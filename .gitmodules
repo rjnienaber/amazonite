@@ -1,0 +1,4 @@
+[submodule "aws-sdk-js"]
+	path = aws-sdk-js
+	url = git@github.com:aws/aws-sdk-js.git
+	branch = v2.1227.0

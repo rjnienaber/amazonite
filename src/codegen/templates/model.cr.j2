@@ -1,0 +1,15 @@
+module Amazonite
+  module {{ service.name }}
+    class {{ shape.name }}
+      include JSON::Serializable
+{% for member in shape.members %}
+      @[JSON::Field(key: "{{ member.name }}"{% if member.has_converter %}, converter: {{ member.converter }}{% endif %})]
+      property {{ member.snake_case_name }} : {{ member.type }}
+{% endfor %}
+      def initialize({% for parameter in shape.parameters %}
+        @{{ parameter.name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %}{% if loop.revindex0 != 0 %},{% endif %}{% endfor %}
+      )
+      end
+    end
+  end
+end

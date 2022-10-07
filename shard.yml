@@ -1,0 +1,26 @@
+name: amazonite
+version: 0.1.0
+
+authors:
+  - Richard Nienaber <rjnienaber@gmail.com>
+
+crystal: 1.5.1
+
+development_dependencies:
+  crinja:
+    github: straight-shoota/crinja
+  assert-diff:
+    github: YusukeHosonuma/assert-diff
+    branch: main
+  webmock:
+    github: manastech/webmock.cr
+    branch: master
+
+license: MIT
+
+scripts:
+  test: echo haha
+
+targets:
+  codegen:
+    main: src/codegen.cr

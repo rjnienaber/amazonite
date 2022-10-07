@@ -1,0 +1,10 @@
+require "json"
+
+require "./core/*"
+require "./{{ service.lower_name }}/*"
+
+module Amazonite
+  module {{ service.name }}
+    VERSION = "{{ service.version }}"
+  end
+end

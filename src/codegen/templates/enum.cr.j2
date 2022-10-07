@@ -1,0 +1,26 @@
+module Amazonite
+  module {{ service.name }}
+    enum {{ shape.name }}{% for e in shape.values %}
+      {{ e }}{% endfor %}
+
+      def self.to_json(e : {{ shape.name }}, json : JSON::Builder) : Nil{% if shape.has_aws_mappings %}
+        value = case e
+                {% for value in shape.aws_mappings %}when {{ value[0] }}{{ value[1] }} then "{{ value[2] }}"
+                {% endfor %}else
+                  raise Exception.new("unknown enum value for '{{ shape.name }}' when serializing to json: '#{e.to_s}'")
+                end
+        json.string(value){% else %}
+        json.string(e.to_s){% endif %}
+      end
+
+      def self.from_json(pull : JSON::PullParser) : Amazonite::{{ service.name }}::{{ shape.name }}
+        value = pull.read_string
+        case value
+        {% for value in shape.crystal_mappings %}when "{{ value[0] }}"{{ value[1] }} then {{ value[2] }}
+        {% endfor %}else
+          raise Exception.new("unknown enum value for '{{ shape.name }}' when deserializing from json: '#{value}'")
+        end
+      end
+    end
+  end
+end
