@@ -8,17 +8,22 @@ module Amazonite::Codegen
     def initialize(@service, @crystal = Bindings::CrystalLang.new)
     end
 
-    def to_file(description : Service::Description, filepath)
-      operations = Amazonite::Codegen::Bindings::Operations.new(description.metadata, description.operations)
+    def exception_factory_file(description : Service::Description, filepath)
+      errors = Amazonite::Codegen::Bindings::Errors.new(description.error_names)
+      to_file("exception_factory.cr", filepath, {"errors" => errors})
+    end
+
+    def client_file(description : Service::Description, filepath)
+      operations = Amazonite::Codegen::Bindings::Operations.new(description.metadata, description.operations, description.has_errors)
       to_file("client.cr", filepath, {"operations" => operations})
     end
 
-    def to_file(e : Service::Enum, filepath)
+    def enum_file(e : Service::Enum, filepath)
       shape = Amazonite::Codegen::Bindings::Enum.new(e)
       to_file("enum.cr", filepath, {"shape" => shape})
     end
 
-    def to_file(model : Service::Structure, filepath)
+    def model_file(model : Service::Structure, filepath)
       shape = Amazonite::Codegen::Bindings::Structure.new(model)
       to_file("model.cr", filepath, {"shape" => shape})
     end

@@ -26,25 +26,32 @@ module Amazonite::Codegen
       render = Render.new(service)
 
       # module
+      puts "generating module"
       render.to_file("module.cr", module_file_path)
-
-      # client
-      client_filepath = File.join(module_dir, "client.cr")
-      render.to_file(description, client_filepath)
 
       # generate all enums
       description.enums.each do |shape|
         puts "generating enum #{shape.name}"
         model_filepath = File.join(module_dir, "#{shape.snake_case_name}.cr")
-        render.to_file(shape, model_filepath)
+        render.enum_file(shape, model_filepath)
       end
 
       # generate all structures
       description.structures.each do |shape|
         puts "generating structure #{shape.name}"
         model_filepath = File.join(module_dir, "#{shape.snake_case_name}.cr")
-        render.to_file(shape, model_filepath)
+        render.model_file(shape, model_filepath)
       end
+
+      # generate errors
+      puts "generating exception factory"
+      exception_factory_file_path = File.join(module_dir, "exception_factory.cr")
+      render.exception_factory_file(description, exception_factory_file_path)
+
+      # client
+      puts "generating client"
+      client_filepath = File.join(module_dir, "client.cr")
+      render.client_file(description, client_filepath)
     end
 
     puts "finished building"

@@ -109,13 +109,5 @@ module Amazonite::Codegen::Service
         count += 1
       end
     end
-
-    def self.aws_shape?(shape_name)
-      KNOWN_AWS_TYPES.includes?(shape_name)
-    end
-
-    def complex_type?(shape_name)
-      KNOWN_DATA_STRUCTS.includes?(@type) && @shape_map.has_key?(shape_name)
-    end
   end
 end

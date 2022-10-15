@@ -5,11 +5,12 @@ module Amazonite::Codegen::Bindings
     @endpoint_prefix : String
     @operations : Array(Crinja::Value)
 
-    getter operations, target_prefix, endpoint_prefix
+    getter operations, target_prefix, endpoint_prefix, has_errors
 
     def initialize(
       metadata : Amazonite::Codegen::Service::Metadata,
-      operations : Array(Amazonite::Codegen::Service::Operation)
+      operations : Array(Amazonite::Codegen::Service::Operation),
+      @has_errors : Bool
     )
       module_name = "Amazonite::#{metadata.service_id}"
       @target_prefix = metadata.target_prefix
