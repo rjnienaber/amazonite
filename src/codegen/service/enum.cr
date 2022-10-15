@@ -2,7 +2,7 @@ module Amazonite::Codegen::Service
   # TODO: rename to Enumeration
   class Enum < Shape
     private SCREAMING_CASE_REGEX = /^[A-Z_\d]+$/
-    private PASCAL_CASE_REGEX = /^[A-Za-z]+$/ # TODO: better regex to detect PascalCase?
+    private PASCAL_CASE_REGEX    = /^[A-Za-z]+$/ # TODO: better regex to detect PascalCase?
 
     def self.enum?(json : JSON::Any)
       !!json["enum"]?
@@ -49,18 +49,18 @@ module Amazonite::Codegen::Service
     def crystal_mappings : Array(Tuple(String, String, String))
       max_length = @enums.max_by { |e| e.size }.size
       enum_values = if @enums.all? { |e| SCREAMING_CASE_REGEX.matches?(e) }
-        @enums.zip(modulized_crystal_values)
-      elsif @enums.all? { |e| PASCAL_CASE_REGEX.matches?(e) }
-        # we modulize here because we are just accepting the values from AWS
-        @enums.map { |e| [e, modulize_enum_value(e)] }
-      else
-        raise Exception.new("unknown enum casing for shape '#{@name}'")
-      end
+                      @enums.zip(modulized_crystal_values)
+                    elsif @enums.all? { |e| PASCAL_CASE_REGEX.matches?(e) }
+                      # we modulize here because we are just accepting the values from AWS
+                      @enums.map { |e| [e, modulize_enum_value(e)] }
+                    else
+                      raise Exception.new("unknown enum casing for shape '#{@name}'")
+                    end
       enum_values.map { |v| {v[0], " " * (max_length - v[0].size), v[1]} }
     end
 
     private def crystal_values
-      @crystal_values ||= @enums.map {|e| e.split("_").map { |w| w.downcase.gsub(/^[a-z]/) { |s| s.upcase } }.join}
+      @crystal_values ||= @enums.map { |e| e.split("_").map { |w| w.downcase.gsub(/^[a-z]/) { |s| s.upcase } }.join }
     end
 
     private def modulized_crystal_values

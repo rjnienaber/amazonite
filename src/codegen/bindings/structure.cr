@@ -10,12 +10,12 @@ module Amazonite::Codegen::Bindings
       @name = shape.name
       @members = shape.members.map do |m|
         converter = if m.time_type?
-          "Amazonite::Core::AWSEpochConverter"
-        elsif m.enum_type?
-          "Amazonite::DynamoDB::#{m.crystal_type(true)}"
-        else
-          nil
-        end
+                      "Amazonite::Core::AWSEpochConverter"
+                    elsif m.enum_type?
+                      "Amazonite::DynamoDB::#{m.crystal_type(true)}"
+                    else
+                      nil
+                    end
         has_converter = !!converter
 
         Crinja.value({

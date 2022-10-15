@@ -9,7 +9,7 @@ describe Amazonite::Core::Client do
     headers = {
       "X-Amz-Target" => "HelloWorld_20221002.Greet",
       "Content-Type" => "application/x-amz-json-1.0",
-      "User-Agent" => "amazonite/0.1.1 Crystal/1.6.0 command/helloworld.greet"
+      "User-Agent"   => "amazonite/0.1.1 Crystal/1.6.0 command/helloworld.greet",
     }
     WebMock.stub(:post, "http://www.example.com/foo")
       .with(body: json, headers: headers)
@@ -28,7 +28,7 @@ describe Amazonite::Core::Client do
     headers = {
       "X-Amz-Target" => "HelloWorld_20221002.Salutation",
       "Content-Type" => "application/x-amz-json-1.0",
-      "User-Agent" => "custom/user-agent"
+      "User-Agent"   => "custom/user-agent",
     }
     WebMock.stub(:post, "http://localhost/")
       .with(body: "", headers: headers)

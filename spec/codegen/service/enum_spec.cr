@@ -84,8 +84,8 @@ describe Amazonite::Codegen::Service::Enum do
       mappings = create_enum("BatchStatementErrorCodeEnum", screaming_snake_case_json).aws_mappings
       expected = [
         {"Amazonite::DynamoDB::BatchStatementErrorCodeEnum::Provisioned", "  ", "PROVISIONED"},
-        {"Amazonite::DynamoDB::BatchStatementErrorCodeEnum::PayPerRequest", "", "PAY_PER_REQUEST"}
-    ]
+        {"Amazonite::DynamoDB::BatchStatementErrorCodeEnum::PayPerRequest", "", "PAY_PER_REQUEST"},
+      ]
       mappings.should eq(expected)
     end
 
@@ -94,8 +94,8 @@ describe Amazonite::Codegen::Service::Enum do
       expected = [
         {"Amazonite::DynamoDB::AttributeAction::Add", "   ", "ADD"},
         {"Amazonite::DynamoDB::AttributeAction::Put", "   ", "PUT"},
-        {"Amazonite::DynamoDB::AttributeAction::Delete", "", "DELETE"}
-    ]
+        {"Amazonite::DynamoDB::AttributeAction::Delete", "", "DELETE"},
+      ]
 
       mappings.should eq(expected)
     end
@@ -104,7 +104,7 @@ describe Amazonite::Codegen::Service::Enum do
       mappings = create_enum("S3SseAlgorithm", enums_with_numbers).aws_mappings
       expected = [
         {"Amazonite::DynamoDB::S3SseAlgorithm::Aes256", "", "AES256"},
-        {"Amazonite::DynamoDB::S3SseAlgorithm::Kms", "   ", "KMS"}
+        {"Amazonite::DynamoDB::S3SseAlgorithm::Kms", "   ", "KMS"},
       ]
 
       mappings.should eq(expected)

@@ -2,7 +2,6 @@ require "./response"
 
 module Amazonite::Core
   class ParsedResponse(T) < Response
-
     @result : T
 
     getter result
@@ -13,4 +12,3 @@ module Amazonite::Core
     end
   end
 end
-

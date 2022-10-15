@@ -8,7 +8,6 @@ module Amazonite::Codegen
     def initialize(@service, @crystal = Bindings::CrystalLang.new)
     end
 
-
     def to_file(description : Service::Description, filepath)
       operations = Amazonite::Codegen::Bindings::Operations.new(description.metadata, description.operations)
       to_file("client.cr", filepath, {"operations" => operations})

@@ -6,4 +6,3 @@ module Amazonite::Core
     end
   end
 end
-
