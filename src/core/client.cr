@@ -1,3 +1,5 @@
+require "http/client"
+
 module Amazonite::Core
   class Client
     VERSION = "0.1.1"
