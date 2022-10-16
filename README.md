@@ -7,7 +7,7 @@ Amazonite is an unofficial AWS SDK for Crystal. This is still in an alpha stage 
 Here's an example that creates a table in DynamoDB:
 
 ```crystal
-require "amazonite/dynamodbv2"
+require "amazonite/dynamodb_v2"
 
 private alias DB = Amazonite::DynamoDBv2
 
