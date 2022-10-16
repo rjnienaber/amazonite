@@ -2,4 +2,4 @@
 
 set -e
 
-crystal eval 'require "./src/dynamodb"'
+crystal eval 'require "./src/dynamodb_v2"'

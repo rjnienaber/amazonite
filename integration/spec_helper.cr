@@ -1,2 +1,2 @@
 require "spec"
-require "amazonite/dynamodb"
+require "amazonite/dynamodb_v2"

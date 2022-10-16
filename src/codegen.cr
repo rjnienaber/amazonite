@@ -11,8 +11,10 @@ module Amazonite::Codegen
       description = files.current_description
 
       src_dir = File.join(Dir.current, "src")
-      module_dir = File.join(src_dir, description.lower_name)
-      module_file_path = File.join(src_dir, "#{description.lower_name}.cr")
+
+      module_name = "#{description.lower_name}_#{description.version}"
+      module_dir = File.join(src_dir, module_name)
+      module_file_path = File.join(src_dir, "#{module_name}.cr")
 
       FileUtils.rm_rf(module_dir)
       FileUtils.rm_rf(module_file_path)
