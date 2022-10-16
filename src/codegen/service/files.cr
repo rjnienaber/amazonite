@@ -9,17 +9,18 @@ module Amazonite::Codegen::Service
       @files = all_files.select { |file| file.includes?(@name) }
     end
 
-    def normal
-      file = self.files.select { |f| f.includes?("normal") }.first
-      Description.new(aws_version, JSON.parse(File.read(file)))
+    def current_description
+      file = current_version_files.select { |f| f.includes?("normal") }.first
+      version = "v#{version_files.keys.size}"
+      Description.new(aws_version, current_version_date, version, JSON.parse(File.read(file)))
     end
 
-    def files
-      self.version_files[self.current_version].sort
+    private def current_version_date
+      version_files.keys.compact.sort[-1]
     end
 
-    def current_version
-      self.version_files.keys.compact.sort[-1]
+    private def current_version_files
+      version_files[current_version_date].sort
     end
 
     private def version_files

@@ -1,23 +1,23 @@
-module Amazonite
-  module DynamoDB
-    enum ScalarAttributeType
-      S
-      N
-      B
+private alias ADDB = Amazonite::DynamoDBv2
 
-      def self.to_json(e : ScalarAttributeType, json : JSON::Builder) : Nil
-        json.string(e.to_s)
-      end
+module Amazonite::DynamoDBv2
+  enum ScalarAttributeType
+    S
+    N
+    B
 
-      def self.from_json(pull : JSON::PullParser) : Amazonite::DynamoDB::ScalarAttributeType
-        value = pull.read_string
-        case value
-        when "S" then Amazonite::DynamoDB::ScalarAttributeType::S
-        when "N" then Amazonite::DynamoDB::ScalarAttributeType::N
-        when "B" then Amazonite::DynamoDB::ScalarAttributeType::B
-        else
-          raise Exception.new("unknown enum value for 'ScalarAttributeType' when deserializing from json: '#{value}'")
-        end
+    def self.to_json(e : ScalarAttributeType, json : JSON::Builder) : Nil
+      json.string(e.to_s)
+    end
+
+    def self.from_json(pull : JSON::PullParser) : ADDB::ScalarAttributeType
+      value = pull.read_string
+      case value
+      when "S" then ADDB::ScalarAttributeType::S
+      when "N" then ADDB::ScalarAttributeType::N
+      when "B" then ADDB::ScalarAttributeType::B
+      else
+        raise Exception.new("unknown enum value for 'ScalarAttributeType' when deserializing from json: '#{value}'")
       end
     end
   end

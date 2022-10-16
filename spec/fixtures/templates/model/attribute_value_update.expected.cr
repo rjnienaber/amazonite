@@ -1,19 +1,19 @@
-module Amazonite
-  module DynamoDB
-    class AttributeValueUpdate
-      include JSON::Serializable
+private alias ADDB = Amazonite::DynamoDBv2
 
-      @[JSON::Field(key: "Value")]
-      property value : AttributeValue | Nil
+module Amazonite::DynamoDBv2
+  class AttributeValueUpdate
+    include JSON::Serializable
 
-      @[JSON::Field(key: "Action", converter: Amazonite::DynamoDB::AttributeAction)]
-      property action : AttributeAction | Nil
+    @[JSON::Field(key: "Value")]
+    property value : AttributeValue | Nil
 
-      def initialize(
-        @value : AttributeValue | Nil = nil,
-        @action : AttributeAction | Nil = nil
-      )
-      end
+    @[JSON::Field(key: "Action", converter: ADDB::AttributeAction)]
+    property action : AttributeAction | Nil
+
+    def initialize(
+      @value : AttributeValue | Nil = nil,
+      @action : AttributeAction | Nil = nil
+    )
     end
   end
 end

@@ -8,10 +8,12 @@ module Amazonite::Codegen::Service
     @operations = [] of Operation
     @resolver : ShapeResolver
     @error_names : Array(String) | Nil
+    @module_alias : String | Nil
 
-    getter aws_version, metadata, operations, resolver
+    getter aws_version, api_version, version, metadata, resolver
+    property operations
 
-    def initialize(@aws_version : String, json : JSON::Any)
+    def initialize(@aws_version : String, @api_version : String, @version : String, json : JSON::Any)
       Utils.verify_keys(KNOWN_KEYS, json)
       version = json["version"]
       raise Exception.new("unknown version document: #{version}") unless version == "2.0"
@@ -22,7 +24,11 @@ module Amazonite::Codegen::Service
         @operations_map[k] = operation
         operations << operation
       end
-      @resolver = ShapeResolver.load_json(@metadata.service_id, json["shapes"])
+      @resolver = ShapeResolver.load_json(json["shapes"])
+    end
+
+    def lower_name
+      @metadata.service_id.downcase
     end
 
     def has_errors
@@ -43,6 +49,14 @@ module Amazonite::Codegen::Service
 
     def structures
       @resolver.shapes.select { |s| s.is_a?(Service::Structure) }.map { |s| s.as(Service::Structure) }
+    end
+
+    def module_name
+      "Amazonite::#{@metadata.service_id}#{@version}"
+    end
+
+    def module_alias
+      @module_alias ||= module_name.scan(/[A-Z]/).map(&.[0]).join
     end
   end
 end

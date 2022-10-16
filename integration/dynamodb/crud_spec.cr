@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-private alias DB = Amazonite::DynamoDB
+private alias DB = Amazonite::DynamoDBv2
 
 describe "DynamoDB: basic crud operations" do
   table_name = "Music"

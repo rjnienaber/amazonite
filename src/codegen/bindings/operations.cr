@@ -7,25 +7,22 @@ module Amazonite::Codegen::Bindings
 
     getter operations, target_prefix, endpoint_prefix, has_errors
 
-    def initialize(
-      metadata : Amazonite::Codegen::Service::Metadata,
-      operations : Array(Amazonite::Codegen::Service::Operation),
-      @has_errors : Bool
-    )
-      module_name = "Amazonite::#{metadata.service_id}"
+    def initialize(description : Amazonite::Codegen::Service::Description, has_errors : Bool | Nil = nil)
+      metadata = description.metadata
+      @has_errors = has_errors.nil? ? description.has_errors : has_errors
       @target_prefix = metadata.target_prefix
       @endpoint_prefix = metadata.endpoint_prefix
-      @operations = operations.map do |o|
+      @operations = description.operations.map do |o|
         output = if o.output.nil?
-                   "Amazonite::Core::Response"
+                   "AC::Response"
                  else
-                   "Amazonite::Core::ParsedResponse(#{module_name}::#{o.output})"
+                   "AC::ParsedResponse(#{description.module_alias}::#{o.output})"
                  end
         Crinja.value({
           function_name: o.lower_name,
           command:       o.name,
           has_input:     !!o.input,
-          input:         "#{module_name}::#{o.input}",
+          input:         "#{description.module_alias}::#{o.input}",
           output:        output,
         })
       end

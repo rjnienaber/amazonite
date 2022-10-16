@@ -1,15 +1,16 @@
-module Amazonite
-  module {{ service.name }}
-    class {{ shape.name }}
-      include JSON::Serializable
+{% if shape.needs_module_alias or shape.needs_core_alias %}{% if shape.needs_module_alias %}private alias {{ service.module_alias }} = {{ service.module_name }}
+{% endif %}{% if shape.needs_core_alias %}private alias AC = Amazonite::Core
+{% endif %}
+{% endif %}module {{ service.module_name }}
+  class {{ shape.name }}
+    include JSON::Serializable
 {% for member in shape.members %}
-      @[JSON::Field(key: "{{ member.name }}"{% if member.has_converter %}, converter: {{ member.converter }}{% endif %})]
-      property {{ member.snake_case_name }} : {{ member.type }}
+    @[JSON::Field(key: "{{ member.name }}"{% if member.has_converter %}, converter: {{ member.converter }}{% endif %})]
+    property {{ member.snake_case_name }} : {{ member.type }}
 {% endfor %}
-      def initialize({% for parameter in shape.parameters %}
-        @{{ parameter.name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %}{% if loop.revindex0 != 0 %},{% endif %}{% endfor %}
-      )
-      end
+    def initialize({% for parameter in shape.parameters %}
+      @{{ parameter.name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %}{% if loop.revindex0 != 0 %},{% endif %}{% endfor %}
+    )
     end
   end
 end

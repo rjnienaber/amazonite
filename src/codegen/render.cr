@@ -5,16 +5,18 @@ module Amazonite::Codegen
     @env : Crinja | Nil
     @service : Bindings::Service
 
-    def initialize(@service, @crystal = Bindings::CrystalLang.new)
+    def initialize(@description : Service::Description)
+      @service = Bindings::Service.new(description)
+      @crystal = Bindings::CrystalLang.new
     end
 
-    def exception_factory_file(description : Service::Description, filepath)
-      errors = Amazonite::Codegen::Bindings::Errors.new(description.error_names)
+    def exception_factory_file(filepath)
+      errors = Amazonite::Codegen::Bindings::Errors.new(@description.error_names)
       to_file("exception_factory.cr", filepath, {"errors" => errors})
     end
 
-    def client_file(description : Service::Description, filepath)
-      operations = Amazonite::Codegen::Bindings::Operations.new(description.metadata, description.operations, description.has_errors)
+    def client_file(filepath)
+      operations = Amazonite::Codegen::Bindings::Operations.new(@description)
       to_file("client.cr", filepath, {"operations" => operations})
     end
 
@@ -24,7 +26,7 @@ module Amazonite::Codegen
     end
 
     def model_file(model : Service::Structure, filepath)
-      shape = Amazonite::Codegen::Bindings::Structure.new(model)
+      shape = Amazonite::Codegen::Bindings::Structure.new(model, @description.module_alias)
       to_file("model.cr", filepath, {"shape" => shape})
     end
 

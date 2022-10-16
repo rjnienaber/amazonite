@@ -1,16 +1,16 @@
-module Amazonite
-  module {{ service.name }}{% for name in errors.names %}
-    class {{ name.value }} < Amazonite::Core::ResponseException
-    end
-{% endfor %}
-    class ExceptionFactory
-      include Amazonite::Core::ResponseExceptionFactory
+private alias AC = Amazonite::Core
 
-      def create_exception(error_type, http, message) : Amazonite::Core::ResponseException | Nil
-        case error_type
-        {% for name in errors.names %}when "{{ name.value }}"{{ name.spacing }} then {{ name.value }}.new(http, message)
-        {% endfor %}end
-      end
+module {{ service.module_name }}{% for name in errors.names %}
+  class {{ name.value }} < AC::ResponseException
+  end
+{% endfor %}
+  class ExceptionFactory
+    include AC::ResponseExceptionFactory
+
+    def create_exception(error_type, http, message) : AC::ResponseException | Nil
+      case error_type
+      {% for name in errors.names %}when "{{ name.value }}"{{ name.spacing }} then {{ name.value }}.new(http, message)
+      {% endfor %}end
     end
   end
 end

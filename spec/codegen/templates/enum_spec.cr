@@ -3,13 +3,12 @@ require "../../spec_helper"
 def render_enum(shape_name)
   source = ServiceJson.load("dynamodb-2012-08-10.normal.json")
 
-  description = Amazonite::Codegen::Service::Description.new("0.23.2", source)
+  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", "v2", source)
 
   e = description.resolver.find(shape_name).as(Amazonite::Codegen::Service::Enum)
   shape_binding = Amazonite::Codegen::Bindings::Enum.new(e)
-  service_binding = Amazonite::Codegen::Bindings::Service.new(description)
 
-  Amazonite::Codegen::Render.new(service_binding).to_s("enum.cr", {"shape" => shape_binding}).strip
+  Amazonite::Codegen::Render.new(description).to_s("enum.cr", {"shape" => shape_binding}).strip
 end
 
 describe "enum.cr.j2 template" do

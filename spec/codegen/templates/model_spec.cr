@@ -3,13 +3,12 @@ require "../../spec_helper"
 def render_model(shape_name)
   source = ServiceJson.load("dynamodb-2012-08-10.normal.json")
 
-  description = Amazonite::Codegen::Service::Description.new("0.23.2", source)
+  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", "v2", source)
 
   structure = description.resolver.find(shape_name).as(Amazonite::Codegen::Service::Structure)
-  shape_binding = Amazonite::Codegen::Bindings::Structure.new(structure)
-  service_binding = Amazonite::Codegen::Bindings::Service.new(description)
+  shape_binding = Amazonite::Codegen::Bindings::Structure.new(structure, description.module_alias)
 
-  Amazonite::Codegen::Render.new(service_binding).to_s("model.cr", {"shape" => shape_binding}).strip
+  Amazonite::Codegen::Render.new(description).to_s("model.cr", {"shape" => shape_binding}).strip
 end
 
 describe "model.cr.j2 template" do

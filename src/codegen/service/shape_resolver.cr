@@ -5,11 +5,11 @@ module Amazonite::Codegen::Service
                                      "double"]
     private KNOWN_AWS_TYPES = KNOWN_DATA_STRUCTS + KNOWN_PRIMITIVE_TYPES
 
-    def self.load_json(service_name, json : JSON::Any)
+    def self.load_json(json : JSON::Any)
       resolver = ShapeResolver.new
       json.as_h.each do |name, json|
         shape = if Enum.enum?(json)
-                  Enum.new(name, json, service_name)
+                  Enum.new(name, json)
                 elsif List.list?(json)
                   List.new(name, json, resolver)
                 elsif Map.map?(json)

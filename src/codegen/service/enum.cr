@@ -13,7 +13,7 @@ module Amazonite::Codegen::Service
     @enums : Array(String)
     getter enums
 
-    def initialize(name : String, json : JSON::Any, @service_name : String)
+    def initialize(name : String, json : JSON::Any)
       super(name, json)
       @enums = json["enum"].as_a.map { |e| e.to_s }
     end
@@ -70,7 +70,7 @@ module Amazonite::Codegen::Service
     end
 
     private def modulize_enum_value(enum_value)
-      "Amazonite::#{@service_name}::#{@name}::#{enum_value}"
+      "#{@name}::#{enum_value}"
     end
   end
 end

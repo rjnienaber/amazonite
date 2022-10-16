@@ -1,27 +1,30 @@
-module Amazonite::DynamoDB
-  class Client < Amazonite::Core::Client
+private alias ADDB = Amazonite::DynamoDBv2
+private alias AC = Amazonite::Core
+
+module Amazonite::DynamoDBv2
+  class Client < AC::Client
     def initialize(base_url : String | Nil = nil, user_agent : String | Nil = nil)
       super("DynamoDB_20120810", "dynamodb", nil, base_url, user_agent)
     end
 
-    def put_item(input : Amazonite::DynamoDB::PutItemInput) : Amazonite::Core::ParsedResponse(Amazonite::DynamoDB::PutItemOutput)
+    def put_item(input : ADDB::PutItemInput) : AC::ParsedResponse(ADDB::PutItemOutput)
       response = post("PutItem", "/", input.to_json)
-      Amazonite::Core::ParsedResponse(Amazonite::DynamoDB::PutItemOutput).new(response)
+      AC::ParsedResponse(ADDB::PutItemOutput).new(response)
     end
 
-    def get_item(input : Amazonite::DynamoDB::GetItemInput) : Amazonite::Core::ParsedResponse(Amazonite::DynamoDB::GetItemOutput)
+    def get_item(input : ADDB::GetItemInput) : AC::ParsedResponse(ADDB::GetItemOutput)
       response = post("GetItem", "/", input.to_json)
-      Amazonite::Core::ParsedResponse(Amazonite::DynamoDB::GetItemOutput).new(response)
+      AC::ParsedResponse(ADDB::GetItemOutput).new(response)
     end
 
-    def update_item(input : Amazonite::DynamoDB::UpdateItemInput) : Amazonite::Core::ParsedResponse(Amazonite::DynamoDB::UpdateItemOutput)
+    def update_item(input : ADDB::UpdateItemInput) : AC::ParsedResponse(ADDB::UpdateItemOutput)
       response = post("UpdateItem", "/", input.to_json)
-      Amazonite::Core::ParsedResponse(Amazonite::DynamoDB::UpdateItemOutput).new(response)
+      AC::ParsedResponse(ADDB::UpdateItemOutput).new(response)
     end
 
-    def delete_item(input : Amazonite::DynamoDB::DeleteItemInput) : Amazonite::Core::ParsedResponse(Amazonite::DynamoDB::DeleteItemOutput)
+    def delete_item(input : ADDB::DeleteItemInput) : AC::ParsedResponse(ADDB::DeleteItemOutput)
       response = post("DeleteItem", "/", input.to_json)
-      Amazonite::Core::ParsedResponse(Amazonite::DynamoDB::DeleteItemOutput).new(response)
+      AC::ParsedResponse(ADDB::DeleteItemOutput).new(response)
     end
   end
 end

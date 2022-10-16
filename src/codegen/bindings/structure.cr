@@ -4,15 +4,19 @@ module Amazonite::Codegen::Bindings
     @name : String
     @members : Array(Crinja::Value)
 
-    getter name, members, parameters
+    getter name, members, parameters, needs_core_alias, needs_module_alias
 
-    def initialize(shape : Amazonite::Codegen::Service::Structure)
+    def initialize(shape : Amazonite::Codegen::Service::Structure, module_alias : String)
       @name = shape.name
+      @needs_core_alias = false
+      @needs_module_alias = false
       @members = shape.members.map do |m|
         converter = if m.time_type?
-                      "Amazonite::Core::AWSEpochConverter"
+                      @needs_core_alias = true
+                      "AC::AWSEpochConverter"
                     elsif m.enum_type?
-                      "Amazonite::DynamoDB::#{m.crystal_type(true)}"
+                      @needs_module_alias = true
+                      "#{module_alias}::#{m.crystal_type(true)}"
                     else
                       nil
                     end

@@ -1,15 +1,15 @@
 require "../../spec_helper"
 
-def render_partial_client(schema_filename : String, has_errors : Bool,  *operation_names)
+def render_partial_client(schema_filename : String, has_errors : Bool, *operation_names)
   source = ServiceJson.load(schema_filename)
-  description = Amazonite::Codegen::Service::Description.new("0.23.2", source)
+  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", "v2", source)
 
   metadata = description.metadata
   operations = operation_names.map { |n| description.find_operation(n) }.to_a
-  operations_binding = Amazonite::Codegen::Bindings::Operations.new(metadata, operations, has_errors)
-  service_binding = Amazonite::Codegen::Bindings::Service.new(description)
+  description.operations = operations
+  operations_binding = Amazonite::Codegen::Bindings::Operations.new(description, has_errors)
 
-  Amazonite::Codegen::Render.new(service_binding).to_s("client.cr", {"operations" => operations_binding}).strip
+  Amazonite::Codegen::Render.new(description).to_s("client.cr", {"operations" => operations_binding}).strip
 end
 
 def render_dynamodb_client(has_errors : Bool, *operation_names)

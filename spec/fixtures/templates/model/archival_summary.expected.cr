@@ -1,23 +1,23 @@
-module Amazonite
-  module DynamoDB
-    class ArchivalSummary
-      include JSON::Serializable
+private alias AC = Amazonite::Core
 
-      @[JSON::Field(key: "ArchivalDateTime", converter: Amazonite::Core::AWSEpochConverter)]
-      property archival_date_time : Time | Nil
+module Amazonite::DynamoDBv2
+  class ArchivalSummary
+    include JSON::Serializable
 
-      @[JSON::Field(key: "ArchivalReason")]
-      property archival_reason : String | Nil
+    @[JSON::Field(key: "ArchivalDateTime", converter: AC::AWSEpochConverter)]
+    property archival_date_time : Time | Nil
 
-      @[JSON::Field(key: "ArchivalBackupArn")]
-      property archival_backup_arn : String | Nil
+    @[JSON::Field(key: "ArchivalReason")]
+    property archival_reason : String | Nil
 
-      def initialize(
-        @archival_date_time : Time | Nil = nil,
-        @archival_reason : String | Nil = nil,
-        @archival_backup_arn : String | Nil = nil
-      )
-      end
+    @[JSON::Field(key: "ArchivalBackupArn")]
+    property archival_backup_arn : String | Nil
+
+    def initialize(
+      @archival_date_time : Time | Nil = nil,
+      @archival_reason : String | Nil = nil,
+      @archival_backup_arn : String | Nil = nil
+    )
     end
   end
 end
