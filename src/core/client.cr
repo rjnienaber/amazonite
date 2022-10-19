@@ -15,6 +15,14 @@ module Amazonite::Core
     end
 
     def post(command, url, body : String)
+      client = create_client(command, url, body)
+      response = client.post(url, build_headers(command), body)
+      return response if ((200..299) === response.status_code)
+
+      raise build_error(response)
+    end
+
+    protected def create_client(command, url, body)
       client = HTTP::Client.new(URI.parse(@config.endpoint_url(@endpoint_prefix)))
       client.before_request do |request|
         region = @config.region
@@ -23,11 +31,7 @@ module Amazonite::Core
         signer = Awscr::Signer::Signers::V4.new(@endpoint_prefix, region, key, secret)
         signer.sign(request)
       end
-
-      response = client.post(url, build_headers(command), body)
-      return response if ((200..299) === response.status_code)
-
-      raise build_error(response)
+      client
     end
 
     private def build_error(response)
