@@ -3,8 +3,8 @@ private alias AC = Amazonite::Core
 
 module Amazonite::DynamoDBv2
   class Client < AC::Client
-    def initialize(base_url : String | Nil = nil, user_agent : String | Nil = nil)
-      super("DynamoDB_20120810", "dynamodb", nil, base_url, user_agent)
+    def initialize(config = AC::Config.new)
+      super("DynamoDB_20120810", "dynamodb", nil, config)
     end
 
     def put_item(input : ADDB::PutItemInput) : AC::ParsedResponse(ADDB::PutItemOutput)

@@ -6,6 +6,8 @@ require "webmock"
 require "../src/codegen/**"
 require "../src/core/**"
 
+require "./mocks/**"
+
 def load_fixture(*path)
   File.read(File.join(Dir.current, "spec", "fixtures", *path))
 end

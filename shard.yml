@@ -6,6 +6,10 @@ authors:
 
 crystal: 1.5.1
 
+dependencies:
+  awscr-signer:
+    github: taylorfinnell/awscr-signer
+
 development_dependencies:
   crinja:
     github: straight-shoota/crinja

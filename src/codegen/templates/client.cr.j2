@@ -5,8 +5,8 @@ module {{ service.module_name }}
   class Client < AC::Client{% if operations.has_errors %}
     EXCEPTION_FACTORY = ExceptionFactory.new
 {% endif %}
-    def initialize(base_url : String | Nil = nil, user_agent : String | Nil = nil)
-      super("{{ operations.target_prefix }}", "{{ operations.endpoint_prefix }}", {% if operations.has_errors %}EXCEPTION_FACTORY, {% else %}nil, {% endif %}base_url, user_agent)
+    def initialize(config = AC::Config.new)
+      super("{{ operations.target_prefix }}", "{{ operations.endpoint_prefix }}", {% if operations.has_errors %}EXCEPTION_FACTORY, {% else %}nil, {% endif %}config)
     end{% for operation in operations.operations %}
 
     def {{ operation.function_name }}{% if operation.has_input %}(input : {{ operation.input }}){% endif %} : {{ operation.output }}

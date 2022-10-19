@@ -1,6 +1,7 @@
 require "../spec_helper"
 
 private alias DB = Amazonite::DynamoDBv2
+private alias Config = Amazonite::Core::Config
 
 describe "DynamoDB: basic crud operations" do
   table_name = "Music"
@@ -8,10 +9,10 @@ describe "DynamoDB: basic crud operations" do
     "Artist" => DB::AttributeValue.new("Soundgarden"),
     "SongTitle" => DB::AttributeValue.new("Burden In The Hand")
   }
+  config = Config.new("AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1", "http://localhost:4566")
+  client = DB::Client.new(config)
 
   it "lists tables and removes existing" do
-    client = DB::Client.new("http://localhost:4566")
-
     list_response = client.list_tables(DB::ListTablesInput.new)
     list_response.http.status_code.should eq(200)
 
@@ -35,7 +36,6 @@ describe "DynamoDB: basic crud operations" do
       provisioned_throughput: DB::ProvisionedThroughput.new(10, 5),
     )
 
-    client = DB::Client.new("http://localhost:4566")
     response = client.create_table(model)
 
     response.http.status_code.should eq(200)
@@ -60,7 +60,6 @@ describe "DynamoDB: basic crud operations" do
       item = DB::PutItemInput.new(table_name, key)
     ]
 
-    client = DB::Client.new("http://localhost:4566")
     items.each do |item|
       response = client.put_item(item)
       response.http.status_code.should eq(200)
@@ -76,7 +75,6 @@ describe "DynamoDB: basic crud operations" do
       }
     )
 
-    client = DB::Client.new("http://localhost:4566")
     response = client.get_item(item)
 
     response.http.status_code.should eq(200)
@@ -97,7 +95,6 @@ describe "DynamoDB: basic crud operations" do
       }
     )
 
-    client = DB::Client.new("http://localhost:4566")
     response = client.update_item(item)
     response.http.status_code.should eq(200)
 
@@ -110,7 +107,6 @@ describe "DynamoDB: basic crud operations" do
   end
 
   it "deletes the item" do
-    client = DB::Client.new("http://localhost:4566")
     response = client.delete_item(DB::DeleteItemInput.new(table_name, key))
     response.http.status_code.should eq(200)
 
@@ -121,9 +117,9 @@ describe "DynamoDB: basic crud operations" do
 
   it "throws an error" do
     item = DB::UpdateItemInput.new("notable", key, {"Rating" => DB::AttributeValueUpdate.new})
-    client = DB::Client.new("http://localhost:4566")
     e = expect_raises(DB::ResourceNotFoundException, "Cannot do operations on a non-existent table") do
       client.update_item(item)
     end
+    e.http.should_not be_nil
   end
 end
