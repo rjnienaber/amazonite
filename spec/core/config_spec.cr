@@ -1,14 +1,13 @@
 require "../spec_helper"
 
 describe Amazonite::Core::Config do
-  described_class = Amazonite::Core::Config
   key = "AKIAIOSFODNN7EXAMPLE"
   secret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
   region = "us-east-1"
   base_url = "https://dynamodb.com"
 
   describe "#endpoint_url" do
-    it "defaults to aws link for now" do
+    it "defaults to aws link" do
       url = Amazonite::Core::Config.new(key, secret, region).endpoint_url("dynamodb")
       url.should eq("dynamodb.us-east-1.amazonaws.com")
     end

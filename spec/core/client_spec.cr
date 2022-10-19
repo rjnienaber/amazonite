@@ -20,8 +20,6 @@ end
 describe Amazonite::Core::Client do
   described_class = Amazonite::Core::Client
 
-  config = create_mock_config("http://localhost:4566")
-
   it "handles post requests" do
     local_config = create_mock_config("http://www.example.com")
 
@@ -60,7 +58,7 @@ describe Amazonite::Core::Client do
   it "uses url from config object" do
     WebMock.stub(:post, "http://localhost:4566/welcome")
 
-    client = described_class.new("HelloWorld_20221002", "helloworld", config: config)
+    client = described_class.new("HelloWorld_20221002", "helloworld", config: create_mock_config("http://localhost:4566"))
     response = client.post("Welcome", "/welcome", "")
   end
 
@@ -68,7 +66,7 @@ describe Amazonite::Core::Client do
     response_body = %({"__type": "ResourceInUseException", "message": "Table already exists: Music"})
     WebMock.stub(:post, "http://localhost:4566/shalom").to_return(status: 400, body: response_body)
 
-    client = described_class.new("HelloWorld_20221002", "helloworld", config: config)
+    client = described_class.new("HelloWorld_20221002", "helloworld", config: create_mock_config("http://localhost:4566"))
 
     e = expect_raises(Amazonite::Core::ResponseException, "Table already exists: Music") do
       client.post("Shalom", "/shalom", "")
@@ -81,7 +79,7 @@ describe Amazonite::Core::Client do
     response_body = "Table already exists: Music"
     WebMock.stub(:post, "http://localhost:4566/toast").to_return(status: 400, body: response_body)
 
-    client = described_class.new("HelloWorld_20221002", "helloworld", config: config)
+    client = described_class.new("HelloWorld_20221002", "helloworld", config: create_mock_config("http://localhost:4566"))
 
     e = expect_raises(Amazonite::Core::ResponseException, "Table already exists: Music") do
       client.post("Toast", "/toast", "")
@@ -94,7 +92,7 @@ describe Amazonite::Core::Client do
     response_body = %({"__type": "CustomResponseException", "message": "Database connection is unavailable"})
     WebMock.stub(:post, "http://localhost:4566/hail").to_return(status: 500, body: response_body)
 
-    client = described_class.new("HelloWorld_20221002", "helloworld", CustomExceptionFactory.new, config)
+    client = described_class.new("HelloWorld_20221002", "helloworld", CustomExceptionFactory.new, create_mock_config("http://localhost:4566"))
 
     e = expect_raises(CustomResponseException, "Database connection is unavailable") do
       client.post("Hail", "/hail", "")

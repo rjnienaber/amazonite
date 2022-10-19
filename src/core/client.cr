@@ -1,11 +1,14 @@
 require "http/client"
 require "awscr-signer"
 require "uri"
+require "uuid"
 
 module Amazonite::Core
   VERSION = "0.1.1"
 
   class Client
+    Log = ::Log.for(self)
+
     def initialize(
       @target_prefix : String,
       @endpoint_prefix : String,
@@ -15,23 +18,45 @@ module Amazonite::Core
     end
 
     def post(command, url, body : String)
-      client = create_client(command, url, body)
+      id = UUID.random.to_s
+      client = create_client(id, command, url, body)
       response = client.post(url, build_headers(command), body)
-      return response if ((200..299) === response.status_code)
-
-      raise build_error(response)
+      process_response(id, command, response)
     end
 
-    protected def create_client(command, url, body)
-      client = HTTP::Client.new(URI.parse(@config.endpoint_url(@endpoint_prefix)))
+    protected def create_client(id, command, url, body)
+      endpoint_url = @config.endpoint_url(@endpoint_prefix)
+      client = HTTP::Client.new(URI.parse(endpoint_url))
       client.before_request do |request|
-        region = @config.region
         key = @config.access_key_id
         secret = @config.secret_access_key
-        signer = Awscr::Signer::Signers::V4.new(@endpoint_prefix, region, key, secret)
+        signer = Awscr::Signer::Signers::V4.new(@endpoint_prefix, @config.region, key, secret)
         signer.sign(request)
+        Log.trace do
+          "request (#{id}) for operation '#{command}' with method '#{request.method}', url '#{url}', " \
+          "headers '#{request.headers.inspect}', body '#{body}'"
+        end
       end
       client
+    end
+
+    protected def process_response(id, command, response)
+      success = ((200..299) === response.status_code)
+      if success
+        Log.trace do
+          "response (#{id}) for operation '#{command}', status_code '#{response.status_code}', " \
+          "headers '#{response.headers.inspect}', body '#{response.body}'"
+        end
+      else
+        Log.error do
+          "response (#{id}) for operation '#{command}', status_code '#{response.status_code}', " \
+          "headers '#{response.headers.inspect}', body '#{response.body}'"
+        end
+      end
+
+      return response if success
+
+      raise build_error(response)
     end
 
     private def build_error(response)

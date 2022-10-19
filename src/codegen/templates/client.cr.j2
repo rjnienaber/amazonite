@@ -2,14 +2,16 @@ private alias {{ service.module_alias }} = {{ service.module_name }}
 private alias AC = Amazonite::Core
 
 module {{ service.module_name }}
-  class Client < AC::Client{% if operations.has_errors %}
-    EXCEPTION_FACTORY = ExceptionFactory.new
+  class Client < AC::Client
+    Log = ::Log.for("amazonite.{{ service.lower_name }}_{{ service.version }}.client")
+{% if operations.has_errors %}    EXCEPTION_FACTORY = ExceptionFactory.new
 {% endif %}
     def initialize(config = AC::Config.new)
       super("{{ operations.target_prefix }}", "{{ operations.endpoint_prefix }}", {% if operations.has_errors %}EXCEPTION_FACTORY, {% else %}nil, {% endif %}config)
     end{% for operation in operations.operations %}
 
     def {{ operation.function_name }}{% if operation.has_input %}(input : {{ operation.input }}){% endif %} : {{ operation.output }}
+      Log.info { "performing '{{ operation.command }}' operation" }
       response = post("{{ operation.command }}", "/", input.to_json)
       {{ operation.output }}.new(response)
     end{% endfor %}
