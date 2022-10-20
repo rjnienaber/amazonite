@@ -40,7 +40,7 @@ Music
 Artist
 ```
 
-# Supported APIs
+## Supported APIs
 | Name          | Supported?      |Integration Tests  | Notes                                                                 |
 | ------------- | :-------------: | :---------------: |-------------                                                          |
 | DynamoDB      | ✅              |✅                 |                                                                       |
