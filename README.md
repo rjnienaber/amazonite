@@ -1,4 +1,5 @@
 # Amazonite AWS SDK
+![example workflow](https://github.com/rjnienaber/amazonite/actions/workflows/ci.yml/badge.svg)
 
 Amazonite is an unofficial AWS SDK for Crystal.
 
