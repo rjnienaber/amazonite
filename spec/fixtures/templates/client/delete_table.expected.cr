@@ -3,7 +3,7 @@ private alias AC = Amazonite::Core
 
 module Amazonite::DynamoDBv2
   class Client < AC::Client
-    Log = ::Log.for("amazonite.dynamodb_v2.client")
+    Log               = ::Log.for("amazonite.dynamodb_v2.client")
     EXCEPTION_FACTORY = ExceptionFactory.new
 
     def initialize(config = AC::Config.new)

@@ -2,8 +2,7 @@ module Amazonite::DynamoDBv2
   class DescribeEndpointsRequest
     include JSON::Serializable
 
-    def initialize(
-    )
+    def initialize
     end
   end
 end

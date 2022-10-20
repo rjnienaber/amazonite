@@ -6,8 +6,8 @@ private alias Config = Amazonite::Core::Config
 describe "DynamoDB: basic crud operations" do
   table_name = "Music"
   key = {
-    "Artist" => DB::AttributeValue.new("Soundgarden"),
-    "SongTitle" => DB::AttributeValue.new("Burden In The Hand")
+    "Artist"    => DB::AttributeValue.new("Soundgarden"),
+    "SongTitle" => DB::AttributeValue.new("Burden In The Hand"),
   }
   config = Config.new("AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1", "http://localhost:4566")
   client = DB::Client.new(config)
@@ -53,11 +53,11 @@ describe "DynamoDB: basic crud operations" do
       item = DB::PutItemInput.new(
         table_name,
         {
-          "Artist" => DB::AttributeValue.new("Soundgarden"),
-          "SongTitle" => DB::AttributeValue.new("Let Me Drown")
+          "Artist"    => DB::AttributeValue.new("Soundgarden"),
+          "SongTitle" => DB::AttributeValue.new("Let Me Drown"),
         }
       ),
-      item = DB::PutItemInput.new(table_name, key)
+      item = DB::PutItemInput.new(table_name, key),
     ]
 
     items.each do |item|
@@ -70,8 +70,8 @@ describe "DynamoDB: basic crud operations" do
     item = DB::GetItemInput.new(
       table_name,
       {
-        "Artist" => DB::AttributeValue.new("Soundgarden"),
-        "SongTitle" => DB::AttributeValue.new("Let Me Drown")
+        "Artist"    => DB::AttributeValue.new("Soundgarden"),
+        "SongTitle" => DB::AttributeValue.new("Let Me Drown"),
       }
     )
 
@@ -91,7 +91,7 @@ describe "DynamoDB: basic crud operations" do
         "Rating" => DB::AttributeValueUpdate.new(
           DB::AttributeValue.new("Good"),
           DB::AttributeAction::Put
-        )
+        ),
       }
     )
 

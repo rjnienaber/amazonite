@@ -67,4 +67,10 @@ describe "model.cr.j2 template" do
     expected = load_fixture("templates", "model", "backup_details.expected.cr").strip
     actual.should eq_diff expected
   end
+
+  it "formats initialize correctly when no parameters" do
+    actual = render_model("DescribeLimitsInput")
+    expected = load_fixture("templates", "model", "describe_limits_input.expected.cr").strip
+    actual.should eq_diff expected
+  end
 end

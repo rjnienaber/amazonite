@@ -42,7 +42,7 @@ module Amazonite::Codegen
 
     private def render(template_name : String, bindings : Crinja::Variables)
       template = self.template_env.get_template("#{template_name}.j2")
-      template.render(bindings)
+      template.render(bindings).strip + "\n"
     end
 
     private def template_env

@@ -18,6 +18,4 @@ class MockConfig < Amazonite::Core::Config
   protected def crystal_description
     "Crystal 1.6.0 [41573fadb] (2022-10-06)\n\nLLVM: 13.0.1\nDefault target: arm_64-unknown-linux-gnu"
   end
-
-
 end

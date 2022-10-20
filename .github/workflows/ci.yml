@@ -1,0 +1,40 @@
+name: CI
+on:
+  push:
+  pull_request:
+    branches: [master]
+  schedule:
+    - cron: '37 0 * * *' # Nightly at 00:37
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        crystal: [latest, nightly]
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: download source
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: install crystal
+        uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: ${{ matrix.crystal }}
+      - name: cache shards
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/shards
+          key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
+          restore-keys: ${{ runner.os }}-shards-
+      - name: install dependencies
+        run: shards install
+      - name: perform code generation
+        run: shards run codegen
+      - name: validate generated code
+        run: ./scripts/compile.sh
+      - name: check formatting
+        run: crystal tool format --check
+      - name: run unit tests
+        run: crystal spec

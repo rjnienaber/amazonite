@@ -3,8 +3,9 @@ module Amazonite::Codegen::Bindings
   class Structure < Base
     @name : String
     @members : Array(Crinja::Value)
+    @has_parameters : Bool
 
-    getter name, members, parameters, needs_core_alias, needs_module_alias
+    getter name, members, has_parameters, parameters, needs_core_alias, needs_module_alias
 
     def initialize(shape : Amazonite::Codegen::Service::Structure, module_alias : String)
       @name = shape.name
@@ -31,6 +32,7 @@ module Amazonite::Codegen::Bindings
         })
       end
 
+      @has_parameters = shape.members.size > 0
       @parameters = [] of Crinja::Value
       shape.members.each do |m|
         next unless m.required?

@@ -91,12 +91,11 @@ module Amazonite::Core
         return @user_agent.as(String)
       end
 
-
       if @built_user_agent.nil?
         arch = crystal_description.split.last
         @built_user_agent = [
           "amazonite/#{api_version} Crystal/#{crystal_version}/#{crystal_build_commit}",
-          "llvm/#{crystal_llvm_version} arch/#{arch}"
+          "llvm/#{crystal_llvm_version} arch/#{arch}",
         ].join(" ")
       end
 
