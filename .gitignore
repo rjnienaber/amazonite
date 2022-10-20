@@ -10,7 +10,5 @@
 
 tmp/*
 notes.md
+test.cr
 
-# temp
-src/dynamodb_v2/
-src/dynamodb_v2.cr
