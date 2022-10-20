@@ -1,6 +1,6 @@
 # Amazonite AWS SDK
 
-Amazonite is an unofficial AWS SDK for Crystal. This is still in an alpha stage of development.
+Amazonite is an unofficial AWS SDK for Crystal.
 
 ## Usage
 
@@ -40,6 +40,13 @@ Music
 Artist
 ```
 
+# Supported APIs
+| Name          | Supported?      |Integration Tests  | Notes                                                                 |
+| ------------- | :-------------: | :---------------: |-------------                                                          |
+| DynamoDB      | ✅              |✅                 |                                                                       |
+| S3            |  🚫             | 🚫                | Consider using [awscr-s3](https://github.com/taylorfinnell/awscr-s3)  |
+
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
@@ -55,8 +62,12 @@ Artist
 ## Development
 Once you've cloned the repo, have a look at the `scripts` directory for some scripts that help with development. Some of them use the excellent [watchexec](https://github.com/watchexec/watchexec) tool to watch for changes.
 
-*
-
+* `./scripts/watch_specs.sh`
+  * watches for code changes and runs the specs
+* `./scripts/watch_codegen.sh`
+  * watches for code changes and regenerates the code for apis
+* `./scripts/watch_integration.cr`
+  * watches for code changes and executes integration tests
 
 ## Contributing
 
