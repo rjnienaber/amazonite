@@ -38,3 +38,36 @@ jobs:
         run: crystal tool format --check
       - name: run unit tests
         run: crystal spec
+  integration:
+    strategy:
+      fail-fast: false
+      matrix:
+        crystal: [latest, nightly]
+    runs-on: ubuntu-latest
+    services:
+      localstack:
+        image: localstack/localstack
+        ports:
+          - 4566:4566
+        env:
+          PERSISTENCE: false
+          SERVICES: s3,dynamodb
+    steps:
+      - name: download source
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: install crystal
+        uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: ${{ matrix.crystal }}
+      - name: cache shards
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/shards
+          key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
+          restore-keys: ${{ runner.os }}-shards-
+      - name: install dependencies
+        run: shards install
+      - name: run integration tests
+        run: ./scripts/run_integration.cr
