@@ -12,7 +12,7 @@ module Amazonite::DynamoDBv2
               when ADDB::AttributeAction::Put    then "PUT"
               when ADDB::AttributeAction::Delete then "DELETE"
               else
-                raise Exception.new("unknown enum value for 'AttributeAction' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'AttributeAction' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

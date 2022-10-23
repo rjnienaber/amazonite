@@ -28,10 +28,10 @@ module Amazonite::Core
       @env : Fetcher = EnvFetcher.new
     )
       @access_key_id = if access_key_id
-                         Log.debug { |v| "using access_key_id from constructor" }
+                         Log.debug { "using access_key_id from constructor" }
                          access_key_id
                        elsif @env["AWS_ACCESS_KEY_ID"]?
-                         Log.debug { |v| p v; "using access_key_id from 'AWS_ACCESS_KEY_ID' environment variable" }
+                         Log.debug { "using access_key_id from 'AWS_ACCESS_KEY_ID' environment variable" }
                          @env["AWS_ACCESS_KEY_ID"]?.as(String)
                        else
                          msg = "no access_key_id provided via constructor or environment variable (AWS_ACCESS_KEY_ID)"

@@ -15,7 +15,7 @@ module Amazonite::Codegen::Service
 
     def initialize(name : String, json : JSON::Any)
       super(name, json)
-      @enums = json["enum"].as_a.map { |e| e.to_s }
+      @enums = json["enum"].as_a.map(&.to_s)
     end
 
     def aws_mappings? : Bool
@@ -49,7 +49,7 @@ module Amazonite::Codegen::Service
     # TODO: cache
     # TODO: don't calculate spacing here, it should be in the binding
     def crystal_mappings : Array(Tuple(String, String, String))
-      max_length = @enums.max_by { |e| e.size }.size
+      max_length = @enums.max_by(&.size).size
       enum_values = if @enums.all? { |e| SCREAMING_CASE_REGEX.matches?(e) }
                       @enums.zip(modulized_crystal_values)
                     elsif @enums.all? { |e| PASCAL_CASE_REGEX.matches?(e) }
@@ -62,7 +62,7 @@ module Amazonite::Codegen::Service
     end
 
     private def crystal_values
-      @crystal_values ||= @enums.map { |e| e.split("_").map { |w| w.downcase.gsub(/^[a-z]/) { |s| s.upcase } }.join }
+      @crystal_values ||= @enums.map(&.split("_").map(&.downcase.gsub(/^[a-z]/, &.upcase)).join)
     end
 
     private def modulized_crystal_values

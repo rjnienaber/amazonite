@@ -12,7 +12,7 @@ module Amazonite::DynamoDBv2
               when ADDB::BackupType::System    then "SYSTEM"
               when ADDB::BackupType::AwsBackup then "AWS_BACKUP"
               else
-                raise Exception.new("unknown enum value for 'BackupType' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'BackupType' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

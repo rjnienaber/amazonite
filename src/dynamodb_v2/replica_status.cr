@@ -20,7 +20,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ReplicaStatus::RegionDisabled                    then "REGION_DISABLED"
               when ADDB::ReplicaStatus::InaccessibleEncryptionCredentials then "INACCESSIBLE_ENCRYPTION_CREDENTIALS"
               else
-                raise Exception.new("unknown enum value for 'ReplicaStatus' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ReplicaStatus' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

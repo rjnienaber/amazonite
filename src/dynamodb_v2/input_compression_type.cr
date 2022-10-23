@@ -12,7 +12,7 @@ module Amazonite::DynamoDBv2
               when ADDB::InputCompressionType::Zstd then "ZSTD"
               when ADDB::InputCompressionType::None then "NONE"
               else
-                raise Exception.new("unknown enum value for 'InputCompressionType' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'InputCompressionType' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

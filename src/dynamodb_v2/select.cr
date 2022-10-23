@@ -14,7 +14,7 @@ module Amazonite::DynamoDBv2
               when ADDB::Select::SpecificAttributes     then "SPECIFIC_ATTRIBUTES"
               when ADDB::Select::Count                  then "COUNT"
               else
-                raise Exception.new("unknown enum value for 'Select' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'Select' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

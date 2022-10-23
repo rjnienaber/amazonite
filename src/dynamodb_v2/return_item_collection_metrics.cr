@@ -10,7 +10,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ReturnItemCollectionMetrics::Size then "SIZE"
               when ADDB::ReturnItemCollectionMetrics::None then "NONE"
               else
-                raise Exception.new("unknown enum value for 'ReturnItemCollectionMetrics' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ReturnItemCollectionMetrics' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

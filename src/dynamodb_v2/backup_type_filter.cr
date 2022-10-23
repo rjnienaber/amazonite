@@ -14,7 +14,7 @@ module Amazonite::DynamoDBv2
               when ADDB::BackupTypeFilter::AwsBackup then "AWS_BACKUP"
               when ADDB::BackupTypeFilter::All       then "ALL"
               else
-                raise Exception.new("unknown enum value for 'BackupTypeFilter' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'BackupTypeFilter' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

@@ -12,7 +12,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ExportStatus::Completed  then "COMPLETED"
               when ADDB::ExportStatus::Failed     then "FAILED"
               else
-                raise Exception.new("unknown enum value for 'ExportStatus' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ExportStatus' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

@@ -16,7 +16,7 @@ module Amazonite::DynamoDBv2
               when ADDB::SSEStatus::Disabled  then "DISABLED"
               when ADDB::SSEStatus::Updating  then "UPDATING"
               else
-                raise Exception.new("unknown enum value for 'SSEStatus' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'SSEStatus' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

@@ -16,7 +16,7 @@ module Amazonite::DynamoDBv2
               when ADDB::DestinationStatus::Disabled     then "DISABLED"
               when ADDB::DestinationStatus::EnableFailed then "ENABLE_FAILED"
               else
-                raise Exception.new("unknown enum value for 'DestinationStatus' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'DestinationStatus' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

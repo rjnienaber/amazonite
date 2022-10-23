@@ -10,7 +10,7 @@ module Amazonite::DynamoDBv2
               when ADDB::PointInTimeRecoveryStatus::Enabled  then "ENABLED"
               when ADDB::PointInTimeRecoveryStatus::Disabled then "DISABLED"
               else
-                raise Exception.new("unknown enum value for 'PointInTimeRecoveryStatus' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'PointInTimeRecoveryStatus' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

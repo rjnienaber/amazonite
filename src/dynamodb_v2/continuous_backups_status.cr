@@ -10,7 +10,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ContinuousBackupsStatus::Enabled  then "ENABLED"
               when ADDB::ContinuousBackupsStatus::Disabled then "DISABLED"
               else
-                raise Exception.new("unknown enum value for 'ContinuousBackupsStatus' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ContinuousBackupsStatus' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

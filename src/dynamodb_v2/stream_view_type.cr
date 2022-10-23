@@ -14,7 +14,7 @@ module Amazonite::DynamoDBv2
               when ADDB::StreamViewType::NewAndOldImages then "NEW_AND_OLD_IMAGES"
               when ADDB::StreamViewType::KeysOnly        then "KEYS_ONLY"
               else
-                raise Exception.new("unknown enum value for 'StreamViewType' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'StreamViewType' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

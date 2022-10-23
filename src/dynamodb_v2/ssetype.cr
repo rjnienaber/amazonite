@@ -10,7 +10,7 @@ module Amazonite::DynamoDBv2
               when ADDB::SSEType::Aes256 then "AES256"
               when ADDB::SSEType::Kms    then "KMS"
               else
-                raise Exception.new("unknown enum value for 'SSEType' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'SSEType' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

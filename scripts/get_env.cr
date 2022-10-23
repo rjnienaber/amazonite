@@ -53,7 +53,7 @@ class GetEnv
     @config.as(Hash(String, String)) unless @config.nil?
 
     ini_file = INI.parse(File.read(@config_file))
-    config_key = ini_file.keys.select { |k| k.includes?(profile) }.first
+    config_key = ini_file.keys.find(&.includes?(profile))
     return {} of String => String if config_key.nil?
     config = ini_file[config_key]?
     config.nil? ? {} of String => String : config.as(Hash(String, String))

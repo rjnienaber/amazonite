@@ -64,14 +64,14 @@ describe "DynamoDB: basic crud operations" do
 
   it "creates items" do
     items = [
-      item = DB::PutItemInput.new(
+      DB::PutItemInput.new(
         table_name,
         {
           "Artist"    => DB::AttributeValue.new("Soundgarden"),
           "SongTitle" => DB::AttributeValue.new("Let Me Drown"),
         }
       ),
-      item = DB::PutItemInput.new(table_name, key),
+      DB::PutItemInput.new(table_name, key),
     ]
 
     items.each do |item|

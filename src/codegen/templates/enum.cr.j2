@@ -8,7 +8,7 @@ module {{ service.module_name }}
       value = case e
               {% for value in shape.aws_mappings %}when {{ service.module_alias }}::{{ value[0] }}{{ value[1] }} then "{{ value[2] }}"
               {% endfor %}else
-                raise Exception.new("unknown enum value for '{{ shape.name }}' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for '{{ shape.name }}' when serializing to json: '#{e}'")
               end
       json.string(value){% else %}
       json.string(e.to_s){% endif %}

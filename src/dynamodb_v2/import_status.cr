@@ -16,7 +16,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ImportStatus::Cancelled  then "CANCELLED"
               when ADDB::ImportStatus::Failed     then "FAILED"
               else
-                raise Exception.new("unknown enum value for 'ImportStatus' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ImportStatus' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

@@ -51,14 +51,14 @@ describe Amazonite::Core::Client do
 
     local_config = create_mock_config("http://localhost", "custom/user-agent")
     client = described_class.new("HelloWorld_20221002", "helloworld", exception_factory, local_config)
-    response = client.post("Salutation", "/", "")
+    client.post("Salutation", "/", "")
   end
 
   it "uses url from config object" do
     WebMock.stub(:post, "http://localhost:4566/welcome")
 
     client = described_class.new("HelloWorld_20221002", "helloworld", exception_factory, create_mock_config("http://localhost:4566"))
-    response = client.post("Welcome", "/welcome", "")
+    client.post("Welcome", "/welcome", "")
   end
 
   it "throws errors if status is not in the 200..299 range" do

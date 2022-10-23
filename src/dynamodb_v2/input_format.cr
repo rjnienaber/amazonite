@@ -12,7 +12,7 @@ module Amazonite::DynamoDBv2
               when ADDB::InputFormat::Ion          then "ION"
               when ADDB::InputFormat::Csv          then "CSV"
               else
-                raise Exception.new("unknown enum value for 'InputFormat' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'InputFormat' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

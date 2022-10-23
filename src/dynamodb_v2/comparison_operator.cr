@@ -32,7 +32,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ComparisonOperator::NotContains then "NOT_CONTAINS"
               when ADDB::ComparisonOperator::BeginsWith  then "BEGINS_WITH"
               else
-                raise Exception.new("unknown enum value for 'ComparisonOperator' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ComparisonOperator' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

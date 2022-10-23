@@ -36,7 +36,7 @@ module Amazonite::Codegen::Service
     end
 
     def error_names
-      @error_names ||= @operations.flat_map { |o| o.errors }.uniq.sort
+      @error_names ||= @operations.flat_map(&.errors).uniq!.sort!
     end
 
     def find_operation(operation_name)
@@ -44,11 +44,11 @@ module Amazonite::Codegen::Service
     end
 
     def enums
-      @resolver.shapes.select { |s| s.is_a?(Service::Enum) }.map { |s| s.as(Service::Enum) }
+      @resolver.shapes.select(Service::Enum).map { |s| s.as(Service::Enum) }
     end
 
     def structures
-      @resolver.shapes.select { |s| s.is_a?(Service::Structure) }.map { |s| s.as(Service::Structure) }
+      @resolver.shapes.select(Service::Structure).map { |s| s.as(Service::Structure) }
     end
 
     def module_name

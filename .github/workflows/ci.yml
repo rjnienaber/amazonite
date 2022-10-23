@@ -36,6 +36,8 @@ jobs:
         run: ./scripts/compile.sh
       - name: check formatting
         run: crystal tool format --check
+      - name: check coding standards
+        run: ./bin/ameba
       - name: run unit tests
         run: crystal spec
   integration:

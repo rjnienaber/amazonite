@@ -10,7 +10,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ExportFormat::DynamodbJson then "DYNAMODB_JSON"
               when ADDB::ExportFormat::Ion          then "ION"
               else
-                raise Exception.new("unknown enum value for 'ExportFormat' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ExportFormat' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

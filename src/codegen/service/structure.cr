@@ -14,9 +14,9 @@ module Amazonite::Codegen::Service
       @required = [] of String
       json["required"].as_a.each { |v| @required << v.as_s } if json["required"]?
 
-      @members = json["members"].as_h.map do |name, json|
-        required = (@required || [] of String).includes?(name)
-        Member.new(name, required, json, resolver)
+      @members = json["members"].as_h.map do |member_name, member_json|
+        required = (@required || [] of String).includes?(member_name)
+        Member.new(member_name, required, member_json, resolver)
       end
     end
   end

@@ -6,17 +6,18 @@ module Amazonite::Codegen::Service
     @files : Array(String)
 
     def initialize(@name : String)
-      @files = all_files.select { |file| file.includes?(@name) }
+      @files = all_files.select(&.includes?(@name))
     end
 
     def current_description
-      file = current_version_files.select { |f| f.includes?("normal") }.first
+      file = current_version_files.find(&.includes?("normal"))
+      raise Exception.new("couldn't find 'normal' api file for '#{@name}'") if file.nil?
       version = "v#{version_files.keys.size}"
-      Description.new(aws_version, current_version_date, version, JSON.parse(File.read(file)))
+      Description.new(aws_version, current_version_date, version, JSON.parse(File.read(file.as(String))))
     end
 
     private def current_version_date
-      version_files.keys.compact.sort[-1]
+      version_files.keys.compact.sort![-1]
     end
 
     private def current_version_files

@@ -65,7 +65,7 @@ module Amazonite::Core
 
     private def build_headers(command)
       user_agent = @config.user_agent do |u|
-        hyphenated_command = command.scan(/[A-Z]+[a-z]*/).map { |w| w[0].downcase }.join("-")
+        hyphenated_command = command.scan(/[A-Z]+[a-z]*/).map(&.[0].downcase).join("-")
         "#{u} command/#{@endpoint_prefix}.#{hyphenated_command}"
       end
       headers = HTTP::Headers.new

@@ -10,7 +10,7 @@ module Amazonite::DynamoDBv2
               when ADDB::TableClass::Standard                 then "STANDARD"
               when ADDB::TableClass::StandardInfrequentAccess then "STANDARD_INFREQUENT_ACCESS"
               else
-                raise Exception.new("unknown enum value for 'TableClass' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'TableClass' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

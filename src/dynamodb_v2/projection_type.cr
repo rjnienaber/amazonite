@@ -12,7 +12,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ProjectionType::KeysOnly then "KEYS_ONLY"
               when ADDB::ProjectionType::Include  then "INCLUDE"
               else
-                raise Exception.new("unknown enum value for 'ProjectionType' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ProjectionType' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

@@ -10,7 +10,7 @@ module Amazonite::DynamoDBv2
               when ADDB::S3SseAlgorithm::Aes256 then "AES256"
               when ADDB::S3SseAlgorithm::Kms    then "KMS"
               else
-                raise Exception.new("unknown enum value for 'S3SseAlgorithm' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'S3SseAlgorithm' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

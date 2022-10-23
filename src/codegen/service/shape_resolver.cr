@@ -7,22 +7,22 @@ module Amazonite::Codegen::Service
 
     def self.load_json(json : JSON::Any)
       resolver = ShapeResolver.new
-      json.as_h.each do |name, json|
-        shape = if Enum.enum?(json)
-                  Enum.new(name, json)
-                elsif List.list?(json)
-                  List.new(name, json, resolver)
-                elsif Map.map?(json)
-                  Map.new(name, json, resolver)
-                elsif Structure.structure?(json)
-                  Structure.new(name, json, resolver)
+      json.as_h.each do |name, obj|
+        shape = if Enum.enum?(obj)
+                  Enum.new(name, obj)
+                elsif List.list?(obj)
+                  List.new(name, obj, resolver)
+                elsif Map.map?(obj)
+                  Map.new(name, obj, resolver)
+                elsif Structure.structure?(obj)
+                  Structure.new(name, obj, resolver)
                 else
-                  Shape.new(name, json)
+                  Shape.new(name, obj)
                 end
         resolver.add(shape)
       end
 
-      primitive_types = resolver.shapes.map { |s| s.type }.to_set
+      primitive_types = resolver.shapes.map(&.type).to_set
       unknown_types = (primitive_types - KNOWN_AWS_TYPES).join("\", \"")
       raise Exception.new("unknown types: \"#{unknown_types}\"") unless unknown_types.empty?
 
@@ -66,36 +66,49 @@ module Amazonite::Codegen::Service
     end
 
     def crystal_type(shape : Shape, required)
-      type = case shape.type
-             when "string"
-               if shape.is_a?(Enum)
-                 shape.name
-               else
-                 "String"
-               end
-             when "timestamp" then "Time"
-             when "boolean"   then "Bool"
-             when "blob"      then "String"
-             when "integer"   then "Int32"
-             when "long"      then "Int64"
-             when "double"    then "Float64"
-             when "structure"
-               shape.name
-             when "list"
-               list_shape = self.get_final_shape(shape.as(List).member.shape_name)
-               list_type = crystal_type(list_shape, true)
-               "Array(#{list_type})"
-             when "map"
-               map_shape = shape.as(Map)
-               key_shape = self.get_final_shape(map_shape.key.shape_name)
-               key_type = crystal_type(key_shape, true)
-               value_shape = self.get_final_shape(map_shape.value.shape_name)
-               value_type = crystal_type(value_shape, true)
-               "Hash(#{key_type}, #{value_type})"
-             else
-               raise Exception.new("Shape '#{shape.name}' has unknown AWS type: #{shape.type}")
-             end
+      type = map_primitive_types(shape)
+      if type.nil?
+        type = map_composite_types(shape)
+      end
+
       required ? type : type + " | Nil"
+    end
+
+    private def map_primitive_types(shape)
+      case shape.type
+      when "timestamp" then "Time"
+      when "boolean"   then "Bool"
+      when "blob"      then "String"
+      when "integer"   then "Int32"
+      when "long"      then "Int64"
+      when "double"    then "Float64"
+      end
+    end
+
+    private def map_composite_types(shape)
+      case shape.type
+      when "string"    then shape.is_a?(Enum) ? shape.name : "String"
+      when "structure" then shape.name
+      when "list"      then resolve_list(shape)
+      when "map"       then resolve_map(shape)
+      else
+        raise Exception.new("Shape '#{shape.name}' has unknown AWS type: #{shape.type}")
+      end
+    end
+
+    private def resolve_list(shape)
+      list_shape = self.get_final_shape(shape.as(List).member.shape_name)
+      list_type = crystal_type(list_shape, true)
+      "Array(#{list_type})"
+    end
+
+    private def resolve_map(shape)
+      map_shape = shape.as(Map)
+      key_shape = self.get_final_shape(map_shape.key.shape_name)
+      key_type = crystal_type(key_shape, true)
+      value_shape = self.get_final_shape(map_shape.value.shape_name)
+      value_type = crystal_type(value_shape, true)
+      "Hash(#{key_type}, #{value_type})"
     end
 
     private def get_final_shape(shape_name : String)

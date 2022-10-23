@@ -20,7 +20,7 @@ module Amazonite::DynamoDBv2
               when ADDB::TableStatus::Archiving                         then "ARCHIVING"
               when ADDB::TableStatus::Archived                          then "ARCHIVED"
               else
-                raise Exception.new("unknown enum value for 'TableStatus' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'TableStatus' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

@@ -10,7 +10,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ContributorInsightsAction::Enable  then "ENABLE"
               when ADDB::ContributorInsightsAction::Disable then "DISABLE"
               else
-                raise Exception.new("unknown enum value for 'ContributorInsightsAction' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ContributorInsightsAction' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

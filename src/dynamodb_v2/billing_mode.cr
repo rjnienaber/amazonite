@@ -10,7 +10,7 @@ module Amazonite::DynamoDBv2
               when ADDB::BillingMode::Provisioned   then "PROVISIONED"
               when ADDB::BillingMode::PayPerRequest then "PAY_PER_REQUEST"
               else
-                raise Exception.new("unknown enum value for 'BillingMode' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'BillingMode' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

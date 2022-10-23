@@ -14,7 +14,7 @@ module Amazonite::DynamoDBv2
               when ADDB::GlobalTableStatus::Deleting then "DELETING"
               when ADDB::GlobalTableStatus::Updating then "UPDATING"
               else
-                raise Exception.new("unknown enum value for 'GlobalTableStatus' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'GlobalTableStatus' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

@@ -16,7 +16,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ContributorInsightsStatus::Disabled  then "DISABLED"
               when ADDB::ContributorInsightsStatus::Failed    then "FAILED"
               else
-                raise Exception.new("unknown enum value for 'ContributorInsightsStatus' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ContributorInsightsStatus' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

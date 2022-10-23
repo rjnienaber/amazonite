@@ -8,12 +8,10 @@ describe Amazonite::Core::ParsedResponse do
     property surname : String
   end
 
-  described_class = Amazonite::Core::ParsedResponse
-
   it "handles responses that are typed" do
     body = %({"name":"John", "surname": "Doe"})
     mock_response = HTTP::Client::Response.new(HTTP::Status::OK, body)
-    response = described_class(ResponseTest).new(mock_response)
+    response = Amazonite::Core::ParsedResponse(ResponseTest).new(mock_response)
 
     response.http.status.should eq(HTTP::Status::OK)
     response.result.name.should eq("John")

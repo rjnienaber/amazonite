@@ -12,7 +12,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ReturnConsumedCapacity::Total   then "TOTAL"
               when ADDB::ReturnConsumedCapacity::None    then "NONE"
               else
-                raise Exception.new("unknown enum value for 'ReturnConsumedCapacity' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ReturnConsumedCapacity' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

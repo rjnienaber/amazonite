@@ -21,7 +21,7 @@ module Amazonite::Codegen::Service
       @http = Http.new(json["http"])
       @input = json["input"]? ? json["input"]["shape"].as_s : nil
       @output = json["output"]? ? json["output"]["shape"].as_s : nil
-      @errors = json["errors"]? ? json["errors"].as_a.map { |v| v["shape"].as_s } : [] of String
+      @errors = json["errors"]? ? json["errors"].as_a.map(&.["shape"].as_s) : [] of String
     end
 
     def lower_name

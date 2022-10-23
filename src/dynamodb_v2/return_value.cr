@@ -16,7 +16,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ReturnValue::AllNew     then "ALL_NEW"
               when ADDB::ReturnValue::UpdatedNew then "UPDATED_NEW"
               else
-                raise Exception.new("unknown enum value for 'ReturnValue' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ReturnValue' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

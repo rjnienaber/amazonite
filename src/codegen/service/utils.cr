@@ -9,7 +9,7 @@ module Amazonite::Codegen::Service
     end
 
     def self.snake_case_name(name)
-      name.scan(/[A-Z]+[a-z]*/).map { |w| w[0].downcase }.join("_")
+      name.scan(/[A-Z]+[a-z]*/).map(&.[0].downcase).join("_")
     end
   end
 end

@@ -10,7 +10,7 @@ module Amazonite::DynamoDBv2
               when ADDB::ReturnValuesOnConditionCheckFailure::AllOld then "ALL_OLD"
               when ADDB::ReturnValuesOnConditionCheckFailure::None   then "NONE"
               else
-                raise Exception.new("unknown enum value for 'ReturnValuesOnConditionCheckFailure' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'ReturnValuesOnConditionCheckFailure' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

@@ -12,7 +12,7 @@ module Amazonite::DynamoDBv2
               when ADDB::BackupStatus::Deleted   then "DELETED"
               when ADDB::BackupStatus::Available then "AVAILABLE"
               else
-                raise Exception.new("unknown enum value for 'BackupStatus' when serializing to json: '#{e.to_s}'")
+                raise Exception.new("unknown enum value for 'BackupStatus' when serializing to json: '#{e}'")
               end
       json.string(value)
     end

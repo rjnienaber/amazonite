@@ -13,7 +13,7 @@ watch_files = [
   "integration",
 ]
 watch_params = watch_files.map { |f| "-w #{f} " }.join
-cmd = "watchexec --no-vcs-ignore -c #{watch_params}-- crystal spec integration/ --tag ~aws"
+cmd = "watchexec --no-vcs-ignore #{watch_params}-- crystal spec integration/ --tag ~aws"
 env = GetEnv.build
 repo_root = File.expand_path(File.join(__DIR__, ".."))
 
