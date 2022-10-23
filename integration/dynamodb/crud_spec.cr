@@ -1,7 +1,7 @@
 require "../spec_helper"
 
 private alias DB = Amazonite::DynamoDBv2
-private alias Config = Amazonite::Core::Config
+private alias AC = Amazonite::Core
 
 describe "DynamoDB: basic crud operations" do
   table_name = "Music"
@@ -9,16 +9,24 @@ describe "DynamoDB: basic crud operations" do
     "Artist"    => DB::AttributeValue.new("Soundgarden"),
     "SongTitle" => DB::AttributeValue.new("Burden In The Hand"),
   }
-  config = Config.new("AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1", "http://localhost:4566")
-  client = DB::Client.new(config)
+  client = DB::Client.new
 
   it "lists tables and removes existing" do
     list_response = client.list_tables(DB::ListTablesInput.new)
     list_response.http.status_code.should eq(200)
 
     list_response.result.table_names.try &.each do |name|
+      next unless name.starts_with?(table_name)
+
       delete_response = client.delete_table(DB::DeleteTableInput.new(name))
       delete_response.http.status_code.should eq(200)
+
+      wait_until do
+        client.describe_table(DB::DescribeTableInput.new(table_name))
+        false
+      rescue e : AC::ResponseException
+        true
+      end
     end
   end
 
@@ -46,6 +54,12 @@ describe "DynamoDB: basic crud operations" do
     attribute_definition = table_description.try &.attribute_definitions.try &.[0]
     attribute_definition.should_not be_nil
     attribute_definition.try &.attribute_name.should eq("Artist")
+
+    # wait for table to become active
+    wait_until do
+      response = client.describe_table(DB::DescribeTableInput.new(table_name))
+      response.result.try &.table.try &.table_status == DB::TableStatus::Active
+    end
   end
 
   it "creates items" do
@@ -115,7 +129,15 @@ describe "DynamoDB: basic crud operations" do
     response.result.try &.item.should be_nil
   end
 
-  it "throws an error" do
+  it "throws a dynamodb error", tags: "aws" do
+    item = DB::UpdateItemInput.new("notable", key, {"Rating" => DB::AttributeValueUpdate.new})
+    e = expect_raises(AC::ValidationException, "One or more parameter values were invalid: Only DELETE action is allowed when no attribute value is specified") do
+      client.update_item(item)
+    end
+    e.http.should_not be_nil
+  end
+
+  it "throws a localstack error", tags: "localstack" do
     item = DB::UpdateItemInput.new("notable", key, {"Rating" => DB::AttributeValueUpdate.new})
     e = expect_raises(DB::ResourceNotFoundException, "Cannot do operations on a non-existent table") do
       client.update_item(item)

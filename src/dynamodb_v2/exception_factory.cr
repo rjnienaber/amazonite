@@ -94,42 +94,40 @@ module Amazonite::DynamoDBv2
   class TransactionInProgressException < AC::ResponseException
   end
 
-  class ExceptionFactory
-    include AC::ResponseExceptionFactory
-
-    def create_exception(error_type, http, message) : AC::ResponseException | Nil
-      case error_type
-      when "BackupInUseException"                     then BackupInUseException.new(http, message)
-      when "BackupNotFoundException"                  then BackupNotFoundException.new(http, message)
-      when "ConditionalCheckFailedException"          then ConditionalCheckFailedException.new(http, message)
-      when "ContinuousBackupsUnavailableException"    then ContinuousBackupsUnavailableException.new(http, message)
-      when "DuplicateItemException"                   then DuplicateItemException.new(http, message)
-      when "ExportConflictException"                  then ExportConflictException.new(http, message)
-      when "ExportNotFoundException"                  then ExportNotFoundException.new(http, message)
-      when "GlobalTableAlreadyExistsException"        then GlobalTableAlreadyExistsException.new(http, message)
-      when "GlobalTableNotFoundException"             then GlobalTableNotFoundException.new(http, message)
-      when "IdempotentParameterMismatchException"     then IdempotentParameterMismatchException.new(http, message)
-      when "ImportConflictException"                  then ImportConflictException.new(http, message)
-      when "ImportNotFoundException"                  then ImportNotFoundException.new(http, message)
-      when "IndexNotFoundException"                   then IndexNotFoundException.new(http, message)
-      when "InternalServerError"                      then InternalServerError.new(http, message)
-      when "InvalidExportTimeException"               then InvalidExportTimeException.new(http, message)
-      when "InvalidRestoreTimeException"              then InvalidRestoreTimeException.new(http, message)
-      when "ItemCollectionSizeLimitExceededException" then ItemCollectionSizeLimitExceededException.new(http, message)
-      when "LimitExceededException"                   then LimitExceededException.new(http, message)
-      when "PointInTimeRecoveryUnavailableException"  then PointInTimeRecoveryUnavailableException.new(http, message)
-      when "ProvisionedThroughputExceededException"   then ProvisionedThroughputExceededException.new(http, message)
-      when "ReplicaAlreadyExistsException"            then ReplicaAlreadyExistsException.new(http, message)
-      when "ReplicaNotFoundException"                 then ReplicaNotFoundException.new(http, message)
-      when "RequestLimitExceeded"                     then RequestLimitExceeded.new(http, message)
-      when "ResourceInUseException"                   then ResourceInUseException.new(http, message)
-      when "ResourceNotFoundException"                then ResourceNotFoundException.new(http, message)
-      when "TableAlreadyExistsException"              then TableAlreadyExistsException.new(http, message)
-      when "TableInUseException"                      then TableInUseException.new(http, message)
-      when "TableNotFoundException"                   then TableNotFoundException.new(http, message)
-      when "TransactionCanceledException"             then TransactionCanceledException.new(http, message)
-      when "TransactionConflictException"             then TransactionConflictException.new(http, message)
-      when "TransactionInProgressException"           then TransactionInProgressException.new(http, message)
+  class ExceptionFactory < AC::ResponseExceptionFactory
+    def create(exception_type, http, message, code) : AC::ResponseException | Nil
+      case exception_type
+      when "BackupInUseException"                     then BackupInUseException.new(http, message, code)
+      when "BackupNotFoundException"                  then BackupNotFoundException.new(http, message, code)
+      when "ConditionalCheckFailedException"          then ConditionalCheckFailedException.new(http, message, code)
+      when "ContinuousBackupsUnavailableException"    then ContinuousBackupsUnavailableException.new(http, message, code)
+      when "DuplicateItemException"                   then DuplicateItemException.new(http, message, code)
+      when "ExportConflictException"                  then ExportConflictException.new(http, message, code)
+      when "ExportNotFoundException"                  then ExportNotFoundException.new(http, message, code)
+      when "GlobalTableAlreadyExistsException"        then GlobalTableAlreadyExistsException.new(http, message, code)
+      when "GlobalTableNotFoundException"             then GlobalTableNotFoundException.new(http, message, code)
+      when "IdempotentParameterMismatchException"     then IdempotentParameterMismatchException.new(http, message, code)
+      when "ImportConflictException"                  then ImportConflictException.new(http, message, code)
+      when "ImportNotFoundException"                  then ImportNotFoundException.new(http, message, code)
+      when "IndexNotFoundException"                   then IndexNotFoundException.new(http, message, code)
+      when "InternalServerError"                      then InternalServerError.new(http, message, code)
+      when "InvalidExportTimeException"               then InvalidExportTimeException.new(http, message, code)
+      when "InvalidRestoreTimeException"              then InvalidRestoreTimeException.new(http, message, code)
+      when "ItemCollectionSizeLimitExceededException" then ItemCollectionSizeLimitExceededException.new(http, message, code)
+      when "LimitExceededException"                   then LimitExceededException.new(http, message, code)
+      when "PointInTimeRecoveryUnavailableException"  then PointInTimeRecoveryUnavailableException.new(http, message, code)
+      when "ProvisionedThroughputExceededException"   then ProvisionedThroughputExceededException.new(http, message, code)
+      when "ReplicaAlreadyExistsException"            then ReplicaAlreadyExistsException.new(http, message, code)
+      when "ReplicaNotFoundException"                 then ReplicaNotFoundException.new(http, message, code)
+      when "RequestLimitExceeded"                     then RequestLimitExceeded.new(http, message, code)
+      when "ResourceInUseException"                   then ResourceInUseException.new(http, message, code)
+      when "ResourceNotFoundException"                then ResourceNotFoundException.new(http, message, code)
+      when "TableAlreadyExistsException"              then TableAlreadyExistsException.new(http, message, code)
+      when "TableInUseException"                      then TableInUseException.new(http, message, code)
+      when "TableNotFoundException"                   then TableNotFoundException.new(http, message, code)
+      when "TransactionCanceledException"             then TransactionCanceledException.new(http, message, code)
+      when "TransactionConflictException"             then TransactionConflictException.new(http, message, code)
+      when "TransactionInProgressException"           then TransactionInProgressException.new(http, message, code)
       end
     end
   end

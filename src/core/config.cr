@@ -80,7 +80,7 @@ module Amazonite::Core
         return env_var_url.as(String)
       end
 
-      url = "#{endpoint_prefix}.#{region}.amazonaws.com"
+      url = "https://#{endpoint_prefix}.#{region}.amazonaws.com"
       Log.trace { "using default base url for endpoint_url: #{url}" }
       url
     end

@@ -1,10 +1,8 @@
 #!/usr/bin/env -S crystal run
 
-RDIO = Process::Redirect::Inherit
+require "./get_env"
 
-repo_root = File.expand_path(File.join(__DIR__, ".."))
-crystal_path = "#{Crystal::PATH}:.."
-env = {"CRYSTAL_PATH" => crystal_path}
+RDIO = Process::Redirect::Inherit
 
 watch_files = [
   "scripts",
@@ -15,6 +13,8 @@ watch_files = [
   "integration",
 ]
 watch_params = watch_files.map { |f| "-w #{f} " }.join
-cmd = "watchexec --no-vcs-ignore -c #{watch_params}-- crystal spec integration/"
+cmd = "watchexec --no-vcs-ignore -c #{watch_params}-- crystal spec integration/ --tag ~aws"
+env = GetEnv.build
+repo_root = File.expand_path(File.join(__DIR__, ".."))
 
 Process.run(cmd, env: env, chdir: repo_root, shell: true, input: RDIO, output: RDIO, error: RDIO)

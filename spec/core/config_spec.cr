@@ -9,7 +9,7 @@ describe Amazonite::Core::Config do
   describe "#endpoint_url" do
     it "defaults to aws link" do
       url = Amazonite::Core::Config.new(key, secret, region).endpoint_url("dynamodb")
-      url.should eq("dynamodb.us-east-1.amazonaws.com")
+      url.should eq("https://dynamodb.us-east-1.amazonaws.com")
     end
 
     it "use environment variable if set" do

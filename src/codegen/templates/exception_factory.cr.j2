@@ -4,12 +4,10 @@ module {{ service.module_name }}{% for name in errors.names %}
   class {{ name.value }} < AC::ResponseException
   end
 {% endfor %}
-  class ExceptionFactory
-    include AC::ResponseExceptionFactory
-
-    def create_exception(error_type, http, message) : AC::ResponseException | Nil
-      case error_type
-      {% for name in errors.names %}when "{{ name.value }}"{{ name.spacing }} then {{ name.value }}.new(http, message)
+  class ExceptionFactory < AC::ResponseExceptionFactory
+    def create(exception_type, http, message, code) : AC::ResponseException | Nil
+      case exception_type
+      {% for name in errors.names %}when "{{ name.value }}"{{ name.spacing }} then {{ name.value }}.new(http, message, code)
       {% endfor %}end
     end
   end

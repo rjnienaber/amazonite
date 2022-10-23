@@ -71,3 +71,7 @@ jobs:
         run: shards install
       - name: run integration tests
         run: ./scripts/run_integration.cr
+        env:
+          AWS_ACCESS_KEY_ID: AKIAIOSFODNN7EXAMPLE
+          AWS_SECRET_ACCESS_KEY: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+          AWS_REGION: us-west-2

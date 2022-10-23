@@ -12,7 +12,7 @@ module Amazonite::Core
     def initialize(
       @target_prefix : String,
       @endpoint_prefix : String,
-      @exception_factory : ResponseExceptionFactory | Nil = nil,
+      @exception_factory : ResponseExceptionFactory,
       @config = Config.new
     )
     end
@@ -56,17 +56,7 @@ module Amazonite::Core
 
       return response if success
 
-      raise build_error(response)
-    end
-
-    private def build_error(response)
-      json = JSON::Parser.new(response.body).parse
-      exception_type = json["__type"].as_s?
-      message = json["message"].as_s
-      type = @exception_factory.try &.create_exception(exception_type, response, message)
-      type.nil? ? ResponseException.new(response, message) : type
-    rescue e : JSON::ParseException
-      ResponseException.new(response, response.body)
+      raise @exception_factory.build(response)
     end
 
     private def base_url(target_prefix) : String
