@@ -1,17 +1,17 @@
-private alias AC = Amazonite::Core
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
-  class InternalServerError < AC::ResponseException
+module Amazonite::DynamoDBV2
+  class InternalServerError < Core::ResponseException
   end
 
-  class LimitExceededException < AC::ResponseException
+  class LimitExceededException < Core::ResponseException
   end
 
-  class ResourceInUseException < AC::ResponseException
+  class ResourceInUseException < Core::ResponseException
   end
 
-  class ExceptionFactory < AC::ResponseExceptionFactory
-    def create(exception_type, http, message, code) : AC::ResponseException | Nil
+  class ExceptionFactory < Core::ResponseExceptionFactory
+    def create(exception_type, http, message, code) : Core::ResponseException | Nil
       case exception_type
       when "InternalServerError"    then InternalServerError.new(http, message, code)
       when "LimitExceededException" then LimitExceededException.new(http, message, code)

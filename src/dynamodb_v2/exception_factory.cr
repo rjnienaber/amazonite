@@ -1,101 +1,101 @@
-private alias AC = Amazonite::Core
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
-  class BackupInUseException < AC::ResponseException
+module Amazonite::DynamoDBV2
+  class BackupInUseException < Core::ResponseException
   end
 
-  class BackupNotFoundException < AC::ResponseException
+  class BackupNotFoundException < Core::ResponseException
   end
 
-  class ConditionalCheckFailedException < AC::ResponseException
+  class ConditionalCheckFailedException < Core::ResponseException
   end
 
-  class ContinuousBackupsUnavailableException < AC::ResponseException
+  class ContinuousBackupsUnavailableException < Core::ResponseException
   end
 
-  class DuplicateItemException < AC::ResponseException
+  class DuplicateItemException < Core::ResponseException
   end
 
-  class ExportConflictException < AC::ResponseException
+  class ExportConflictException < Core::ResponseException
   end
 
-  class ExportNotFoundException < AC::ResponseException
+  class ExportNotFoundException < Core::ResponseException
   end
 
-  class GlobalTableAlreadyExistsException < AC::ResponseException
+  class GlobalTableAlreadyExistsException < Core::ResponseException
   end
 
-  class GlobalTableNotFoundException < AC::ResponseException
+  class GlobalTableNotFoundException < Core::ResponseException
   end
 
-  class IdempotentParameterMismatchException < AC::ResponseException
+  class IdempotentParameterMismatchException < Core::ResponseException
   end
 
-  class ImportConflictException < AC::ResponseException
+  class ImportConflictException < Core::ResponseException
   end
 
-  class ImportNotFoundException < AC::ResponseException
+  class ImportNotFoundException < Core::ResponseException
   end
 
-  class IndexNotFoundException < AC::ResponseException
+  class IndexNotFoundException < Core::ResponseException
   end
 
-  class InternalServerError < AC::ResponseException
+  class InternalServerError < Core::ResponseException
   end
 
-  class InvalidExportTimeException < AC::ResponseException
+  class InvalidExportTimeException < Core::ResponseException
   end
 
-  class InvalidRestoreTimeException < AC::ResponseException
+  class InvalidRestoreTimeException < Core::ResponseException
   end
 
-  class ItemCollectionSizeLimitExceededException < AC::ResponseException
+  class ItemCollectionSizeLimitExceededException < Core::ResponseException
   end
 
-  class LimitExceededException < AC::ResponseException
+  class LimitExceededException < Core::ResponseException
   end
 
-  class PointInTimeRecoveryUnavailableException < AC::ResponseException
+  class PointInTimeRecoveryUnavailableException < Core::ResponseException
   end
 
-  class ProvisionedThroughputExceededException < AC::ResponseException
+  class ProvisionedThroughputExceededException < Core::ResponseException
   end
 
-  class ReplicaAlreadyExistsException < AC::ResponseException
+  class ReplicaAlreadyExistsException < Core::ResponseException
   end
 
-  class ReplicaNotFoundException < AC::ResponseException
+  class ReplicaNotFoundException < Core::ResponseException
   end
 
-  class RequestLimitExceeded < AC::ResponseException
+  class RequestLimitExceeded < Core::ResponseException
   end
 
-  class ResourceInUseException < AC::ResponseException
+  class ResourceInUseException < Core::ResponseException
   end
 
-  class ResourceNotFoundException < AC::ResponseException
+  class ResourceNotFoundException < Core::ResponseException
   end
 
-  class TableAlreadyExistsException < AC::ResponseException
+  class TableAlreadyExistsException < Core::ResponseException
   end
 
-  class TableInUseException < AC::ResponseException
+  class TableInUseException < Core::ResponseException
   end
 
-  class TableNotFoundException < AC::ResponseException
+  class TableNotFoundException < Core::ResponseException
   end
 
-  class TransactionCanceledException < AC::ResponseException
+  class TransactionCanceledException < Core::ResponseException
   end
 
-  class TransactionConflictException < AC::ResponseException
+  class TransactionConflictException < Core::ResponseException
   end
 
-  class TransactionInProgressException < AC::ResponseException
+  class TransactionInProgressException < Core::ResponseException
   end
 
-  class ExceptionFactory < AC::ResponseExceptionFactory
-    def create(exception_type, http, message, code) : AC::ResponseException | Nil
+  class ExceptionFactory < Core::ResponseExceptionFactory
+    def create(exception_type, http, message, code) : Core::ResponseException | Nil
       case exception_type
       when "BackupInUseException"                     then BackupInUseException.new(http, message, code)
       when "BackupNotFoundException"                  then BackupNotFoundException.new(http, message, code)

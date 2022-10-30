@@ -1,4 +1,4 @@
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class DescribeTableReplicaAutoScalingOutput
     include JSON::Serializable
 

@@ -9,7 +9,7 @@ require "../src/core/**"
 require "./mocks/**"
 
 def load_fixture(*path)
-  File.read(File.join(Dir.current, "spec", "fixtures", *path))
+  File.read(File.join(__DIR__, "..", "spec", "fixtures", *path))
 end
 
 class ServiceJson

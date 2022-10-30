@@ -1,18 +1,18 @@
-private alias ADDB = Amazonite::DynamoDBv2
-private alias AC = Amazonite::Core
+private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
-  class Client < AC::Client
+module Amazonite::DynamoDBV2
+  class Client < Core::Client
     Log = ::Log.for("amazonite.dynamodb_v2.client")
 
-    def initialize(config = AC::Config.new)
+    def initialize(config = Core::Config.new)
       super("DynamoDB_20120810", "dynamodb", nil, config)
     end
 
-    def untag_resource(input : ADDB::UntagResourceInput) : AC::Response
+    def untag_resource(input : ADDB::UntagResourceInput) : Core::Response
       Log.info { "performing 'UntagResource' operation" }
       response = post("UntagResource", "/", input.to_json)
-      AC::Response.new(response)
+      Core::Response.new(response)
     end
   end
 end

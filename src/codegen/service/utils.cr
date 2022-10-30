@@ -9,7 +9,19 @@ module Amazonite::Codegen::Service
     end
 
     def self.snake_case_name(name)
-      name.scan(/[A-Z]+[a-z]*/).map(&.[0].downcase).join("_")
+      name.split(/([A-Z][a-z]+)/).reject { |v| v == "" }.map(&.downcase).join("_")
+    end
+
+    def self.pascal_case(name) : String
+      name
+        # get rid of non-character values
+        .split(/[-:\._\/ ]/)
+        # split up words on pascal that are pascal already
+        # sometimes a string value will have mixed case so do this so all words
+        # are treated the same later on
+        .flat_map(&.split(/([A-Z][a-z]+)/)).reject { |v| v == "" }
+        # should just have words at this point, convert them all to Pascal case
+        .map { |v| v[0].upcase + v[1..].downcase }.join
     end
   end
 end

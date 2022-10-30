@@ -1,12 +1,12 @@
 private alias {{ service.module_alias }} = {{ service.module_name }}
-private alias AC = Amazonite::Core
+private alias Core = Amazonite::Core
 
 module {{ service.module_name }}
-  class Client < AC::Client
-    Log {% if operations.has_errors %}              {% endif %}= ::Log.for("amazonite.{{ service.lower_name }}_{{ service.version }}.client")
+  class Client < Core::Client
+    Log {% if operations.has_errors %}              {% endif %}= ::Log.for("amazonite.{{ service.lower_name }}_{{ service.lower_version }}.client")
 {% if operations.has_errors %}    EXCEPTION_FACTORY = ExceptionFactory.new
 {% endif %}
-    def initialize(config = AC::Config.new)
+    def initialize(config = Core::Config.new)
       super("{{ operations.target_prefix }}", "{{ operations.endpoint_prefix }}", {% if operations.has_errors %}EXCEPTION_FACTORY, {% else %}nil, {% endif %}config)
     end{% for operation in operations.operations %}
 

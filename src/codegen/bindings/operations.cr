@@ -14,9 +14,9 @@ module Amazonite::Codegen::Bindings
       @endpoint_prefix = metadata.endpoint_prefix
       @operations = description.operations.map do |o|
         output = if o.output.nil?
-                   "AC::Response"
+                   "Core::Response"
                  else
-                   "AC::ParsedResponse(#{description.module_alias}::#{o.output})"
+                   "Core::ParsedResponse(#{description.module_alias}::#{o.output})"
                  end
         Crinja.value({
           function_name: o.lower_name,

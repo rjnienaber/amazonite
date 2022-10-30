@@ -14,7 +14,7 @@ module Amazonite::Codegen::Bindings
       @members = shape.members.map do |m|
         converter = if m.time_type?
                       @needs_core_alias = true
-                      "AC::AWSEpochConverter"
+                      "Core::AWSEpochConverter"
                     elsif m.enum_type?
                       @needs_module_alias = true
                       "#{module_alias}::#{m.crystal_type(true)}"

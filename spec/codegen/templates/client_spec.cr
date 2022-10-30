@@ -2,7 +2,7 @@ require "../../spec_helper"
 
 def render_partial_client(schema_filename : String, has_errors : Bool, *operation_names)
   source = ServiceJson.load(schema_filename)
-  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", "v2", source)
+  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", "2", source)
 
   operations = operation_names.map { |n| description.find_operation(n) }.to_a
   description.operations = operations
@@ -48,6 +48,13 @@ describe "client.cr.j2 template" do
     actual = render_partial_client("opsworks-2013-02-18.normal.json", false, "DescribeOperatingSystems")
 
     expected = load_fixture("templates", "client", "describe_operating_systems.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "handles method with no input" do
+    actual = render_partial_client("forecast-2018-06-26.normal.json", false, "CreateAutoPredictor")
+
+    expected = load_fixture("templates", "client", "create_auto_predictor.expected.cr").strip
     actual.should eq_diff expected
   end
 end

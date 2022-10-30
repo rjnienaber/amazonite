@@ -1,4 +1,4 @@
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class DeleteReplicaAction
     include JSON::Serializable
 

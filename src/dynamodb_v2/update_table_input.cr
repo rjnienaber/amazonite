@@ -1,6 +1,6 @@
-private alias ADDB = Amazonite::DynamoDBv2
+private alias ADDB = Amazonite::DynamoDBV2
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class UpdateTableInput
     include JSON::Serializable
 
@@ -23,7 +23,7 @@ module Amazonite::DynamoDBv2
     property stream_specification : StreamSpecification | Nil
 
     @[JSON::Field(key: "SSESpecification")]
-    property ssespecification : SSESpecification | Nil
+    property sse_specification : SSESpecification | Nil
 
     @[JSON::Field(key: "ReplicaUpdates")]
     property replica_updates : Array(ReplicationGroupUpdate) | Nil
@@ -38,7 +38,7 @@ module Amazonite::DynamoDBv2
       @provisioned_throughput : ProvisionedThroughput | Nil = nil,
       @global_secondary_index_updates : Array(GlobalSecondaryIndexUpdate) | Nil = nil,
       @stream_specification : StreamSpecification | Nil = nil,
-      @ssespecification : SSESpecification | Nil = nil,
+      @sse_specification : SSESpecification | Nil = nil,
       @replica_updates : Array(ReplicationGroupUpdate) | Nil = nil,
       @table_class : TableClass | Nil = nil
     )

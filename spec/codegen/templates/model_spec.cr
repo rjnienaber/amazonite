@@ -1,9 +1,9 @@
 require "../../spec_helper"
 
-def render_model(shape_name)
-  source = ServiceJson.load("dynamodb-2012-08-10.normal.json")
+def render_model(shape_name, spec_filename = "dynamodb-2012-08-10.normal.json")
+  source = ServiceJson.load(spec_filename)
 
-  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", "v2", source)
+  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", "2", source)
 
   structure = description.resolver.find(shape_name).as(Amazonite::Codegen::Service::Structure)
   shape_binding = Amazonite::Codegen::Bindings::Structure.new(structure, description.module_alias)
@@ -47,6 +47,13 @@ describe "model.cr.j2 template" do
     actual.should eq_diff expected
   end
 
+  it "parses float in 'DocumentLabel'" do
+    actual = render_model("DocumentLabel", "comprehend-2017-11-27.normal.json")
+
+    expected = load_fixture("templates", "model", "document_label.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
   it "parses float64 in 'Capacity'" do
     actual = render_model("Capacity")
 
@@ -71,6 +78,18 @@ describe "model.cr.j2 template" do
   it "formats initialize correctly when no parameters" do
     actual = render_model("DescribeLimitsInput")
     expected = load_fixture("templates", "model", "describe_limits_input.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "deal with 'TagKeys'" do
+    actual = render_model("UntagResourceInput", "backup-gateway-2021-01-01.normal.json")
+    expected = load_fixture("templates", "model", "untag_resource_input.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "deal with 'AgentConfigurationStatus'" do
+    actual = render_model("AgentConfigurationStatus", "discovery-2015-11-01.normal.json")
+    expected = load_fixture("templates", "model", "agent_configuration_status.expected.cr").strip
     actual.should eq_diff expected
   end
 end

@@ -2,7 +2,7 @@ module Amazonite::Codegen::Service
   class Metadata
     private KNOWN_KEYS = ["apiVersion", "endpointPrefix", "protocol", "signatureVersion",
                           "jsonVersion", "serviceAbbreviation", "serviceFullName", "serviceId",
-                          "targetPrefix", "uid"]
+                          "targetPrefix", "uid", "signingName", "protocolSettings", "xmlNamespace"]
 
     getter version, endpoint_prefix, protocol, service_id, target_prefix
 
@@ -15,7 +15,7 @@ module Amazonite::Codegen::Service
       @endpoint_prefix = json["endpointPrefix"].as_s
       @protocol = json["protocol"].as_s
       @service_id = json["serviceId"].as_s
-      @target_prefix = json["targetPrefix"].as_s
+      @target_prefix = json["targetPrefix"]? ? json["targetPrefix"].as_s : @endpoint_prefix
     end
   end
 end

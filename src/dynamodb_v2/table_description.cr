@@ -1,7 +1,7 @@
-private alias ADDB = Amazonite::DynamoDBv2
-private alias AC = Amazonite::Core
+private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class TableDescription
     include JSON::Serializable
 
@@ -17,7 +17,7 @@ module Amazonite::DynamoDBv2
     @[JSON::Field(key: "TableStatus", converter: ADDB::TableStatus)]
     property table_status : TableStatus | Nil
 
-    @[JSON::Field(key: "CreationDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "CreationDateTime", converter: Core::AWSEpochConverter)]
     property creation_date_time : Time | Nil
 
     @[JSON::Field(key: "ProvisionedThroughput")]
@@ -63,7 +63,7 @@ module Amazonite::DynamoDBv2
     property restore_summary : RestoreSummary | Nil
 
     @[JSON::Field(key: "SSEDescription")]
-    property ssedescription : SSEDescription | Nil
+    property sse_description : SSEDescription | Nil
 
     @[JSON::Field(key: "ArchivalSummary")]
     property archival_summary : ArchivalSummary | Nil
@@ -91,7 +91,7 @@ module Amazonite::DynamoDBv2
       @global_table_version : String | Nil = nil,
       @replicas : Array(ReplicaDescription) | Nil = nil,
       @restore_summary : RestoreSummary | Nil = nil,
-      @ssedescription : SSEDescription | Nil = nil,
+      @sse_description : SSEDescription | Nil = nil,
       @archival_summary : ArchivalSummary | Nil = nil,
       @table_class_summary : TableClassSummary | Nil = nil
     )

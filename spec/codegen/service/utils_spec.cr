@@ -14,6 +14,10 @@ describe Amazonite::Codegen::Service::Utils do
       it "handles 'DynamoDB'" do
         subject.snake_case_name("DynamoDB").should eq("dynamo_db")
       end
+
+      it "handles 'KMSMasterKeyId'" do
+        subject.snake_case_name("KMSMasterKeyId").should eq("kms_master_key_id")
+      end
     end
   end
 end

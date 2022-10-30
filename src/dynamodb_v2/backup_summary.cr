@@ -1,7 +1,7 @@
-private alias ADDB = Amazonite::DynamoDBv2
-private alias AC = Amazonite::Core
+private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class BackupSummary
     include JSON::Serializable
 
@@ -20,10 +20,10 @@ module Amazonite::DynamoDBv2
     @[JSON::Field(key: "BackupName")]
     property backup_name : String | Nil
 
-    @[JSON::Field(key: "BackupCreationDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "BackupCreationDateTime", converter: Core::AWSEpochConverter)]
     property backup_creation_date_time : Time | Nil
 
-    @[JSON::Field(key: "BackupExpiryDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "BackupExpiryDateTime", converter: Core::AWSEpochConverter)]
     property backup_expiry_date_time : Time | Nil
 
     @[JSON::Field(key: "BackupStatus", converter: ADDB::BackupStatus)]

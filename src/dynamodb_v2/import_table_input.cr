@@ -1,6 +1,6 @@
-private alias ADDB = Amazonite::DynamoDBv2
+private alias ADDB = Amazonite::DynamoDBV2
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class ImportTableInput
     include JSON::Serializable
 
@@ -8,7 +8,7 @@ module Amazonite::DynamoDBv2
     property client_token : String | Nil
 
     @[JSON::Field(key: "S3BucketSource")]
-    property s_bucket_source : S3BucketSource
+    property s3_bucket_source : S3BucketSource
 
     @[JSON::Field(key: "InputFormat", converter: ADDB::InputFormat)]
     property input_format : InputFormat
@@ -23,7 +23,7 @@ module Amazonite::DynamoDBv2
     property table_creation_parameters : TableCreationParameters
 
     def initialize(
-      @s_bucket_source : S3BucketSource,
+      @s3_bucket_source : S3BucketSource,
       @input_format : InputFormat,
       @table_creation_parameters : TableCreationParameters,
       @client_token : String | Nil = nil,

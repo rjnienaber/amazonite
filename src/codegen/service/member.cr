@@ -1,15 +1,19 @@
 module Amazonite::Codegen::Service
   class Member
-    private KNOWN_KEYS = ["shape", "documentation", "idempotencyToken"]
+    private KNOWN_KEYS = ["shape", "documentation", "idempotencyToken", "box", "deprecated", "deprecatedMessage",
+                          "location", "locationName", "jsonvalue", # TODO: should return JSON::Any for this?
+    ]
 
     @is_enum_type : Bool | Nil
     @is_time_type : Bool | Nil
+    @shape_name : String
 
     getter name, shape_name
 
     def initialize(@name : String, @required : Bool, json : JSON::Any, @resolver : ShapeResolver)
       Utils.verify_keys(KNOWN_KEYS, json)
-      @shape_name = json["shape"].as_s
+      name = json["shape"].as_s
+      @shape_name = name[0].upcase + name[1..]
     end
 
     def required?

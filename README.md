@@ -10,7 +10,7 @@ Here's an example that creates a table in DynamoDB:
 ```crystal
 require "amazonite/dynamodb_v2"
 
-private alias DB = Amazonite::DynamoDBv2
+private alias DB = Amazonite::DynamoDBV2
 
 model = DB::CreateTableInput.new(
   [

@@ -1,4 +1,4 @@
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class ListContributorInsightsInput
     include JSON::Serializable
 

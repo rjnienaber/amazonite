@@ -1,11 +1,11 @@
-private alias AC = Amazonite::Core
+private alias Core = Amazonite::Core
 
 module {{ service.module_name }}{% for name in errors.names %}
-  class {{ name.value }} < AC::ResponseException
+  class {{ name.value }} < Core::ResponseException
   end
 {% endfor %}
-  class ExceptionFactory < AC::ResponseExceptionFactory
-    def create(exception_type, http, message, code) : AC::ResponseException | Nil
+  class ExceptionFactory < Core::ResponseExceptionFactory
+    def create(exception_type, http, message, code) : Core::ResponseException | Nil
       case exception_type
       {% for name in errors.names %}when "{{ name.value }}"{{ name.spacing }} then {{ name.value }}.new(http, message, code)
       {% endfor %}end

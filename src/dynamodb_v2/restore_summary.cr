@@ -1,6 +1,6 @@
-private alias AC = Amazonite::Core
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class RestoreSummary
     include JSON::Serializable
 
@@ -10,7 +10,7 @@ module Amazonite::DynamoDBv2
     @[JSON::Field(key: "SourceTableArn")]
     property source_table_arn : String | Nil
 
-    @[JSON::Field(key: "RestoreDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "RestoreDateTime", converter: Core::AWSEpochConverter)]
     property restore_date_time : Time
 
     @[JSON::Field(key: "RestoreInProgress")]

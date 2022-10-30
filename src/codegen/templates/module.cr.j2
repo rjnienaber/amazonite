@@ -1,7 +1,7 @@
 require "json"
 
 require "./core/*"
-require "./{{ service.lower_name }}_{{ service.version }}/*"
+require "./{{ service.lower_name }}_{{ service.lower_version }}/*"
 
 module {{ service.module_name }}
   VERSION     = "{{ service.aws_version }}"

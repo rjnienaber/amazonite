@@ -1,13 +1,14 @@
 module Amazonite::Codegen::Service
   class Operation
     private KNOWN_KEYS = ["name", "http", "input", "output", "errors", "documentation", "endpointdiscovery",
-                          "endpointoperation"]
+                          "endpointoperation", "idempotent", "deprecated", "deprecatedMessage", "authtype",
+                          "endpoint"]
 
     private class Http
       getter method, request_uri
 
       def initialize(json : JSON::Any)
-        Utils.verify_keys(["method", "requestUri"], json)
+        Utils.verify_keys(["method", "requestUri", "responseCode"], json)
         @method = json["method"]
         @request_uri = json["requestUri"]
       end

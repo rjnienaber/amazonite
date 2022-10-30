@@ -1,18 +1,18 @@
-private alias ADDB = Amazonite::DynamoDBv2
-private alias AC = Amazonite::Core
+private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
-  class Client < AC::Client
+module Amazonite::DynamoDBV2
+  class Client < Core::Client
     Log = ::Log.for("amazonite.dynamodb_v2.client")
 
-    def initialize(config = AC::Config.new)
+    def initialize(config = Core::Config.new)
       super("DynamoDB_20120810", "dynamodb", nil, config)
     end
 
-    def create_table(input : ADDB::CreateTableInput) : AC::ParsedResponse(ADDB::CreateTableOutput)
+    def create_table(input : ADDB::CreateTableInput) : Core::ParsedResponse(ADDB::CreateTableOutput)
       Log.info { "performing 'CreateTable' operation" }
       response = post("CreateTable", "/", input.to_json)
-      AC::ParsedResponse(ADDB::CreateTableOutput).new(response)
+      Core::ParsedResponse(ADDB::CreateTableOutput).new(response)
     end
   end
 end

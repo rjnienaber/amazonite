@@ -1,7 +1,7 @@
-private alias ADDB = Amazonite::DynamoDBv2
-private alias AC = Amazonite::Core
+private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class ReplicaDescription
     include JSON::Serializable
 
@@ -18,7 +18,7 @@ module Amazonite::DynamoDBv2
     property replica_status_percent_progress : String | Nil
 
     @[JSON::Field(key: "KMSMasterKeyId")]
-    property kmsmaster_key_id : String | Nil
+    property kms_master_key_id : String | Nil
 
     @[JSON::Field(key: "ProvisionedThroughputOverride")]
     property provisioned_throughput_override : ProvisionedThroughputOverride | Nil
@@ -26,7 +26,7 @@ module Amazonite::DynamoDBv2
     @[JSON::Field(key: "GlobalSecondaryIndexes")]
     property global_secondary_indexes : Array(ReplicaGlobalSecondaryIndexDescription) | Nil
 
-    @[JSON::Field(key: "ReplicaInaccessibleDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "ReplicaInaccessibleDateTime", converter: Core::AWSEpochConverter)]
     property replica_inaccessible_date_time : Time | Nil
 
     @[JSON::Field(key: "ReplicaTableClassSummary")]
@@ -37,7 +37,7 @@ module Amazonite::DynamoDBv2
       @replica_status : ReplicaStatus | Nil = nil,
       @replica_status_description : String | Nil = nil,
       @replica_status_percent_progress : String | Nil = nil,
-      @kmsmaster_key_id : String | Nil = nil,
+      @kms_master_key_id : String | Nil = nil,
       @provisioned_throughput_override : ProvisionedThroughputOverride | Nil = nil,
       @global_secondary_indexes : Array(ReplicaGlobalSecondaryIndexDescription) | Nil = nil,
       @replica_inaccessible_date_time : Time | Nil = nil,

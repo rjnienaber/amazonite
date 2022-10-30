@@ -1,7 +1,7 @@
-private alias ADDB = Amazonite::DynamoDBv2
-private alias AC = Amazonite::Core
+private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class GlobalTableDescription
     include JSON::Serializable
 
@@ -11,7 +11,7 @@ module Amazonite::DynamoDBv2
     @[JSON::Field(key: "GlobalTableArn")]
     property global_table_arn : String | Nil
 
-    @[JSON::Field(key: "CreationDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "CreationDateTime", converter: Core::AWSEpochConverter)]
     property creation_date_time : Time | Nil
 
     @[JSON::Field(key: "GlobalTableStatus", converter: ADDB::GlobalTableStatus)]

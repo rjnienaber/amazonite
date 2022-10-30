@@ -1,6 +1,6 @@
-private alias ADDB = Amazonite::DynamoDBv2
+private alias ADDB = Amazonite::DynamoDBV2
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class CreateTableInput
     include JSON::Serializable
 
@@ -29,7 +29,7 @@ module Amazonite::DynamoDBv2
     property stream_specification : StreamSpecification | Nil
 
     @[JSON::Field(key: "SSESpecification")]
-    property ssespecification : SSESpecification | Nil
+    property sse_specification : SSESpecification | Nil
 
     @[JSON::Field(key: "Tags")]
     property tags : Array(Tag) | Nil
@@ -46,7 +46,7 @@ module Amazonite::DynamoDBv2
       @billing_mode : BillingMode | Nil = nil,
       @provisioned_throughput : ProvisionedThroughput | Nil = nil,
       @stream_specification : StreamSpecification | Nil = nil,
-      @ssespecification : SSESpecification | Nil = nil,
+      @sse_specification : SSESpecification | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
       @table_class : TableClass | Nil = nil
     )

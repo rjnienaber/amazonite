@@ -1,9 +1,6 @@
 module Amazonite::Codegen::Service
   # TODO: rename to Enumeration
   class Enum < Shape
-    private SCREAMING_CASE_REGEX = /^[A-Z_\d]+$/
-    private PASCAL_CASE_REGEX    = /^[A-Za-z]+$/ # TODO: better regex to detect PascalCase?
-
     def self.enum?(json : JSON::Any)
       !!json["enum"]?
     end
@@ -11,6 +8,9 @@ module Amazonite::Codegen::Service
     @crystal_values : Array(String) | Nil
     @modulized_crystal_values : Array(String) | Nil
     @enums : Array(String)
+    @aws_mappings : Array(Tuple(String, String)) | Nil
+    @crystal_mappings : Array(Tuple(String, String)) | Nil
+
     getter enums
 
     def initialize(name : String, json : JSON::Any)
@@ -19,50 +19,34 @@ module Amazonite::Codegen::Service
     end
 
     def aws_mappings? : Bool
-      !!aws_mappings
+      !aws_mappings.empty?
     end
 
     def values
-      aws_mappings.nil? ? @enums : crystal_values
+      aws_mappings? ? crystal_values : @enums
     end
 
-    # TODO: cache
-    # TODO: don't calculate spacing here, it should be in the binding
-    def aws_mappings : Array(Tuple(String, String, String)) | Nil
-      if @enums.all? { |e| SCREAMING_CASE_REGEX.matches?(e) }
-        enum_values = modulized_crystal_values.zip(crystal_values, @enums)
-        input_output_identical = true
-        max_length = 0
+    def aws_mappings : Array(Tuple(String, String))
+      return @aws_mappings.as(Array(Tuple(String, String))) if @aws_mappings
 
-        enum_values.each do |fqdn_new_name, new_name, e|
-          max_length = Math.max(max_length, fqdn_new_name.size)
-          input_output_identical &= new_name == e
-        end
+      input_output_identical = crystal_values.zip(@enums).all? { |v| v[0] == v[1] }
+      return [] of Tuple(String, String) if input_output_identical
 
-        enum_values.map { |v| {v[0], " " * (max_length - v[0].size), v[2]} } unless input_output_identical
-      elsif @enums.all? { |e| PASCAL_CASE_REGEX.matches?(e) }
-      else
-        raise Exception.new("unknown enum casing for shape '#{@name}'")
+      @aws_mappings = modulized_crystal_values.zip(@enums)
+    end
+
+    def crystal_mappings : Array(Tuple(String, String))
+      @crystal_mappings ||= @enums.zip(modulized_crystal_values)
+    end
+
+    private def crystal_values : Array(String)
+      return @crystal_values.as(Array(String)) if @crystal_values
+
+      # special case enums that look like version numbers and
+      # prefix with a 'V' to be a valid enum
+      @crystal_values = @enums.map do |e|
+        /^[\d\.]+$/.match(e) ? "V#{Utils.pascal_case(e)}" : Utils.pascal_case(e)
       end
-    end
-
-    # TODO: cache
-    # TODO: don't calculate spacing here, it should be in the binding
-    def crystal_mappings : Array(Tuple(String, String, String))
-      max_length = @enums.max_by(&.size).size
-      enum_values = if @enums.all? { |e| SCREAMING_CASE_REGEX.matches?(e) }
-                      @enums.zip(modulized_crystal_values)
-                    elsif @enums.all? { |e| PASCAL_CASE_REGEX.matches?(e) }
-                      # we modulize here because we are just accepting the values from AWS
-                      @enums.map { |e| [e, modulize_enum_value(e)] }
-                    else
-                      raise Exception.new("unknown enum casing for shape '#{@name}'")
-                    end
-      enum_values.map { |v| {v[0], " " * (max_length - v[0].size), v[1]} }
-    end
-
-    private def crystal_values
-      @crystal_values ||= @enums.map(&.split("_").map(&.downcase.gsub(/^[a-z]/, &.upcase)).join)
     end
 
     private def modulized_crystal_values
@@ -70,7 +54,7 @@ module Amazonite::Codegen::Service
     end
 
     private def modulize_enum_value(enum_value)
-      "#{@name}::#{enum_value}"
+      "#{name}::#{enum_value}"
     end
   end
 end

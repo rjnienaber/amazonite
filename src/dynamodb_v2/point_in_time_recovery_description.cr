@@ -1,17 +1,17 @@
-private alias ADDB = Amazonite::DynamoDBv2
-private alias AC = Amazonite::Core
+private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class PointInTimeRecoveryDescription
     include JSON::Serializable
 
     @[JSON::Field(key: "PointInTimeRecoveryStatus", converter: ADDB::PointInTimeRecoveryStatus)]
     property point_in_time_recovery_status : PointInTimeRecoveryStatus | Nil
 
-    @[JSON::Field(key: "EarliestRestorableDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "EarliestRestorableDateTime", converter: Core::AWSEpochConverter)]
     property earliest_restorable_date_time : Time | Nil
 
-    @[JSON::Field(key: "LatestRestorableDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "LatestRestorableDateTime", converter: Core::AWSEpochConverter)]
     property latest_restorable_date_time : Time | Nil
 
     def initialize(

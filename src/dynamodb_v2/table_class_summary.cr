@@ -1,14 +1,14 @@
-private alias ADDB = Amazonite::DynamoDBv2
-private alias AC = Amazonite::Core
+private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class TableClassSummary
     include JSON::Serializable
 
     @[JSON::Field(key: "TableClass", converter: ADDB::TableClass)]
     property table_class : TableClass | Nil
 
-    @[JSON::Field(key: "LastUpdateDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "LastUpdateDateTime", converter: Core::AWSEpochConverter)]
     property last_update_date_time : Time | Nil
 
     def initialize(

@@ -1,10 +1,10 @@
-private alias AC = Amazonite::Core
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class ArchivalSummary
     include JSON::Serializable
 
-    @[JSON::Field(key: "ArchivalDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "ArchivalDateTime", converter: Core::AWSEpochConverter)]
     property archival_date_time : Time | Nil
 
     @[JSON::Field(key: "ArchivalReason")]

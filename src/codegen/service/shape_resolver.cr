@@ -2,7 +2,7 @@ module Amazonite::Codegen::Service
   class ShapeResolver
     private KNOWN_DATA_STRUCTS    = ["structure", "list", "map"]
     private KNOWN_PRIMITIVE_TYPES = ["string", "boolean", "timestamp", "long", "integer", "blob",
-                                     "double"]
+                                     "double", "float"]
     private KNOWN_AWS_TYPES = KNOWN_DATA_STRUCTS + KNOWN_PRIMITIVE_TYPES
 
     def self.load_json(json : JSON::Any)
@@ -81,6 +81,7 @@ module Amazonite::Codegen::Service
       when "blob"      then "String"
       when "integer"   then "Int32"
       when "long"      then "Int64"
+      when "float"     then "Float32"
       when "double"    then "Float64"
       end
     end
@@ -97,30 +98,15 @@ module Amazonite::Codegen::Service
     end
 
     private def resolve_list(shape)
-      list_shape = self.get_final_shape(shape.as(List).member.shape_name)
-      list_type = crystal_type(list_shape, true)
+      list_type = crystal_type(shape.as(List).member.shape_name, true)
       "Array(#{list_type})"
     end
 
     private def resolve_map(shape)
       map_shape = shape.as(Map)
-      key_shape = self.get_final_shape(map_shape.key.shape_name)
-      key_type = crystal_type(key_shape, true)
-      value_shape = self.get_final_shape(map_shape.value.shape_name)
-      value_type = crystal_type(value_shape, true)
+      key_type = crystal_type(map_shape.key.shape_name, true)
+      value_type = crystal_type(map_shape.value.shape_name, true)
       "Hash(#{key_type}, #{value_type})"
-    end
-
-    private def get_final_shape(shape_name : String)
-      shape = @shape_map[shape_name]
-      count = 0
-      while (true)
-        raise Exception.new("infinite loop detected for shape '#{shape_name}'") if count > 100
-        t = @shape_map.fetch(shape.type, nil)
-        return shape if t.nil?
-        shape = t
-        count += 1
-      end
     end
   end
 end

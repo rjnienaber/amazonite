@@ -1,6 +1,6 @@
-private alias ADDB = Amazonite::DynamoDBv2
+private alias ADDB = Amazonite::DynamoDBV2
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class UpdateItemInput
     include JSON::Serializable
 

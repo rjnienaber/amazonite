@@ -1,7 +1,7 @@
-private alias ADDB = Amazonite::DynamoDBv2
-private alias AC = Amazonite::Core
+private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class SourceTableDetails
     include JSON::Serializable
 
@@ -20,7 +20,7 @@ module Amazonite::DynamoDBv2
     @[JSON::Field(key: "KeySchema")]
     property key_schema : Array(KeySchemaElement)
 
-    @[JSON::Field(key: "TableCreationDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "TableCreationDateTime", converter: Core::AWSEpochConverter)]
     property table_creation_date_time : Time
 
     @[JSON::Field(key: "ProvisionedThroughput")]

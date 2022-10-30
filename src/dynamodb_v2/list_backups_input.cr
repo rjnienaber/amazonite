@@ -1,7 +1,7 @@
-private alias ADDB = Amazonite::DynamoDBv2
-private alias AC = Amazonite::Core
+private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class ListBackupsInput
     include JSON::Serializable
 
@@ -11,10 +11,10 @@ module Amazonite::DynamoDBv2
     @[JSON::Field(key: "Limit")]
     property limit : Int32 | Nil
 
-    @[JSON::Field(key: "TimeRangeLowerBound", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "TimeRangeLowerBound", converter: Core::AWSEpochConverter)]
     property time_range_lower_bound : Time | Nil
 
-    @[JSON::Field(key: "TimeRangeUpperBound", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "TimeRangeUpperBound", converter: Core::AWSEpochConverter)]
     property time_range_upper_bound : Time | Nil
 
     @[JSON::Field(key: "ExclusiveStartBackupArn")]

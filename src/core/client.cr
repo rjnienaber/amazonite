@@ -28,6 +28,7 @@ module Amazonite::Core
       endpoint_url = @config.endpoint_url(@endpoint_prefix)
       client = HTTP::Client.new(URI.parse(endpoint_url))
       client.before_request do |request|
+        before_request(request)
         key = @config.access_key_id
         secret = @config.secret_access_key
         signer = Awscr::Signer::Signers::V4.new(@endpoint_prefix, @config.region, key, secret)
@@ -38,6 +39,9 @@ module Amazonite::Core
         end
       end
       client
+    end
+
+    protected def before_request(request)
     end
 
     protected def process_response(id, command, response)

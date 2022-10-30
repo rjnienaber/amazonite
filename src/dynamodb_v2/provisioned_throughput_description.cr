@@ -1,13 +1,13 @@
-private alias AC = Amazonite::Core
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class ProvisionedThroughputDescription
     include JSON::Serializable
 
-    @[JSON::Field(key: "LastIncreaseDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "LastIncreaseDateTime", converter: Core::AWSEpochConverter)]
     property last_increase_date_time : Time | Nil
 
-    @[JSON::Field(key: "LastDecreaseDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "LastDecreaseDateTime", converter: Core::AWSEpochConverter)]
     property last_decrease_date_time : Time | Nil
 
     @[JSON::Field(key: "NumberOfDecreasesToday")]

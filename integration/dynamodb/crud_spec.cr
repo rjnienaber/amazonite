@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-private alias DB = Amazonite::DynamoDBv2
+private alias DB = Amazonite::DynamoDBV2
 private alias AC = Amazonite::Core
 
 describe "DynamoDB: basic crud operations" do

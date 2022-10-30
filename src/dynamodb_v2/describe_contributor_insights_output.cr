@@ -1,7 +1,7 @@
-private alias ADDB = Amazonite::DynamoDBv2
-private alias AC = Amazonite::Core
+private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBv2
+module Amazonite::DynamoDBV2
   class DescribeContributorInsightsOutput
     include JSON::Serializable
 
@@ -17,7 +17,7 @@ module Amazonite::DynamoDBv2
     @[JSON::Field(key: "ContributorInsightsStatus", converter: ADDB::ContributorInsightsStatus)]
     property contributor_insights_status : ContributorInsightsStatus | Nil
 
-    @[JSON::Field(key: "LastUpdateDateTime", converter: AC::AWSEpochConverter)]
+    @[JSON::Field(key: "LastUpdateDateTime", converter: Core::AWSEpochConverter)]
     property last_update_date_time : Time | Nil
 
     @[JSON::Field(key: "FailureException")]

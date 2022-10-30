@@ -30,14 +30,16 @@ jobs:
           restore-keys: ${{ runner.os }}-shards-
       - name: install dependencies
         run: shards install
-      - name: perform code generation
-        run: shards run codegen
-      - name: validate generated code
-        run: ./scripts/compile.sh
       - name: check formatting
         run: crystal tool format --check
       - name: check coding standards
         run: ./bin/ameba
+      - name: perform code generation
+        run: shards run codegen
+      - name: validate generated code
+        run: |
+          cp -R src/core tmp
+          ./scripts/compile.sh
       - name: run unit tests
         run: crystal spec
   integration:
