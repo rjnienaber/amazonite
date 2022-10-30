@@ -1,14 +1,11 @@
 #!/usr/bin/env -S crystal run
 
-require "./get_env"
+require "./test_helper"
 
 RDIO = Process::Redirect::Inherit
 
-env = GetEnv.build
-exclude_tag = env["AWS_PROFILE"] == "local" ? "aws" : "localstack"
+helper = TestHelper.create
 
-cmd = "crystal spec integration/ --tag ~#{exclude_tag}"
-
+cmd = "crystal spec integration/ --tag ~#{helper.test_tags}"
 repo_root = File.expand_path(File.join(__DIR__, ".."))
-
-Process.run(cmd, env: env, chdir: repo_root, shell: true, input: RDIO, output: RDIO, error: RDIO)
+Process.run(cmd, env: helper.env, chdir: repo_root, shell: true, input: RDIO, output: RDIO, error: RDIO)

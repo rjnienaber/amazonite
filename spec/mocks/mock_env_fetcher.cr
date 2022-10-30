@@ -1,4 +1,5 @@
-class MockEnvFetcher < Amazonite::Core::Config::Fetcher
+# TODO: should be using interfaces
+class MockEnvFetcher < Amazonite::Core::Fetcher
   def initialize(@hash : Hash(String, String))
   end
 

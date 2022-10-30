@@ -12,7 +12,7 @@ class CustomClientExceptionFactory < Amazonite::Core::ResponseExceptionFactory
 end
 
 def create_mock_config(base_url = nil, user_agent = nil)
-  Amazonite::Core::Config.new("AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1", base_url, user_agent)
+  Amazonite::Core::Config.new("AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1", nil, base_url, user_agent)
 end
 
 describe Amazonite::Core::Client do

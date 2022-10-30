@@ -2,20 +2,11 @@ module Amazonite::Core
   class Config
     Log = ::Log.for(self)
 
-    abstract class Fetcher
-      abstract def []?(key)
-    end
-
-    class EnvFetcher < Fetcher
-      def []?(key)
-        ENV[key]?
-      end
-    end
-
     @access_key_id : String
     @secret_access_key : String
     @region : String
     @base_url : String | Nil
+    @ini_parser : IniParser
 
     getter access_key_id, secret_access_key, region, base_url
 
@@ -23,48 +14,15 @@ module Amazonite::Core
       access_key_id : String | Nil = nil,
       secret_access_key : String | Nil = nil,
       region : String | Nil = nil,
+      profile : String | Nil = nil,
       @base_url : String | Nil = nil,
       @user_agent : String | Nil = nil,
       @env : Fetcher = EnvFetcher.new
     )
-      @access_key_id = if access_key_id
-                         Log.debug { "using access_key_id from constructor" }
-                         access_key_id
-                       elsif @env["AWS_ACCESS_KEY_ID"]?
-                         Log.debug { "using access_key_id from 'AWS_ACCESS_KEY_ID' environment variable" }
-                         @env["AWS_ACCESS_KEY_ID"]?.as(String)
-                       else
-                         msg = "no access_key_id provided via constructor or environment variable (AWS_ACCESS_KEY_ID)"
-                         Log.error { msg }
-                         raise Exception.new(msg)
-                       end
-
-      @secret_access_key = if secret_access_key
-                             Log.debug { "using secret_access_key from constructor" }
-                             secret_access_key
-                           elsif @env["AWS_SECRET_ACCESS_KEY"]?
-                             Log.debug { "using secret_access_key from 'AWS_SECRET_ACCESS_KEY' environment variable" }
-                             @env["AWS_SECRET_ACCESS_KEY"]?.as(String)
-                           else
-                             msg = "no secret_access_key provided via constructor or environment variable (AWS_SECRET_ACCESS_KEY)"
-                             Log.error { msg }
-                             raise Exception.new(msg)
-                           end
-
-      @region = if region
-                  Log.debug { "using region from constructor: #{region}" }
-                  region
-                elsif @env["AWS_REGION"]?
-                  Log.debug { "using region from 'AWS_REGION' environment variable: #{@env["AWS_REGION"]?}" }
-                  @env["AWS_REGION"]?.as(String)
-                elsif @env["AWS_DEFAULT_REGION"]?
-                  Log.debug { "using region from 'AWS_DEFAULT_REGION' environment variable: #{@env["AWS_DEFAULT_REGION"]?}" }
-                  @env["AWS_DEFAULT_REGION"]?.as(String)
-                else
-                  msg = "no region provided via constructor or environment variable (AWS_REGION or AWS_DEFAULT_REGION)"
-                  Log.error { msg }
-                  raise Exception.new(msg)
-                end
+      @ini_parser = create_ini_parser(profile, @env)
+      @access_key_id = resolve_config_value("access_key_id", access_key_id, "AWS_ACCESS_KEY_ID")
+      @secret_access_key = resolve_config_value("secret_access_key", secret_access_key, "AWS_SECRET_ACCESS_KEY")
+      @region = resolve_config_value("region", region, "AWS_REGION", "AWS_DEFAULT_REGION")
     end
 
     def endpoint_url(endpoint_prefix) : String
@@ -103,6 +61,10 @@ module Amazonite::Core
       yield @built_user_agent
     end
 
+    def aws_profile
+      @ini_parser.profile
+    end
+
     protected def api_version
       Amazonite::Core::VERSION
     end
@@ -121,6 +83,34 @@ module Amazonite::Core
 
     protected def crystal_description
       Crystal::DESCRIPTION
+    end
+
+    protected def create_ini_parser(profile, env : Fetcher) : IniParser
+      IniParser.new(profile, env)
+    end
+
+    private def resolve_config_value(type, value, *env_var_keys)
+      if value
+        Log.debug { "using #{type} from constructor" }
+        return value
+      end
+
+      env_var_keys.each do |env_var_key|
+        next unless @env[env_var_key]?
+
+        Log.debug { "using #{type} from '#{env_var_key}' environment variable" }
+        return @env[env_var_key]?.as(String)
+      end
+
+      if @ini_parser[type]
+        Log.debug { "using #{type} from profile '#{aws_profile}'" }
+        @ini_parser[type].as(String)
+      else
+        keys = env_var_keys.join(" or ")
+        msg = "no #{type} provided via constructor or environment variable (#{keys})"
+        Log.error { msg }
+        raise Exception.new(msg)
+      end
     end
   end
 end
