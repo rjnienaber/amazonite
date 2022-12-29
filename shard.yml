@@ -4,7 +4,10 @@ version: 0.1.0
 authors:
   - Richard Nienaber <rjnienaber@gmail.com>
 
-crystal: 1.5.1
+crystal: ">= 1.5.1"
+
+description: |
+  An AWS SDK for Crystal
 
 dependencies:
   awscr-signer:
@@ -24,9 +27,6 @@ development_dependencies:
     version: ~> 1.0.0
 
 license: MIT
-
-scripts:
-  test: echo haha
 
 targets:
   codegen:
