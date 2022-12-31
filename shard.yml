@@ -7,7 +7,7 @@ authors:
 crystal: ">= 1.5.1"
 
 description: |
-  An AWS SDK for Crystal
+  An unofficial SDK for Crystal, supporting popular AWS APIs
 
 dependencies:
   awscr-signer:
