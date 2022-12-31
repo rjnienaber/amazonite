@@ -2,4 +2,4 @@
 
 set -e
 
-watchexec -c -w src/core -w src/codegen -w src/codegen.cr -w spec/ -- crystal spec
+watchexec -c -w src/core -w codegen -w spec/ -- crystal spec

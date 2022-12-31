@@ -3,7 +3,10 @@ require "assert-diff"
 require "http"
 require "webmock"
 
-require "../src/codegen/**"
+require "../codegen/bindings/*"
+require "../codegen/render"
+require "../codegen/service/*"
+
 require "../src/core/**"
 
 require "./mocks/**"

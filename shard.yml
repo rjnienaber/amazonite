@@ -30,4 +30,4 @@ license: MIT
 
 targets:
   codegen:
-    main: src/codegen.cr
+    main: codegen/codegen.cr

@@ -1,6 +1,6 @@
-require "./codegen/bindings/*"
-require "./codegen/render"
-require "./codegen/service/*"
+require "./bindings/*"
+require "./render"
+require "./service/*"
 
 module Amazonite::Codegen
   def self.main
