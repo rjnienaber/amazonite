@@ -4,7 +4,7 @@ require "uri"
 require "uuid"
 
 module Amazonite::Core
-  VERSION = "0.1.2"
+  VERSION = "0.2.1"
 
   class Client
     Log = ::Log.for(self)
