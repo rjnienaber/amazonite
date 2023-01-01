@@ -33,7 +33,7 @@ describe Amazonite::Core::Client do
       .with(body: json, headers: headers)
       .to_return(body: response_json)
 
-    client = described_class.new("HelloWorld_20221002", "helloworld", exception_factory, local_config)
+    client = described_class.new("HelloWorld_20221002", "helloworld", "1.0", exception_factory, local_config)
     response = client.post("Greet", "/foo", json)
 
     response.status.should eq(HTTP::Status::OK)
@@ -50,14 +50,14 @@ describe Amazonite::Core::Client do
       .with(body: "", headers: headers)
 
     local_config = create_mock_config("http://localhost", "custom/user-agent")
-    client = described_class.new("HelloWorld_20221002", "helloworld", exception_factory, local_config)
+    client = described_class.new("HelloWorld_20221002", "helloworld", "1.0", exception_factory, local_config)
     client.post("Salutation", "/", "")
   end
 
   it "uses url from config object" do
     WebMock.stub(:post, "http://localhost:4566/welcome")
 
-    client = described_class.new("HelloWorld_20221002", "helloworld", exception_factory, create_mock_config("http://localhost:4566"))
+    client = described_class.new("HelloWorld_20221002", "helloworld", "1.0", exception_factory, create_mock_config("http://localhost:4566"))
     client.post("Welcome", "/welcome", "")
   end
 
@@ -65,7 +65,7 @@ describe Amazonite::Core::Client do
     response_body = %({"__type": "ResourceInUseException", "message": "Table already exists: Music"})
     WebMock.stub(:post, "http://localhost:4566/shalom").to_return(status: 400, body: response_body)
 
-    client = described_class.new("HelloWorld_20221002", "helloworld", exception_factory, create_mock_config("http://localhost:4566"))
+    client = described_class.new("HelloWorld_20221002", "helloworld", "1.0", exception_factory, create_mock_config("http://localhost:4566"))
 
     e = expect_raises(Amazonite::Core::ResponseException, "Table already exists: Music") do
       client.post("Shalom", "/shalom", "")
@@ -78,7 +78,7 @@ describe Amazonite::Core::Client do
     response_body = "Table already exists: Music"
     WebMock.stub(:post, "http://localhost:4566/toast").to_return(status: 400, body: response_body)
 
-    client = described_class.new("HelloWorld_20221002", "helloworld", exception_factory, create_mock_config("http://localhost:4566"))
+    client = described_class.new("HelloWorld_20221002", "helloworld", "1.0", exception_factory, create_mock_config("http://localhost:4566"))
 
     e = expect_raises(Amazonite::Core::ResponseException, "Table already exists: Music") do
       client.post("Toast", "/toast", "")
@@ -91,7 +91,7 @@ describe Amazonite::Core::Client do
     response_body = %({"__type": "CustomResponseException", "message": "Database connection is unavailable"})
     WebMock.stub(:post, "http://localhost:4566/hail").to_return(status: 500, body: response_body)
 
-    client = described_class.new("HelloWorld_20221002", "helloworld", exception_factory, create_mock_config("http://localhost:4566"))
+    client = described_class.new("HelloWorld_20221002", "helloworld", "1.0", exception_factory, create_mock_config("http://localhost:4566"))
 
     e = expect_raises(CustomResponseException, "Database connection is unavailable") do
       client.post("Hail", "/hail", "")

@@ -7,7 +7,7 @@ module Amazonite::DynamoDBV2
     EXCEPTION_FACTORY = ExceptionFactory.new
 
     def initialize(config = Core::Config.new)
-      super("DynamoDB_20120810", "dynamodb", EXCEPTION_FACTORY, config)
+      super("DynamoDB_20120810", "dynamodb", "1.0", EXCEPTION_FACTORY, config)
     end
 
     def delete_table(input : ADDB::DeleteTableInput) : Core::ParsedResponse(ADDB::DeleteTableOutput)

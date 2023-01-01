@@ -6,7 +6,7 @@ module Amazonite::OpsWorksV2
     Log = ::Log.for("amazonite.opsworks_v2.client")
 
     def initialize(config = Core::Config.new)
-      super("OpsWorks_20130218", "opsworks", nil, config)
+      super("OpsWorks_20130218", "opsworks", "1.1", nil, config)
     end
 
     def describe_operating_systems : Core::ParsedResponse(AOW::DescribeOperatingSystemsResponse)

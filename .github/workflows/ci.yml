@@ -33,7 +33,7 @@ jobs:
       - name: check formatting
         run: crystal tool format --check
       - name: check coding standards
-        run: ./bin/ameba
+        run: ./bin/ameba integration/ src/core/ codegen/ spec/
       - name: perform code generation
         run: shards run codegen
       - name: validate generated code

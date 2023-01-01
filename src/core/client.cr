@@ -12,6 +12,7 @@ module Amazonite::Core
     def initialize(
       @target_prefix : String,
       @endpoint_prefix : String,
+      @json_version : String,
       @exception_factory : ResponseExceptionFactory,
       @config = Config.new
     )
@@ -74,7 +75,7 @@ module Amazonite::Core
       end
       headers = HTTP::Headers.new
       headers["X-Amz-Target"] = "#{@target_prefix}.#{command}"
-      headers["Content-Type"] = "application/x-amz-json-1.0"
+      headers["Content-Type"] = "application/x-amz-json-#{@json_version}"
       headers["User-Agent"] = user_agent
       headers
     end

@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     Log = ::Log.for("amazonite.dynamodb_v2.client")
 
     def initialize(config = Core::Config.new)
-      super("DynamoDB_20120810", "dynamodb", nil, config)
+      super("DynamoDB_20120810", "dynamodb", "1.0", nil, config)
     end
 
     def put_item(input : ADDB::PutItemInput) : Core::ParsedResponse(ADDB::PutItemOutput)

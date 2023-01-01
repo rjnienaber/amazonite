@@ -3,15 +3,17 @@ module Amazonite::Codegen::Bindings
   class Operations < Base
     @target_prefix : String
     @endpoint_prefix : String
+    @json_version : String
     @operations : Array(Crinja::Value)
 
-    getter operations, target_prefix, endpoint_prefix, has_errors
+    getter operations, target_prefix, endpoint_prefix, json_version, has_errors
 
     def initialize(description : Amazonite::Codegen::Service::Description, has_errors : Bool | Nil = nil)
       metadata = description.metadata
       @has_errors = has_errors.nil? ? description.has_errors : has_errors
       @target_prefix = metadata.target_prefix
       @endpoint_prefix = metadata.endpoint_prefix
+      @json_version = metadata.json_version
       @operations = description.operations.map do |o|
         output = if o.output.nil?
                    "Core::Response"

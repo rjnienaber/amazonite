@@ -25,7 +25,7 @@ model = DB::CreateTableInput.new(
   provisioned_throughput: DB::ProvisionedThroughput.new(10, 5),
 )
 
-client = DB::Client.new
+client = DB::Client.new # read credentials from environment variables
 response = client.create_table(model)
 
 puts response.http.status_code # 200
@@ -42,11 +42,21 @@ Artist
 ```
 
 ## Supported APIs
+API types that can be generated:
+* `json`
+
+API types that are in progress:
+* `rest-json`
+* `query`
+
 | Name          | Supported?      |Integration Tests  | Notes                                                                 |
 | ------------- | :-------------: | :---------------: |-------------                                                          |
 | DynamoDB      | ✅              |✅                 |                                                                       |
+| SSM           | ✅              |✅                 |                                                                       |
 | S3            |  🚫             | 🚫                | Consider using [awscr-s3](https://github.com/taylorfinnell/awscr-s3)  |
 
+For example usage, please look at [the integration tests](integration). If you need an API that is not listed here,
+please open an issue or pull request with the generated code.
 
 ## Installation
 

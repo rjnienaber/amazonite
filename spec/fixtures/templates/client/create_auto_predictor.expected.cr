@@ -6,7 +6,7 @@ module Amazonite::ForecastV2
     Log = ::Log.for("amazonite.forecast_v2.client")
 
     def initialize(config = Core::Config.new)
-      super("AmazonForecast", "forecast", nil, config)
+      super("AmazonForecast", "forecast", "1.1", nil, config)
     end
 
     def create_auto_predictor(input : AF::CreateAutoPredictorRequest) : Core::ParsedResponse(AF::CreateAutoPredictorResponse)

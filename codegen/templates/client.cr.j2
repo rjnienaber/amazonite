@@ -7,7 +7,7 @@ module {{ service.module_name }}
 {% if operations.has_errors %}    EXCEPTION_FACTORY = ExceptionFactory.new
 {% endif %}
     def initialize(config = Core::Config.new)
-      super("{{ operations.target_prefix }}", "{{ operations.endpoint_prefix }}", {% if operations.has_errors %}EXCEPTION_FACTORY, {% else %}nil, {% endif %}config)
+      super("{{ operations.target_prefix }}", "{{ operations.endpoint_prefix }}", "{{ operations.json_version }}", {% if operations.has_errors %}EXCEPTION_FACTORY, {% else %}nil, {% endif %}config)
     end{% for operation in operations.operations %}
 
     def {{ operation.function_name }}{% if operation.has_input %}(input : {{ operation.input }}){% endif %} : {{ operation.output }}
