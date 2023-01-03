@@ -1,10 +1,11 @@
 require "./bindings/*"
-require "./render"
 require "./service/*"
+require "./files"
+require "./render"
 
 module Amazonite::Codegen
   def self.main
-    Service::Files.process("json") do |files|
+    Files.process("query") do |files|
       puts "processing: #{files.current_normal_file}"
 
       description = files.current_description

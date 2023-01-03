@@ -9,4 +9,4 @@ services:
       - "127.0.0.1:4510-4559:4510-4559"  # external services port range
     environment:
       - PERSISTENCE=false
-      - SERVICES=s3,dynamodb,ssm
+      - SERVICES=s3,dynamodb,ssm,sqs
