@@ -1,10 +1,10 @@
-require "./description"
+require "./service/description"
 
-module Amazonite::Codegen::Service
+module Amazonite::Codegen
   class Files
     API_DIR = "aws-sdk-js/apis"
 
-    def self.process(protocol = "json", &)
+    def self.process(protocol = "query", &)
       matches = all_files.compact_map { |f| /#{API_DIR}\/(.+)-\d{4}-\d\d-\d\d\.normal\.json/.match(f) }
       names = Set(String).new
       matches.each do |match|
@@ -43,7 +43,7 @@ module Amazonite::Codegen::Service
       file = current_normal_file
       raise Exception.new("couldn't find 'normal' api file for '#{@name}'") if file.nil?
       version = version_files.keys.size.to_s
-      Description.new(aws_version, current_version_date, version, JSON.parse(File.read(file.as(String))))
+      Service::Description.new(aws_version, current_version_date, version, JSON.parse(File.read(file.as(String))))
     end
 
     def current_normal_file

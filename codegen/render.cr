@@ -1,5 +1,7 @@
 require "crinja"
 
+private alias Protocol = Amazonite::Codegen::Service::Protocol
+
 module Amazonite::Codegen
   class Render
     @env : Crinja | Nil
@@ -27,7 +29,13 @@ module Amazonite::Codegen
 
     def model_file(model : Service::Structure, filepath)
       shape = Amazonite::Codegen::Bindings::Structure.new(model, @description.module_alias)
-      to_file("model.cr", filepath, {"shape" => shape})
+      template_file = case @description.metadata.protocol
+                      when Protocol::JSON then "json_model.cr"
+                      when Protocol::Query then "query_model.cr"
+                      else raise Exception.new("template for protocol '#{@description.metadata.protocol}' not implemented")
+                      end
+
+      to_file(template_file, filepath, {"shape" => shape})
     end
 
     def to_file(template_name : String, filepath : String, bindings = {} of String => Bindings::Base)

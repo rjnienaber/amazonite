@@ -2,6 +2,7 @@ module Amazonite::Codegen::Service
   class Member
     private KNOWN_KEYS = ["shape", "documentation", "idempotencyToken", "box", "deprecated", "deprecatedMessage",
                           "location", "locationName", "jsonvalue", # TODO: should return JSON::Any for this?
+                          "flattened"
     ]
 
     @is_enum_type : Bool | Nil
