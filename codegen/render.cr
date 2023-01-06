@@ -13,27 +13,26 @@ module Amazonite::Codegen
     end
 
     def exception_factory_file(filepath)
-      errors = Amazonite::Codegen::Bindings::Errors.new(@description.error_names)
+      errors = Bindings::Errors.new(@description.error_names)
       to_file("exception_factory.cr", filepath, {"errors" => errors})
     end
 
     def client_file(filepath)
-      operations = Amazonite::Codegen::Bindings::Operations.new(@description)
+      operations = Bindings::Operations.new(@description)
       to_file("client.cr", filepath, {"operations" => operations})
     end
 
     def enum_file(e : Service::Enum, filepath)
-      shape = Amazonite::Codegen::Bindings::Enum.new(e)
+      shape = Bindings::Enum.new(e)
       to_file("enum.cr", filepath, {"shape" => shape})
     end
 
     def model_file(model : Service::Structure, filepath)
-      shape = Amazonite::Codegen::Bindings::JsonStructure.new(model, @description.module_alias)
       binding, template_file = case @description.metadata.protocol
                       when Protocol::JSON
-                        [Amazonite::Codegen::Bindings::JsonStructure.new(model, @description.module_alias), "json_model.cr"]
+                        [Bindings::JsonStructure.new(model, @description.module_alias), "json_model.cr"]
                       when Protocol::Query
-                        [Amazonite::Codegen::Bindings::XmlStructure.new(model, @description.module_alias), "query_model.cr"]
+                        [Bindings::XmlStructure.new(model, @description.module_alias), "query_model.cr"]
                       else
                         raise Exception.new("template for protocol '#{@description.metadata.protocol}' not implemented")
                       end

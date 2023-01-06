@@ -16,36 +16,50 @@ describe "xml_model.cr.j2 template" do
     it "'CreateQueueResult'" do
       actual = render_xml_model("CreateQueueResult").strip
 
-      expected = load_fixture("templates", "query_model", "create_queue_result.expected.cr").strip
+      expected = load_fixture("templates", "xml_model", "create_queue_result.expected.cr").strip
       actual.strip.should eq_diff expected.strip
     end
 
     it "'BatchResultErrorEntry'" do
       actual = render_xml_model("BatchResultErrorEntry").strip
 
-      expected = load_fixture("templates", "query_model", "batch_result_error_entry.expected.cr").strip
+      expected = load_fixture("templates", "xml_model", "batch_result_error_entry.expected.cr").strip
       actual.should eq_diff expected
     end
 
     it "'SendMessageBatchResult'" do
       actual = render_xml_model("SendMessageBatchResult")
 
-      expected = load_fixture("templates", "query_model", "send_message_batch_result.expected.cr").strip
+      expected = load_fixture("templates", "xml_model", "send_message_batch_result.expected.cr").strip
       actual.should eq_diff expected
     end
 
     it "'SendMessageBatchResultEntry'" do
       actual = render_xml_model("SendMessageBatchResultEntry")
 
-      expected = load_fixture("templates", "query_model", "send_message_batch_result_entry.expected.cr").strip
+      expected = load_fixture("templates", "xml_model", "send_message_batch_result_entry.expected.cr").strip
       actual.should eq_diff expected
     end
 
-    pending "'DeleteMessageResponse'"
+    it "'ReceiveMessageResult'" do
+      actual = render_xml_model("ReceiveMessageResult")
 
-    pending "handles enums"
+      expected = load_fixture("templates", "xml_model", "receive_message_result.expected.cr").strip
+      actual.should eq_diff expected
+    end
+
+    # it "'Message'" do
+    #   # TODO: need to figure out how to parse this using 'test.cr'
+    #   actual = render_xml_model("Message")
+
+    #   expected = load_fixture("templates", "xml_model", "message.expected.cr").strip
+    #   actual.should eq_diff expected
+    # end
+
     pending "handles numbers"
     pending "handles maps"
+    pending "'DeleteMessageResponse'"
+    pending "check that "
   end
 
   pending "builds" # converts a data structure to the required, escaped query string

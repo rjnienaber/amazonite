@@ -11,15 +11,15 @@
     end
 
     def initialize(node : XML::Node){% if shape.needs_values %}
-      values = {} of Symbol => String{% endif %}{% for parameter in shape.required_list_parameters %}
-      @{{ parameter.snake_case_name }} = [] of {{ service.module_alias }}::{{ parameter.underlying_type }}{% endfor %}
+      values = {} of Symbol => String{% endif %}{% for parameter in shape.list_parameters %}
+      {% if not parameter.is_optional %}@{% endif %}{{ parameter.snake_case_name }} = [] of {{ parameter.underlying_type }}{% endfor %}
       node.children.each do |n|
         case n.name{% for parameter in shape.parameters %}
         when "{{ parameter.name }}"{{ parameter.name_spacing }} then {{ parameter.xml_converter }}{% endfor %}
         end
-      end{% if shape.has_required %}
+      end{% if shape.has_assigned %}
 {% endif %}
-{% for parameter in shape.required_parameters %}      @{{ parameter.snake_case_name }} = {{ parameter.value_converter }}
+{% for parameter in shape.assigned_parameters %}      @{{ parameter.snake_case_name }} = {{ parameter.value_converter }}
 {% endfor %}    end
   end
 end

@@ -3,42 +3,40 @@ module Amazonite::Codegen::Bindings
   class XmlStructure < Base
     @name : String
     @has_parameters : Bool
-    @has_required : Bool
+    @has_assigned : Bool
     @needs_values : Bool
     @parameters : Array(Crinja::Value)
-    @required_parameters : Array(Crinja::Value)
-    @required_list_parameters : Array(Crinja::Value)
+    @assigned_parameters : Array(Crinja::Value)
+    @list_parameters : Array(Crinja::Value)
 
-    getter name, has_parameters, needs_values, parameters, needs_core_alias, needs_module_alias, required_parameters, required_list_parameters, has_required
+    getter name, has_parameters, needs_values, parameters, needs_core_alias, needs_module_alias, assigned_parameters, list_parameters, has_assigned
 
     def initialize(shape : Amazonite::Codegen::Service::Structure, module_alias : String)
       @name = shape.name
       @needs_core_alias = false
       @needs_module_alias = false
       max_length = shape.members.size.zero? ? 0 : shape.members.map { |m| get_name(m).size }.max
-      crinja_members = shape.members.map do |m|
-        name = m.list? ? m.underlying_crystal_type : m.name
+      @parameters = shape.members.map do |m|
+        name = get_name(m)
 
-        xml_converter = if m.required?
-          if m.list?
-            @needs_module_alias = true
-            "@#{m.snake_case_name} << #{module_alias}::#{m.underlying_crystal_type}.new(n)"
-          else
-            "values[:#{m.snake_case_name}] = n.children[0].to_s"
-          end
+        xml_converter = if m.list?
+          amp = m.required? ? "@" : ""
+          "#{amp}#{m.snake_case_name} << #{m.underlying_crystal_type}.new(n)"
+        elsif m.required?
+          "values[:#{m.snake_case_name}] = n.children[0].to_s"
         else
           "@#{m.snake_case_name} = n.children[0].to_s"
         end
 
-        value_converter = if m.required?
+        value_converter = if m.list? && !m.required?
+                            "#{m.snake_case_name} unless #{m.snake_case_name}.size.zero?"
+                          elsif m.required?
                             case m.crystal_type
                             when "Bool"
                               @needs_core_alias = true
                               "Core::StringUtils.to_bool(values[:#{m.snake_case_name}])"
                             else "values[:#{m.snake_case_name}]"
                             end
-                          else
-                            nil
                           end
 
         Crinja.value({
@@ -54,12 +52,12 @@ module Amazonite::Codegen::Bindings
         })
       end
 
-      optional, @required_parameters = crinja_members.partition { |m| m["is_optional"].raw }
-      @parameters = @required_parameters + optional
-      @required_list_parameters, @required_parameters = @required_parameters.partition { |m| m["is_list"].raw }
+
+      @assigned_parameters = @parameters.select { |m| (m["is_list"].raw && m["is_optional"].raw) || (!m["is_list"].raw && !m["is_optional"].raw) }
+      @list_parameters = @parameters.select { |m| m["is_list"].raw }
       @has_parameters = shape.members.size > 0
-      @has_required = @required_parameters.size > 0
-      @needs_values = (@required_parameters.size - @required_list_parameters.size) > 0
+      @has_assigned = @assigned_parameters.size > 0
+      @needs_values = (@assigned_parameters.size - list_parameters.size) > 0
     end
 
     private def get_name(member)

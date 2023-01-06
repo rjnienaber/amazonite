@@ -1,5 +1,3 @@
-private alias AS = Amazonite::SqsV1
-
 module Amazonite::SqsV1
   class SendMessageBatchResult
     property successful : Array(SendMessageBatchResultEntry)
@@ -12,12 +10,12 @@ module Amazonite::SqsV1
     end
 
     def initialize(node : XML::Node)
-      @successful = [] of AS::SendMessageBatchResultEntry
-      @failed = [] of AS::BatchResultErrorEntry
+      @successful = [] of SendMessageBatchResultEntry
+      @failed = [] of BatchResultErrorEntry
       node.children.each do |n|
         case n.name
-        when "SendMessageBatchResultEntry" then @successful << AS::SendMessageBatchResultEntry.new(n)
-        when "BatchResultErrorEntry"       then @failed << AS::BatchResultErrorEntry.new(n)
+        when "SendMessageBatchResultEntry" then @successful << SendMessageBatchResultEntry.new(n)
+        when "BatchResultErrorEntry"       then @failed << BatchResultErrorEntry.new(n)
         end
       end
     end
