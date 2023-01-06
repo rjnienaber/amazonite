@@ -28,14 +28,17 @@ module Amazonite::Codegen
     end
 
     def model_file(model : Service::Structure, filepath)
-      shape = Amazonite::Codegen::Bindings::Structure.new(model, @description.module_alias)
-      template_file = case @description.metadata.protocol
-                      when Protocol::JSON then "json_model.cr"
-                      when Protocol::Query then "query_model.cr"
-                      else raise Exception.new("template for protocol '#{@description.metadata.protocol}' not implemented")
+      shape = Amazonite::Codegen::Bindings::JsonStructure.new(model, @description.module_alias)
+      binding, template_file = case @description.metadata.protocol
+                      when Protocol::JSON
+                        [Amazonite::Codegen::Bindings::JsonStructure.new(model, @description.module_alias), "json_model.cr"]
+                      when Protocol::Query
+                        [Amazonite::Codegen::Bindings::XmlStructure.new(model, @description.module_alias), "query_model.cr"]
+                      else
+                        raise Exception.new("template for protocol '#{@description.metadata.protocol}' not implemented")
                       end
 
-      to_file(template_file, filepath, {"shape" => shape})
+      to_file(template_file, filepath, {"shape" => binding})
     end
 
     def to_file(template_name : String, filepath : String, bindings = {} of String => Bindings::Base)

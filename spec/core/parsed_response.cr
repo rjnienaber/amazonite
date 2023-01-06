@@ -1,9 +1,8 @@
 require "../spec_helper"
 
+# TODO: should be JsonParsedResponse, create XmlParsedResponse that includes RequestId element
 describe Amazonite::Core::ParsedResponse do
   class ResponseTest
-    include JSON::Serializable
-
     property name : String
     property surname : String
   end

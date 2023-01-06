@@ -2,9 +2,10 @@ module Amazonite::Codegen::Service
   class Member
     private KNOWN_KEYS = ["shape", "documentation", "idempotencyToken", "box", "deprecated", "deprecatedMessage",
                           "location", "locationName", "jsonvalue", # TODO: should return JSON::Any for this?
-                          "flattened"
+                          "flattened",
     ]
 
+    @is_list_type : Bool | Nil
     @is_enum_type : Bool | Nil
     @is_time_type : Bool | Nil
     @shape_name : String
@@ -25,6 +26,10 @@ module Amazonite::Codegen::Service
       Utils.snake_case_name(self.name)
     end
 
+    def list?
+      @resolver.list?(self.shape_name)
+    end
+
     def enum_type?
       @is_enum_type ||= @resolver.enum?(self.shape_name)
     end
@@ -39,6 +44,10 @@ module Amazonite::Codegen::Service
 
     def crystal_type(required = @required)
       @resolver.crystal_type(@shape_name, required)
+    end
+
+    def underlying_crystal_type
+      @resolver.underlying_crystal_type(@shape_name)
     end
   end
 end

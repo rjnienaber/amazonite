@@ -48,6 +48,10 @@ module Amazonite::Codegen::Service
       @shape_map[shape_name]
     end
 
+    def list?(shape_name)
+      @shape_map[shape_name].type == "list"
+    end
+
     def enum?(shape_name)
       @shape_map[shape_name].is_a?(Enum)
     end
@@ -65,16 +69,25 @@ module Amazonite::Codegen::Service
       crystal_type(@shape_map[shape_name], required)
     end
 
-    def crystal_type(shape : Shape, required)
-      type = map_primitive_types(shape)
+    def underlying_crystal_type(shape_name)
+      shape = @shape_map[shape_name]
+      type = resolve_primitive_types(shape)
       if type.nil?
-        type = map_composite_types(shape)
+        type = resolve_composite_types(shape, false)
+      end
+      type
+    end
+
+    def crystal_type(shape : Shape, required)
+      type = resolve_primitive_types(shape)
+      if type.nil?
+        type = resolve_composite_types(shape)
       end
 
       required ? type : type + " | Nil"
     end
 
-    private def map_primitive_types(shape)
+    private def resolve_primitive_types(shape)
       case shape.type
       when "timestamp" then "Time"
       when "boolean"   then "Bool"
@@ -86,20 +99,20 @@ module Amazonite::Codegen::Service
       end
     end
 
-    private def map_composite_types(shape)
+    private def resolve_composite_types(shape, add_container = true)
       case shape.type
       when "string"    then shape.is_a?(Enum) ? shape.name : "String"
       when "structure" then shape.name
-      when "list"      then resolve_list(shape)
+      when "list"      then resolve_list(shape, add_container)
       when "map"       then resolve_map(shape)
       else
         raise Exception.new("Shape '#{shape.name}' has unknown AWS type: #{shape.type}")
       end
     end
 
-    private def resolve_list(shape)
+    private def resolve_list(shape, add_container)
       list_type = crystal_type(shape.as(List).member.shape_name, true)
-      "Array(#{list_type})"
+      add_container ? "Array(#{list_type})" : list_type
     end
 
     private def resolve_map(shape)
