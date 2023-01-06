@@ -11,9 +11,6 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "BackupName")]
     property backup_name : String
 
-    @[JSON::Field(key: "BackupSizeBytes")]
-    property backup_size_bytes : Int64 | Nil
-
     @[JSON::Field(key: "BackupStatus", converter: ADDB::BackupStatus)]
     property backup_status : BackupStatus
 
@@ -22,6 +19,9 @@ module Amazonite::DynamoDBV2
 
     @[JSON::Field(key: "BackupCreationDateTime", converter: Core::AWSEpochConverter)]
     property backup_creation_date_time : Time
+
+    @[JSON::Field(key: "BackupSizeBytes")]
+    property backup_size_bytes : Int64 | Nil
 
     @[JSON::Field(key: "BackupExpiryDateTime", converter: Core::AWSEpochConverter)]
     property backup_expiry_date_time : Time | Nil

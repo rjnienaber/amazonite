@@ -1,17 +1,17 @@
 module Amazonite::Codegen::Bindings
   @[Crinja::Attributes]
-  class Structure < Base
+  class JsonStructure < Base
     @name : String
-    @members : Array(Crinja::Value)
+    @parameters : Array(Crinja::Value)
     @has_parameters : Bool
 
-    getter name, members, has_parameters, parameters, needs_core_alias, needs_module_alias
+    getter name, has_parameters, parameters, needs_core_alias, needs_module_alias
 
     def initialize(shape : Amazonite::Codegen::Service::Structure, module_alias : String)
       @name = shape.name
       @needs_core_alias = false
       @needs_module_alias = false
-      @members = shape.members.map do |m|
+      crinja_members = shape.members.map do |m|
         converter = if m.time_type?
                       @needs_core_alias = true
                       "Core::AWSEpochConverter"
@@ -29,30 +29,13 @@ module Amazonite::Codegen::Bindings
           type:            m.crystal_type,
           has_converter:   has_converter,
           converter:       converter,
+          is_optional:     !m.required?,
         })
       end
 
       @has_parameters = shape.members.size > 0
-      @parameters = [] of Crinja::Value
-      shape.members.each do |m|
-        next unless m.required?
-
-        parameters << Crinja.value({
-          name:        m.snake_case_name,
-          type:        m.crystal_type,
-          is_optional: false,
-        })
-      end
-
-      shape.members.each do |m|
-        next if m.required?
-
-        parameters << Crinja.value({
-          name:        m.snake_case_name,
-          type:        m.crystal_type,
-          is_optional: true,
-        })
-      end
+      optional, required = crinja_members.partition { |m| m["is_optional"].raw }
+      @parameters = required + optional
     end
   end
 end

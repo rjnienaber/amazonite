@@ -10,7 +10,7 @@ module Amazonite::SqsV1
     def initialize(node : XML::Node)
       node.children.each do |n|
         case n.name
-        when "QueueUrl" then self.queue_url = n.children[0].to_s
+        when "QueueUrl" then @queue_url = n.children[0].to_s
         end
       end
     end

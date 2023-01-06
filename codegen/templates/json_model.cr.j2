@@ -4,12 +4,12 @@
 {% endif %}module {{ service.module_name }}
   class {{ shape.name }}
     include JSON::Serializable
-{% for member in shape.members %}
-    @[JSON::Field(key: "{{ member.name }}"{% if member.has_converter %}, converter: {{ member.converter }}{% endif %})]
-    property {{ member.snake_case_name }} : {{ member.type }}
+{% for parameter in shape.parameters %}
+    @[JSON::Field(key: "{{ parameter.name }}"{% if parameter.has_converter %}, converter: {{ parameter.converter }}{% endif %})]
+    property {{ parameter.snake_case_name }} : {{ parameter.type }}
 {% endfor %}
     def initialize{% if shape.has_parameters %}({% for parameter in shape.parameters %}
-      @{{ parameter.name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %}{% if loop.revindex0 != 0 %},{% endif %}{% endfor %}
+      @{{ parameter.snake_case_name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %}{% if loop.revindex0 != 0 %},{% endif %}{% endfor %}
     ){% endif %}
     end
   end

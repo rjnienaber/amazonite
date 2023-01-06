@@ -9,8 +9,8 @@ module Amazonite::Codegen::Service
     def self.from_json(json : ::JSON::Any) : Protocol
       value = json["protocol"].as_s
       case value
-      when "json" then Protocol::JSON
-      when "query" then Protocol::Query
+      when "json"      then Protocol::JSON
+      when "query"     then Protocol::Query
       when "rest-json" then Protocol::RestJSON
       else
         raise Exception.new("unknown enum value for 'Protocol': '#{value}'")

@@ -25,3 +25,13 @@ class ServiceJson
     @@files[filepath] = json
   end
 end
+
+def compare_strings(actual : String, expected : String)
+  puts "ACTUAL\n#{actual}"
+  puts "EXPECTED\n#{expected}"
+  actual.lines.zip?(expected.lines).each do |actual, expected|
+    next if actual == expected
+    puts "actual: #{actual.inspect}"
+    puts "expect: #{expected.inspect}"
+  end
+end

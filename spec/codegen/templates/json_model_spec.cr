@@ -6,7 +6,7 @@ def render_json_model(shape_name, spec_filename = "dynamodb-2012-08-10.normal.js
   description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", "2", source)
 
   structure = description.resolver.find(shape_name).as(Amazonite::Codegen::Service::Structure)
-  shape_binding = Amazonite::Codegen::Bindings::Structure.new(structure, description.module_alias)
+  shape_binding = Amazonite::Codegen::Bindings::JsonStructure.new(structure, description.module_alias)
 
   Amazonite::Codegen::Render.new(description).to_s("json_model.cr", {"shape" => shape_binding}).strip
 end
@@ -81,7 +81,7 @@ describe "json_model.cr.j2 template" do
     actual.should eq_diff expected
   end
 
-  it "deal with 'TagKeys'" do
+  it "deal with 'UntagResourceInput'" do
     actual = render_json_model("UntagResourceInput", "backup-gateway-2021-01-01.normal.json")
     expected = load_fixture("templates", "json_model", "untag_resource_input.expected.cr").strip
     actual.should eq_diff expected

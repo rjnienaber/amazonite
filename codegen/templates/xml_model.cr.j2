@@ -1,0 +1,25 @@
+{% if shape.needs_module_alias or shape.needs_core_alias %}{% if shape.needs_module_alias %}private alias {{ service.module_alias }} = {{ service.module_name }}
+{% endif %}{% if shape.needs_core_alias %}private alias Core = Amazonite::Core
+{% endif %}
+{% endif %}module {{ service.module_name }}
+  class {{ shape.name }}{% for parameter in shape.parameters %}
+    property {{ parameter.snake_case_name }} : {{ parameter.type }}{% endfor %}
+
+    def initialize{% if shape.has_parameters %}({% for parameter in shape.parameters %}
+      @{{ parameter.snake_case_name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %}{% if loop.revindex0 != 0 %},{% endif %}{% endfor %}
+    ){% endif %}
+    end
+
+    def initialize(node : XML::Node){% if shape.needs_values %}
+      values = {} of Symbol => String{% endif %}{% for parameter in shape.required_list_parameters %}
+      @{{ parameter.snake_case_name }} = [] of {{ service.module_alias }}::{{ parameter.underlying_type }}{% endfor %}
+      node.children.each do |n|
+        case n.name{% for parameter in shape.parameters %}
+        when "{{ parameter.name }}"{{ parameter.name_spacing }} then {{ parameter.xml_converter }}{% endfor %}
+        end
+      end{% if shape.has_required %}
+{% endif %}
+{% for parameter in shape.required_parameters %}      @{{ parameter.snake_case_name }} = {{ parameter.value_converter }}
+{% endfor %}    end
+  end
+end
