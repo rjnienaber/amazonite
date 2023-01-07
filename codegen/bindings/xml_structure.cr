@@ -18,7 +18,7 @@ module Amazonite::Codegen::Bindings
       max_length = shape.members.size.zero? ? 0 : shape.members.map { |m| get_name(m).size }.max
       parameters = shape.members.map do |m|
         name = get_name(m)
-
+        underlying_type, _ = m.underlying_crystal_type
         Crinja.value({
           is_list:         m.list_type?,
           is_optional:     !m.required?,
@@ -26,7 +26,7 @@ module Amazonite::Codegen::Bindings
           name_spacing:    " " * (max_length - name.size),
           snake_case_name: m.snake_case_name,
           type:            m.crystal_type,
-          underlying_type: m.underlying_crystal_type,
+          underlying_type: underlying_type,
           value_converter: value_converter(m),
           xml_converter:   xml_converter(m)
         })
@@ -44,7 +44,8 @@ module Amazonite::Codegen::Bindings
 
     private def get_name(member)
       if member.list_type?
-        member.underlying_crystal_type
+        _, resolved_shapes = member.underlying_crystal_type
+        resolved_shapes.last.name
       else
         member.name
       end
@@ -65,9 +66,13 @@ module Amazonite::Codegen::Bindings
 
     private def xml_converter(member)
       if member.list_type?
-        if !member.primitive_type?
-          amp = member.required? ? "@" : ""
-          "#{amp}#{member.snake_case_name} << #{member.underlying_crystal_type}.new(n)"
+        amp = member.required? ? "@" : ""
+        _, resolved_shapes = member.underlying_crystal_type
+        last_shape = resolved_shapes.last
+        if last_shape.primitive?
+          "#{amp}#{member.snake_case_name} << n.children[0].to_s"
+        else
+          "#{amp}#{member.snake_case_name} << #{last_shape.name}.new(n)"
         end
       elsif member.required?
         "values[:#{member.snake_case_name}] = n.children[0].to_s"

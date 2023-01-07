@@ -48,7 +48,7 @@ describe "xml_model.cr.j2 template" do
       actual.should eq_diff expected
     end
 
-    it "'MessageSystemAttributeValue'", focus: true do
+    it "'MessageSystemAttributeValue'" do
       actual = render_xml_model("MessageSystemAttributeValue")
 
       expected = load_fixture("templates", "xml_model", "message_system_attribute_value.expected.cr").strip

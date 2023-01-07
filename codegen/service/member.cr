@@ -44,11 +44,13 @@ module Amazonite::Codegen::Service
     end
 
     def crystal_type(required = @required)
-      @resolver.crystal_type(shape, required)
+      @resolver.crystal_type(shape, required, [] of Shape)
     end
 
-    def underlying_crystal_type
-      @resolver.underlying_crystal_type(@shape_name)
+    def underlying_crystal_type : Tuple(String, Array(Shape))
+      resolved_shapes = [] of Shape
+      value = @resolver.underlying_crystal_type(shape, resolved_shapes)
+      {value, resolved_shapes}
     end
 
     private def shape : Shape
