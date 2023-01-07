@@ -17,5 +17,21 @@ module Amazonite::Codegen::Service
     def snake_case_name
       Utils.snake_case_name(self.name)
     end
+
+    def list?
+      type == "list"
+    end
+
+    def primitive?
+      ShapeResolver::KNOWN_PRIMITIVE_TYPES.includes?(type) && !enum?
+    end
+
+    def enum?
+      is_a?(Service::Enum)
+    end
+
+    def time?
+      type == "timestamp"
+    end
   end
 end

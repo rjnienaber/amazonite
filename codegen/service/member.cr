@@ -9,6 +9,7 @@ module Amazonite::Codegen::Service
     @is_enum_type : Bool | Nil
     @is_time_type : Bool | Nil
     @shape_name : String
+    @shape : Shape | Nil
 
     getter name, shape_name
 
@@ -26,28 +27,35 @@ module Amazonite::Codegen::Service
       Utils.snake_case_name(self.name)
     end
 
-    def list?
-      @resolver.list?(self.shape_name)
+    def primitive_type?
+      shape.primitive?
+    end
+
+    def list_type?
+      shape.list?
     end
 
     def enum_type?
-      @is_enum_type ||= @resolver.enum?(self.shape_name)
-    end
-
-    def enum_type
-      @enum_type ||= resolver.enum(self.shape_name)
+      shape.enum?
     end
 
     def time_type?
-      @is_time_type ||= @resolver.time?(self.shape_name)
+      shape.time?
     end
 
     def crystal_type(required = @required)
-      @resolver.crystal_type(@shape_name, required)
+      @resolver.crystal_type(shape, required)
     end
 
     def underlying_crystal_type
       @resolver.underlying_crystal_type(@shape_name)
+    end
+
+    private def shape : Shape
+      return @shape.as(Shape) if @shape
+      @shape = @resolver.find(@shape_name)
+      raise Exception.new("shape '#{@shape_name}' not found") unless @shape
+      @shape.as(Shape)
     end
   end
 end

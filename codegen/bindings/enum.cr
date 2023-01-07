@@ -8,7 +8,7 @@ module Amazonite::Codegen::Bindings
 
     getter name, values, has_aws_mappings, aws_mappings, crystal_mappings
 
-    def initialize(shape : Amazonite::Codegen::Service::Enum)
+    def initialize(shape : Amazonite::Codegen::Service::Enum, @protocol : Amazonite::Codegen::Service::Protocol)
       @name = shape.name
       @values = shape.values
       @has_aws_mappings = shape.aws_mappings?

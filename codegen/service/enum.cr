@@ -1,5 +1,4 @@
 module Amazonite::Codegen::Service
-  # TODO: rename to Enumeration
   class Enum < Shape
     def self.enum?(json : JSON::Any)
       !!json["enum"]?

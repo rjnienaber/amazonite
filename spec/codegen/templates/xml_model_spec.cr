@@ -48,6 +48,15 @@ describe "xml_model.cr.j2 template" do
       actual.should eq_diff expected
     end
 
+    it "'MessageSystemAttributeValue'", focus: true do
+      actual = render_xml_model("MessageSystemAttributeValue")
+
+      expected = load_fixture("templates", "xml_model", "message_system_attribute_value.expected.cr").strip
+      actual.should eq_diff expected
+    end
+
+    pending "'MessageAttributeValue'"
+
     # it "'Message'" do
     #   # TODO: need to figure out how to parse this using 'test.cr'
     #   actual = render_xml_model("Message")

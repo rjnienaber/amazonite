@@ -49,7 +49,7 @@ API types that are in progress:
 * `rest-json`
 * `query`
 
-| Name          | Supported?      |Integration Tests  | Notes                                                                 |
+| Name          | Generated?      |Integration Tests?  | Notes                                                                 |
 | ------------- | :-------------: | :---------------: |-------------                                                          |
 | DynamoDB      | ✅              |✅                 |                                                                       |
 | SSM           | ✅              |✅                 |                                                                       |

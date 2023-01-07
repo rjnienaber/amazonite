@@ -1,15 +1,16 @@
 module Amazonite::Codegen::Service
   class ShapeResolver
+    KNOWN_PRIMITIVE_TYPES = ["string", "boolean", "timestamp", "long", "integer", "blob", "double", "float"]
+
     private KNOWN_DATA_STRUCTS    = ["structure", "list", "map"]
-    private KNOWN_PRIMITIVE_TYPES = ["string", "boolean", "timestamp", "long", "integer", "blob",
-                                     "double", "float"]
     private KNOWN_AWS_TYPES = KNOWN_DATA_STRUCTS + KNOWN_PRIMITIVE_TYPES
 
     def self.load_json(json : JSON::Any)
       resolver = ShapeResolver.new
+      shape_types = Set(String).new
       json.as_h.each do |name, obj|
-        shape = if Enum.enum?(obj)
-                  Enum.new(name, obj)
+        shape = if Service::Enum.enum?(obj)
+                  Service::Enum.new(name, obj)
                 elsif List.list?(obj)
                   List.new(name, obj, resolver)
                 elsif Map.map?(obj)
@@ -20,53 +21,33 @@ module Amazonite::Codegen::Service
                   Shape.new(name, obj)
                 end
         resolver.add(shape)
+        shape_types.add(shape.type)
       end
 
-      primitive_types = resolver.shapes.map(&.type).to_set
-      unknown_types = (primitive_types - KNOWN_AWS_TYPES).join("\", \"")
+      unknown_types = (shape_types - KNOWN_AWS_TYPES).join("\", \"")
       raise Exception.new("unknown types: \"#{unknown_types}\"") unless unknown_types.empty?
 
       resolver
     end
 
     @shape_map : Hash(String, Shape)
-    @shapes : Array(Shape)
 
-    getter shape_map, shapes
+    getter shape_map
 
     def initialize
       @shape_map = {} of String => Shape
-      @shapes = [] of Shape
     end
 
     def add(shape)
       @shape_map[shape.name] = shape
-      @shapes << shape
+    end
+
+    def shapes
+      @shape_map.values
     end
 
     def find(shape_name)
       @shape_map[shape_name]
-    end
-
-    def list?(shape_name)
-      @shape_map[shape_name].type == "list"
-    end
-
-    def enum?(shape_name)
-      @shape_map[shape_name].is_a?(Enum)
-    end
-
-    def time?(shape_name)
-      @shape_map[shape_name].type == "timestamp"
-    end
-
-    def enum(shape_name)
-      raise Exception.new("Shape '#{shape_name}' is not an enum") unless enum?(shape_name)
-      @shape_map[shape_name].as(Enum)
-    end
-
-    def crystal_type(shape_name, required)
-      crystal_type(@shape_map[shape_name], required)
     end
 
     def underlying_crystal_type(shape_name)
@@ -87,6 +68,10 @@ module Amazonite::Codegen::Service
       required ? type : type + " | Nil"
     end
 
+    private def crystal_type(shape_name, required)
+      crystal_type(@shape_map[shape_name], required)
+    end
+
     private def resolve_primitive_types(shape)
       case shape.type
       when "timestamp" then "Time"
@@ -101,7 +86,7 @@ module Amazonite::Codegen::Service
 
     private def resolve_composite_types(shape, add_container = true)
       case shape.type
-      when "string"    then shape.is_a?(Enum) ? shape.name : "String"
+      when "string"    then shape.is_a?(Service::Enum) ? shape.name : "String"
       when "structure" then shape.name
       when "list"      then resolve_list(shape, add_container)
       when "map"       then resolve_map(shape)

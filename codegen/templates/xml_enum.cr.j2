@@ -1,0 +1,21 @@
+module {{ service.module_name }}
+  enum {{ shape.name }}{% for e in shape.values %}
+    {{ e }}{% endfor %}
+{% if shape.has_aws_mappings %}
+    def to_s : String
+      case self
+      {% for value in shape.aws_mappings %}when {{ value[0] }}{{ value[1] }} then "{{ value[2] }}"
+      {% endfor %}else
+        raise Exception.new("unknown enum value for '{{ shape.name }}' when stringifying '#{self}'")
+      end
+    end{% endif %}
+
+    def self.from_string(value : String) : {{ shape.name }}
+      case value
+      {% for value in shape.crystal_mappings %}when "{{ value[0] }}"{{ value[1] }} then {{ value[2] }}
+      {% endfor %}else
+        raise Exception.new("unknown enum value for '{{ shape.name }}' when parsing '#{value}'")
+      end
+    end
+  end
+end
