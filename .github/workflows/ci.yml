@@ -14,6 +14,10 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: setup openssl (macos)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install pkg-config
       - name: download source
         uses: actions/checkout@v3
         with:
