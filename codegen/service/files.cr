@@ -4,7 +4,7 @@ module Amazonite::Codegen::Service
   class Files
     API_DIR = "aws-sdk-js/apis"
 
-    def self.process(protocol = "json")
+    def self.process(protocol = "json", &)
       matches = all_files.compact_map { |f| /#{API_DIR}\/(.+)-\d{4}-\d\d-\d\d\.normal\.json/.match(f) }
       names = Set(String).new
       matches.each do |match|

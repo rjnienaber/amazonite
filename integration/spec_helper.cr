@@ -3,7 +3,7 @@ require "amazonite/dynamodb_v2"
 require "amazonite/ssm_v1"
 require "./helpers"
 
-def wait_until
+def wait_until(&)
   counter = 0
   loop do
     break if yield
