@@ -24,7 +24,7 @@ development_dependencies:
     branch: master
   ameba:
     github: crystal-ameba/ameba
-    version: ~> 1.0.0
+    version: ~> 1.4.0
 
 license: Apache-2.0
 

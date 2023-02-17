@@ -43,7 +43,7 @@ module Amazonite::Core
       url
     end
 
-    def user_agent(&builder) : String
+    def user_agent(&) : String
       unless @user_agent.nil?
         Log.debug { "using user_agent from constructor: #{@user_agent}" }
         return @user_agent.as(String)
