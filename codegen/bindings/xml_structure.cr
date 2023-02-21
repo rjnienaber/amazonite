@@ -142,7 +142,7 @@ module Amazonite::Codegen::Bindings
       when "Time"
         @needs_core_alias = true
         "Core::StringUtils.to_time"
-      when "Int64", "Float64" then "#{underlying_crystal_type}.new"
+      when "Int32", "Int64", "Float64" then "#{underlying_crystal_type}.new"
       when "String" then nil
       else
         raise Exception.new("unable convert to crystal type '#{underlying_crystal_type}' from '#{member.name}'")

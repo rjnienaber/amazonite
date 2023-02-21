@@ -62,6 +62,13 @@ describe "xml_model.cr.j2 template" do
       actual.should eq_diff expected
     end
 
+    it "handles integers" do
+      actual = render_xml_model("ReservedCacheNode", "elasticache-2015-02-02.normal.json")
+
+      expected = load_fixture("templates", "xml_model", "reserved_cache_node.expected.cr").strip
+      actual.should eq_diff expected
+    end
+
     it "handles doubles" do
       actual = render_xml_model("GetSendQuotaResponse", "email-2010-12-01.normal.json")
 
@@ -76,8 +83,12 @@ describe "xml_model.cr.j2 template" do
       actual.should eq_diff expected
     end
 
-    pending "handles integers"
-    pending "handles blob"
+    it "handles blobs" do
+      actual = render_xml_model("VirtualMFADevice", "iam-2010-05-08.normal.json")
+
+      expected = load_fixture("templates", "xml_model", "virtual_mfa_device.expected.cr").strip
+      actual.should eq_diff expected
+    end
   end
 
   describe "builds" do
