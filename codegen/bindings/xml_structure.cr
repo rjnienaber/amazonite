@@ -5,7 +5,6 @@ module Amazonite::Codegen::Bindings
       XmlElement
       KeyXmlElement
       ValueXmlElement
-      ValuesHash
     end
 
     @name : String
@@ -42,10 +41,10 @@ module Amazonite::Codegen::Bindings
           key_type:            map_key.nil? ? nil : map_key.crystal_type,
           value_type:          map_value.nil? ? nil : map_value.crystal_type,
           underlying_type:     underlying_type,
-          value_converter:     value_converter(m),
-          key_xml_converter:   convert_hash_from_xml_string(map_key, ValueSource::KeyXmlElement),
-          value_xml_converter: convert_hash_from_xml_string(map_value, ValueSource::ValueXmlElement),
-          xml_converter:       convert_from_xml_string(m, ValueSource::XmlElement),
+          value_converter:     value_converter(m, is_assigned),
+          key_xml_converter:   convert_from_xml_string(map_key, is_assigned, ValueSource::KeyXmlElement),
+          value_xml_converter: convert_from_xml_string(map_value, is_assigned, ValueSource::ValueXmlElement),
+          xml_converter:       convert_from_xml_string(m, is_assigned, ValueSource::XmlElement),
         })
       end
 
@@ -74,25 +73,28 @@ module Amazonite::Codegen::Bindings
       member.location_name || name
     end
 
-    private def value_converter(member)
-      if !member.required? && (member.list_type? || member.map_type?)
-        "#{member.snake_case_name} unless #{member.snake_case_name}.empty?"
-      elsif member.required?
-        convert_from_xml_string(member, ValueSource::ValuesHash)
-      end
+    private def hash_source?(value_source)
+      [ValueSource::KeyXmlElement, ValueSource::ValueXmlElement].includes?(value_source)
     end
 
-    private def convert_from_xml_string(member : Codegen::Service::Member | Nil, value_source = ValueSource::XmlElement) : String | Nil
+    private def simple_type?(member)
+      member.primitive_type? || member.enum_type? || member.underlying_crystal_type[0] == "String"
+    end
+
+    private def value_converter(member, is_assigned)
+      return nil unless is_assigned
+      return "#{member.snake_case_name} unless #{member.snake_case_name}.empty?" if member.collection_type?
+
+      source = "values[:#{member.snake_case_name}]"
+      converter = get_primitive_converter(member)
+      converter.nil? ? source : "#{converter}(#{source})"
+    end
+
+    private def convert_from_xml_string(member, is_assigned, value_source) : String | Nil
       return nil if member.nil?
 
-      if value_source == ValueSource::ValuesHash
-        converter = get_converter(member, value_source)
-        source = get_source(member, value_source)
-        return converter.nil? ? source : "#{converter}(#{source})"
-      end
-
       source = get_source(member, value_source)
-      converter = get_converter(member, value_source)
+      converter = get_converter(member, value_source, is_assigned)
       operator = member.list_type? ? "<<" : "="
       destination = get_destination(member, value_source)
 
@@ -103,53 +105,33 @@ module Amazonite::Codegen::Bindings
       end
     end
 
-    private def convert_hash_from_xml_string(member : Codegen::Service::Member | Nil, value_source : ValueSource) : String | Nil
-      return nil if member.nil?
-
-      source = get_source(member, value_source)
-      converter = get_converter(member, value_source)
-      destination = value_source == ValueSource::KeyXmlElement ? "key" : "value"
-
-
-      if converter.nil?
-        "#{destination} = #{source}"
-      else
-        "#{destination} = #{converter}(#{source})"
-      end
-
-    end
-
-    private def get_source(member : Codegen::Service::Member, value_source : ValueSource)
-      return "values[:#{member.snake_case_name}]" if value_source == ValueSource::ValuesHash
-
+    private def get_source(member, value_source)
       pos = value_source == ValueSource::ValueXmlElement ? 1 : 0
       xml_position = "n.children[#{pos}]"
-      underlying_crystal_type = member.underlying_crystal_type[0]
 
-      if [ValueSource::KeyXmlElement, ValueSource::ValueXmlElement].includes?(value_source)
-        if member.primitive_type? || member.enum_type?
+      if hash_source?(value_source)
+        if simple_type?(member)
           "#{xml_position}.children[0].to_s"
         else
           xml_position
         end
-      elsif member.primitive_type? || member.enum_type? || underlying_crystal_type == "String"
+      elsif simple_type?(member)
         "#{xml_position}.to_s"
       else
-        "#{underlying_crystal_type}.new(n)"
+        "n"
       end
     end
 
-    private def get_converter(member : Codegen::Service::Member, value_source : ValueSource)
-      if value_source == ValueSource::XmlElement && !member.primitive_type?
-        return nil
-      elsif [ValueSource::ValueXmlElement].includes?(value_source) && !member.primitive_type?
-        type, _ = member.underlying_crystal_type
-        return "#{type}.new"
-      elsif [ValueSource::ValuesHash].includes?(value_source) && member.primitive_type?
-      elsif !member.enum_type? && member.required?
-        return nil
+    private def get_converter(member, value_source, is_assigned)
+      if simple_type?(member)
+        return is_assigned && !hash_source?(value_source) ? nil : get_primitive_converter(member)
       end
 
+      underlying_crystal_type, _ = member.underlying_crystal_type
+      "#{underlying_crystal_type}.new"
+    end
+
+    private def get_primitive_converter(member)
       underlying_crystal_type, _ = member.underlying_crystal_type
       return "#{underlying_crystal_type}.from_string" if member.enum_type?
 
@@ -167,8 +149,10 @@ module Amazonite::Codegen::Bindings
       end
     end
 
-    private def get_destination(member : Codegen::Service::Member, value_source : ValueSource)
-      if member.list_type?
+    private def get_destination(member, value_source)
+      if hash_source?(value_source)
+        value_source == ValueSource::KeyXmlElement ? "key" : "value"
+      elsif member.list_type?
         amp = member.required? ? "@" : ""
         _, resolved_shapes = member.underlying_crystal_type
         last_shape = resolved_shapes.last
