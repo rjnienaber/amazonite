@@ -22,6 +22,10 @@ module Amazonite::Codegen::Service
       type == "list"
     end
 
+    def map?
+      type == "map"
+    end
+
     def primitive?
       ShapeResolver::KNOWN_PRIMITIVE_TYPES.includes?(type) && !enum?
     end

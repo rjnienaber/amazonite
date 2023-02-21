@@ -20,5 +20,4 @@ describe "xml_enum.cr.j2 template" do
   end
 
   pending "'MessageAttributeValue'"
-
 end

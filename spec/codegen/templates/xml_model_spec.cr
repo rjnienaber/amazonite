@@ -55,21 +55,35 @@ describe "xml_model.cr.j2 template" do
       actual.should eq_diff expected
     end
 
-    pending "'MessageAttributeValue'"
+    it "'Message'" do
+      actual = render_xml_model("Message")
 
-    # it "'Message'" do
-    #   # TODO: need to figure out how to parse this using 'test.cr'
-    #   actual = render_xml_model("Message")
+      expected = load_fixture("templates", "xml_model", "message.expected.cr").strip
+      actual.should eq_diff expected
+    end
 
-    #   expected = load_fixture("templates", "xml_model", "message.expected.cr").strip
-    #   actual.should eq_diff expected
-    # end
+    it "handles doubles" do
+      actual = render_xml_model("GetSendQuotaResponse", "email-2010-12-01.normal.json")
 
-    pending "handles numbers"
-    pending "handles maps"
-    pending "'DeleteMessageResponse'"
-    pending "check that "
+      expected = load_fixture("templates", "xml_model", "get_send_quota_response.expected.cr").strip
+      actual.should eq_diff expected
+    end
+
+    it "handles longs and timestamps" do
+      actual = render_xml_model("SendDataPoint", "email-2010-12-01.normal.json")
+
+      expected = load_fixture("templates", "xml_model", "send_data_point.expected.cr").strip
+      actual.should eq_diff expected
+    end
+
+    pending "handles integers"
+    pending "handles blob"
   end
 
-  pending "builds" # converts a data structure to the required, escaped query string
+  describe "builds" do
+    # converts a data structure to the required, escaped query string
+
+    pending "handles integers"
+    pending "handles blob"
+  end
 end

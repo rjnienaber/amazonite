@@ -15,7 +15,7 @@ module Amazonite::SqsV1
         end
       end
 
-      @messages = messages unless messages.size.zero?
+      @messages = messages unless messages.empty?
     end
   end
 end

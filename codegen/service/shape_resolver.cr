@@ -2,8 +2,8 @@ module Amazonite::Codegen::Service
   class ShapeResolver
     KNOWN_PRIMITIVE_TYPES = ["string", "boolean", "timestamp", "long", "integer", "blob", "double", "float"]
 
-    private KNOWN_DATA_STRUCTS    = ["structure", "list", "map"]
-    private KNOWN_AWS_TYPES = KNOWN_DATA_STRUCTS + KNOWN_PRIMITIVE_TYPES
+    private KNOWN_DATA_STRUCTS = ["structure", "list", "map"]
+    private KNOWN_AWS_TYPES    = KNOWN_DATA_STRUCTS + KNOWN_PRIMITIVE_TYPES
 
     def self.load_json(json : JSON::Any)
       resolver = ShapeResolver.new

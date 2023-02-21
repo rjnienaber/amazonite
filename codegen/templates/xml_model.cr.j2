@@ -12,10 +12,14 @@
 
     def initialize(node : XML::Node){% if shape.needs_values %}
       values = {} of Symbol => String{% endif %}{% for parameter in shape.list_parameters %}
-      {% if not parameter.is_optional %}@{% endif %}{{ parameter.snake_case_name }} = [] of {{ parameter.underlying_type }}{% endfor %}
+      {% if not parameter.is_optional %}@{% endif %}{{ parameter.snake_case_name }} = [] of {{ parameter.underlying_type }}{% endfor %}{% for parameter in shape.map_parameters %}
+      {% if not parameter.is_optional %}@{% endif %}{{ parameter.snake_case_name }} = {} of {{ parameter.key_type }} => {{ parameter.value_type }}{% endfor %}
       node.children.each do |n|
         case n.name{% for parameter in shape.parameters %}
-        when "{{ parameter.name }}"{{ parameter.name_spacing }} then {{ parameter.xml_converter }}{% endfor %}
+        when "{{ parameter.name }}"{% if parameter.is_map %}
+          {{ parameter.key_xml_converter }}
+          {{ parameter.value_xml_converter }}
+          {{ parameter.snake_case_name }}[key] = value{% else %}{{ parameter.name_spacing }} then {{ parameter.xml_converter }}{% endif %}{% endfor %}
         end
       end{% if shape.has_assigned %}
 {% endif %}

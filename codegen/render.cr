@@ -25,26 +25,26 @@ module Amazonite::Codegen
     def enum_file(e : Service::Enum, filepath)
       shape = Bindings::Enum.new(e, @description.metadata.protocol)
       template_file = case @description.metadata.protocol
-      when Protocol::JSON
-        "json_model.cr"
-      when Protocol::Query
-        "xml_model.cr"
-      else
-        raise Exception.new("model not implemented for'#{@description.metadata.protocol}' protocol")
-      end
+                      when Protocol::JSON
+                        "json_model.cr"
+                      when Protocol::Query
+                        "xml_model.cr"
+                      else
+                        raise Exception.new("model not implemented for'#{@description.metadata.protocol}' protocol")
+                      end
 
       to_file(template_file, filepath, {"shape" => shape})
     end
 
     def model_file(model : Service::Structure, filepath)
       binding, template_file = case @description.metadata.protocol
-                      when Protocol::JSON
-                        {Bindings::JsonStructure.new(model, @description.module_alias), "json_model.cr"}
-                      when Protocol::Query
-                        {Bindings::XmlStructure.new(model, @description.module_alias), "xml_model.cr"}
-                      else
-                        raise Exception.new("model not implemented for'#{@description.metadata.protocol}' protocol")
-                      end
+                               when Protocol::JSON
+                                 {Bindings::JsonStructure.new(model, @description.module_alias), "json_model.cr"}
+                               when Protocol::Query
+                                 {Bindings::XmlStructure.new(model, @description.module_alias), "xml_model.cr"}
+                               else
+                                 raise Exception.new("model not implemented for'#{@description.metadata.protocol}' protocol")
+                               end
 
       to_file(template_file, filepath, {"shape" => binding})
     end

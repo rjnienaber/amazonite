@@ -1,5 +1,5 @@
 module Amazonite::SqsV1
-  class MessageSystemAttributeValue
+  class MessageAttributeValue
     property data_type : String
     property string_value : String | Nil
     property binary_value : String | Nil
@@ -21,11 +21,11 @@ module Amazonite::SqsV1
       binary_list_values = [] of String
       node.children.each do |n|
         case n.name
-        when "DataType"        then values[:data_type] = n.children[0].to_s
-        when "StringValue"     then @string_value = n.children[0].to_s
-        when "BinaryValue"     then @binary_value = n.children[0].to_s
-        when "StringListValue" then string_list_values << n.children[0].to_s
-        when "BinaryListValue" then binary_list_values << n.children[0].to_s
+        when "DataType"    then values[:data_type] = n.children[0].to_s
+        when "StringValue" then @string_value = n.children[0].to_s
+        when "BinaryValue" then @binary_value = n.children[0].to_s
+        when "String"      then string_list_values << n.children[0].to_s
+        when "Binary"      then binary_list_values << n.children[0].to_s
         end
       end
 

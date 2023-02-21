@@ -5,22 +5,29 @@ module Amazonite::Codegen::Service
                           "flattened",
     ]
 
+    # TODO: remove unused instance variables
     @is_list_type : Bool | Nil
     @is_enum_type : Bool | Nil
     @is_time_type : Bool | Nil
     @shape_name : String
+    @location_name : String | Nil
     @shape : Shape | Nil
 
-    getter name, shape_name
+    getter name, shape_name, location_name
 
     def initialize(@name : String, @required : Bool, json : JSON::Any, @resolver : ShapeResolver)
       Utils.verify_keys(KNOWN_KEYS, json)
       name = json["shape"].as_s
       @shape_name = name[0].upcase + name[1..]
+      @location_name = json["locationName"]? ? json["locationName"].as_s : nil
     end
 
     def required?
       @required
+    end
+
+    def optional?
+      !required?
     end
 
     def snake_case_name
@@ -33,6 +40,19 @@ module Amazonite::Codegen::Service
 
     def list_type?
       shape.list?
+    end
+
+    def map_type?
+      shape.map?
+    end
+
+    def collection_type?
+      list_type? || map_type?
+    end
+
+    def map_types
+      map = shape.as(Service::Map)
+      {map.key, map.value}
     end
 
     def enum_type?
