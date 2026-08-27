@@ -5,7 +5,7 @@ module Amazonite::Codegen::Service
     API_DIR = "aws-sdk-js/apis"
 
     def self.process(protocol = "json", &)
-      matches = all_files.compact_map { |f| /#{API_DIR}\/(.+)-\d{4}-\d\d-\d\d\.normal\.json/.match(f) }
+      matches = all_files.compact_map { |file| /#{API_DIR}\/(.+)-\d{4}-\d\d-\d\d\.normal\.json/.match(file) }
       names = Set(String).new
       matches.each do |match|
         filepath, name = match
@@ -24,7 +24,7 @@ module Amazonite::Codegen::Service
       end
 
       names.to_a.sort.each do |name|
-        service_files = all_files.select { |f| /\/#{name}-\d/.matches?(f) }
+        service_files = all_files.select { |file| /\/#{name}-\d/.matches?(file) }
         yield Files.new(name, service_files)
       end
     end
@@ -59,10 +59,10 @@ module Amazonite::Codegen::Service
     end
 
     private def version_files
-      @version_files unless @version_files.empty?
+      return @version_files unless @version_files.empty?
 
       date_regex = /\d{4}-\d\d-\d\d/
-      @version_files = @files.select { |f| date_regex.match(f) }.group_by do |file|
+      @version_files = @files.select { |file| date_regex.match(file) }.group_by do |file|
         date_regex.match(file).as(Regex::MatchData)[0]
       end
     end

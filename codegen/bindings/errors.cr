@@ -6,8 +6,8 @@ module Amazonite::Codegen::Bindings
     getter names
 
     def initialize(names : Array(String))
-      max_length = names.map(&.size).max
-      @names = names.map { |n| Crinja.value({spacing: " " * (max_length - n.size), value: n}) }
+      max_length = names.max_of(&.size)
+      @names = names.map { |name| Crinja.value({spacing: " " * (max_length - name.size), value: name}) }
     end
   end
 end

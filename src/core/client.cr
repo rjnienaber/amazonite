@@ -14,7 +14,7 @@ module Amazonite::Core
       @endpoint_prefix : String,
       @json_version : String,
       @exception_factory : ResponseExceptionFactory,
-      @config = Config.new
+      @config = Config.new,
     )
     end
 
@@ -69,9 +69,9 @@ module Amazonite::Core
     end
 
     private def build_headers(command)
-      user_agent = @config.user_agent do |u|
+      user_agent = @config.user_agent do |agent|
         hyphenated_command = command.scan(/[A-Z]+[a-z]*/).map(&.[0].downcase).join("-")
-        "#{u} command/#{@endpoint_prefix}.#{hyphenated_command}"
+        "#{agent} command/#{@endpoint_prefix}.#{hyphenated_command}"
       end
       headers = HTTP::Headers.new
       headers["X-Amz-Target"] = "#{@target_prefix}.#{command}"

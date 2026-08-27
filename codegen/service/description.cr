@@ -7,10 +7,10 @@ module Amazonite::Codegen::Service
     @operations_map = {} of String => Operation
     @operations = [] of Operation
     @resolver : ShapeResolver
-    @error_names : Array(String) | Nil
-    @lower_name : String | Nil
-    @module_name : String | Nil
-    @module_alias : String | Nil
+    @error_names : Array(String)?
+    @lower_name : String?
+    @module_name : String?
+    @module_alias : String?
     @service_id : String
 
     getter aws_version, api_version, version, lower_version, metadata, resolver
@@ -56,11 +56,11 @@ module Amazonite::Codegen::Service
     end
 
     def enums
-      @resolver.shapes.select(Service::Enum).map { |s| s.as(Service::Enum) }
+      @resolver.shapes.select(Service::Enum).map { |shape| shape.as(Service::Enum) }
     end
 
     def structures
-      @resolver.shapes.select(Service::Structure).map { |s| s.as(Service::Structure) }
+      @resolver.shapes.select(Service::Structure).map { |shape| shape.as(Service::Structure) }
     end
 
     def module_name

@@ -24,7 +24,7 @@ describe "DynamoDB: basic crud operations" do
       wait_until do
         client.describe_table(DB::DescribeTableInput.new(table_name))
         false
-      rescue e : AC::ResponseException
+      rescue AC::ResponseException
         true
       end
     end

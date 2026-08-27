@@ -23,7 +23,7 @@ module Amazonite::Core
       ResponseException.new(response, response.body)
     end
 
-    abstract def create(exception_type : String | Nil, http : HTTP::Client::Response, message : String | Nil, code : String | Nil) : ResponseException | Nil
+    abstract def create(exception_type : String?, http : HTTP::Client::Response, message : String?, code : String?) : ResponseException?
 
     private def parse_exception_type(exception_type : String)
       parts = exception_type.split("#")

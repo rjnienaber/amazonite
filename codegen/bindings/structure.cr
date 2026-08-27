@@ -11,22 +11,20 @@ module Amazonite::Codegen::Bindings
       @name = shape.name
       @needs_core_alias = false
       @needs_module_alias = false
-      @members = shape.members.map do |m|
-        converter = if m.time_type?
+      @members = shape.members.map do |member|
+        converter = if member.time_type?
                       @needs_core_alias = true
                       "Core::AWSEpochConverter"
-                    elsif m.enum_type?
+                    elsif member.enum_type?
                       @needs_module_alias = true
-                      "#{module_alias}::#{m.crystal_type(true)}"
-                    else
-                      nil
+                      "#{module_alias}::#{member.crystal_type(true)}"
                     end
         has_converter = !!converter
 
         Crinja.value({
-          name:            m.name,
-          snake_case_name: m.snake_case_name,
-          type:            m.crystal_type,
+          name:            member.name,
+          snake_case_name: member.snake_case_name,
+          type:            member.crystal_type,
           has_converter:   has_converter,
           converter:       converter,
         })
@@ -34,22 +32,22 @@ module Amazonite::Codegen::Bindings
 
       @has_parameters = shape.members.size > 0
       @parameters = [] of Crinja::Value
-      shape.members.each do |m|
-        next unless m.required?
+      shape.members.each do |member|
+        next unless member.required?
 
         parameters << Crinja.value({
-          name:        m.snake_case_name,
-          type:        m.crystal_type,
+          name:        member.snake_case_name,
+          type:        member.crystal_type,
           is_optional: false,
         })
       end
 
-      shape.members.each do |m|
-        next if m.required?
+      shape.members.each do |member|
+        next if member.required?
 
         parameters << Crinja.value({
-          name:        m.snake_case_name,
-          type:        m.crystal_type,
+          name:        member.snake_case_name,
+          type:        member.crystal_type,
           is_optional: true,
         })
       end

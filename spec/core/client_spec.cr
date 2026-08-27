@@ -4,7 +4,7 @@ class CustomResponseException < Amazonite::Core::ResponseException
 end
 
 class CustomClientExceptionFactory < Amazonite::Core::ResponseExceptionFactory
-  def create(exception_type, http, message, code) : Amazonite::Core::ResponseException | Nil
+  def create(exception_type, http, message, code) : Amazonite::Core::ResponseException?
     case exception_type
     when "CustomResponseException" then CustomResponseException.new(http, message, code)
     end
@@ -27,7 +27,7 @@ describe Amazonite::Core::Client do
     headers = {
       "X-Amz-Target" => "HelloWorld_20221002.Greet",
       "Content-Type" => "application/x-amz-json-1.0",
-      "User-Agent"   => local_config.user_agent { |u| "#{u} command/helloworld.greet" },
+      "User-Agent"   => local_config.user_agent { |agent| "#{agent} command/helloworld.greet" },
     }
     WebMock.stub(:post, "http://www.example.com/foo")
       .with(body: json, headers: headers)

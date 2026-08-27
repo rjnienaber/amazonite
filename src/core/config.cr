@@ -5,19 +5,19 @@ module Amazonite::Core
     @access_key_id : String
     @secret_access_key : String
     @region : String
-    @base_url : String | Nil
+    @base_url : String?
     @ini_parser : IniParser
 
     getter access_key_id, secret_access_key, region, base_url
 
     def initialize(
-      access_key_id : String | Nil = nil,
-      secret_access_key : String | Nil = nil,
-      region : String | Nil = nil,
-      profile : String | Nil = nil,
-      @base_url : String | Nil = nil,
-      @user_agent : String | Nil = nil,
-      @env : Fetcher = EnvFetcher.new
+      access_key_id : String? = nil,
+      secret_access_key : String? = nil,
+      region : String? = nil,
+      profile : String? = nil,
+      @base_url : String? = nil,
+      @user_agent : String? = nil,
+      @env : Fetcher = EnvFetcher.new,
     )
       @ini_parser = create_ini_parser(profile, @env)
       @access_key_id = resolve_config_value("access_key_id", access_key_id, "AWS_ACCESS_KEY_ID")

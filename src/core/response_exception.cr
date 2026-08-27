@@ -2,7 +2,7 @@ module Amazonite::Core
   class ResponseException < Exception
     getter http, code
 
-    def initialize(@http : HTTP::Client::Response, message : String? = nil, @code : String | Nil = nil)
+    def initialize(@http : HTTP::Client::Response, message : String? = nil, @code : String? = nil)
       super(message)
     end
   end
@@ -11,7 +11,7 @@ module Amazonite::Core
   end
 
   class RequestEntityTooLarge < ResponseException
-    def initialize(@http : HTTP::Client::Response, message : String? = nil, @code : String | Nil = nil)
+    def initialize(@http : HTTP::Client::Response, message : String? = nil, @code : String? = nil)
       super
       @message ||= "Request body must be less than 1 MB"
     end

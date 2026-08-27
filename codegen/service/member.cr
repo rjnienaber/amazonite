@@ -4,8 +4,8 @@ module Amazonite::Codegen::Service
                           "location", "locationName", "jsonvalue", # TODO: should return JSON::Any for this?
     ]
 
-    @is_enum_type : Bool | Nil
-    @is_time_type : Bool | Nil
+    @is_enum_type : Bool?
+    @is_time_type : Bool?
     @shape_name : String
 
     getter name, shape_name
@@ -21,19 +21,19 @@ module Amazonite::Codegen::Service
     end
 
     def snake_case_name
-      Utils.snake_case_name(self.name)
+      Utils.snake_case_name(name)
     end
 
     def enum_type?
-      @is_enum_type ||= @resolver.enum?(self.shape_name)
+      @is_enum_type ||= @resolver.enum?(shape_name)
     end
 
     def enum_type
-      @enum_type ||= resolver.enum(self.shape_name)
+      @enum_type ||= resolver.enum(shape_name)
     end
 
     def time_type?
-      @is_time_type ||= @resolver.time?(self.shape_name)
+      @is_time_type ||= @resolver.time?(shape_name)
     end
 
     def crystal_type(required = @required)

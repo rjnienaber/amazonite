@@ -4,7 +4,7 @@ def render_partial_client(schema_filename : String, has_errors : Bool, *operatio
   source = ServiceJson.load(schema_filename)
   description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", "2", source)
 
-  operations = operation_names.map { |n| description.find_operation(n) }.to_a
+  operations = operation_names.map { |name| description.find_operation(name) }.to_a
   description.operations = operations
   operations_binding = Amazonite::Codegen::Bindings::Operations.new(description, has_errors)
 

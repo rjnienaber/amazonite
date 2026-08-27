@@ -159,12 +159,12 @@ describe Config do
     it "uses default user agent" do
       config = MockConfig.new(key, secret, region)
       expected = "amazonite/0.1.1 Crystal/1.5.0/41573fadc llvm/13.0.2 arch/arm_64-unknown-linux-gnu command/mycommand"
-      config.user_agent { |u| "#{u} command/mycommand" }.should eq(expected)
+      config.user_agent { |agent| "#{agent} command/mycommand" }.should eq(expected)
     end
 
     it "allows setting the user agent" do
       config = MockConfig.new(key, secret, region, user_agent: "another value")
-      config.user_agent { |u| "#{u} command/mycommand" }.should eq("another value")
+      config.user_agent { |agent| "#{agent} command/mycommand" }.should eq("another value")
     end
   end
 end

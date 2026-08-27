@@ -15,7 +15,7 @@ module Amazonite::Codegen::Service
     end
 
     def snake_case_name
-      Utils.snake_case_name(self.name)
+      Utils.snake_case_name(name)
     end
   end
 end

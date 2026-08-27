@@ -4,19 +4,19 @@ module Amazonite::Core
   class IniParser
     Log = ::Log.for(self)
 
-    @credentials_filepath : String | Nil
-    @config_filepath : String | Nil
-    @access_key_id : String | Nil
-    @secret_access_key : String | Nil
-    @region : String | Nil
+    @credentials_filepath : String?
+    @config_filepath : String?
+    @access_key_id : String?
+    @secret_access_key : String?
+    @region : String?
 
     getter profile, credentials_filepath, config_filepath
 
     def initialize(
-      profile : String | Nil = nil,
+      profile : String? = nil,
       @env : Fetcher = EnvFetcher.new, # TODO: move last
-      credentials_filepath : String | Nil = nil,
-      config_filepath : String | Nil = nil
+      credentials_filepath : String? = nil,
+      config_filepath : String? = nil,
     )
       @profile = if profile
                    Log.debug { "using profile from constructor: #{profile}" }
@@ -44,21 +44,21 @@ module Amazonite::Core
 
     def access_key_id
       return @access_key_id if @access_key_id
-      return nil if credentials_content.nil? || @profile.nil?
+      return if credentials_content.nil? || @profile.nil?
       @access_key_id = credentials_content[@profile.as(String)]?.try &.["aws_access_key_id"]?
     end
 
     def secret_access_key
       return @secret_access_key if @secret_access_key
-      return nil if credentials_content.nil? || @profile.nil?
+      return if credentials_content.nil? || @profile.nil?
       @secret_access_key = credentials_content[@profile.as(String)]?.try &.["aws_secret_access_key"]?
     end
 
     def region
       return @region if @region
-      return nil if config_content.nil? || @profile.nil?
+      return if config_content.nil? || @profile.nil?
       config_key = config_content.keys.find(&.includes?(profile.as(String)))
-      return nil if config_key.nil?
+      return if config_key.nil?
       @region = config_content[config_key]?.try &.["region"]?
     end
 
@@ -75,7 +75,7 @@ module Amazonite::Core
     end
 
     private def read_ini_file(filepath)
-      return nil if filepath.nil?
+      return if filepath.nil?
 
       INI.parse(File.read(filepath.as(String)))
     end

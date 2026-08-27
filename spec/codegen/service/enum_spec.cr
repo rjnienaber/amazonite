@@ -7,159 +7,159 @@ end
 # TODO: use examples from json instead of listing it here
 describe Amazonite::Codegen::Service::Enum do
   crystal_convention_json = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "ConditionalCheckFailed",
-      "ItemCollectionSizeLimitExceeded",
-      "RequestLimitExceeded"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "ConditionalCheckFailed",
+        "ItemCollectionSizeLimitExceeded",
+        "RequestLimitExceeded"
+      ]
+    }
+    JSON
 
   screaming_snake_case_json = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "PROVISIONED",
-      "PAY_PER_REQUEST"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "PROVISIONED",
+        "PAY_PER_REQUEST"
+      ]
+    }
+    JSON
 
   all_upper_case_json = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "ADD",
-      "PUT",
-      "DELETE"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "ADD",
+        "PUT",
+        "DELETE"
+      ]
+    }
+    JSON
 
   enums_with_numbers = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "AES256",
-      "KMS"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "AES256",
+        "KMS"
+      ]
+    }
+    JSON
 
   enums_with_mixed_case = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "RSA_2048",
-      "RSA_4096",
-      "EC_prime256v1",
-      "EC_secp384r1"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "RSA_2048",
+        "RSA_4096",
+        "EC_prime256v1",
+        "EC_secp384r1"
+      ]
+    }
+    JSON
 
   enums_with_colons = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "ecs:service:DesiredCount",
-      "ec2:spot-fleet-request:TargetCapacity",
-      "dynamodb:table:ReadCapacityUnits",
-      "dynamodb:index:ReadCapacityUnits",
-      "elasticmapreduce:instancegroup:InstanceCount"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "ecs:service:DesiredCount",
+        "ec2:spot-fleet-request:TargetCapacity",
+        "dynamodb:table:ReadCapacityUnits",
+        "dynamodb:index:ReadCapacityUnits",
+        "elasticmapreduce:instancegroup:InstanceCount"
+      ]
+    }
+    JSON
 
   enums_with_hyphens = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "aws-flow-ruby",
-      "java",
-      "rails",
-      "php",
-      "ec2"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "aws-flow-ruby",
+        "java",
+        "rails",
+        "php",
+        "ec2"
+      ]
+    }
+    JSON
 
   enums_with_periods = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "Standard",
-      "CostCategoryExpression.v1",
-      "G.025X"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "Standard",
+        "CostCategoryExpression.v1",
+        "G.025X"
+      ]
+    }
+    JSON
 
   enums_with_mixed_case_and_hyphens = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "ko",
-      "zh",
-      "zh-TW"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "ko",
+        "zh",
+        "zh-TW"
+      ]
+    }
+    JSON
 
   enums_with_forward_slashes = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "application/pdf",
-      "AWS/Rekognition/DetectModerationLabels/Image/V3"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "application/pdf",
+        "AWS/Rekognition/DetectModerationLabels/Image/V3"
+      ]
+    }
+    JSON
 
   enums_with_spaces = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "Registered",
-      "Topic not found"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "Registered",
+        "Topic not found"
+      ]
+    }
+    JSON
 
   enums_with_non_word_characters = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "One-Way: Outgoing",
-      "One-Way: Incoming",
-      "Two-Way"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "One-Way: Outgoing",
+        "One-Way: Incoming",
+        "Two-Way"
+      ]
+    }
+    JSON
 
   enums_with_hyphens_and_underscores = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "SQL-1_0",
-      "FLINK-1_6",
-      "ZEPPELIN-FLINK-1_0",
-      "FLINK-1_13"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "SQL-1_0",
+        "FLINK-1_6",
+        "ZEPPELIN-FLINK-1_0",
+        "FLINK-1_13"
+      ]
+    }
+    JSON
 
   enums_that_are_versions = <<-JSON
-  {
-    "type": "string",
-    "enum": [
-      "5.1",
-      "5.3"
-    ]
-  }
-  JSON
+    {
+      "type": "string",
+      "enum": [
+        "5.1",
+        "5.3"
+      ]
+    }
+    JSON
 
   describe "#values" do
     it "handles values which matches Crystal coding convention" do

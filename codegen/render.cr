@@ -2,7 +2,7 @@ require "crinja"
 
 module Amazonite::Codegen
   class Render
-    @env : Crinja | Nil
+    @env : Crinja?
     @service : Bindings::Service
 
     def initialize(@description : Service::Description)
@@ -41,7 +41,7 @@ module Amazonite::Codegen
     end
 
     private def render(template_name : String, bindings : Crinja::Variables)
-      template = self.template_env.get_template("#{template_name}.j2")
+      template = template_env.get_template("#{template_name}.j2")
       template.render(bindings).strip + "\n"
     end
 

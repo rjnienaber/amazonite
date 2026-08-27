@@ -9,7 +9,7 @@ class ErrorCode < AC::ResponseException
 end
 
 class CustomResponseExceptionFactory < AC::ResponseExceptionFactory
-  def create(exception_type, http, message, code) : AC::ResponseException | Nil
+  def create(exception_type, http, message, code) : AC::ResponseException?
     case exception_type
     when "ResourceNotFoundException" then ResourceNotFoundException.new(http, message, code)
     when "ErrorCode"                 then ErrorCode.new(http, message, code)

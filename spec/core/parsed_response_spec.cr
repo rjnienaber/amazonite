@@ -1,13 +1,13 @@
 require "../spec_helper"
 
+class ResponseTest
+  include JSON::Serializable
+
+  property name : String
+  property surname : String
+end
+
 describe Amazonite::Core::ParsedResponse do
-  class ResponseTest
-    include JSON::Serializable
-
-    property name : String
-    property surname : String
-  end
-
   it "handles responses that are typed" do
     body = %({"name":"John", "surname": "Doe"})
     mock_response = HTTP::Client::Response.new(HTTP::Status::OK, body)

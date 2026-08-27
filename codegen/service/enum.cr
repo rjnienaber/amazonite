@@ -5,11 +5,11 @@ module Amazonite::Codegen::Service
       !!json["enum"]?
     end
 
-    @crystal_values : Array(String) | Nil
-    @modulized_crystal_values : Array(String) | Nil
+    @crystal_values : Array(String)?
+    @modulized_crystal_values : Array(String)?
     @enums : Array(String)
-    @aws_mappings : Array(Tuple(String, String)) | Nil
-    @crystal_mappings : Array(Tuple(String, String)) | Nil
+    @aws_mappings : Array(Tuple(String, String))?
+    @crystal_mappings : Array(Tuple(String, String))?
 
     getter enums
 

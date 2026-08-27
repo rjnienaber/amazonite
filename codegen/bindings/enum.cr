@@ -3,7 +3,7 @@ module Amazonite::Codegen::Bindings
   class Enum < Base
     @name : String
     @values : Array(String)
-    @aws_mappings : Array(Tuple(String, String, String)) | Nil
+    @aws_mappings : Array(Tuple(String, String, String))?
     @crystal_mappings : Array(Tuple(String, String, String))
 
     getter name, values, has_aws_mappings, aws_mappings, crystal_mappings
