@@ -20,6 +20,7 @@ module Amazonite::SsmV1
     ChangeCalendarOverrideRejected
     CompletedWithSuccess
     CompletedWithFailure
+    Exited
 
     def self.to_json(e : AutomationExecutionStatus, json : JSON::Builder) : Nil
       json.string(e.to_s)
@@ -46,6 +47,7 @@ module Amazonite::SsmV1
       when "ChangeCalendarOverrideRejected" then AS::AutomationExecutionStatus::ChangeCalendarOverrideRejected
       when "CompletedWithSuccess"           then AS::AutomationExecutionStatus::CompletedWithSuccess
       when "CompletedWithFailure"           then AS::AutomationExecutionStatus::CompletedWithFailure
+      when "Exited"                         then AS::AutomationExecutionStatus::Exited
       else
         raise Exception.new("unknown enum value for 'AutomationExecutionStatus' when deserializing from json: '#{value}'")
       end

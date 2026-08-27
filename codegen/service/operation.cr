@@ -2,7 +2,7 @@ module Amazonite::Codegen::Service
   class Operation
     private KNOWN_KEYS = ["name", "http", "input", "output", "errors", "documentation", "endpointdiscovery",
                           "endpointoperation", "idempotent", "deprecated", "deprecatedMessage", "authtype",
-                          "endpoint"]
+                          "endpoint", "auth", "staticContextParams"]
 
     private class Http
       getter method, request_uri

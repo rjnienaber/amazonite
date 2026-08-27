@@ -10,9 +10,13 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "Message")]
     property message : String | Nil
 
+    @[JSON::Field(key: "Item")]
+    property item : Hash(String, AttributeValue) | Nil
+
     def initialize(
       @code : BatchStatementErrorCodeEnum | Nil = nil,
       @message : String | Nil = nil,
+      @item : Hash(String, AttributeValue) | Nil = nil,
     )
     end
   end

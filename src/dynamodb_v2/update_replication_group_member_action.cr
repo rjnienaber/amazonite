@@ -13,6 +13,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "ProvisionedThroughputOverride")]
     property provisioned_throughput_override : ProvisionedThroughputOverride | Nil
 
+    @[JSON::Field(key: "OnDemandThroughputOverride")]
+    property on_demand_throughput_override : OnDemandThroughputOverride | Nil
+
     @[JSON::Field(key: "GlobalSecondaryIndexes")]
     property global_secondary_indexes : Array(ReplicaGlobalSecondaryIndex) | Nil
 
@@ -23,6 +26,7 @@ module Amazonite::DynamoDBV2
       @region_name : String,
       @kms_master_key_id : String | Nil = nil,
       @provisioned_throughput_override : ProvisionedThroughputOverride | Nil = nil,
+      @on_demand_throughput_override : OnDemandThroughputOverride | Nil = nil,
       @global_secondary_indexes : Array(ReplicaGlobalSecondaryIndex) | Nil = nil,
       @table_class_override : TableClass | Nil = nil,
     )

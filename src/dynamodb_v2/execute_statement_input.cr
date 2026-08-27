@@ -22,6 +22,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "Limit")]
     property limit : Int32 | Nil
 
+    @[JSON::Field(key: "ReturnValuesOnConditionCheckFailure", converter: ADDB::ReturnValuesOnConditionCheckFailure)]
+    property return_values_on_condition_check_failure : ReturnValuesOnConditionCheckFailure | Nil
+
     def initialize(
       @statement : String,
       @parameters : Array(AttributeValue) | Nil = nil,
@@ -29,6 +32,7 @@ module Amazonite::DynamoDBV2
       @next_token : String | Nil = nil,
       @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil,
       @limit : Int32 | Nil = nil,
+      @return_values_on_condition_check_failure : ReturnValuesOnConditionCheckFailure | Nil = nil,
     )
     end
   end

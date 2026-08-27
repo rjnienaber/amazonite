@@ -160,6 +160,9 @@ module Amazonite::SsmV1
   class InvalidInstanceInformationFilterValue < Core::ResponseException
   end
 
+  class InvalidInstancePropertyFilterValue < Core::ResponseException
+  end
+
   class InvalidInventoryGroupException < Core::ResponseException
   end
 
@@ -244,10 +247,19 @@ module Amazonite::SsmV1
   class ItemSizeLimitExceededException < Core::ResponseException
   end
 
+  class MalformedResourcePolicyDocumentException < Core::ResponseException
+  end
+
   class MaxDocumentSizeExceeded < Core::ResponseException
   end
 
+  class OpsItemAccessDeniedException < Core::ResponseException
+  end
+
   class OpsItemAlreadyExistsException < Core::ResponseException
+  end
+
+  class OpsItemConflictException < Core::ResponseException
   end
 
   class OpsItemInvalidParameterException < Core::ResponseException
@@ -326,6 +338,21 @@ module Amazonite::SsmV1
   end
 
   class ResourceLimitExceededException < Core::ResponseException
+  end
+
+  class ResourceNotFoundException < Core::ResponseException
+  end
+
+  class ResourcePolicyConflictException < Core::ResponseException
+  end
+
+  class ResourcePolicyInvalidParameterException < Core::ResponseException
+  end
+
+  class ResourcePolicyLimitExceededException < Core::ResponseException
+  end
+
+  class ResourcePolicyNotFoundException < Core::ResponseException
   end
 
   class ServiceSettingNotFound < Core::ResponseException
@@ -429,6 +456,7 @@ module Amazonite::SsmV1
       when "InvalidFilterValue"                             then InvalidFilterValue.new(http, message, code)
       when "InvalidInstanceId"                              then InvalidInstanceId.new(http, message, code)
       when "InvalidInstanceInformationFilterValue"          then InvalidInstanceInformationFilterValue.new(http, message, code)
+      when "InvalidInstancePropertyFilterValue"             then InvalidInstancePropertyFilterValue.new(http, message, code)
       when "InvalidInventoryGroupException"                 then InvalidInventoryGroupException.new(http, message, code)
       when "InvalidInventoryItemContextException"           then InvalidInventoryItemContextException.new(http, message, code)
       when "InvalidInventoryRequestException"               then InvalidInventoryRequestException.new(http, message, code)
@@ -457,8 +485,11 @@ module Amazonite::SsmV1
       when "InvocationDoesNotExist"                         then InvocationDoesNotExist.new(http, message, code)
       when "ItemContentMismatchException"                   then ItemContentMismatchException.new(http, message, code)
       when "ItemSizeLimitExceededException"                 then ItemSizeLimitExceededException.new(http, message, code)
+      when "MalformedResourcePolicyDocumentException"       then MalformedResourcePolicyDocumentException.new(http, message, code)
       when "MaxDocumentSizeExceeded"                        then MaxDocumentSizeExceeded.new(http, message, code)
+      when "OpsItemAccessDeniedException"                   then OpsItemAccessDeniedException.new(http, message, code)
       when "OpsItemAlreadyExistsException"                  then OpsItemAlreadyExistsException.new(http, message, code)
+      when "OpsItemConflictException"                       then OpsItemConflictException.new(http, message, code)
       when "OpsItemInvalidParameterException"               then OpsItemInvalidParameterException.new(http, message, code)
       when "OpsItemLimitExceededException"                  then OpsItemLimitExceededException.new(http, message, code)
       when "OpsItemNotFoundException"                       then OpsItemNotFoundException.new(http, message, code)
@@ -485,6 +516,11 @@ module Amazonite::SsmV1
       when "ResourceDataSyncNotFoundException"              then ResourceDataSyncNotFoundException.new(http, message, code)
       when "ResourceInUseException"                         then ResourceInUseException.new(http, message, code)
       when "ResourceLimitExceededException"                 then ResourceLimitExceededException.new(http, message, code)
+      when "ResourceNotFoundException"                      then ResourceNotFoundException.new(http, message, code)
+      when "ResourcePolicyConflictException"                then ResourcePolicyConflictException.new(http, message, code)
+      when "ResourcePolicyInvalidParameterException"        then ResourcePolicyInvalidParameterException.new(http, message, code)
+      when "ResourcePolicyLimitExceededException"           then ResourcePolicyLimitExceededException.new(http, message, code)
+      when "ResourcePolicyNotFoundException"                then ResourcePolicyNotFoundException.new(http, message, code)
       when "ServiceSettingNotFound"                         then ServiceSettingNotFound.new(http, message, code)
       when "StatusUnchanged"                                then StatusUnchanged.new(http, message, code)
       when "SubTypeCountLimitExceededException"             then SubTypeCountLimitExceededException.new(http, message, code)

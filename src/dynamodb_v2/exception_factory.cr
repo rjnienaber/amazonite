@@ -58,6 +58,9 @@ module Amazonite::DynamoDBV2
   class PointInTimeRecoveryUnavailableException < Core::ResponseException
   end
 
+  class PolicyNotFoundException < Core::ResponseException
+  end
+
   class ProvisionedThroughputExceededException < Core::ResponseException
   end
 
@@ -116,6 +119,7 @@ module Amazonite::DynamoDBV2
       when "ItemCollectionSizeLimitExceededException" then ItemCollectionSizeLimitExceededException.new(http, message, code)
       when "LimitExceededException"                   then LimitExceededException.new(http, message, code)
       when "PointInTimeRecoveryUnavailableException"  then PointInTimeRecoveryUnavailableException.new(http, message, code)
+      when "PolicyNotFoundException"                  then PolicyNotFoundException.new(http, message, code)
       when "ProvisionedThroughputExceededException"   then ProvisionedThroughputExceededException.new(http, message, code)
       when "ReplicaAlreadyExistsException"            then ReplicaAlreadyExistsException.new(http, message, code)
       when "ReplicaNotFoundException"                 then ReplicaNotFoundException.new(http, message, code)

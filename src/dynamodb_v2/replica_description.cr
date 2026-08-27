@@ -23,6 +23,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "ProvisionedThroughputOverride")]
     property provisioned_throughput_override : ProvisionedThroughputOverride | Nil
 
+    @[JSON::Field(key: "OnDemandThroughputOverride")]
+    property on_demand_throughput_override : OnDemandThroughputOverride | Nil
+
     @[JSON::Field(key: "GlobalSecondaryIndexes")]
     property global_secondary_indexes : Array(ReplicaGlobalSecondaryIndexDescription) | Nil
 
@@ -39,6 +42,7 @@ module Amazonite::DynamoDBV2
       @replica_status_percent_progress : String | Nil = nil,
       @kms_master_key_id : String | Nil = nil,
       @provisioned_throughput_override : ProvisionedThroughputOverride | Nil = nil,
+      @on_demand_throughput_override : OnDemandThroughputOverride | Nil = nil,
       @global_secondary_indexes : Array(ReplicaGlobalSecondaryIndexDescription) | Nil = nil,
       @replica_inaccessible_date_time : Time | Nil = nil,
       @replica_table_class_summary : TableClassSummary | Nil = nil,

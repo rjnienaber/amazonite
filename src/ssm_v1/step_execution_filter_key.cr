@@ -8,6 +8,9 @@ module Amazonite::SsmV1
     StepExecutionId
     StepName
     Action
+    ParentStepExecutionId
+    ParentStepIteration
+    ParentStepIteratorValue
 
     def self.to_json(e : StepExecutionFilterKey, json : JSON::Builder) : Nil
       json.string(e.to_s)
@@ -16,12 +19,15 @@ module Amazonite::SsmV1
     def self.from_json(pull : JSON::PullParser) : AS::StepExecutionFilterKey
       value = pull.read_string
       case value
-      when "StartTimeBefore"     then AS::StepExecutionFilterKey::StartTimeBefore
-      when "StartTimeAfter"      then AS::StepExecutionFilterKey::StartTimeAfter
-      when "StepExecutionStatus" then AS::StepExecutionFilterKey::StepExecutionStatus
-      when "StepExecutionId"     then AS::StepExecutionFilterKey::StepExecutionId
-      when "StepName"            then AS::StepExecutionFilterKey::StepName
-      when "Action"              then AS::StepExecutionFilterKey::Action
+      when "StartTimeBefore"         then AS::StepExecutionFilterKey::StartTimeBefore
+      when "StartTimeAfter"          then AS::StepExecutionFilterKey::StartTimeAfter
+      when "StepExecutionStatus"     then AS::StepExecutionFilterKey::StepExecutionStatus
+      when "StepExecutionId"         then AS::StepExecutionFilterKey::StepExecutionId
+      when "StepName"                then AS::StepExecutionFilterKey::StepName
+      when "Action"                  then AS::StepExecutionFilterKey::Action
+      when "ParentStepExecutionId"   then AS::StepExecutionFilterKey::ParentStepExecutionId
+      when "ParentStepIteration"     then AS::StepExecutionFilterKey::ParentStepIteration
+      when "ParentStepIteratorValue" then AS::StepExecutionFilterKey::ParentStepIteratorValue
       else
         raise Exception.new("unknown enum value for 'StepExecutionFilterKey' when deserializing from json: '#{value}'")
       end

@@ -58,6 +58,12 @@ module Amazonite::DynamoDBV2
       Core::ParsedResponse(ADDB::DeleteItemOutput).new(response)
     end
 
+    def delete_resource_policy(input : ADDB::DeleteResourcePolicyInput) : Core::ParsedResponse(ADDB::DeleteResourcePolicyOutput)
+      Log.info { "performing 'DeleteResourcePolicy' operation" }
+      response = post("DeleteResourcePolicy", "/", input.to_json)
+      Core::ParsedResponse(ADDB::DeleteResourcePolicyOutput).new(response)
+    end
+
     def delete_table(input : ADDB::DeleteTableInput) : Core::ParsedResponse(ADDB::DeleteTableOutput)
       Log.info { "performing 'DeleteTable' operation" }
       response = post("DeleteTable", "/", input.to_json)
@@ -178,6 +184,12 @@ module Amazonite::DynamoDBV2
       Core::ParsedResponse(ADDB::GetItemOutput).new(response)
     end
 
+    def get_resource_policy(input : ADDB::GetResourcePolicyInput) : Core::ParsedResponse(ADDB::GetResourcePolicyOutput)
+      Log.info { "performing 'GetResourcePolicy' operation" }
+      response = post("GetResourcePolicy", "/", input.to_json)
+      Core::ParsedResponse(ADDB::GetResourcePolicyOutput).new(response)
+    end
+
     def import_table(input : ADDB::ImportTableInput) : Core::ParsedResponse(ADDB::ImportTableOutput)
       Log.info { "performing 'ImportTable' operation" }
       response = post("ImportTable", "/", input.to_json)
@@ -230,6 +242,12 @@ module Amazonite::DynamoDBV2
       Log.info { "performing 'PutItem' operation" }
       response = post("PutItem", "/", input.to_json)
       Core::ParsedResponse(ADDB::PutItemOutput).new(response)
+    end
+
+    def put_resource_policy(input : ADDB::PutResourcePolicyInput) : Core::ParsedResponse(ADDB::PutResourcePolicyOutput)
+      Log.info { "performing 'PutResourcePolicy' operation" }
+      response = post("PutResourcePolicy", "/", input.to_json)
+      Core::ParsedResponse(ADDB::PutResourcePolicyOutput).new(response)
     end
 
     def query(input : ADDB::QueryInput) : Core::ParsedResponse(ADDB::QueryOutput)
@@ -308,6 +326,12 @@ module Amazonite::DynamoDBV2
       Log.info { "performing 'UpdateItem' operation" }
       response = post("UpdateItem", "/", input.to_json)
       Core::ParsedResponse(ADDB::UpdateItemOutput).new(response)
+    end
+
+    def update_kinesis_streaming_destination(input : ADDB::UpdateKinesisStreamingDestinationInput) : Core::ParsedResponse(ADDB::UpdateKinesisStreamingDestinationOutput)
+      Log.info { "performing 'UpdateKinesisStreamingDestination' operation" }
+      response = post("UpdateKinesisStreamingDestination", "/", input.to_json)
+      Core::ParsedResponse(ADDB::UpdateKinesisStreamingDestinationOutput).new(response)
     end
 
     def update_table(input : ADDB::UpdateTableInput) : Core::ParsedResponse(ADDB::UpdateTableOutput)

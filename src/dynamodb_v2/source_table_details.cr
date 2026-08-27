@@ -26,6 +26,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "ProvisionedThroughput")]
     property provisioned_throughput : ProvisionedThroughput
 
+    @[JSON::Field(key: "OnDemandThroughput")]
+    property on_demand_throughput : OnDemandThroughput | Nil
+
     @[JSON::Field(key: "ItemCount")]
     property item_count : Int64 | Nil
 
@@ -40,6 +43,7 @@ module Amazonite::DynamoDBV2
       @provisioned_throughput : ProvisionedThroughput,
       @table_arn : String | Nil = nil,
       @table_size_bytes : Int64 | Nil = nil,
+      @on_demand_throughput : OnDemandThroughput | Nil = nil,
       @item_count : Int64 | Nil = nil,
       @billing_mode : BillingMode | Nil = nil,
     )

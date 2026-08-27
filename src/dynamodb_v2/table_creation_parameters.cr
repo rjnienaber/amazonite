@@ -19,6 +19,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "ProvisionedThroughput")]
     property provisioned_throughput : ProvisionedThroughput | Nil
 
+    @[JSON::Field(key: "OnDemandThroughput")]
+    property on_demand_throughput : OnDemandThroughput | Nil
+
     @[JSON::Field(key: "SSESpecification")]
     property sse_specification : SSESpecification | Nil
 
@@ -31,6 +34,7 @@ module Amazonite::DynamoDBV2
       @key_schema : Array(KeySchemaElement),
       @billing_mode : BillingMode | Nil = nil,
       @provisioned_throughput : ProvisionedThroughput | Nil = nil,
+      @on_demand_throughput : OnDemandThroughput | Nil = nil,
       @sse_specification : SSESpecification | Nil = nil,
       @global_secondary_indexes : Array(GlobalSecondaryIndex) | Nil = nil,
     )

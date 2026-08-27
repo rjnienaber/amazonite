@@ -8,6 +8,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "Name")]
     property name : String | Nil
 
+    @[JSON::Field(key: "ARN")]
+    property arn : String | Nil
+
     @[JSON::Field(key: "Type", converter: AS::ParameterType)]
     property type : ParameterType | Nil
 
@@ -40,6 +43,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @name : String | Nil = nil,
+      @arn : String | Nil = nil,
       @type : ParameterType | Nil = nil,
       @key_id : String | Nil = nil,
       @last_modified_date : Time | Nil = nil,

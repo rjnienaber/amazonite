@@ -37,6 +37,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "ScheduleOffset")]
     property schedule_offset : Int32 | Nil
 
+    @[JSON::Field(key: "Duration")]
+    property duration : Int32 | Nil
+
     @[JSON::Field(key: "TargetMaps")]
     property target_maps : Array(Hash(String, Array(String))) | Nil
 
@@ -52,6 +55,7 @@ module Amazonite::SsmV1
       @schedule_expression : String | Nil = nil,
       @association_name : String | Nil = nil,
       @schedule_offset : Int32 | Nil = nil,
+      @duration : Int32 | Nil = nil,
       @target_maps : Array(Hash(String, Array(String))) | Nil = nil,
     )
     end

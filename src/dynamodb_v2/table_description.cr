@@ -71,6 +71,12 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "TableClassSummary")]
     property table_class_summary : TableClassSummary | Nil
 
+    @[JSON::Field(key: "DeletionProtectionEnabled")]
+    property deletion_protection_enabled : Bool | Nil
+
+    @[JSON::Field(key: "OnDemandThroughput")]
+    property on_demand_throughput : OnDemandThroughput | Nil
+
     def initialize(
       @attribute_definitions : Array(AttributeDefinition) | Nil = nil,
       @table_name : String | Nil = nil,
@@ -94,6 +100,8 @@ module Amazonite::DynamoDBV2
       @sse_description : SSEDescription | Nil = nil,
       @archival_summary : ArchivalSummary | Nil = nil,
       @table_class_summary : TableClassSummary | Nil = nil,
+      @deletion_protection_enabled : Bool | Nil = nil,
+      @on_demand_throughput : OnDemandThroughput | Nil = nil,
     )
     end
   end

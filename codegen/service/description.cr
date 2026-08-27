@@ -2,7 +2,8 @@ require "./shape"
 
 module Amazonite::Codegen::Service
   class Description
-    private KNOWN_KEYS = ["version", "metadata", "operations", "shapes", "documentation"]
+    private KNOWN_KEYS = ["version", "metadata", "operations", "shapes", "documentation",
+                          "deprecated", "deprecatedMessage"]
 
     @operations_map = {} of String => Operation
     @operations = [] of Operation

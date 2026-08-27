@@ -71,6 +71,12 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "TargetLocation")]
     property target_location : TargetLocation | Nil
 
+    @[JSON::Field(key: "TriggeredAlarms")]
+    property triggered_alarms : Array(AlarmStateInformation) | Nil
+
+    @[JSON::Field(key: "ParentStepDetails")]
+    property parent_step_details : ParentStepDetails | Nil
+
     def initialize(
       @step_name : String | Nil = nil,
       @action : String | Nil = nil,
@@ -94,6 +100,8 @@ module Amazonite::SsmV1
       @valid_next_steps : Array(String) | Nil = nil,
       @targets : Array(Target) | Nil = nil,
       @target_location : TargetLocation | Nil = nil,
+      @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,
+      @parent_step_details : ParentStepDetails | Nil = nil,
     )
     end
   end

@@ -62,6 +62,12 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "ItemCount")]
     property item_count : Int64 | Nil
 
+    @[JSON::Field(key: "ExportType", converter: ADDB::ExportType)]
+    property export_type : ExportType | Nil
+
+    @[JSON::Field(key: "IncrementalExportSpecification")]
+    property incremental_export_specification : IncrementalExportSpecification | Nil
+
     def initialize(
       @export_arn : String | Nil = nil,
       @export_status : ExportStatus | Nil = nil,
@@ -82,6 +88,8 @@ module Amazonite::DynamoDBV2
       @export_format : ExportFormat | Nil = nil,
       @billed_size_bytes : Int64 | Nil = nil,
       @item_count : Int64 | Nil = nil,
+      @export_type : ExportType | Nil = nil,
+      @incremental_export_specification : IncrementalExportSpecification | Nil = nil,
     )
     end
   end

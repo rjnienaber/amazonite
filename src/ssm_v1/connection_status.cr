@@ -3,17 +3,23 @@ private alias AS = Amazonite::SsmV1
 module Amazonite::SsmV1
   enum ConnectionStatus
     Connected
-    NotConnected
+    Notconnected
 
     def self.to_json(e : ConnectionStatus, json : JSON::Builder) : Nil
-      json.string(e.to_s)
+      value = case e
+              when AS::ConnectionStatus::Connected    then "connected"
+              when AS::ConnectionStatus::Notconnected then "notconnected"
+              else
+                raise Exception.new("unknown enum value for 'ConnectionStatus' when serializing to json: '#{e}'")
+              end
+      json.string(value)
     end
 
     def self.from_json(pull : JSON::PullParser) : AS::ConnectionStatus
       value = pull.read_string
       case value
-      when "Connected"    then AS::ConnectionStatus::Connected
-      when "NotConnected" then AS::ConnectionStatus::NotConnected
+      when "connected"    then AS::ConnectionStatus::Connected
+      when "notconnected" then AS::ConnectionStatus::Notconnected
       else
         raise Exception.new("unknown enum value for 'ConnectionStatus' when deserializing from json: '#{value}'")
       end

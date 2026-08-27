@@ -14,11 +14,15 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "ProvisionedThroughput")]
     property provisioned_throughput : ProvisionedThroughput | Nil
 
+    @[JSON::Field(key: "OnDemandThroughput")]
+    property on_demand_throughput : OnDemandThroughput | Nil
+
     def initialize(
       @index_name : String | Nil = nil,
       @key_schema : Array(KeySchemaElement) | Nil = nil,
       @projection : Projection | Nil = nil,
       @provisioned_throughput : ProvisionedThroughput | Nil = nil,
+      @on_demand_throughput : OnDemandThroughput | Nil = nil,
     )
     end
   end

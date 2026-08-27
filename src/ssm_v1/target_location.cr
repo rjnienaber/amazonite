@@ -17,12 +17,16 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "ExecutionRoleName")]
     property execution_role_name : String | Nil
 
+    @[JSON::Field(key: "TargetLocationAlarmConfiguration")]
+    property target_location_alarm_configuration : AlarmConfiguration | Nil
+
     def initialize(
       @accounts : Array(String) | Nil = nil,
       @regions : Array(String) | Nil = nil,
       @target_location_max_concurrency : String | Nil = nil,
       @target_location_max_errors : String | Nil = nil,
       @execution_role_name : String | Nil = nil,
+      @target_location_alarm_configuration : AlarmConfiguration | Nil = nil,
     )
     end
   end

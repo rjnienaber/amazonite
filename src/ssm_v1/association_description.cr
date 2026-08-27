@@ -80,6 +80,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "ScheduleOffset")]
     property schedule_offset : Int32 | Nil
 
+    @[JSON::Field(key: "Duration")]
+    property duration : Int32 | Nil
+
     @[JSON::Field(key: "TargetMaps")]
     property target_maps : Array(Hash(String, Array(String))) | Nil
 
@@ -115,6 +118,7 @@ module Amazonite::SsmV1
       @calendar_names : Array(String) | Nil = nil,
       @target_locations : Array(TargetLocation) | Nil = nil,
       @schedule_offset : Int32 | Nil = nil,
+      @duration : Int32 | Nil = nil,
       @target_maps : Array(Hash(String, Array(String))) | Nil = nil,
       @alarm_configuration : AlarmConfiguration | Nil = nil,
       @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,

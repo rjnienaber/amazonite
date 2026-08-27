@@ -7,7 +7,12 @@ module Amazonite::Codegen
     Service::Files.process("json") do |files|
       puts "processing: #{files.current_normal_file}"
 
-      description = files.current_description
+      description = begin
+        files.current_description
+      rescue ex : JSON::ParseException
+        puts "  skipping: #{ex.message}"
+        next
+      end
 
       src_dir = File.join(Dir.current, "tmp")
 

@@ -29,6 +29,7 @@ module Amazonite::SsmV1
     ChangeRequestByTemplate
     ChangeRequestByTargetsResourceGroup
     InsightByType
+    AccountId
 
     def self.to_json(e : OpsItemFilterKey, json : JSON::Builder) : Nil
       json.string(e.to_s)
@@ -64,6 +65,7 @@ module Amazonite::SsmV1
       when "ChangeRequestByTemplate"             then AS::OpsItemFilterKey::ChangeRequestByTemplate
       when "ChangeRequestByTargetsResourceGroup" then AS::OpsItemFilterKey::ChangeRequestByTargetsResourceGroup
       when "InsightByType"                       then AS::OpsItemFilterKey::InsightByType
+      when "AccountId"                           then AS::OpsItemFilterKey::AccountId
       else
         raise Exception.new("unknown enum value for 'OpsItemFilterKey' when deserializing from json: '#{value}'")
       end

@@ -31,6 +31,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "IndexArn")]
     property index_arn : String | Nil
 
+    @[JSON::Field(key: "OnDemandThroughput")]
+    property on_demand_throughput : OnDemandThroughput | Nil
+
     def initialize(
       @index_name : String | Nil = nil,
       @key_schema : Array(KeySchemaElement) | Nil = nil,
@@ -41,6 +44,7 @@ module Amazonite::DynamoDBV2
       @index_size_bytes : Int64 | Nil = nil,
       @item_count : Int64 | Nil = nil,
       @index_arn : String | Nil = nil,
+      @on_demand_throughput : OnDemandThroughput | Nil = nil,
     )
     end
   end

@@ -8,9 +8,13 @@ module Amazonite::ComprehendV2
     @[JSON::Field(key: "Score")]
     property score : Float32 | Nil
 
+    @[JSON::Field(key: "Page")]
+    property page : Int32 | Nil
+
     def initialize(
       @name : String | Nil = nil,
-      @score : Float32 | Nil = nil
+      @score : Float32 | Nil = nil,
+      @page : Int32 | Nil = nil
     )
     end
   end

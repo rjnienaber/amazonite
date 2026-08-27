@@ -50,6 +50,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "PlannedEndTime", converter: Core::AWSEpochConverter)]
     property planned_end_time : Time | Nil
 
+    @[JSON::Field(key: "OpsItemArn")]
+    property ops_item_arn : String | Nil
+
     def initialize(
       @ops_item_id : String,
       @description : String | Nil = nil,
@@ -66,6 +69,7 @@ module Amazonite::SsmV1
       @actual_end_time : Time | Nil = nil,
       @planned_start_time : Time | Nil = nil,
       @planned_end_time : Time | Nil = nil,
+      @ops_item_arn : String | Nil = nil,
     )
     end
   end

@@ -1,8 +1,9 @@
 module Amazonite::Codegen::Service
   class Metadata
-    private KNOWN_KEYS = ["apiVersion", "endpointPrefix", "protocol", "signatureVersion",
+    private KNOWN_KEYS = ["apiVersion", "endpointPrefix", "protocol", "protocols", "signatureVersion",
                           "jsonVersion", "serviceAbbreviation", "serviceFullName", "serviceId",
-                          "targetPrefix", "uid", "signingName", "protocolSettings", "xmlNamespace"]
+                          "targetPrefix", "uid", "signingName", "protocolSettings", "xmlNamespace", "auth",
+                          "awsQueryCompatible", "ripServiceName"]
 
     getter version, endpoint_prefix, json_version, protocol, service_id, target_prefix
 

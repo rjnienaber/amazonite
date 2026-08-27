@@ -32,6 +32,12 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "ExportFormat", converter: ADDB::ExportFormat)]
     property export_format : ExportFormat | Nil
 
+    @[JSON::Field(key: "ExportType", converter: ADDB::ExportType)]
+    property export_type : ExportType | Nil
+
+    @[JSON::Field(key: "IncrementalExportSpecification")]
+    property incremental_export_specification : IncrementalExportSpecification | Nil
+
     def initialize(
       @table_arn : String,
       @s3_bucket : String,
@@ -42,6 +48,8 @@ module Amazonite::DynamoDBV2
       @s3_sse_algorithm : S3SseAlgorithm | Nil = nil,
       @s3_sse_kms_key_id : String | Nil = nil,
       @export_format : ExportFormat | Nil = nil,
+      @export_type : ExportType | Nil = nil,
+      @incremental_export_specification : IncrementalExportSpecification | Nil = nil,
     )
     end
   end

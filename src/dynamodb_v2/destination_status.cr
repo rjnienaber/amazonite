@@ -7,6 +7,7 @@ module Amazonite::DynamoDBV2
     Disabling
     Disabled
     EnableFailed
+    Updating
 
     def self.to_json(e : DestinationStatus, json : JSON::Builder) : Nil
       value = case e
@@ -15,6 +16,7 @@ module Amazonite::DynamoDBV2
               when ADDB::DestinationStatus::Disabling    then "DISABLING"
               when ADDB::DestinationStatus::Disabled     then "DISABLED"
               when ADDB::DestinationStatus::EnableFailed then "ENABLE_FAILED"
+              when ADDB::DestinationStatus::Updating     then "UPDATING"
               else
                 raise Exception.new("unknown enum value for 'DestinationStatus' when serializing to json: '#{e}'")
               end
@@ -29,6 +31,7 @@ module Amazonite::DynamoDBV2
       when "DISABLING"     then ADDB::DestinationStatus::Disabling
       when "DISABLED"      then ADDB::DestinationStatus::Disabled
       when "ENABLE_FAILED" then ADDB::DestinationStatus::EnableFailed
+      when "UPDATING"      then ADDB::DestinationStatus::Updating
       else
         raise Exception.new("unknown enum value for 'DestinationStatus' when deserializing from json: '#{value}'")
       end

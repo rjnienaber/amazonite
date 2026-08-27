@@ -118,6 +118,12 @@ module Amazonite::SsmV1
       Core::ParsedResponse(AS::DeleteMaintenanceWindowResult).new(response)
     end
 
+    def delete_ops_item(input : AS::DeleteOpsItemRequest) : Core::ParsedResponse(AS::DeleteOpsItemResponse)
+      Log.info { "performing 'DeleteOpsItem' operation" }
+      response = post("DeleteOpsItem", "/", input.to_json)
+      Core::ParsedResponse(AS::DeleteOpsItemResponse).new(response)
+    end
+
     def delete_ops_metadata(input : AS::DeleteOpsMetadataRequest) : Core::ParsedResponse(AS::DeleteOpsMetadataResult)
       Log.info { "performing 'DeleteOpsMetadata' operation" }
       response = post("DeleteOpsMetadata", "/", input.to_json)
@@ -146,6 +152,12 @@ module Amazonite::SsmV1
       Log.info { "performing 'DeleteResourceDataSync' operation" }
       response = post("DeleteResourceDataSync", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteResourceDataSyncResult).new(response)
+    end
+
+    def delete_resource_policy(input : AS::DeleteResourcePolicyRequest) : Core::ParsedResponse(AS::DeleteResourcePolicyResponse)
+      Log.info { "performing 'DeleteResourcePolicy' operation" }
+      response = post("DeleteResourcePolicy", "/", input.to_json)
+      Core::ParsedResponse(AS::DeleteResourcePolicyResponse).new(response)
     end
 
     def deregister_managed_instance(input : AS::DeregisterManagedInstanceRequest) : Core::ParsedResponse(AS::DeregisterManagedInstanceResult)
@@ -266,6 +278,12 @@ module Amazonite::SsmV1
       Log.info { "performing 'DescribeInstancePatches' operation" }
       response = post("DescribeInstancePatches", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeInstancePatchesResult).new(response)
+    end
+
+    def describe_instance_properties(input : AS::DescribeInstancePropertiesRequest) : Core::ParsedResponse(AS::DescribeInstancePropertiesResult)
+      Log.info { "performing 'DescribeInstanceProperties' operation" }
+      response = post("DescribeInstanceProperties", "/", input.to_json)
+      Core::ParsedResponse(AS::DescribeInstancePropertiesResult).new(response)
     end
 
     def describe_inventory_deletions(input : AS::DescribeInventoryDeletionsRequest) : Core::ParsedResponse(AS::DescribeInventoryDeletionsResult)
@@ -508,6 +526,12 @@ module Amazonite::SsmV1
       Core::ParsedResponse(AS::GetPatchBaselineForPatchGroupResult).new(response)
     end
 
+    def get_resource_policies(input : AS::GetResourcePoliciesRequest) : Core::ParsedResponse(AS::GetResourcePoliciesResponse)
+      Log.info { "performing 'GetResourcePolicies' operation" }
+      response = post("GetResourcePolicies", "/", input.to_json)
+      Core::ParsedResponse(AS::GetResourcePoliciesResponse).new(response)
+    end
+
     def get_service_setting(input : AS::GetServiceSettingRequest) : Core::ParsedResponse(AS::GetServiceSettingResult)
       Log.info { "performing 'GetServiceSetting' operation" }
       response = post("GetServiceSetting", "/", input.to_json)
@@ -638,6 +662,12 @@ module Amazonite::SsmV1
       Log.info { "performing 'PutParameter' operation" }
       response = post("PutParameter", "/", input.to_json)
       Core::ParsedResponse(AS::PutParameterResult).new(response)
+    end
+
+    def put_resource_policy(input : AS::PutResourcePolicyRequest) : Core::ParsedResponse(AS::PutResourcePolicyResponse)
+      Log.info { "performing 'PutResourcePolicy' operation" }
+      response = post("PutResourcePolicy", "/", input.to_json)
+      Core::ParsedResponse(AS::PutResourcePolicyResponse).new(response)
     end
 
     def register_default_patch_baseline(input : AS::RegisterDefaultPatchBaselineRequest) : Core::ParsedResponse(AS::RegisterDefaultPatchBaselineResult)

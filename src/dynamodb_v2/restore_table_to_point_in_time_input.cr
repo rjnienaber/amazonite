@@ -32,6 +32,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "ProvisionedThroughputOverride")]
     property provisioned_throughput_override : ProvisionedThroughput | Nil
 
+    @[JSON::Field(key: "OnDemandThroughputOverride")]
+    property on_demand_throughput_override : OnDemandThroughput | Nil
+
     @[JSON::Field(key: "SSESpecificationOverride")]
     property sse_specification_override : SSESpecification | Nil
 
@@ -45,6 +48,7 @@ module Amazonite::DynamoDBV2
       @global_secondary_index_override : Array(GlobalSecondaryIndex) | Nil = nil,
       @local_secondary_index_override : Array(LocalSecondaryIndex) | Nil = nil,
       @provisioned_throughput_override : ProvisionedThroughput | Nil = nil,
+      @on_demand_throughput_override : OnDemandThroughput | Nil = nil,
       @sse_specification_override : SSESpecification | Nil = nil,
     )
     end

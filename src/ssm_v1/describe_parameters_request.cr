@@ -14,11 +14,15 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 
+    @[JSON::Field(key: "Shared")]
+    property shared : Bool | Nil
+
     def initialize(
       @filters : Array(ParametersFilter) | Nil = nil,
       @parameter_filters : Array(ParameterStringFilter) | Nil = nil,
       @max_results : Int32 | Nil = nil,
       @next_token : String | Nil = nil,
+      @shared : Bool | Nil = nil,
     )
     end
   end

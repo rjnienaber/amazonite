@@ -37,6 +37,15 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "TableClass", converter: ADDB::TableClass)]
     property table_class : TableClass | Nil
 
+    @[JSON::Field(key: "DeletionProtectionEnabled")]
+    property deletion_protection_enabled : Bool | Nil
+
+    @[JSON::Field(key: "ResourcePolicy")]
+    property resource_policy : String | Nil
+
+    @[JSON::Field(key: "OnDemandThroughput")]
+    property on_demand_throughput : OnDemandThroughput | Nil
+
     def initialize(
       @attribute_definitions : Array(AttributeDefinition),
       @table_name : String,
@@ -49,6 +58,9 @@ module Amazonite::DynamoDBV2
       @sse_specification : SSESpecification | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
       @table_class : TableClass | Nil = nil,
+      @deletion_protection_enabled : Bool | Nil = nil,
+      @resource_policy : String | Nil = nil,
+      @on_demand_throughput : OnDemandThroughput | Nil = nil,
     )
     end
   end

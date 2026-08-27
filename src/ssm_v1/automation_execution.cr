@@ -104,6 +104,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "ChangeRequestName")]
     property change_request_name : String | Nil
 
+    @[JSON::Field(key: "Variables")]
+    property variables : Hash(String, Array(String)) | Nil
+
     def initialize(
       @automation_execution_id : String | Nil = nil,
       @document_name : String | Nil = nil,
@@ -138,6 +141,7 @@ module Amazonite::SsmV1
       @ops_item_id : String | Nil = nil,
       @association_id : String | Nil = nil,
       @change_request_name : String | Nil = nil,
+      @variables : Hash(String, Array(String)) | Nil = nil,
     )
     end
   end

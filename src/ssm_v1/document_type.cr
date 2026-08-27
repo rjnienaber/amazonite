@@ -16,6 +16,7 @@ module Amazonite::SsmV1
     ProblemAnalysisTemplate
     CloudFormation
     ConformancePackTemplate
+    QuickSetup
 
     def self.to_json(e : DocumentType, json : JSON::Builder) : Nil
       value = case e
@@ -33,6 +34,7 @@ module Amazonite::SsmV1
               when AS::DocumentType::ProblemAnalysisTemplate        then "ProblemAnalysisTemplate"
               when AS::DocumentType::CloudFormation                 then "CloudFormation"
               when AS::DocumentType::ConformancePackTemplate        then "ConformancePackTemplate"
+              when AS::DocumentType::QuickSetup                     then "QuickSetup"
               else
                 raise Exception.new("unknown enum value for 'DocumentType' when serializing to json: '#{e}'")
               end
@@ -56,6 +58,7 @@ module Amazonite::SsmV1
       when "ProblemAnalysisTemplate"        then AS::DocumentType::ProblemAnalysisTemplate
       when "CloudFormation"                 then AS::DocumentType::CloudFormation
       when "ConformancePackTemplate"        then AS::DocumentType::ConformancePackTemplate
+      when "QuickSetup"                     then AS::DocumentType::QuickSetup
       else
         raise Exception.new("unknown enum value for 'DocumentType' when deserializing from json: '#{value}'")
       end
