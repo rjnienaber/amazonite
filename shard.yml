@@ -24,10 +24,12 @@ development_dependencies:
     branch: master
   ameba:
     github: crystal-ameba/ameba
-    version: ~> 1.4.0
+    version: ~> 1.7.0
 
 license: Apache-2.0
 
 targets:
   codegen:
     main: codegen/codegen.cr
+  ameba:
+    main: lib/ameba/bin/ameba.cr

@@ -2,6 +2,7 @@ Excluded:
   - src/compiler
   - src/dynamodb_v2
   - src/dynamodb_v2.cr
+  - spec/fixtures
 
 # Problems found: 6
 # Run `ameba --only Metrics/CyclomaticComplexity` for details
@@ -13,4 +14,12 @@ Metrics/CyclomaticComplexity:
   - src/dynamo_v2/*.cr
   Enabled: true
   Severity: Convention
+
+Lint/SpecFilename:
+  IgnoredPaths:
+  - spec/support/**
+  - spec/fixtures/**
+  - spec/data/**
+  - spec/**/spec_helper.cr
+  - spec/mocks/**
 
