@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property parameter : Parameter | Nil
 
     def initialize(
-      @parameter : Parameter | Nil = nil
+      @parameter : Parameter | Nil = nil,
     )
     end
   end

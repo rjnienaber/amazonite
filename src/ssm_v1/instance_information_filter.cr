@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @key : InstanceInformationFilterKey,
-      @value_set : Array(String)
+      @value_set : Array(String),
     )
     end
   end

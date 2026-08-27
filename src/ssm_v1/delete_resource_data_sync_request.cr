@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @sync_name : String,
-      @sync_type : String | Nil = nil
+      @sync_type : String | Nil = nil,
     )
     end
   end

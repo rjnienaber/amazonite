@@ -16,7 +16,7 @@ module Amazonite::SsmV1
     def initialize(
       @key : AttachmentsSourceKey | Nil = nil,
       @values : Array(String) | Nil = nil,
-      @name : String | Nil = nil
+      @name : String | Nil = nil,
     )
     end
   end

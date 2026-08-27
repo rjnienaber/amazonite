@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property service_setting : ServiceSetting | Nil
 
     def initialize(
-      @service_setting : ServiceSetting | Nil = nil
+      @service_setting : ServiceSetting | Nil = nil,
     )
     end
   end

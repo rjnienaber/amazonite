@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @organization_source_type : String,
-      @organizational_units : Array(ResourceDataSyncOrganizationalUnit) | Nil = nil
+      @organizational_units : Array(ResourceDataSyncOrganizationalUnit) | Nil = nil,
     )
     end
   end

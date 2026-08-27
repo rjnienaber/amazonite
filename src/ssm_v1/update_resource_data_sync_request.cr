@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @sync_name : String,
       @sync_type : String,
-      @sync_source : ResourceDataSyncSource
+      @sync_source : ResourceDataSyncSource,
     )
     end
   end

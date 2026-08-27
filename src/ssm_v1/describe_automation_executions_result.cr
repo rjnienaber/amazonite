@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @automation_execution_metadata_list : Array(AutomationExecutionMetadata) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

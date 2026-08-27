@@ -24,7 +24,7 @@ module Amazonite::SsmV1
       @compliance_level : PatchComplianceLevel | Nil = nil,
       @approve_after_days : Int32 | Nil = nil,
       @approve_until_date : String | Nil = nil,
-      @enable_non_security : Bool | Nil = nil
+      @enable_non_security : Bool | Nil = nil,
     )
     end
   end

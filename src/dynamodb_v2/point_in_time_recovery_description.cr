@@ -17,7 +17,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @point_in_time_recovery_status : PointInTimeRecoveryStatus | Nil = nil,
       @earliest_restorable_date_time : Time | Nil = nil,
-      @latest_restorable_date_time : Time | Nil = nil
+      @latest_restorable_date_time : Time | Nil = nil,
     )
     end
   end

@@ -52,7 +52,7 @@ module Amazonite::SsmV1
       @rejected_patches_action : PatchAction | Nil = nil,
       @description : String | Nil = nil,
       @sources : Array(PatchSource) | Nil = nil,
-      @replace : Bool | Nil = nil
+      @replace : Bool | Nil = nil,
     )
     end
   end

@@ -20,7 +20,7 @@ module Amazonite::DynamoDBV2
       @restore_date_time : Time,
       @restore_in_progress : Bool,
       @source_backup_arn : String | Nil = nil,
-      @source_table_arn : String | Nil = nil
+      @source_table_arn : String | Nil = nil,
     )
     end
   end

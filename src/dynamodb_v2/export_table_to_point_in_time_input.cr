@@ -41,7 +41,7 @@ module Amazonite::DynamoDBV2
       @s3_prefix : String | Nil = nil,
       @s3_sse_algorithm : S3SseAlgorithm | Nil = nil,
       @s3_sse_kms_key_id : String | Nil = nil,
-      @export_format : ExportFormat | Nil = nil
+      @export_format : ExportFormat | Nil = nil,
     )
     end
   end

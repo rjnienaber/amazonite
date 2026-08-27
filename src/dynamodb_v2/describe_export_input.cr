@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property export_arn : String
 
     def initialize(
-      @export_arn : String
+      @export_arn : String,
     )
     end
   end

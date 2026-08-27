@@ -24,7 +24,7 @@ module Amazonite::DynamoDBV2
       @last_decrease_date_time : Time | Nil = nil,
       @number_of_decreases_today : Int64 | Nil = nil,
       @read_capacity_units : Int64 | Nil = nil,
-      @write_capacity_units : Int64 | Nil = nil
+      @write_capacity_units : Int64 | Nil = nil,
     )
     end
   end

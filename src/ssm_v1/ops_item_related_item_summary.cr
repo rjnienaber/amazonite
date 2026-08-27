@@ -40,7 +40,7 @@ module Amazonite::SsmV1
       @created_by : OpsItemIdentity | Nil = nil,
       @created_time : Time | Nil = nil,
       @last_modified_by : OpsItemIdentity | Nil = nil,
-      @last_modified_time : Time | Nil = nil
+      @last_modified_time : Time | Nil = nil,
     )
     end
   end

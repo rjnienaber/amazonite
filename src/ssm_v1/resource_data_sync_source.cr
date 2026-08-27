@@ -22,7 +22,7 @@ module Amazonite::SsmV1
       @source_regions : Array(String),
       @aws_organizations_source : ResourceDataSyncAwsOrganizationsSource | Nil = nil,
       @include_future_regions : Bool | Nil = nil,
-      @enable_all_ops_data_sources : Bool | Nil = nil
+      @enable_all_ops_data_sources : Bool | Nil = nil,
     )
     end
   end

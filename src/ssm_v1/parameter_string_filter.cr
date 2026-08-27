@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @key : String,
       @option : String | Nil = nil,
-      @values : Array(String) | Nil = nil
+      @values : Array(String) | Nil = nil,
     )
     end
   end

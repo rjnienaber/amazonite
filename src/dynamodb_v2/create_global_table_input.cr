@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @global_table_name : String,
-      @replication_group : Array(Replica)
+      @replication_group : Array(Replica),
     )
     end
   end

@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @table_name : String | Nil = nil,
-      @kinesis_data_stream_destinations : Array(KinesisDataStreamDestination) | Nil = nil
+      @kinesis_data_stream_destinations : Array(KinesisDataStreamDestination) | Nil = nil,
     )
     end
   end

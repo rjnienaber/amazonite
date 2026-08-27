@@ -36,7 +36,7 @@ module Amazonite::SsmV1
       @overall_severity : ComplianceSeverity | Nil = nil,
       @execution_summary : ComplianceExecutionSummary | Nil = nil,
       @compliant_summary : CompliantSummary | Nil = nil,
-      @non_compliant_summary : NonCompliantSummary | Nil = nil
+      @non_compliant_summary : NonCompliantSummary | Nil = nil,
     )
     end
   end

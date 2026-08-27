@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @baseline_id : String | Nil = nil,
-      @operating_system : OperatingSystem | Nil = nil
+      @operating_system : OperatingSystem | Nil = nil,
     )
     end
   end

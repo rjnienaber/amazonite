@@ -32,7 +32,7 @@ module Amazonite::SsmV1
       @registration_limit : Int32 | Nil = nil,
       @expiration_date : Time | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
-      @registration_metadata : Array(RegistrationMetadataItem) | Nil = nil
+      @registration_metadata : Array(RegistrationMetadataItem) | Nil = nil,
     )
     end
   end

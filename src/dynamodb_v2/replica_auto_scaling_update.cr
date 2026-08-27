@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @region_name : String,
       @replica_global_secondary_index_updates : Array(ReplicaGlobalSecondaryIndexAutoScalingUpdate) | Nil = nil,
-      @replica_provisioned_read_capacity_auto_scaling_update : AutoScalingSettingsUpdate | Nil = nil
+      @replica_provisioned_read_capacity_auto_scaling_update : AutoScalingSettingsUpdate | Nil = nil,
     )
     end
   end

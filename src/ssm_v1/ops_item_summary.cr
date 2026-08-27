@@ -73,7 +73,7 @@ module Amazonite::SsmV1
       @actual_start_time : Time | Nil = nil,
       @actual_end_time : Time | Nil = nil,
       @planned_start_time : Time | Nil = nil,
-      @planned_end_time : Time | Nil = nil
+      @planned_end_time : Time | Nil = nil,
     )
     end
   end

@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @policy_text : String | Nil = nil,
       @policy_type : String | Nil = nil,
-      @policy_status : String | Nil = nil
+      @policy_status : String | Nil = nil,
     )
     end
   end

@@ -22,7 +22,7 @@ module Amazonite::SsmV1
       @instance_id : String | Nil = nil,
       @max_results : Int32 | Nil = nil,
       @next_token : String | Nil = nil,
-      @filters : Array(CommandFilter) | Nil = nil
+      @filters : Array(CommandFilter) | Nil = nil,
     )
     end
   end

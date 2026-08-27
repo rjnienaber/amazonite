@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @next_token : String | Nil = nil,
-      @summaries : Array(OpsItemEventSummary) | Nil = nil
+      @summaries : Array(OpsItemEventSummary) | Nil = nil,
     )
     end
   end

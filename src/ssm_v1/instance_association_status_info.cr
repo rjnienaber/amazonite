@@ -52,7 +52,7 @@ module Amazonite::SsmV1
       @execution_summary : String | Nil = nil,
       @error_code : String | Nil = nil,
       @output_url : InstanceAssociationOutputUrl | Nil = nil,
-      @association_name : String | Nil = nil
+      @association_name : String | Nil = nil,
     )
     end
   end

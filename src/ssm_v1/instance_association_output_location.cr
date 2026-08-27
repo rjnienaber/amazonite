@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property s3_location : S3OutputLocation | Nil
 
     def initialize(
-      @s3_location : S3OutputLocation | Nil = nil
+      @s3_location : S3OutputLocation | Nil = nil,
     )
     end
   end

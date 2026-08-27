@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @output_source_id : String | Nil = nil,
-      @output_source_type : String | Nil = nil
+      @output_source_type : String | Nil = nil,
     )
     end
   end

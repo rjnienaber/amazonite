@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @window_id : String | Nil = nil,
-      @window_target_id : String | Nil = nil
+      @window_target_id : String | Nil = nil,
     )
     end
   end

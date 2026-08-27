@@ -69,7 +69,7 @@ module Amazonite::SsmV1
       @command_plugins : Array(CommandPlugin) | Nil = nil,
       @service_role : String | Nil = nil,
       @notification_config : NotificationConfig | Nil = nil,
-      @cloud_watch_output_config : CloudWatchOutputConfig | Nil = nil
+      @cloud_watch_output_config : CloudWatchOutputConfig | Nil = nil,
     )
     end
   end

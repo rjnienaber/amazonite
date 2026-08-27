@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @key : CommandFilterKey,
-      @value : String
+      @value : String,
     )
     end
   end

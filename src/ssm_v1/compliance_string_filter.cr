@@ -16,7 +16,7 @@ module Amazonite::SsmV1
     def initialize(
       @key : String | Nil = nil,
       @values : Array(String) | Nil = nil,
-      @type : ComplianceQueryOperatorType | Nil = nil
+      @type : ComplianceQueryOperatorType | Nil = nil,
     )
     end
   end

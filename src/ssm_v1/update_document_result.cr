@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property document_description : DocumentDescription | Nil
 
     def initialize(
-      @document_description : DocumentDescription | Nil = nil
+      @document_description : DocumentDescription | Nil = nil,
     )
     end
   end

@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @id : String | Nil = nil,
-      @data : Hash(String, OpsEntityItem) | Nil = nil
+      @data : Hash(String, OpsEntityItem) | Nil = nil,
     )
     end
   end

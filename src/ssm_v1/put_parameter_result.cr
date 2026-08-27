@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @version : Int64 | Nil = nil,
-      @tier : ParameterTier | Nil = nil
+      @tier : ParameterTier | Nil = nil,
     )
     end
   end

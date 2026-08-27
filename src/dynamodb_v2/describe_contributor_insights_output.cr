@@ -29,7 +29,7 @@ module Amazonite::DynamoDBV2
       @contributor_insights_rule_list : Array(String) | Nil = nil,
       @contributor_insights_status : ContributorInsightsStatus | Nil = nil,
       @last_update_date_time : Time | Nil = nil,
-      @failure_exception : FailureException | Nil = nil
+      @failure_exception : FailureException | Nil = nil,
     )
     end
   end

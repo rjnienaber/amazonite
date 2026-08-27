@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @exception_name : String | Nil = nil,
-      @exception_description : String | Nil = nil
+      @exception_description : String | Nil = nil,
     )
     end
   end

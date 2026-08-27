@@ -50,7 +50,7 @@ module Amazonite::SsmV1
       @duration : Int32 | Nil = nil,
       @cutoff : Int32 | Nil = nil,
       @allow_unassociated_targets : Bool | Nil = nil,
-      @enabled : Bool | Nil = nil
+      @enabled : Bool | Nil = nil,
     )
     end
   end

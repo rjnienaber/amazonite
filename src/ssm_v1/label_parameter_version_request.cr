@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @name : String,
       @labels : Array(String),
-      @parameter_version : Int64 | Nil = nil
+      @parameter_version : Int64 | Nil = nil,
     )
     end
   end

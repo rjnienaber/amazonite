@@ -12,7 +12,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @value : AttributeValue | Nil = nil,
-      @action : AttributeAction | Nil = nil
+      @action : AttributeAction | Nil = nil,
     )
     end
   end

@@ -33,7 +33,7 @@ module Amazonite::SsmV1
       @severity : String,
       @state : PatchComplianceDataState,
       @installed_time : Time,
-      @cve_ids : String | Nil = nil
+      @cve_ids : String | Nil = nil,
     )
     end
   end

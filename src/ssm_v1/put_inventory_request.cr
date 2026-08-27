@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @instance_id : String,
-      @items : Array(InventoryItem)
+      @items : Array(InventoryItem),
     )
     end
   end

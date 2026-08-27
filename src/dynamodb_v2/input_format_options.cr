@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property csv : CsvOptions | Nil
 
     def initialize(
-      @csv : CsvOptions | Nil = nil
+      @csv : CsvOptions | Nil = nil,
     )
     end
   end

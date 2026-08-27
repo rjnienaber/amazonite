@@ -32,7 +32,7 @@ module Amazonite::SsmV1
       @detail_type : String | Nil = nil,
       @detail : String | Nil = nil,
       @created_by : OpsItemIdentity | Nil = nil,
-      @created_time : Time | Nil = nil
+      @created_time : Time | Nil = nil,
     )
     end
   end

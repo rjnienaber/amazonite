@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @table_arn : String | Nil = nil,
       @page_size : Int32 | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

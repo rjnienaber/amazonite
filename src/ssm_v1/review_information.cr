@@ -17,7 +17,7 @@ module Amazonite::SsmV1
     def initialize(
       @reviewed_time : Time | Nil = nil,
       @status : ReviewStatus | Nil = nil,
-      @reviewer : String | Nil = nil
+      @reviewer : String | Nil = nil,
     )
     end
   end

@@ -45,7 +45,7 @@ module Amazonite::SsmV1
       @document_format : DocumentFormat | Nil = nil,
       @status : DocumentStatus | Nil = nil,
       @status_information : String | Nil = nil,
-      @review_status : ReviewStatus | Nil = nil
+      @review_status : ReviewStatus | Nil = nil,
     )
     end
   end

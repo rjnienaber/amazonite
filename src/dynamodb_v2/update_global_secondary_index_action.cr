@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @index_name : String,
-      @provisioned_throughput : ProvisionedThroughput
+      @provisioned_throughput : ProvisionedThroughput,
     )
     end
   end

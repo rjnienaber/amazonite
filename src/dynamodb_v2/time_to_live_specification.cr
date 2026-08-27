@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @enabled : Bool,
-      @attribute_name : String
+      @attribute_name : String,
     )
     end
   end

@@ -32,7 +32,7 @@ module Amazonite::DynamoDBV2
       @billing_mode : BillingMode | Nil = nil,
       @provisioned_throughput : ProvisionedThroughput | Nil = nil,
       @sse_specification : SSESpecification | Nil = nil,
-      @global_secondary_indexes : Array(GlobalSecondaryIndex) | Nil = nil
+      @global_secondary_indexes : Array(GlobalSecondaryIndex) | Nil = nil,
     )
     end
   end

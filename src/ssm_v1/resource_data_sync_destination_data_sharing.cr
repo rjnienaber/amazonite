@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property destination_data_sharing_type : String | Nil
 
     def initialize(
-      @destination_data_sharing_type : String | Nil = nil
+      @destination_data_sharing_type : String | Nil = nil,
     )
     end
   end

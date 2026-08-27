@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @backup_details : BackupDetails | Nil = nil,
       @source_table_details : SourceTableDetails | Nil = nil,
-      @source_table_feature_details : SourceTableFeatureDetails | Nil = nil
+      @source_table_feature_details : SourceTableFeatureDetails | Nil = nil,
     )
     end
   end

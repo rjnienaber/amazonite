@@ -125,7 +125,7 @@ module Amazonite::SsmV1
       @pending_review_version : String | Nil = nil,
       @review_status : ReviewStatus | Nil = nil,
       @category : Array(String) | Nil = nil,
-      @category_enum : Array(String) | Nil = nil
+      @category_enum : Array(String) | Nil = nil,
     )
     end
   end

@@ -20,7 +20,7 @@ module Amazonite::SsmV1
       @name : String | Nil = nil,
       @type : DocumentParameterType | Nil = nil,
       @description : String | Nil = nil,
-      @default_value : String | Nil = nil
+      @default_value : String | Nil = nil,
     )
     end
   end

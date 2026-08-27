@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @baseline_id : String,
-      @patch_group : String
+      @patch_group : String,
     )
     end
   end

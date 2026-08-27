@@ -18,7 +18,7 @@ module Amazonite::SsmV1
       @patch_group : String,
       @filters : Array(InstancePatchStateFilter) | Nil = nil,
       @next_token : String | Nil = nil,
-      @max_results : Int32 | Nil = nil
+      @max_results : Int32 | Nil = nil,
     )
     end
   end

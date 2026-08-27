@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @update : UpdateGlobalSecondaryIndexAction | Nil = nil,
       @create : CreateGlobalSecondaryIndexAction | Nil = nil,
-      @delete : DeleteGlobalSecondaryIndexAction | Nil = nil
+      @delete : DeleteGlobalSecondaryIndexAction | Nil = nil,
     )
     end
   end

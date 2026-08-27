@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @filters : Array(OpsItemEventFilter) | Nil = nil,
       @max_results : Int32 | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

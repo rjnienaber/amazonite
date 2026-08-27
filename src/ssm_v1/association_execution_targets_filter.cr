@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @key : AssociationExecutionTargetsFilterKey,
-      @value : String
+      @value : String,
     )
     end
   end

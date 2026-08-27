@@ -12,7 +12,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @continuous_backups_status : ContinuousBackupsStatus,
-      @point_in_time_recovery_description : PointInTimeRecoveryDescription | Nil = nil
+      @point_in_time_recovery_description : PointInTimeRecoveryDescription | Nil = nil,
     )
     end
   end

@@ -18,7 +18,7 @@ module Amazonite::SsmV1
       @sync_name : String,
       @s3_destination : ResourceDataSyncS3Destination | Nil = nil,
       @sync_type : String | Nil = nil,
-      @sync_source : ResourceDataSyncSource | Nil = nil
+      @sync_source : ResourceDataSyncSource | Nil = nil,
     )
     end
   end

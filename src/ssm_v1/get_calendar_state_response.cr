@@ -16,7 +16,7 @@ module Amazonite::SsmV1
     def initialize(
       @state : CalendarState | Nil = nil,
       @at_time : String | Nil = nil,
-      @next_transition_time : String | Nil = nil
+      @next_transition_time : String | Nil = nil,
     )
     end
   end

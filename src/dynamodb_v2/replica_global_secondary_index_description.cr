@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @index_name : String | Nil = nil,
-      @provisioned_throughput_override : ProvisionedThroughputOverride | Nil = nil
+      @provisioned_throughput_override : ProvisionedThroughputOverride | Nil = nil,
     )
     end
   end

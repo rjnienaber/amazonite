@@ -21,7 +21,7 @@ module Amazonite::SsmV1
       @date : Time,
       @name : AssociationStatusName,
       @message : String,
-      @additional_info : String | Nil = nil
+      @additional_info : String | Nil = nil,
     )
     end
   end

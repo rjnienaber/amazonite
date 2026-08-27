@@ -18,7 +18,7 @@ module Amazonite::SsmV1
       @instance_id : String | Nil = nil,
       @snapshot_id : String | Nil = nil,
       @snapshot_download_url : String | Nil = nil,
-      @product : String | Nil = nil
+      @product : String | Nil = nil,
     )
     end
   end

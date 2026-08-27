@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @compliance_summary_items : Array(ComplianceSummaryItem) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

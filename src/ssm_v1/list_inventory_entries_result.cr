@@ -26,7 +26,7 @@ module Amazonite::SsmV1
       @schema_version : String | Nil = nil,
       @capture_time : String | Nil = nil,
       @entries : Array(Hash(String, String)) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

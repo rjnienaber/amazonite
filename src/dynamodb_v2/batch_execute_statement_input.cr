@@ -12,7 +12,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @statements : Array(BatchStatementRequest),
-      @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil
+      @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil,
     )
     end
   end

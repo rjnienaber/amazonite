@@ -84,7 +84,7 @@ module Amazonite::SsmV1
       @schedule_offset : Int32 | Nil = nil,
       @target_maps : Array(Hash(String, Array(String))) | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
-      @alarm_configuration : AlarmConfiguration | Nil = nil
+      @alarm_configuration : AlarmConfiguration | Nil = nil,
     )
     end
   end

@@ -49,7 +49,7 @@ module Amazonite::SsmV1
       @reason : String | Nil = nil,
       @details : String | Nil = nil,
       @output_url : SessionManagerOutputUrl | Nil = nil,
-      @max_session_duration : String | Nil = nil
+      @max_session_duration : String | Nil = nil,
     )
     end
   end

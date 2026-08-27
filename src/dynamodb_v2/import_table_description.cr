@@ -81,7 +81,7 @@ module Amazonite::DynamoDBV2
       @processed_item_count : Int64 | Nil = nil,
       @imported_item_count : Int64 | Nil = nil,
       @failure_code : String | Nil = nil,
-      @failure_message : String | Nil = nil
+      @failure_message : String | Nil = nil,
     )
     end
   end

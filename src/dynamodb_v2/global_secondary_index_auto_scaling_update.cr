@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @index_name : String | Nil = nil,
-      @provisioned_write_capacity_auto_scaling_update : AutoScalingSettingsUpdate | Nil = nil
+      @provisioned_write_capacity_auto_scaling_update : AutoScalingSettingsUpdate | Nil = nil,
     )
     end
   end

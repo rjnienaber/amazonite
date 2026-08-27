@@ -22,7 +22,7 @@ module Amazonite::SsmV1
       @task_id : String,
       @filters : Array(MaintenanceWindowFilter) | Nil = nil,
       @max_results : Int32 | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

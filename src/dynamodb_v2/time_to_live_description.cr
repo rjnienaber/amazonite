@@ -12,7 +12,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @time_to_live_status : TimeToLiveStatus | Nil = nil,
-      @attribute_name : String | Nil = nil
+      @attribute_name : String | Nil = nil,
     )
     end
   end

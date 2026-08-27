@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property patch_group : String
 
     def initialize(
-      @patch_group : String
+      @patch_group : String,
     )
     end
   end

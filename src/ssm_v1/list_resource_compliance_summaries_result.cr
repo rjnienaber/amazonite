@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @resource_compliance_summary_items : Array(ResourceComplianceSummaryItem) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

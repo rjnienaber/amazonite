@@ -22,7 +22,7 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
       @max_results : Int32 | Nil = nil,
       @aggregator : Bool | Nil = nil,
-      @sub_type : Bool | Nil = nil
+      @sub_type : Bool | Nil = nil,
     )
     end
   end

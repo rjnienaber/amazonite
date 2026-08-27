@@ -29,7 +29,7 @@ module Amazonite::SsmV1
       @status : MaintenanceWindowExecutionStatus | Nil = nil,
       @status_details : String | Nil = nil,
       @start_time : Time | Nil = nil,
-      @end_time : Time | Nil = nil
+      @end_time : Time | Nil = nil,
     )
     end
   end

@@ -22,7 +22,7 @@ module Amazonite::DynamoDBV2
       @count : Int32 | Nil = nil,
       @scanned_count : Int32 | Nil = nil,
       @last_evaluated_key : Hash(String, AttributeValue) | Nil = nil,
-      @consumed_capacity : ConsumedCapacity | Nil = nil
+      @consumed_capacity : ConsumedCapacity | Nil = nil,
     )
     end
   end

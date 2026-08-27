@@ -28,7 +28,7 @@ module Amazonite::DynamoDBV2
       @table_creation_parameters : TableCreationParameters,
       @client_token : String | Nil = nil,
       @input_format_options : InputFormatOptions | Nil = nil,
-      @input_compression_type : InputCompressionType | Nil = nil
+      @input_compression_type : InputCompressionType | Nil = nil,
     )
     end
   end

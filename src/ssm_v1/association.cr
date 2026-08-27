@@ -52,7 +52,7 @@ module Amazonite::SsmV1
       @schedule_expression : String | Nil = nil,
       @association_name : String | Nil = nil,
       @schedule_offset : Int32 | Nil = nil,
-      @target_maps : Array(Hash(String, Array(String))) | Nil = nil
+      @target_maps : Array(Hash(String, Array(String))) | Nil = nil,
     )
     end
   end

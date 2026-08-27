@@ -22,7 +22,7 @@ module Amazonite::DynamoDBV2
       @global_secondary_indexes : Array(GlobalSecondaryIndexInfo) | Nil = nil,
       @stream_description : StreamSpecification | Nil = nil,
       @time_to_live_description : TimeToLiveDescription | Nil = nil,
-      @sse_description : SSEDescription | Nil = nil
+      @sse_description : SSEDescription | Nil = nil,
     )
     end
   end

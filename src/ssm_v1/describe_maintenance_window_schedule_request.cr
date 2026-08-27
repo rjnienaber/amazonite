@@ -28,7 +28,7 @@ module Amazonite::SsmV1
       @resource_type : MaintenanceWindowResourceType | Nil = nil,
       @filters : Array(PatchOrchestratorFilter) | Nil = nil,
       @max_results : Int32 | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

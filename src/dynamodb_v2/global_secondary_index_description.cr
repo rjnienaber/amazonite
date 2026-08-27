@@ -40,7 +40,7 @@ module Amazonite::DynamoDBV2
       @provisioned_throughput : ProvisionedThroughputDescription | Nil = nil,
       @index_size_bytes : Int64 | Nil = nil,
       @item_count : Int64 | Nil = nil,
-      @index_arn : String | Nil = nil
+      @index_arn : String | Nil = nil,
     )
     end
   end

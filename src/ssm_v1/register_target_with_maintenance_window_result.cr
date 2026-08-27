@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property window_target_id : String | Nil
 
     def initialize(
-      @window_target_id : String | Nil = nil
+      @window_target_id : String | Nil = nil,
     )
     end
   end

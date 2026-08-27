@@ -29,7 +29,7 @@ module Amazonite::DynamoDBV2
       @time_range_lower_bound : Time | Nil = nil,
       @time_range_upper_bound : Time | Nil = nil,
       @exclusive_start_backup_arn : String | Nil = nil,
-      @backup_type : BackupTypeFilter | Nil = nil
+      @backup_type : BackupTypeFilter | Nil = nil,
     )
     end
   end

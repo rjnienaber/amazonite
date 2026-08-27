@@ -40,7 +40,7 @@ module Amazonite::SsmV1
       @status : ComplianceStatus | Nil = nil,
       @severity : ComplianceSeverity | Nil = nil,
       @execution_summary : ComplianceExecutionSummary | Nil = nil,
-      @details : Hash(String, String) | Nil = nil
+      @details : Hash(String, String) | Nil = nil,
     )
     end
   end

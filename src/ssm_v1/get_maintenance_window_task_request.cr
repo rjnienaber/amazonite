@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @window_id : String,
-      @window_task_id : String
+      @window_task_id : String,
     )
     end
   end

@@ -93,7 +93,7 @@ module Amazonite::SsmV1
       @reboot_option : RebootOption | Nil = nil,
       @critical_non_compliant_count : Int32 | Nil = nil,
       @security_non_compliant_count : Int32 | Nil = nil,
-      @other_non_compliant_count : Int32 | Nil = nil
+      @other_non_compliant_count : Int32 | Nil = nil,
     )
     end
   end

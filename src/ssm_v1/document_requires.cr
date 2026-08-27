@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @name : String,
-      @version : String | Nil = nil
+      @version : String | Nil = nil,
     )
     end
   end

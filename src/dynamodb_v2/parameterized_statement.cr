@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @statement : String,
-      @parameters : Array(AttributeValue) | Nil = nil
+      @parameters : Array(AttributeValue) | Nil = nil,
     )
     end
   end

@@ -24,7 +24,7 @@ module Amazonite::SsmV1
       @metadata : DocumentMetadataEnum,
       @document_version : String | Nil = nil,
       @next_token : String | Nil = nil,
-      @max_results : Int32 | Nil = nil
+      @max_results : Int32 | Nil = nil,
     )
     end
   end

@@ -18,7 +18,7 @@ module Amazonite::DynamoDBV2
       @key : Hash(String, AttributeValue),
       @table_name : String,
       @projection_expression : String | Nil = nil,
-      @expression_attribute_names : Hash(String, String) | Nil = nil
+      @expression_attribute_names : Hash(String, String) | Nil = nil,
     )
     end
   end

@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property type_name : String
 
     def initialize(
-      @type_name : String
+      @type_name : String,
     )
     end
   end

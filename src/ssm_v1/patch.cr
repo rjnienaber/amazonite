@@ -96,7 +96,7 @@ module Amazonite::SsmV1
       @release : String | Nil = nil,
       @arch : String | Nil = nil,
       @severity : String | Nil = nil,
-      @repository : String | Nil = nil
+      @repository : String | Nil = nil,
     )
     end
   end

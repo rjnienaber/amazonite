@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @name : String,
       @document_version : String | Nil = nil,
-      @version_name : String | Nil = nil
+      @version_name : String | Nil = nil,
     )
     end
   end

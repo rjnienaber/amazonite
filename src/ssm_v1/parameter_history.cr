@@ -57,7 +57,7 @@ module Amazonite::SsmV1
       @labels : Array(String) | Nil = nil,
       @tier : ParameterTier | Nil = nil,
       @policies : Array(ParameterInlinePolicy) | Nil = nil,
-      @data_type : String | Nil = nil
+      @data_type : String | Nil = nil,
     )
     end
   end

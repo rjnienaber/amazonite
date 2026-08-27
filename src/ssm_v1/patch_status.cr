@@ -17,7 +17,7 @@ module Amazonite::SsmV1
     def initialize(
       @deployment_status : PatchDeploymentStatus | Nil = nil,
       @compliance_level : PatchComplianceLevel | Nil = nil,
-      @approval_date : Time | Nil = nil
+      @approval_date : Time | Nil = nil,
     )
     end
   end

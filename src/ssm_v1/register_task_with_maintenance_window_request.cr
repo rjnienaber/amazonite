@@ -68,7 +68,7 @@ module Amazonite::SsmV1
       @description : String | Nil = nil,
       @client_token : String | Nil = nil,
       @cutoff_behavior : MaintenanceWindowTaskCutoffBehavior | Nil = nil,
-      @alarm_configuration : AlarmConfiguration | Nil = nil
+      @alarm_configuration : AlarmConfiguration | Nil = nil,
     )
     end
   end

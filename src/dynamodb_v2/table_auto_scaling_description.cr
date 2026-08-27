@@ -16,7 +16,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @table_name : String | Nil = nil,
       @table_status : TableStatus | Nil = nil,
-      @replicas : Array(ReplicaAutoScalingDescription) | Nil = nil
+      @replicas : Array(ReplicaAutoScalingDescription) | Nil = nil,
     )
     end
   end

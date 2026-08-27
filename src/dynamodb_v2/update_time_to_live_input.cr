@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @table_name : String,
-      @time_to_live_specification : TimeToLiveSpecification
+      @time_to_live_specification : TimeToLiveSpecification,
     )
     end
   end

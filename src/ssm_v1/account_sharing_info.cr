@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @account_id : String | Nil = nil,
-      @shared_document_version : String | Nil = nil
+      @shared_document_version : String | Nil = nil,
     )
     end
   end

@@ -18,7 +18,7 @@ module Amazonite::SsmV1
       @ops_item_id : String,
       @association_type : String,
       @resource_type : String,
-      @resource_uri : String
+      @resource_uri : String,
     )
     end
   end

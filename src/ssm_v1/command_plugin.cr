@@ -53,7 +53,7 @@ module Amazonite::SsmV1
       @standard_error_url : String | Nil = nil,
       @output_s3_region : String | Nil = nil,
       @output_s3_bucket_name : String | Nil = nil,
-      @output_s3_key_prefix : String | Nil = nil
+      @output_s3_key_prefix : String | Nil = nil,
     )
     end
   end

@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @account_ids : Array(String) | Nil = nil,
       @account_sharing_info_list : Array(AccountSharingInfo) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

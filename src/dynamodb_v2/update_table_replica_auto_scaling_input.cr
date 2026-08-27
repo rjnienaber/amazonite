@@ -18,7 +18,7 @@ module Amazonite::DynamoDBV2
       @table_name : String,
       @global_secondary_index_updates : Array(GlobalSecondaryIndexAutoScalingUpdate) | Nil = nil,
       @provisioned_write_capacity_auto_scaling_update : AutoScalingSettingsUpdate | Nil = nil,
-      @replica_updates : Array(ReplicaAutoScalingUpdate) | Nil = nil
+      @replica_updates : Array(ReplicaAutoScalingUpdate) | Nil = nil,
     )
     end
   end

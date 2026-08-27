@@ -20,7 +20,7 @@ module Amazonite::SsmV1
       @name : String,
       @version_name : String | Nil = nil,
       @document_version : String | Nil = nil,
-      @document_format : DocumentFormat | Nil = nil
+      @document_format : DocumentFormat | Nil = nil,
     )
     end
   end

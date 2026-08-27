@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @global_tables : Array(GlobalTable) | Nil = nil,
-      @last_evaluated_global_table_name : String | Nil = nil
+      @last_evaluated_global_table_name : String | Nil = nil,
     )
     end
   end

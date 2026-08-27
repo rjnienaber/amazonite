@@ -18,7 +18,7 @@ module Amazonite::SsmV1
       @instance_information_filter_list : Array(InstanceInformationFilter) | Nil = nil,
       @filters : Array(InstanceInformationStringFilter) | Nil = nil,
       @max_results : Int32 | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

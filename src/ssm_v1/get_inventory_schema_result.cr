@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @schemas : Array(InventoryItemSchema) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

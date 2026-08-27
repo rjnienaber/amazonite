@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @ops_metadata_list : Array(OpsMetadata) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

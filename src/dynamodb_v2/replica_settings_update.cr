@@ -24,7 +24,7 @@ module Amazonite::DynamoDBV2
       @replica_provisioned_read_capacity_units : Int64 | Nil = nil,
       @replica_provisioned_read_capacity_auto_scaling_settings_update : AutoScalingSettingsUpdate | Nil = nil,
       @replica_global_secondary_index_settings_update : Array(ReplicaGlobalSecondaryIndexSettingsUpdate) | Nil = nil,
-      @replica_table_class : TableClass | Nil = nil
+      @replica_table_class : TableClass | Nil = nil,
     )
     end
   end

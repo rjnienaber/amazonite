@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @backup_summaries : Array(BackupSummary) | Nil = nil,
-      @last_evaluated_backup_arn : String | Nil = nil
+      @last_evaluated_backup_arn : String | Nil = nil,
     )
     end
   end

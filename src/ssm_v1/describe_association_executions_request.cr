@@ -18,7 +18,7 @@ module Amazonite::SsmV1
       @association_id : String,
       @filters : Array(AssociationExecutionFilter) | Nil = nil,
       @max_results : Int32 | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

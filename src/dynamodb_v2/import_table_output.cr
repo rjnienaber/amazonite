@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property import_table_description : ImportTableDescription
 
     def initialize(
-      @import_table_description : ImportTableDescription
+      @import_table_description : ImportTableDescription,
     )
     end
   end

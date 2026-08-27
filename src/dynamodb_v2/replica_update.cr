@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @create : CreateReplicaAction | Nil = nil,
-      @delete : DeleteReplicaAction | Nil = nil
+      @delete : DeleteReplicaAction | Nil = nil,
     )
     end
   end

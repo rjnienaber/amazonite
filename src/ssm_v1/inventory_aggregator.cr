@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @expression : String | Nil = nil,
       @aggregators : Array(InventoryAggregator) | Nil = nil,
-      @groups : Array(InventoryGroup) | Nil = nil
+      @groups : Array(InventoryGroup) | Nil = nil,
     )
     end
   end

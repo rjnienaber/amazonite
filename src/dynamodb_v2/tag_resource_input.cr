@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @resource_arn : String,
-      @tags : Array(Tag)
+      @tags : Array(Tag),
     )
     end
   end

@@ -50,7 +50,7 @@ module Amazonite::SsmV1
       @schedule_timezone : String | Nil = nil,
       @schedule_offset : Int32 | Nil = nil,
       @client_token : String | Nil = nil,
-      @tags : Array(Tag) | Nil = nil
+      @tags : Array(Tag) | Nil = nil,
     )
     end
   end

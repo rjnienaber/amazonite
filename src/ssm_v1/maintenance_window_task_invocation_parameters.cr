@@ -18,7 +18,7 @@ module Amazonite::SsmV1
       @run_command : MaintenanceWindowRunCommandParameters | Nil = nil,
       @automation : MaintenanceWindowAutomationParameters | Nil = nil,
       @step_functions : MaintenanceWindowStepFunctionsParameters | Nil = nil,
-      @lambda : MaintenanceWindowLambdaParameters | Nil = nil
+      @lambda : MaintenanceWindowLambdaParameters | Nil = nil,
     )
     end
   end

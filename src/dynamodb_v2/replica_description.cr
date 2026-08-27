@@ -41,7 +41,7 @@ module Amazonite::DynamoDBV2
       @provisioned_throughput_override : ProvisionedThroughputOverride | Nil = nil,
       @global_secondary_indexes : Array(ReplicaGlobalSecondaryIndexDescription) | Nil = nil,
       @replica_inaccessible_date_time : Time | Nil = nil,
-      @replica_table_class_summary : TableClassSummary | Nil = nil
+      @replica_table_class_summary : TableClassSummary | Nil = nil,
     )
     end
   end

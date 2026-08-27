@@ -20,7 +20,7 @@ module Amazonite::DynamoDBV2
       @index_name : String | Nil = nil,
       @index_status : IndexStatus | Nil = nil,
       @provisioned_read_capacity_auto_scaling_settings : AutoScalingSettingsDescription | Nil = nil,
-      @provisioned_write_capacity_auto_scaling_settings : AutoScalingSettingsDescription | Nil = nil
+      @provisioned_write_capacity_auto_scaling_settings : AutoScalingSettingsDescription | Nil = nil,
     )
     end
   end

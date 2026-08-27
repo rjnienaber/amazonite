@@ -18,7 +18,7 @@ module Amazonite::SsmV1
       @name : String,
       @document_version : String | Nil = nil,
       @version_name : String | Nil = nil,
-      @force : Bool | Nil = nil
+      @force : Bool | Nil = nil,
     )
     end
   end

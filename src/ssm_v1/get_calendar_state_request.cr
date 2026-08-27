@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @calendar_names : Array(String),
-      @at_time : String | Nil = nil
+      @at_time : String | Nil = nil,
     )
     end
   end

@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @name : String,
-      @filters : Array(InventoryFilter)
+      @filters : Array(InventoryFilter),
     )
     end
   end

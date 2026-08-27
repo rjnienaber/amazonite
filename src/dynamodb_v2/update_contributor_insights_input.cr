@@ -16,7 +16,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @table_name : String,
       @contributor_insights_action : ContributorInsightsAction,
-      @index_name : String | Nil = nil
+      @index_name : String | Nil = nil,
     )
     end
   end

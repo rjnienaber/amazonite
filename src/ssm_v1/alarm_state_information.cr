@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @name : String,
-      @state : ExternalAlarmState
+      @state : ExternalAlarmState,
     )
     end
   end

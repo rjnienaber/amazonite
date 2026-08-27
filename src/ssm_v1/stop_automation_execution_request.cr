@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @automation_execution_id : String,
-      @type : StopType | Nil = nil
+      @type : StopType | Nil = nil,
     )
     end
   end

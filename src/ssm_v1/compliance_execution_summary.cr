@@ -16,7 +16,7 @@ module Amazonite::SsmV1
     def initialize(
       @execution_time : Time,
       @execution_id : String | Nil = nil,
-      @execution_type : String | Nil = nil
+      @execution_type : String | Nil = nil,
     )
     end
   end

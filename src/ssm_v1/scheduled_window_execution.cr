@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @window_id : String | Nil = nil,
       @name : String | Nil = nil,
-      @execution_time : String | Nil = nil
+      @execution_time : String | Nil = nil,
     )
     end
   end

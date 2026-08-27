@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @item_collection_key : Hash(String, AttributeValue) | Nil = nil,
-      @size_estimate_range_gb : Array(Float64) | Nil = nil
+      @size_estimate_range_gb : Array(Float64) | Nil = nil,
     )
     end
   end

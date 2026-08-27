@@ -30,7 +30,7 @@ module Amazonite::DynamoDBV2
       @write_capacity_units : Float64 | Nil = nil,
       @table : Capacity | Nil = nil,
       @local_secondary_indexes : Hash(String, Capacity) | Nil = nil,
-      @global_secondary_indexes : Hash(String, Capacity) | Nil = nil
+      @global_secondary_indexes : Hash(String, Capacity) | Nil = nil,
     )
     end
   end

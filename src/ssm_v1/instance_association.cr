@@ -18,7 +18,7 @@ module Amazonite::SsmV1
       @association_id : String | Nil = nil,
       @instance_id : String | Nil = nil,
       @content : String | Nil = nil,
-      @association_version : String | Nil = nil
+      @association_version : String | Nil = nil,
     )
     end
   end

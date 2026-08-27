@@ -18,7 +18,7 @@ module Amazonite::DynamoDBV2
       @items : Array(Hash(String, AttributeValue)) | Nil = nil,
       @next_token : String | Nil = nil,
       @consumed_capacity : ConsumedCapacity | Nil = nil,
-      @last_evaluated_key : Hash(String, AttributeValue) | Nil = nil
+      @last_evaluated_key : Hash(String, AttributeValue) | Nil = nil,
     )
     end
   end

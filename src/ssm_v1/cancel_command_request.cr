@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @command_id : String,
-      @instance_ids : Array(String) | Nil = nil
+      @instance_ids : Array(String) | Nil = nil,
     )
     end
   end

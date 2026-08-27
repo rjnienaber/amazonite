@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @instance_id : String,
-      @iam_role : String
+      @iam_role : String,
     )
     end
   end

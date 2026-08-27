@@ -32,7 +32,7 @@ module Amazonite::DynamoDBV2
       @consistent_read : Bool | Nil = nil,
       @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil,
       @projection_expression : String | Nil = nil,
-      @expression_attribute_names : Hash(String, String) | Nil = nil
+      @expression_attribute_names : Hash(String, String) | Nil = nil,
     )
     end
   end

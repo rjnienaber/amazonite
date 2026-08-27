@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @association_filter_list : Array(AssociationFilter) | Nil = nil,
       @max_results : Int32 | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

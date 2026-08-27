@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @successful : Array(AssociationDescription) | Nil = nil,
-      @failed : Array(FailedCreateAssociation) | Nil = nil
+      @failed : Array(FailedCreateAssociation) | Nil = nil,
     )
     end
   end

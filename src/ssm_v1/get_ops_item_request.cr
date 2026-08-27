@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property ops_item_id : String
 
     def initialize(
-      @ops_item_id : String
+      @ops_item_id : String,
     )
     end
   end

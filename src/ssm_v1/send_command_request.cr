@@ -76,7 +76,7 @@ module Amazonite::SsmV1
       @service_role_arn : String | Nil = nil,
       @notification_config : NotificationConfig | Nil = nil,
       @cloud_watch_output_config : CloudWatchOutputConfig | Nil = nil,
-      @alarm_configuration : AlarmConfiguration | Nil = nil
+      @alarm_configuration : AlarmConfiguration | Nil = nil,
     )
     end
   end

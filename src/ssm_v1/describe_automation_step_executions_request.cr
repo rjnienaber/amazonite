@@ -22,7 +22,7 @@ module Amazonite::SsmV1
       @filters : Array(StepExecutionFilter) | Nil = nil,
       @next_token : String | Nil = nil,
       @max_results : Int32 | Nil = nil,
-      @reverse_order : Bool | Nil = nil
+      @reverse_order : Bool | Nil = nil,
     )
     end
   end

@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @ops_metadata_arn : String,
       @metadata_to_update : Hash(String, MetadataValue) | Nil = nil,
-      @keys_to_delete : Array(String) | Nil = nil
+      @keys_to_delete : Array(String) | Nil = nil,
     )
     end
   end

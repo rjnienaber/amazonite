@@ -54,7 +54,7 @@ module Amazonite::SsmV1
       @cutoff : Int32 | Nil = nil,
       @allow_unassociated_targets : Bool | Nil = nil,
       @enabled : Bool | Nil = nil,
-      @replace : Bool | Nil = nil
+      @replace : Bool | Nil = nil,
     )
     end
   end

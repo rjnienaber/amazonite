@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @alarms : Array(Alarm),
-      @ignore_poll_alarm_failure : Bool | Nil = nil
+      @ignore_poll_alarm_failure : Bool | Nil = nil,
     )
     end
   end

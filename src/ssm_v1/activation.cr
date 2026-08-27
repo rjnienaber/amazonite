@@ -44,7 +44,7 @@ module Amazonite::SsmV1
       @expiration_date : Time | Nil = nil,
       @expired : Bool | Nil = nil,
       @created_date : Time | Nil = nil,
-      @tags : Array(Tag) | Nil = nil
+      @tags : Array(Tag) | Nil = nil,
     )
     end
   end

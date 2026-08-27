@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @command_id : String,
       @instance_id : String,
-      @plugin_name : String | Nil = nil
+      @plugin_name : String | Nil = nil,
     )
     end
   end

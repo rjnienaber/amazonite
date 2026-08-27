@@ -18,7 +18,7 @@ module Amazonite::SsmV1
       @type_name : String,
       @attributes : Array(InventoryItemAttribute),
       @version : String | Nil = nil,
-      @display_name : String | Nil = nil
+      @display_name : String | Nil = nil,
     )
     end
   end

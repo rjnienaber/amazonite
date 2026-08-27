@@ -44,7 +44,7 @@ module Amazonite::DynamoDBV2
       @conditional_operator : ConditionalOperator | Nil = nil,
       @condition_expression : String | Nil = nil,
       @expression_attribute_names : Hash(String, String) | Nil = nil,
-      @expression_attribute_values : Hash(String, AttributeValue) | Nil = nil
+      @expression_attribute_values : Hash(String, AttributeValue) | Nil = nil,
     )
     end
   end

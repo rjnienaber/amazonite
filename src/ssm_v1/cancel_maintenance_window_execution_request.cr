@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property window_execution_id : String
 
     def initialize(
-      @window_execution_id : String
+      @window_execution_id : String,
     )
     end
   end

@@ -24,7 +24,7 @@ module Amazonite::SsmV1
       @baseline_name : String | Nil = nil,
       @operating_system : OperatingSystem | Nil = nil,
       @baseline_description : String | Nil = nil,
-      @default_baseline : Bool | Nil = nil
+      @default_baseline : Bool | Nil = nil,
     )
     end
   end

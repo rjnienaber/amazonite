@@ -137,7 +137,7 @@ module Amazonite::SsmV1
       @runbooks : Array(Runbook) | Nil = nil,
       @ops_item_id : String | Nil = nil,
       @association_id : String | Nil = nil,
-      @change_request_name : String | Nil = nil
+      @change_request_name : String | Nil = nil,
     )
     end
   end

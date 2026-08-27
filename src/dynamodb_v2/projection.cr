@@ -12,7 +12,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @projection_type : ProjectionType | Nil = nil,
-      @non_key_attributes : Array(String) | Nil = nil
+      @non_key_attributes : Array(String) | Nil = nil,
     )
     end
   end

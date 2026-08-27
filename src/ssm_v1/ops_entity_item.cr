@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @capture_time : String | Nil = nil,
-      @content : Array(Hash(String, String)) | Nil = nil
+      @content : Array(Hash(String, String)) | Nil = nil,
     )
     end
   end

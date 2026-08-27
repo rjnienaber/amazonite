@@ -18,7 +18,7 @@ module Amazonite::DynamoDBV2
       @condition_check : ConditionCheck | Nil = nil,
       @put : Put | Nil = nil,
       @delete : Delete | Nil = nil,
-      @update : Update | Nil = nil
+      @update : Update | Nil = nil,
     )
     end
   end

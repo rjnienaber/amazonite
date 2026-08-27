@@ -49,7 +49,7 @@ module Amazonite::SsmV1
       @version : Int64 | Nil = nil,
       @tier : ParameterTier | Nil = nil,
       @policies : Array(ParameterInlinePolicy) | Nil = nil,
-      @data_type : String | Nil = nil
+      @data_type : String | Nil = nil,
     )
     end
   end

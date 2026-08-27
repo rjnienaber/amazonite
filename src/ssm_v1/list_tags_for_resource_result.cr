@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property tag_list : Array(Tag) | Nil
 
     def initialize(
-      @tag_list : Array(Tag) | Nil = nil
+      @tag_list : Array(Tag) | Nil = nil,
     )
     end
   end

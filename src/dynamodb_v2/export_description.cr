@@ -81,7 +81,7 @@ module Amazonite::DynamoDBV2
       @failure_message : String | Nil = nil,
       @export_format : ExportFormat | Nil = nil,
       @billed_size_bytes : Int64 | Nil = nil,
-      @item_count : Int64 | Nil = nil
+      @item_count : Int64 | Nil = nil,
     )
     end
   end

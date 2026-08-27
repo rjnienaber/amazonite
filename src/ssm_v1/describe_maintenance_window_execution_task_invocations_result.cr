@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @window_execution_task_invocation_identities : Array(MaintenanceWindowExecutionTaskInvocationIdentity) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

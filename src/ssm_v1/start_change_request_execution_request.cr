@@ -48,7 +48,7 @@ module Amazonite::SsmV1
       @auto_approve : Bool | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
       @scheduled_end_time : Time | Nil = nil,
-      @change_details : String | Nil = nil
+      @change_details : String | Nil = nil,
     )
     end
   end

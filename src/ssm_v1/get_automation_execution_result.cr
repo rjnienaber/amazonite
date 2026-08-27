@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property automation_execution : AutomationExecution | Nil
 
     def initialize(
-      @automation_execution : AutomationExecution | Nil = nil
+      @automation_execution : AutomationExecution | Nil = nil,
     )
     end
   end

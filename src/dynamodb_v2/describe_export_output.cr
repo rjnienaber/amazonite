@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property export_description : ExportDescription | Nil
 
     def initialize(
-      @export_description : ExportDescription | Nil = nil
+      @export_description : ExportDescription | Nil = nil,
     )
     end
   end

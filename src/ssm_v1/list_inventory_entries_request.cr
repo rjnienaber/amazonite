@@ -22,7 +22,7 @@ module Amazonite::SsmV1
       @type_name : String,
       @filters : Array(InventoryFilter) | Nil = nil,
       @next_token : String | Nil = nil,
-      @max_results : Int32 | Nil = nil
+      @max_results : Int32 | Nil = nil,
     )
     end
   end

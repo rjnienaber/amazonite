@@ -48,7 +48,7 @@ module Amazonite::SsmV1
       @output_s3_key_prefix : String | Nil = nil,
       @parameters : Hash(String, Array(String)) | Nil = nil,
       @service_role_arn : String | Nil = nil,
-      @timeout_seconds : Int32 | Nil = nil
+      @timeout_seconds : Int32 | Nil = nil,
     )
     end
   end

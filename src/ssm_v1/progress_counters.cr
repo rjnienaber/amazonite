@@ -22,7 +22,7 @@ module Amazonite::SsmV1
       @success_steps : Int32 | Nil = nil,
       @failed_steps : Int32 | Nil = nil,
       @cancelled_steps : Int32 | Nil = nil,
-      @timed_out_steps : Int32 | Nil = nil
+      @timed_out_steps : Int32 | Nil = nil,
     )
     end
   end

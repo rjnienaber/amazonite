@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @table_name : String,
-      @backup_name : String
+      @backup_name : String,
     )
     end
   end

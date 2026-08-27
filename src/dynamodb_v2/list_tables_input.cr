@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @exclusive_start_table_name : String | Nil = nil,
-      @limit : Int32 | Nil = nil
+      @limit : Int32 | Nil = nil,
     )
     end
   end

@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @delimiter : String | Nil = nil,
-      @header_list : Array(String) | Nil = nil
+      @header_list : Array(String) | Nil = nil,
     )
     end
   end

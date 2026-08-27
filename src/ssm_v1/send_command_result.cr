@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property command : Command | Nil
 
     def initialize(
-      @command : Command | Nil = nil
+      @command : Command | Nil = nil,
     )
     end
   end

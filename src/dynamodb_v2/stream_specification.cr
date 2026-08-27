@@ -12,7 +12,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @stream_enabled : Bool,
-      @stream_view_type : StreamViewType | Nil = nil
+      @stream_view_type : StreamViewType | Nil = nil,
     )
     end
   end

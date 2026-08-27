@@ -30,7 +30,7 @@ module Amazonite::SsmV1
       @owner_information : String | Nil = nil,
       @name : String | Nil = nil,
       @description : String | Nil = nil,
-      @replace : Bool | Nil = nil
+      @replace : Bool | Nil = nil,
     )
     end
   end

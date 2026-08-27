@@ -45,7 +45,7 @@ module Amazonite::SsmV1
       @sync_last_modified_time : Time | Nil = nil,
       @last_status : LastResourceDataSyncStatus | Nil = nil,
       @sync_created_time : Time | Nil = nil,
-      @last_sync_status_message : String | Nil = nil
+      @last_sync_status_message : String | Nil = nil,
     )
     end
   end

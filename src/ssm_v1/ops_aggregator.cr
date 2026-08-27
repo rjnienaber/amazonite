@@ -26,7 +26,7 @@ module Amazonite::SsmV1
       @attribute_name : String | Nil = nil,
       @values : Hash(String, String) | Nil = nil,
       @filters : Array(OpsFilter) | Nil = nil,
-      @aggregators : Array(OpsAggregator) | Nil = nil
+      @aggregators : Array(OpsAggregator) | Nil = nil,
     )
     end
   end

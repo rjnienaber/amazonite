@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property region_name : String
 
     def initialize(
-      @region_name : String
+      @region_name : String,
     )
     end
   end

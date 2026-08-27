@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @create : CreateReplicationGroupMemberAction | Nil = nil,
       @update : UpdateReplicationGroupMemberAction | Nil = nil,
-      @delete : DeleteReplicationGroupMemberAction | Nil = nil
+      @delete : DeleteReplicationGroupMemberAction | Nil = nil,
     )
     end
   end

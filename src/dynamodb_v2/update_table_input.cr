@@ -40,7 +40,7 @@ module Amazonite::DynamoDBV2
       @stream_specification : StreamSpecification | Nil = nil,
       @sse_specification : SSESpecification | Nil = nil,
       @replica_updates : Array(ReplicationGroupUpdate) | Nil = nil,
-      @table_class : TableClass | Nil = nil
+      @table_class : TableClass | Nil = nil,
     )
     end
   end

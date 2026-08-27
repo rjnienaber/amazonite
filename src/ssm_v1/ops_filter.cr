@@ -16,7 +16,7 @@ module Amazonite::SsmV1
     def initialize(
       @key : String,
       @values : Array(String),
-      @type : OpsFilterOperatorType | Nil = nil
+      @type : OpsFilterOperatorType | Nil = nil,
     )
     end
   end

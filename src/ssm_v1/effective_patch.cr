@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @patch : Patch | Nil = nil,
-      @patch_status : PatchStatus | Nil = nil
+      @patch_status : PatchStatus | Nil = nil,
     )
     end
   end

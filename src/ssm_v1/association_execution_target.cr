@@ -40,7 +40,7 @@ module Amazonite::SsmV1
       @status : String | Nil = nil,
       @detailed_status : String | Nil = nil,
       @last_execution_date : Time | Nil = nil,
-      @output_source : OutputSource | Nil = nil
+      @output_source : OutputSource | Nil = nil,
     )
     end
   end

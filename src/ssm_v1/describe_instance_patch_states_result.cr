@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @instance_patch_states : Array(InstancePatchState) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

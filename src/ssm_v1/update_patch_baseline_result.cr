@@ -61,7 +61,7 @@ module Amazonite::SsmV1
       @created_date : Time | Nil = nil,
       @modified_date : Time | Nil = nil,
       @description : String | Nil = nil,
-      @sources : Array(PatchSource) | Nil = nil
+      @sources : Array(PatchSource) | Nil = nil,
     )
     end
   end

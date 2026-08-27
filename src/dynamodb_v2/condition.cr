@@ -12,7 +12,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @comparison_operator : ComparisonOperator,
-      @attribute_value_list : Array(AttributeValue) | Nil = nil
+      @attribute_value_list : Array(AttributeValue) | Nil = nil,
     )
     end
   end

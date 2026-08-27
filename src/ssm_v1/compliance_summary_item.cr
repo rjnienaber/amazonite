@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @compliance_type : String | Nil = nil,
       @compliant_summary : CompliantSummary | Nil = nil,
-      @non_compliant_summary : NonCompliantSummary | Nil = nil
+      @non_compliant_summary : NonCompliantSummary | Nil = nil,
     )
     end
   end

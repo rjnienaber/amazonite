@@ -36,7 +36,7 @@ module Amazonite::SsmV1
       @version_name : String | Nil = nil,
       @document_version : String | Nil = nil,
       @document_format : DocumentFormat | Nil = nil,
-      @target_type : String | Nil = nil
+      @target_type : String | Nil = nil,
     )
     end
   end

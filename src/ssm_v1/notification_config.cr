@@ -16,7 +16,7 @@ module Amazonite::SsmV1
     def initialize(
       @notification_arn : String | Nil = nil,
       @notification_events : Array(NotificationEvent) | Nil = nil,
-      @notification_type : NotificationType | Nil = nil
+      @notification_type : NotificationType | Nil = nil,
     )
     end
   end

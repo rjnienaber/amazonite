@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @responses : Array(ItemResponse) | Nil = nil,
-      @consumed_capacity : Array(ConsumedCapacity) | Nil = nil
+      @consumed_capacity : Array(ConsumedCapacity) | Nil = nil,
     )
     end
   end

@@ -56,7 +56,7 @@ module Amazonite::SsmV1
       @description : String | Nil = nil,
       @sources : Array(PatchSource) | Nil = nil,
       @client_token : String | Nil = nil,
-      @tags : Array(Tag) | Nil = nil
+      @tags : Array(Tag) | Nil = nil,
     )
     end
   end

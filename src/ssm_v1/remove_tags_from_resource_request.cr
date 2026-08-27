@@ -16,7 +16,7 @@ module Amazonite::SsmV1
     def initialize(
       @resource_type : ResourceTypeForTagging,
       @resource_id : String,
-      @tag_keys : Array(String)
+      @tag_keys : Array(String),
     )
     end
   end

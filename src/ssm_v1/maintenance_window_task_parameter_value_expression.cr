@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property values : Array(String) | Nil
 
     def initialize(
-      @values : Array(String) | Nil = nil
+      @values : Array(String) | Nil = nil,
     )
     end
   end

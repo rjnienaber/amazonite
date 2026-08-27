@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @removed_labels : Array(String) | Nil = nil,
-      @invalid_labels : Array(String) | Nil = nil
+      @invalid_labels : Array(String) | Nil = nil,
     )
     end
   end

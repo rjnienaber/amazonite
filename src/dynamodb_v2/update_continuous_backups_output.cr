@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property continuous_backups_description : ContinuousBackupsDescription | Nil
 
     def initialize(
-      @continuous_backups_description : ContinuousBackupsDescription | Nil = nil
+      @continuous_backups_description : ContinuousBackupsDescription | Nil = nil,
     )
     end
   end

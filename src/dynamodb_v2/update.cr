@@ -32,7 +32,7 @@ module Amazonite::DynamoDBV2
       @condition_expression : String | Nil = nil,
       @expression_attribute_names : Hash(String, String) | Nil = nil,
       @expression_attribute_values : Hash(String, AttributeValue) | Nil = nil,
-      @return_values_on_condition_check_failure : ReturnValuesOnConditionCheckFailure | Nil = nil
+      @return_values_on_condition_check_failure : ReturnValuesOnConditionCheckFailure | Nil = nil,
     )
     end
   end

@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @name : String,
       @products : Array(String),
-      @configuration : String
+      @configuration : String,
     )
     end
   end

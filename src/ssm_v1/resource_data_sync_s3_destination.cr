@@ -28,7 +28,7 @@ module Amazonite::SsmV1
       @region : String,
       @prefix : String | Nil = nil,
       @awskms_key_arn : String | Nil = nil,
-      @destination_data_sharing : ResourceDataSyncDestinationDataSharing | Nil = nil
+      @destination_data_sharing : ResourceDataSyncDestinationDataSharing | Nil = nil,
     )
     end
   end

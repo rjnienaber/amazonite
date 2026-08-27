@@ -72,7 +72,7 @@ module Amazonite::DynamoDBV2
       @filter_expression : String | Nil = nil,
       @key_condition_expression : String | Nil = nil,
       @expression_attribute_names : Hash(String, String) | Nil = nil,
-      @expression_attribute_values : Hash(String, AttributeValue) | Nil = nil
+      @expression_attribute_values : Hash(String, AttributeValue) | Nil = nil,
     )
     end
   end

@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property baseline_id : String | Nil
 
     def initialize(
-      @baseline_id : String | Nil = nil
+      @baseline_id : String | Nil = nil,
     )
     end
   end

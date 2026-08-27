@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @key : DocumentFilterKey,
-      @value : String
+      @value : String,
     )
     end
   end

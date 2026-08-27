@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property ops_metadata_arn : String | Nil
 
     def initialize(
-      @ops_metadata_arn : String | Nil = nil
+      @ops_metadata_arn : String | Nil = nil,
     )
     end
   end

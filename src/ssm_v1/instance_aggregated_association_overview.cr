@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @detailed_status : String | Nil = nil,
-      @instance_association_status_aggregated_count : Hash(String, Int32) | Nil = nil
+      @instance_association_status_aggregated_count : Hash(String, Int32) | Nil = nil,
     )
     end
   end

@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property session_id : String | Nil
 
     def initialize(
-      @session_id : String | Nil = nil
+      @session_id : String | Nil = nil,
     )
     end
   end

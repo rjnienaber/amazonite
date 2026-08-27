@@ -28,7 +28,7 @@ module Amazonite::SsmV1
       @last_modified_date : Time | Nil = nil,
       @last_modified_user : String | Nil = nil,
       @arn : String | Nil = nil,
-      @status : String | Nil = nil
+      @status : String | Nil = nil,
     )
     end
   end

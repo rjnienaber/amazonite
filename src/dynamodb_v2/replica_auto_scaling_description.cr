@@ -24,7 +24,7 @@ module Amazonite::DynamoDBV2
       @global_secondary_indexes : Array(ReplicaGlobalSecondaryIndexAutoScalingDescription) | Nil = nil,
       @replica_provisioned_read_capacity_auto_scaling_settings : AutoScalingSettingsDescription | Nil = nil,
       @replica_provisioned_write_capacity_auto_scaling_settings : AutoScalingSettingsDescription | Nil = nil,
-      @replica_status : ReplicaStatus | Nil = nil
+      @replica_status : ReplicaStatus | Nil = nil,
     )
     end
   end

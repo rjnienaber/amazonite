@@ -26,7 +26,7 @@ module Amazonite::SsmV1
       @parameter_filters : Array(ParameterStringFilter) | Nil = nil,
       @with_decryption : Bool | Nil = nil,
       @max_results : Int32 | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

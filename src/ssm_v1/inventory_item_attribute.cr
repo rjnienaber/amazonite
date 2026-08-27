@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @name : String,
-      @data_type : InventoryAttributeDataType
+      @data_type : InventoryAttributeDataType,
     )
     end
   end

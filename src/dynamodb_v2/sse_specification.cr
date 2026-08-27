@@ -16,7 +16,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @enabled : Bool | Nil = nil,
       @sse_type : SSEType | Nil = nil,
-      @kms_master_key_id : String | Nil = nil
+      @kms_master_key_id : String | Nil = nil,
     )
     end
   end

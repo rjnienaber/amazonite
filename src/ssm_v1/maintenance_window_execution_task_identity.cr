@@ -45,7 +45,7 @@ module Amazonite::SsmV1
       @task_arn : String | Nil = nil,
       @task_type : MaintenanceWindowTaskType | Nil = nil,
       @alarm_configuration : AlarmConfiguration | Nil = nil,
-      @triggered_alarms : Array(AlarmStateInformation) | Nil = nil
+      @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,
     )
     end
   end

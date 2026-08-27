@@ -40,7 +40,7 @@ module Amazonite::DynamoDBV2
       @replica_provisioned_write_capacity_units : Int64 | Nil = nil,
       @replica_provisioned_write_capacity_auto_scaling_settings : AutoScalingSettingsDescription | Nil = nil,
       @replica_global_secondary_index_settings : Array(ReplicaGlobalSecondaryIndexSettingsDescription) | Nil = nil,
-      @replica_table_class_summary : TableClassSummary | Nil = nil
+      @replica_table_class_summary : TableClassSummary | Nil = nil,
     )
     end
   end

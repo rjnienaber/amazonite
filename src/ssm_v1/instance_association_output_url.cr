@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property s3_output_url : S3OutputUrl | Nil
 
     def initialize(
-      @s3_output_url : S3OutputUrl | Nil = nil
+      @s3_output_url : S3OutputUrl | Nil = nil,
     )
     end
   end

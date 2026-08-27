@@ -20,7 +20,7 @@ module Amazonite::DynamoDBV2
       @transact_items : Array(TransactWriteItem),
       @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil,
       @return_item_collection_metrics : ReturnItemCollectionMetrics | Nil = nil,
-      @client_request_token : String | Nil = nil
+      @client_request_token : String | Nil = nil,
     )
     end
   end

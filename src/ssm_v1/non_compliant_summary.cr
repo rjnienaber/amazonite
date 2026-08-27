@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @non_compliant_count : Int32 | Nil = nil,
-      @severity_summary : SeveritySummary | Nil = nil
+      @severity_summary : SeveritySummary | Nil = nil,
     )
     end
   end

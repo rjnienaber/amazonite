@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @exclusive_start_global_table_name : String | Nil = nil,
       @limit : Int32 | Nil = nil,
-      @region_name : String | Nil = nil
+      @region_name : String | Nil = nil,
     )
     end
   end

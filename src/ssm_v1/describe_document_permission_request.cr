@@ -20,7 +20,7 @@ module Amazonite::SsmV1
       @name : String,
       @permission_type : DocumentPermissionType,
       @max_results : Int32 | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

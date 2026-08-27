@@ -38,7 +38,7 @@ module Amazonite::SsmV1
       @target_maps : Array(Hash(String, Array(String))) | Nil = nil,
       @max_concurrency : String | Nil = nil,
       @max_errors : String | Nil = nil,
-      @target_locations : Array(TargetLocation) | Nil = nil
+      @target_locations : Array(TargetLocation) | Nil = nil,
     )
     end
   end

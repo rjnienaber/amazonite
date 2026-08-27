@@ -72,7 +72,7 @@ module Amazonite::SsmV1
       @standard_output_url : String | Nil = nil,
       @standard_error_content : String | Nil = nil,
       @standard_error_url : String | Nil = nil,
-      @cloud_watch_output_config : CloudWatchOutputConfig | Nil = nil
+      @cloud_watch_output_config : CloudWatchOutputConfig | Nil = nil,
     )
     end
   end

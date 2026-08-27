@@ -45,7 +45,7 @@ module Amazonite::DynamoDBV2
       @backup_expiry_date_time : Time | Nil = nil,
       @backup_status : BackupStatus | Nil = nil,
       @backup_type : BackupType | Nil = nil,
-      @backup_size_bytes : Int64 | Nil = nil
+      @backup_size_bytes : Int64 | Nil = nil,
     )
     end
   end

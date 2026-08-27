@@ -12,7 +12,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @code : BatchStatementErrorCodeEnum | Nil = nil,
-      @message : String | Nil = nil
+      @message : String | Nil = nil,
     )
     end
   end

@@ -16,7 +16,7 @@ module Amazonite::SsmV1
     def initialize(
       @key : String,
       @values : Array(String),
-      @type : InventoryQueryOperatorType | Nil = nil
+      @type : InventoryQueryOperatorType | Nil = nil,
     )
     end
   end

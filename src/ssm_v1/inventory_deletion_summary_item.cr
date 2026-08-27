@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @version : String | Nil = nil,
       @count : Int32 | Nil = nil,
-      @remaining_count : Int32 | Nil = nil
+      @remaining_count : Int32 | Nil = nil,
     )
     end
   end

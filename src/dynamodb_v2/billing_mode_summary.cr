@@ -13,7 +13,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @billing_mode : BillingMode | Nil = nil,
-      @last_update_to_pay_per_request_date_time : Time | Nil = nil
+      @last_update_to_pay_per_request_date_time : Time | Nil = nil,
     )
     end
   end

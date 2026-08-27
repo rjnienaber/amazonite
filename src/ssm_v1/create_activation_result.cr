@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @activation_id : String | Nil = nil,
-      @activation_code : String | Nil = nil
+      @activation_code : String | Nil = nil,
     )
     end
   end

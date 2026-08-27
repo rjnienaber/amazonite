@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @resource_type : ResourceTypeForTagging,
-      @resource_id : String
+      @resource_id : String,
     )
     end
   end

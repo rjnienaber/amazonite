@@ -16,7 +16,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @request_items : Hash(String, Array(WriteRequest)),
       @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil,
-      @return_item_collection_metrics : ReturnItemCollectionMetrics | Nil = nil
+      @return_item_collection_metrics : ReturnItemCollectionMetrics | Nil = nil,
     )
     end
   end

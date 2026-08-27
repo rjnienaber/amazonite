@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @output_s3_region : String | Nil = nil,
       @output_s3_bucket_name : String | Nil = nil,
-      @output_s3_key_prefix : String | Nil = nil
+      @output_s3_key_prefix : String | Nil = nil,
     )
     end
   end

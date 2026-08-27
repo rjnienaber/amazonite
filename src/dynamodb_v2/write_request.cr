@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @put_request : PutRequest | Nil = nil,
-      @delete_request : DeleteRequest | Nil = nil
+      @delete_request : DeleteRequest | Nil = nil,
     )
     end
   end

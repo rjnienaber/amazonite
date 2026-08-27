@@ -26,7 +26,7 @@ module Amazonite::SsmV1
       @medium_count : Int32 | Nil = nil,
       @low_count : Int32 | Nil = nil,
       @informational_count : Int32 | Nil = nil,
-      @unspecified_count : Int32 | Nil = nil
+      @unspecified_count : Int32 | Nil = nil,
     )
     end
   end

@@ -21,7 +21,7 @@ module Amazonite::DynamoDBV2
       @status : SSEStatus | Nil = nil,
       @sse_type : SSEType | Nil = nil,
       @kms_master_key_arn : String | Nil = nil,
-      @inaccessible_encryption_date_time : Time | Nil = nil
+      @inaccessible_encryption_date_time : Time | Nil = nil,
     )
     end
   end

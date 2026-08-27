@@ -16,7 +16,7 @@ module Amazonite::SsmV1
     def initialize(
       @entry : CreateAssociationBatchRequestEntry | Nil = nil,
       @message : String | Nil = nil,
-      @fault : Fault | Nil = nil
+      @fault : Fault | Nil = nil,
     )
     end
   end

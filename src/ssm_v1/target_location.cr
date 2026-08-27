@@ -22,7 +22,7 @@ module Amazonite::SsmV1
       @regions : Array(String) | Nil = nil,
       @target_location_max_concurrency : String | Nil = nil,
       @target_location_max_errors : String | Nil = nil,
-      @execution_role_name : String | Nil = nil
+      @execution_role_name : String | Nil = nil,
     )
     end
   end

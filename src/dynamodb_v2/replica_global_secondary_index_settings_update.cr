@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @index_name : String,
       @provisioned_read_capacity_units : Int64 | Nil = nil,
-      @provisioned_read_capacity_auto_scaling_settings_update : AutoScalingSettingsUpdate | Nil = nil
+      @provisioned_read_capacity_auto_scaling_settings_update : AutoScalingSettingsUpdate | Nil = nil,
     )
     end
   end

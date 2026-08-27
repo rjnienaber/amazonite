@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property item : Hash(String, AttributeValue)
 
     def initialize(
-      @item : Hash(String, AttributeValue)
+      @item : Hash(String, AttributeValue),
     )
     end
   end

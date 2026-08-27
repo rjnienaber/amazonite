@@ -44,7 +44,7 @@ module Amazonite::SsmV1
       @document_type : DocumentType | Nil = nil,
       @document_format : DocumentFormat | Nil = nil,
       @target_type : String | Nil = nil,
-      @tags : Array(Tag) | Nil = nil
+      @tags : Array(Tag) | Nil = nil,
     )
     end
   end

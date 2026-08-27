@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @s3_output_url : String | Nil = nil,
-      @cloud_watch_output_url : String | Nil = nil
+      @cloud_watch_output_url : String | Nil = nil,
     )
     end
   end

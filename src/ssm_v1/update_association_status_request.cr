@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @name : String,
       @instance_id : String,
-      @association_status : AssociationStatus
+      @association_status : AssociationStatus,
     )
     end
   end

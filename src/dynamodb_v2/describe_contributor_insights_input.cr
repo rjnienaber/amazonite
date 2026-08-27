@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @table_name : String,
-      @index_name : String | Nil = nil
+      @index_name : String | Nil = nil,
     )
     end
   end

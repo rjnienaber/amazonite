@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @attributes : Hash(String, AttributeValue) | Nil = nil,
       @consumed_capacity : ConsumedCapacity | Nil = nil,
-      @item_collection_metrics : ItemCollectionMetrics | Nil = nil
+      @item_collection_metrics : ItemCollectionMetrics | Nil = nil,
     )
     end
   end

@@ -41,7 +41,7 @@ module Amazonite::DynamoDBV2
       @table_arn : String | Nil = nil,
       @table_size_bytes : Int64 | Nil = nil,
       @item_count : Int64 | Nil = nil,
-      @billing_mode : BillingMode | Nil = nil
+      @billing_mode : BillingMode | Nil = nil,
     )
     end
   end

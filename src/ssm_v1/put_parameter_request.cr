@@ -48,7 +48,7 @@ module Amazonite::SsmV1
       @tags : Array(Tag) | Nil = nil,
       @tier : ParameterTier | Nil = nil,
       @policies : String | Nil = nil,
-      @data_type : String | Nil = nil
+      @data_type : String | Nil = nil,
     )
     end
   end

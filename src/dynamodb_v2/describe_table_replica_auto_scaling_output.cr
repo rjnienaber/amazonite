@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property table_auto_scaling_description : TableAutoScalingDescription | Nil
 
     def initialize(
-      @table_auto_scaling_description : TableAutoScalingDescription | Nil = nil
+      @table_auto_scaling_description : TableAutoScalingDescription | Nil = nil,
     )
     end
   end

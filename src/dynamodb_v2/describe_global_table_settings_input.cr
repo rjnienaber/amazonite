@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property global_table_name : String
 
     def initialize(
-      @global_table_name : String
+      @global_table_name : String,
     )
     end
   end

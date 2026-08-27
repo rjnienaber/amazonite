@@ -22,7 +22,7 @@ module Amazonite::SsmV1
       @schema_version : String,
       @content : Array(Hash(String, String)),
       @capture_time : String | Nil = nil,
-      @content_hash : String | Nil = nil
+      @content_hash : String | Nil = nil,
     )
     end
   end

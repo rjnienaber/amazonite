@@ -93,7 +93,7 @@ module Amazonite::SsmV1
       @is_critical : Bool | Nil = nil,
       @valid_next_steps : Array(String) | Nil = nil,
       @targets : Array(Target) | Nil = nil,
-      @target_location : TargetLocation | Nil = nil
+      @target_location : TargetLocation | Nil = nil,
     )
     end
   end

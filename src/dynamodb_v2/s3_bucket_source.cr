@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @s3_bucket : String,
       @s3_bucket_owner : String | Nil = nil,
-      @s3_key_prefix : String | Nil = nil
+      @s3_key_prefix : String | Nil = nil,
     )
     end
   end

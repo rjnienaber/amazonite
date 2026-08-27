@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property point_in_time_recovery_enabled : Bool
 
     def initialize(
-      @point_in_time_recovery_enabled : Bool
+      @point_in_time_recovery_enabled : Bool,
     )
     end
   end

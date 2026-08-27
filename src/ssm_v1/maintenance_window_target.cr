@@ -32,7 +32,7 @@ module Amazonite::SsmV1
       @targets : Array(Target) | Nil = nil,
       @owner_information : String | Nil = nil,
       @name : String | Nil = nil,
-      @description : String | Nil = nil
+      @description : String | Nil = nil,
     )
     end
   end

@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @address : String,
-      @cache_period_in_minutes : Int64
+      @cache_period_in_minutes : Int64,
     )
     end
   end

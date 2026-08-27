@@ -57,7 +57,7 @@ module Amazonite::SsmV1
       @document_format : DocumentFormat | Nil = nil,
       @requires : Array(DocumentRequires) | Nil = nil,
       @attachments_content : Array(AttachmentContent) | Nil = nil,
-      @review_status : ReviewStatus | Nil = nil
+      @review_status : ReviewStatus | Nil = nil,
     )
     end
   end

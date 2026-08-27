@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @index_name : String | Nil = nil,
       @key_schema : Array(KeySchemaElement) | Nil = nil,
-      @projection : Projection | Nil = nil
+      @projection : Projection | Nil = nil,
     )
     end
   end

@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @filter_key : DescribeActivationsFilterKeys | Nil = nil,
-      @filter_values : Array(String) | Nil = nil
+      @filter_values : Array(String) | Nil = nil,
     )
     end
   end

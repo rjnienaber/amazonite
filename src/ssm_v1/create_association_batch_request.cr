@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property entries : Array(CreateAssociationBatchRequestEntry)
 
     def initialize(
-      @entries : Array(CreateAssociationBatchRequestEntry)
+      @entries : Array(CreateAssociationBatchRequestEntry),
     )
     end
   end

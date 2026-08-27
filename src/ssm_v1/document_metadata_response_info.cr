@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property reviewer_response : Array(DocumentReviewerResponseSource) | Nil
 
     def initialize(
-      @reviewer_response : Array(DocumentReviewerResponseSource) | Nil = nil
+      @reviewer_response : Array(DocumentReviewerResponseSource) | Nil = nil,
     )
     end
   end

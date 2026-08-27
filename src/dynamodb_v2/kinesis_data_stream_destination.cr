@@ -16,7 +16,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @stream_arn : String | Nil = nil,
       @destination_status : DestinationStatus | Nil = nil,
-      @destination_status_description : String | Nil = nil
+      @destination_status_description : String | Nil = nil,
     )
     end
   end

@@ -41,7 +41,7 @@ module Amazonite::SsmV1
       @source_result : String | Nil = nil,
       @last_modified_date : Time | Nil = nil,
       @arn : String | Nil = nil,
-      @data_type : String | Nil = nil
+      @data_type : String | Nil = nil,
     )
     end
   end

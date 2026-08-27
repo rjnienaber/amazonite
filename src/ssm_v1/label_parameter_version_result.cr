@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @invalid_labels : Array(String) | Nil = nil,
-      @parameter_version : Int64 | Nil = nil
+      @parameter_version : Int64 | Nil = nil,
     )
     end
   end

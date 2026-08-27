@@ -13,7 +13,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @table_class : TableClass | Nil = nil,
-      @last_update_date_time : Time | Nil = nil
+      @last_update_date_time : Time | Nil = nil,
     )
     end
   end

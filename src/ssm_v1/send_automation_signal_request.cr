@@ -16,7 +16,7 @@ module Amazonite::SsmV1
     def initialize(
       @automation_execution_id : String,
       @signal_type : SignalType,
-      @payload : Hash(String, Array(String)) | Nil = nil
+      @payload : Hash(String, Array(String)) | Nil = nil,
     )
     end
   end

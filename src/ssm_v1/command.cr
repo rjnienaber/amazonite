@@ -109,7 +109,7 @@ module Amazonite::SsmV1
       @cloud_watch_output_config : CloudWatchOutputConfig | Nil = nil,
       @timeout_seconds : Int32 | Nil = nil,
       @alarm_configuration : AlarmConfiguration | Nil = nil,
-      @triggered_alarms : Array(AlarmStateInformation) | Nil = nil
+      @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,
     )
     end
   end

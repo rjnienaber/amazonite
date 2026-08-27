@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @name : String,
-      @with_decryption : Bool | Nil = nil
+      @with_decryption : Bool | Nil = nil,
     )
     end
   end

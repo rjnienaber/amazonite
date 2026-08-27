@@ -16,7 +16,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @transact_statements : Array(ParameterizedStatement),
       @client_request_token : String | Nil = nil,
-      @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil
+      @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil,
     )
     end
   end

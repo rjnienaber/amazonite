@@ -22,7 +22,7 @@ module Amazonite::DynamoDBV2
       @attributes_to_get : Array(String) | Nil = nil,
       @consistent_read : Bool | Nil = nil,
       @projection_expression : String | Nil = nil,
-      @expression_attribute_names : Hash(String, String) | Nil = nil
+      @expression_attribute_names : Hash(String, String) | Nil = nil,
     )
     end
   end

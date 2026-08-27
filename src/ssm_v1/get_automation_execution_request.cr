@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property automation_execution_id : String
 
     def initialize(
-      @automation_execution_id : String
+      @automation_execution_id : String,
     )
     end
   end

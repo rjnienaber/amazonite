@@ -12,7 +12,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @attribute_name : String,
-      @attribute_type : ScalarAttributeType
+      @attribute_type : ScalarAttributeType,
     )
     end
   end

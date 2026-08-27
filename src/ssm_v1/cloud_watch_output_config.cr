@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @cloud_watch_log_group_name : String | Nil = nil,
-      @cloud_watch_output_enabled : Bool | Nil = nil
+      @cloud_watch_output_enabled : Bool | Nil = nil,
     )
     end
   end

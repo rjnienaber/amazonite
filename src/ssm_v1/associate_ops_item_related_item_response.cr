@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property association_id : String | Nil
 
     def initialize(
-      @association_id : String | Nil = nil
+      @association_id : String | Nil = nil,
     )
     end
   end

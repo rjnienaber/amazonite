@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @action : DocumentReviewAction,
-      @comment : Array(DocumentReviewCommentSource) | Nil = nil
+      @comment : Array(DocumentReviewCommentSource) | Nil = nil,
     )
     end
   end

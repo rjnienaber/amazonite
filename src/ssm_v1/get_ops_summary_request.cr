@@ -26,7 +26,7 @@ module Amazonite::SsmV1
       @aggregators : Array(OpsAggregator) | Nil = nil,
       @result_attributes : Array(OpsResultAttribute) | Nil = nil,
       @next_token : String | Nil = nil,
-      @max_results : Int32 | Nil = nil
+      @max_results : Int32 | Nil = nil,
     )
     end
   end

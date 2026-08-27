@@ -32,7 +32,7 @@ module Amazonite::DynamoDBV2
       @global_secondary_index_override : Array(GlobalSecondaryIndex) | Nil = nil,
       @local_secondary_index_override : Array(LocalSecondaryIndex) | Nil = nil,
       @provisioned_throughput_override : ProvisionedThroughput | Nil = nil,
-      @sse_specification_override : SSESpecification | Nil = nil
+      @sse_specification_override : SSESpecification | Nil = nil,
     )
     end
   end

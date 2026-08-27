@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property association_description : AssociationDescription | Nil
 
     def initialize(
-      @association_description : AssociationDescription | Nil = nil
+      @association_description : AssociationDescription | Nil = nil,
     )
     end
   end

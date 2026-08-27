@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @document_version : String | Nil = nil,
-      @parameters : Hash(String, Array(String)) | Nil = nil
+      @parameters : Hash(String, Array(String)) | Nil = nil,
     )
     end
   end

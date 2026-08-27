@@ -12,7 +12,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @export_arn : String | Nil = nil,
-      @export_status : ExportStatus | Nil = nil
+      @export_status : ExportStatus | Nil = nil,
     )
     end
   end

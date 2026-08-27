@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @name : String | Nil = nil,
       @instance_id : String | Nil = nil,
-      @association_id : String | Nil = nil
+      @association_id : String | Nil = nil,
     )
     end
   end

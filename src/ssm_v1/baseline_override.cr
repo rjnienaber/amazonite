@@ -40,7 +40,7 @@ module Amazonite::SsmV1
       @rejected_patches : Array(String) | Nil = nil,
       @rejected_patches_action : PatchAction | Nil = nil,
       @approved_patches_enable_non_security : Bool | Nil = nil,
-      @sources : Array(PatchSource) | Nil = nil
+      @sources : Array(PatchSource) | Nil = nil,
     )
     end
   end

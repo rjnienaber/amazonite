@@ -56,7 +56,7 @@ module Amazonite::SsmV1
       @max_errors : String | Nil = nil,
       @target_locations : Array(TargetLocation) | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
-      @alarm_configuration : AlarmConfiguration | Nil = nil
+      @alarm_configuration : AlarmConfiguration | Nil = nil,
     )
     end
   end

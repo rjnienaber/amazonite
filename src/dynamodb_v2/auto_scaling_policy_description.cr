@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @policy_name : String | Nil = nil,
-      @target_tracking_scaling_policy_configuration : AutoScalingTargetTrackingScalingPolicyConfigurationDescription | Nil = nil
+      @target_tracking_scaling_policy_configuration : AutoScalingTargetTrackingScalingPolicyConfigurationDescription | Nil = nil,
     )
     end
   end

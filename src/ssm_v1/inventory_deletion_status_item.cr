@@ -33,7 +33,7 @@ module Amazonite::SsmV1
       @last_status : InventoryDeletionStatus | Nil = nil,
       @last_status_message : String | Nil = nil,
       @deletion_summary : InventoryDeletionSummary | Nil = nil,
-      @last_status_update_time : Time | Nil = nil
+      @last_status_update_time : Time | Nil = nil,
     )
     end
   end

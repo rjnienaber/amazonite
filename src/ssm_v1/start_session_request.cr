@@ -18,7 +18,7 @@ module Amazonite::SsmV1
       @target : String,
       @document_name : String | Nil = nil,
       @reason : String | Nil = nil,
-      @parameters : Hash(String, Array(String)) | Nil = nil
+      @parameters : Hash(String, Array(String)) | Nil = nil,
     )
     end
   end

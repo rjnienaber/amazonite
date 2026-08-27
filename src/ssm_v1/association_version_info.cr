@@ -81,7 +81,7 @@ module Amazonite::SsmV1
       @calendar_names : Array(String) | Nil = nil,
       @target_locations : Array(TargetLocation) | Nil = nil,
       @schedule_offset : Int32 | Nil = nil,
-      @target_maps : Array(Hash(String, Array(String))) | Nil = nil
+      @target_maps : Array(Hash(String, Array(String))) | Nil = nil,
     )
     end
   end

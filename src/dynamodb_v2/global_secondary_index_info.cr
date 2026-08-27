@@ -18,7 +18,7 @@ module Amazonite::DynamoDBV2
       @index_name : String | Nil = nil,
       @key_schema : Array(KeySchemaElement) | Nil = nil,
       @projection : Projection | Nil = nil,
-      @provisioned_throughput : ProvisionedThroughput | Nil = nil
+      @provisioned_throughput : ProvisionedThroughput | Nil = nil,
     )
     end
   end

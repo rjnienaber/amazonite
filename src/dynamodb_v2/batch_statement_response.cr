@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @error : BatchStatementError | Nil = nil,
       @table_name : String | Nil = nil,
-      @item : Hash(String, AttributeValue) | Nil = nil
+      @item : Hash(String, AttributeValue) | Nil = nil,
     )
     end
   end

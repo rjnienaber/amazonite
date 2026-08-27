@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @session_id : String | Nil = nil,
       @token_value : String | Nil = nil,
-      @stream_url : String | Nil = nil
+      @stream_url : String | Nil = nil,
     )
     end
   end

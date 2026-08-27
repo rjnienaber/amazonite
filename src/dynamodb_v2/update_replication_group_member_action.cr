@@ -24,7 +24,7 @@ module Amazonite::DynamoDBV2
       @kms_master_key_id : String | Nil = nil,
       @provisioned_throughput_override : ProvisionedThroughputOverride | Nil = nil,
       @global_secondary_indexes : Array(ReplicaGlobalSecondaryIndex) | Nil = nil,
-      @table_class_override : TableClass | Nil = nil
+      @table_class_override : TableClass | Nil = nil,
     )
     end
   end

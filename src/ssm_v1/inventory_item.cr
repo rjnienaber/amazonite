@@ -26,7 +26,7 @@ module Amazonite::SsmV1
       @capture_time : String,
       @content_hash : String | Nil = nil,
       @content : Array(Hash(String, String)) | Nil = nil,
-      @context : Hash(String, String) | Nil = nil
+      @context : Hash(String, String) | Nil = nil,
     )
     end
   end

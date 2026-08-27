@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property backup_details : BackupDetails | Nil
 
     def initialize(
-      @backup_details : BackupDetails | Nil = nil
+      @backup_details : BackupDetails | Nil = nil,
     )
     end
   end

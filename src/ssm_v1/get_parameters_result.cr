@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @parameters : Array(Parameter) | Nil = nil,
-      @invalid_parameters : Array(String) | Nil = nil
+      @invalid_parameters : Array(String) | Nil = nil,
     )
     end
   end

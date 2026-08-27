@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @value : String | Nil = nil,
-      @type : OpsItemDataType | Nil = nil
+      @type : OpsItemDataType | Nil = nil,
     )
     end
   end

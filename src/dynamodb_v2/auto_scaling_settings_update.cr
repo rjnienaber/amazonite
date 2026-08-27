@@ -22,7 +22,7 @@ module Amazonite::DynamoDBV2
       @maximum_units : Int64 | Nil = nil,
       @auto_scaling_disabled : Bool | Nil = nil,
       @auto_scaling_role_arn : String | Nil = nil,
-      @scaling_policy_update : AutoScalingPolicyUpdate | Nil = nil
+      @scaling_policy_update : AutoScalingPolicyUpdate | Nil = nil,
     )
     end
   end

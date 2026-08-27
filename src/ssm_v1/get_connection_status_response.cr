@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @target : String | Nil = nil,
-      @status : ConnectionStatus | Nil = nil
+      @status : ConnectionStatus | Nil = nil,
     )
     end
   end

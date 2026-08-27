@@ -64,7 +64,7 @@ module Amazonite::SsmV1
       @allow_unassociated_targets : Bool | Nil = nil,
       @enabled : Bool | Nil = nil,
       @created_date : Time | Nil = nil,
-      @modified_date : Time | Nil = nil
+      @modified_date : Time | Nil = nil,
     )
     end
   end

@@ -18,7 +18,7 @@ module Amazonite::SsmV1
       @ops_item_id : String | Nil = nil,
       @filters : Array(OpsItemRelatedItemsFilter) | Nil = nil,
       @max_results : Int32 | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

@@ -25,7 +25,7 @@ module Amazonite::SsmV1
       @updated_time : Time | Nil = nil,
       @review_status : ReviewStatus | Nil = nil,
       @comment : Array(DocumentReviewCommentSource) | Nil = nil,
-      @reviewer : String | Nil = nil
+      @reviewer : String | Nil = nil,
     )
     end
   end

@@ -65,7 +65,7 @@ module Amazonite::SsmV1
       @start_time : Time | Nil = nil,
       @end_time : Time | Nil = nil,
       @alarm_configuration : AlarmConfiguration | Nil = nil,
-      @triggered_alarms : Array(AlarmStateInformation) | Nil = nil
+      @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,
     )
     end
   end

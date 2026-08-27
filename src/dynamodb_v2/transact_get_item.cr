@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property get : Get
 
     def initialize(
-      @get : Get
+      @get : Get,
     )
     end
   end

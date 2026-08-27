@@ -18,7 +18,7 @@ module Amazonite::DynamoDBV2
       @target_value : Float64,
       @disable_scale_in : Bool | Nil = nil,
       @scale_in_cooldown : Int32 | Nil = nil,
-      @scale_out_cooldown : Int32 | Nil = nil
+      @scale_out_cooldown : Int32 | Nil = nil,
     )
     end
   end

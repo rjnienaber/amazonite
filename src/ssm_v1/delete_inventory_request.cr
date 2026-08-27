@@ -20,7 +20,7 @@ module Amazonite::SsmV1
       @type_name : String,
       @schema_delete_option : InventorySchemaDeleteOption | Nil = nil,
       @dry_run : Bool | Nil = nil,
-      @client_token : String | Nil = nil
+      @client_token : String | Nil = nil,
     )
     end
   end

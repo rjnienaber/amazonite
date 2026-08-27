@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @table_name : String,
-      @point_in_time_recovery_specification : PointInTimeRecoverySpecification
+      @point_in_time_recovery_specification : PointInTimeRecoverySpecification,
     )
     end
   end

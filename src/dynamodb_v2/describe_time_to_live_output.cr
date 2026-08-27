@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property time_to_live_description : TimeToLiveDescription | Nil
 
     def initialize(
-      @time_to_live_description : TimeToLiveDescription | Nil = nil
+      @time_to_live_description : TimeToLiveDescription | Nil = nil,
     )
     end
   end

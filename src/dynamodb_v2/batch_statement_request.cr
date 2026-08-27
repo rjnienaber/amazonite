@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @statement : String,
       @parameters : Array(AttributeValue) | Nil = nil,
-      @consistent_read : Bool | Nil = nil
+      @consistent_read : Bool | Nil = nil,
     )
     end
   end

@@ -28,7 +28,7 @@ module Amazonite::DynamoDBV2
       @global_table_provisioned_write_capacity_units : Int64 | Nil = nil,
       @global_table_provisioned_write_capacity_auto_scaling_settings_update : AutoScalingSettingsUpdate | Nil = nil,
       @global_table_global_secondary_index_settings_update : Array(GlobalTableGlobalSecondaryIndexSettingsUpdate) | Nil = nil,
-      @replica_settings_update : Array(ReplicaSettingsUpdate) | Nil = nil
+      @replica_settings_update : Array(ReplicaSettingsUpdate) | Nil = nil,
     )
     end
   end

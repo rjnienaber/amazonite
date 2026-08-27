@@ -18,7 +18,7 @@ module Amazonite::DynamoDBV2
       @account_max_read_capacity_units : Int64 | Nil = nil,
       @account_max_write_capacity_units : Int64 | Nil = nil,
       @table_max_read_capacity_units : Int64 | Nil = nil,
-      @table_max_write_capacity_units : Int64 | Nil = nil
+      @table_max_write_capacity_units : Int64 | Nil = nil,
     )
     end
   end

@@ -44,7 +44,7 @@ module Amazonite::SsmV1
       @last_execution_date : Time | Nil = nil,
       @resource_count_by_status : String | Nil = nil,
       @alarm_configuration : AlarmConfiguration | Nil = nil,
-      @triggered_alarms : Array(AlarmStateInformation) | Nil = nil
+      @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,
     )
     end
   end

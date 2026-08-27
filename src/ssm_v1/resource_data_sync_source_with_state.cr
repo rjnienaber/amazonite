@@ -26,7 +26,7 @@ module Amazonite::SsmV1
       @source_regions : Array(String) | Nil = nil,
       @include_future_regions : Bool | Nil = nil,
       @state : String | Nil = nil,
-      @enable_all_ops_data_sources : Bool | Nil = nil
+      @enable_all_ops_data_sources : Bool | Nil = nil,
     )
     end
   end

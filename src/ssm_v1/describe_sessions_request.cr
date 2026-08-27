@@ -20,7 +20,7 @@ module Amazonite::SsmV1
       @state : SessionState,
       @max_results : Int32 | Nil = nil,
       @next_token : String | Nil = nil,
-      @filters : Array(SessionFilter) | Nil = nil
+      @filters : Array(SessionFilter) | Nil = nil,
     )
     end
   end

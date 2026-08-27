@@ -28,7 +28,7 @@ module Amazonite::DynamoDBV2
       @provisioned_read_capacity_units : Int64 | Nil = nil,
       @provisioned_read_capacity_auto_scaling_settings : AutoScalingSettingsDescription | Nil = nil,
       @provisioned_write_capacity_units : Int64 | Nil = nil,
-      @provisioned_write_capacity_auto_scaling_settings : AutoScalingSettingsDescription | Nil = nil
+      @provisioned_write_capacity_auto_scaling_settings : AutoScalingSettingsDescription | Nil = nil,
     )
     end
   end

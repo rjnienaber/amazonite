@@ -20,7 +20,7 @@ module Amazonite::SsmV1
       @targets : Array(Target),
       @resource_type : MaintenanceWindowResourceType,
       @max_results : Int32 | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

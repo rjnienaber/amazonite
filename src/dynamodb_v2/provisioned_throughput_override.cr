@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property read_capacity_units : Int64 | Nil
 
     def initialize(
-      @read_capacity_units : Int64 | Nil = nil
+      @read_capacity_units : Int64 | Nil = nil,
     )
     end
   end

@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @instance_ids : Array(String),
       @next_token : String | Nil = nil,
-      @max_results : Int32 | Nil = nil
+      @max_results : Int32 | Nil = nil,
     )
     end
   end

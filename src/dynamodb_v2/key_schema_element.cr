@@ -12,7 +12,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @attribute_name : String,
-      @key_type : KeyType
+      @key_type : KeyType,
     )
     end
   end

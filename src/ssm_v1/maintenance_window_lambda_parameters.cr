@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @client_context : String | Nil = nil,
       @qualifier : String | Nil = nil,
-      @payload : String | Nil = nil
+      @payload : String | Nil = nil,
     )
     end
   end

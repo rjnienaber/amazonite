@@ -24,7 +24,7 @@ module Amazonite::SsmV1
       @ops_metadata_arn : String | Nil = nil,
       @last_modified_date : Time | Nil = nil,
       @last_modified_user : String | Nil = nil,
-      @creation_date : Time | Nil = nil
+      @creation_date : Time | Nil = nil,
     )
     end
   end

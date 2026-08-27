@@ -53,7 +53,7 @@ module Amazonite::SsmV1
       @start_time : Time | Nil = nil,
       @end_time : Time | Nil = nil,
       @owner_information : String | Nil = nil,
-      @window_target_id : String | Nil = nil
+      @window_target_id : String | Nil = nil,
     )
     end
   end

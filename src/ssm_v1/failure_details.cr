@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @failure_stage : String | Nil = nil,
       @failure_type : String | Nil = nil,
-      @details : Hash(String, Array(String)) | Nil = nil
+      @details : Hash(String, Array(String)) | Nil = nil,
     )
     end
   end

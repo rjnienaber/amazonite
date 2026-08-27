@@ -12,7 +12,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @key : PatchFilterKey,
-      @values : Array(String)
+      @values : Array(String),
     )
     end
   end

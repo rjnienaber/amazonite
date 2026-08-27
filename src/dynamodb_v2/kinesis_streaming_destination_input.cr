@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @table_name : String,
-      @stream_arn : String
+      @stream_arn : String,
     )
     end
   end

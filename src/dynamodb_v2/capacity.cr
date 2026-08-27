@@ -14,7 +14,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @read_capacity_units : Float64 | Nil = nil,
       @write_capacity_units : Float64 | Nil = nil,
-      @capacity_units : Float64 | Nil = nil
+      @capacity_units : Float64 | Nil = nil,
     )
     end
   end

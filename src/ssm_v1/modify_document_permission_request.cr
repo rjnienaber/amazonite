@@ -24,7 +24,7 @@ module Amazonite::SsmV1
       @permission_type : DocumentPermissionType,
       @account_ids_to_add : Array(String) | Nil = nil,
       @account_ids_to_remove : Array(String) | Nil = nil,
-      @shared_document_version : String | Nil = nil
+      @shared_document_version : String | Nil = nil,
     )
     end
   end

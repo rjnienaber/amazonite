@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property backup_arn : String
 
     def initialize(
-      @backup_arn : String
+      @backup_arn : String,
     )
     end
   end

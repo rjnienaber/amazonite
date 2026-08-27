@@ -93,7 +93,7 @@ module Amazonite::DynamoDBV2
       @restore_summary : RestoreSummary | Nil = nil,
       @sse_description : SSEDescription | Nil = nil,
       @archival_summary : ArchivalSummary | Nil = nil,
-      @table_class_summary : TableClassSummary | Nil = nil
+      @table_class_summary : TableClassSummary | Nil = nil,
     )
     end
   end

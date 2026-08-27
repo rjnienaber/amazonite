@@ -28,7 +28,7 @@ module Amazonite::DynamoDBV2
       @consistent_read : Bool | Nil = nil,
       @next_token : String | Nil = nil,
       @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil,
-      @limit : Int32 | Nil = nil
+      @limit : Int32 | Nil = nil,
     )
     end
   end

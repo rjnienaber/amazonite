@@ -50,7 +50,7 @@ module Amazonite::SsmV1
       @instances_with_unreported_not_applicable_patches : Int32 | Nil = nil,
       @instances_with_critical_non_compliant_patches : Int32 | Nil = nil,
       @instances_with_security_non_compliant_patches : Int32 | Nil = nil,
-      @instances_with_other_non_compliant_patches : Int32 | Nil = nil
+      @instances_with_other_non_compliant_patches : Int32 | Nil = nil,
     )
     end
   end

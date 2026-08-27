@@ -20,7 +20,7 @@ module Amazonite::DynamoDBV2
       @value : AttributeValue | Nil = nil,
       @exists : Bool | Nil = nil,
       @comparison_operator : ComparisonOperator | Nil = nil,
-      @attribute_value_list : Array(AttributeValue) | Nil = nil
+      @attribute_value_list : Array(AttributeValue) | Nil = nil,
     )
     end
   end

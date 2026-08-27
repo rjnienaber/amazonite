@@ -89,7 +89,7 @@ module Amazonite::SsmV1
       @last_successful_association_execution_date : Time | Nil = nil,
       @association_overview : InstanceAggregatedAssociationOverview | Nil = nil,
       @source_id : String | Nil = nil,
-      @source_type : SourceType | Nil = nil
+      @source_type : SourceType | Nil = nil,
     )
     end
   end

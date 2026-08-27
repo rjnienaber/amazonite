@@ -37,7 +37,7 @@ module Amazonite::DynamoDBV2
       @cloud_watch_log_group_arn : String | Nil = nil,
       @input_format : InputFormat | Nil = nil,
       @start_time : Time | Nil = nil,
-      @end_time : Time | Nil = nil
+      @end_time : Time | Nil = nil,
     )
     end
   end

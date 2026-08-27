@@ -26,7 +26,7 @@ module Amazonite::SsmV1
       @max_results : Int32 | Nil = nil,
       @next_token : String | Nil = nil,
       @filters : Array(CommandFilter) | Nil = nil,
-      @details : Bool | Nil = nil
+      @details : Bool | Nil = nil,
     )
     end
   end

@@ -65,7 +65,7 @@ module Amazonite::SsmV1
       @tags : Array(Tag) | Nil = nil,
       @requires : Array(DocumentRequires) | Nil = nil,
       @review_status : ReviewStatus | Nil = nil,
-      @author : String | Nil = nil
+      @author : String | Nil = nil,
     )
     end
   end

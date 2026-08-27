@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property value : String | Nil
 
     def initialize(
-      @value : String | Nil = nil
+      @value : String | Nil = nil,
     )
     end
   end

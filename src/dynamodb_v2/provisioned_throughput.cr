@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @read_capacity_units : Int64,
-      @write_capacity_units : Int64
+      @write_capacity_units : Int64,
     )
     end
   end

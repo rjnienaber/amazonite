@@ -33,7 +33,7 @@ module Amazonite::DynamoDBV2
       @backup_type : BackupType,
       @backup_creation_date_time : Time,
       @backup_size_bytes : Int64 | Nil = nil,
-      @backup_expiry_date_time : Time | Nil = nil
+      @backup_expiry_date_time : Time | Nil = nil,
     )
     end
   end

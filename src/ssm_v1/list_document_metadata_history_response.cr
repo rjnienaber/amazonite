@@ -22,7 +22,7 @@ module Amazonite::SsmV1
       @document_version : String | Nil = nil,
       @author : String | Nil = nil,
       @metadata : DocumentMetadataResponseInfo | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

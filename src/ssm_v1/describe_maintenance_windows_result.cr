@@ -10,7 +10,7 @@ module Amazonite::SsmV1
 
     def initialize(
       @window_identities : Array(MaintenanceWindowIdentity) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

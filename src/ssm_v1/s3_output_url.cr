@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property output_url : String | Nil
 
     def initialize(
-      @output_url : String | Nil = nil
+      @output_url : String | Nil = nil,
     )
     end
   end

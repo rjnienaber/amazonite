@@ -8,7 +8,7 @@ module Amazonite::SsmV1
     property operating_system : OperatingSystem | Nil
 
     def initialize(
-      @operating_system : OperatingSystem | Nil = nil
+      @operating_system : OperatingSystem | Nil = nil,
     )
     end
   end

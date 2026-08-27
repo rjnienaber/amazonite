@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @resource_arn : String,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

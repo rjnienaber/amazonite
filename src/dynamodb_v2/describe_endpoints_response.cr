@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property endpoints : Array(Endpoint)
 
     def initialize(
-      @endpoints : Array(Endpoint)
+      @endpoints : Array(Endpoint),
     )
     end
   end

@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @resource_id : String | Nil = nil,
       @metadata : Hash(String, MetadataValue) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

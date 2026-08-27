@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property index_name : String
 
     def initialize(
-      @index_name : String
+      @index_name : String,
     )
     end
   end

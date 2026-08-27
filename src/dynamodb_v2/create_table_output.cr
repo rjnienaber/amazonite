@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property table_description : TableDescription | Nil
 
     def initialize(
-      @table_description : TableDescription | Nil = nil
+      @table_description : TableDescription | Nil = nil,
     )
     end
   end

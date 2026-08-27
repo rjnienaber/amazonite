@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @deletion_id : String | Nil = nil,
       @type_name : String | Nil = nil,
-      @deletion_summary : InventoryDeletionSummary | Nil = nil
+      @deletion_summary : InventoryDeletionSummary | Nil = nil,
     )
     end
   end

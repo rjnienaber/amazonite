@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property patch_filters : Array(PatchFilter)
 
     def initialize(
-      @patch_filters : Array(PatchFilter)
+      @patch_filters : Array(PatchFilter),
     )
     end
   end

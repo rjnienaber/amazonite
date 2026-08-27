@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @consumed_capacity : Array(ConsumedCapacity) | Nil = nil,
-      @item_collection_metrics : Hash(String, Array(ItemCollectionMetrics)) | Nil = nil
+      @item_collection_metrics : Hash(String, Array(ItemCollectionMetrics)) | Nil = nil,
     )
     end
   end

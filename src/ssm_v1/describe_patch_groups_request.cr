@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @max_results : Int32 | Nil = nil,
       @filters : Array(PatchOrchestratorFilter) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

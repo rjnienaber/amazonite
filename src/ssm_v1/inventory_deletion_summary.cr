@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @total_count : Int32 | Nil = nil,
       @remaining_count : Int32 | Nil = nil,
-      @summary_items : Array(InventoryDeletionSummaryItem) | Nil = nil
+      @summary_items : Array(InventoryDeletionSummaryItem) | Nil = nil,
     )
     end
   end

@@ -24,7 +24,7 @@ module Amazonite::SsmV1
       @size : Int64 | Nil = nil,
       @hash : String | Nil = nil,
       @hash_type : AttachmentHashType | Nil = nil,
-      @url : String | Nil = nil
+      @url : String | Nil = nil,
     )
     end
   end

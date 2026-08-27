@@ -24,7 +24,7 @@ module Amazonite::SsmV1
       @status : ComplianceStatus,
       @id : String | Nil = nil,
       @title : String | Nil = nil,
-      @details : Hash(String, String) | Nil = nil
+      @details : Hash(String, String) | Nil = nil,
     )
     end
   end

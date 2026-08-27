@@ -10,7 +10,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @import_summary_list : Array(ImportSummary) | Nil = nil,
-      @next_token : String | Nil = nil
+      @next_token : String | Nil = nil,
     )
     end
   end

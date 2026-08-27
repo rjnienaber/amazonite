@@ -14,7 +14,7 @@ module Amazonite::SsmV1
     def initialize(
       @instance_id : String,
       @snapshot_id : String,
-      @baseline_override : BaselineOverride | Nil = nil
+      @baseline_override : BaselineOverride | Nil = nil,
     )
     end
   end

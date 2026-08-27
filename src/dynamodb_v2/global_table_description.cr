@@ -25,7 +25,7 @@ module Amazonite::DynamoDBV2
       @global_table_arn : String | Nil = nil,
       @creation_date_time : Time | Nil = nil,
       @global_table_status : GlobalTableStatus | Nil = nil,
-      @global_table_name : String | Nil = nil
+      @global_table_name : String | Nil = nil,
     )
     end
   end

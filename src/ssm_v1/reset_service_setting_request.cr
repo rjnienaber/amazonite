@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property setting_id : String
 
     def initialize(
-      @setting_id : String
+      @setting_id : String,
     )
     end
   end

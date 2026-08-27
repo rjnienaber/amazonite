@@ -16,7 +16,7 @@ module Amazonite::SsmV1
     def initialize(
       @key : AssociationExecutionFilterKey,
       @value : String,
-      @type : AssociationFilterOperatorType
+      @type : AssociationFilterOperatorType,
     )
     end
   end

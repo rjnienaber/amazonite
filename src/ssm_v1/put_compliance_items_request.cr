@@ -32,7 +32,7 @@ module Amazonite::SsmV1
       @execution_summary : ComplianceExecutionSummary,
       @items : Array(ComplianceItemEntry),
       @item_content_hash : String | Nil = nil,
-      @upload_type : ComplianceUploadType | Nil = nil
+      @upload_type : ComplianceUploadType | Nil = nil,
     )
     end
   end

@@ -16,7 +16,7 @@ module Amazonite::SsmV1
     def initialize(
       @key : OpsItemEventFilterKey,
       @values : Array(String),
-      @operator : OpsItemEventFilterOperator
+      @operator : OpsItemEventFilterOperator,
     )
     end
   end

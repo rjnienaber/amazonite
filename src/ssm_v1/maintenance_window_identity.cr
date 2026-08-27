@@ -50,7 +50,7 @@ module Amazonite::SsmV1
       @schedule_offset : Int32 | Nil = nil,
       @end_date : String | Nil = nil,
       @start_date : String | Nil = nil,
-      @next_execution_time : String | Nil = nil
+      @next_execution_time : String | Nil = nil,
     )
     end
   end
