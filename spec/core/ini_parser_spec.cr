@@ -30,7 +30,7 @@ describe IniParser do
     end
 
     it "uses default path if no path provided" do
-      MockIniParser.new.credentials_filepath.as(String).should end_with("/spec/fixtures/iniparser/credentials")
+      MockIniParser.new.credentials_filepath.as(String).should end_with(File.join("spec", "fixtures", "iniparser", "credentials"))
     end
   end
 
@@ -40,7 +40,7 @@ describe IniParser do
     end
 
     it "uses default path if no path provided" do
-      MockIniParser.new.config_filepath.as(String).should end_with("/spec/fixtures/iniparser/config")
+      MockIniParser.new.config_filepath.as(String).should end_with(File.join("spec", "fixtures", "iniparser", "config"))
     end
   end
 
