@@ -62,6 +62,7 @@ jobs:
         env:
           PERSISTENCE: false
           SERVICES: s3,dynamodb
+          LOCALSTACK_AUTH_TOKEN: ${{ secrets.LOCALSTACK_AUTH_TOKEN }}
     steps:
       - name: download source
         uses: actions/checkout@v7
