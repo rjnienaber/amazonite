@@ -11,7 +11,7 @@ def wait_until(&)
     raise Exception.new("timed out waiting for check to succeed") if counter == 20
 
     counter += 1
-    sleep 0.5
+    sleep 0.5.seconds
   end
 end
 
