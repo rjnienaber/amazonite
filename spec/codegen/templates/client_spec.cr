@@ -45,9 +45,9 @@ describe "client.cr.j2 template" do
   end
 
   it "handles method with no input" do
-    actual = render_partial_client("opsworks-2013-02-18.normal.json", false, "DescribeOperatingSystems")
+    actual = render_partial_client("discovery-2015-11-01.normal.json", false, "ExportConfigurations")
 
-    expected = load_fixture("templates", "client", "describe_operating_systems.expected.cr").strip
+    expected = load_fixture("templates", "client", "export_configurations.expected.cr").strip
     actual.should eq_diff expected
   end
 

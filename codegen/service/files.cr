@@ -1,74 +1,53 @@
-require "./description"
+require "json"
+require "./translator"
 
 module Amazonite::Codegen::Service
+  # Locates and parses a service's Smithy JSON AST model from the
+  # api-models-aws submodule.
   class Files
-    API_DIR = "aws-sdk-js/apis"
+    MODELS_DIR = "api-models-aws/models"
 
-    def self.process(protocol = "json", &)
-      matches = all_files.compact_map { |file| /#{API_DIR}\/(.+)-\d{4}-\d\d-\d\d\.normal\.json/.match(file) }
-      names = Set(String).new
-      matches.each do |match|
-        filepath, name = match
-        next if names.includes?(name)
+    # api-models-aws directory names don't always match the service slugs
+    # used historically (dynamodb, ssm, ...) - only the exceptions need an
+    # entry here, everything else defaults to slug == directory name.
+    SERVICE_DIRS = {
+      "kinesisanalyticsv2"     => "kinesis-analytics-v2",
+      "elasticloadbalancingv2" => "elastic-load-balancing-v2",
+      "discovery"              => "application-discovery-service",
+    }
 
-        counter = 0
-        File.each_line(filepath) do |line|
-          protocol_match = /"protocol": "(.*)"/.match(line)
-          next unless protocol_match
+    SLUG_WITH_DATE = /^(.+?)-(\d{4}-\d\d-\d\d)\.normal\.json$/
 
-          names << name if protocol_match[1] == protocol
+    @@submodule_commit_sha : String?
 
-          counter += 1
-          raise Exception.new("unable to determine protocol for '#{filepath}'") if counter > 20
-        end
+    # Accepts either a bare service slug (e.g. "dynamodb") or an old-format
+    # filename (e.g. "dynamodb-2012-08-10.normal.json") for spec call-site
+    # compatibility. Either way, resolves to the one Smithy model file for
+    # that service (optionally pinned to a specific date).
+    def self.translator(name : String) : Translator
+      if match = SLUG_WITH_DATE.match(name)
+        slug, date = match[1], match[2]
+      else
+        slug, date = name, nil
       end
 
-      names.to_a.sort.each do |name|
-        service_files = all_files.select { |file| /\/#{name}-\d/.matches?(file) }
-        yield Files.new(name, service_files)
+      dir = SERVICE_DIRS.fetch(slug, slug)
+      # Dir[] glob patterns always use "/" regardless of platform - File.join
+      # would emit "\" on Windows and silently match nothing there.
+      pattern = "#{MODELS_DIR}/#{dir}/service/#{date || "*"}/*.json"
+      matches = Dir[pattern]
+      raise Exception.new("couldn't find Smithy model for '#{name}' (looked for #{pattern})") if matches.empty?
+      raise Exception.new("multiple Smithy model files found for '#{name}': #{matches}") if matches.size > 1
+
+      Translator.new(JSON.parse(File.read(matches.first)))
+    end
+
+    def self.submodule_commit_sha : String
+      @@submodule_commit_sha ||= begin
+        output = IO::Memory.new
+        Process.run("git", ["-C", "api-models-aws", "rev-parse", "--short", "HEAD"], output: output)
+        output.to_s.strip
       end
-    end
-
-    private def self.all_files
-      @@all_files ||= Dir["#{API_DIR}/*.json"]
-    end
-
-    @version_files = {} of String => Array(String)
-    @files : Array(String)
-
-    def initialize(@name : String, @files : Array(String))
-    end
-
-    def current_description
-      file = current_normal_file
-      raise Exception.new("couldn't find 'normal' api file for '#{@name}'") if file.nil?
-      version = version_files.keys.size.to_s
-      Description.new(aws_version, current_version_date, version, JSON.parse(File.read(file.as(String))))
-    end
-
-    def current_normal_file
-      current_version_files.find(&.includes?("normal"))
-    end
-
-    private def current_version_date
-      version_files.keys.compact.sort![-1]
-    end
-
-    private def current_version_files
-      version_files[current_version_date].sort
-    end
-
-    private def version_files
-      return @version_files unless @version_files.empty?
-
-      date_regex = /\d{4}-\d\d-\d\d/
-      @version_files = @files.select { |file| date_regex.match(file) }.group_by do |file|
-        date_regex.match(file).as(Regex::MatchData)[0]
-      end
-    end
-
-    private def aws_version
-      @aws_version ||= JSON.parse(File.read("aws-sdk-js/package.json"))["version"].as_s
     end
   end
 end

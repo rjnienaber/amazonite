@@ -9,7 +9,6 @@
 /shard.lock
 
 tmp/*
-tmp_smithy/*
 notes.md
 test.cr
 .tool-versions

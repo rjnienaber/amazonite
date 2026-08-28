@@ -2,10 +2,10 @@ require "json"
 
 module Amazonite::Codegen::Service
   # Translates a Smithy JSON AST service model (aws/api-models-aws) into the
-  # same JSON shape that Description/Metadata/Operation/Member/Shape already
-  # parse (the old aws-sdk-js `.normal.json` schema), so the existing,
-  # unmodified parsing/rendering pipeline can consume either source.
-  class SmithyTranslator
+  # JSON shape that Description/Metadata/Operation/Member/Shape parse, so the
+  # rest of the pipeline stays unchanged regardless of the Smithy source's
+  # own layout.
+  class Translator
     getter api_version
 
     @service_id : String
@@ -34,30 +34,53 @@ module Amazonite::Codegen::Service
       end
     end
 
+    # Smithy protocol trait name => old-format metadata.protocol value,
+    # matching the strings aws-sdk-js itself used. Full request/response
+    # rendering (client.cr.j2 etc.) is only exercised for awsJson services -
+    # the rest are translated just far enough for metadata/naming to resolve.
+    PROTOCOLS = {
+      "awsQuery"  => "query",
+      "ec2Query"  => "ec2",
+      "restJson1" => "rest-json",
+      "restXml"   => "rest-xml",
+    }
+
     private def build_metadata(json : JSON::Builder)
       service_info = @service_shape["traits"]["aws.api#service"].as_h
 
       json.object do
         json.field "apiVersion", @api_version
         json.field "endpointPrefix", service_info["endpointPrefix"].as_s
-        json.field "protocol", "json"
+        json.field "protocol", protocol
         json.field "signatureVersion", "v4"
-        json.field "jsonVersion", aws_json_version
+        json.field "jsonVersion", aws_json_version if aws_json?
         json.field "serviceId", service_info["sdkId"].as_s
         json.field "targetPrefix", local_name(@service_id)
       end
     end
 
-    # awsJson1_0/1_1 is the only protocol these two target services use, and
-    # the trait carries no explicit version field - it's encoded in the trait
-    # name itself (e.g. "aws.protocols#awsJson1_0" -> "1.0").
-    private def aws_json_version : String
+    private def aws_json?
+      protocol_trait_name.starts_with?("aws.protocols#awsJson")
+    end
+
+    private def protocol : String
+      return "json" if aws_json?
+
+      name = protocol_trait_name.sub("aws.protocols#", "")
+      PROTOCOLS.fetch(name) { raise Exception.new("service '#{@service_id}' uses unsupported protocol '#{name}'") }
+    end
+
+    private def protocol_trait_name : String
       traits = @service_shape["traits"].as_h
-      trait_name = traits.keys.find(&.starts_with?("aws.protocols#awsJson"))
-      unless trait_name
-        raise Exception.new("service '#{@service_id}' does not use the awsJson protocol")
-      end
-      trait_name.split("awsJson").last.sub('_', '.')
+      trait_name = traits.keys.find(&.starts_with?("aws.protocols#"))
+      raise Exception.new("service '#{@service_id}' has no aws.protocols trait") unless trait_name
+      trait_name
+    end
+
+    # awsJson1_0/1_1 carries no explicit version field - it's encoded in the
+    # trait name itself (e.g. "aws.protocols#awsJson1_0" -> "1.0").
+    private def aws_json_version : String
+      protocol_trait_name.split("awsJson").last.sub('_', '.')
     end
 
     private def build_operations(json : JSON::Builder)

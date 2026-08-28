@@ -16,12 +16,9 @@ def load_fixture(*path)
 end
 
 class ServiceJson
-  @@files = {} of String => JSON::Any
+  @@translated = {} of String => JSON::Any
 
-  def self.load(*path)
-    filepath = File.join(__DIR__, "..", "aws-sdk-js", "apis", *path)
-    return @@files[filepath] if @@files.has_key?(filepath)
-    json = JSON.parse(File.read(filepath))
-    @@files[filepath] = json
+  def self.load(name : String)
+    @@translated[name] ||= Amazonite::Codegen::Service::Files.translator(name).translate
   end
 end
