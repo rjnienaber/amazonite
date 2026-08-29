@@ -8,7 +8,7 @@ module Amazonite::SsmV1
     property key : OpsItemRelatedItemsFilterKey
 
     @[JSON::Field(key: "Values")]
-    property values : Array(String)
+    property values : Array(String) = [] of String
 
     @[JSON::Field(key: "Operator", converter: AS::OpsItemRelatedItemsFilterOperator)]
     property operator : OpsItemRelatedItemsFilterOperator

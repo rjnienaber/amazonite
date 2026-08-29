@@ -3,7 +3,7 @@ module Amazonite::SsmV1
     include JSON::Serializable
 
     @[JSON::Field(key: "AssociationIds")]
-    property association_ids : Array(String)
+    property association_ids : Array(String) = [] of String
 
     def initialize(
       @association_ids : Array(String),

@@ -6,7 +6,7 @@ module Amazonite::KmsV1
     property key_id : String
 
     @[JSON::Field(key: "TagKeys")]
-    property tag_keys : Array(String)
+    property tag_keys : Array(String) = [] of String
 
     def initialize(
       @key_id : String,

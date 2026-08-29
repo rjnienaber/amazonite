@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property instance_id : String
 
     @[JSON::Field(key: "Items")]
-    property items : Array(InventoryItem)
+    property items : Array(InventoryItem) = [] of InventoryItem
 
     def initialize(
       @instance_id : String,

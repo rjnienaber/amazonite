@@ -1,3 +1,6 @@
+private alias AK = Amazonite::KmsV1
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class CreateGrantRequest
     include JSON::Serializable
@@ -11,8 +14,8 @@ module Amazonite::KmsV1
     @[JSON::Field(key: "RetiringPrincipal")]
     property retiring_principal : String | Nil
 
-    @[JSON::Field(key: "Operations")]
-    property operations : Array(GrantOperation)
+    @[JSON::Field(key: "Operations", converter: Core::ArrayConverter(AK::GrantOperation))]
+    property operations : Array(GrantOperation) = [] of GrantOperation
 
     @[JSON::Field(key: "Constraints")]
     property constraints : GrantConstraints | Nil

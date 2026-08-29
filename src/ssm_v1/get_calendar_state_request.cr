@@ -3,7 +3,7 @@ module Amazonite::SsmV1
     include JSON::Serializable
 
     @[JSON::Field(key: "CalendarNames")]
-    property calendar_names : Array(String)
+    property calendar_names : Array(String) = [] of String
 
     @[JSON::Field(key: "AtTime")]
     property at_time : String | Nil

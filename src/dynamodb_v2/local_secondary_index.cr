@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property index_name : String
 
     @[JSON::Field(key: "KeySchema")]
-    property key_schema : Array(KeySchemaElement)
+    property key_schema : Array(KeySchemaElement) = [] of KeySchemaElement
 
     @[JSON::Field(key: "Projection")]
     property projection : Projection

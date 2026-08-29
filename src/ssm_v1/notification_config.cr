@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   class NotificationConfig
@@ -7,7 +8,7 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "NotificationArn")]
     property notification_arn : String | Nil
 
-    @[JSON::Field(key: "NotificationEvents")]
+    @[JSON::Field(key: "NotificationEvents", converter: Core::ArrayConverter(AS::NotificationEvent))]
     property notification_events : Array(NotificationEvent) | Nil
 
     @[JSON::Field(key: "NotificationType", converter: AS::NotificationType)]

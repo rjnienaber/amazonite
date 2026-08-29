@@ -8,7 +8,7 @@ module Amazonite::SsmV1
     property key : OpsItemEventFilterKey
 
     @[JSON::Field(key: "Values")]
-    property values : Array(String)
+    property values : Array(String) = [] of String
 
     @[JSON::Field(key: "Operator", converter: AS::OpsItemEventFilterOperator)]
     property operator : OpsItemEventFilterOperator

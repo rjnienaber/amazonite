@@ -5,7 +5,7 @@ module Amazonite::SsmV1
     include JSON::Serializable
 
     @[JSON::Field(key: "Targets")]
-    property targets : Array(Target)
+    property targets : Array(Target) = [] of Target
 
     @[JSON::Field(key: "ResourceType", converter: AS::MaintenanceWindowResourceType)]
     property resource_type : MaintenanceWindowResourceType

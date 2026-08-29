@@ -3,7 +3,7 @@ module Amazonite::SsmV1
     include JSON::Serializable
 
     @[JSON::Field(key: "Names")]
-    property names : Array(String)
+    property names : Array(String) = [] of String
 
     @[JSON::Field(key: "WithDecryption")]
     property with_decryption : Bool | Nil

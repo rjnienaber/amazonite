@@ -17,7 +17,7 @@ module Amazonite::SsmV1
     property execution_summary : ComplianceExecutionSummary
 
     @[JSON::Field(key: "Items")]
-    property items : Array(ComplianceItemEntry)
+    property items : Array(ComplianceItemEntry) = [] of ComplianceItemEntry
 
     @[JSON::Field(key: "ItemContentHash")]
     property item_content_hash : String | Nil

@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property name : String
 
     @[JSON::Field(key: "Filters")]
-    property filters : Array(InventoryFilter)
+    property filters : Array(InventoryFilter) = [] of InventoryFilter
 
     def initialize(
       @name : String,

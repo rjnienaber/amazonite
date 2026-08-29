@@ -3,7 +3,7 @@ module Amazonite::DynamoDBV2
     include JSON::Serializable
 
     @[JSON::Field(key: "Endpoints")]
-    property endpoints : Array(Endpoint)
+    property endpoints : Array(Endpoint) = [] of Endpoint
 
     def initialize(
       @endpoints : Array(Endpoint),

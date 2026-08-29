@@ -9,10 +9,10 @@ module Amazonite::SqsV1
     property label : String
 
     @[JSON::Field(key: "AWSAccountIds")]
-    property aws_account_ids : Array(String)
+    property aws_account_ids : Array(String) = [] of String
 
     @[JSON::Field(key: "Actions")]
-    property actions : Array(String)
+    property actions : Array(String) = [] of String
 
     def initialize(
       @queue_url : String,

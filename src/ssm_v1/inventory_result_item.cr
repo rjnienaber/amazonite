@@ -15,7 +15,7 @@ module Amazonite::SsmV1
     property content_hash : String | Nil
 
     @[JSON::Field(key: "Content")]
-    property content : Array(Hash(String, String))
+    property content : Array(Hash(String, String)) = [] of Hash(String, String)
 
     def initialize(
       @type_name : String,

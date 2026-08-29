@@ -3,7 +3,7 @@ module Amazonite::SsmV1
     include JSON::Serializable
 
     @[JSON::Field(key: "PatchRules")]
-    property patch_rules : Array(PatchRule)
+    property patch_rules : Array(PatchRule) = [] of PatchRule
 
     def initialize(
       @patch_rules : Array(PatchRule),

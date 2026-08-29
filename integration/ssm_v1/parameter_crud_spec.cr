@@ -35,6 +35,34 @@ describe "SsmV1: basic crud operations" do
     response.result.tier.should eq(SSM::ParameterTier::Standard)
   end
 
+  it "tags the parameter" do
+    tag = SSM::Tag.new("Environment", "test")
+    add_response = client.add_tags_to_resource(SSM::AddTagsToResourceRequest.new(SSM::ResourceTypeForTagging::Parameter, param_name, [tag]))
+    add_response.http.status_code.should eq(200)
+
+    list_response = client.list_tags_for_resource(SSM::ListTagsForResourceRequest.new(SSM::ResourceTypeForTagging::Parameter, param_name))
+    list_response.http.status_code.should eq(200)
+    tag_list = list_response.result.tag_list || [] of SSM::Tag
+    tag_list.map(&.key).should eq(["Environment"])
+    tag_list.map(&.value).should eq(["test"])
+
+    remove_response = client.remove_tags_from_resource(SSM::RemoveTagsFromResourceRequest.new(SSM::ResourceTypeForTagging::Parameter, param_name, ["Environment"]))
+    remove_response.http.status_code.should eq(200)
+
+    list_response = client.list_tags_for_resource(SSM::ListTagsForResourceRequest.new(SSM::ResourceTypeForTagging::Parameter, param_name))
+    list_response.http.status_code.should eq(200)
+    (list_response.result.tag_list || [] of SSM::Tag).should be_empty
+  end
+
+  it "gets multiple parameters" do
+    response = client.get_parameters(SSM::GetParametersRequest.new([param_name]))
+    response.http.status_code.should eq(200)
+
+    response.result.invalid_parameters.should eq([] of String)
+    names = response.result.parameters.try(&.compact_map(&.name))
+    names.should eq([param_name])
+  end
+
   it "gets a parameter" do
     param = SSM::GetParameterRequest.new(param_name)
     response = client.get_parameter(param)

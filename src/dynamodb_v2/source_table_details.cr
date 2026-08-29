@@ -18,7 +18,7 @@ module Amazonite::DynamoDBV2
     property table_size_bytes : Int64 | Nil
 
     @[JSON::Field(key: "KeySchema")]
-    property key_schema : Array(KeySchemaElement)
+    property key_schema : Array(KeySchemaElement) = [] of KeySchemaElement
 
     @[JSON::Field(key: "TableCreationDateTime", converter: Core::AWSEpochConverter)]
     property table_creation_date_time : Time

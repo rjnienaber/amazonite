@@ -6,7 +6,7 @@ module Amazonite::SqsV1
     property queue_url : String
 
     @[JSON::Field(key: "Entries")]
-    property entries : Array(DeleteMessageBatchRequestEntry)
+    property entries : Array(DeleteMessageBatchRequestEntry) = [] of DeleteMessageBatchRequestEntry
 
     def initialize(
       @queue_url : String,

@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property ignore_poll_alarm_failure : Bool | Nil
 
     @[JSON::Field(key: "Alarms")]
-    property alarms : Array(Alarm)
+    property alarms : Array(Alarm) = [] of Alarm
 
     def initialize(
       @alarms : Array(Alarm),

@@ -3,7 +3,7 @@ module Amazonite::SsmV1
     include JSON::Serializable
 
     @[JSON::Field(key: "InstanceIds")]
-    property instance_ids : Array(String)
+    property instance_ids : Array(String) = [] of String
 
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil

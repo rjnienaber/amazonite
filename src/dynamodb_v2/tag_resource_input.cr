@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property resource_arn : String
 
     @[JSON::Field(key: "Tags")]
-    property tags : Array(Tag)
+    property tags : Array(Tag) = [] of Tag
 
     def initialize(
       @resource_arn : String,

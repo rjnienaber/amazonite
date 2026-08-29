@@ -5,7 +5,7 @@ module Amazonite::DynamoDBV2
     include JSON::Serializable
 
     @[JSON::Field(key: "TransactStatements")]
-    property transact_statements : Array(ParameterizedStatement)
+    property transact_statements : Array(ParameterizedStatement) = [] of ParameterizedStatement
 
     @[JSON::Field(key: "ClientRequestToken")]
     property client_request_token : String | Nil

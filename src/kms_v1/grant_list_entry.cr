@@ -1,3 +1,4 @@
+private alias AK = Amazonite::KmsV1
 private alias Core = Amazonite::Core
 
 module Amazonite::KmsV1
@@ -25,7 +26,7 @@ module Amazonite::KmsV1
     @[JSON::Field(key: "IssuingAccount")]
     property issuing_account : String | Nil
 
-    @[JSON::Field(key: "Operations")]
+    @[JSON::Field(key: "Operations", converter: Core::ArrayConverter(AK::GrantOperation))]
     property operations : Array(GrantOperation) | Nil
 
     @[JSON::Field(key: "Constraints")]

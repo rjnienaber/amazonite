@@ -8,7 +8,7 @@ module Amazonite::SsmV1
     property key : ParametersFilterKey
 
     @[JSON::Field(key: "Values")]
-    property values : Array(String)
+    property values : Array(String) = [] of String
 
     def initialize(
       @key : ParametersFilterKey,

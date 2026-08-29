@@ -9,7 +9,7 @@ module Amazonite::SsmV1
     property version : String | Nil
 
     @[JSON::Field(key: "Attributes")]
-    property attributes : Array(InventoryItemAttribute)
+    property attributes : Array(InventoryItemAttribute) = [] of InventoryItemAttribute
 
     @[JSON::Field(key: "DisplayName")]
     property display_name : String | Nil

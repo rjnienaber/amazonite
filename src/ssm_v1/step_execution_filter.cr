@@ -8,7 +8,7 @@ module Amazonite::SsmV1
     property key : StepExecutionFilterKey
 
     @[JSON::Field(key: "Values")]
-    property values : Array(String)
+    property values : Array(String) = [] of String
 
     def initialize(
       @key : StepExecutionFilterKey,

@@ -5,7 +5,7 @@ module Amazonite::DynamoDBV2
     include JSON::Serializable
 
     @[JSON::Field(key: "TransactItems")]
-    property transact_items : Array(TransactGetItem)
+    property transact_items : Array(TransactGetItem) = [] of TransactGetItem
 
     @[JSON::Field(key: "ReturnConsumedCapacity", converter: ADDB::ReturnConsumedCapacity)]
     property return_consumed_capacity : ReturnConsumedCapacity | Nil

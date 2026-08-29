@@ -56,13 +56,13 @@ module Amazonite::KmsV1
     @[JSON::Field(key: "KeySpec", converter: AK::KeySpec)]
     property key_spec : KeySpec | Nil
 
-    @[JSON::Field(key: "EncryptionAlgorithms")]
+    @[JSON::Field(key: "EncryptionAlgorithms", converter: Core::ArrayConverter(AK::EncryptionAlgorithmSpec))]
     property encryption_algorithms : Array(EncryptionAlgorithmSpec) | Nil
 
-    @[JSON::Field(key: "SigningAlgorithms")]
+    @[JSON::Field(key: "SigningAlgorithms", converter: Core::ArrayConverter(AK::SigningAlgorithmSpec))]
     property signing_algorithms : Array(SigningAlgorithmSpec) | Nil
 
-    @[JSON::Field(key: "KeyAgreementAlgorithms")]
+    @[JSON::Field(key: "KeyAgreementAlgorithms", converter: Core::ArrayConverter(AK::KeyAgreementAlgorithmSpec))]
     property key_agreement_algorithms : Array(KeyAgreementAlgorithmSpec) | Nil
 
     @[JSON::Field(key: "MultiRegion")]
@@ -74,7 +74,7 @@ module Amazonite::KmsV1
     @[JSON::Field(key: "PendingDeletionWindowInDays")]
     property pending_deletion_window_in_days : Int32 | Nil
 
-    @[JSON::Field(key: "MacAlgorithms")]
+    @[JSON::Field(key: "MacAlgorithms", converter: Core::ArrayConverter(AK::MacAlgorithmSpec))]
     property mac_algorithms : Array(MacAlgorithmSpec) | Nil
 
     @[JSON::Field(key: "XksKeyConfiguration")]

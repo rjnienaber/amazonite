@@ -44,7 +44,7 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "Parameters")]
     property parameters : Array(DocumentParameter) | Nil
 
-    @[JSON::Field(key: "PlatformTypes")]
+    @[JSON::Field(key: "PlatformTypes", converter: Core::ArrayConverter(AS::PlatformType))]
     property platform_types : Array(PlatformType) | Nil
 
     @[JSON::Field(key: "DocumentType", converter: AS::DocumentType)]

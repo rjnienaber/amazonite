@@ -3,7 +3,7 @@ module Amazonite::SsmV1
     include JSON::Serializable
 
     @[JSON::Field(key: "PatchFilters")]
-    property patch_filters : Array(PatchFilter)
+    property patch_filters : Array(PatchFilter) = [] of PatchFilter
 
     def initialize(
       @patch_filters : Array(PatchFilter),

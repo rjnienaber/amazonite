@@ -33,6 +33,23 @@ module Amazonite::Codegen::Service
       @enum_type ||= resolver.enum(shape_name)
     end
 
+    def list_of_enum?
+      shape = @resolver.find(shape_name)
+      shape.is_a?(List) && @resolver.enum?(shape.member.shape_name)
+    end
+
+    def list_enum_crystal_type
+      @resolver.find(shape_name).as(List).member.shape_name
+    end
+
+    def list_type?
+      @resolver.find(shape_name).is_a?(List)
+    end
+
+    def list_item_crystal_type
+      @resolver.find(shape_name).as(List).member.crystal_type(true)
+    end
+
     def time_type?
       @is_time_type ||= @resolver.time?(shape_name)
     end

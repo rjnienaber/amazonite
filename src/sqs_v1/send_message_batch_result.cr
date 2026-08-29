@@ -3,10 +3,10 @@ module Amazonite::SqsV1
     include JSON::Serializable
 
     @[JSON::Field(key: "Successful")]
-    property successful : Array(SendMessageBatchResultEntry)
+    property successful : Array(SendMessageBatchResultEntry) = [] of SendMessageBatchResultEntry
 
     @[JSON::Field(key: "Failed")]
-    property failed : Array(BatchResultErrorEntry)
+    property failed : Array(BatchResultErrorEntry) = [] of BatchResultErrorEntry
 
     def initialize(
       @successful : Array(SendMessageBatchResultEntry),

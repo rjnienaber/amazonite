@@ -1,4 +1,5 @@
 private alias AK = Amazonite::KmsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::KmsV1
   class ReEncryptRequest
@@ -31,7 +32,7 @@ module Amazonite::KmsV1
     @[JSON::Field(key: "DryRun")]
     property dry_run : Bool | Nil
 
-    @[JSON::Field(key: "DryRunModifiers")]
+    @[JSON::Field(key: "DryRunModifiers", converter: Core::ArrayConverter(AK::DryRunModifierType))]
     property dry_run_modifiers : Array(DryRunModifierType) | Nil
 
     def initialize(

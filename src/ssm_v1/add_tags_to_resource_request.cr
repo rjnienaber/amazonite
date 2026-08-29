@@ -11,7 +11,7 @@ module Amazonite::SsmV1
     property resource_id : String
 
     @[JSON::Field(key: "Tags")]
-    property tags : Array(Tag)
+    property tags : Array(Tag) = [] of Tag
 
     def initialize(
       @resource_type : ResourceTypeForTagging,

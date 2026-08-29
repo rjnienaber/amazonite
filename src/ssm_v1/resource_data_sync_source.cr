@@ -9,7 +9,7 @@ module Amazonite::SsmV1
     property aws_organizations_source : ResourceDataSyncAwsOrganizationsSource | Nil
 
     @[JSON::Field(key: "SourceRegions")]
-    property source_regions : Array(String)
+    property source_regions : Array(String) = [] of String
 
     @[JSON::Field(key: "IncludeFutureRegions")]
     property include_future_regions : Bool | Nil

@@ -6,7 +6,7 @@ module Amazonite::BackupGatewayV2
     property resource_arn : String
 
     @[JSON::Field(key: "TagKeys")]
-    property tag_keys : Array(String)
+    property tag_keys : Array(String) = [] of String
 
     def initialize(
       @resource_arn : String,

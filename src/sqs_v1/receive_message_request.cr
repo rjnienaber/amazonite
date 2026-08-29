@@ -1,3 +1,6 @@
+private alias AS = Amazonite::SqsV1
+private alias Core = Amazonite::Core
+
 module Amazonite::SqsV1
   class ReceiveMessageRequest
     include JSON::Serializable
@@ -5,10 +8,10 @@ module Amazonite::SqsV1
     @[JSON::Field(key: "QueueUrl")]
     property queue_url : String
 
-    @[JSON::Field(key: "AttributeNames")]
+    @[JSON::Field(key: "AttributeNames", converter: Core::ArrayConverter(AS::QueueAttributeName))]
     property attribute_names : Array(QueueAttributeName) | Nil
 
-    @[JSON::Field(key: "MessageSystemAttributeNames")]
+    @[JSON::Field(key: "MessageSystemAttributeNames", converter: Core::ArrayConverter(AS::MessageSystemAttributeName))]
     property message_system_attribute_names : Array(MessageSystemAttributeName) | Nil
 
     @[JSON::Field(key: "MessageAttributeNames")]

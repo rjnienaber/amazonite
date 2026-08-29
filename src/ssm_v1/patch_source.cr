@@ -6,7 +6,7 @@ module Amazonite::SsmV1
     property name : String
 
     @[JSON::Field(key: "Products")]
-    property products : Array(String)
+    property products : Array(String) = [] of String
 
     @[JSON::Field(key: "Configuration")]
     property configuration : String

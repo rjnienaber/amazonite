@@ -5,7 +5,7 @@ module Amazonite::DynamoDBV2
     include JSON::Serializable
 
     @[JSON::Field(key: "Statements")]
-    property statements : Array(BatchStatementRequest)
+    property statements : Array(BatchStatementRequest) = [] of BatchStatementRequest
 
     @[JSON::Field(key: "ReturnConsumedCapacity", converter: ADDB::ReturnConsumedCapacity)]
     property return_consumed_capacity : ReturnConsumedCapacity | Nil

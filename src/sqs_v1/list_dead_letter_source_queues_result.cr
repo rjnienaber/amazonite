@@ -3,7 +3,7 @@ module Amazonite::SqsV1
     include JSON::Serializable
 
     @[JSON::Field(key: "queueUrls")]
-    property queue_urls : Array(String)
+    property queue_urls : Array(String) = [] of String
 
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil

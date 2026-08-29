@@ -8,7 +8,7 @@ module Amazonite::SsmV1
     property key : InstancePropertyFilterKey
 
     @[JSON::Field(key: "valueSet")]
-    property value_set : Array(String)
+    property value_set : Array(String) = [] of String
 
     def initialize(
       @key : InstancePropertyFilterKey,

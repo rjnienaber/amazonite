@@ -26,7 +26,7 @@ module Amazonite::SsmV1
     property auto_approve : Bool | Nil
 
     @[JSON::Field(key: "Runbooks")]
-    property runbooks : Array(Runbook)
+    property runbooks : Array(Runbook) = [] of Runbook
 
     @[JSON::Field(key: "Tags")]
     property tags : Array(Tag) | Nil

@@ -9,7 +9,7 @@ module Amazonite::SsmV1
     property parameter_version : Int64
 
     @[JSON::Field(key: "Labels")]
-    property labels : Array(String)
+    property labels : Array(String) = [] of String
 
     def initialize(
       @name : String,

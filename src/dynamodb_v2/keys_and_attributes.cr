@@ -3,7 +3,7 @@ module Amazonite::DynamoDBV2
     include JSON::Serializable
 
     @[JSON::Field(key: "Keys")]
-    property keys : Array(Hash(String, AttributeValue))
+    property keys : Array(Hash(String, AttributeValue)) = [] of Hash(String, AttributeValue)
 
     @[JSON::Field(key: "AttributesToGet")]
     property attributes_to_get : Array(String) | Nil

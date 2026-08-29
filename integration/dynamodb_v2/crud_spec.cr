@@ -120,6 +120,28 @@ describe "DynamoDB: basic crud operations" do
     item.try &.["Rating"].try &.s.should eq("Good")
   end
 
+  it "queries items by partition key" do
+    input = DB::QueryInput.new(
+      table_name,
+      key_condition_expression: "Artist = :artist",
+      expression_attribute_values: {":artist" => DB::AttributeValue.new("Soundgarden")},
+    )
+    response = client.query(input)
+    response.http.status_code.should eq(200)
+
+    items = response.result.try(&.items) || [] of Hash(String, DB::AttributeValue)
+    song_titles = items.compact_map { |item| item["SongTitle"]?.try &.s }.sort!
+    song_titles.should eq(["Burden In The Hand", "Let Me Drown"])
+  end
+
+  it "scans the table" do
+    response = client.scan(DB::ScanInput.new(table_name))
+    response.http.status_code.should eq(200)
+
+    items = response.result.try(&.items) || [] of Hash(String, DB::AttributeValue)
+    items.size.should eq(2)
+  end
+
   it "deletes the item" do
     response = client.delete_item(DB::DeleteItemInput.new(table_name, key))
     response.http.status_code.should eq(200)

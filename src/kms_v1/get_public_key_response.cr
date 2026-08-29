@@ -1,4 +1,5 @@
 private alias AK = Amazonite::KmsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::KmsV1
   class GetPublicKeyResponse
@@ -19,13 +20,13 @@ module Amazonite::KmsV1
     @[JSON::Field(key: "KeyUsage", converter: AK::KeyUsageType)]
     property key_usage : KeyUsageType | Nil
 
-    @[JSON::Field(key: "EncryptionAlgorithms")]
+    @[JSON::Field(key: "EncryptionAlgorithms", converter: Core::ArrayConverter(AK::EncryptionAlgorithmSpec))]
     property encryption_algorithms : Array(EncryptionAlgorithmSpec) | Nil
 
-    @[JSON::Field(key: "SigningAlgorithms")]
+    @[JSON::Field(key: "SigningAlgorithms", converter: Core::ArrayConverter(AK::SigningAlgorithmSpec))]
     property signing_algorithms : Array(SigningAlgorithmSpec) | Nil
 
-    @[JSON::Field(key: "KeyAgreementAlgorithms")]
+    @[JSON::Field(key: "KeyAgreementAlgorithms", converter: Core::ArrayConverter(AK::KeyAgreementAlgorithmSpec))]
     property key_agreement_algorithms : Array(KeyAgreementAlgorithmSpec) | Nil
 
     def initialize(

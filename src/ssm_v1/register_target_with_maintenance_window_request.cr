@@ -11,7 +11,7 @@ module Amazonite::SsmV1
     property resource_type : MaintenanceWindowResourceType
 
     @[JSON::Field(key: "Targets")]
-    property targets : Array(Target)
+    property targets : Array(Target) = [] of Target
 
     @[JSON::Field(key: "OwnerInformation")]
     property owner_information : String | Nil

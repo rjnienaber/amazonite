@@ -6,7 +6,7 @@ module Amazonite::SqsV1
     property queue_url : String
 
     @[JSON::Field(key: "TagKeys")]
-    property tag_keys : Array(String)
+    property tag_keys : Array(String) = [] of String
 
     def initialize(
       @queue_url : String,

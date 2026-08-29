@@ -20,7 +20,7 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "VersionName")]
     property version_name : String | Nil
 
-    @[JSON::Field(key: "PlatformTypes")]
+    @[JSON::Field(key: "PlatformTypes", converter: Core::ArrayConverter(AS::PlatformType))]
     property platform_types : Array(PlatformType) | Nil
 
     @[JSON::Field(key: "DocumentVersion")]

@@ -18,8 +18,15 @@ module Amazonite::Codegen::Bindings
                     elsif member.enum_type?
                       @needs_module_alias = true
                       "#{module_alias}::#{member.crystal_type(true)}"
+                    elsif member.list_of_enum?
+                      @needs_core_alias = true
+                      @needs_module_alias = true
+                      "Core::ArrayConverter(#{module_alias}::#{member.list_enum_crystal_type})"
                     end
         has_converter = !!converter
+
+        default = "[] of #{member.list_item_crystal_type}" if member.required? && member.list_type?
+        has_default = !!default
 
         Crinja.value({
           name:            member.name,
@@ -27,6 +34,8 @@ module Amazonite::Codegen::Bindings
           type:            member.crystal_type,
           has_converter:   has_converter,
           converter:       converter,
+          has_default:     has_default,
+          default:         default,
         })
       end
 

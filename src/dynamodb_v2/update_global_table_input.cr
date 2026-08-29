@@ -6,7 +6,7 @@ module Amazonite::DynamoDBV2
     property global_table_name : String
 
     @[JSON::Field(key: "ReplicaUpdates")]
-    property replica_updates : Array(ReplicaUpdate)
+    property replica_updates : Array(ReplicaUpdate) = [] of ReplicaUpdate
 
     def initialize(
       @global_table_name : String,
