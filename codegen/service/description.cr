@@ -26,6 +26,12 @@ module Amazonite::Codegen::Service
       version_match = @metadata.service_id.split(/(?=[vV]\d+$)/)
       if version_match.size > 1
         @service_id, version_part = version_match
+        # The split's lookahead only consumes up to the version suffix
+        # itself, so a serviceId like "Elastic Load Balancing v2" (name and
+        # suffix separated by a space) leaves that trailing space on
+        # @service_id - strip it so lower_name (used to build file/module
+        # paths) doesn't end up with a stray double underscore.
+        @service_id = @service_id.strip
         @version = version_part.upcase
       else
         @service_id = version_match[0]
