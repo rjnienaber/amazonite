@@ -45,8 +45,6 @@ Artist
 API types that can be generated:
 * `json`
 * `rest-json`
-
-API types that are in progress:
 * `query`
 
 | Name          | Supported?      |Integration Tests  | Notes                                                                 |
@@ -57,6 +55,7 @@ API types that are in progress:
 | KMS           | ✅              |✅                 |                                                                       |
 | Secrets Manager | ✅            |✅                 |                                                                       |
 | Lambda        | ✅              |✅                 | InvokeWithResponseStream isn't generated - uses event-stream framing, not a plain request/response |
+| SNS           | ✅              |✅                 |                                                                       |
 | S3            |  🚫             | 🚫                | Consider using [awscr-s3](https://github.com/taylorfinnell/awscr-s3)  |
 
 For example usage, please look at [the integration tests](integration). If you need an API that is not listed here,

@@ -15,6 +15,17 @@ module Amazonite::Codegen::Service
       end
     end
 
+    # An error a operation can raise - `code` is the string an awsQuery
+    # service's XML error response actually identifies the error by, which
+    # can differ from `name` (the generated exception class name); it
+    # defaults to `name` for every other protocol, where they're the same.
+    class ErrorRef
+      getter name, code
+
+      def initialize(@name : String, @code : String)
+      end
+    end
+
     getter name, http, input, output, errors
 
     def initialize(json : JSON::Any)
@@ -23,7 +34,12 @@ module Amazonite::Codegen::Service
       @http = Http.new(json["http"])
       @input = json["input"]? ? json["input"]["shape"].as_s : nil
       @output = json["output"]? ? json["output"]["shape"].as_s : nil
-      @errors = json["errors"]? ? json["errors"].as_a.map(&.["shape"].as_s) : [] of String
+      @errors = json["errors"]? ? json["errors"].as_a.map { |e| error_ref(e) } : [] of ErrorRef
+    end
+
+    private def error_ref(json : JSON::Any) : ErrorRef
+      name = json["shape"].as_s
+      ErrorRef.new(name, json["queryErrorCode"]?.try(&.as_s) || name)
     end
 
     def lower_name

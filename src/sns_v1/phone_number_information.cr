@@ -1,0 +1,68 @@
+private alias AS = Amazonite::SnsV1
+private alias Core = Amazonite::Core
+
+module Amazonite::SnsV1
+  class PhoneNumberInformation
+    property created_at : Time | Nil
+
+    property phone_number : String | Nil
+
+    property status : String | Nil
+
+    property iso_2_country_code : String | Nil
+
+    property route_type : RouteType | Nil
+
+    property number_capabilities : Array(NumberCapability) | Nil
+
+    def initialize(
+      @created_at : Time | Nil = nil,
+      @phone_number : String | Nil = nil,
+      @status : String | Nil = nil,
+      @iso_2_country_code : String | Nil = nil,
+      @route_type : RouteType | Nil = nil,
+      @number_capabilities : Array(NumberCapability) | Nil = nil,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      if value = @created_at
+        params << {"#{prefix}CreatedAt", Core::QueryValue.time(value)}
+      end
+
+      if value = @phone_number
+        params << {"#{prefix}PhoneNumber", value}
+      end
+
+      if value = @status
+        params << {"#{prefix}Status", value}
+      end
+
+      if value = @iso_2_country_code
+        params << {"#{prefix}Iso2CountryCode", value}
+      end
+
+      if value = @route_type
+        params << {"#{prefix}RouteType", value.to_json_object_key}
+      end
+
+      (@number_capabilities || [] of NumberCapability).each_with_index(1) do |item, i|
+        params << {"#{prefix}NumberCapabilities.member.#{i}", item.to_json_object_key}
+      end
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        created_at: Core::XMLValue.time(node.xpath_node("*[local-name()='CreatedAt']")),
+        phone_number: Core::XMLValue.string(node.xpath_node("*[local-name()='PhoneNumber']")),
+        status: Core::XMLValue.string(node.xpath_node("*[local-name()='Status']")),
+        iso_2_country_code: Core::XMLValue.string(node.xpath_node("*[local-name()='Iso2CountryCode']")),
+        route_type: (n = node.xpath_node("*[local-name()='RouteType']")) ? AS::RouteType.from_json_object_key?(n.content) : nil,
+        number_capabilities: node.xpath_nodes("*[local-name()='NumberCapabilities']/*[local-name()='member']").compact_map { |n| AS::NumberCapability.from_json_object_key?(n.content) },
+      )
+    end
+  end
+end

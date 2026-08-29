@@ -38,6 +38,19 @@ module Amazonite::Core
       process_response(id, command, response)
     end
 
+    # awsQuery protocol entry point: POST / with a form-urlencoded body
+    # (Action/Version plus the flattened operation params the caller has
+    # already built) and an XML response/error body, unlike #post's JSON.
+    def query_request(command : String, body : String)
+      id = UUID.random.to_s
+      client = create_client(id, command, "/", body)
+      headers = HTTP::Headers.new
+      headers["Content-Type"] = "application/x-www-form-urlencoded; charset=utf-8"
+      headers["User-Agent"] = @config.user_agent { |agent| "#{agent} command/#{@endpoint_prefix}.#{hyphenate(command)}" }
+      response = client.post("/", headers, body)
+      process_response(id, command, response)
+    end
+
     protected def create_client(id, command, url, body)
       endpoint_url = @config.endpoint_url(@endpoint_prefix)
       client = HTTP::Client.new(URI.parse(endpoint_url))

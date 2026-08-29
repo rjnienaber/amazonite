@@ -1,0 +1,40 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::SnsV1
+  class CreatePlatformApplicationInput
+    property name : String
+
+    property platform : String
+
+    property attributes : Hash(String, String)
+
+    def initialize(
+      @name : String,
+      @platform : String,
+      @attributes : Hash(String, String),
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      params << {"#{prefix}Name", @name}
+
+      params << {"#{prefix}Platform", @platform}
+
+      @attributes.each_with_index(1) do |(key, value), i|
+        params << {"#{prefix}Attributes.entry.#{i}.key", key}
+        params << {"#{prefix}Attributes.entry.#{i}.value", value}
+      end
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        name: Core::XMLValue.string(node.xpath_node("*[local-name()='Name']")).not_nil!,
+        platform: Core::XMLValue.string(node.xpath_node("*[local-name()='Platform']")).not_nil!,
+        attributes: node.xpath_nodes("*[local-name()='Attributes']/*[local-name()='entry']").each_with_object({} of String => String) { |entry, hash| hash[entry.xpath_node("*[local-name()='key']").not_nil!.content] = entry.xpath_node("*[local-name()='value']").not_nil!.content },
+      )
+    end
+  end
+end

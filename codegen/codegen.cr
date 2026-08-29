@@ -19,6 +19,7 @@ module Amazonite::Codegen
     "kms"             => "1",
     "secrets-manager" => "1",
     "lambda"          => "1",
+    "sns"             => "1",
   }
 
   # Operations that can't be modeled as a plain request/response call and

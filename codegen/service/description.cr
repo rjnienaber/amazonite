@@ -9,6 +9,7 @@ module Amazonite::Codegen::Service
     @operations = [] of Operation
     @resolver : ShapeResolver
     @error_names : Array(String)?
+    @error_refs : Array(Operation::ErrorRef)?
     @lower_name : String?
     @module_name : String?
     @module_alias : String?
@@ -49,7 +50,15 @@ module Amazonite::Codegen::Service
     end
 
     def error_names
-      @error_names ||= @operations.flat_map(&.errors).uniq!.sort!
+      @error_names ||= error_refs.map(&.name)
+    end
+
+    def error_refs
+      @error_refs ||= @operations.flat_map(&.errors).uniq!(&.name).sort_by!(&.name)
+    end
+
+    def error_codes
+      error_refs.to_h { |error| {error.name, error.code} }
     end
 
     def find_operation(operation_name)

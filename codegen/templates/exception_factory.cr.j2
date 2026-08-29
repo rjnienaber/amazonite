@@ -4,10 +4,10 @@ module {{ service.module_name }}{% for name in errors.names %}
   class {{ name }} < Core::ResponseException
   end
 {% endfor %}
-  class ExceptionFactory < Core::ResponseExceptionFactory
+  class ExceptionFactory < Core::{% if service.protocol == "query" %}Query{% endif %}ResponseExceptionFactory
     def create(exception_type, http, message, code) : Core::ResponseException | Nil
       case exception_type
-      {% for name in errors.names %}when "{{ name }}" then {{ name }}.new(http, message, code)
+      {% for error in errors.codes %}when "{{ error.code }}" then {{ error.name }}.new(http, message, code)
       {% endfor %}end
     end
   end

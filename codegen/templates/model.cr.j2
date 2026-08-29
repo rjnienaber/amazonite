@@ -3,6 +3,29 @@
 {% endif %}
 {% endif %}module {{ service.module_name }}
   class {{ shape.name }}
+{% if service.protocol == "query" -%}
+{% for member in shape.members %}
+    property {{ member.snake_case_name }} : {{ member.type }}{% if member.has_default %} = {{ member.default }}{% endif %}
+{% endfor -%}
+    def initialize{% if shape.has_parameters %}({% for parameter in shape.parameters %}
+      @{{ parameter.name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %},{% endfor %}
+    ){% endif %}
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+{% for add in shape.query_adds %}
+      {{ add.stmt }}
+{% endfor -%}
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new({% for read in shape.xml_reads %}
+        {{ read.name }}: {{ read.expr }},{% endfor %}
+      )
+    end
+{% else -%}
     include JSON::Serializable
 {% for member in shape.members %}
     @[JSON::Field(key: "{{ member.name }}"{% if member.has_converter %}, converter: {{ member.converter }}{% endif %}{% if member.ignore %}, ignore: true{% endif %})]
@@ -12,5 +35,6 @@
       @{{ parameter.name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %},{% endfor %}
     ){% endif %}
     end
+{% endif -%}
   end
 end

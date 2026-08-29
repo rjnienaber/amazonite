@@ -4,9 +4,10 @@ module Amazonite::Codegen::Bindings
     @target_prefix : String
     @endpoint_prefix : String
     @json_version : String
+    @api_version : String
     @operations : Array(Crinja::Value)
 
-    getter operations, target_prefix, endpoint_prefix, json_version, has_errors
+    getter operations, target_prefix, endpoint_prefix, json_version, has_errors, api_version
 
     def initialize(description : Amazonite::Codegen::Service::Description, has_errors : Bool? = nil)
       metadata = description.metadata
@@ -15,6 +16,8 @@ module Amazonite::Codegen::Bindings
       @endpoint_prefix = metadata.endpoint_prefix
       @json_version = metadata.json_version
       is_rest = metadata.protocol == "rest-json"
+      is_query = metadata.protocol == "query"
+      @api_version = description.api_version
 
       @operations = description.operations.map do |operation|
         # A 204 response has no body by HTTP definition, regardless of
@@ -37,6 +40,7 @@ module Amazonite::Codegen::Bindings
           input:         "#{description.module_alias}::#{operation.input}",
           output:        output,
           is_rest:       is_rest,
+          is_query:      is_query,
 
           http_method:         request[:http_method],
           path_literal:        request[:path_literal],
@@ -50,6 +54,10 @@ module Amazonite::Codegen::Bindings
           custom_output:      response[:custom_output],
           output_type:        response[:output_type],
           output_assignments: response[:output_assignments],
+
+          no_output:        no_output,
+          output_type_bare: output_type,
+          result_element:   "#{operation.name}Result",
         })
       end
     end

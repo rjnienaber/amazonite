@@ -137,12 +137,30 @@ module Amazonite::Codegen::Service
         unless errors.empty?
           json.field "errors" do
             json.array do
-              errors.each do |error|
-                json.object { json.field "shape", local_name(error["target"].as_s) }
-              end
+              errors.each { |error| build_error_ref(json, error) }
             end
           end
         end
+      end
+    end
+
+    # awsQuery services identify an error by a distinct "code" string carried
+    # on the error shape's own aws.protocols#awsQueryError trait, which can
+    # differ from the shape's own name (e.g. NotFoundException's code is
+    # "NotFound") - captured here (only for awsQuery services) so the
+    # generated ExceptionFactory can dispatch on the code actually seen on
+    # the wire. Some shapes shared across AWS's error catalog carry this
+    # trait even when used by a non-query service (e.g. DynamoDB's own
+    # ThrottlingException) - it must be ignored there, since a non-query
+    # service's wire error identifier is always its plain shape name.
+    private def build_error_ref(json : JSON::Builder, error : JSON::Any)
+      target = error["target"].as_s
+      error_shape = @shapes[target]
+      code = protocol == "query" ? error_shape["traits"]?.try(&.["aws.protocols#awsQueryError"]?).try(&.["code"]?.try(&.as_s)) : nil
+
+      json.object do
+        json.field "shape", local_name(target)
+        json.field "queryErrorCode", code if code
       end
     end
 
@@ -273,6 +291,11 @@ module Amazonite::Codegen::Service
             json.field "locationName", header_name
           elsif traits["smithy.api#httpResponseCode"]?
             json.field "location", "statusCode"
+          elsif xml_name = traits["smithy.api#xmlName"]?.try(&.as_s)
+            # awsQuery/restXml use the member's own Smithy name as its wire
+            # name (query param / XML element) unless overridden here - no
+            # "location" is set since this isn't an http-binding trait.
+            json.field "locationName", xml_name
           end
         end
 

@@ -12,7 +12,7 @@ module Amazonite::Codegen
     end
 
     def exception_factory_file(filepath)
-      errors = Amazonite::Codegen::Bindings::Errors.new(@description.error_names)
+      errors = Amazonite::Codegen::Bindings::Errors.new(@description.error_names, @description.error_codes)
       to_file("exception_factory.cr", filepath, {"errors" => errors})
     end
 
@@ -28,7 +28,8 @@ module Amazonite::Codegen
 
     def model_file(model : Service::Structure, filepath)
       is_rest = @description.metadata.protocol == "rest-json"
-      shape = Amazonite::Codegen::Bindings::Structure.new(model, @description.module_alias, is_rest)
+      is_query = @description.metadata.protocol == "query"
+      shape = Amazonite::Codegen::Bindings::Structure.new(model, @description.module_alias, is_rest, is_query)
       to_file("model.cr", filepath, {"shape" => shape})
     end
 

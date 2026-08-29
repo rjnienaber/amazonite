@@ -51,6 +51,25 @@ module {{ service.module_name }}
 {% else -%}
       {{ operation.output }}.new(response)
 {% endif -%}
+{% elif operation.is_query -%}
+{% if operation.has_input -%}
+      params = input.to_query_params("")
+{% else -%}
+      params = [] of {String, String}
+{% endif -%}
+      body = URI::Params.build do |form|
+        form.add("Action", "{{ operation.command }}")
+        form.add("Version", "{{ operations.api_version }}")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("{{ operation.command }}", body)
+{% if operation.no_output -%}
+      {{ operation.output }}.new(response)
+{% else -%}
+      result_node = XML.parse(response.body).xpath_node("//*[local-name()='{{ operation.result_element }}']").not_nil!
+      result = {{ operation.output_type_bare }}.from_xml(result_node)
+      {{ operation.output }}.new(response, result)
+{% endif -%}
 {% else -%}
       response = post("{{ operation.command }}", "/", input.to_json)
       {{ operation.output }}.new(response)
