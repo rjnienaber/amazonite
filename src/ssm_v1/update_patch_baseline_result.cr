@@ -47,6 +47,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "Sources")]
     property sources : Array(PatchSource) | Nil
 
+    @[JSON::Field(key: "AvailableSecurityUpdatesComplianceStatus", converter: AS::PatchComplianceStatus)]
+    property available_security_updates_compliance_status : PatchComplianceStatus | Nil
+
     def initialize(
       @baseline_id : String | Nil = nil,
       @name : String | Nil = nil,
@@ -62,6 +65,7 @@ module Amazonite::SsmV1
       @modified_date : Time | Nil = nil,
       @description : String | Nil = nil,
       @sources : Array(PatchSource) | Nil = nil,
+      @available_security_updates_compliance_status : PatchComplianceStatus | Nil = nil,
     )
     end
   end

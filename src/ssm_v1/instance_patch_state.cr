@@ -47,6 +47,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "NotApplicableCount")]
     property not_applicable_count : Int32 | Nil
 
+    @[JSON::Field(key: "AvailableSecurityUpdateCount")]
+    property available_security_update_count : Int32 | Nil
+
     @[JSON::Field(key: "OperationStartTime", converter: Core::AWSEpochConverter)]
     property operation_start_time : Time
 
@@ -89,6 +92,7 @@ module Amazonite::SsmV1
       @failed_count : Int32 | Nil = nil,
       @unreported_not_applicable_count : Int32 | Nil = nil,
       @not_applicable_count : Int32 | Nil = nil,
+      @available_security_update_count : Int32 | Nil = nil,
       @last_no_reboot_install_operation_time : Time | Nil = nil,
       @reboot_option : RebootOption | Nil = nil,
       @critical_non_compliant_count : Int32 | Nil = nil,

@@ -24,5 +24,23 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'ExportFormat' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::ExportFormat::DynamodbJson then "DYNAMODB_JSON"
+      when ADDB::ExportFormat::Ion          then "ION"
+      else
+        raise Exception.new("unknown enum value for 'ExportFormat' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::ExportFormat?
+      case key
+      when "DYNAMODB_JSON" then ADDB::ExportFormat::DynamodbJson
+      when "ION"           then ADDB::ExportFormat::Ion
+      else
+        nil
+      end
+    end
   end
 end

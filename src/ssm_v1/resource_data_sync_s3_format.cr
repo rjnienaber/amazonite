@@ -16,5 +16,17 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'ResourceDataSyncS3Format' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::ResourceDataSyncS3Format?
+      case key
+      when "JsonSerDe" then AS::ResourceDataSyncS3Format::JsonSerDe
+      else
+        nil
+      end
+    end
   end
 end

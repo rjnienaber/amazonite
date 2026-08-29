@@ -24,5 +24,23 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'CalendarState' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when AS::CalendarState::Open   then "OPEN"
+      when AS::CalendarState::Closed then "CLOSED"
+      else
+        raise Exception.new("unknown enum value for 'CalendarState' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : AS::CalendarState?
+      case key
+      when "OPEN"   then AS::CalendarState::Open
+      when "CLOSED" then AS::CalendarState::Closed
+      else
+        nil
+      end
+    end
   end
 end

@@ -33,5 +33,29 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'ComplianceQueryOperatorType' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when AS::ComplianceQueryOperatorType::Equal       then "EQUAL"
+      when AS::ComplianceQueryOperatorType::NotEqual    then "NOT_EQUAL"
+      when AS::ComplianceQueryOperatorType::BeginWith   then "BEGIN_WITH"
+      when AS::ComplianceQueryOperatorType::LessThan    then "LESS_THAN"
+      when AS::ComplianceQueryOperatorType::GreaterThan then "GREATER_THAN"
+      else
+        raise Exception.new("unknown enum value for 'ComplianceQueryOperatorType' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : AS::ComplianceQueryOperatorType?
+      case key
+      when "EQUAL"        then AS::ComplianceQueryOperatorType::Equal
+      when "NOT_EQUAL"    then AS::ComplianceQueryOperatorType::NotEqual
+      when "BEGIN_WITH"   then AS::ComplianceQueryOperatorType::BeginWith
+      when "LESS_THAN"    then AS::ComplianceQueryOperatorType::LessThan
+      when "GREATER_THAN" then AS::ComplianceQueryOperatorType::GreaterThan
+      else
+        nil
+      end
+    end
   end
 end

@@ -18,5 +18,18 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'InventoryDeletionStatus' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::InventoryDeletionStatus?
+      case key
+      when "InProgress" then AS::InventoryDeletionStatus::InProgress
+      when "Complete"   then AS::InventoryDeletionStatus::Complete
+      else
+        nil
+      end
+    end
   end
 end

@@ -44,6 +44,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "FailureMessage")]
     property failure_message : String | Nil
 
+    @[JSON::Field(key: "WarningMessage")]
+    property warning_message : String | Nil
+
     @[JSON::Field(key: "FailureDetails")]
     property failure_details : FailureDetails | Nil
 
@@ -91,6 +94,7 @@ module Amazonite::SsmV1
       @outputs : Hash(String, Array(String)) | Nil = nil,
       @response : String | Nil = nil,
       @failure_message : String | Nil = nil,
+      @warning_message : String | Nil = nil,
       @failure_details : FailureDetails | Nil = nil,
       @step_execution_id : String | Nil = nil,
       @overridden_parameters : Hash(String, Array(String)) | Nil = nil,

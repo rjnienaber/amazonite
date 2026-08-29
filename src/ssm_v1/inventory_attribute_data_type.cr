@@ -24,5 +24,23 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'InventoryAttributeDataType' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when AS::InventoryAttributeDataType::String then "string"
+      when AS::InventoryAttributeDataType::Number then "number"
+      else
+        raise Exception.new("unknown enum value for 'InventoryAttributeDataType' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : AS::InventoryAttributeDataType?
+      case key
+      when "string" then AS::InventoryAttributeDataType::String
+      when "number" then AS::InventoryAttributeDataType::Number
+      else
+        nil
+      end
+    end
   end
 end

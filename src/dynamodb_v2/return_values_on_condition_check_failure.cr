@@ -24,5 +24,23 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'ReturnValuesOnConditionCheckFailure' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::ReturnValuesOnConditionCheckFailure::AllOld then "ALL_OLD"
+      when ADDB::ReturnValuesOnConditionCheckFailure::None   then "NONE"
+      else
+        raise Exception.new("unknown enum value for 'ReturnValuesOnConditionCheckFailure' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::ReturnValuesOnConditionCheckFailure?
+      case key
+      when "ALL_OLD" then ADDB::ReturnValuesOnConditionCheckFailure::AllOld
+      when "NONE"    then ADDB::ReturnValuesOnConditionCheckFailure::None
+      else
+        nil
+      end
+    end
   end
 end

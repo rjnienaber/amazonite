@@ -38,6 +38,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "SSESpecificationOverride")]
     property sse_specification_override : SSESpecification | Nil
 
+    @[JSON::Field(key: "VectorIndexOverride")]
+    property vector_index_override : Array(VectorIndex) | Nil
+
     def initialize(
       @target_table_name : String,
       @source_table_arn : String | Nil = nil,
@@ -50,6 +53,7 @@ module Amazonite::DynamoDBV2
       @provisioned_throughput_override : ProvisionedThroughput | Nil = nil,
       @on_demand_throughput_override : OnDemandThroughput | Nil = nil,
       @sse_specification_override : SSESpecification | Nil = nil,
+      @vector_index_override : Array(VectorIndex) | Nil = nil,
     )
     end
   end

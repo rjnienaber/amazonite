@@ -38,6 +38,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "MaxSessionDuration")]
     property max_session_duration : String | Nil
 
+    @[JSON::Field(key: "AccessType", converter: AS::AccessType)]
+    property access_type : AccessType | Nil
+
     def initialize(
       @session_id : String | Nil = nil,
       @target : String | Nil = nil,
@@ -50,6 +53,7 @@ module Amazonite::SsmV1
       @details : String | Nil = nil,
       @output_url : SessionManagerOutputUrl | Nil = nil,
       @max_session_duration : String | Nil = nil,
+      @access_type : AccessType | Nil = nil,
     )
     end
   end

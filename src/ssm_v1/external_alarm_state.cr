@@ -24,5 +24,23 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'ExternalAlarmState' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when AS::ExternalAlarmState::Unknown then "UNKNOWN"
+      when AS::ExternalAlarmState::Alarm   then "ALARM"
+      else
+        raise Exception.new("unknown enum value for 'ExternalAlarmState' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : AS::ExternalAlarmState?
+      case key
+      when "UNKNOWN" then AS::ExternalAlarmState::Unknown
+      when "ALARM"   then AS::ExternalAlarmState::Alarm
+      else
+        nil
+      end
+    end
   end
 end

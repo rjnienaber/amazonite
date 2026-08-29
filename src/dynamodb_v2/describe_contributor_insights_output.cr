@@ -23,6 +23,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "FailureException")]
     property failure_exception : FailureException | Nil
 
+    @[JSON::Field(key: "ContributorInsightsMode", converter: ADDB::ContributorInsightsMode)]
+    property contributor_insights_mode : ContributorInsightsMode | Nil
+
     def initialize(
       @table_name : String | Nil = nil,
       @index_name : String | Nil = nil,
@@ -30,6 +33,7 @@ module Amazonite::DynamoDBV2
       @contributor_insights_status : ContributorInsightsStatus | Nil = nil,
       @last_update_date_time : Time | Nil = nil,
       @failure_exception : FailureException | Nil = nil,
+      @contributor_insights_mode : ContributorInsightsMode | Nil = nil,
     )
     end
   end

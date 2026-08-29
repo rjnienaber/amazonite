@@ -27,5 +27,25 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'AssociationFilterOperatorType' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when AS::AssociationFilterOperatorType::Equal       then "EQUAL"
+      when AS::AssociationFilterOperatorType::LessThan    then "LESS_THAN"
+      when AS::AssociationFilterOperatorType::GreaterThan then "GREATER_THAN"
+      else
+        raise Exception.new("unknown enum value for 'AssociationFilterOperatorType' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : AS::AssociationFilterOperatorType?
+      case key
+      when "EQUAL"        then AS::AssociationFilterOperatorType::Equal
+      when "LESS_THAN"    then AS::AssociationFilterOperatorType::LessThan
+      when "GREATER_THAN" then AS::AssociationFilterOperatorType::GreaterThan
+      else
+        nil
+      end
+    end
   end
 end

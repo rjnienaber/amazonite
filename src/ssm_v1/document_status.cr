@@ -24,5 +24,21 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'DocumentStatus' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::DocumentStatus?
+      case key
+      when "Creating" then AS::DocumentStatus::Creating
+      when "Active"   then AS::DocumentStatus::Active
+      when "Updating" then AS::DocumentStatus::Updating
+      when "Deleting" then AS::DocumentStatus::Deleting
+      when "Failed"   then AS::DocumentStatus::Failed
+      else
+        nil
+      end
+    end
   end
 end

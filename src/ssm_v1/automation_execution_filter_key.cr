@@ -38,5 +38,28 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'AutomationExecutionFilterKey' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::AutomationExecutionFilterKey?
+      case key
+      when "DocumentNamePrefix"  then AS::AutomationExecutionFilterKey::DocumentNamePrefix
+      when "ExecutionStatus"     then AS::AutomationExecutionFilterKey::ExecutionStatus
+      when "ExecutionId"         then AS::AutomationExecutionFilterKey::ExecutionId
+      when "ParentExecutionId"   then AS::AutomationExecutionFilterKey::ParentExecutionId
+      when "CurrentAction"       then AS::AutomationExecutionFilterKey::CurrentAction
+      when "StartTimeBefore"     then AS::AutomationExecutionFilterKey::StartTimeBefore
+      when "StartTimeAfter"      then AS::AutomationExecutionFilterKey::StartTimeAfter
+      when "AutomationType"      then AS::AutomationExecutionFilterKey::AutomationType
+      when "TagKey"              then AS::AutomationExecutionFilterKey::TagKey
+      when "TargetResourceGroup" then AS::AutomationExecutionFilterKey::TargetResourceGroup
+      when "AutomationSubtype"   then AS::AutomationExecutionFilterKey::AutomationSubtype
+      when "OpsItemId"           then AS::AutomationExecutionFilterKey::OpsItemId
+      else
+        nil
+      end
+    end
   end
 end

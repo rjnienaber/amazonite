@@ -13,10 +13,11 @@ module Amazonite::Codegen
   # than computed, to avoid ever silently renaming an already-published
   # module.
   TARGETS = {
-    "dynamodb" => "2",
-    "ssm"      => "1",
-    "sqs"      => "1",
-    "kms"      => "1",
+    "dynamodb"        => "2",
+    "ssm"             => "1",
+    "sqs"             => "1",
+    "kms"             => "1",
+    "secrets-manager" => "1",
   }
 
   def self.main

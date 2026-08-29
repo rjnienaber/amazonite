@@ -18,5 +18,18 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'NotificationType' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::NotificationType?
+      case key
+      when "Command"    then AS::NotificationType::Command
+      when "Invocation" then AS::NotificationType::Invocation
+      else
+        nil
+      end
+    end
   end
 end

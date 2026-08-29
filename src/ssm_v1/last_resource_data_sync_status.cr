@@ -20,5 +20,19 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'LastResourceDataSyncStatus' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::LastResourceDataSyncStatus?
+      case key
+      when "Successful" then AS::LastResourceDataSyncStatus::Successful
+      when "Failed"     then AS::LastResourceDataSyncStatus::Failed
+      when "InProgress" then AS::LastResourceDataSyncStatus::InProgress
+      else
+        nil
+      end
+    end
   end
 end

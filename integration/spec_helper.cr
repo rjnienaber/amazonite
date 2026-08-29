@@ -3,6 +3,7 @@ require "amazonite/dynamodb_v2"
 require "amazonite/ssm_v1"
 require "amazonite/sqs_v1"
 require "amazonite/kms_v1"
+require "amazonite/secrets_manager_v1"
 require "./helpers"
 
 def wait_until(&)

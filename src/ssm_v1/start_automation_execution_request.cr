@@ -43,6 +43,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "AlarmConfiguration")]
     property alarm_configuration : AlarmConfiguration | Nil
 
+    @[JSON::Field(key: "TargetLocationsURL")]
+    property target_locations_url : String | Nil
+
     def initialize(
       @document_name : String,
       @document_version : String | Nil = nil,
@@ -57,6 +60,7 @@ module Amazonite::SsmV1
       @target_locations : Array(TargetLocation) | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
       @alarm_configuration : AlarmConfiguration | Nil = nil,
+      @target_locations_url : String | Nil = nil,
     )
     end
   end

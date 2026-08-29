@@ -52,6 +52,12 @@ module Amazonite::SsmV1
       Core::ParsedResponse(AS::CreateAssociationBatchResult).new(response)
     end
 
+    def create_cloud_connector(input : AS::CreateCloudConnectorRequest) : Core::ParsedResponse(AS::CreateCloudConnectorResult)
+      Log.info { "performing 'CreateCloudConnector' operation" }
+      response = post("CreateCloudConnector", "/", input.to_json)
+      Core::ParsedResponse(AS::CreateCloudConnectorResult).new(response)
+    end
+
     def create_document(input : AS::CreateDocumentRequest) : Core::ParsedResponse(AS::CreateDocumentResult)
       Log.info { "performing 'CreateDocument' operation" }
       response = post("CreateDocument", "/", input.to_json)
@@ -98,6 +104,12 @@ module Amazonite::SsmV1
       Log.info { "performing 'DeleteAssociation' operation" }
       response = post("DeleteAssociation", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteAssociationResult).new(response)
+    end
+
+    def delete_cloud_connector(input : AS::DeleteCloudConnectorRequest) : Core::ParsedResponse(AS::DeleteCloudConnectorResult)
+      Log.info { "performing 'DeleteCloudConnector' operation" }
+      response = post("DeleteCloudConnector", "/", input.to_json)
+      Core::ParsedResponse(AS::DeleteCloudConnectorResult).new(response)
     end
 
     def delete_document(input : AS::DeleteDocumentRequest) : Core::ParsedResponse(AS::DeleteDocumentResult)
@@ -196,16 +208,16 @@ module Amazonite::SsmV1
       Core::ParsedResponse(AS::DescribeAssociationResult).new(response)
     end
 
-    def describe_association_execution_targets(input : AS::DescribeAssociationExecutionTargetsRequest) : Core::ParsedResponse(AS::DescribeAssociationExecutionTargetsResult)
-      Log.info { "performing 'DescribeAssociationExecutionTargets' operation" }
-      response = post("DescribeAssociationExecutionTargets", "/", input.to_json)
-      Core::ParsedResponse(AS::DescribeAssociationExecutionTargetsResult).new(response)
-    end
-
     def describe_association_executions(input : AS::DescribeAssociationExecutionsRequest) : Core::ParsedResponse(AS::DescribeAssociationExecutionsResult)
       Log.info { "performing 'DescribeAssociationExecutions' operation" }
       response = post("DescribeAssociationExecutions", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeAssociationExecutionsResult).new(response)
+    end
+
+    def describe_association_execution_targets(input : AS::DescribeAssociationExecutionTargetsRequest) : Core::ParsedResponse(AS::DescribeAssociationExecutionTargetsResult)
+      Log.info { "performing 'DescribeAssociationExecutionTargets' operation" }
+      response = post("DescribeAssociationExecutionTargets", "/", input.to_json)
+      Core::ParsedResponse(AS::DescribeAssociationExecutionTargetsResult).new(response)
     end
 
     def describe_automation_executions(input : AS::DescribeAutomationExecutionsRequest) : Core::ParsedResponse(AS::DescribeAutomationExecutionsResult)
@@ -262,6 +274,12 @@ module Amazonite::SsmV1
       Core::ParsedResponse(AS::DescribeInstanceInformationResult).new(response)
     end
 
+    def describe_instance_patches(input : AS::DescribeInstancePatchesRequest) : Core::ParsedResponse(AS::DescribeInstancePatchesResult)
+      Log.info { "performing 'DescribeInstancePatches' operation" }
+      response = post("DescribeInstancePatches", "/", input.to_json)
+      Core::ParsedResponse(AS::DescribeInstancePatchesResult).new(response)
+    end
+
     def describe_instance_patch_states(input : AS::DescribeInstancePatchStatesRequest) : Core::ParsedResponse(AS::DescribeInstancePatchStatesResult)
       Log.info { "performing 'DescribeInstancePatchStates' operation" }
       response = post("DescribeInstancePatchStates", "/", input.to_json)
@@ -272,12 +290,6 @@ module Amazonite::SsmV1
       Log.info { "performing 'DescribeInstancePatchStatesForPatchGroup' operation" }
       response = post("DescribeInstancePatchStatesForPatchGroup", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeInstancePatchStatesForPatchGroupResult).new(response)
-    end
-
-    def describe_instance_patches(input : AS::DescribeInstancePatchesRequest) : Core::ParsedResponse(AS::DescribeInstancePatchesResult)
-      Log.info { "performing 'DescribeInstancePatches' operation" }
-      response = post("DescribeInstancePatches", "/", input.to_json)
-      Core::ParsedResponse(AS::DescribeInstancePatchesResult).new(response)
     end
 
     def describe_instance_properties(input : AS::DescribeInstancePropertiesRequest) : Core::ParsedResponse(AS::DescribeInstancePropertiesResult)
@@ -292,6 +304,12 @@ module Amazonite::SsmV1
       Core::ParsedResponse(AS::DescribeInventoryDeletionsResult).new(response)
     end
 
+    def describe_maintenance_window_executions(input : AS::DescribeMaintenanceWindowExecutionsRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowExecutionsResult)
+      Log.info { "performing 'DescribeMaintenanceWindowExecutions' operation" }
+      response = post("DescribeMaintenanceWindowExecutions", "/", input.to_json)
+      Core::ParsedResponse(AS::DescribeMaintenanceWindowExecutionsResult).new(response)
+    end
+
     def describe_maintenance_window_execution_task_invocations(input : AS::DescribeMaintenanceWindowExecutionTaskInvocationsRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowExecutionTaskInvocationsResult)
       Log.info { "performing 'DescribeMaintenanceWindowExecutionTaskInvocations' operation" }
       response = post("DescribeMaintenanceWindowExecutionTaskInvocations", "/", input.to_json)
@@ -304,16 +322,22 @@ module Amazonite::SsmV1
       Core::ParsedResponse(AS::DescribeMaintenanceWindowExecutionTasksResult).new(response)
     end
 
-    def describe_maintenance_window_executions(input : AS::DescribeMaintenanceWindowExecutionsRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowExecutionsResult)
-      Log.info { "performing 'DescribeMaintenanceWindowExecutions' operation" }
-      response = post("DescribeMaintenanceWindowExecutions", "/", input.to_json)
-      Core::ParsedResponse(AS::DescribeMaintenanceWindowExecutionsResult).new(response)
+    def describe_maintenance_windows(input : AS::DescribeMaintenanceWindowsRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowsResult)
+      Log.info { "performing 'DescribeMaintenanceWindows' operation" }
+      response = post("DescribeMaintenanceWindows", "/", input.to_json)
+      Core::ParsedResponse(AS::DescribeMaintenanceWindowsResult).new(response)
     end
 
     def describe_maintenance_window_schedule(input : AS::DescribeMaintenanceWindowScheduleRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowScheduleResult)
       Log.info { "performing 'DescribeMaintenanceWindowSchedule' operation" }
       response = post("DescribeMaintenanceWindowSchedule", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeMaintenanceWindowScheduleResult).new(response)
+    end
+
+    def describe_maintenance_windows_for_target(input : AS::DescribeMaintenanceWindowsForTargetRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowsForTargetResult)
+      Log.info { "performing 'DescribeMaintenanceWindowsForTarget' operation" }
+      response = post("DescribeMaintenanceWindowsForTarget", "/", input.to_json)
+      Core::ParsedResponse(AS::DescribeMaintenanceWindowsForTargetResult).new(response)
     end
 
     def describe_maintenance_window_targets(input : AS::DescribeMaintenanceWindowTargetsRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowTargetsResult)
@@ -326,18 +350,6 @@ module Amazonite::SsmV1
       Log.info { "performing 'DescribeMaintenanceWindowTasks' operation" }
       response = post("DescribeMaintenanceWindowTasks", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeMaintenanceWindowTasksResult).new(response)
-    end
-
-    def describe_maintenance_windows(input : AS::DescribeMaintenanceWindowsRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowsResult)
-      Log.info { "performing 'DescribeMaintenanceWindows' operation" }
-      response = post("DescribeMaintenanceWindows", "/", input.to_json)
-      Core::ParsedResponse(AS::DescribeMaintenanceWindowsResult).new(response)
-    end
-
-    def describe_maintenance_windows_for_target(input : AS::DescribeMaintenanceWindowsForTargetRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowsForTargetResult)
-      Log.info { "performing 'DescribeMaintenanceWindowsForTarget' operation" }
-      response = post("DescribeMaintenanceWindowsForTarget", "/", input.to_json)
-      Core::ParsedResponse(AS::DescribeMaintenanceWindowsForTargetResult).new(response)
     end
 
     def describe_ops_items(input : AS::DescribeOpsItemsRequest) : Core::ParsedResponse(AS::DescribeOpsItemsResponse)
@@ -358,16 +370,16 @@ module Amazonite::SsmV1
       Core::ParsedResponse(AS::DescribePatchBaselinesResult).new(response)
     end
 
-    def describe_patch_group_state(input : AS::DescribePatchGroupStateRequest) : Core::ParsedResponse(AS::DescribePatchGroupStateResult)
-      Log.info { "performing 'DescribePatchGroupState' operation" }
-      response = post("DescribePatchGroupState", "/", input.to_json)
-      Core::ParsedResponse(AS::DescribePatchGroupStateResult).new(response)
-    end
-
     def describe_patch_groups(input : AS::DescribePatchGroupsRequest) : Core::ParsedResponse(AS::DescribePatchGroupsResult)
       Log.info { "performing 'DescribePatchGroups' operation" }
       response = post("DescribePatchGroups", "/", input.to_json)
       Core::ParsedResponse(AS::DescribePatchGroupsResult).new(response)
+    end
+
+    def describe_patch_group_state(input : AS::DescribePatchGroupStateRequest) : Core::ParsedResponse(AS::DescribePatchGroupStateResult)
+      Log.info { "performing 'DescribePatchGroupState' operation" }
+      response = post("DescribePatchGroupState", "/", input.to_json)
+      Core::ParsedResponse(AS::DescribePatchGroupStateResult).new(response)
     end
 
     def describe_patch_properties(input : AS::DescribePatchPropertiesRequest) : Core::ParsedResponse(AS::DescribePatchPropertiesResult)
@@ -388,6 +400,12 @@ module Amazonite::SsmV1
       Core::ParsedResponse(AS::DisassociateOpsItemRelatedItemResponse).new(response)
     end
 
+    def get_access_token(input : AS::GetAccessTokenRequest) : Core::ParsedResponse(AS::GetAccessTokenResponse)
+      Log.info { "performing 'GetAccessToken' operation" }
+      response = post("GetAccessToken", "/", input.to_json)
+      Core::ParsedResponse(AS::GetAccessTokenResponse).new(response)
+    end
+
     def get_automation_execution(input : AS::GetAutomationExecutionRequest) : Core::ParsedResponse(AS::GetAutomationExecutionResult)
       Log.info { "performing 'GetAutomationExecution' operation" }
       response = post("GetAutomationExecution", "/", input.to_json)
@@ -398,6 +416,12 @@ module Amazonite::SsmV1
       Log.info { "performing 'GetCalendarState' operation" }
       response = post("GetCalendarState", "/", input.to_json)
       Core::ParsedResponse(AS::GetCalendarStateResponse).new(response)
+    end
+
+    def get_cloud_connector(input : AS::GetCloudConnectorRequest) : Core::ParsedResponse(AS::GetCloudConnectorResult)
+      Log.info { "performing 'GetCloudConnector' operation" }
+      response = post("GetCloudConnector", "/", input.to_json)
+      Core::ParsedResponse(AS::GetCloudConnectorResult).new(response)
     end
 
     def get_command_invocation(input : AS::GetCommandInvocationRequest) : Core::ParsedResponse(AS::GetCommandInvocationResult)
@@ -428,6 +452,12 @@ module Amazonite::SsmV1
       Log.info { "performing 'GetDocument' operation" }
       response = post("GetDocument", "/", input.to_json)
       Core::ParsedResponse(AS::GetDocumentResult).new(response)
+    end
+
+    def get_execution_preview(input : AS::GetExecutionPreviewRequest) : Core::ParsedResponse(AS::GetExecutionPreviewResponse)
+      Log.info { "performing 'GetExecutionPreview' operation" }
+      response = post("GetExecutionPreview", "/", input.to_json)
+      Core::ParsedResponse(AS::GetExecutionPreviewResponse).new(response)
     end
 
     def get_inventory(input : AS::GetInventoryRequest) : Core::ParsedResponse(AS::GetInventoryResult)
@@ -544,16 +574,22 @@ module Amazonite::SsmV1
       Core::ParsedResponse(AS::LabelParameterVersionResult).new(response)
     end
 
+    def list_associations(input : AS::ListAssociationsRequest) : Core::ParsedResponse(AS::ListAssociationsResult)
+      Log.info { "performing 'ListAssociations' operation" }
+      response = post("ListAssociations", "/", input.to_json)
+      Core::ParsedResponse(AS::ListAssociationsResult).new(response)
+    end
+
     def list_association_versions(input : AS::ListAssociationVersionsRequest) : Core::ParsedResponse(AS::ListAssociationVersionsResult)
       Log.info { "performing 'ListAssociationVersions' operation" }
       response = post("ListAssociationVersions", "/", input.to_json)
       Core::ParsedResponse(AS::ListAssociationVersionsResult).new(response)
     end
 
-    def list_associations(input : AS::ListAssociationsRequest) : Core::ParsedResponse(AS::ListAssociationsResult)
-      Log.info { "performing 'ListAssociations' operation" }
-      response = post("ListAssociations", "/", input.to_json)
-      Core::ParsedResponse(AS::ListAssociationsResult).new(response)
+    def list_cloud_connectors(input : AS::ListCloudConnectorsRequest) : Core::ParsedResponse(AS::ListCloudConnectorsResult)
+      Log.info { "performing 'ListCloudConnectors' operation" }
+      response = post("ListCloudConnectors", "/", input.to_json)
+      Core::ParsedResponse(AS::ListCloudConnectorsResult).new(response)
     end
 
     def list_command_invocations(input : AS::ListCommandInvocationsRequest) : Core::ParsedResponse(AS::ListCommandInvocationsResult)
@@ -586,22 +622,34 @@ module Amazonite::SsmV1
       Core::ParsedResponse(AS::ListDocumentMetadataHistoryResponse).new(response)
     end
 
-    def list_document_versions(input : AS::ListDocumentVersionsRequest) : Core::ParsedResponse(AS::ListDocumentVersionsResult)
-      Log.info { "performing 'ListDocumentVersions' operation" }
-      response = post("ListDocumentVersions", "/", input.to_json)
-      Core::ParsedResponse(AS::ListDocumentVersionsResult).new(response)
-    end
-
     def list_documents(input : AS::ListDocumentsRequest) : Core::ParsedResponse(AS::ListDocumentsResult)
       Log.info { "performing 'ListDocuments' operation" }
       response = post("ListDocuments", "/", input.to_json)
       Core::ParsedResponse(AS::ListDocumentsResult).new(response)
     end
 
+    def list_document_versions(input : AS::ListDocumentVersionsRequest) : Core::ParsedResponse(AS::ListDocumentVersionsResult)
+      Log.info { "performing 'ListDocumentVersions' operation" }
+      response = post("ListDocumentVersions", "/", input.to_json)
+      Core::ParsedResponse(AS::ListDocumentVersionsResult).new(response)
+    end
+
     def list_inventory_entries(input : AS::ListInventoryEntriesRequest) : Core::ParsedResponse(AS::ListInventoryEntriesResult)
       Log.info { "performing 'ListInventoryEntries' operation" }
       response = post("ListInventoryEntries", "/", input.to_json)
       Core::ParsedResponse(AS::ListInventoryEntriesResult).new(response)
+    end
+
+    def list_nodes(input : AS::ListNodesRequest) : Core::ParsedResponse(AS::ListNodesResult)
+      Log.info { "performing 'ListNodes' operation" }
+      response = post("ListNodes", "/", input.to_json)
+      Core::ParsedResponse(AS::ListNodesResult).new(response)
+    end
+
+    def list_nodes_summary(input : AS::ListNodesSummaryRequest) : Core::ParsedResponse(AS::ListNodesSummaryResult)
+      Log.info { "performing 'ListNodesSummary' operation" }
+      response = post("ListNodesSummary", "/", input.to_json)
+      Core::ParsedResponse(AS::ListNodesSummaryResult).new(response)
     end
 
     def list_ops_item_events(input : AS::ListOpsItemEventsRequest) : Core::ParsedResponse(AS::ListOpsItemEventsResponse)
@@ -724,6 +772,12 @@ module Amazonite::SsmV1
       Core::ParsedResponse(AS::SendCommandResult).new(response)
     end
 
+    def start_access_request(input : AS::StartAccessRequestRequest) : Core::ParsedResponse(AS::StartAccessRequestResponse)
+      Log.info { "performing 'StartAccessRequest' operation" }
+      response = post("StartAccessRequest", "/", input.to_json)
+      Core::ParsedResponse(AS::StartAccessRequestResponse).new(response)
+    end
+
     def start_associations_once(input : AS::StartAssociationsOnceRequest) : Core::ParsedResponse(AS::StartAssociationsOnceResult)
       Log.info { "performing 'StartAssociationsOnce' operation" }
       response = post("StartAssociationsOnce", "/", input.to_json)
@@ -740,6 +794,12 @@ module Amazonite::SsmV1
       Log.info { "performing 'StartChangeRequestExecution' operation" }
       response = post("StartChangeRequestExecution", "/", input.to_json)
       Core::ParsedResponse(AS::StartChangeRequestExecutionResult).new(response)
+    end
+
+    def start_execution_preview(input : AS::StartExecutionPreviewRequest) : Core::ParsedResponse(AS::StartExecutionPreviewResponse)
+      Log.info { "performing 'StartExecutionPreview' operation" }
+      response = post("StartExecutionPreview", "/", input.to_json)
+      Core::ParsedResponse(AS::StartExecutionPreviewResponse).new(response)
     end
 
     def start_session(input : AS::StartSessionRequest) : Core::ParsedResponse(AS::StartSessionResponse)
@@ -776,6 +836,12 @@ module Amazonite::SsmV1
       Log.info { "performing 'UpdateAssociationStatus' operation" }
       response = post("UpdateAssociationStatus", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateAssociationStatusResult).new(response)
+    end
+
+    def update_cloud_connector(input : AS::UpdateCloudConnectorRequest) : Core::ParsedResponse(AS::UpdateCloudConnectorResult)
+      Log.info { "performing 'UpdateCloudConnector' operation" }
+      response = post("UpdateCloudConnector", "/", input.to_json)
+      Core::ParsedResponse(AS::UpdateCloudConnectorResult).new(response)
     end
 
     def update_document(input : AS::UpdateDocumentRequest) : Core::ParsedResponse(AS::UpdateDocumentResult)
@@ -848,6 +914,12 @@ module Amazonite::SsmV1
       Log.info { "performing 'UpdateServiceSetting' operation" }
       response = post("UpdateServiceSetting", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateServiceSettingResult).new(response)
+    end
+
+    def validate_cloud_connector(input : AS::ValidateCloudConnectorRequest) : Core::ParsedResponse(AS::ValidateCloudConnectorResult)
+      Log.info { "performing 'ValidateCloudConnector' operation" }
+      response = post("ValidateCloudConnector", "/", input.to_json)
+      Core::ParsedResponse(AS::ValidateCloudConnectorResult).new(response)
     end
   end
 end

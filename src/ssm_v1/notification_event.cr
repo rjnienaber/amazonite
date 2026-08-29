@@ -26,5 +26,22 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'NotificationEvent' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::NotificationEvent?
+      case key
+      when "All"        then AS::NotificationEvent::All
+      when "InProgress" then AS::NotificationEvent::InProgress
+      when "Success"    then AS::NotificationEvent::Success
+      when "TimedOut"   then AS::NotificationEvent::TimedOut
+      when "Cancelled"  then AS::NotificationEvent::Cancelled
+      when "Failed"     then AS::NotificationEvent::Failed
+      else
+        nil
+      end
+    end
   end
 end

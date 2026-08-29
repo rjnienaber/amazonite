@@ -43,6 +43,9 @@ module Amazonite::DynamoDBV2
   class InternalServerError < Core::ResponseException
   end
 
+  class InvalidEndpointException < Core::ResponseException
+  end
+
   class InvalidExportTimeException < Core::ResponseException
   end
 
@@ -70,6 +73,9 @@ module Amazonite::DynamoDBV2
   class ReplicaNotFoundException < Core::ResponseException
   end
 
+  class ReplicatedWriteConflictException < Core::ResponseException
+  end
+
   class RequestLimitExceeded < Core::ResponseException
   end
 
@@ -86,6 +92,9 @@ module Amazonite::DynamoDBV2
   end
 
   class TableNotFoundException < Core::ResponseException
+  end
+
+  class ThrottlingException < Core::ResponseException
   end
 
   class TransactionCanceledException < Core::ResponseException
@@ -114,6 +123,7 @@ module Amazonite::DynamoDBV2
       when "ImportNotFoundException"                  then ImportNotFoundException.new(http, message, code)
       when "IndexNotFoundException"                   then IndexNotFoundException.new(http, message, code)
       when "InternalServerError"                      then InternalServerError.new(http, message, code)
+      when "InvalidEndpointException"                 then InvalidEndpointException.new(http, message, code)
       when "InvalidExportTimeException"               then InvalidExportTimeException.new(http, message, code)
       when "InvalidRestoreTimeException"              then InvalidRestoreTimeException.new(http, message, code)
       when "ItemCollectionSizeLimitExceededException" then ItemCollectionSizeLimitExceededException.new(http, message, code)
@@ -123,12 +133,14 @@ module Amazonite::DynamoDBV2
       when "ProvisionedThroughputExceededException"   then ProvisionedThroughputExceededException.new(http, message, code)
       when "ReplicaAlreadyExistsException"            then ReplicaAlreadyExistsException.new(http, message, code)
       when "ReplicaNotFoundException"                 then ReplicaNotFoundException.new(http, message, code)
+      when "ReplicatedWriteConflictException"         then ReplicatedWriteConflictException.new(http, message, code)
       when "RequestLimitExceeded"                     then RequestLimitExceeded.new(http, message, code)
       when "ResourceInUseException"                   then ResourceInUseException.new(http, message, code)
       when "ResourceNotFoundException"                then ResourceNotFoundException.new(http, message, code)
       when "TableAlreadyExistsException"              then TableAlreadyExistsException.new(http, message, code)
       when "TableInUseException"                      then TableInUseException.new(http, message, code)
       when "TableNotFoundException"                   then TableNotFoundException.new(http, message, code)
+      when "ThrottlingException"                      then ThrottlingException.new(http, message, code)
       when "TransactionCanceledException"             then TransactionCanceledException.new(http, message, code)
       when "TransactionConflictException"             then TransactionConflictException.new(http, message, code)
       when "TransactionInProgressException"           then TransactionInProgressException.new(http, message, code)

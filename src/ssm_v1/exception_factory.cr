@@ -1,6 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
+  class AccessDeniedException < Core::ResponseException
+  end
+
   class AlreadyExistsException < Core::ResponseException
   end
 
@@ -41,6 +44,9 @@ module Amazonite::SsmV1
   end
 
   class ComplianceTypeCountLimitExceededException < Core::ResponseException
+  end
+
+  class ConflictException < Core::ResponseException
   end
 
   class CustomSchemaCountLimitExceededException < Core::ResponseException
@@ -253,6 +259,9 @@ module Amazonite::SsmV1
   class MaxDocumentSizeExceeded < Core::ResponseException
   end
 
+  class NoLongerSupportedException < Core::ResponseException
+  end
+
   class OpsItemAccessDeniedException < Core::ResponseException
   end
 
@@ -355,6 +364,9 @@ module Amazonite::SsmV1
   class ResourcePolicyNotFoundException < Core::ResponseException
   end
 
+  class ServiceQuotaExceededException < Core::ResponseException
+  end
+
   class ServiceSettingNotFound < Core::ResponseException
   end
 
@@ -368,6 +380,9 @@ module Amazonite::SsmV1
   end
 
   class TargetNotConnected < Core::ResponseException
+  end
+
+  class ThrottlingException < Core::ResponseException
   end
 
   class TooManyTagsError < Core::ResponseException
@@ -394,15 +409,22 @@ module Amazonite::SsmV1
   class UnsupportedOperatingSystem < Core::ResponseException
   end
 
+  class UnsupportedOperationException < Core::ResponseException
+  end
+
   class UnsupportedParameterType < Core::ResponseException
   end
 
   class UnsupportedPlatformType < Core::ResponseException
   end
 
+  class ValidationException < Core::ResponseException
+  end
+
   class ExceptionFactory < Core::ResponseExceptionFactory
     def create(exception_type, http, message, code) : Core::ResponseException | Nil
       case exception_type
+      when "AccessDeniedException"                          then AccessDeniedException.new(http, message, code)
       when "AlreadyExistsException"                         then AlreadyExistsException.new(http, message, code)
       when "AssociatedInstances"                            then AssociatedInstances.new(http, message, code)
       when "AssociationAlreadyExists"                       then AssociationAlreadyExists.new(http, message, code)
@@ -417,6 +439,7 @@ module Amazonite::SsmV1
       when "AutomationExecutionNotFoundException"           then AutomationExecutionNotFoundException.new(http, message, code)
       when "AutomationStepNotFoundException"                then AutomationStepNotFoundException.new(http, message, code)
       when "ComplianceTypeCountLimitExceededException"      then ComplianceTypeCountLimitExceededException.new(http, message, code)
+      when "ConflictException"                              then ConflictException.new(http, message, code)
       when "CustomSchemaCountLimitExceededException"        then CustomSchemaCountLimitExceededException.new(http, message, code)
       when "DocumentAlreadyExists"                          then DocumentAlreadyExists.new(http, message, code)
       when "DocumentLimitExceeded"                          then DocumentLimitExceeded.new(http, message, code)
@@ -487,6 +510,7 @@ module Amazonite::SsmV1
       when "ItemSizeLimitExceededException"                 then ItemSizeLimitExceededException.new(http, message, code)
       when "MalformedResourcePolicyDocumentException"       then MalformedResourcePolicyDocumentException.new(http, message, code)
       when "MaxDocumentSizeExceeded"                        then MaxDocumentSizeExceeded.new(http, message, code)
+      when "NoLongerSupportedException"                     then NoLongerSupportedException.new(http, message, code)
       when "OpsItemAccessDeniedException"                   then OpsItemAccessDeniedException.new(http, message, code)
       when "OpsItemAlreadyExistsException"                  then OpsItemAlreadyExistsException.new(http, message, code)
       when "OpsItemConflictException"                       then OpsItemConflictException.new(http, message, code)
@@ -521,11 +545,13 @@ module Amazonite::SsmV1
       when "ResourcePolicyInvalidParameterException"        then ResourcePolicyInvalidParameterException.new(http, message, code)
       when "ResourcePolicyLimitExceededException"           then ResourcePolicyLimitExceededException.new(http, message, code)
       when "ResourcePolicyNotFoundException"                then ResourcePolicyNotFoundException.new(http, message, code)
+      when "ServiceQuotaExceededException"                  then ServiceQuotaExceededException.new(http, message, code)
       when "ServiceSettingNotFound"                         then ServiceSettingNotFound.new(http, message, code)
       when "StatusUnchanged"                                then StatusUnchanged.new(http, message, code)
       when "SubTypeCountLimitExceededException"             then SubTypeCountLimitExceededException.new(http, message, code)
       when "TargetInUseException"                           then TargetInUseException.new(http, message, code)
       when "TargetNotConnected"                             then TargetNotConnected.new(http, message, code)
+      when "ThrottlingException"                            then ThrottlingException.new(http, message, code)
       when "TooManyTagsError"                               then TooManyTagsError.new(http, message, code)
       when "TooManyUpdates"                                 then TooManyUpdates.new(http, message, code)
       when "TotalSizeLimitExceededException"                then TotalSizeLimitExceededException.new(http, message, code)
@@ -534,8 +560,10 @@ module Amazonite::SsmV1
       when "UnsupportedInventoryItemContextException"       then UnsupportedInventoryItemContextException.new(http, message, code)
       when "UnsupportedInventorySchemaVersionException"     then UnsupportedInventorySchemaVersionException.new(http, message, code)
       when "UnsupportedOperatingSystem"                     then UnsupportedOperatingSystem.new(http, message, code)
+      when "UnsupportedOperationException"                  then UnsupportedOperationException.new(http, message, code)
       when "UnsupportedParameterType"                       then UnsupportedParameterType.new(http, message, code)
       when "UnsupportedPlatformType"                        then UnsupportedPlatformType.new(http, message, code)
+      when "ValidationException"                            then ValidationException.new(http, message, code)
       end
     end
   end

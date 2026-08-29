@@ -34,6 +34,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "OnDemandThroughput")]
     property on_demand_throughput : OnDemandThroughput | Nil
 
+    @[JSON::Field(key: "WarmThroughput")]
+    property warm_throughput : GlobalSecondaryIndexWarmThroughputDescription | Nil
+
     def initialize(
       @index_name : String | Nil = nil,
       @key_schema : Array(KeySchemaElement) | Nil = nil,
@@ -45,6 +48,7 @@ module Amazonite::DynamoDBV2
       @item_count : Int64 | Nil = nil,
       @index_arn : String | Nil = nil,
       @on_demand_throughput : OnDemandThroughput | Nil = nil,
+      @warm_throughput : GlobalSecondaryIndexWarmThroughputDescription | Nil = nil,
     )
     end
   end

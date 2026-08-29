@@ -8,6 +8,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "PointInTimeRecoveryStatus", converter: ADDB::PointInTimeRecoveryStatus)]
     property point_in_time_recovery_status : PointInTimeRecoveryStatus | Nil
 
+    @[JSON::Field(key: "RecoveryPeriodInDays")]
+    property recovery_period_in_days : Int32 | Nil
+
     @[JSON::Field(key: "EarliestRestorableDateTime", converter: Core::AWSEpochConverter)]
     property earliest_restorable_date_time : Time | Nil
 
@@ -16,6 +19,7 @@ module Amazonite::DynamoDBV2
 
     def initialize(
       @point_in_time_recovery_status : PointInTimeRecoveryStatus | Nil = nil,
+      @recovery_period_in_days : Int32 | Nil = nil,
       @earliest_restorable_date_time : Time | Nil = nil,
       @latest_restorable_date_time : Time | Nil = nil,
     )

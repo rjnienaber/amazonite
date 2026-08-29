@@ -22,5 +22,20 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'DocumentReviewAction' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::DocumentReviewAction?
+      case key
+      when "SendForReview" then AS::DocumentReviewAction::SendForReview
+      when "UpdateReview"  then AS::DocumentReviewAction::UpdateReview
+      when "Approve"       then AS::DocumentReviewAction::Approve
+      when "Reject"        then AS::DocumentReviewAction::Reject
+      else
+        nil
+      end
+    end
   end
 end

@@ -24,5 +24,21 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'CommandFilterKey' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::CommandFilterKey?
+      case key
+      when "InvokedAfter"   then AS::CommandFilterKey::InvokedAfter
+      when "InvokedBefore"  then AS::CommandFilterKey::InvokedBefore
+      when "Status"         then AS::CommandFilterKey::Status
+      when "ExecutionStage" then AS::CommandFilterKey::ExecutionStage
+      when "DocumentName"   then AS::CommandFilterKey::DocumentName
+      else
+        nil
+      end
+    end
   end
 end

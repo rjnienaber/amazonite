@@ -18,5 +18,18 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'StopType' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::StopType?
+      case key
+      when "Complete" then AS::StopType::Complete
+      when "Cancel"   then AS::StopType::Cancel
+      else
+        nil
+      end
+    end
   end
 end

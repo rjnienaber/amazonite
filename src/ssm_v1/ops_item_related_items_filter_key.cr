@@ -20,5 +20,19 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'OpsItemRelatedItemsFilterKey' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::OpsItemRelatedItemsFilterKey?
+      case key
+      when "ResourceType"  then AS::OpsItemRelatedItemsFilterKey::ResourceType
+      when "AssociationId" then AS::OpsItemRelatedItemsFilterKey::AssociationId
+      when "ResourceUri"   then AS::OpsItemRelatedItemsFilterKey::ResourceUri
+      else
+        nil
+      end
+    end
   end
 end

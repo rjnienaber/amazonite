@@ -65,6 +65,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "TargetMaps")]
     property target_maps : Array(Hash(String, Array(String))) | Nil
 
+    @[JSON::Field(key: "AssociationDispatchAssumeRole")]
+    property association_dispatch_assume_role : String | Nil
+
     def initialize(
       @association_id : String | Nil = nil,
       @association_version : String | Nil = nil,
@@ -86,6 +89,7 @@ module Amazonite::SsmV1
       @schedule_offset : Int32 | Nil = nil,
       @duration : Int32 | Nil = nil,
       @target_maps : Array(Hash(String, Array(String))) | Nil = nil,
+      @association_dispatch_assume_role : String | Nil = nil,
     )
     end
   end

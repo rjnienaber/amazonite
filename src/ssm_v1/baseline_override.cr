@@ -31,6 +31,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "Sources")]
     property sources : Array(PatchSource) | Nil
 
+    @[JSON::Field(key: "AvailableSecurityUpdatesComplianceStatus", converter: AS::PatchComplianceStatus)]
+    property available_security_updates_compliance_status : PatchComplianceStatus | Nil
+
     def initialize(
       @operating_system : OperatingSystem | Nil = nil,
       @global_filters : PatchFilterGroup | Nil = nil,
@@ -41,6 +44,7 @@ module Amazonite::SsmV1
       @rejected_patches_action : PatchAction | Nil = nil,
       @approved_patches_enable_non_security : Bool | Nil = nil,
       @sources : Array(PatchSource) | Nil = nil,
+      @available_security_updates_compliance_status : PatchComplianceStatus | Nil = nil,
     )
     end
   end

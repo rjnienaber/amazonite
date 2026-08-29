@@ -38,6 +38,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "InstancesWithOtherNonCompliantPatches")]
     property instances_with_other_non_compliant_patches : Int32 | Nil
 
+    @[JSON::Field(key: "InstancesWithAvailableSecurityUpdates")]
+    property instances_with_available_security_updates : Int32 | Nil
+
     def initialize(
       @instances : Int32 | Nil = nil,
       @instances_with_installed_patches : Int32 | Nil = nil,
@@ -51,6 +54,7 @@ module Amazonite::SsmV1
       @instances_with_critical_non_compliant_patches : Int32 | Nil = nil,
       @instances_with_security_non_compliant_patches : Int32 | Nil = nil,
       @instances_with_other_non_compliant_patches : Int32 | Nil = nil,
+      @instances_with_available_security_updates : Int32 | Nil = nil,
     )
     end
   end

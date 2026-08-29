@@ -20,5 +20,19 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'ParametersFilterKey' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::ParametersFilterKey?
+      case key
+      when "Name"  then AS::ParametersFilterKey::Name
+      when "Type"  then AS::ParametersFilterKey::Type
+      when "KeyId" then AS::ParametersFilterKey::KeyId
+      else
+        nil
+      end
+    end
   end
 end

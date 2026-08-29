@@ -27,5 +27,25 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'ParameterTier' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when AS::ParameterTier::Standard           then "Standard"
+      when AS::ParameterTier::Advanced           then "Advanced"
+      when AS::ParameterTier::IntelligentTiering then "Intelligent-Tiering"
+      else
+        raise Exception.new("unknown enum value for 'ParameterTier' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : AS::ParameterTier?
+      case key
+      when "Standard"            then AS::ParameterTier::Standard
+      when "Advanced"            then AS::ParameterTier::Advanced
+      when "Intelligent-Tiering" then AS::ParameterTier::IntelligentTiering
+      else
+        nil
+      end
+    end
   end
 end

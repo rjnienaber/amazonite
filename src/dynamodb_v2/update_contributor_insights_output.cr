@@ -13,10 +13,14 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "ContributorInsightsStatus", converter: ADDB::ContributorInsightsStatus)]
     property contributor_insights_status : ContributorInsightsStatus | Nil
 
+    @[JSON::Field(key: "ContributorInsightsMode", converter: ADDB::ContributorInsightsMode)]
+    property contributor_insights_mode : ContributorInsightsMode | Nil
+
     def initialize(
       @table_name : String | Nil = nil,
       @index_name : String | Nil = nil,
       @contributor_insights_status : ContributorInsightsStatus | Nil = nil,
+      @contributor_insights_mode : ContributorInsightsMode | Nil = nil,
     )
     end
   end
