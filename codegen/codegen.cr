@@ -23,6 +23,7 @@ module Amazonite::Codegen
     "iam"             => "1",
     "cloudwatch"      => "1",
     "sts"             => "1",
+    "cloudformation"  => "1",
   }
 
   # Operations that can't be modeled as a plain request/response call and

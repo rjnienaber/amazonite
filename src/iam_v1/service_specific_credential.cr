@@ -83,7 +83,7 @@ module Amazonite::IamV1
         service_credential_secret: Core::XMLValue.string(node.xpath_node("*[local-name()='ServiceCredentialSecret']")),
         service_specific_credential_id: Core::XMLValue.string(node.xpath_node("*[local-name()='ServiceSpecificCredentialId']")).not_nil!,
         user_name: Core::XMLValue.string(node.xpath_node("*[local-name()='UserName']")).not_nil!,
-        status: (n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil.not_nil!,
+        status: ((n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil).not_nil!,
       )
     end
   end

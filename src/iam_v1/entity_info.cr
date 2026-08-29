@@ -43,7 +43,7 @@ module Amazonite::IamV1
       new(
         arn: Core::XMLValue.string(node.xpath_node("*[local-name()='Arn']")).not_nil!,
         name: Core::XMLValue.string(node.xpath_node("*[local-name()='Name']")).not_nil!,
-        type: (n = node.xpath_node("*[local-name()='Type']")) ? AI::PolicyOwnerEntityType.from_json_object_key?(n.content) : nil.not_nil!,
+        type: ((n = node.xpath_node("*[local-name()='Type']")) ? AI::PolicyOwnerEntityType.from_json_object_key?(n.content) : nil).not_nil!,
         id: Core::XMLValue.string(node.xpath_node("*[local-name()='Id']")).not_nil!,
         path: Core::XMLValue.string(node.xpath_node("*[local-name()='Path']")),
       )

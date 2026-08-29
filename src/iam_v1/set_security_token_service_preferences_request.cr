@@ -18,7 +18,7 @@ module Amazonite::IamV1
 
     def self.from_xml(node : XML::Node) : self
       new(
-        global_endpoint_token_version: (n = node.xpath_node("*[local-name()='GlobalEndpointTokenVersion']")) ? AI::GlobalEndpointTokenVersion.from_json_object_key?(n.content) : nil.not_nil!,
+        global_endpoint_token_version: ((n = node.xpath_node("*[local-name()='GlobalEndpointTokenVersion']")) ? AI::GlobalEndpointTokenVersion.from_json_object_key?(n.content) : nil).not_nil!,
       )
     end
   end

@@ -9,6 +9,7 @@ require "amazonite/sns_v1"
 require "amazonite/iam_v1"
 require "amazonite/cloudwatch_v1"
 require "amazonite/sts_v1"
+require "amazonite/cloudformation_v1"
 require "./helpers"
 
 def wait_until(&)

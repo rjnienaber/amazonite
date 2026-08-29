@@ -50,7 +50,7 @@ module Amazonite::IamV1
         ssh_public_key_id: Core::XMLValue.string(node.xpath_node("*[local-name()='SSHPublicKeyId']")).not_nil!,
         fingerprint: Core::XMLValue.string(node.xpath_node("*[local-name()='Fingerprint']")).not_nil!,
         ssh_public_key_body: Core::XMLValue.string(node.xpath_node("*[local-name()='SSHPublicKeyBody']")).not_nil!,
-        status: (n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil.not_nil!,
+        status: ((n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil).not_nil!,
         upload_date: Core::XMLValue.time(node.xpath_node("*[local-name()='UploadDate']")),
       )
     end

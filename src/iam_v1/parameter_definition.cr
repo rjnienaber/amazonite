@@ -60,7 +60,7 @@ module Amazonite::IamV1
     def self.from_xml(node : XML::Node) : self
       new(
         name: Core::XMLValue.string(node.xpath_node("*[local-name()='Name']")).not_nil!,
-        type: (n = node.xpath_node("*[local-name()='Type']")) ? AI::ParameterTypeType.from_json_object_key?(n.content) : nil.not_nil!,
+        type: ((n = node.xpath_node("*[local-name()='Type']")) ? AI::ParameterTypeType.from_json_object_key?(n.content) : nil).not_nil!,
         sub_type: Core::XMLValue.string(node.xpath_node("*[local-name()='SubType']")),
         description: Core::XMLValue.string(node.xpath_node("*[local-name()='Description']")),
         is_required: Core::XMLValue.bool(node.xpath_node("*[local-name()='IsRequired']")),

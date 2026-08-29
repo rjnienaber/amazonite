@@ -73,7 +73,7 @@ module Amazonite::IamV1
 
     def self.from_xml(node : XML::Node) : self
       new(
-        job_status: (n = node.xpath_node("*[local-name()='JobStatus']")) ? AI::JobStatusType.from_json_object_key?(n.content) : nil.not_nil!,
+        job_status: ((n = node.xpath_node("*[local-name()='JobStatus']")) ? AI::JobStatusType.from_json_object_key?(n.content) : nil).not_nil!,
         job_creation_date: Core::XMLValue.time(node.xpath_node("*[local-name()='JobCreationDate']")).not_nil!,
         job_completion_date: Core::XMLValue.time(node.xpath_node("*[local-name()='JobCompletionDate']")),
         number_of_services_accessible: Core::XMLValue.i32(node.xpath_node("*[local-name()='NumberOfServicesAccessible']")),

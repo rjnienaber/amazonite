@@ -36,7 +36,7 @@ module Amazonite::IamV1
       new(
         user_name: Core::XMLValue.string(node.xpath_node("*[local-name()='UserName']")).not_nil!,
         ssh_public_key_id: Core::XMLValue.string(node.xpath_node("*[local-name()='SSHPublicKeyId']")).not_nil!,
-        status: (n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil.not_nil!,
+        status: ((n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil).not_nil!,
         upload_date: Core::XMLValue.time(node.xpath_node("*[local-name()='UploadDate']")).not_nil!,
       )
     end

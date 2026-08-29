@@ -43,7 +43,7 @@ module Amazonite::IamV1
       new(
         user_name: Core::XMLValue.string(node.xpath_node("*[local-name()='UserName']")).not_nil!,
         access_key_id: Core::XMLValue.string(node.xpath_node("*[local-name()='AccessKeyId']")).not_nil!,
-        status: (n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil.not_nil!,
+        status: ((n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil).not_nil!,
         secret_access_key: Core::XMLValue.string(node.xpath_node("*[local-name()='SecretAccessKey']")).not_nil!,
         create_date: Core::XMLValue.time(node.xpath_node("*[local-name()='CreateDate']")),
       )

@@ -64,7 +64,7 @@ module Amazonite::IamV1
 
     def self.from_xml(node : XML::Node) : self
       new(
-        job_status: (n = node.xpath_node("*[local-name()='JobStatus']")) ? AI::JobStatusType.from_json_object_key?(n.content) : nil.not_nil!,
+        job_status: ((n = node.xpath_node("*[local-name()='JobStatus']")) ? AI::JobStatusType.from_json_object_key?(n.content) : nil).not_nil!,
         job_type: (n = node.xpath_node("*[local-name()='JobType']")) ? AI::AccessAdvisorUsageGranularityType.from_json_object_key?(n.content) : nil,
         job_creation_date: Core::XMLValue.time(node.xpath_node("*[local-name()='JobCreationDate']")).not_nil!,
         services_last_accessed: node.xpath_nodes("*[local-name()='ServicesLastAccessed']/*[local-name()='member']").map { |n| ServiceLastAccessed.from_xml(n) },

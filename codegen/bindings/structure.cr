@@ -278,19 +278,26 @@ module Amazonite::Codegen::Bindings
     # `required` (a required member's Crystal property is non-nilable, so
     # its read expression must resolve the Optional away with `.not_nil!`).
     private def scalar_read_expr(node_expr : String, member, required : Bool) : String
-      expr = if member.time_type?
-               @needs_core_alias = true
-               "Core::XMLValue.time(#{node_expr})"
-             elsif member.blob_type?
-               @needs_core_alias = true
-               "Core::XMLValue.bytes(#{node_expr})"
-             elsif member.enum_type?
-               @needs_module_alias = true
-               "(n = #{node_expr}) ? #{@module_alias}::#{member.crystal_type(true)}.from_json_object_key?(n.content) : nil"
-             else
-               @needs_core_alias = true
-               "Core::XMLValue.#{xml_value_method(member.crystal_type(true))}(#{node_expr})"
-             end
+      if member.time_type?
+        @needs_core_alias = true
+        not_nil_if_required("Core::XMLValue.time(#{node_expr})", required)
+      elsif member.blob_type?
+        @needs_core_alias = true
+        not_nil_if_required("Core::XMLValue.bytes(#{node_expr})", required)
+      elsif member.enum_type?
+        @needs_module_alias = true
+        # This is itself a ternary, so `.not_nil!` must wrap the whole
+        # expression in parens rather than plain string-appending the call,
+        # which would otherwise bind only to the `nil` arm.
+        ternary = "(n = #{node_expr}) ? #{@module_alias}::#{member.crystal_type(true)}.from_json_object_key?(n.content) : nil"
+        required ? "(#{ternary}).not_nil!" : ternary
+      else
+        @needs_core_alias = true
+        not_nil_if_required("Core::XMLValue.#{xml_value_method(member.crystal_type(true))}(#{node_expr})", required)
+      end
+    end
+
+    private def not_nil_if_required(expr : String, required : Bool) : String
       required ? "#{expr}.not_nil!" : expr
     end
 

@@ -9,7 +9,7 @@ services:
       - "127.0.0.1:4510-4559:4510-4559"  # external services port range
     environment:
       - PERSISTENCE=false
-      - SERVICES=s3,dynamodb,ssm,sqs,kms,secretsmanager,lambda,sns,iam,cloudwatch,sts
+      - SERVICES=s3,dynamodb,ssm,sqs,kms,secretsmanager,lambda,sns,iam,cloudwatch,sts,cloudformation
       - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN}
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock" # lambda invocation runs functions in per-invoke Docker containers

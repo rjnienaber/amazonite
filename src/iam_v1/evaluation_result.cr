@@ -76,7 +76,7 @@ module Amazonite::IamV1
       new(
         eval_action_name: Core::XMLValue.string(node.xpath_node("*[local-name()='EvalActionName']")).not_nil!,
         eval_resource_name: Core::XMLValue.string(node.xpath_node("*[local-name()='EvalResourceName']")),
-        eval_decision: (n = node.xpath_node("*[local-name()='EvalDecision']")) ? AI::PolicyEvaluationDecisionType.from_json_object_key?(n.content) : nil.not_nil!,
+        eval_decision: ((n = node.xpath_node("*[local-name()='EvalDecision']")) ? AI::PolicyEvaluationDecisionType.from_json_object_key?(n.content) : nil).not_nil!,
         matched_statements: node.xpath_nodes("*[local-name()='MatchedStatements']/*[local-name()='member']").map { |n| Statement.from_xml(n) },
         missing_context_values: node.xpath_nodes("*[local-name()='MissingContextValues']/*[local-name()='member']").map { |n| n.content },
         organizations_decision_detail: node.xpath_node("*[local-name()='OrganizationsDecisionDetail']").try { |n| OrganizationsDecisionDetail.from_xml(n) },

@@ -46,7 +46,7 @@ module Amazonite::IamV1
     def self.from_xml(node : XML::Node) : self
       new(
         policy_name: Core::XMLValue.string(node.xpath_node("*[local-name()='PolicyName']")).not_nil!,
-        policy_type: (n = node.xpath_node("*[local-name()='PolicyType']")) ? AI::PolicyType.from_json_object_key?(n.content) : nil.not_nil!,
+        policy_type: ((n = node.xpath_node("*[local-name()='PolicyType']")) ? AI::PolicyType.from_json_object_key?(n.content) : nil).not_nil!,
         policy_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='PolicyArn']")),
         entity_type: (n = node.xpath_node("*[local-name()='EntityType']")) ? AI::PolicyOwnerEntityType.from_json_object_key?(n.content) : nil,
         entity_name: Core::XMLValue.string(node.xpath_node("*[local-name()='EntityName']")),

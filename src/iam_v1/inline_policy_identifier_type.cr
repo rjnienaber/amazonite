@@ -30,7 +30,7 @@ module Amazonite::IamV1
     def self.from_xml(node : XML::Node) : self
       new(
         policy_name: Core::XMLValue.string(node.xpath_node("*[local-name()='PolicyName']")).not_nil!,
-        attachment_type: (n = node.xpath_node("*[local-name()='AttachmentType']")) ? AI::AttachmentType.from_json_object_key?(n.content) : nil.not_nil!,
+        attachment_type: ((n = node.xpath_node("*[local-name()='AttachmentType']")) ? AI::AttachmentType.from_json_object_key?(n.content) : nil).not_nil!,
         attachment_name: Core::XMLValue.string(node.xpath_node("*[local-name()='AttachmentName']")).not_nil!,
       )
     end

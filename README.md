@@ -61,6 +61,7 @@ API types that can be generated:
 | IAM           | ✅              |✅                 |                                                                       |
 | CloudWatch    | ✅              |✅                 |                                                                       |
 | STS           | ✅              |✅                 |                                                                       |
+| CloudFormation | ✅             |✅                 |                                                                       |
 | S3            |  🚫             | 🚫                | Consider using [awscr-s3](https://github.com/taylorfinnell/awscr-s3)  |
 
 For example usage, please look at [the integration tests](integration). If you need an API that is not listed here,

@@ -1,0 +1,23 @@
+module Amazonite::CloudFormationV1
+  class DetectStackResourceDriftOutput
+    property stack_resource_drift : StackResourceDrift
+
+    def initialize(
+      @stack_resource_drift : StackResourceDrift,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      params.concat(@stack_resource_drift.to_query_params("#{prefix}StackResourceDrift."))
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        stack_resource_drift: node.xpath_node("*[local-name()='StackResourceDrift']").try { |n| StackResourceDrift.from_xml(n) }.not_nil!,
+      )
+    end
+  end
+end

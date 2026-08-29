@@ -61,7 +61,7 @@ module Amazonite::IamV1
     def self.from_xml(node : XML::Node) : self
       new(
         user_name: Core::XMLValue.string(node.xpath_node("*[local-name()='UserName']")).not_nil!,
-        status: (n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil.not_nil!,
+        status: ((n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil).not_nil!,
         service_user_name: Core::XMLValue.string(node.xpath_node("*[local-name()='ServiceUserName']")),
         service_credential_alias: Core::XMLValue.string(node.xpath_node("*[local-name()='ServiceCredentialAlias']")),
         create_date: Core::XMLValue.time(node.xpath_node("*[local-name()='CreateDate']")).not_nil!,

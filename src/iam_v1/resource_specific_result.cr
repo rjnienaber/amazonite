@@ -54,7 +54,7 @@ module Amazonite::IamV1
     def self.from_xml(node : XML::Node) : self
       new(
         eval_resource_name: Core::XMLValue.string(node.xpath_node("*[local-name()='EvalResourceName']")).not_nil!,
-        eval_resource_decision: (n = node.xpath_node("*[local-name()='EvalResourceDecision']")) ? AI::PolicyEvaluationDecisionType.from_json_object_key?(n.content) : nil.not_nil!,
+        eval_resource_decision: ((n = node.xpath_node("*[local-name()='EvalResourceDecision']")) ? AI::PolicyEvaluationDecisionType.from_json_object_key?(n.content) : nil).not_nil!,
         matched_statements: node.xpath_nodes("*[local-name()='MatchedStatements']/*[local-name()='member']").map { |n| Statement.from_xml(n) },
         missing_context_values: node.xpath_nodes("*[local-name()='MissingContextValues']/*[local-name()='member']").map { |n| n.content },
         eval_decision_details: node.xpath_nodes("*[local-name()='EvalDecisionDetails']/*[local-name()='entry']").each_with_object({} of String => PolicyEvaluationDecisionType) { |entry, hash| hash[entry.xpath_node("*[local-name()='key']").not_nil!.content] = AI::PolicyEvaluationDecisionType.from_json_object_key?(entry.xpath_node("*[local-name()='value']").not_nil!.content).not_nil! },
