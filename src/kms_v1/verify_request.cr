@@ -1,4 +1,5 @@
 private alias AK = Amazonite::KmsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::KmsV1
   class VerifyRequest
@@ -7,14 +8,14 @@ module Amazonite::KmsV1
     @[JSON::Field(key: "KeyId")]
     property key_id : String
 
-    @[JSON::Field(key: "Message")]
-    property message : String
+    @[JSON::Field(key: "Message", converter: Core::Base64Converter)]
+    property message : Bytes
 
     @[JSON::Field(key: "MessageType", converter: AK::MessageType)]
     property message_type : MessageType | Nil
 
-    @[JSON::Field(key: "Signature")]
-    property signature : String
+    @[JSON::Field(key: "Signature", converter: Core::Base64Converter)]
+    property signature : Bytes
 
     @[JSON::Field(key: "SigningAlgorithm", converter: AK::SigningAlgorithmSpec)]
     property signing_algorithm : SigningAlgorithmSpec
@@ -27,8 +28,8 @@ module Amazonite::KmsV1
 
     def initialize(
       @key_id : String,
-      @message : String,
-      @signature : String,
+      @message : Bytes,
+      @signature : Bytes,
       @signing_algorithm : SigningAlgorithmSpec,
       @message_type : MessageType | Nil = nil,
       @grant_tokens : Array(String) | Nil = nil,

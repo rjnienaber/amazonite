@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class AttributeValue
     include JSON::Serializable
@@ -8,8 +10,8 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "N")]
     property n : String | Nil
 
-    @[JSON::Field(key: "B")]
-    property b : String | Nil
+    @[JSON::Field(key: "B", converter: Core::Base64Converter)]
+    property b : Bytes | Nil
 
     @[JSON::Field(key: "SS")]
     property ss : Array(String) | Nil
@@ -17,8 +19,8 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "NS")]
     property ns : Array(String) | Nil
 
-    @[JSON::Field(key: "BS")]
-    property bs : Array(String) | Nil
+    @[JSON::Field(key: "BS", converter: Core::Base64ArrayConverter)]
+    property bs : Array(Bytes) | Nil
 
     @[JSON::Field(key: "M")]
     property m : Hash(String, AttributeValue) | Nil
@@ -35,10 +37,10 @@ module Amazonite::DynamoDBV2
     def initialize(
       @s : String | Nil = nil,
       @n : String | Nil = nil,
-      @b : String | Nil = nil,
+      @b : Bytes | Nil = nil,
       @ss : Array(String) | Nil = nil,
       @ns : Array(String) | Nil = nil,
-      @bs : Array(String) | Nil = nil,
+      @bs : Array(Bytes) | Nil = nil,
       @m : Hash(String, AttributeValue) | Nil = nil,
       @l : Array(AttributeValue) | Nil = nil,
       @null : Bool | Nil = nil,

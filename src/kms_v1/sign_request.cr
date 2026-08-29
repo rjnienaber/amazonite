@@ -1,4 +1,5 @@
 private alias AK = Amazonite::KmsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::KmsV1
   class SignRequest
@@ -7,8 +8,8 @@ module Amazonite::KmsV1
     @[JSON::Field(key: "KeyId")]
     property key_id : String
 
-    @[JSON::Field(key: "Message")]
-    property message : String
+    @[JSON::Field(key: "Message", converter: Core::Base64Converter)]
+    property message : Bytes
 
     @[JSON::Field(key: "MessageType", converter: AK::MessageType)]
     property message_type : MessageType | Nil
@@ -24,7 +25,7 @@ module Amazonite::KmsV1
 
     def initialize(
       @key_id : String,
-      @message : String,
+      @message : Bytes,
       @signing_algorithm : SigningAlgorithmSpec,
       @message_type : MessageType | Nil = nil,
       @grant_tokens : Array(String) | Nil = nil,

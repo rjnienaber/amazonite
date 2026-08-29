@@ -1,11 +1,12 @@
 private alias AK = Amazonite::KmsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::KmsV1
   class EncryptResponse
     include JSON::Serializable
 
-    @[JSON::Field(key: "CiphertextBlob")]
-    property ciphertext_blob : String | Nil
+    @[JSON::Field(key: "CiphertextBlob", converter: Core::Base64Converter)]
+    property ciphertext_blob : Bytes | Nil
 
     @[JSON::Field(key: "KeyId")]
     property key_id : String | Nil
@@ -14,7 +15,7 @@ module Amazonite::KmsV1
     property encryption_algorithm : EncryptionAlgorithmSpec | Nil
 
     def initialize(
-      @ciphertext_blob : String | Nil = nil,
+      @ciphertext_blob : Bytes | Nil = nil,
       @key_id : String | Nil = nil,
       @encryption_algorithm : EncryptionAlgorithmSpec | Nil = nil,
     )

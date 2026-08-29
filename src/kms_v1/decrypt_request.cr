@@ -5,8 +5,8 @@ module Amazonite::KmsV1
   class DecryptRequest
     include JSON::Serializable
 
-    @[JSON::Field(key: "CiphertextBlob")]
-    property ciphertext_blob : String | Nil
+    @[JSON::Field(key: "CiphertextBlob", converter: Core::Base64Converter)]
+    property ciphertext_blob : Bytes | Nil
 
     @[JSON::Field(key: "EncryptionContext")]
     property encryption_context : Hash(String, String) | Nil
@@ -30,7 +30,7 @@ module Amazonite::KmsV1
     property dry_run_modifiers : Array(DryRunModifierType) | Nil
 
     def initialize(
-      @ciphertext_blob : String | Nil = nil,
+      @ciphertext_blob : Bytes | Nil = nil,
       @encryption_context : Hash(String, String) | Nil = nil,
       @grant_tokens : Array(String) | Nil = nil,
       @key_id : String | Nil = nil,

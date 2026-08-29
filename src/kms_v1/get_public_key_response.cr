@@ -8,8 +8,8 @@ module Amazonite::KmsV1
     @[JSON::Field(key: "KeyId")]
     property key_id : String | Nil
 
-    @[JSON::Field(key: "PublicKey")]
-    property public_key : String | Nil
+    @[JSON::Field(key: "PublicKey", converter: Core::Base64Converter)]
+    property public_key : Bytes | Nil
 
     @[JSON::Field(key: "CustomerMasterKeySpec", converter: AK::CustomerMasterKeySpec)]
     property customer_master_key_spec : CustomerMasterKeySpec | Nil
@@ -31,7 +31,7 @@ module Amazonite::KmsV1
 
     def initialize(
       @key_id : String | Nil = nil,
-      @public_key : String | Nil = nil,
+      @public_key : Bytes | Nil = nil,
       @customer_master_key_spec : CustomerMasterKeySpec | Nil = nil,
       @key_spec : KeySpec | Nil = nil,
       @key_usage : KeyUsageType | Nil = nil,

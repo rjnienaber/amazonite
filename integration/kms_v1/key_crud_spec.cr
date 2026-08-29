@@ -1,4 +1,3 @@
-require "base64"
 require "../spec_helper"
 
 private alias KMS = Amazonite::KmsV1
@@ -66,16 +65,16 @@ describe "KmsV1: basic key operations" do
   end
 
   it "encrypts and decrypts data" do
-    plaintext = "amazonite secret"
+    plaintext = "amazonite secret".to_slice
 
-    encrypt_response = client.encrypt(KMS::EncryptRequest.new(key_id, Base64.strict_encode(plaintext)))
+    encrypt_response = client.encrypt(KMS::EncryptRequest.new(key_id, plaintext))
     encrypt_response.http.status_code.should eq(200)
     ciphertext = encrypt_response.result.ciphertext_blob || raise "expected a ciphertext blob in the response"
 
     decrypt_response = client.decrypt(KMS::DecryptRequest.new(ciphertext, key_id: key_id))
     decrypt_response.http.status_code.should eq(200)
     decrypted_plaintext = decrypt_response.result.plaintext || raise "expected plaintext in the response"
-    Base64.decode_string(decrypted_plaintext).should eq(plaintext)
+    String.new(decrypted_plaintext).should eq(String.new(plaintext))
   end
 
   it "generates a data key" do

@@ -8,11 +8,11 @@ module Amazonite::KmsV1
     @[JSON::Field(key: "KeyId")]
     property key_id : String
 
-    @[JSON::Field(key: "ImportToken")]
-    property import_token : String
+    @[JSON::Field(key: "ImportToken", converter: Core::Base64Converter)]
+    property import_token : Bytes
 
-    @[JSON::Field(key: "EncryptedKeyMaterial")]
-    property encrypted_key_material : String
+    @[JSON::Field(key: "EncryptedKeyMaterial", converter: Core::Base64Converter)]
+    property encrypted_key_material : Bytes
 
     @[JSON::Field(key: "ValidTo", converter: Core::AWSEpochConverter)]
     property valid_to : Time | Nil
@@ -31,8 +31,8 @@ module Amazonite::KmsV1
 
     def initialize(
       @key_id : String,
-      @import_token : String,
-      @encrypted_key_material : String,
+      @import_token : Bytes,
+      @encrypted_key_material : Bytes,
       @valid_to : Time | Nil = nil,
       @expiration_model : ExpirationModelType | Nil = nil,
       @import_type : ImportType | Nil = nil,

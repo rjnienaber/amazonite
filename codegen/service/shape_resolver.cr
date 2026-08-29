@@ -56,6 +56,10 @@ module Amazonite::Codegen::Service
       @shape_map[shape_name].type == "timestamp"
     end
 
+    def blob?(shape_name)
+      @shape_map[shape_name].type == "blob"
+    end
+
     def enum(shape_name)
       raise Exception.new("Shape '#{shape_name}' is not an enum") unless enum?(shape_name)
       @shape_map[shape_name].as(Enum)
@@ -78,7 +82,7 @@ module Amazonite::Codegen::Service
       case shape.type
       when "timestamp" then "Time"
       when "boolean"   then "Bool"
-      when "blob"      then "String"
+      when "blob"      then "Bytes"
       when "integer"   then "Int32"
       when "long"      then "Int64"
       when "float"     then "Float32"

@@ -1,4 +1,5 @@
 private alias AK = Amazonite::KmsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::KmsV1
   class EncryptRequest
@@ -7,8 +8,8 @@ module Amazonite::KmsV1
     @[JSON::Field(key: "KeyId")]
     property key_id : String
 
-    @[JSON::Field(key: "Plaintext")]
-    property plaintext : String
+    @[JSON::Field(key: "Plaintext", converter: Core::Base64Converter)]
+    property plaintext : Bytes
 
     @[JSON::Field(key: "EncryptionContext")]
     property encryption_context : Hash(String, String) | Nil
@@ -24,7 +25,7 @@ module Amazonite::KmsV1
 
     def initialize(
       @key_id : String,
-      @plaintext : String,
+      @plaintext : Bytes,
       @encryption_context : Hash(String, String) | Nil = nil,
       @grant_tokens : Array(String) | Nil = nil,
       @encryption_algorithm : EncryptionAlgorithmSpec | Nil = nil,

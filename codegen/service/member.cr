@@ -7,6 +7,7 @@ module Amazonite::Codegen::Service
 
     @is_enum_type : Bool?
     @is_time_type : Bool?
+    @is_blob_type : Bool?
     @shape_name : String
 
     getter name, shape_name
@@ -52,6 +53,15 @@ module Amazonite::Codegen::Service
 
     def time_type?
       @is_time_type ||= @resolver.time?(shape_name)
+    end
+
+    def blob_type?
+      @is_blob_type ||= @resolver.blob?(shape_name)
+    end
+
+    def list_of_blob?
+      shape = @resolver.find(shape_name)
+      shape.is_a?(List) && @resolver.blob?(shape.member.shape_name)
     end
 
     def crystal_type(required = @required)

@@ -22,6 +22,12 @@ module Amazonite::Codegen::Bindings
                       @needs_core_alias = true
                       @needs_module_alias = true
                       "Core::ArrayConverter(#{module_alias}::#{member.list_enum_crystal_type})"
+                    elsif member.blob_type?
+                      @needs_core_alias = true
+                      "Core::Base64Converter"
+                    elsif member.list_of_blob?
+                      @needs_core_alias = true
+                      "Core::Base64ArrayConverter"
                     end
         has_converter = !!converter
 
