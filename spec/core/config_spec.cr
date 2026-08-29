@@ -202,7 +202,7 @@ describe Config do
 
   describe "no credentials resolvable" do
     it "raises a combined error covering every credential source" do
-      env = MockEnvFetcher.new({} of String => String)
+      env = MockEnvFetcher.new({"AWS_EC2_METADATA_DISABLED" => "true"})
       expect_raises(Exception, "no AWS credentials found for profile 'nonexistent-profile'") do
         MockConfig.new(region: region, profile: "nonexistent-profile", env: env)
       end
