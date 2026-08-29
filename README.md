@@ -56,6 +56,7 @@ API types that can be generated:
 | Secrets Manager | ✅            |✅                 |                                                                       |
 | Lambda        | ✅              |✅                 | InvokeWithResponseStream isn't generated - uses event-stream framing, not a plain request/response |
 | SNS           | ✅              |✅                 |                                                                       |
+| IAM           | ✅              |✅                 |                                                                       |
 | S3            |  🚫             | 🚫                | Consider using [awscr-s3](https://github.com/taylorfinnell/awscr-s3)  |
 
 For example usage, please look at [the integration tests](integration). If you need an API that is not listed here,

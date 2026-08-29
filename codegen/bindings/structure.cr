@@ -256,8 +256,22 @@ module Amazonite::Codegen::Bindings
       value = member.map_value_member
       key_content = %(entry.xpath_node("#{xp(key.wire_name)}").not_nil!.content)
       value_node = %(entry.xpath_node("#{xp(value.wire_name)}").not_nil!)
-      value_expr = value.structure_type? ? "#{value.crystal_type(true)}.from_xml(#{value_node})" : type_convert_expr("#{value_node}.content", value.crystal_type(true))
+      value_expr = present_read_expr(value_node, value)
       %(node.xpath_nodes("#{xp(member.wire_name)}/#{xp("entry")}").each_with_object({} of #{key.crystal_type(true)} => #{value.crystal_type(true)}) { |entry, hash| hash[#{key_content}] = #{value_expr} })
+    end
+
+    # A non-nilable read of a value already known to be present (a map
+    # entry's value node) - handles the structure/enum/scalar cases the
+    # same way list_read_expr's item handling does.
+    private def present_read_expr(node_expr : String, member) : String
+      if member.structure_type?
+        "#{member.crystal_type(true)}.from_xml(#{node_expr})"
+      elsif member.enum_type?
+        @needs_module_alias = true
+        "#{@module_alias}::#{member.crystal_type(true)}.from_json_object_key?(#{node_expr}.content).not_nil!"
+      else
+        type_convert_expr("#{node_expr}.content", member.crystal_type(true))
+      end
     end
 
     # A nilable read of one scalar member from an XML node, honoring

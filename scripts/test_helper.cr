@@ -14,6 +14,7 @@ class TestHelper
     env["AMAZONITE_SECRETSMANAGER_URL"] = "http://localhost:4566" if @use_localstack
     env["AMAZONITE_LAMBDA_URL"] = "http://localhost:4566" if @use_localstack
     env["AMAZONITE_SNS_URL"] = "http://localhost:4566" if @use_localstack
+    env["AMAZONITE_IAM_URL"] = "http://localhost:4566" if @use_localstack
     env["AWS_PROFILE"] = "local" unless (ENV["AWS_PROFILE"]? || ENV["AWS_ACCESS_KEY_ID"]?)
     env
   end

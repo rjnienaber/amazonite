@@ -1,0 +1,25 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::IamV1
+  class DeleteAccountAliasRequest
+    property account_alias : String
+
+    def initialize(
+      @account_alias : String,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      params << {"#{prefix}AccountAlias", @account_alias}
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        account_alias: Core::XMLValue.string(node.xpath_node("*[local-name()='AccountAlias']")).not_nil!,
+      )
+    end
+  end
+end

@@ -6,6 +6,7 @@ require "amazonite/kms_v1"
 require "amazonite/secrets_manager_v1"
 require "amazonite/lambda_v1"
 require "amazonite/sns_v1"
+require "amazonite/iam_v1"
 require "./helpers"
 
 def wait_until(&)

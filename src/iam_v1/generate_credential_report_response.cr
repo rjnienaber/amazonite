@@ -1,0 +1,36 @@
+private alias AI = Amazonite::IamV1
+private alias Core = Amazonite::Core
+
+module Amazonite::IamV1
+  class GenerateCredentialReportResponse
+    property state : ReportStateType | Nil
+
+    property description : String | Nil
+
+    def initialize(
+      @state : ReportStateType | Nil = nil,
+      @description : String | Nil = nil,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      if value = @state
+        params << {"#{prefix}State", value.to_json_object_key}
+      end
+
+      if value = @description
+        params << {"#{prefix}Description", value}
+      end
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        state: (n = node.xpath_node("*[local-name()='State']")) ? AI::ReportStateType.from_json_object_key?(n.content) : nil,
+        description: Core::XMLValue.string(node.xpath_node("*[local-name()='Description']")),
+      )
+    end
+  end
+end

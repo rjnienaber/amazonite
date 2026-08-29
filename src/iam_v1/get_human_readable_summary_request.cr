@@ -1,0 +1,33 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::IamV1
+  class GetHumanReadableSummaryRequest
+    property entity_arn : String
+
+    property locale : String | Nil
+
+    def initialize(
+      @entity_arn : String,
+      @locale : String | Nil = nil,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      params << {"#{prefix}EntityArn", @entity_arn}
+
+      if value = @locale
+        params << {"#{prefix}Locale", value}
+      end
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        entity_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='EntityArn']")).not_nil!,
+        locale: Core::XMLValue.string(node.xpath_node("*[local-name()='Locale']")),
+      )
+    end
+  end
+end
