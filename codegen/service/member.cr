@@ -9,13 +9,49 @@ module Amazonite::Codegen::Service
     @is_time_type : Bool?
     @is_blob_type : Bool?
     @shape_name : String
+    @location : String?
+    @location_name : String?
 
-    getter name, shape_name
+    getter name, shape_name, location, location_name
 
     def initialize(@name : String, @required : Bool, json : JSON::Any, @resolver : ShapeResolver)
       Utils.verify_keys(KNOWN_KEYS, json)
       name = json["shape"].as_s
       @shape_name = name[0].upcase + name[1..]
+      @location = json["location"]?.try(&.as_s)
+      @location_name = json["locationName"]?.try(&.as_s)
+    end
+
+    # For a "uri"/"querystring"/"header" member, the wire name to use - the
+    # explicit locationName if the Smithy trait carried one, otherwise the
+    # member's own AWS name (true for httpLabel members, whose {placeholder}
+    # in the URI template always matches the member name exactly).
+    def wire_name
+      @location_name || @name
+    end
+
+    def label?
+      @location == "uri"
+    end
+
+    def query?
+      @location == "querystring"
+    end
+
+    def header?
+      @location == "header"
+    end
+
+    def status_code?
+      @location == "statusCode"
+    end
+
+    def body?
+      @location.nil?
+    end
+
+    def structure_type?
+      @resolver.find(shape_name).is_a?(Structure)
     end
 
     def required?

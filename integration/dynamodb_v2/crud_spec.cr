@@ -32,11 +32,11 @@ describe "DynamoDB: basic crud operations" do
 
   it "creates a table" do
     model = DB::CreateTableInput.new(
+      table_name,
       [
         DB::AttributeDefinition.new("Artist", DB::ScalarAttributeType::S),
         DB::AttributeDefinition.new("SongTitle", DB::ScalarAttributeType::S),
       ],
-      table_name,
       [
         DB::KeySchemaElement.new("Artist", DB::KeyType::Hash),
         DB::KeySchemaElement.new("SongTitle", DB::KeyType::Range),

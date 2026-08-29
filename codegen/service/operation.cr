@@ -5,12 +5,13 @@ module Amazonite::Codegen::Service
                           "endpoint", "auth", "staticContextParams"]
 
     private class Http
-      getter method, request_uri
+      getter method, request_uri, response_code
 
       def initialize(json : JSON::Any)
         Utils.verify_keys(["method", "requestUri", "responseCode"], json)
-        @method = json["method"]
-        @request_uri = json["requestUri"]
+        @method = json["method"].as_s
+        @request_uri = json["requestUri"].as_s
+        @response_code = json["responseCode"].as_i
       end
     end
 

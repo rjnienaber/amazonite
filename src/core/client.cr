@@ -25,6 +25,19 @@ module Amazonite::Core
       process_response(id, command, response)
     end
 
+    # rest-json protocol entry point: unlike #post, the caller has already
+    # routed operation members into the method/path/headers/body themselves
+    # (rest-json has no fixed X-Amz-Target routing - the method and URI path
+    # *are* the routing), so this just signs and dispatches what it's given.
+    def rest_request(command : String, method : String, path : String, headers : HTTP::Headers, body : String?)
+      id = UUID.random.to_s
+      client = create_client(id, command, path, body || "")
+      headers["Content-Type"] = "application/json" if body && !headers.has_key?("Content-Type")
+      headers["User-Agent"] = @config.user_agent { |agent| "#{agent} command/#{@endpoint_prefix}.#{hyphenate(command)}" }
+      response = client.exec(method, path, headers, body)
+      process_response(id, command, response)
+    end
+
     protected def create_client(id, command, url, body)
       endpoint_url = @config.endpoint_url(@endpoint_prefix)
       client = HTTP::Client.new(URI.parse(endpoint_url))
@@ -69,15 +82,16 @@ module Amazonite::Core
     end
 
     private def build_headers(command)
-      user_agent = @config.user_agent do |agent|
-        hyphenated_command = command.scan(/[A-Z]+[a-z]*/).map(&.[0].downcase).join("-")
-        "#{agent} command/#{@endpoint_prefix}.#{hyphenated_command}"
-      end
+      user_agent = @config.user_agent { |agent| "#{agent} command/#{@endpoint_prefix}.#{hyphenate(command)}" }
       headers = HTTP::Headers.new
       headers["X-Amz-Target"] = "#{@target_prefix}.#{command}"
       headers["Content-Type"] = "application/x-amz-json-#{@json_version}"
       headers["User-Agent"] = user_agent
       headers
+    end
+
+    private def hyphenate(command)
+      command.scan(/[A-Z]+[a-z]*/).map(&.[0].downcase).join("-")
     end
   end
 end

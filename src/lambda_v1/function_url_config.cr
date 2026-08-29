@@ -1,0 +1,39 @@
+private alias AL = Amazonite::LambdaV1
+
+module Amazonite::LambdaV1
+  class FunctionUrlConfig
+    include JSON::Serializable
+
+    @[JSON::Field(key: "FunctionUrl")]
+    property function_url : String
+
+    @[JSON::Field(key: "FunctionArn")]
+    property function_arn : String
+
+    @[JSON::Field(key: "CreationTime")]
+    property creation_time : String
+
+    @[JSON::Field(key: "LastModifiedTime")]
+    property last_modified_time : String
+
+    @[JSON::Field(key: "Cors")]
+    property cors : Cors | Nil
+
+    @[JSON::Field(key: "AuthType", converter: AL::FunctionUrlAuthType)]
+    property auth_type : FunctionUrlAuthType
+
+    @[JSON::Field(key: "InvokeMode", converter: AL::InvokeMode)]
+    property invoke_mode : InvokeMode | Nil
+
+    def initialize(
+      @function_url : String,
+      @function_arn : String,
+      @creation_time : String,
+      @last_modified_time : String,
+      @auth_type : FunctionUrlAuthType,
+      @cors : Cors | Nil = nil,
+      @invoke_mode : InvokeMode | Nil = nil,
+    )
+    end
+  end
+end

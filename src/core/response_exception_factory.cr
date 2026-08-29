@@ -6,7 +6,13 @@ module Amazonite::Core
     def build(response : HTTP::Client::Response) : ResponseException
       json = JSON::Parser.new(response.body).parse
 
-      exception_type = json["__type"]?.try &.as_s
+      # rest-json services identify the error type via the x-amzn-errortype
+      # response header (sometimes suffixed with a docs URL, e.g.
+      # "ResourceNotFoundException:https://...") rather than a JSON __type
+      # field - awsJson services never send this header, so this is a no-op
+      # fallback to the existing body-based detection for them.
+      header_type = response.headers["x-amzn-errortype"]?.try &.split(':').first
+      exception_type = header_type || json["__type"]?.try &.as_s
       message = json["message"]?.try &.as_s || json["Message"]?.try &.as_s
       code = json["code"]?.try &.as_s || json["Code"]?.try &.as_s
       parsed_type = parse_exception_type(exception_type.as(String)) unless exception_type.nil?

@@ -84,7 +84,7 @@ module Amazonite::Codegen::Service
     end
 
     private def build_operations(json : JSON::Builder)
-      operation_refs = @service_shape["operations"]?.try(&.as_a) || [] of JSON::Any
+      operation_refs = collect_operation_refs(@service_shape)
 
       json.object do
         operation_refs.each do |ref|
@@ -95,16 +95,33 @@ module Amazonite::Codegen::Service
       end
     end
 
+    # Some services (e.g. Lambda) attach most of their operations to
+    # Smithy resource shapes rather than listing them directly on the
+    # service - a resource carries its own "operations"/"collectionOperations"
+    # lists plus singular lifecycle refs (put/create/read/update/delete/list),
+    # and can nest further sub-resources the same way, so this walks the
+    # whole service/resource tree to find every operation.
+    private def collect_operation_refs(shape : JSON::Any) : Array(JSON::Any)
+      refs = [] of JSON::Any
+      refs.concat(shape["operations"]?.try(&.as_a) || [] of JSON::Any)
+      refs.concat(shape["collectionOperations"]?.try(&.as_a) || [] of JSON::Any)
+      {"put", "create", "read", "update", "delete", "list"}.each do |key|
+        ref = shape[key]?
+        refs << ref if ref
+      end
+
+      resource_refs = shape["resources"]?.try(&.as_a) || [] of JSON::Any
+      resource_refs.each do |resource_ref|
+        refs.concat(collect_operation_refs(@shapes[resource_ref["target"].as_s]))
+      end
+
+      refs
+    end
+
     private def build_operation(json : JSON::Builder, name : String, op_shape : JSON::Any)
       json.object do
         json.field "name", name
-        json.field "http" do
-          json.object do
-            json.field "method", "POST"
-            json.field "requestUri", "/"
-            json.field "responseCode", 200
-          end
-        end
+        json.field("http") { build_http(json, name, op_shape) }
 
         input_target = op_shape["input"]?.try(&.["target"]?).try(&.as_s)
         if input_target && input_target != "smithy.api#Unit"
@@ -126,6 +143,20 @@ module Amazonite::Codegen::Service
             end
           end
         end
+      end
+    end
+
+    private def build_http(json : JSON::Builder, name : String, op_shape : JSON::Any)
+      http_trait = op_shape["traits"]?.try(&.["smithy.api#http"]?)
+      method = http_trait.try(&.["method"]?.try(&.as_s)) || "POST"
+      uri = http_trait.try(&.["uri"]?.try(&.as_s)) || "/"
+      raise Exception.new("operation '#{name}' uses an unsupported greedy URI label: '#{uri}'") if uri.includes?("+}")
+      code = http_trait.try(&.["code"]?.try(&.as_i)) || 200
+
+      json.object do
+        json.field "method", method
+        json.field "requestUri", uri
+        json.field "responseCode", code
       end
     end
 
@@ -185,6 +216,7 @@ module Amazonite::Codegen::Service
     private def build_structure_shape(json : JSON::Builder, shape : JSON::Any)
       members = shape["members"]?.try(&.as_h) || {} of String => JSON::Any
       required = members.select { |_, member| required?(member) }.keys
+      payload_member = members.find { |_, member| member["traits"]?.try(&.["smithy.api#httpPayload"]?) }.try(&.[0])
 
       json.object do
         json.field "type", "structure"
@@ -198,6 +230,7 @@ module Amazonite::Codegen::Service
         unless required.empty?
           json.field "required" { json.array { required.each { |name| json.string name } } }
         end
+        json.field "payload", payload_member if payload_member
         add_documentation(json, shape)
       end
     end
@@ -227,6 +260,22 @@ module Amazonite::Codegen::Service
     private def build_member_ref(json : JSON::Builder, member : JSON::Any)
       json.object do
         json.field "shape", local_name(member["target"].as_s)
+
+        traits = member["traits"]?
+        if traits
+          if traits["smithy.api#httpLabel"]?
+            json.field "location", "uri"
+          elsif query_name = traits["smithy.api#httpQuery"]?.try(&.as_s)
+            json.field "location", "querystring"
+            json.field "locationName", query_name
+          elsif header_name = traits["smithy.api#httpHeader"]?.try(&.as_s)
+            json.field "location", "header"
+            json.field "locationName", header_name
+          elsif traits["smithy.api#httpResponseCode"]?
+            json.field "location", "statusCode"
+          end
+        end
+
         add_documentation(json, member)
       end
     end

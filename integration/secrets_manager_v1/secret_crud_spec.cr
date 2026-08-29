@@ -1,3 +1,4 @@
+require "uuid"
 require "../spec_helper"
 
 private alias ASM = Amazonite::SecretsManagerV1
@@ -16,7 +17,12 @@ describe "SecretsManagerV1: basic secret operations" do
   end
 
   it "creates a secret" do
-    request = ASM::CreateSecretRequest.new(secret_name, secret_string: "s3cr3t", description: "amazonite integration test secret")
+    request = ASM::CreateSecretRequest.new(
+      secret_name,
+      client_request_token: UUID.random.to_s,
+      secret_string: "s3cr3t",
+      description: "amazonite integration test secret",
+    )
     response = client.create_secret(request)
     response.http.status_code.should eq(200)
 
@@ -39,7 +45,7 @@ describe "SecretsManagerV1: basic secret operations" do
   end
 
   it "puts a new secret value" do
-    response = client.put_secret_value(ASM::PutSecretValueRequest.new(secret_name, secret_string: "n3w-s3cr3t"))
+    response = client.put_secret_value(ASM::PutSecretValueRequest.new(secret_name, client_request_token: UUID.random.to_s, secret_string: "n3w-s3cr3t"))
     response.http.status_code.should eq(200)
 
     get_response = client.get_secret_value(ASM::GetSecretValueRequest.new(secret_name))
@@ -47,7 +53,7 @@ describe "SecretsManagerV1: basic secret operations" do
   end
 
   it "updates the secret" do
-    response = client.update_secret(ASM::UpdateSecretRequest.new(secret_name, description: "updated description"))
+    response = client.update_secret(ASM::UpdateSecretRequest.new(secret_name, client_request_token: UUID.random.to_s, description: "updated description"))
     response.http.status_code.should eq(200)
 
     describe_response = client.describe_secret(ASM::DescribeSecretRequest.new(secret_name))

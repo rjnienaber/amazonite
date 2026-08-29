@@ -18,6 +18,18 @@ module Amazonite::Codegen
     "sqs"             => "1",
     "kms"             => "1",
     "secrets-manager" => "1",
+    "lambda"          => "1",
+  }
+
+  # Operations that can't be modeled as a plain request/response call and
+  # are excluded from generation, keyed by service. InvokeWithResponseStream
+  # uses Smithy's event-stream protocol (application/vnd.amazon.eventstream
+  # chunked multiplexed events) rather than a single JSON/binary body -
+  # genuinely different HTTP handling that a request/response client can't
+  # represent, so it's dropped rather than mis-generated (same precedent as
+  # OpsWorks being dropped from the aws-sdk-js -> Smithy cutover).
+  EXCLUDED_OPERATIONS = {
+    "lambda" => ["InvokeWithResponseStream"],
   }
 
   def self.main
@@ -28,6 +40,8 @@ module Amazonite::Codegen
       puts "processing: #{service} (api version #{translator.api_version})"
 
       description = Service::Description.new(aws_version, translator.api_version, version_number, translator.translate)
+      excluded = EXCLUDED_OPERATIONS[service]?
+      description.operations.reject! { |op| excluded.includes?(op.name) } if excluded
 
       src_dir = File.join(Dir.current, "tmp")
       module_name = "#{description.lower_name}_#{description.lower_version}"

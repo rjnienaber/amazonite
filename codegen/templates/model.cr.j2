@@ -5,7 +5,7 @@
   class {{ shape.name }}
     include JSON::Serializable
 {% for member in shape.members %}
-    @[JSON::Field(key: "{{ member.name }}"{% if member.has_converter %}, converter: {{ member.converter }}{% endif %})]
+    @[JSON::Field(key: "{{ member.name }}"{% if member.has_converter %}, converter: {{ member.converter }}{% endif %}{% if member.ignore %}, ignore: true{% endif %})]
     property {{ member.snake_case_name }} : {{ member.type }}{% if member.has_default %} = {{ member.default }}{% endif %}
 {% endfor %}
     def initialize{% if shape.has_parameters %}({% for parameter in shape.parameters %}

@@ -12,8 +12,49 @@ module {{ service.module_name }}
 
     def {{ operation.function_name }}{% if operation.has_input %}(input : {{ operation.input }}){% endif %} : {{ operation.output }}
       Log.info { "performing '{{ operation.command }}' operation" }
+{% if operation.is_rest -%}
+      path = {{ operation.path_literal }}
+{% if operation.has_query -%}
+      query = URI::Params.build do |form|
+{% for query_add in operation.query_adds -%}
+{% if query_add.is_list -%}
+        ({{ query_add.list_accessor }} || [] of {{ query_add.list_item_type }}).each do |value|
+          form.add("{{ query_add.wire_name }}", {{ query_add.item_expr }})
+        end
+{% else -%}
+        if value = {{ query_add.value_expr }}
+          form.add("{{ query_add.wire_name }}", value)
+        end
+{% endif -%}
+{% endfor -%}
+      end
+      path = "#{path}?#{query}" unless query.empty?
+{% endif -%}
+      headers = HTTP::Headers.new
+{% for header in operation.request_headers -%}
+{% if header.is_list -%}
+      ({{ header.list_accessor }} || [] of {{ header.list_item_type }}).each do |value|
+        headers.add("{{ header.wire_name }}", {{ header.item_expr }})
+      end
+{% else -%}
+      if value = {{ header.value_expr }}
+        headers["{{ header.wire_name }}"] = value
+      end
+{% endif -%}
+{% endfor -%}
+      response = rest_request("{{ operation.command }}", "{{ operation.http_method }}", path, headers, {{ operation.body_expr }})
+{% if operation.custom_output -%}
+      result = {{ operation.output_type }}.new({% for assignment in operation.output_assignments %}
+        {{ assignment.name }}: {{ assignment.value_expr }},{% endfor %}
+      )
+      {{ operation.output }}.new(response, result)
+{% else -%}
+      {{ operation.output }}.new(response)
+{% endif -%}
+{% else -%}
       response = post("{{ operation.command }}", "/", input.to_json)
       {{ operation.output }}.new(response)
+{% endif -%}
     end{% endfor %}
   end
 end

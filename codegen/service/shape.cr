@@ -3,7 +3,7 @@ module Amazonite::Codegen::Service
     private KNOWN_KEYS = ["type", "members", "documentation", "enum", "required", "member",
                           "key", "value", "max", "min", "pattern", "box", "sensitive",
                           "deprecated", "deprecatedMessage", "exception", "fault", "union", "document",
-                          "timestampFormat", "event", "eventstream", "flattened"]
+                          "timestampFormat", "event", "eventstream", "flattened", "payload"]
 
     getter name, type, documentation
 

@@ -27,7 +27,8 @@ module Amazonite::Codegen
     end
 
     def model_file(model : Service::Structure, filepath)
-      shape = Amazonite::Codegen::Bindings::Structure.new(model, @description.module_alias)
+      is_rest = @description.metadata.protocol == "rest-json"
+      shape = Amazonite::Codegen::Bindings::Structure.new(model, @description.module_alias, is_rest)
       to_file("model.cr", filepath, {"shape" => shape})
     end
 

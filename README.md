@@ -13,11 +13,11 @@ require "amazonite/dynamodb_v2"
 private alias DB = Amazonite::DynamoDBV2
 
 model = DB::CreateTableInput.new(
+  "Music",
   [
     DB::AttributeDefinition.new("Artist", DB::ScalarAttributeType::S),
     DB::AttributeDefinition.new("SongTitle", DB::ScalarAttributeType::S)
   ],
-  "Music",
   [
     DB::KeySchemaElement.new("Artist", DB::KeyType::Hash),
     DB::KeySchemaElement.new("SongTitle", DB::KeyType::Range)
@@ -44,9 +44,9 @@ Artist
 ## Supported APIs
 API types that can be generated:
 * `json`
+* `rest-json`
 
 API types that are in progress:
-* `rest-json`
 * `query`
 
 | Name          | Supported?      |Integration Tests  | Notes                                                                 |
@@ -56,6 +56,7 @@ API types that are in progress:
 | SQS           | ✅              |✅                 |                                                                       |
 | KMS           | ✅              |✅                 |                                                                       |
 | Secrets Manager | ✅            |✅                 |                                                                       |
+| Lambda        | ✅              |✅                 | InvokeWithResponseStream isn't generated - uses event-stream framing, not a plain request/response |
 | S3            |  🚫             | 🚫                | Consider using [awscr-s3](https://github.com/taylorfinnell/awscr-s3)  |
 
 For example usage, please look at [the integration tests](integration). If you need an API that is not listed here,

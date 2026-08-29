@@ -5,8 +5,9 @@ module Amazonite::Codegen::Service
     end
 
     @members : Array(Member)
+    @payload_member : String?
 
-    getter members
+    getter members, payload_member
 
     def initialize(name : String, json : JSON::Any, resolver : ShapeResolver)
       super(name, json)
@@ -18,6 +19,8 @@ module Amazonite::Codegen::Service
         required = (@required || [] of String).includes?(member_name)
         Member.new(member_name, required, member_json, resolver)
       end
+
+      @payload_member = json["payload"]?.try(&.as_s)
     end
   end
 end

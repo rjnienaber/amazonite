@@ -8,8 +8,9 @@ module Amazonite::Codegen::Bindings
     @api_version : String
     @module_name : String
     @module_alias : String
+    @protocol : String
 
-    getter lower_name, version, lower_version, api_version, aws_version, module_name, module_alias
+    getter lower_name, version, lower_version, api_version, aws_version, module_name, module_alias, protocol
 
     def initialize(description : Amazonite::Codegen::Service::Description)
       @lower_name = description.lower_name
@@ -19,6 +20,7 @@ module Amazonite::Codegen::Bindings
       @lower_version = description.lower_version
       @module_name = description.module_name
       @module_alias = description.module_alias
+      @protocol = description.metadata.protocol
     end
   end
 end
