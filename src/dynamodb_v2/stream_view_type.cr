@@ -30,5 +30,27 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'StreamViewType' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::StreamViewType::NewImage        then "NEW_IMAGE"
+      when ADDB::StreamViewType::OldImage        then "OLD_IMAGE"
+      when ADDB::StreamViewType::NewAndOldImages then "NEW_AND_OLD_IMAGES"
+      when ADDB::StreamViewType::KeysOnly        then "KEYS_ONLY"
+      else
+        raise Exception.new("unknown enum value for 'StreamViewType' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::StreamViewType?
+      case key
+      when "NEW_IMAGE"          then ADDB::StreamViewType::NewImage
+      when "OLD_IMAGE"          then ADDB::StreamViewType::OldImage
+      when "NEW_AND_OLD_IMAGES" then ADDB::StreamViewType::NewAndOldImages
+      when "KEYS_ONLY"          then ADDB::StreamViewType::KeysOnly
+      else
+        nil
+      end
+    end
   end
 end

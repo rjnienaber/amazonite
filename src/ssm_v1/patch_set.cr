@@ -24,5 +24,23 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'PatchSet' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when AS::PatchSet::Os          then "OS"
+      when AS::PatchSet::Application then "APPLICATION"
+      else
+        raise Exception.new("unknown enum value for 'PatchSet' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : AS::PatchSet?
+      case key
+      when "OS"          then AS::PatchSet::Os
+      when "APPLICATION" then AS::PatchSet::Application
+      else
+        nil
+      end
+    end
   end
 end

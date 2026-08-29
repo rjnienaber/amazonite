@@ -24,5 +24,23 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'AssociationSyncCompliance' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when AS::AssociationSyncCompliance::Auto   then "AUTO"
+      when AS::AssociationSyncCompliance::Manual then "MANUAL"
+      else
+        raise Exception.new("unknown enum value for 'AssociationSyncCompliance' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : AS::AssociationSyncCompliance?
+      case key
+      when "AUTO"   then AS::AssociationSyncCompliance::Auto
+      when "MANUAL" then AS::AssociationSyncCompliance::Manual
+      else
+        nil
+      end
+    end
   end
 end

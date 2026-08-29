@@ -17,12 +17,16 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "SSEDescription")]
     property sse_description : SSEDescription | Nil
 
+    @[JSON::Field(key: "VectorIndexes")]
+    property vector_indexes : Array(VectorIndexInfo) | Nil
+
     def initialize(
       @local_secondary_indexes : Array(LocalSecondaryIndexInfo) | Nil = nil,
       @global_secondary_indexes : Array(GlobalSecondaryIndexInfo) | Nil = nil,
       @stream_description : StreamSpecification | Nil = nil,
       @time_to_live_description : TimeToLiveDescription | Nil = nil,
       @sse_description : SSEDescription | Nil = nil,
+      @vector_indexes : Array(VectorIndexInfo) | Nil = nil,
     )
     end
   end

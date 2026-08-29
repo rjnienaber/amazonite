@@ -30,5 +30,27 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'IndexStatus' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::IndexStatus::Creating then "CREATING"
+      when ADDB::IndexStatus::Updating then "UPDATING"
+      when ADDB::IndexStatus::Deleting then "DELETING"
+      when ADDB::IndexStatus::Active   then "ACTIVE"
+      else
+        raise Exception.new("unknown enum value for 'IndexStatus' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::IndexStatus?
+      case key
+      when "CREATING" then ADDB::IndexStatus::Creating
+      when "UPDATING" then ADDB::IndexStatus::Updating
+      when "DELETING" then ADDB::IndexStatus::Deleting
+      when "ACTIVE"   then ADDB::IndexStatus::Active
+      else
+        nil
+      end
+    end
   end
 end

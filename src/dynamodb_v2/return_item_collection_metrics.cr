@@ -24,5 +24,23 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'ReturnItemCollectionMetrics' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::ReturnItemCollectionMetrics::Size then "SIZE"
+      when ADDB::ReturnItemCollectionMetrics::None then "NONE"
+      else
+        raise Exception.new("unknown enum value for 'ReturnItemCollectionMetrics' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::ReturnItemCollectionMetrics?
+      case key
+      when "SIZE" then ADDB::ReturnItemCollectionMetrics::Size
+      when "NONE" then ADDB::ReturnItemCollectionMetrics::None
+      else
+        nil
+      end
+    end
   end
 end

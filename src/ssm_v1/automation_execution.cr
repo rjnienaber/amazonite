@@ -38,6 +38,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "FailureMessage")]
     property failure_message : String | Nil
 
+    @[JSON::Field(key: "WarningMessage")]
+    property warning_message : String | Nil
+
     @[JSON::Field(key: "Mode", converter: AS::ExecutionMode)]
     property mode : ExecutionMode | Nil
 
@@ -86,6 +89,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "TriggeredAlarms")]
     property triggered_alarms : Array(AlarmStateInformation) | Nil
 
+    @[JSON::Field(key: "TargetLocationsURL")]
+    property target_locations_url : String | Nil
+
     @[JSON::Field(key: "AutomationSubtype", converter: AS::AutomationSubtype)]
     property automation_subtype : AutomationSubtype | Nil
 
@@ -119,6 +125,7 @@ module Amazonite::SsmV1
       @parameters : Hash(String, Array(String)) | Nil = nil,
       @outputs : Hash(String, Array(String)) | Nil = nil,
       @failure_message : String | Nil = nil,
+      @warning_message : String | Nil = nil,
       @mode : ExecutionMode | Nil = nil,
       @parent_automation_execution_id : String | Nil = nil,
       @executed_by : String | Nil = nil,
@@ -135,6 +142,7 @@ module Amazonite::SsmV1
       @progress_counters : ProgressCounters | Nil = nil,
       @alarm_configuration : AlarmConfiguration | Nil = nil,
       @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,
+      @target_locations_url : String | Nil = nil,
       @automation_subtype : AutomationSubtype | Nil = nil,
       @scheduled_time : Time | Nil = nil,
       @runbooks : Array(Runbook) | Nil = nil,

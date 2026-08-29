@@ -36,5 +36,31 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'ComplianceSeverity' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when AS::ComplianceSeverity::Critical      then "CRITICAL"
+      when AS::ComplianceSeverity::High          then "HIGH"
+      when AS::ComplianceSeverity::Medium        then "MEDIUM"
+      when AS::ComplianceSeverity::Low           then "LOW"
+      when AS::ComplianceSeverity::Informational then "INFORMATIONAL"
+      when AS::ComplianceSeverity::Unspecified   then "UNSPECIFIED"
+      else
+        raise Exception.new("unknown enum value for 'ComplianceSeverity' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : AS::ComplianceSeverity?
+      case key
+      when "CRITICAL"      then AS::ComplianceSeverity::Critical
+      when "HIGH"          then AS::ComplianceSeverity::High
+      when "MEDIUM"        then AS::ComplianceSeverity::Medium
+      when "LOW"           then AS::ComplianceSeverity::Low
+      when "INFORMATIONAL" then AS::ComplianceSeverity::Informational
+      when "UNSPECIFIED"   then AS::ComplianceSeverity::Unspecified
+      else
+        nil
+      end
+    end
   end
 end

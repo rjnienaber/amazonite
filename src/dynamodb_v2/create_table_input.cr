@@ -5,13 +5,13 @@ module Amazonite::DynamoDBV2
     include JSON::Serializable
 
     @[JSON::Field(key: "AttributeDefinitions")]
-    property attribute_definitions : Array(AttributeDefinition)
+    property attribute_definitions : Array(AttributeDefinition) | Nil
 
     @[JSON::Field(key: "TableName")]
     property table_name : String
 
     @[JSON::Field(key: "KeySchema")]
-    property key_schema : Array(KeySchemaElement)
+    property key_schema : Array(KeySchemaElement) | Nil
 
     @[JSON::Field(key: "LocalSecondaryIndexes")]
     property local_secondary_indexes : Array(LocalSecondaryIndex) | Nil
@@ -40,16 +40,28 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "DeletionProtectionEnabled")]
     property deletion_protection_enabled : Bool | Nil
 
+    @[JSON::Field(key: "WarmThroughput")]
+    property warm_throughput : WarmThroughput | Nil
+
     @[JSON::Field(key: "ResourcePolicy")]
     property resource_policy : String | Nil
 
     @[JSON::Field(key: "OnDemandThroughput")]
     property on_demand_throughput : OnDemandThroughput | Nil
 
+    @[JSON::Field(key: "GlobalTableSourceArn")]
+    property global_table_source_arn : String | Nil
+
+    @[JSON::Field(key: "GlobalTableSettingsReplicationMode", converter: ADDB::GlobalTableSettingsReplicationMode)]
+    property global_table_settings_replication_mode : GlobalTableSettingsReplicationMode | Nil
+
+    @[JSON::Field(key: "VectorIndexes")]
+    property vector_indexes : Array(VectorIndex) | Nil
+
     def initialize(
-      @attribute_definitions : Array(AttributeDefinition),
       @table_name : String,
-      @key_schema : Array(KeySchemaElement),
+      @attribute_definitions : Array(AttributeDefinition) | Nil = nil,
+      @key_schema : Array(KeySchemaElement) | Nil = nil,
       @local_secondary_indexes : Array(LocalSecondaryIndex) | Nil = nil,
       @global_secondary_indexes : Array(GlobalSecondaryIndex) | Nil = nil,
       @billing_mode : BillingMode | Nil = nil,
@@ -59,8 +71,12 @@ module Amazonite::DynamoDBV2
       @tags : Array(Tag) | Nil = nil,
       @table_class : TableClass | Nil = nil,
       @deletion_protection_enabled : Bool | Nil = nil,
+      @warm_throughput : WarmThroughput | Nil = nil,
       @resource_policy : String | Nil = nil,
       @on_demand_throughput : OnDemandThroughput | Nil = nil,
+      @global_table_source_arn : String | Nil = nil,
+      @global_table_settings_replication_mode : GlobalTableSettingsReplicationMode | Nil = nil,
+      @vector_indexes : Array(VectorIndex) | Nil = nil,
     )
     end
   end

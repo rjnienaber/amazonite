@@ -20,5 +20,19 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'ParameterType' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::ParameterType?
+      case key
+      when "String"       then AS::ParameterType::String
+      when "StringList"   then AS::ParameterType::StringList
+      when "SecureString" then AS::ParameterType::SecureString
+      else
+        nil
+      end
+    end
   end
 end

@@ -24,5 +24,23 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'S3SseAlgorithm' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::S3SseAlgorithm::Aes256 then "AES256"
+      when ADDB::S3SseAlgorithm::Kms    then "KMS"
+      else
+        raise Exception.new("unknown enum value for 'S3SseAlgorithm' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::S3SseAlgorithm?
+      case key
+      when "AES256" then ADDB::S3SseAlgorithm::Aes256
+      when "KMS"    then ADDB::S3SseAlgorithm::Kms
+      else
+        nil
+      end
+    end
   end
 end

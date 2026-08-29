@@ -24,5 +24,23 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'BillingMode' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::BillingMode::Provisioned   then "PROVISIONED"
+      when ADDB::BillingMode::PayPerRequest then "PAY_PER_REQUEST"
+      else
+        raise Exception.new("unknown enum value for 'BillingMode' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::BillingMode?
+      case key
+      when "PROVISIONED"     then ADDB::BillingMode::Provisioned
+      when "PAY_PER_REQUEST" then ADDB::BillingMode::PayPerRequest
+      else
+        nil
+      end
+    end
   end
 end

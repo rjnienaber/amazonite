@@ -52,5 +52,35 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'AutomationExecutionStatus' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::AutomationExecutionStatus?
+      case key
+      when "Pending"                        then AS::AutomationExecutionStatus::Pending
+      when "InProgress"                     then AS::AutomationExecutionStatus::InProgress
+      when "Waiting"                        then AS::AutomationExecutionStatus::Waiting
+      when "Success"                        then AS::AutomationExecutionStatus::Success
+      when "TimedOut"                       then AS::AutomationExecutionStatus::TimedOut
+      when "Cancelling"                     then AS::AutomationExecutionStatus::Cancelling
+      when "Cancelled"                      then AS::AutomationExecutionStatus::Cancelled
+      when "Failed"                         then AS::AutomationExecutionStatus::Failed
+      when "PendingApproval"                then AS::AutomationExecutionStatus::PendingApproval
+      when "Approved"                       then AS::AutomationExecutionStatus::Approved
+      when "Rejected"                       then AS::AutomationExecutionStatus::Rejected
+      when "Scheduled"                      then AS::AutomationExecutionStatus::Scheduled
+      when "RunbookInProgress"              then AS::AutomationExecutionStatus::RunbookInProgress
+      when "PendingChangeCalendarOverride"  then AS::AutomationExecutionStatus::PendingChangeCalendarOverride
+      when "ChangeCalendarOverrideApproved" then AS::AutomationExecutionStatus::ChangeCalendarOverrideApproved
+      when "ChangeCalendarOverrideRejected" then AS::AutomationExecutionStatus::ChangeCalendarOverrideRejected
+      when "CompletedWithSuccess"           then AS::AutomationExecutionStatus::CompletedWithSuccess
+      when "CompletedWithFailure"           then AS::AutomationExecutionStatus::CompletedWithFailure
+      when "Exited"                         then AS::AutomationExecutionStatus::Exited
+      else
+        nil
+      end
+    end
   end
 end

@@ -67,6 +67,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "AlarmConfiguration")]
     property alarm_configuration : AlarmConfiguration | Nil
 
+    @[JSON::Field(key: "AssociationDispatchAssumeRole")]
+    property association_dispatch_assume_role : String | Nil
+
     def initialize(
       @name : String,
       @document_version : String | Nil = nil,
@@ -89,6 +92,7 @@ module Amazonite::SsmV1
       @target_maps : Array(Hash(String, Array(String))) | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
       @alarm_configuration : AlarmConfiguration | Nil = nil,
+      @association_dispatch_assume_role : String | Nil = nil,
     )
     end
   end

@@ -27,5 +27,25 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'InputFormat' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::InputFormat::DynamodbJson then "DYNAMODB_JSON"
+      when ADDB::InputFormat::Ion          then "ION"
+      when ADDB::InputFormat::Csv          then "CSV"
+      else
+        raise Exception.new("unknown enum value for 'InputFormat' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::InputFormat?
+      case key
+      when "DYNAMODB_JSON" then ADDB::InputFormat::DynamodbJson
+      when "ION"           then ADDB::InputFormat::Ion
+      when "CSV"           then ADDB::InputFormat::Csv
+      else
+        nil
+      end
+    end
   end
 end

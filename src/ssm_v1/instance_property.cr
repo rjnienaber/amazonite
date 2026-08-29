@@ -83,6 +83,12 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "SourceType", converter: AS::SourceType)]
     property source_type : SourceType | Nil
 
+    @[JSON::Field(key: "SourceLocation")]
+    property source_location : String | Nil
+
+    @[JSON::Field(key: "AvailabilityZone")]
+    property availability_zone : String | Nil
+
     def initialize(
       @name : String | Nil = nil,
       @instance_id : String | Nil = nil,
@@ -110,6 +116,8 @@ module Amazonite::SsmV1
       @association_overview : InstanceAggregatedAssociationOverview | Nil = nil,
       @source_id : String | Nil = nil,
       @source_type : SourceType | Nil = nil,
+      @source_location : String | Nil = nil,
+      @availability_zone : String | Nil = nil,
     )
     end
   end

@@ -24,5 +24,23 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'ResourceType' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when AS::ResourceType::ManagedInstance then "ManagedInstance"
+      when AS::ResourceType::Ec2Instance     then "EC2Instance"
+      else
+        raise Exception.new("unknown enum value for 'ResourceType' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : AS::ResourceType?
+      case key
+      when "ManagedInstance" then AS::ResourceType::ManagedInstance
+      when "EC2Instance"     then AS::ResourceType::Ec2Instance
+      else
+        nil
+      end
+    end
   end
 end

@@ -20,5 +20,19 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'DescribeActivationsFilterKeys' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::DescribeActivationsFilterKeys?
+      case key
+      when "ActivationIds"       then AS::DescribeActivationsFilterKeys::ActivationIds
+      when "DefaultInstanceName" then AS::DescribeActivationsFilterKeys::DefaultInstanceName
+      when "IamRole"             then AS::DescribeActivationsFilterKeys::IamRole
+      else
+        nil
+      end
+    end
   end
 end

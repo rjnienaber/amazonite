@@ -24,5 +24,23 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'PatchAction' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when AS::PatchAction::AllowAsDependency then "ALLOW_AS_DEPENDENCY"
+      when AS::PatchAction::Block             then "BLOCK"
+      else
+        raise Exception.new("unknown enum value for 'PatchAction' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : AS::PatchAction?
+      case key
+      when "ALLOW_AS_DEPENDENCY" then AS::PatchAction::AllowAsDependency
+      when "BLOCK"               then AS::PatchAction::Block
+      else
+        nil
+      end
+    end
   end
 end

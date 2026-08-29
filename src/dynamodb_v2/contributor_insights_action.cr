@@ -24,5 +24,23 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'ContributorInsightsAction' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::ContributorInsightsAction::Enable  then "ENABLE"
+      when ADDB::ContributorInsightsAction::Disable then "DISABLE"
+      else
+        raise Exception.new("unknown enum value for 'ContributorInsightsAction' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::ContributorInsightsAction?
+      case key
+      when "ENABLE"  then ADDB::ContributorInsightsAction::Enable
+      when "DISABLE" then ADDB::ContributorInsightsAction::Disable
+      else
+        nil
+      end
+    end
   end
 end

@@ -27,5 +27,25 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'ReturnConsumedCapacity' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::ReturnConsumedCapacity::Indexes then "INDEXES"
+      when ADDB::ReturnConsumedCapacity::Total   then "TOTAL"
+      when ADDB::ReturnConsumedCapacity::None    then "NONE"
+      else
+        raise Exception.new("unknown enum value for 'ReturnConsumedCapacity' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::ReturnConsumedCapacity?
+      case key
+      when "INDEXES" then ADDB::ReturnConsumedCapacity::Indexes
+      when "TOTAL"   then ADDB::ReturnConsumedCapacity::Total
+      when "NONE"    then ADDB::ReturnConsumedCapacity::None
+      else
+        nil
+      end
+    end
   end
 end

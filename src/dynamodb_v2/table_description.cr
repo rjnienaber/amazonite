@@ -59,6 +59,12 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "Replicas")]
     property replicas : Array(ReplicaDescription) | Nil
 
+    @[JSON::Field(key: "GlobalTableWitnesses")]
+    property global_table_witnesses : Array(GlobalTableWitnessDescription) | Nil
+
+    @[JSON::Field(key: "GlobalTableSettingsReplicationMode", converter: ADDB::GlobalTableSettingsReplicationMode)]
+    property global_table_settings_replication_mode : GlobalTableSettingsReplicationMode | Nil
+
     @[JSON::Field(key: "RestoreSummary")]
     property restore_summary : RestoreSummary | Nil
 
@@ -76,6 +82,15 @@ module Amazonite::DynamoDBV2
 
     @[JSON::Field(key: "OnDemandThroughput")]
     property on_demand_throughput : OnDemandThroughput | Nil
+
+    @[JSON::Field(key: "WarmThroughput")]
+    property warm_throughput : TableWarmThroughputDescription | Nil
+
+    @[JSON::Field(key: "MultiRegionConsistency", converter: ADDB::MultiRegionConsistency)]
+    property multi_region_consistency : MultiRegionConsistency | Nil
+
+    @[JSON::Field(key: "VectorIndexes")]
+    property vector_indexes : Array(VectorIndexDescription) | Nil
 
     def initialize(
       @attribute_definitions : Array(AttributeDefinition) | Nil = nil,
@@ -96,12 +111,17 @@ module Amazonite::DynamoDBV2
       @latest_stream_arn : String | Nil = nil,
       @global_table_version : String | Nil = nil,
       @replicas : Array(ReplicaDescription) | Nil = nil,
+      @global_table_witnesses : Array(GlobalTableWitnessDescription) | Nil = nil,
+      @global_table_settings_replication_mode : GlobalTableSettingsReplicationMode | Nil = nil,
       @restore_summary : RestoreSummary | Nil = nil,
       @sse_description : SSEDescription | Nil = nil,
       @archival_summary : ArchivalSummary | Nil = nil,
       @table_class_summary : TableClassSummary | Nil = nil,
       @deletion_protection_enabled : Bool | Nil = nil,
       @on_demand_throughput : OnDemandThroughput | Nil = nil,
+      @warm_throughput : TableWarmThroughputDescription | Nil = nil,
+      @multi_region_consistency : MultiRegionConsistency | Nil = nil,
+      @vector_indexes : Array(VectorIndexDescription) | Nil = nil,
     )
     end
   end

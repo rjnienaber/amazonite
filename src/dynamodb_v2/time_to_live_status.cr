@@ -30,5 +30,27 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'TimeToLiveStatus' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::TimeToLiveStatus::Enabling  then "ENABLING"
+      when ADDB::TimeToLiveStatus::Disabling then "DISABLING"
+      when ADDB::TimeToLiveStatus::Enabled   then "ENABLED"
+      when ADDB::TimeToLiveStatus::Disabled  then "DISABLED"
+      else
+        raise Exception.new("unknown enum value for 'TimeToLiveStatus' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::TimeToLiveStatus?
+      case key
+      when "ENABLING"  then ADDB::TimeToLiveStatus::Enabling
+      when "DISABLING" then ADDB::TimeToLiveStatus::Disabling
+      when "ENABLED"   then ADDB::TimeToLiveStatus::Enabled
+      when "DISABLED"  then ADDB::TimeToLiveStatus::Disabled
+      else
+        nil
+      end
+    end
   end
 end

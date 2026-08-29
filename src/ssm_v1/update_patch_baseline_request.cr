@@ -37,6 +37,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "Sources")]
     property sources : Array(PatchSource) | Nil
 
+    @[JSON::Field(key: "AvailableSecurityUpdatesComplianceStatus", converter: AS::PatchComplianceStatus)]
+    property available_security_updates_compliance_status : PatchComplianceStatus | Nil
+
     @[JSON::Field(key: "Replace")]
     property replace : Bool | Nil
 
@@ -52,6 +55,7 @@ module Amazonite::SsmV1
       @rejected_patches_action : PatchAction | Nil = nil,
       @description : String | Nil = nil,
       @sources : Array(PatchSource) | Nil = nil,
+      @available_security_updates_compliance_status : PatchComplianceStatus | Nil = nil,
       @replace : Bool | Nil = nil,
     )
     end

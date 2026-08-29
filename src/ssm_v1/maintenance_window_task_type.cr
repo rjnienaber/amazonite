@@ -30,5 +30,27 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'MaintenanceWindowTaskType' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when AS::MaintenanceWindowTaskType::RunCommand    then "RUN_COMMAND"
+      when AS::MaintenanceWindowTaskType::Automation    then "AUTOMATION"
+      when AS::MaintenanceWindowTaskType::StepFunctions then "STEP_FUNCTIONS"
+      when AS::MaintenanceWindowTaskType::Lambda        then "LAMBDA"
+      else
+        raise Exception.new("unknown enum value for 'MaintenanceWindowTaskType' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : AS::MaintenanceWindowTaskType?
+      case key
+      when "RUN_COMMAND"    then AS::MaintenanceWindowTaskType::RunCommand
+      when "AUTOMATION"     then AS::MaintenanceWindowTaskType::Automation
+      when "STEP_FUNCTIONS" then AS::MaintenanceWindowTaskType::StepFunctions
+      when "LAMBDA"         then AS::MaintenanceWindowTaskType::Lambda
+      else
+        nil
+      end
+    end
   end
 end

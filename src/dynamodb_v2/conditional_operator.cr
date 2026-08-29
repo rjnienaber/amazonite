@@ -24,5 +24,23 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'ConditionalOperator' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::ConditionalOperator::And then "AND"
+      when ADDB::ConditionalOperator::Or  then "OR"
+      else
+        raise Exception.new("unknown enum value for 'ConditionalOperator' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::ConditionalOperator?
+      case key
+      when "AND" then ADDB::ConditionalOperator::And
+      when "OR"  then ADDB::ConditionalOperator::Or
+      else
+        nil
+      end
+    end
   end
 end

@@ -92,6 +92,9 @@ module Amazonite::SsmV1
     @[JSON::Field(key: "TriggeredAlarms")]
     property triggered_alarms : Array(AlarmStateInformation) | Nil
 
+    @[JSON::Field(key: "AssociationDispatchAssumeRole")]
+    property association_dispatch_assume_role : String | Nil
+
     def initialize(
       @name : String | Nil = nil,
       @instance_id : String | Nil = nil,
@@ -122,6 +125,7 @@ module Amazonite::SsmV1
       @target_maps : Array(Hash(String, Array(String))) | Nil = nil,
       @alarm_configuration : AlarmConfiguration | Nil = nil,
       @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,
+      @association_dispatch_assume_role : String | Nil = nil,
     )
     end
   end

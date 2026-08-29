@@ -8,10 +8,10 @@ module Amazonite::DynamoDBV2
     property table_name : String
 
     @[JSON::Field(key: "AttributeDefinitions")]
-    property attribute_definitions : Array(AttributeDefinition)
+    property attribute_definitions : Array(AttributeDefinition) = [] of AttributeDefinition
 
     @[JSON::Field(key: "KeySchema")]
-    property key_schema : Array(KeySchemaElement)
+    property key_schema : Array(KeySchemaElement) = [] of KeySchemaElement
 
     @[JSON::Field(key: "BillingMode", converter: ADDB::BillingMode)]
     property billing_mode : BillingMode | Nil
@@ -28,6 +28,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "GlobalSecondaryIndexes")]
     property global_secondary_indexes : Array(GlobalSecondaryIndex) | Nil
 
+    @[JSON::Field(key: "VectorIndexes")]
+    property vector_indexes : Array(VectorIndex) | Nil
+
     def initialize(
       @table_name : String,
       @attribute_definitions : Array(AttributeDefinition),
@@ -37,6 +40,7 @@ module Amazonite::DynamoDBV2
       @on_demand_throughput : OnDemandThroughput | Nil = nil,
       @sse_specification : SSESpecification | Nil = nil,
       @global_secondary_indexes : Array(GlobalSecondaryIndex) | Nil = nil,
+      @vector_indexes : Array(VectorIndex) | Nil = nil,
     )
     end
   end

@@ -27,5 +27,25 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'ExportStatus' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::ExportStatus::InProgress then "IN_PROGRESS"
+      when ADDB::ExportStatus::Completed  then "COMPLETED"
+      when ADDB::ExportStatus::Failed     then "FAILED"
+      else
+        raise Exception.new("unknown enum value for 'ExportStatus' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::ExportStatus?
+      case key
+      when "IN_PROGRESS" then ADDB::ExportStatus::InProgress
+      when "COMPLETED"   then ADDB::ExportStatus::Completed
+      when "FAILED"      then ADDB::ExportStatus::Failed
+      else
+        nil
+      end
+    end
   end
 end

@@ -34,8 +34,23 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "DeletionProtectionEnabled")]
     property deletion_protection_enabled : Bool | Nil
 
+    @[JSON::Field(key: "MultiRegionConsistency", converter: ADDB::MultiRegionConsistency)]
+    property multi_region_consistency : MultiRegionConsistency | Nil
+
+    @[JSON::Field(key: "GlobalTableWitnessUpdates")]
+    property global_table_witness_updates : Array(GlobalTableWitnessGroupUpdate) | Nil
+
     @[JSON::Field(key: "OnDemandThroughput")]
     property on_demand_throughput : OnDemandThroughput | Nil
+
+    @[JSON::Field(key: "WarmThroughput")]
+    property warm_throughput : WarmThroughput | Nil
+
+    @[JSON::Field(key: "GlobalTableSettingsReplicationMode", converter: ADDB::GlobalTableSettingsReplicationMode)]
+    property global_table_settings_replication_mode : GlobalTableSettingsReplicationMode | Nil
+
+    @[JSON::Field(key: "VectorIndexUpdates")]
+    property vector_index_updates : Array(VectorIndexUpdate) | Nil
 
     def initialize(
       @table_name : String,
@@ -48,7 +63,12 @@ module Amazonite::DynamoDBV2
       @replica_updates : Array(ReplicationGroupUpdate) | Nil = nil,
       @table_class : TableClass | Nil = nil,
       @deletion_protection_enabled : Bool | Nil = nil,
+      @multi_region_consistency : MultiRegionConsistency | Nil = nil,
+      @global_table_witness_updates : Array(GlobalTableWitnessGroupUpdate) | Nil = nil,
       @on_demand_throughput : OnDemandThroughput | Nil = nil,
+      @warm_throughput : WarmThroughput | Nil = nil,
+      @global_table_settings_replication_mode : GlobalTableSettingsReplicationMode | Nil = nil,
+      @vector_index_updates : Array(VectorIndexUpdate) | Nil = nil,
     )
     end
   end

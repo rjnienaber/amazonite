@@ -23,6 +23,9 @@ module Amazonite::DynamoDBV2
     @[JSON::Field(key: "GlobalSecondaryIndexes")]
     property global_secondary_indexes : Hash(String, Capacity) | Nil
 
+    @[JSON::Field(key: "VectorIndexes")]
+    property vector_indexes : Hash(String, VectorCapacity) | Nil
+
     def initialize(
       @table_name : String | Nil = nil,
       @capacity_units : Float64 | Nil = nil,
@@ -31,6 +34,7 @@ module Amazonite::DynamoDBV2
       @table : Capacity | Nil = nil,
       @local_secondary_indexes : Hash(String, Capacity) | Nil = nil,
       @global_secondary_indexes : Hash(String, Capacity) | Nil = nil,
+      @vector_indexes : Hash(String, VectorCapacity) | Nil = nil,
     )
     end
   end

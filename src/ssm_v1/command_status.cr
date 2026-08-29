@@ -28,5 +28,23 @@ module Amazonite::SsmV1
         raise Exception.new("unknown enum value for 'CommandStatus' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::CommandStatus?
+      case key
+      when "Pending"    then AS::CommandStatus::Pending
+      when "InProgress" then AS::CommandStatus::InProgress
+      when "Success"    then AS::CommandStatus::Success
+      when "Cancelled"  then AS::CommandStatus::Cancelled
+      when "Failed"     then AS::CommandStatus::Failed
+      when "TimedOut"   then AS::CommandStatus::TimedOut
+      when "Cancelling" then AS::CommandStatus::Cancelling
+      else
+        nil
+      end
+    end
   end
 end

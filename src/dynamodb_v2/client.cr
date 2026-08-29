@@ -274,6 +274,12 @@ module Amazonite::DynamoDBV2
       Core::ParsedResponse(ADDB::ScanOutput).new(response)
     end
 
+    def search_vectors(input : ADDB::SearchVectorsInput) : Core::ParsedResponse(ADDB::SearchVectorsOutput)
+      Log.info { "performing 'SearchVectors' operation" }
+      response = post("SearchVectors", "/", input.to_json)
+      Core::ParsedResponse(ADDB::SearchVectorsOutput).new(response)
+    end
+
     def tag_resource(input : ADDB::TagResourceInput) : Core::Response
       Log.info { "performing 'TagResource' operation" }
       response = post("TagResource", "/", input.to_json)

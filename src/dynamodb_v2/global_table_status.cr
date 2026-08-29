@@ -30,5 +30,27 @@ module Amazonite::DynamoDBV2
         raise Exception.new("unknown enum value for 'GlobalTableStatus' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String
+      case self
+      when ADDB::GlobalTableStatus::Creating then "CREATING"
+      when ADDB::GlobalTableStatus::Active   then "ACTIVE"
+      when ADDB::GlobalTableStatus::Deleting then "DELETING"
+      when ADDB::GlobalTableStatus::Updating then "UPDATING"
+      else
+        raise Exception.new("unknown enum value for 'GlobalTableStatus' when serializing to json: '#{self}'")
+      end
+    end
+
+    def self.from_json_object_key?(key : String) : ADDB::GlobalTableStatus?
+      case key
+      when "CREATING" then ADDB::GlobalTableStatus::Creating
+      when "ACTIVE"   then ADDB::GlobalTableStatus::Active
+      when "DELETING" then ADDB::GlobalTableStatus::Deleting
+      when "UPDATING" then ADDB::GlobalTableStatus::Updating
+      else
+        nil
+      end
+    end
   end
 end
