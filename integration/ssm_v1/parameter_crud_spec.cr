@@ -32,7 +32,7 @@ describe "SsmV1: basic crud operations" do
     response.http.status_code.should eq(200)
 
     response.result.version.should eq(1)
-    response.result.tier.should eq(aws_value(SSM::ParameterTier::Standard))
+    response.result.tier.should eq(SSM::ParameterTier::Standard)
   end
 
   it "gets a parameter" do
@@ -52,7 +52,7 @@ describe "SsmV1: basic crud operations" do
     response.http.status_code.should eq(200)
 
     response.result.version.should eq(2)
-    response.result.tier.should eq(aws_value(SSM::ParameterTier::Standard))
+    response.result.tier.should eq(SSM::ParameterTier::Standard)
   end
 
   it "deletes the parameter" do

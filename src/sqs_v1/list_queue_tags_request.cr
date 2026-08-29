@@ -1,0 +1,13 @@
+module Amazonite::SqsV1
+  class ListQueueTagsRequest
+    include JSON::Serializable
+
+    @[JSON::Field(key: "QueueUrl")]
+    property queue_url : String
+
+    def initialize(
+      @queue_url : String,
+    )
+    end
+  end
+end

@@ -15,6 +15,8 @@ module Amazonite::Codegen
   TARGETS = {
     "dynamodb" => "2",
     "ssm"      => "1",
+    "sqs"      => "1",
+    "kms"      => "1",
   }
 
   def self.main

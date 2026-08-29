@@ -22,5 +22,22 @@ module {{ service.module_name }}
         raise Exception.new("unknown enum value for '{{ shape.name }}' when deserializing from json: '#{value}'")
       end
     end
+
+    def to_json_object_key : String{% if shape.has_aws_mappings %}
+      case self
+      {% for value in shape.aws_mappings %}when {{ service.module_alias }}::{{ value[0] }}{{ value[1] }} then "{{ value[2] }}"
+      {% endfor %}else
+        raise Exception.new("unknown enum value for '{{ shape.name }}' when serializing to json: '#{self}'")
+      end{% else %}
+      to_s{% endif %}
+    end
+
+    def self.from_json_object_key?(key : String) : {{ service.module_alias }}::{{ shape.name }}?
+      case key
+      {% for value in shape.crystal_mappings %}when "{{ value[0] }}"{{ value[1] }} then {{ service.module_alias }}::{{ value[2] }}
+      {% endfor %}else
+        nil
+      end
+    end
   end
 end

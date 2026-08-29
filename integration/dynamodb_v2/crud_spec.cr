@@ -131,11 +131,11 @@ describe "DynamoDB: basic crud operations" do
 
   it "throws a dynamodb error" do
     item = DB::UpdateItemInput.new("notable", key, {"Rating" => DB::AttributeValueUpdate.new})
-    type = target_aws? ? AC::ValidationException : DB::ResourceNotFoundException
+    type = AC::ValidationException
     message = if target_aws?
                 "One or more parameter values were invalid: Only DELETE action is allowed when no attribute value is specified"
               else
-                "Cannot do operations on a non-existent table"
+                "AttributeUpdates PUT requires Value"
               end
 
     e = expect_raises(type, message) { client.update_item(item) }
