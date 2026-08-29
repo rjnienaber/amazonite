@@ -1,0 +1,37 @@
+private alias AEB = Amazonite::EventBridgeV1
+private alias Core = Amazonite::Core
+
+module Amazonite::EventBridgeV1
+  class DeleteConnectionResponse
+    include JSON::Serializable
+
+    # The ARN of the connection that was deleted.
+    @[JSON::Field(key: "ConnectionArn")]
+    property connection_arn : String | Nil
+
+    # The state of the connection before it was deleted.
+    @[JSON::Field(key: "ConnectionState", converter: AEB::ConnectionState)]
+    property connection_state : ConnectionState | Nil
+
+    # A time stamp for the time that the connection was created.
+    @[JSON::Field(key: "CreationTime", converter: Core::AWSEpochConverter)]
+    property creation_time : Time | Nil
+
+    # A time stamp for the time that the connection was last modified before it was deleted.
+    @[JSON::Field(key: "LastModifiedTime", converter: Core::AWSEpochConverter)]
+    property last_modified_time : Time | Nil
+
+    # A time stamp for the time that the connection was last authorized before it wa deleted.
+    @[JSON::Field(key: "LastAuthorizedTime", converter: Core::AWSEpochConverter)]
+    property last_authorized_time : Time | Nil
+
+    def initialize(
+      @connection_arn : String | Nil = nil,
+      @connection_state : ConnectionState | Nil = nil,
+      @creation_time : Time | Nil = nil,
+      @last_modified_time : Time | Nil = nil,
+      @last_authorized_time : Time | Nil = nil,
+    )
+    end
+  end
+end
