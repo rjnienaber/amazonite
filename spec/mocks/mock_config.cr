@@ -25,4 +25,13 @@ class MockConfig < Amazonite::Core::Config
     test_config_filepath = MockIniParser.test_config_filepath
     MockIniParser.new(profile, env, test_credential_filepath, test_config_filepath)
   end
+
+  protected def build_provider_chain : Amazonite::Core::CredentialsProviderChain
+    Amazonite::Core::CredentialsProviderChain.new([
+      Amazonite::Core::AssumeRoleCredentialsProvider.new(@ini_parser, @env),
+      Amazonite::Core::SsoCredentialsProvider.new(@ini_parser, @env, MockIniParser.test_sso_cache_dir),
+      Amazonite::Core::ContainerCredentialsProvider.new(@env),
+      Amazonite::Core::InstanceMetadataCredentialsProvider.new(@env),
+    ] of Amazonite::Core::CredentialsProvider)
+  end
 end

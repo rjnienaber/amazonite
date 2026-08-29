@@ -1,0 +1,6 @@
+{
+  "startUrl": "https://expired.awsapps.com/start",
+  "region": "us-east-1",
+  "accessToken": "expired-access-token",
+  "expiresAt": "2000-01-01T00:00:00Z"
+}

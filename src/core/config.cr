@@ -124,6 +124,7 @@ module Amazonite::Core
     protected def build_provider_chain : CredentialsProviderChain
       CredentialsProviderChain.new([
         AssumeRoleCredentialsProvider.new(@ini_parser, @env),
+        SsoCredentialsProvider.new(@ini_parser, @env),
         ContainerCredentialsProvider.new(@env),
         InstanceMetadataCredentialsProvider.new(@env),
       ] of CredentialsProvider)

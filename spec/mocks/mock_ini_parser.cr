@@ -8,6 +8,10 @@ class MockIniParser < Amazonite::Core::IniParser
     File.join(Dir.current, "spec", "fixtures", "iniparser", "config")
   end
 
+  def self.test_sso_cache_dir
+    Path.new(Dir.current) / "spec" / "fixtures" / "sso" / "cache"
+  end
+
   protected def aws_dir : Path
     Path.new(Dir.current) / "spec" / "fixtures" / "iniparser"
   end

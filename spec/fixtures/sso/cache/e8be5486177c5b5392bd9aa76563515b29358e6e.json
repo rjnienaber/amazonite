@@ -1,0 +1,6 @@
+{
+  "startUrl": "https://example.awsapps.com/start",
+  "region": "us-east-1",
+  "accessToken": "legacy-access-token",
+  "expiresAt": "2099-01-01T00:00:00Z"
+}

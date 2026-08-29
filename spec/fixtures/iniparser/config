@@ -29,3 +29,15 @@ sso_role_name = ExampleRole
 [sso-session example-sso-session]
 sso_start_url = https://example.awsapps.com/start
 sso_region = us-east-1
+
+[profile sso-expired-profile]
+sso_start_url = https://expired.awsapps.com/start
+sso_region = us-east-1
+sso_account_id = 123456789012
+sso_role_name = ExampleRole
+
+[profile sso-missing-cache-profile]
+sso_start_url = https://no-cache-file.awsapps.com/start
+sso_region = us-east-1
+sso_account_id = 123456789012
+sso_role_name = ExampleRole
