@@ -27,7 +27,7 @@ model = DB::CreateTableInput.new(
   provisioned_throughput: DB::ProvisionedThroughput.new(10, 5),
 )
 
-client = DB::Client.new # read credentials from environment variables
+client = DB::Client.new # resolves credentials from the default provider chain
 response = client.create_table(model)
 
 puts response.http.status_code # 200
@@ -42,6 +42,22 @@ Output:
 Music
 Artist
 ```
+
+## Credentials
+
+`Client.new`/`Config.new` accept `access_key_id`/`secret_access_key`/`region` directly, but if you leave
+them out, credentials are resolved automatically from the following sources, in order:
+
+1. Environment variables (`AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY`/`AWS_SESSION_TOKEN`)
+2. A static profile in `~/.aws/credentials` (via `AWS_PROFILE` or `Config.new(profile: "...")`)
+3. `role_arn`/`source_profile` chaining in `~/.aws/config` (calls STS `AssumeRole`)
+4. An SSO cached token from `aws sso login` (calls SSO `GetRoleCredentials`)
+5. ECS/Fargate container credentials (`AWS_CONTAINER_CREDENTIALS_RELATIVE_URI`/`_FULL_URI`)
+6. EC2 instance metadata (IMDSv2) - set `AWS_EC2_METADATA_DISABLED=true` to skip this check on
+   non-EC2 hosts (e.g. local development, CI) so it doesn't add latency to every client
+
+Temporary credentials (from AssumeRole, SSO, ECS, or EC2) are refreshed automatically as they near
+expiry.
 
 ## Supported APIs
 API types that can be generated:
