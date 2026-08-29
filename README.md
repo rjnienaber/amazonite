@@ -3,6 +3,8 @@
 
 Amazonite is an unofficial AWS SDK for Crystal.
 
+> Amazonite is not affiliated with, endorsed by, or sponsored by Amazon.com, Inc. or its affiliates. "AWS" and "Amazon" are trademarks of Amazon.com, Inc. or its affiliates.
+
 ## Usage
 
 Here's an example that creates a table in DynamoDB:
