@@ -10,7 +10,7 @@ module Amazonite::BackupGatewayV2
 
     def initialize(
       @resource_arn : String,
-      @tag_keys : Array(String)
+      @tag_keys : Array(String),
     )
     end
   end

@@ -6,7 +6,7 @@ module {{ service.module_name }}
 
     def self.to_json(e : {{ shape.name }}, json : JSON::Builder) : Nil{% if shape.has_aws_mappings %}
       value = case e
-              {% for value in shape.aws_mappings %}when {{ service.module_alias }}::{{ value[0] }}{{ value[1] }} then "{{ value[2] }}"
+              {% for value in shape.aws_mappings %}when {{ service.module_alias }}::{{ value[0] }} then "{{ value[1] }}"
               {% endfor %}else
                 raise Exception.new("unknown enum value for '{{ shape.name }}' when serializing to json: '#{e}'")
               end
@@ -17,7 +17,7 @@ module {{ service.module_name }}
     def self.from_json(pull : JSON::PullParser) : {{ service.module_alias }}::{{ shape.name }}
       value = pull.read_string
       case value
-      {% for value in shape.crystal_mappings %}when "{{ value[0] }}"{{ value[1] }} then {{ service.module_alias }}::{{ value[2] }}
+      {% for value in shape.crystal_mappings %}when "{{ value[0] }}" then {{ service.module_alias }}::{{ value[1] }}
       {% endfor %}else
         raise Exception.new("unknown enum value for '{{ shape.name }}' when deserializing from json: '#{value}'")
       end
@@ -25,7 +25,7 @@ module {{ service.module_name }}
 
     def to_json_object_key : String{% if shape.has_aws_mappings %}
       case self
-      {% for value in shape.aws_mappings %}when {{ service.module_alias }}::{{ value[0] }}{{ value[1] }} then "{{ value[2] }}"
+      {% for value in shape.aws_mappings %}when {{ service.module_alias }}::{{ value[0] }} then "{{ value[1] }}"
       {% endfor %}else
         raise Exception.new("unknown enum value for '{{ shape.name }}' when serializing to json: '#{self}'")
       end{% else %}
@@ -34,7 +34,7 @@ module {{ service.module_name }}
 
     def self.from_json_object_key?(key : String) : {{ service.module_alias }}::{{ shape.name }}?
       case key
-      {% for value in shape.crystal_mappings %}when "{{ value[0] }}"{{ value[1] }} then {{ service.module_alias }}::{{ value[2] }}
+      {% for value in shape.crystal_mappings %}when "{{ value[0] }}" then {{ service.module_alias }}::{{ value[1] }}
       {% endfor %}else
         nil
       end

@@ -1,4 +1,5 @@
 require "crinja"
+require "compiler/crystal/formatter"
 
 module Amazonite::Codegen
   class Render
@@ -42,7 +43,7 @@ module Amazonite::Codegen
 
     private def render(template_name : String, bindings : Crinja::Variables)
       template = template_env.get_template("#{template_name}.j2")
-      template.render(bindings).strip + "\n"
+      Crystal.format(template.render(bindings).strip + "\n")
     end
 
     private def template_env

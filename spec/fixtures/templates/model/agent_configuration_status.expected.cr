@@ -14,7 +14,7 @@ module Amazonite::ApplicationDiscoveryServiceV2
     def initialize(
       @agent_id : String | Nil = nil,
       @operation_succeeded : Bool | Nil = nil,
-      @description : String | Nil = nil
+      @description : String | Nil = nil,
     )
     end
   end

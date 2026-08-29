@@ -9,7 +9,7 @@
     property {{ member.snake_case_name }} : {{ member.type }}
 {% endfor %}
     def initialize{% if shape.has_parameters %}({% for parameter in shape.parameters %}
-      @{{ parameter.name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %}{% if loop.revindex0 != 0 %},{% endif %}{% endfor %}
+      @{{ parameter.name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %},{% endfor %}
     ){% endif %}
     end
   end
