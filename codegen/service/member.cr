@@ -11,8 +11,9 @@ module Amazonite::Codegen::Service
     @shape_name : String
     @location : String?
     @location_name : String?
+    @documentation : String?
 
-    getter name, shape_name, location, location_name
+    getter name, shape_name, location, location_name, documentation
 
     def initialize(@name : String, @required : Bool, json : JSON::Any, @resolver : ShapeResolver)
       Utils.verify_keys(KNOWN_KEYS, json)
@@ -20,6 +21,7 @@ module Amazonite::Codegen::Service
       @shape_name = name[0].upcase + name[1..]
       @location = json["location"]?.try(&.as_s)
       @location_name = json["locationName"]?.try(&.as_s)
+      @documentation = json["documentation"]?.try(&.as_s)
     end
 
     # For a "uri"/"querystring"/"header" member, the wire name to use - the

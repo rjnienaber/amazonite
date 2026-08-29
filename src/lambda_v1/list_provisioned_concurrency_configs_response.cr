@@ -2,9 +2,11 @@ module Amazonite::LambdaV1
   class ListProvisionedConcurrencyConfigsResponse
     include JSON::Serializable
 
+    # A list of provisioned concurrency configurations.
     @[JSON::Field(key: "ProvisionedConcurrencyConfigs")]
     property provisioned_concurrency_configs : Array(ProvisionedConcurrencyConfigListItem) | Nil
 
+    # The pagination token that's included if more results are available.
     @[JSON::Field(key: "NextMarker")]
     property next_marker : String | Nil
 

@@ -1,10 +1,13 @@
 module Amazonite::LambdaV1
+  # Input information for an event.
   class EventInput
     include JSON::Serializable
 
+    # The input payload.
     @[JSON::Field(key: "Payload")]
     property payload : String | Nil
 
+    # Indicates if the error payload was truncated due to size limits.
     @[JSON::Field(key: "Truncated")]
     property truncated : Bool | Nil
 

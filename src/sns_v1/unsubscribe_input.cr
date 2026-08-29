@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for Unsubscribe action.
   class UnsubscribeInput
+    # The ARN of the subscription to be deleted.
     property subscription_arn : String
 
     def initialize(

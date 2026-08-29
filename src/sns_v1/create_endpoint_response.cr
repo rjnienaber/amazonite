@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Response from CreateEndpoint action.
   class CreateEndpointResponse
+    # EndpointArn returned from CreateEndpoint action.
     property endpoint_arn : String | Nil
 
     def initialize(

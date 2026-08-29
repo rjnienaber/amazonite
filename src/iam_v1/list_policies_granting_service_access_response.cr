@@ -2,10 +2,18 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class ListPoliciesGrantingServiceAccessResponse
+    # A `ListPoliciesGrantingServiceAccess` object that contains details about the permissions
+    # policies attached to the specified identity (user, group, or role).
     property policies_granting_service_access : Array(ListPoliciesGrantingServiceAccessEntry) = [] of ListPoliciesGrantingServiceAccessEntry
 
+    # A flag that indicates whether there are more items to return. If your results were truncated,
+    # you can make a subsequent pagination request using the `Marker` request parameter to retrieve
+    # more items. We recommend that you check `IsTruncated` after every call to ensure that you
+    # receive all your results.
     property is_truncated : Bool | Nil
 
+    # When `IsTruncated` is `true`, this element is present and contains the value to use for the
+    # `Marker` parameter in a subsequent pagination request.
     property marker : String | Nil
 
     def initialize(

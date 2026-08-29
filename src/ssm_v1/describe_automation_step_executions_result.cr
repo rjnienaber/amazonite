@@ -2,9 +2,12 @@ module Amazonite::SsmV1
   class DescribeAutomationStepExecutionsResult
     include JSON::Serializable
 
+    # A list of details about the current state of all steps that make up an execution.
     @[JSON::Field(key: "StepExecutions")]
     property step_executions : Array(StepExecution) | Nil
 
+    # The token to use when requesting the next set of items. If there are no additional items to
+    # return, the string is empty.
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 

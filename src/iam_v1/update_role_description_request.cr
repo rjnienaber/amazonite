@@ -2,8 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class UpdateRoleDescriptionRequest
+    # The name of the role that you want to modify.
     property role_name : String
 
+    # The new description that you want to apply to the specified role.
     property description : String
 
     def initialize(

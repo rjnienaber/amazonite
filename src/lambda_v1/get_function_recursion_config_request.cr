@@ -2,6 +2,7 @@ module Amazonite::LambdaV1
   class GetFunctionRecursionConfigRequest
     include JSON::Serializable
 
+    # The name of the function.
     @[JSON::Field(key: "FunctionName", ignore: true)]
     property function_name : String = ""
 

@@ -1,7 +1,9 @@
 module Amazonite::SqsV1
+  # Encloses the `Id` of an entry in ` DeleteMessageBatch.`
   class DeleteMessageBatchResultEntry
     include JSON::Serializable
 
+    # Represents a successfully deleted message.
     @[JSON::Field(key: "Id")]
     property id : String
 

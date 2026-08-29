@@ -4,15 +4,20 @@ module Amazonite::SsmV1
   class DescribeMaintenanceWindowsForTargetRequest
     include JSON::Serializable
 
+    # The managed node ID or key-value pair to retrieve information about.
     @[JSON::Field(key: "Targets")]
     property targets : Array(Target) = [] of Target
 
+    # The type of resource you want to retrieve information about. For example, `INSTANCE`.
     @[JSON::Field(key: "ResourceType", converter: AS::MaintenanceWindowResourceType)]
     property resource_type : MaintenanceWindowResourceType
 
+    # The maximum number of items to return for this call. The call also returns a token that you can
+    # specify in a subsequent call to get the next set of results.
     @[JSON::Field(key: "MaxResults")]
     property max_results : Int32 | Nil
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 

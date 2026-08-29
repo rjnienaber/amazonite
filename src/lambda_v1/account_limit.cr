@@ -1,19 +1,27 @@
 module Amazonite::LambdaV1
+  # Limits that are related to concurrency and storage. All file and storage sizes are in bytes.
   class AccountLimit
     include JSON::Serializable
 
+    # The amount of storage space that you can use for all deployment packages and layer archives.
     @[JSON::Field(key: "TotalCodeSize")]
     property total_code_size : Int64 | Nil
 
+    # The maximum size of a function's deployment package and layers when they're extracted.
     @[JSON::Field(key: "CodeSizeUnzipped")]
     property code_size_unzipped : Int64 | Nil
 
+    # The maximum size of a deployment package when it's uploaded directly to Lambda. Use Amazon S3
+    # for larger files.
     @[JSON::Field(key: "CodeSizeZipped")]
     property code_size_zipped : Int64 | Nil
 
+    # The maximum number of simultaneous function executions.
     @[JSON::Field(key: "ConcurrentExecutions")]
     property concurrent_executions : Int32 | Nil
 
+    # The maximum number of simultaneous function executions, minus the capacity that's reserved for
+    # individual functions with PutFunctionConcurrency.
     @[JSON::Field(key: "UnreservedConcurrentExecutions")]
     property unreserved_concurrent_executions : Int32 | Nil
 

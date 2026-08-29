@@ -2,8 +2,18 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class AttachUserPolicyRequest
+    # The name (friendly name, not ARN) of the IAM user to attach the policy to.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property user_name : String
 
+    # The Amazon Resource Name (ARN) of the IAM policy you want to attach.
+    #
+    # For more information about ARNs, see [Amazon Resource Names
+    # (ARNs)](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) in the
+    # *Amazon Web Services General Reference*.
     property policy_arn : String
 
     def initialize(

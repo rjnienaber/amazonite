@@ -4,36 +4,167 @@ module Amazonite::KmsV1
   class CreateCustomKeyStoreRequest
     include JSON::Serializable
 
+    # Specifies a friendly name for the custom key store. The name must be unique in your Amazon Web
+    # Services account and Region. This parameter is required for all custom key stores.
+    #
+    # Do not include confidential or sensitive information in this field. This field may be displayed
+    # in plaintext in CloudTrail logs and other output.
     @[JSON::Field(key: "CustomKeyStoreName")]
     property custom_key_store_name : String
 
+    # Identifies the CloudHSM cluster for an CloudHSM key store. This parameter is required for custom
+    # key stores with `CustomKeyStoreType` of `AWS_CLOUDHSM`.
+    #
+    # Enter the cluster ID of any active CloudHSM cluster that is not already associated with a custom
+    # key store. To find the cluster ID, use the
+    # [DescribeClusters](https://docs.aws.amazon.com/cloudhsm/latest/APIReference/API_DescribeClusters.html)
+    # operation.
     @[JSON::Field(key: "CloudHsmClusterId")]
     property cloud_hsm_cluster_id : String | Nil
 
+    # Specifies the certificate for an CloudHSM key store. This parameter is required for custom key
+    # stores with a `CustomKeyStoreType` of `AWS_CLOUDHSM`.
+    #
+    # Enter the content of the trust anchor certificate for the CloudHSM cluster. This is the content
+    # of the `customerCA.crt` file that you created when you [initialized the
+    # cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/initialize-cluster.html).
     @[JSON::Field(key: "TrustAnchorCertificate")]
     property trust_anchor_certificate : String | Nil
 
+    # Specifies the `kmsuser` password for an CloudHSM key store. This parameter is required for
+    # custom key stores with a `CustomKeyStoreType` of `AWS_CLOUDHSM`.
+    #
+    # Enter the password of the [ `kmsuser` crypto user (CU)
+    # account](https://docs.aws.amazon.com/kms/latest/developerguide/keystore-cloudhsm.html#concept-kmsuser)
+    # in the specified CloudHSM cluster. KMS logs into the cluster as this user to manage key material
+    # on your behalf.
+    #
+    # The password must be a string of 7 to 32 characters. Its value is case sensitive.
+    #
+    # This parameter tells KMS the `kmsuser` account password; it does not change the password in the
+    # CloudHSM cluster.
     @[JSON::Field(key: "KeyStorePassword")]
     property key_store_password : String | Nil
 
+    # Specifies the type of custom key store. The default value is `AWS_CLOUDHSM`.
+    #
+    # For a custom key store backed by an CloudHSM cluster, omit the parameter or enter
+    # `AWS_CLOUDHSM`. For a custom key store backed by an external key manager outside of Amazon Web
+    # Services, enter `EXTERNAL_KEY_STORE`. You cannot change this property after the key store is
+    # created.
     @[JSON::Field(key: "CustomKeyStoreType", converter: AK::CustomKeyStoreType)]
     property custom_key_store_type : CustomKeyStoreType | Nil
 
+    # Specifies the endpoint that KMS uses to send requests to the external key store proxy (XKS
+    # proxy). This parameter is required for custom key stores with a `CustomKeyStoreType` of
+    # `EXTERNAL_KEY_STORE`.
+    #
+    # The protocol must be HTTPS. KMS communicates on port 443. Do not specify the port in the
+    # `XksProxyUriEndpoint` value.
+    #
+    # For external key stores with `XksProxyConnectivity` value of `VPC_ENDPOINT_SERVICE`, specify
+    # `https://` followed by the private DNS name of the VPC endpoint service.
+    #
+    # For external key stores with `PUBLIC_ENDPOINT` connectivity, this endpoint must be reachable
+    # before you create the custom key store. KMS connects to the external key store proxy while
+    # creating the custom key store. For external key stores with `VPC_ENDPOINT_SERVICE` connectivity,
+    # KMS connects when you call the ConnectCustomKeyStore operation.
+    #
+    # The value of this parameter must begin with `https://`. The remainder can contain upper and
+    # lower case letters (A-Z and a-z), numbers (0-9), dots (`.`), and hyphens (`-`). Additional
+    # slashes (`/` and `\`) are not permitted.
+    #
+    # **Uniqueness requirements: **
+    #
+    # - The combined `XksProxyUriEndpoint` and `XksProxyUriPath` values must be unique in the Amazon
+    # Web Services account and Region.
+    #
+    # - An external key store with `PUBLIC_ENDPOINT` connectivity cannot use the same
+    # `XksProxyUriEndpoint` value as an external key store with `VPC_ENDPOINT_SERVICE` connectivity in
+    # this Amazon Web Services Region.
+    #
+    # - Each external key store with `VPC_ENDPOINT_SERVICE` connectivity must have its own private DNS
+    # name. The `XksProxyUriEndpoint` value for external key stores with `VPC_ENDPOINT_SERVICE`
+    # connectivity (private DNS name) must be unique in the Amazon Web Services account and Region.
     @[JSON::Field(key: "XksProxyUriEndpoint")]
     property xks_proxy_uri_endpoint : String | Nil
 
+    # Specifies the base path to the proxy APIs for this external key store. To find this value, see
+    # the documentation for your external key store proxy. This parameter is required for all custom
+    # key stores with a `CustomKeyStoreType` of `EXTERNAL_KEY_STORE`.
+    #
+    # The value must start with `/` and must end with `/kms/xks/v1` where `v1` represents the version
+    # of the KMS external key store proxy API. This path can include an optional prefix between the
+    # required elements such as `/*prefix*/kms/xks/v1`.
+    #
+    # **Uniqueness requirements: **
+    #
+    # - The combined `XksProxyUriEndpoint` and `XksProxyUriPath` values must be unique in the Amazon
+    # Web Services account and Region.
     @[JSON::Field(key: "XksProxyUriPath")]
     property xks_proxy_uri_path : String | Nil
 
+    # Specifies the name of the Amazon VPC endpoint service for interface endpoints that is used to
+    # communicate with your external key store proxy (XKS proxy). This parameter is required when the
+    # value of `CustomKeyStoreType` is `EXTERNAL_KEY_STORE` and the value of `XksProxyConnectivity` is
+    # `VPC_ENDPOINT_SERVICE`.
+    #
+    # The Amazon VPC endpoint service must [fulfill all
+    # requirements](https://docs.aws.amazon.com/kms/latest/developerguide/create-xks-keystore.html#xks-requirements)
+    # for use with an external key store.
+    #
+    # **Uniqueness requirements:**
+    #
+    # - External key stores with `VPC_ENDPOINT_SERVICE` connectivity can share an Amazon VPC, but each
+    # external key store must have its own VPC endpoint service and private DNS name.
     @[JSON::Field(key: "XksProxyVpcEndpointServiceName")]
     property xks_proxy_vpc_endpoint_service_name : String | Nil
 
+    # Specifies the Amazon Web Services account ID that owns the Amazon VPC service endpoint for the
+    # interface that is used to communicate with your external key store proxy (XKS proxy). This
+    # parameter is optional. If not provided, the Amazon Web Services account ID calling the action
+    # will be used.
     @[JSON::Field(key: "XksProxyVpcEndpointServiceOwner")]
     property xks_proxy_vpc_endpoint_service_owner : String | Nil
 
+    # Specifies an authentication credential for the external key store proxy (XKS proxy). This
+    # parameter is required for all custom key stores with a `CustomKeyStoreType` of
+    # `EXTERNAL_KEY_STORE`.
+    #
+    # The `XksProxyAuthenticationCredential` has two required elements: `RawSecretAccessKey`, a secret
+    # key, and `AccessKeyId`, a unique identifier for the `RawSecretAccessKey`. For character
+    # requirements, see
+    # [XksProxyAuthenticationCredentialType](API_XksProxyAuthenticationCredentialType.html).
+    #
+    # KMS uses this authentication credential to sign requests to the external key store proxy on your
+    # behalf. This credential is unrelated to Identity and Access Management (IAM) and Amazon Web
+    # Services credentials.
+    #
+    # This parameter doesn't set or change the authentication credentials on the XKS proxy. It just
+    # tells KMS the credential that you established on your external key store proxy. If you rotate
+    # your proxy authentication credential, use the UpdateCustomKeyStore operation to provide the new
+    # credential to KMS.
     @[JSON::Field(key: "XksProxyAuthenticationCredential")]
     property xks_proxy_authentication_credential : XksProxyAuthenticationCredentialType | Nil
 
+    # Indicates how KMS communicates with the external key store proxy. This parameter is required for
+    # custom key stores with a `CustomKeyStoreType` of `EXTERNAL_KEY_STORE`.
+    #
+    # If the external key store proxy uses a public endpoint, specify `PUBLIC_ENDPOINT`. If the
+    # external key store proxy uses a Amazon VPC endpoint service for communication with KMS, specify
+    # `VPC_ENDPOINT_SERVICE`. For help making this choice, see [Choosing a connectivity
+    # option](https://docs.aws.amazon.com/kms/latest/developerguide/choose-xks-connectivity.html) in
+    # the *Key Management Service Developer Guide*.
+    #
+    # An Amazon VPC endpoint service keeps your communication with KMS in a private address space
+    # entirely within Amazon Web Services, but it requires more configuration, including establishing
+    # a Amazon VPC with multiple subnets, a VPC endpoint service, a network load balancer, and a
+    # verified private DNS name. A public endpoint is simpler to set up, but it might be slower and
+    # might not fulfill your security requirements. You might consider testing with a public endpoint,
+    # and then establishing a VPC endpoint service for production tasks. Note that this choice does
+    # not determine the location of the external key store proxy. Even if you choose a VPC endpoint
+    # service, the proxy can be hosted within the VPC or outside of Amazon Web Services such as in
+    # your corporate data center.
     @[JSON::Field(key: "XksProxyConnectivity", converter: AK::XksProxyConnectivityType)]
     property xks_proxy_connectivity : XksProxyConnectivityType | Nil
 

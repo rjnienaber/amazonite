@@ -1,9 +1,13 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Response for ListTopics action.
   class ListTopicsResponse
+    # A list of topic ARNs.
     property topics : Array(Topic) | Nil
 
+    # Token to pass along to the next `ListTopics` request. This element is returned if there are
+    # additional topics to retrieve.
     property next_token : String | Nil
 
     def initialize(

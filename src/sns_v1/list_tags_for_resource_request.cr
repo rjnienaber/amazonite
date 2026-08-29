@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class ListTagsForResourceRequest
+    # The ARN of the topic for which to list tags.
     property resource_arn : String
 
     def initialize(

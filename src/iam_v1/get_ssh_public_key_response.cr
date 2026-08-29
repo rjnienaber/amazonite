@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetSSHPublicKey](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetSSHPublicKey.html)
+  # request.
   class GetSSHPublicKeyResponse
+    # A structure containing details about the SSH public key.
     property ssh_public_key : SSHPublicKey | Nil
 
     def initialize(

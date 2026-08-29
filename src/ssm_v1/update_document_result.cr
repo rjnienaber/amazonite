@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class UpdateDocumentResult
     include JSON::Serializable
 
+    # A description of the document that was updated.
     @[JSON::Field(key: "DocumentDescription")]
     property document_description : DocumentDescription | Nil
 

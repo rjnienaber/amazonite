@@ -2,8 +2,15 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class TagServerCertificateRequest
+    # The name of the IAM server certificate to which you want to add tags.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property server_certificate_name : String
 
+    # The list of tags that you want to attach to the IAM server certificate. Each tag consists of a
+    # key name and an associated value.
     property tags : Array(Tag) = [] of Tag
 
     def initialize(

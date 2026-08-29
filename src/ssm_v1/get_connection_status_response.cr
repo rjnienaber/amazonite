@@ -4,9 +4,11 @@ module Amazonite::SsmV1
   class GetConnectionStatusResponse
     include JSON::Serializable
 
+    # The ID of the managed node to check connection status.
     @[JSON::Field(key: "Target")]
     property target : String | Nil
 
+    # The status of the connection to the managed node.
     @[JSON::Field(key: "Status", converter: AS::ConnectionStatus)]
     property status : ConnectionStatus | Nil
 

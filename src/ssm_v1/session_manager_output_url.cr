@@ -1,10 +1,13 @@
 module Amazonite::SsmV1
+  # Reserved for future use.
   class SessionManagerOutputUrl
     include JSON::Serializable
 
+    # Reserved for future use.
     @[JSON::Field(key: "S3OutputUrl")]
     property s3_output_url : String | Nil
 
+    # Reserved for future use.
     @[JSON::Field(key: "CloudWatchOutputUrl")]
     property cloud_watch_output_url : String | Nil
 

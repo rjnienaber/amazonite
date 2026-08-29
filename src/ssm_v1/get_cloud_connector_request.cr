@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class GetCloudConnectorRequest
     include JSON::Serializable
 
+    # The ID of the cloud connector to retrieve information about.
     @[JSON::Field(key: "CloudConnectorId")]
     property cloud_connector_id : String
 

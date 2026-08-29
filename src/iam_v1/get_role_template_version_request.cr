@@ -2,8 +2,15 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GetRoleTemplateVersionRequest
+    # The Amazon Resource Name (ARN) of the role template whose version you want to retrieve.
+    #
+    # For more information about ARNs, see [Amazon Resource Names
+    # (ARNs)](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) in the
+    # *Amazon Web Services General Reference*.
     property template_arn : String
 
+    # The minor version of the role template to retrieve. If you do not specify a minor version, the
+    # service returns the template's default minor version.
     property minor_version : Int32 | Nil
 
     def initialize(

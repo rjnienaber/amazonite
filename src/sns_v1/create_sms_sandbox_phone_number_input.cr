@@ -3,8 +3,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class CreateSMSSandboxPhoneNumberInput
+    # The destination phone number to verify. On verification, Amazon SNS adds this phone number to
+    # the list of verified phone numbers that you can send SMS messages to.
     property phone_number : String
 
+    # The language to use for sending the OTP. The default value is `en-US`.
     property language_code : LanguageCodeString | Nil
 
     def initialize(

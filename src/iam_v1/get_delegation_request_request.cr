@@ -2,8 +2,17 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GetDelegationRequestRequest
+    # The unique identifier of the delegation request to retrieve.
     property delegation_request_id : String
 
+    # Specifies whether to perform a permission check for the delegation request.
+    #
+    # If set to true, the `GetDelegationRequest` API call will start a permission check process. This
+    # process calculates whether the caller has sufficient permissions to cover the asks from this
+    # delegation request.
+    #
+    # Setting this parameter to true does not guarantee an answer in the response. See the
+    # `PermissionCheckStatus` and the `PermissionCheckResult` response attributes for further details.
     property delegation_permission_check : Bool | Nil
 
     def initialize(

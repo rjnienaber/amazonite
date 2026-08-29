@@ -1,9 +1,12 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # The endpoint for mobile app and device.
   class Endpoint
+    # The `EndpointArn` for mobile app and device.
     property endpoint_arn : String | Nil
 
+    # Attributes for endpoint.
     property attributes : Hash(String, String) | Nil
 
     def initialize(

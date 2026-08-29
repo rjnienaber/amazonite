@@ -1,15 +1,21 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # A wrapper type for the attributes of an Amazon SNS subscription.
   class Subscription
+    # The subscription's ARN.
     property subscription_arn : String | Nil
 
+    # The subscription's owner.
     property owner : String | Nil
 
+    # The subscription's protocol.
     property protocol : String | Nil
 
+    # The subscription's endpoint (format depends on the protocol).
     property endpoint : String | Nil
 
+    # The ARN of the subscription's topic.
     property topic_arn : String | Nil
 
     def initialize(

@@ -2,8 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class UntagResourceRequest
+    # The ARN of the topic from which to remove tags.
     property resource_arn : String
 
+    # The list of tag keys to remove from the specified topic.
     property tag_keys : Array(String) = [] of String
 
     def initialize(

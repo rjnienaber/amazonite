@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [ListSAMLProviders](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListSAMLProviders.html)
+  # request.
   class ListSAMLProvidersResponse
+    # The list of SAML provider resource objects defined in IAM for this Amazon Web Services account.
     property saml_provider_list : Array(SAMLProviderListEntry) | Nil
 
     def initialize(

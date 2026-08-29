@@ -1,5 +1,6 @@
 module Amazonite::IamV1
   class GetAccountPropertiesResponse
+    # A map of account property key-value pairs. Keys are in the format `Namespace/PropertyName`.
     property properties : Hash(String, String) | Nil
 
     def initialize(

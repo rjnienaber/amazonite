@@ -32,6 +32,7 @@ module Amazonite::Codegen::Bindings
 
         request = rest_request_fields(operation, input_shape)
         response = rest_response_fields(output_type, output_shape)
+        doc = Amazonite::Codegen::Service::Utils.doc_comment(operation.documentation)
 
         Crinja.value({
           function_name: operation.lower_name,
@@ -41,6 +42,8 @@ module Amazonite::Codegen::Bindings
           output:        output,
           is_rest:       is_rest,
           is_query:      is_query,
+          doc:           doc,
+          has_doc:       !!doc,
 
           http_method:         request[:http_method],
           path_literal:        request[:path_literal],

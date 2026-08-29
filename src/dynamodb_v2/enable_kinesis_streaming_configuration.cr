@@ -1,9 +1,12 @@
 private alias ADDB = Amazonite::DynamoDBV2
 
 module Amazonite::DynamoDBV2
+  # Enables setting the configuration for Kinesis Streaming.
   class EnableKinesisStreamingConfiguration
     include JSON::Serializable
 
+    # Toggle for the precision of Kinesis data stream timestamp. The values are either `MILLISECOND`
+    # or `MICROSECOND`.
     @[JSON::Field(key: "ApproximateCreationDateTimePrecision", converter: ADDB::ApproximateCreationDateTimePrecision)]
     property approximate_creation_date_time_precision : ApproximateCreationDateTimePrecision | Nil
 

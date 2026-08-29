@@ -5,18 +5,27 @@ module Amazonite::KmsV1
   class GenerateDataKeyPairWithoutPlaintextResponse
     include JSON::Serializable
 
+    # The encrypted copy of the private key. When you use the HTTP API or the Amazon Web Services CLI,
+    # the value is Base64-encoded. Otherwise, it is not Base64-encoded.
     @[JSON::Field(key: "PrivateKeyCiphertextBlob", converter: Core::Base64Converter)]
     property private_key_ciphertext_blob : Bytes | Nil
 
+    # The public key (in plaintext). When you use the HTTP API or the Amazon Web Services CLI, the
+    # value is Base64-encoded. Otherwise, it is not Base64-encoded.
     @[JSON::Field(key: "PublicKey", converter: Core::Base64Converter)]
     property public_key : Bytes | Nil
 
+    # The Amazon Resource Name ([key
+    # ARN](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN)) of the
+    # KMS key that encrypted the private key.
     @[JSON::Field(key: "KeyId")]
     property key_id : String | Nil
 
+    # The type of data key pair that was generated.
     @[JSON::Field(key: "KeyPairSpec", converter: AK::DataKeyPairSpec)]
     property key_pair_spec : DataKeyPairSpec | Nil
 
+    # The identifier of the key material used to encrypt the private key.
     @[JSON::Field(key: "KeyMaterialId")]
     property key_material_id : String | Nil
 

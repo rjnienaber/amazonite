@@ -1,4 +1,5 @@
 require "json"
+require "xml"
 
 require "./core/*"
 require "./sqs_v1/*"

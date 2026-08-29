@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [ListOpenIDConnectProviders](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListOpenIDConnectProviders.html)
+  # request.
   class ListOpenIDConnectProvidersResponse
+    # The list of IAM OIDC provider resource objects defined in the Amazon Web Services account.
     property open_id_connect_provider_list : Array(OpenIDConnectProviderListEntry) | Nil
 
     def initialize(

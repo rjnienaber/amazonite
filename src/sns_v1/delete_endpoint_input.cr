@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for `DeleteEndpoint` action.
   class DeleteEndpointInput
+    # `EndpointArn` of endpoint to delete.
     property endpoint_arn : String
 
     def initialize(

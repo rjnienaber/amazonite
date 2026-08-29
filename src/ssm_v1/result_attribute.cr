@@ -1,7 +1,10 @@
 module Amazonite::SsmV1
+  # The inventory item result attribute.
   class ResultAttribute
     include JSON::Serializable
 
+    # Name of the inventory item type. Valid value: `AWS:InstanceInformation`. Default Value:
+    # `AWS:InstanceInformation`.
     @[JSON::Field(key: "TypeName")]
     property type_name : String
 

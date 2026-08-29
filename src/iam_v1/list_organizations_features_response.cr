@@ -3,8 +3,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class ListOrganizationsFeaturesResponse
+    # The unique identifier (ID) of an organization.
     property organization_id : String | Nil
 
+    # Specifies the features that are currently available in your organization.
     property enabled_features : Array(FeatureType) | Nil
 
     def initialize(

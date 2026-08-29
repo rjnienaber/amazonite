@@ -1,9 +1,12 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for ListSubscriptionsByTopic action.
   class ListSubscriptionsByTopicInput
+    # The ARN of the topic for which you wish to find subscriptions.
     property topic_arn : String
 
+    # Token returned by the previous `ListSubscriptionsByTopic` request.
     property next_token : String | Nil
 
     def initialize(

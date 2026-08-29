@@ -1,5 +1,8 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [CreateGroup](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateGroup.html) request.
   class CreateGroupResponse
+    # A structure containing details about the new group.
     property group : Group
 
     def initialize(

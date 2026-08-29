@@ -1,7 +1,9 @@
 module Amazonite::LambdaV1
+  # Configuration for the capacity provider that manages compute resources for Lambda functions.
   class CapacityProviderConfig
     include JSON::Serializable
 
+    # Configuration for Lambda-managed instances used by the capacity provider.
     @[JSON::Field(key: "LambdaManagedInstancesCapacityProviderConfig")]
     property lambda_managed_instances_capacity_provider_config : LambdaManagedInstancesCapacityProviderConfig
 

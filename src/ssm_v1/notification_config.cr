@@ -2,15 +2,28 @@ private alias AS = Amazonite::SsmV1
 private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
+  # Configurations for sending notifications.
   class NotificationConfig
     include JSON::Serializable
 
+    # An Amazon Resource Name (ARN) for an Amazon Simple Notification Service (Amazon SNS) topic. Run
+    # Command pushes notifications about command status changes to this topic.
     @[JSON::Field(key: "NotificationArn")]
     property notification_arn : String | Nil
 
+    # The different events for which you can receive notifications. To learn more about these events,
+    # see [Monitoring Systems Manager status changes using Amazon SNS
+    # notifications](https://docs.aws.amazon.com/systems-manager/latest/userguide/monitoring-sns-notifications.html)
+    # in the *Amazon Web Services Systems Manager User Guide*.
     @[JSON::Field(key: "NotificationEvents", converter: Core::ArrayConverter(AS::NotificationEvent))]
     property notification_events : Array(NotificationEvent) | Nil
 
+    # The type of notification.
+    #
+    # - `Command`: Receive notification when the status of a command changes.
+    #
+    # - `Invocation`: For commands sent to multiple managed nodes, receive notification on a per-node
+    # basis when the status of a command changes.
     @[JSON::Field(key: "NotificationType", converter: AS::NotificationType)]
     property notification_type : NotificationType | Nil
 

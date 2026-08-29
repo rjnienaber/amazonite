@@ -3,20 +3,38 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GetOrganizationsAccessReportResponse
+    # The status of the job.
     property job_status : JobStatusType
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the
+    # report job was created.
     property job_creation_date : Time
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the
+    # generated report job was completed or failed.
+    #
+    # This field is null if the job is still in progress, as indicated by a job status value of
+    # `IN_PROGRESS`.
     property job_completion_date : Time | Nil
 
+    # The number of services that the applicable SCPs allow account principals to access.
     property number_of_services_accessible : Int32 | Nil
 
+    # The number of services that account principals are allowed but did not attempt to access.
     property number_of_services_not_accessed : Int32 | Nil
 
+    # An object that contains details about the most recent attempt to access the service.
     property access_details : Array(AccessDetail) | Nil
 
+    # A flag that indicates whether there are more items to return. If your results were truncated,
+    # you can make a subsequent pagination request using the `Marker` request parameter to retrieve
+    # more items. Note that IAM might return fewer than the `MaxItems` number of results even when
+    # there are more results available. We recommend that you check `IsTruncated` after every call to
+    # ensure that you receive all your results.
     property is_truncated : Bool | Nil
 
+    # When `IsTruncated` is `true`, this element is present and contains the value to use for the
+    # `Marker` parameter in a subsequent pagination request.
     property marker : String | Nil
 
     property error_details : ErrorDetails | Nil

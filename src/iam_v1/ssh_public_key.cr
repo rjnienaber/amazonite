@@ -2,17 +2,32 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about an SSH public key.
+  #
+  # This data type is used as a response element in the
+  # [GetSSHPublicKey](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetSSHPublicKey.html)
+  # and
+  # [UploadSSHPublicKey](https://docs.aws.amazon.com/IAM/latest/APIReference/API_UploadSSHPublicKey.html)
+  # operations.
   class SSHPublicKey
+    # The name of the IAM user associated with the SSH public key.
     property user_name : String
 
+    # The unique identifier for the SSH public key.
     property ssh_public_key_id : String
 
+    # The MD5 message digest of the SSH public key.
     property fingerprint : String
 
+    # The SSH public key.
     property ssh_public_key_body : String
 
+    # The status of the SSH public key. `Active` means that the key can be used for authentication
+    # with an CodeCommit repository. `Inactive` means that the key cannot be used.
     property status : StatusType
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the SSH
+    # public key was uploaded.
     property upload_date : Time | Nil
 
     def initialize(

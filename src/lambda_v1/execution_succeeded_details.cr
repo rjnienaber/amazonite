@@ -1,7 +1,10 @@
 module Amazonite::LambdaV1
+  # Details about a [durable
+  # execution](https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html) that succeeded.
   class ExecutionSucceededDetails
     include JSON::Serializable
 
+    # The response payload from the successful operation.
     @[JSON::Field(key: "Result")]
     property result : EventResult
 

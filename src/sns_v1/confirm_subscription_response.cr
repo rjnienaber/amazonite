@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Response for ConfirmSubscriptions action.
   class ConfirmSubscriptionResponse
+    # The ARN of the created subscription.
     property subscription_arn : String | Nil
 
     def initialize(

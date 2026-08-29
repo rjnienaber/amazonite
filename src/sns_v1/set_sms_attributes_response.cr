@@ -1,4 +1,5 @@
 module Amazonite::SnsV1
+  # The response for the SetSMSAttributes action.
   class SetSMSAttributesResponse
     def initialize
     end

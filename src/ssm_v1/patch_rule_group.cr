@@ -1,7 +1,9 @@
 module Amazonite::SsmV1
+  # A set of rules defining the approval rules for a patch baseline.
   class PatchRuleGroup
     include JSON::Serializable
 
+    # The rules that make up the rule group.
     @[JSON::Field(key: "PatchRules")]
     property patch_rules : Array(PatchRule) = [] of PatchRule
 

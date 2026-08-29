@@ -1,9 +1,12 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Platform application object.
   class PlatformApplication
+    # PlatformApplicationArn for platform application object.
     property platform_application_arn : String | Nil
 
+    # Attributes for platform application object.
     property attributes : Hash(String, String) | Nil
 
     def initialize(

@@ -2,8 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class UpdateDelegationRequestRequest
+    # The unique identifier of the delegation request to update.
     property delegation_request_id : String
 
+    # Additional notes or comments to add to the delegation request.
     property notes : String | Nil
 
     def initialize(

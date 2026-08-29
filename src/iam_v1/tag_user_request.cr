@@ -2,8 +2,15 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class TagUserRequest
+    # The name of the IAM user to which you want to add tags.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property user_name : String
 
+    # The list of tags that you want to attach to the IAM user. Each tag consists of a key name and an
+    # associated value.
     property tags : Array(Tag) = [] of Tag
 
     def initialize(

@@ -1,19 +1,35 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about an IAM group, including all of the group's policies.
+  #
+  # This data type is used as a response element in the
+  # [GetAccountAuthorizationDetails](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountAuthorizationDetails.html)
+  # operation.
   class GroupDetail
+    # The path to the group. For more information about paths, see [IAM
+    # identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html) in the
+    # *IAM User Guide*.
     property path : String | Nil
 
+    # The friendly name that identifies the group.
     property group_name : String | Nil
 
+    # The stable and unique string identifying the group. For more information about IDs, see [IAM
+    # identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html) in the
+    # *IAM User Guide*.
     property group_id : String | Nil
 
     property arn : String | Nil
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the
+    # group was created.
     property create_date : Time | Nil
 
+    # A list of the inline policies embedded in the group.
     property group_policy_list : Array(PolicyDetail) | Nil
 
+    # A list of the managed policies attached to the group.
     property attached_managed_policies : Array(AttachedPolicy) | Nil
 
     def initialize(

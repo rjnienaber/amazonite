@@ -1,21 +1,29 @@
 private alias AS = Amazonite::SsmV1
 
 module Amazonite::SsmV1
+  # Defines the basic information about a patch baseline.
   class PatchBaselineIdentity
     include JSON::Serializable
 
+    # The ID of the patch baseline.
     @[JSON::Field(key: "BaselineId")]
     property baseline_id : String | Nil
 
+    # The name of the patch baseline.
     @[JSON::Field(key: "BaselineName")]
     property baseline_name : String | Nil
 
+    # Defines the operating system the patch baseline applies to. The default value is `WINDOWS`.
     @[JSON::Field(key: "OperatingSystem", converter: AS::OperatingSystem)]
     property operating_system : OperatingSystem | Nil
 
+    # The description of the patch baseline.
     @[JSON::Field(key: "BaselineDescription")]
     property baseline_description : String | Nil
 
+    # Indicates whether this is the default baseline. Amazon Web Services Systems Manager supports
+    # creating multiple default patch baselines. For example, you can create a default patch baseline
+    # for each operating system.
     @[JSON::Field(key: "DefaultBaseline")]
     property default_baseline : Bool | Nil
 

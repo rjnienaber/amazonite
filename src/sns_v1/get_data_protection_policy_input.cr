@@ -2,6 +2,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class GetDataProtectionPolicyInput
+    # The ARN of the topic whose `DataProtectionPolicy` you want to get.
+    #
+    # For more information about ARNs, see [Amazon Resource Names
+    # (ARNs)](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) in the
+    # Amazon Web Services General Reference.
     property resource_arn : String
 
     def initialize(

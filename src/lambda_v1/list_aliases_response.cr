@@ -2,9 +2,11 @@ module Amazonite::LambdaV1
   class ListAliasesResponse
     include JSON::Serializable
 
+    # The pagination token that's included if more results are available.
     @[JSON::Field(key: "NextMarker")]
     property next_marker : String | Nil
 
+    # A list of aliases.
     @[JSON::Field(key: "Aliases")]
     property aliases : Array(AliasConfiguration) | Nil
 

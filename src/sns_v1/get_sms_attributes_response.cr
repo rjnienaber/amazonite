@@ -1,5 +1,7 @@
 module Amazonite::SnsV1
+  # The response from the `GetSMSAttributes` request.
   class GetSMSAttributesResponse
+    # The SMS attribute names and their values.
     property attributes : Hash(String, String) | Nil
 
     def initialize(

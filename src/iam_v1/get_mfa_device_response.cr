@@ -2,12 +2,19 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GetMFADeviceResponse
+    # The friendly name identifying the user.
     property user_name : String | Nil
 
+    # Serial number that uniquely identifies the MFA device. For this API, we only accept FIDO
+    # security key [ARNs](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html).
     property serial_number : String
 
+    # The date that a specified user's MFA device was first enabled.
     property enable_date : Time | Nil
 
+    # The certifications of a specified user's MFA device. We currently provide FIPS-140-2,
+    # FIPS-140-3, and FIDO certification levels obtained from [ FIDO Alliance Metadata Service
+    # (MDS)](https://fidoalliance.org/metadata/).
     property certifications : Hash(String, String) | Nil
 
     def initialize(

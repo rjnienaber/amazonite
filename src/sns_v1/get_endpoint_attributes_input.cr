@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for `GetEndpointAttributes` action.
   class GetEndpointAttributesInput
+    # `EndpointArn` for `GetEndpointAttributes` input.
     property endpoint_arn : String
 
     def initialize(

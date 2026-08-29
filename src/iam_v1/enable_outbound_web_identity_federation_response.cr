@@ -2,6 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class EnableOutboundWebIdentityFederationResponse
+    # A unique issuer URL for your Amazon Web Services account that hosts the OpenID Connect (OIDC)
+    # discovery endpoints at `/.well-known/openid-configuration and /.well-known/jwks.json`. The
+    # OpenID Connect (OIDC) discovery endpoints contain verification keys and metadata necessary for
+    # token verification.
     property issuer_identifier : String | Nil
 
     def initialize(

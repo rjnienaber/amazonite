@@ -1,39 +1,55 @@
 private alias AL = Amazonite::LambdaV1
 
 module Amazonite::LambdaV1
+  # An update to be applied to an operation during checkpointing.
   class OperationUpdate
     include JSON::Serializable
 
+    # The unique identifier for this operation.
     @[JSON::Field(key: "Id")]
     property id : String
 
+    # The unique identifier of the parent operation, if this operation is running within a child
+    # context.
     @[JSON::Field(key: "ParentId")]
     property parent_id : String | Nil
 
+    # The customer-provided name for this operation.
     @[JSON::Field(key: "Name")]
     property name : String | Nil
 
+    # The type of operation to update.
     @[JSON::Field(key: "Type", converter: AL::OperationType)]
     property type : OperationType
 
+    # The subtype of the operation, providing additional categorization.
     @[JSON::Field(key: "SubType")]
     property sub_type : String | Nil
 
+    # The action to take on the operation.
     @[JSON::Field(key: "Action", converter: AL::OperationAction)]
     property action : OperationAction
 
+    # The payload for successful operations. The maximum payload size is 6 MB for synchronous
+    # `EXECUTION` operations (RequestResponse invocationType), 1 MB for asynchronous `EXECUTION`
+    # (Event invocationType) and `CHAINED_INVOKE` operations, and 256 KB for `CONTEXT`, `STEP`,
+    # `WAIT`, and `CALLBACK` operations.
     @[JSON::Field(key: "Payload")]
     property payload : String | Nil
 
+    # The error information for failed operations.
     @[JSON::Field(key: "Error")]
     property error : ErrorObject | Nil
 
+    # Options for context operations.
     @[JSON::Field(key: "ContextOptions")]
     property context_options : ContextOptions | Nil
 
+    # Options for step operations.
     @[JSON::Field(key: "StepOptions")]
     property step_options : StepOptions | Nil
 
+    # Options for wait operations.
     @[JSON::Field(key: "WaitOptions")]
     property wait_options : WaitOptions | Nil
 

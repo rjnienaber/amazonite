@@ -2,45 +2,90 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about a delegation request, including its status, permissions, and
+  # associated metadata.
   class DelegationRequest
+    # The unique identifier for the delegation request.
     property delegation_request_id : String | Nil
 
+    # Amazon Web Services account ID of the owner of the delegation request.
     property owner_account_id : String | Nil
 
+    # Description of the delegation request. This is a message that is provided by the Amazon Web
+    # Services partner that filed the delegation request.
     property description : String | Nil
 
+    # A custom message that is added to the delegation request by the partner.
+    #
+    # This element is different from the `Description` element such that this is a request specific
+    # message injected by the partner. The `Description` is typically a generic explanation of what
+    # the delegation request is targeted to do.
     property request_message : String | Nil
 
     property permissions : DelegationPermission | Nil
 
+    # JSON content of the associated permission policy of this delegation request.
     property permission_policy : String | Nil
 
+    # If the `PermissionPolicy` includes role creation permissions, this element will include the list
+    # of permissions boundary policies associated with the role creation. See [Permissions boundaries
+    # for IAM
+    # entities](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html) for
+    # more details about IAM permission boundaries.
     property role_permission_restriction_arns : Array(String) | Nil
 
+    # ARN of the owner of this delegation request.
     property owner_id : String | Nil
 
     property approver_id : String | Nil
 
+    # The state of this delegation request.
+    #
+    # See the [Understanding the Request
+    # Lifecycle](https://docs.aws.amazon.com/IAM/latest/UserGuide/temporary-delegation-building-integration.html#temporary-delegation-request-lifecycle)
+    # for an explanation of how these states are transitioned.
     property state : StateType | Nil
 
+    # The expiry time of this delegation request
+    #
+    # See the [Understanding the Request
+    # Lifecycle](https://docs.aws.amazon.com/IAM/latest/UserGuide/temporary-delegation-building-integration.html#temporary-delegation-request-lifecycle)
+    # for details on the life time of a delegation request at each state.
     property expiration_time : Time | Nil
 
+    # Identity of the requestor of this delegation request. This will be an Amazon Web Services
+    # account ID.
     property requestor_id : String | Nil
 
+    # A friendly name of the requestor.
     property requestor_name : String | Nil
 
+    # Creation date (timestamp) of this delegation request.
     property create_date : Time | Nil
 
+    # The life-time of the requested session credential.
     property session_duration : Int32 | Nil
 
+    # A URL to be redirected to once the delegation request is approved. Partners provide this URL
+    # when creating the delegation request.
     property redirect_url : String | Nil
 
+    # Notes added to this delegation request, if this request was updated via the
+    # [UpdateDelegationRequest](https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateDelegationRequest.html)
+    # API.
     property notes : String | Nil
 
+    # Reasons for rejecting this delegation request, if this request was rejected. See also
+    # [RejectDelegationRequest](https://docs.aws.amazon.com/IAM/latest/APIReference/API_RejectDelegationRequest.html)
+    # API documentation.
     property rejection_reason : String | Nil
 
+    # A flag indicating whether the
+    # [SendDelegationToken](https://docs.aws.amazon.com/IAM/latest/APIReference/API_SendDelegationToken.html)
+    # must be called by the owner of this delegation request. This is set by the requesting partner.
     property only_send_by_owner : Bool | Nil
 
+    # Last updated timestamp of the request.
     property updated_time : Time | Nil
 
     def initialize(

@@ -1,0 +1,52 @@
+name: Docs
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: download source
+        uses: actions/checkout@v7
+      - name: install crystal
+        uses: crystal-lang/install-crystal@v1
+      - name: cache shards
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/shards
+          key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
+          restore-keys: ${{ runner.os }}-shards-
+      - name: install dependencies
+        run: shards install
+      - name: generate api docs
+        run: |
+          crystal docs \
+            --project-name=Amazonite \
+            --project-version="$(git rev-parse --short HEAD)" \
+            --source-refname="$(git rev-parse HEAD)" \
+            --source-url-pattern="https://github.com/${{ github.repository }}/blob/%{refname}/%{path}#L%{line}"
+      - name: upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: deploy to github pages
+        id: deployment
+        uses: actions/deploy-pages@v4

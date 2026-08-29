@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [CreatePolicy](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreatePolicy.html)
+  # request.
   class CreatePolicyResponse
+    # A structure containing details about the new policy.
     property policy : Policy | Nil
 
     def initialize(

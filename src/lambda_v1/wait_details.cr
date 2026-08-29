@@ -1,9 +1,12 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
+  # Details about a wait operation.
   class WaitDetails
     include JSON::Serializable
 
+    # The date and time when the wait operation is scheduled to complete, in [ISO-8601
+    # format](https://www.w3.org/TR/NOTE-datetime) (YYYY-MM-DDThh:mm:ss.sTZD).
     @[JSON::Field(key: "ScheduledEndTimestamp", converter: Core::AWSEpochConverter)]
     property scheduled_end_timestamp : Time | Nil
 

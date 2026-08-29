@@ -2,13 +2,23 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about an Amazon Web Services access key, without its secret key.
+  #
+  # This data type is used as a response element in the
+  # [ListAccessKeys](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListAccessKeys.html)
+  # operation.
   class AccessKeyMetadata
+    # The name of the IAM user that the key is associated with.
     property user_name : String | Nil
 
+    # The ID for this access key.
     property access_key_id : String | Nil
 
+    # The status of the access key. `Active` means that the key is valid for API calls; `Inactive`
+    # means it is not.
     property status : StatusType | Nil
 
+    # The date when the access key was created.
     property create_date : Time | Nil
 
     def initialize(

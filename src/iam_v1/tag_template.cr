@@ -1,9 +1,14 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Represents a tag that is applied to roles that are created from a role template. The key and
+  # value can include `@{parameter}` placeholders that are replaced with template parameter values
+  # when the role is created.
   class TagTemplate
+    # The key name of the tag.
     property key : String
 
+    # The value associated with the tag key.
     property value : String
 
     def initialize(

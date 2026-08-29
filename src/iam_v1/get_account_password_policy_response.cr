@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetAccountPasswordPolicy](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountPasswordPolicy.html)
+  # request.
   class GetAccountPasswordPolicyResponse
+    # A structure that contains details about the account's password policy.
     property password_policy : PasswordPolicy
 
     def initialize(

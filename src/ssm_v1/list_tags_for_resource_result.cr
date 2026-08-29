@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class ListTagsForResourceResult
     include JSON::Serializable
 
+    # A list of tags.
     @[JSON::Field(key: "TagList")]
     property tag_list : Array(Tag) | Nil
 

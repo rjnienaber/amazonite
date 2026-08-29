@@ -141,6 +141,8 @@ module Amazonite::Codegen::Service
             end
           end
         end
+
+        add_documentation(json, op_shape)
       end
     end
 

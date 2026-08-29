@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class CreateAssociationResult
     include JSON::Serializable
 
+    # Information about the association.
     @[JSON::Field(key: "AssociationDescription")]
     property association_description : AssociationDescription | Nil
 

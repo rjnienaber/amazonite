@@ -2,8 +2,15 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class UntagInstanceProfileRequest
+    # The name of the IAM instance profile from which you want to remove tags.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property instance_profile_name : String
 
+    # A list of key names as a simple array of strings. The tags with matching keys are removed from
+    # the specified instance profile.
     property tag_keys : Array(String) = [] of String
 
     def initialize(

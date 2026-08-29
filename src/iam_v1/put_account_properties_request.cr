@@ -1,5 +1,12 @@
 module Amazonite::IamV1
   class PutAccountPropertiesRequest
+    # A map of property key-value pairs to set. All keys must belong to the same namespace.
+    #
+    # Each key uses the format `Namespace/PropertyName`. The key must contain exactly one `/`
+    # separating the namespace from the property name, and cannot start or end with `/`.
+    #
+    # The service validates each value based on the property key's expected type. For example, boolean
+    # properties expect `true` or `false`.
     property properties : Hash(String, String)
 
     def initialize(

@@ -2,8 +2,18 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class DeleteUserPolicyRequest
+    # The name (friendly name, not ARN) identifying the user that the policy is embedded in.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property user_name : String
 
+    # The name identifying the policy document to delete.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property policy_name : String
 
     def initialize(

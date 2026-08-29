@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [CreateVirtualMFADevice](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateVirtualMFADevice.html)
+  # request.
   class CreateVirtualMFADeviceResponse
+    # A structure containing details about the new virtual MFA device.
     property virtual_mfa_device : VirtualMFADevice
 
     def initialize(

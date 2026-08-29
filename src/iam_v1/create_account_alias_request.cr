@@ -2,6 +2,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class CreateAccountAliasRequest
+    # The account alias to create.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of lowercase letters, digits, and dashes. You cannot start or finish with
+    # a dash, nor can you have two dashes in a row.
     property account_alias : String
 
     def initialize(

@@ -1,5 +1,6 @@
 module Amazonite::IamV1
   class AcquireRoleResponse
+    # A structure that contains details about the IAM role that was created.
     property role : Role
 
     def initialize(

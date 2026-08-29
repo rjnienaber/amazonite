@@ -2,21 +2,34 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains additional details about a service-specific credential.
   class ServiceSpecificCredentialMetadata
+    # The name of the IAM user associated with the service-specific credential.
     property user_name : String
 
+    # The status of the service-specific credential. `Active` means that the key is valid for API
+    # calls, while `Inactive` means it is not.
     property status : StatusType
 
+    # The generated user name for the service-specific credential.
     property service_user_name : String | Nil
 
+    # For Bedrock API keys and CloudWatch Logs API keys, this is the public portion of the credential
+    # that includes the IAM user name and a suffix containing version and creation information.
     property service_credential_alias : String | Nil
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the
+    # service-specific credential were created.
     property create_date : Time
 
+    # The date and time when the service specific credential expires. This field is only present for
+    # Bedrock API keys and CloudWatch Logs API keys that were created with an expiration period.
     property expiration_date : Time | Nil
 
+    # The unique identifier for the service-specific credential.
     property service_specific_credential_id : String
 
+    # The name of the service associated with the service-specific credential.
     property service_name : String
 
     def initialize(

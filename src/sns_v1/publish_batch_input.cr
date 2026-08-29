@@ -2,8 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class PublishBatchInput
+    # The Amazon resource name (ARN) of the topic you want to batch publish to.
     property topic_arn : String
 
+    # A list of `PublishBatch` request entries to be sent to the SNS topic.
     property publish_batch_request_entries : Array(PublishBatchRequestEntry) = [] of PublishBatchRequestEntry
 
     def initialize(

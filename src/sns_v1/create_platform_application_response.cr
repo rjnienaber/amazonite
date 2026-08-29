@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Response from CreatePlatformApplication action.
   class CreatePlatformApplicationResponse
+    # `PlatformApplicationArn` is returned.
     property platform_application_arn : String | Nil
 
     def initialize(

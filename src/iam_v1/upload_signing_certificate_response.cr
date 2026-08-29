@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [UploadSigningCertificate](https://docs.aws.amazon.com/IAM/latest/APIReference/API_UploadSigningCertificate.html)
+  # request.
   class UploadSigningCertificateResponse
+    # Information about the certificate.
     property certificate : SigningCertificate
 
     def initialize(

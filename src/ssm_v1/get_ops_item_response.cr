@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class GetOpsItemResponse
     include JSON::Serializable
 
+    # The OpsItem.
     @[JSON::Field(key: "OpsItem")]
     property ops_item : OpsItem | Nil
 

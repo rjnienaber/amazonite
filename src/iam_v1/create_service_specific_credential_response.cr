@@ -1,5 +1,10 @@
 module Amazonite::IamV1
   class CreateServiceSpecificCredentialResponse
+    # A structure that contains information about the newly created service-specific credential.
+    #
+    # This is the only time that the password for this credential set is available. It cannot be
+    # recovered later. Instead, you must reset the password with
+    # [ResetServiceSpecificCredential](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ResetServiceSpecificCredential.html).
     property service_specific_credential : ServiceSpecificCredential | Nil
 
     def initialize(

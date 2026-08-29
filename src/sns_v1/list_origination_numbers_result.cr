@@ -2,8 +2,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class ListOriginationNumbersResult
+    # A `NextToken` string is returned when you call the `ListOriginationNumbers` operation if
+    # additional pages of records are available.
     property next_token : String | Nil
 
+    # A list of the calling account's verified and pending origination numbers.
     property phone_numbers : Array(PhoneNumberInformation) | Nil
 
     def initialize(

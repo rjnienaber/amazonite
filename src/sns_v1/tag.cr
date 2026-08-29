@@ -1,9 +1,12 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # The list of tags to be added to the specified topic.
   class Tag
+    # The required key portion of the tag.
     property key : String
 
+    # The optional value portion of the tag.
     property value : String
 
     def initialize(

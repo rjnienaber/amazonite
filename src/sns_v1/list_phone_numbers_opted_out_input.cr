@@ -1,7 +1,10 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # The input for the `ListPhoneNumbersOptedOut` action.
   class ListPhoneNumbersOptedOutInput
+    # A `NextToken` string is used when you call the `ListPhoneNumbersOptedOut` action to retrieve
+    # additional records that are available after the first page of results.
     property next_token : String | Nil
 
     def initialize(

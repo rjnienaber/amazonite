@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [CreateAccessKey](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateAccessKey.html)
+  # request.
   class CreateAccessKeyResponse
+    # A structure with details about the access key.
     property access_key : AccessKey
 
     def initialize(

@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for ListSubscriptions action.
   class ListSubscriptionsInput
+    # Token returned by the previous `ListSubscriptions` request.
     property next_token : String | Nil
 
     def initialize(

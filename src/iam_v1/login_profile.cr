@@ -1,11 +1,22 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the user name and password create date for a user.
+  #
+  # This data type is used as a response element in the
+  # [CreateLoginProfile](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateLoginProfile.html)
+  # and
+  # [GetLoginProfile](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetLoginProfile.html)
+  # operations.
   class LoginProfile
+    # The name of the user, which can be used for signing in to the Amazon Web Services Management
+    # Console.
     property user_name : String
 
+    # The date when the password for the user was created.
     property create_date : Time
 
+    # Specifies whether the user is required to set a new password on next sign-in.
     property password_reset_required : Bool | Nil
 
     def initialize(

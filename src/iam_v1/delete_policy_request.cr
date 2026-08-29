@@ -2,6 +2,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class DeletePolicyRequest
+    # The Amazon Resource Name (ARN) of the IAM policy you want to delete.
+    #
+    # For more information about ARNs, see [Amazon Resource Names
+    # (ARNs)](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) in the
+    # *Amazon Web Services General Reference*.
     property policy_arn : String
 
     def initialize(

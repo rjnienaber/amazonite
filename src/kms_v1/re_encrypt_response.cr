@@ -5,24 +5,36 @@ module Amazonite::KmsV1
   class ReEncryptResponse
     include JSON::Serializable
 
+    # The reencrypted data. When you use the HTTP API or the Amazon Web Services CLI, the value is
+    # Base64-encoded. Otherwise, it is not Base64-encoded.
     @[JSON::Field(key: "CiphertextBlob", converter: Core::Base64Converter)]
     property ciphertext_blob : Bytes | Nil
 
+    # Unique identifier of the KMS key used to originally encrypt the data.
     @[JSON::Field(key: "SourceKeyId")]
     property source_key_id : String | Nil
 
+    # The Amazon Resource Name ([key
+    # ARN](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN)) of the
+    # KMS key that was used to reencrypt the data.
     @[JSON::Field(key: "KeyId")]
     property key_id : String | Nil
 
+    # The encryption algorithm that was used to decrypt the ciphertext before it was reencrypted.
     @[JSON::Field(key: "SourceEncryptionAlgorithm", converter: AK::EncryptionAlgorithmSpec)]
     property source_encryption_algorithm : EncryptionAlgorithmSpec | Nil
 
+    # The encryption algorithm that was used to reencrypt the data.
     @[JSON::Field(key: "DestinationEncryptionAlgorithm", converter: AK::EncryptionAlgorithmSpec)]
     property destination_encryption_algorithm : EncryptionAlgorithmSpec | Nil
 
+    # The identifier of the key material used to originally encrypt the data. This field is present
+    # only when the original encryption used a symmetric encryption KMS key.
     @[JSON::Field(key: "SourceKeyMaterialId")]
     property source_key_material_id : String | Nil
 
+    # The identifier of the key material used to reencrypt the data. This field is present only when
+    # data is reencrypted using a symmetric encryption KMS key.
     @[JSON::Field(key: "DestinationKeyMaterialId")]
     property destination_key_material_id : String | Nil
 

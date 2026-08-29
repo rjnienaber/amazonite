@@ -1,7 +1,9 @@
 module Amazonite::LambdaV1
+  # An object that contains the filters for an event source.
   class FilterCriteria
     include JSON::Serializable
 
+    # A list of filters.
     @[JSON::Field(key: "Filters")]
     property filters : Array(Filter) | Nil
 
