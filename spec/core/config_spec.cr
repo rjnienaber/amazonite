@@ -177,6 +177,29 @@ describe Config do
     end
   end
 
+  describe "AssumeRole fallback" do
+    it "falls through env vars and static profile keys into AssumeRole" do
+      response = <<-XML
+        <AssumeRoleResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
+          <AssumeRoleResult>
+            <Credentials>
+              <AccessKeyId>ASIAEXAMPLE</AccessKeyId>
+              <SecretAccessKey>secretExampleKey</SecretAccessKey>
+              <SessionToken>exampleSessionToken</SessionToken>
+              <Expiration>2099-01-01T00:00:00Z</Expiration>
+            </Credentials>
+          </AssumeRoleResult>
+        </AssumeRoleResponse>
+        XML
+      WebMock.stub(:post, "https://sts.us-east-1.amazonaws.com/").to_return(body: response)
+
+      config = MockConfig.new(region: region, profile: "assume-role-profile", env: MockEnvFetcher.new({} of String => String))
+      config.access_key_id.should eq("ASIAEXAMPLE")
+      config.secret_access_key.should eq("secretExampleKey")
+      config.session_token.should eq("exampleSessionToken")
+    end
+  end
+
   describe "no credentials resolvable" do
     it "raises a combined error covering every credential source" do
       env = MockEnvFetcher.new({} of String => String)

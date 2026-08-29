@@ -122,7 +122,9 @@ module Amazonite::Core
     end
 
     protected def build_provider_chain : CredentialsProviderChain
-      CredentialsProviderChain.new([] of CredentialsProvider)
+      CredentialsProviderChain.new([
+        AssumeRoleCredentialsProvider.new(@ini_parser, @env),
+      ] of CredentialsProvider)
     end
 
     private def current_credentials : Credentials

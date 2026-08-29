@@ -11,6 +11,10 @@ region = eu-west-2
 role_arn = arn:aws:iam::123456789012:role/example-role
 source_profile = other
 
+[profile assume-role-missing-source-profile]
+role_arn = arn:aws:iam::123456789012:role/example-role
+source_profile = another
+
 [profile sso-legacy-profile]
 sso_start_url = https://example.awsapps.com/start
 sso_region = us-east-1
