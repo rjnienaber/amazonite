@@ -109,4 +109,61 @@ describe IniParser do
       region.should be_nil
     end
   end
+
+  describe "#session_token" do
+    it "reads session_token from credentials file" do
+      token = described_class.new("other", credentials_filepath: test_credential_filepath).session_token
+      token.should eq("tokenTOKENtoken")
+    end
+
+    it "returns nil if the profile does not have a session_token" do
+      token = described_class.new("default", credentials_filepath: test_credential_filepath).session_token
+      token.should be_nil
+    end
+  end
+
+  describe "#role_arn and #source_profile" do
+    it "reads role_arn and source_profile from config file" do
+      parser = described_class.new("assume-role-profile", config_filepath: test_config_filepath)
+      parser.role_arn.should eq("arn:aws:iam::123456789012:role/example-role")
+      parser.source_profile.should eq("other")
+    end
+
+    it "returns nil if the profile does not set them" do
+      parser = described_class.new("other", config_filepath: test_config_filepath)
+      parser.role_arn.should be_nil
+      parser.source_profile.should be_nil
+    end
+  end
+
+  describe "#sso_start_url, #sso_region, #sso_account_id, #sso_role_name, #sso_session" do
+    it "reads legacy sso_* keys from config file" do
+      parser = described_class.new("sso-legacy-profile", config_filepath: test_config_filepath)
+      parser.sso_start_url.should eq("https://example.awsapps.com/start")
+      parser.sso_region.should eq("us-east-1")
+      parser.sso_account_id.should eq("123456789012")
+      parser.sso_role_name.should eq("ExampleRole")
+      parser.sso_session.should be_nil
+    end
+
+    it "reads sso_session from config file" do
+      parser = described_class.new("sso-session-profile", config_filepath: test_config_filepath)
+      parser.sso_session.should eq("example-sso-session")
+      parser.sso_account_id.should eq("123456789012")
+      parser.sso_role_name.should eq("ExampleRole")
+    end
+  end
+
+  describe "#sso_session_config_value" do
+    it "reads a key from the matching [sso-session <name>] section" do
+      parser = described_class.new("sso-session-profile", config_filepath: test_config_filepath)
+      parser.sso_session_config_value("example-sso-session", "sso_start_url").should eq("https://example.awsapps.com/start")
+      parser.sso_session_config_value("example-sso-session", "sso_region").should eq("us-east-1")
+    end
+
+    it "returns nil if the session does not exist" do
+      parser = described_class.new("sso-session-profile", config_filepath: test_config_filepath)
+      parser.sso_session_config_value("missing-session", "sso_start_url").should be_nil
+    end
+  end
 end

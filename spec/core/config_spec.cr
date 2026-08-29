@@ -155,6 +155,37 @@ describe Config do
     end
   end
 
+  describe "#session_token" do
+    it "is nil by default" do
+      Config.new(key, secret, region).session_token.should be_nil
+    end
+
+    it "uses value from constructor" do
+      Config.new(key, secret, region, session_token: "a-token").session_token.should eq("a-token")
+    end
+
+    it "uses 'AWS_SESSION_TOKEN' environment variable when available" do
+      env = {"AWS_SESSION_TOKEN" => "env-token"}
+      config = Config.new(key, secret, region, env: MockEnvFetcher.new(env))
+      config.session_token.should eq("env-token")
+    end
+  end
+
+  describe "#expiration" do
+    it "is nil for static credentials" do
+      Config.new(key, secret, region).expiration.should be_nil
+    end
+  end
+
+  describe "no credentials resolvable" do
+    it "raises a combined error covering every credential source" do
+      env = MockEnvFetcher.new({} of String => String)
+      expect_raises(Exception, "no AWS credentials found for profile 'nonexistent-profile'") do
+        MockConfig.new(region: region, profile: "nonexistent-profile", env: env)
+      end
+    end
+  end
+
   describe "#user_agent" do
     it "uses default user agent" do
       config = MockConfig.new(key, secret, region)

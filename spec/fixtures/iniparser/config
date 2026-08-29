@@ -6,3 +6,22 @@ output = json
 region = eu-west-2
 
 [profile another]
+
+[profile assume-role-profile]
+role_arn = arn:aws:iam::123456789012:role/example-role
+source_profile = other
+
+[profile sso-legacy-profile]
+sso_start_url = https://example.awsapps.com/start
+sso_region = us-east-1
+sso_account_id = 123456789012
+sso_role_name = ExampleRole
+
+[profile sso-session-profile]
+sso_session = example-sso-session
+sso_account_id = 123456789012
+sso_role_name = ExampleRole
+
+[sso-session example-sso-session]
+sso_start_url = https://example.awsapps.com/start
+sso_region = us-east-1

@@ -40,6 +40,18 @@ describe Amazonite::Core::Client do
     response.body.should eq(response_json)
   end
 
+  it "signs requests with a session token when the config has one" do
+    local_config = Amazonite::Core::Config.new(
+      "AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1",
+      base_url: "http://www.example.com", session_token: "a-session-token")
+
+    WebMock.stub(:post, "http://www.example.com/foo")
+      .with(headers: {"X-Amz-Security-Token" => "a-session-token"})
+
+    client = described_class.new("HelloWorld_20221002", "helloworld", "1.0", exception_factory, local_config)
+    client.post("Greet", "/foo", "")
+  end
+
   it "allows setting the user agent" do
     headers = {
       "X-Amz-Target" => "HelloWorld_20221002.Salutation",

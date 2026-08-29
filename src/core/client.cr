@@ -58,7 +58,8 @@ module Amazonite::Core
         before_request(request)
         key = @config.access_key_id
         secret = @config.secret_access_key
-        signer = Awscr::Signer::Signers::V4.new(@endpoint_prefix, @config.region, key, secret)
+        token = @config.session_token
+        signer = Awscr::Signer::Signers::V4.new(@endpoint_prefix, @config.region, key, secret, token)
         signer.sign(request)
         Log.trace do
           "request (#{id}) for operation '#{command}' with method '#{request.method}', url '#{url}', " \
