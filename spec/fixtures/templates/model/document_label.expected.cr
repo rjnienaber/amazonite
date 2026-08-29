@@ -14,7 +14,7 @@ module Amazonite::ComprehendV2
     def initialize(
       @name : String | Nil = nil,
       @score : Float32 | Nil = nil,
-      @page : Int32 | Nil = nil
+      @page : Int32 | Nil = nil,
     )
     end
   end

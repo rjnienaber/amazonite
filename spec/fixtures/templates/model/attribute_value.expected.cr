@@ -42,7 +42,7 @@ module Amazonite::DynamoDBV2
       @m : Hash(String, AttributeValue) | Nil = nil,
       @l : Array(AttributeValue) | Nil = nil,
       @null : Bool | Nil = nil,
-      @bool : Bool | Nil = nil
+      @bool : Bool | Nil = nil,
     )
     end
   end

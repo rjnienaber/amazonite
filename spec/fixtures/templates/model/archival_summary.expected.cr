@@ -16,7 +16,7 @@ module Amazonite::DynamoDBV2
     def initialize(
       @archival_date_time : Time | Nil = nil,
       @archival_reason : String | Nil = nil,
-      @archival_backup_arn : String | Nil = nil
+      @archival_backup_arn : String | Nil = nil,
     )
     end
   end
