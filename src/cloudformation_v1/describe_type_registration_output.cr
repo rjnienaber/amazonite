@@ -3,12 +3,20 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribeTypeRegistrationOutput
+    # The current status of the extension registration request.
     property progress_status : RegistrationStatus | Nil
 
+    # The description of the extension registration request.
     property description : String | Nil
 
+    # The Amazon Resource Name (ARN) of the extension being registered.
+    #
+    # For registration requests with a `ProgressStatus` of other than `COMPLETE`, this will be `null`.
     property type_arn : String | Nil
 
+    # The Amazon Resource Name (ARN) of this specific version of the extension being registered.
+    #
+    # For registration requests with a `ProgressStatus` of other than `COMPLETE`, this will be `null`.
     property type_version_arn : String | Nil
 
     def initialize(

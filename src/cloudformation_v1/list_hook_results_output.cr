@@ -3,12 +3,17 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListHookResultsOutput
+    # The target type.
     property target_type : ListHookResultsTargetType | Nil
 
+    # The unique identifier of the Hook invocation target.
     property target_id : String | Nil
 
+    # A list of `HookResultSummary` structures that provides the status and Hook status reason for
+    # each Hook invocation for the specified target.
     property hook_results : Array(HookResultSummary) | Nil
 
+    # Pagination token, `null` or empty if no more results.
     property next_token : String | Nil
 
     def initialize(

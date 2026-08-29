@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribeResourceScanInput
+    # The Amazon Resource Name (ARN) of the resource scan.
     property resource_scan_id : String
 
     def initialize(

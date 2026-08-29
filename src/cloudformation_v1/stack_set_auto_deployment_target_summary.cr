@@ -1,9 +1,14 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # One of the targets for the StackSet. Returned by the
+  # [ListStackSetAutoDeploymentTargets](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListStackSetAutoDeploymentTargets.html)
+  # API operation.
   class StackSetAutoDeploymentTargetSummary
+    # The organization root ID or organizational unit (OU) IDs where the StackSet is targeted.
     property organizational_unit_id : String | Nil
 
+    # The list of Regions targeted for this organization or OU.
     property regions : Array(String) | Nil
 
     def initialize(

@@ -1,13 +1,18 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The `Output` data type.
   class Output
+    # The key associated with the output.
     property output_key : String | Nil
 
+    # The value associated with the output.
     property output_value : String | Nil
 
+    # User defined description associated with the output.
     property description : String | Nil
 
+    # The name of the export associated with the output.
     property export_name : String | Nil
 
     def initialize(

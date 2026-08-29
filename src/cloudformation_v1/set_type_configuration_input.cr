@@ -3,14 +3,40 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class SetTypeConfigurationInput
+    # The Amazon Resource Name (ARN) for the extension in this account and Region.
+    #
+    # For public extensions, this will be the ARN assigned when you call the
+    # [ActivateType](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ActivateType.html)
+    # API operation in this account and Region. For private extensions, this will be the ARN assigned
+    # when you call the
+    # [RegisterType](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_RegisterType.html)
+    # API operation in this account and Region.
+    #
+    # Do not include the extension versions suffix at the end of the ARN. You can set the
+    # configuration for an extension, but not for a specific extension version.
     property type_arn : String | Nil
 
+    # The configuration data for the extension in this account and Region.
+    #
+    # The configuration data must be formatted as JSON and validate against the extension's schema
+    # returned in the `Schema` response element of
+    # [DescribeType](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_DescribeType.html).
     property configuration : String
 
+    # An alias by which to refer to this extension configuration data.
+    #
+    # Conditional: Specifying a configuration alias is required when setting a configuration for a
+    # resource type extension.
     property configuration_alias : String | Nil
 
+    # The name of the extension.
+    #
+    # Conditional: You must specify `ConfigurationArn`, or `Type` and `TypeName`.
     property type_name : String | Nil
 
+    # The type of extension.
+    #
+    # Conditional: You must specify `ConfigurationArn`, or `Type` and `TypeName`.
     property type : ThirdPartyType | Nil
 
     def initialize(

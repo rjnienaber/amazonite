@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class PublishTypeOutput
+    # The Amazon Resource Name (ARN) assigned to the public extension upon publication.
     property public_type_arn : String | Nil
 
     def initialize(

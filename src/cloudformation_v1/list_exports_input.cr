@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListExportsInput
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
     def initialize(

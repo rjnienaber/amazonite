@@ -1,11 +1,20 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Describes the target resource of an import operation.
   class ResourceToImport
+    # The type of resource to import into your stack, such as `AWS::S3::Bucket`. For a list of
+    # supported resource types, see [Resource type support for imports and drift
+    # detection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-supported-resources.html)
+    # in the *CloudFormation User Guide*.
     property resource_type : String
 
+    # The logical ID of the target resource as specified in the template.
     property logical_resource_id : String
 
+    # A key-value pair that identifies the target resource. The key is an identifier property (for
+    # example, `BucketName` for `AWS::S3::Bucket` resources) and the value is the actual property
+    # value (for example, `MyS3Bucket`).
     property resource_identifier : Hash(String, String)
 
     def initialize(

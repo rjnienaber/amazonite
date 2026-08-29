@@ -1,9 +1,12 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The output for the CreateChangeSet action.
   class CreateChangeSetOutput
+    # The Amazon Resource Name (ARN) of the change set.
     property id : String | Nil
 
+    # The unique ID of the stack.
     property stack_id : String | Nil
 
     def initialize(

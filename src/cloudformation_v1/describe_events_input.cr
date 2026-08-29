@@ -2,14 +2,20 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribeEventsInput
+    # The name or unique stack ID for which you want to retrieve events. If you specified the name of
+    # a change set, specify the stack name or ID (ARN) of the change set you want to describe.
     property stack_name : String | Nil
 
+    # The name or Amazon Resource Name (ARN) of the change set for which you want to retrieve events.
     property change_set_name : String | Nil
 
+    # The unique identifier of the operation for which you want to retrieve events.
     property operation_id : String | Nil
 
+    # Filters to apply when retrieving events.
     property filters : EventFilter | Nil
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
     def initialize(

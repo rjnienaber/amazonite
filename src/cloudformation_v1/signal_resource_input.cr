@@ -2,13 +2,23 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The input for the SignalResource action.
   class SignalResourceInput
+    # The stack name or unique stack ID that includes the resource that you want to signal.
     property stack_name : String
 
+    # The logical ID of the resource that you want to signal. The logical ID is the name of the
+    # resource that given in the template.
     property logical_resource_id : String
 
+    # A unique ID of the signal. When you signal Amazon EC2 instances or Auto Scaling groups, specify
+    # the instance ID that you are signaling as the unique ID. If you send multiple signals to a
+    # single resource (such as signaling a wait condition), each signal requires a different unique
+    # ID.
     property unique_id : String
 
+    # The status of the signal, which is either success or failure. A failure signal causes
+    # CloudFormation to immediately fail the stack creation or update.
     property status : ResourceSignalStatus
 
     def initialize(

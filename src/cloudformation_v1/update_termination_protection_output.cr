@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class UpdateTerminationProtectionOutput
+    # The unique ID of the stack.
     property stack_id : String | Nil
 
     def initialize(

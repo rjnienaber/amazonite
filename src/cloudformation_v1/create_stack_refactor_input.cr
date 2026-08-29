@@ -2,12 +2,16 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class CreateStackRefactorInput
+    # A description to help you identify the stack refactor.
     property description : String | Nil
 
+    # Determines if a new stack is created with the refactor.
     property enable_stack_creation : Bool | Nil
 
+    # The mappings for the stack resource `Source` and stack resource `Destination`.
     property resource_mappings : Array(ResourceMapping) | Nil
 
+    # The stacks being refactored.
     property stack_definitions : Array(StackDefinition) = [] of StackDefinition
 
     def initialize(

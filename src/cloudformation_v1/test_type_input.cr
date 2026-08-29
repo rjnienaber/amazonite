@@ -3,14 +3,44 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class TestTypeInput
+    # The Amazon Resource Name (ARN) of the extension.
+    #
+    # Conditional: You must specify `Arn`, or `TypeName` and `Type`.
     property arn : String | Nil
 
+    # The type of the extension to test.
+    #
+    # Conditional: You must specify `Arn`, or `TypeName` and `Type`.
     property type : ThirdPartyType | Nil
 
+    # The name of the extension to test.
+    #
+    # Conditional: You must specify `Arn`, or `TypeName` and `Type`.
     property type_name : String | Nil
 
+    # The version of the extension to test.
+    #
+    # You can specify the version id with either `Arn`, or with `TypeName` and `Type`.
+    #
+    # If you don't specify a version, CloudFormation uses the default version of the extension in this
+    # account and Region for testing.
     property version_id : String | Nil
 
+    # The S3 bucket to which CloudFormation delivers the contract test execution logs.
+    #
+    # CloudFormation delivers the logs by the time contract testing has completed and the extension
+    # has been assigned a test type status of `PASSED` or `FAILED`.
+    #
+    # The user calling `TestType` must be able to access items in the specified S3 bucket.
+    # Specifically, the user needs the following permissions:
+    #
+    # - `GetObject`
+    #
+    # - `PutObject`
+    #
+    # For more information, see [Actions, Resources, and Condition Keys for Amazon
+    # S3](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazons3.html) in
+    # the *Identity and Access Management User Guide*.
     property log_delivery_bucket : String | Nil
 
     def initialize(

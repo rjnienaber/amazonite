@@ -2,17 +2,25 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The summary of a stack refactor operation.
   class StackRefactorSummary
+    # The ID associated with the stack refactor created from the CreateStackRefactor action.
     property stack_refactor_id : String | Nil
 
+    # A description to help you identify the refactor.
     property description : String | Nil
 
+    # The operation status that's provided after calling the ExecuteStackRefactor action.
     property execution_status : StackRefactorExecutionStatus | Nil
 
+    # A detailed explanation for the stack refactor `ExecutionStatus`.
     property execution_status_reason : String | Nil
 
+    # The stack refactor operation status that's provided after calling the CreateStackRefactor
+    # action.
     property status : StackRefactorStatus | Nil
 
+    # A detailed explanation for the stack refactor `Status`.
     property status_reason : String | Nil
 
     def initialize(

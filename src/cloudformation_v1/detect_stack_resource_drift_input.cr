@@ -2,8 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DetectStackResourceDriftInput
+    # The name of the stack to which the resource belongs.
     property stack_name : String
 
+    # The logical name of the resource for which to return drift information.
     property logical_resource_id : String
 
     def initialize(

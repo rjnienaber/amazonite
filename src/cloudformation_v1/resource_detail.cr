@@ -2,17 +2,42 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Details about a resource in a generated template
   class ResourceDetail
+    # The type of the resource, such as `AWS::DynamoDB::Table`. For the list of supported resources,
+    # see [Resource type support for imports and drift
+    # detection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-supported-resources.html)
+    # In the *CloudFormation User Guide*
     property resource_type : String | Nil
 
+    # The logical id for this resource in the final generated template.
     property logical_resource_id : String | Nil
 
+    # A list of up to 256 key-value pairs that identifies the resource in the generated template. The
+    # key is the name of one of the primary identifiers for the resource. (Primary identifiers are
+    # specified in the `primaryIdentifier` list in the resource schema.) The value is the value of
+    # that primary identifier. For example, for a `AWS::DynamoDB::Table` resource, the primary
+    # identifiers is `TableName` so the key-value pair could be `"TableName": "MyDDBTable"`. For more
+    # information, see
+    # [primaryIdentifier](https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/resource-type-schema.html#schema-properties-primaryidentifier)
+    # in the *CloudFormation Command Line Interface (CLI) User Guide*.
     property resource_identifier : Hash(String, String) | Nil
 
+    # Status of the processing of a resource in a generated template.
+    #
+    # InProgress The resource processing is still in progress.
+    #
+    # Complete The resource processing is complete.
+    #
+    # Pending The resource processing is pending.
+    #
+    # Failed The resource processing has failed.
     property resource_status : GeneratedTemplateResourceStatus | Nil
 
+    # The reason for the resource detail, providing more information if a failure happened.
     property resource_status_reason : String | Nil
 
+    # The warnings generated for this resource.
     property warnings : Array(WarningDetail) | Nil
 
     def initialize(

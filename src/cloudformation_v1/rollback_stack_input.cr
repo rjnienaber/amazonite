@@ -2,14 +2,22 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class RollbackStackInput
+    # The name that's associated with the stack.
     property stack_name : String
 
+    # The Amazon Resource Name (ARN) of an IAM role that CloudFormation assumes to rollback the stack.
     property role_arn : String | Nil
 
+    # A unique identifier for this `RollbackStack` request.
     property client_request_token : String | Nil
 
+    # When set to `true`, newly created resources are deleted when the operation rolls back. This
+    # includes newly created resources marked with a deletion policy of `Retain`.
+    #
+    # Default: `false`
     property retain_except_on_create : Bool | Nil
 
+    # The deployment configuration for this stack operation, including the deployment mode.
     property deployment_config : DeploymentConfig | Nil
 
     def initialize(

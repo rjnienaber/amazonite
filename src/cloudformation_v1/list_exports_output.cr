@@ -2,8 +2,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListExportsOutput
+    # The output for the ListExports action.
     property exports : Array(Export) | Nil
 
+    # If the output exceeds 100 exported output values, a string that identifies the next page of
+    # exports. If there is no additional page, this value is null.
     property next_token : String | Nil
 
     def initialize(

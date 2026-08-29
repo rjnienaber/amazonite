@@ -2,53 +2,125 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The output for the DescribeChangeSet action.
   class DescribeChangeSetOutput
+    # The name of the change set.
     property change_set_name : String | Nil
 
+    # The Amazon Resource Name (ARN) of the change set.
     property change_set_id : String | Nil
 
+    # The Amazon Resource Name (ARN) of the stack that's associated with the change set.
     property stack_id : String | Nil
 
+    # The name of the stack that's associated with the change set.
     property stack_name : String | Nil
 
+    # Information about the change set.
     property description : String | Nil
 
+    # A list of `Parameter` structures that describes the input parameters and their values used to
+    # create the change set. For more information, see the
+    # [Parameter](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_Parameter.html)
+    # data type.
     property parameters : Array(Parameter) | Nil
 
+    # The start time when the change set was created, in UTC.
     property creation_time : Time | Nil
 
+    # If the change set execution status is `AVAILABLE`, you can execute the change set. If you can't
+    # execute the change set, the status indicates why. For example, a change set might be in an
+    # `UNAVAILABLE` state because CloudFormation is still creating it or in an `OBSOLETE` state
+    # because the stack was already updated.
     property execution_status : ExecutionStatus | Nil
 
+    # The current status of the change set, such as `CREATE_PENDING`, `CREATE_COMPLETE`, or `FAILED`.
     property status : ChangeSetStatus | Nil
 
+    # A description of the change set's status. For example, if your attempt to create a change set
+    # failed, CloudFormation shows the error message.
     property status_reason : String | Nil
 
+    # The drift status of the stack when the change set was created. Valid values:
+    #
+    # - `DRIFTED` – The stack has drifted from its last deployment.
+    #
+    # - `IN_SYNC` – The stack is in sync with its last deployment.
+    #
+    # - `NOT_CHECKED` – CloudFormation doesn’t currently return this value.
+    #
+    # - `UNKNOWN` – The drift status could not be determined.
+    #
+    # Only present for drift-aware change sets.
     property stack_drift_status : StackDriftStatus | Nil
 
+    # The ARNs of the Amazon SNS topics that will be associated with the stack if you execute the
+    # change set.
     property notification_ar_ns : Array(String) | Nil
 
+    # The rollback triggers for CloudFormation to monitor during stack creation and updating
+    # operations, and for the specified monitoring period afterwards.
     property rollback_configuration : RollbackConfiguration | Nil
 
+    # If you execute the change set, the list of capabilities that were explicitly acknowledged when
+    # the change set was created.
     property capabilities : Array(Capability) | Nil
 
+    # If you execute the change set, the tags that will be associated with the stack.
     property tags : Array(Tag) | Nil
 
+    # A list of `Change` structures that describes the resources CloudFormation changes if you execute
+    # the change set.
     property changes : Array(Change) | Nil
 
+    # If the output exceeds 1 MB, a string that identifies the next page of changes. If there is no
+    # additional page, this value is null.
     property next_token : String | Nil
 
+    # Verifies if `IncludeNestedStacks` is set to `True`.
     property include_nested_stacks : Bool | Nil
 
+    # Specifies the change set ID of the parent change set in the current nested change set hierarchy.
     property parent_change_set_id : String | Nil
 
+    # Specifies the change set ID of the root change set in the current nested change set hierarchy.
     property root_change_set_id : String | Nil
 
+    # Determines what action will be taken if stack creation fails. When this parameter is specified,
+    # the `DisableRollback` parameter to the
+    # [ExecuteChangeSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ExecuteChangeSet.html)
+    # API operation must not be specified. This must be one of these values:
+    #
+    # - `DELETE` - Deletes the change set if the stack creation fails. This is only valid when the
+    # `ChangeSetType` parameter is set to `CREATE`. If the deletion of the stack fails, the status of
+    # the stack is `DELETE_FAILED`.
+    #
+    # - `DO_NOTHING` - if the stack creation fails, do nothing. This is equivalent to specifying
+    # `true` for the `DisableRollback` parameter to the
+    # [ExecuteChangeSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ExecuteChangeSet.html)
+    # API operation.
+    #
+    # - `ROLLBACK` - if the stack creation fails, roll back the stack. This is equivalent to
+    # specifying `false` for the `DisableRollback` parameter to the
+    # [ExecuteChangeSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ExecuteChangeSet.html)
+    # API operation.
     property on_stack_failure : OnStackFailure | Nil
 
+    # Indicates if the change set imports resources that already exist.
+    #
+    # This parameter can only import resources that have [custom
+    # names](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-properties-name.html)
+    # in templates. To import resources that do not accept custom names, such as EC2 instances, use
+    # the [resource
+    # import](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import.html)
+    # feature instead.
     property import_existing_resources : Bool | Nil
 
+    # The deployment mode specified when the change set was created. Valid value is `REVERT_DRIFT`.
+    # Only present for drift-aware change sets.
     property deployment_mode : DeploymentMode | Nil
 
+    # The deployment configuration specified when the change set was created.
     property deployment_config : DeploymentConfig | Nil
 
     def initialize(

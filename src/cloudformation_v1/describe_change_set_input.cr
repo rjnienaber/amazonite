@@ -1,13 +1,19 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The input for the DescribeChangeSet action.
   class DescribeChangeSetInput
+    # The name or Amazon Resource Name (ARN) of the change set that you want to describe.
     property change_set_name : String
 
+    # If you specified the name of a change set, specify the stack name or ID (ARN) of the change set
+    # you want to describe.
     property stack_name : String | Nil
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
+    # If `true`, the returned changes include detailed changes in the property values.
     property include_property_values : Bool | Nil
 
     def initialize(

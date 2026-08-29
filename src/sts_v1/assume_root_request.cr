@@ -2,10 +2,34 @@ private alias Core = Amazonite::Core
 
 module Amazonite::StsV1
   class AssumeRootRequest
+    # The member account principal ARN or account ID.
     property target_principal : String
 
+    # The identity based policy that scopes the session to the privileged tasks that can be performed.
+    # You must use one of following Amazon Web Services managed policies to scope root session
+    # actions:
+    #
+    # -
+    # [IAMAuditRootUserCredentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/security-iam-awsmanpol.html#security-iam-awsmanpol-IAMAuditRootUserCredentials)
+    #
+    # -
+    # [IAMCreateRootUserPassword](https://docs.aws.amazon.com/IAM/latest/UserGuide/security-iam-awsmanpol.html#security-iam-awsmanpol-IAMCreateRootUserPassword)
+    #
+    # -
+    # [IAMDeleteRootUserCredentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/security-iam-awsmanpol.html#security-iam-awsmanpol-IAMDeleteRootUserCredentials)
+    #
+    # -
+    # [S3UnlockBucketPolicy](https://docs.aws.amazon.com/IAM/latest/UserGuide/security-iam-awsmanpol.html#security-iam-awsmanpol-S3UnlockBucketPolicy)
+    #
+    # -
+    # [SQSUnlockQueuePolicy](https://docs.aws.amazon.com/IAM/latest/UserGuide/security-iam-awsmanpol.html#security-iam-awsmanpol-SQSUnlockQueuePolicy)
     property task_policy_arn : PolicyDescriptorType
 
+    # The duration, in seconds, of the privileged session. The value can range from 0 seconds up to
+    # the maximum session duration of 900 seconds (15 minutes). If you specify a value higher than
+    # this setting, the operation fails.
+    #
+    # By default, the value is set to `900` seconds.
     property duration_seconds : Int32 | Nil
 
     def initialize(

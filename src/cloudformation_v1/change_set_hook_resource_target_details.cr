@@ -2,11 +2,15 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Specifies `RESOURCE` type target details for activated Hooks.
   class ChangeSetHookResourceTargetDetails
+    # The resource's logical ID, which is defined in the stack's template.
     property logical_resource_id : String | Nil
 
+    # The type of CloudFormation resource, such as `AWS::S3::Bucket`.
     property resource_type : String | Nil
 
+    # Specifies the action of the resource.
     property resource_action : ChangeAction | Nil
 
     def initialize(

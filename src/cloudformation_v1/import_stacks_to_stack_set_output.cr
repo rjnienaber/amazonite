@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ImportStacksToStackSetOutput
+    # The unique identifier for the StackSet operation.
     property operation_id : String | Nil
 
     def initialize(

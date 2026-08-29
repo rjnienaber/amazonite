@@ -3,10 +3,20 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DeactivateTypeInput
+    # The type name of the extension in this account and Region. If you specified a type name alias
+    # when enabling the extension, use the type name alias.
+    #
+    # Conditional: You must specify either `Arn`, or `TypeName` and `Type`.
     property type_name : String | Nil
 
+    # The extension type.
+    #
+    # Conditional: You must specify either `Arn`, or `TypeName` and `Type`.
     property type : ThirdPartyType | Nil
 
+    # The Amazon Resource Name (ARN) for the extension in this account and Region.
+    #
+    # Conditional: You must specify either `Arn`, or `TypeName` and `Type`.
     property arn : String | Nil
 
     def initialize(

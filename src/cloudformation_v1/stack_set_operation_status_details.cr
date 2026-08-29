@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Detailed information about the StackSet operation.
   class StackSetOperationStatusDetails
+    # The number of stack instances for which the StackSet operation failed.
     property failed_stack_instances_count : Int32 | Nil
 
     def initialize(

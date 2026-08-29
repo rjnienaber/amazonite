@@ -2,6 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribePublisherInput
+    # The ID of the extension publisher.
+    #
+    # If you don't supply a `PublisherId`, and you have registered as an extension publisher,
+    # `DescribePublisher` returns information about your own publisher account.
     property publisher_id : String | Nil
 
     def initialize(

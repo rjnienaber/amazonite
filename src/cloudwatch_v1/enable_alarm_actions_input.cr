@@ -2,6 +2,7 @@ module Amazonite::CloudWatchV1
   class EnableAlarmActionsInput
     include JSON::Serializable
 
+    # The names of the alarms.
     @[JSON::Field(key: "AlarmNames")]
     property alarm_names : Array(String) = [] of String
 

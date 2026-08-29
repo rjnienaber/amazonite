@@ -1,9 +1,13 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The output for an UpdateStack action.
   class UpdateStackOutput
+    # Unique identifier of the stack.
     property stack_id : String | Nil
 
+    # A unique identifier for this update operation that can be used to track the operation's progress
+    # and events.
     property operation_id : String | Nil
 
     def initialize(

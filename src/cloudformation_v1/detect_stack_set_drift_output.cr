@@ -2,6 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DetectStackSetDriftOutput
+    # The ID of the drift detection StackSet operation.
+    #
+    # You can use this operation ID with DescribeStackSetOperation to monitor the progress of the
+    # drift detection operation.
     property operation_id : String | Nil
 
     def initialize(

@@ -2,8 +2,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListImportsInput
+    # The name of the exported output value. CloudFormation returns the stack names that are importing
+    # this value.
     property export_name : String
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
     def initialize(

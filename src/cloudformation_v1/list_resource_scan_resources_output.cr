@@ -2,8 +2,14 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListResourceScanResourcesOutput
+    # List of up to `MaxResults` resources in the specified resource scan that match all of the
+    # specified filters.
     property resources : Array(ScannedResource) | Nil
 
+    # If the request doesn't return all the remaining results, `NextToken` is set to a token. To
+    # retrieve the next set of results, call `ListResourceScanResources` again and use that value for
+    # the `NextToken` parameter. If the request returns all results, `NextToken` is set to an empty
+    # string.
     property next_token : String | Nil
 
     def initialize(

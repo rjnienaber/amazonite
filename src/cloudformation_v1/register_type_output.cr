@@ -2,6 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class RegisterTypeOutput
+    # The identifier for this registration request.
+    #
+    # Use this registration token when calling DescribeTypeRegistration, which returns information
+    # about the status and IDs of the extension registration.
     property registration_token : String | Nil
 
     def initialize(

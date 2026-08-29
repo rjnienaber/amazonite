@@ -1,5 +1,8 @@
 module Amazonite::CloudFormationV1
   class DetectStackResourceDriftOutput
+    # Information about whether the resource's actual configuration has drifted from its expected
+    # template configuration, including actual and expected property values and any differences
+    # detected.
     property stack_resource_drift : StackResourceDrift
 
     def initialize(

@@ -1,7 +1,10 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Event filter allows you to focus on specific events in an operation.
   class EventFilter
+    # When set to true, only returns failed events within the operation. This helps quickly identify
+    # root causes for a failed operation.
     property failed_events : Bool | Nil
 
     def initialize(

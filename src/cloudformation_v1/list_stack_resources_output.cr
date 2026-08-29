@@ -1,9 +1,13 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The output for a ListStackResources action.
   class ListStackResourcesOutput
+    # A list of `StackResourceSummary` structures.
     property stack_resource_summaries : Array(StackResourceSummary) | Nil
 
+    # If the output exceeds 1 MB, a string that identifies the next page of stack resources. If no
+    # additional page exists, this value is null.
     property next_token : String | Nil
 
     def initialize(

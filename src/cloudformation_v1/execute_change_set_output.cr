@@ -1,4 +1,5 @@
 module Amazonite::CloudFormationV1
+  # The output for the ExecuteChangeSet action.
   class ExecuteChangeSetOutput
     def initialize
     end

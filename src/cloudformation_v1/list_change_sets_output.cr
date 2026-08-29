@@ -1,9 +1,14 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The output for the ListChangeSets action.
   class ListChangeSetsOutput
+    # A list of `ChangeSetSummary` structures that provides the ID and status of each change set for
+    # the specified stack.
     property summaries : Array(ChangeSetSummary) | Nil
 
+    # If the output exceeds 1 MB, a string that identifies the next page of change sets. If there is
+    # no additional page, this value is `null`.
     property next_token : String | Nil
 
     def initialize(

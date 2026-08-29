@@ -3,10 +3,16 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListStackRefactorsInput
+    # Execution status to use as a filter. Specify one or more execution status codes to list only
+    # stack refactors with the specified execution status codes.
     property execution_status_filter : Array(StackRefactorExecutionStatus) | Nil
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
+    # The maximum number of results to be returned with a single call. If the number of available
+    # results exceeds this maximum, the response includes a `NextToken` value that you can assign to
+    # the `NextToken` request parameter to get the next set of results.
     property max_results : Int32 | Nil
 
     def initialize(

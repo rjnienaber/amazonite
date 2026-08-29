@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The input for the GetStackPolicy action.
   class GetStackPolicyInput
+    # The name or unique stack ID that's associated with the stack whose policy you want to get.
     property stack_name : String
 
     def initialize(

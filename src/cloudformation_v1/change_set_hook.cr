@@ -2,17 +2,45 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Specifies the resource, the Hook, and the Hook version to be invoked.
   class ChangeSetHook
+    # The specific point in the provisioning process where the Hook is invoked.
     property invocation_point : HookInvocationPoint | Nil
 
+    # Specify the Hook failure mode for non-compliant resources in the followings ways.
+    #
+    # - `FAIL` Stops provisioning resources.
+    #
+    # - `WARN` Allows provisioning to continue with a warning message.
     property failure_mode : HookFailureMode | Nil
 
+    # The unique name for your Hook. Specifies a three-part namespace for your Hook, with a
+    # recommended pattern of `Organization::Service::Hook`.
+    #
+    # The following organization namespaces are reserved and can't be used in your Hook type names:
+    #
+    # - `Alexa`
+    #
+    # - `AMZN`
+    #
+    # - `Amazon`
+    #
+    # - `ASK`
+    #
+    # - `AWS`
+    #
+    # - `Custom`
+    #
+    # - `Dev`
     property type_name : String | Nil
 
+    # The version ID of the type specified.
     property type_version_id : String | Nil
 
+    # The version ID of the type configuration.
     property type_configuration_version_id : String | Nil
 
+    # Specifies details about the target that the Hook will run against.
     property target_details : ChangeSetHookTargetDetails | Nil
 
     def initialize(

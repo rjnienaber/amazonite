@@ -1,7 +1,10 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Options for the `GetTemplateSummary` API action.
   class TemplateSummaryConfig
+    # If set to `True`, any unrecognized resource types generate warnings and not an error. Any
+    # unrecognized resource types are returned in the `Warnings` output parameter.
     property treat_unrecognized_resource_types_as_warnings : Bool | Nil
 
     def initialize(

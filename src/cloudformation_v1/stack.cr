@@ -2,59 +2,130 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The `Stack` data type.
   class Stack
+    # Unique identifier of the stack.
     property stack_id : String | Nil
 
+    # The name associated with the stack.
     property stack_name : String
 
+    # The unique ID of the change set.
     property change_set_id : String | Nil
 
+    # A user-defined description associated with the stack.
     property description : String | Nil
 
+    # A list of `Parameter` structures.
     property parameters : Array(Parameter) | Nil
 
+    # The time at which the stack was created.
     property creation_time : Time
 
+    # The time the stack was deleted.
     property deletion_time : Time | Nil
 
+    # The time the stack was last updated. This field will only be returned if the stack has been
+    # updated at least once.
     property last_updated_time : Time | Nil
 
+    # The rollback triggers for CloudFormation to monitor during stack creation and updating
+    # operations, and for the specified monitoring period afterwards.
     property rollback_configuration : RollbackConfiguration | Nil
 
+    # Current status of the stack.
     property stack_status : StackStatus
 
+    # Success/failure message associated with the stack status.
     property stack_status_reason : String | Nil
 
+    # Boolean to enable or disable rollback on stack creation failures:
+    #
+    # - `true`: disable rollback.
+    #
+    # - `false`: enable rollback.
     property disable_rollback : Bool | Nil
 
+    # The deployment configuration for the stack, including the deployment mode used for stack
+    # operations.
     property deployment_config : DeploymentConfig | Nil
 
+    # Amazon SNS topic Amazon Resource Names (ARNs) to which stack related events are published.
     property notification_ar_ns : Array(String) | Nil
 
+    # The amount of time within which stack creation should complete.
     property timeout_in_minutes : Int32 | Nil
 
+    # The capabilities allowed in the stack.
     property capabilities : Array(Capability) | Nil
 
+    # A list of output structures.
     property outputs : Array(Output) | Nil
 
+    # The Amazon Resource Name (ARN) of an IAM role that's associated with the stack. During a stack
+    # operation, CloudFormation uses this role's credentials to make calls on your behalf.
     property role_arn : String | Nil
 
+    # A list of `Tag`s that specify information about the stack.
     property tags : Array(Tag) | Nil
 
+    # Whether termination protection is enabled for the stack.
+    #
+    # For [nested
+    # stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-nested-stacks.html),
+    # termination protection is set on the root stack and can't be changed directly on the nested
+    # stack. For more information, see [Protect a CloudFormation stack from being
+    # deleted](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-protect-stacks.html)
+    # in the *CloudFormation User Guide*.
     property enable_termination_protection : Bool | Nil
 
+    # For nested stacks, the stack ID of the direct parent of this stack. For the first level of
+    # nested stacks, the root stack is also the parent stack.
+    #
+    # For more information, see [Nested
+    # stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-nested-stacks.html)
+    # in the *CloudFormation User Guide*.
     property parent_id : String | Nil
 
+    # For nested stacks, the stack ID of the top-level stack to which the nested stack ultimately
+    # belongs.
+    #
+    # For more information, see [Nested
+    # stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-nested-stacks.html)
+    # in the *CloudFormation User Guide*.
     property root_id : String | Nil
 
+    # Information about whether a stack's actual configuration differs, or has *drifted*, from its
+    # expected configuration, as defined in the stack template and any values specified as template
+    # parameters. For more information, see [Detect unmanaged configuration changes to stacks and
+    # resources with drift
+    # detection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-drift.html).
     property drift_information : StackDriftInformation | Nil
 
+    # When set to `true`, newly created resources are deleted when the operation rolls back. This
+    # includes newly created resources marked with a deletion policy of `Retain`.
+    #
+    # Default: `false`
     property retain_except_on_create : Bool | Nil
 
+    # Specifies the deletion mode for the stack. Possible values are:
+    #
+    # - `STANDARD` - Use the standard behavior. Specifying this value is the same as not specifying
+    # this parameter.
+    #
+    # - `FORCE_DELETE_STACK` - Delete the stack if it's stuck in a `DELETE_FAILED` state due to
+    # resource deletion failure.
     property deletion_mode : DeletionMode | Nil
 
+    # The detailed status of the resource or stack. If `CONFIGURATION_COMPLETE` is present, the
+    # resource or resource configuration phase has completed and the stabilization of the resources is
+    # in progress. The StackSets `CONFIGURATION_COMPLETE` when all of the resources in the stack have
+    # reached that event. For more information, see [Understand CloudFormation stack creation
+    # events](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stack-resource-configuration-complete.html)
+    # in the *CloudFormation User Guide*.
     property detailed_status : DetailedStatus | Nil
 
+    # Information about the most recent operations performed on this stack.
     property last_operations : Array(OperationEntry) | Nil
 
     def initialize(

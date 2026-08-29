@@ -2,13 +2,18 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The `HookTarget` data type.
   class HookTarget
+    # The target type.
     property target_type : HookTargetType
 
+    # The target name, for example, `AWS::S3::Bucket`.
     property target_type_name : String
 
+    # The unique identifier of the Hook invocation target.
     property target_id : String
 
+    # The action that invoked the Hook.
     property action : HookTargetAction
 
     def initialize(

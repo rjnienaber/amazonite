@@ -1,11 +1,15 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Describes the stack and the template used by the stack.
   class StackDefinition
+    # The name associated with the stack.
     property stack_name : String | Nil
 
+    # The file path for the stack template file.
     property template_body : String | Nil
 
+    # The desired final state of the stack template.
     property template_url : String | Nil
 
     def initialize(

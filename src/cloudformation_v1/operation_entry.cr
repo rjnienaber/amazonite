@@ -2,9 +2,12 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Contains information about a CloudFormation operation.
   class OperationEntry
+    # The type of operation.
     property operation_type : OperationType | Nil
 
+    # The unique identifier for the operation.
     property operation_id : String | Nil
 
     def initialize(

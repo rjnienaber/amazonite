@@ -1,5 +1,9 @@
 module Amazonite::CloudFormationV1
+  # Contains any warnings returned by the `GetTemplateSummary` API action.
   class Warnings
+    # A list of all of the unrecognized resource types. This is only returned if the
+    # `TemplateSummaryConfig` parameter has the `TreatUnrecognizedResourceTypesAsWarning`
+    # configuration set to `True`.
     property unrecognized_resource_types : Array(String) | Nil
 
     def initialize(

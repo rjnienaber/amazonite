@@ -2,17 +2,31 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The `Annotation` data type.
+  #
+  # A `GetHookResult` call returns detailed information and remediation guidance from Control Tower,
+  # Guard, Lambda, or custom Hooks for a Hook invocation result.
   class Annotation
+    # An identifier for the evaluation logic that was used when invoking the Hook. For Control Tower,
+    # this is the control ID. For Guard, this is the rule ID. For Lambda and custom Hooks, this is a
+    # user-defined identifier.
     property annotation_name : String | Nil
 
+    # The status of the Hook invocation from the downstream service.
     property status : AnnotationStatus | Nil
 
+    # The explanation for the specific status assigned to this Hook invocation. For example, "Bucket
+    # does not block public access".
     property status_message : String | Nil
 
+    # Suggests what to change if your Hook returns a `FAILED` status. For example, "Block public
+    # access to the bucket".
     property remediation_message : String | Nil
 
+    # A URL that you can access for additional remediation guidance.
     property remediation_link : String | Nil
 
+    # The relative risk associated with any violations of this type.
     property severity_level : AnnotationSeverityLevel | Nil
 
     def initialize(

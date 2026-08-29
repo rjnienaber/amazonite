@@ -2,15 +2,19 @@ module Amazonite::CloudWatchV1
   class DescribeAlarmsOutput
     include JSON::Serializable
 
+    # The information about any composite alarms returned by the operation.
     @[JSON::Field(key: "CompositeAlarms")]
     property composite_alarms : Array(CompositeAlarm) | Nil
 
+    # The information about any metric alarms returned by the operation.
     @[JSON::Field(key: "MetricAlarms")]
     property metric_alarms : Array(MetricAlarm) | Nil
 
+    # The information about any log alarms returned by the operation.
     @[JSON::Field(key: "LogAlarms")]
     property log_alarms : Array(LogAlarm) | Nil
 
+    # The token that marks the start of the next batch of returned results.
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 

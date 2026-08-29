@@ -1,17 +1,25 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The `ParameterDeclaration` data type.
   class ParameterDeclaration
+    # The name that's associated with the parameter.
     property parameter_key : String | Nil
 
+    # The default value of the parameter.
     property default_value : String | Nil
 
+    # The type of parameter.
     property parameter_type : String | Nil
 
+    # Flag that indicates whether the parameter value is shown as plain text in logs and in the Amazon
+    # Web Services Management Console.
     property no_echo : Bool | Nil
 
+    # The description that's associate with the parameter.
     property description : String | Nil
 
+    # The criteria that CloudFormation uses to validate parameter values.
     property parameter_constraints : ParameterConstraints | Nil
 
     def initialize(

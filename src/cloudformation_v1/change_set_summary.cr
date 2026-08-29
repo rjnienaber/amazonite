@@ -2,31 +2,50 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The `ChangeSetSummary` structure describes a change set, its status, and the stack with which
+  # it's associated.
   class ChangeSetSummary
+    # The ID of the stack with which the change set is associated.
     property stack_id : String | Nil
 
+    # The name of the stack with which the change set is associated.
     property stack_name : String | Nil
 
+    # The ID of the change set.
     property change_set_id : String | Nil
 
+    # The name of the change set.
     property change_set_name : String | Nil
 
+    # If the change set execution status is `AVAILABLE`, you can execute the change set. If you can't
+    # execute the change set, the status indicates why. For example, a change set might be in an
+    # `UNAVAILABLE` state because CloudFormation is still creating it or in an `OBSOLETE` state
+    # because the stack was already updated.
     property execution_status : ExecutionStatus | Nil
 
+    # The state of the change set, such as `CREATE_PENDING`, `CREATE_COMPLETE`, or `FAILED`.
     property status : ChangeSetStatus | Nil
 
+    # A description of the change set's status. For example, if your change set is in the `FAILED`
+    # state, CloudFormation shows the error message.
     property status_reason : String | Nil
 
+    # The start time when the change set was created, in UTC.
     property creation_time : Time | Nil
 
+    # Descriptive information about the change set.
     property description : String | Nil
 
+    # Specifies the current setting of `IncludeNestedStacks` for the change set.
     property include_nested_stacks : Bool | Nil
 
+    # The parent change set ID.
     property parent_change_set_id : String | Nil
 
+    # The root change set ID.
     property root_change_set_id : String | Nil
 
+    # Indicates if the change set imports resources that already exist.
     property import_existing_resources : Bool | Nil
 
     def initialize(

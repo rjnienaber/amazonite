@@ -1,7 +1,13 @@
 module Amazonite::CloudWatchV1
+  # This object includes parameters that you can use to provide information to CloudWatch to help it
+  # build more accurate anomaly detection models.
   class MetricCharacteristics
     include JSON::Serializable
 
+    # Set this parameter to `true` if values for this metric consistently include spikes that should
+    # not be considered to be anomalies. With this set to `true`, CloudWatch will expect to see spikes
+    # that occurred consistently during the model training period, and won't flag future similar
+    # spikes as anomalies.
     @[JSON::Field(key: "PeriodicSpikes")]
     property periodic_spikes : Bool | Nil
 

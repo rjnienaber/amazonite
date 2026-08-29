@@ -1,5 +1,6 @@
 module Amazonite::CloudFormationV1
   class DescribeStackSetOperationOutput
+    # The specified StackSet operation.
     property stack_set_operation : StackSetOperation | Nil
 
     def initialize(

@@ -2,8 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DetectStackDriftInput
+    # The name of the stack for which you want to detect drift.
     property stack_name : String
 
+    # The logical names of any resources you want to use as filters.
     property logical_resource_ids : Array(String) | Nil
 
     def initialize(

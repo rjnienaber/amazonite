@@ -2,29 +2,53 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Contains detailed information about the specified stack resource.
   class StackResourceDetail
+    # The name associated with the stack.
     property stack_name : String | Nil
 
+    # Unique identifier of the stack.
     property stack_id : String | Nil
 
+    # The logical name of the resource specified in the template.
     property logical_resource_id : String
 
+    # The name or unique identifier that corresponds to a physical instance ID of a resource supported
+    # by CloudFormation.
     property physical_resource_id : String | Nil
 
+    # Type of resource. For more information, see [Amazon Web Services resource and property types
+    # reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)
+    # in the *CloudFormation User Guide*.
     property resource_type : String
 
+    # Time the status was updated.
     property last_updated_timestamp : Time
 
+    # Current status of the resource.
     property resource_status : ResourceStatus
 
+    # Success/failure message associated with the resource.
     property resource_status_reason : String | Nil
 
+    # User defined description associated with the resource.
     property description : String | Nil
 
+    # The content of the `Metadata` attribute declared for the resource. For more information, see
+    # [Metadata
+    # attribute](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-metadata.html)
+    # in the *CloudFormation User Guide*.
     property metadata : String | Nil
 
+    # Information about whether the resource's actual configuration differs, or has *drifted*, from
+    # its expected configuration, as defined in the stack template and any values specified as
+    # template parameters. For more information, see [Detect unmanaged configuration changes to stacks
+    # and resources with drift
+    # detection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-drift.html).
     property drift_information : StackResourceDriftInformation | Nil
 
+    # Contains information about the module from which the resource was created, if the resource was
+    # created from a module included in the stack template.
     property module_info : ModuleInfo | Nil
 
     def initialize(

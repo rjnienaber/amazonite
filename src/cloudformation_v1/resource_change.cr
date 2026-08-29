@@ -2,35 +2,94 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The `ResourceChange` structure describes the resource and the action that CloudFormation will
+  # perform on it if you execute this change set.
   class ResourceChange
+    # The action that will be taken on the physical resource when the change set is executed.
+    #
+    # - `Delete` The resource will be deleted.
+    #
+    # - `Retain` The resource will be retained.
+    #
+    # - `Snapshot` The resource will have a snapshot taken.
+    #
+    # - `ReplaceAndDelete` The resource will be replaced and then deleted.
+    #
+    # - `ReplaceAndRetain` The resource will be replaced and then retained.
+    #
+    # - `ReplaceAndSnapshot` The resource will be replaced and then have a snapshot taken.
     property policy_action : PolicyAction | Nil
 
+    # The action that CloudFormation takes on the resource, such as `Add` (adds a new resource),
+    # `Modify` (changes a resource), `Remove` (deletes a resource), `Import` (imports a resource),
+    # `Dynamic` (exact action for the resource can't be determined), or `SyncWithActual` (resource
+    # will not be changed, only CloudFormation metadata will change).
     property action : ChangeAction | Nil
 
+    # The resource's logical ID, which is defined in the stack's template.
     property logical_resource_id : String | Nil
 
+    # The resource's physical ID (resource name). Resources that you are adding don't have physical
+    # IDs because they haven't been created.
     property physical_resource_id : String | Nil
 
+    # The type of CloudFormation resource, such as `AWS::S3::Bucket`.
     property resource_type : String | Nil
 
+    # For the `Modify` action, indicates whether CloudFormation will replace the resource by creating
+    # a new one and deleting the old one. This value depends on the value of the `RequiresRecreation`
+    # property in the `ResourceTargetDefinition` structure. For example, if the `RequiresRecreation`
+    # field is `Always` and the `Evaluation` field is `Static`, `Replacement` is `True`. If the
+    # `RequiresRecreation` field is `Always` and the `Evaluation` field is `Dynamic`, `Replacement` is
+    # `Conditional`.
+    #
+    # If you have multiple changes with different `RequiresRecreation` values, the `Replacement` value
+    # depends on the change with the most impact. A `RequiresRecreation` value of `Always` has the
+    # most impact, followed by `Conditional`, and then `Never`.
     property replacement : Replacement | Nil
 
+    # For the `Modify` action, indicates which resource attribute is triggering this update, such as a
+    # change in the resource attribute's `Metadata`, `Properties`, or `Tags`.
     property scope : Array(ResourceAttribute) | Nil
 
+    # The drift status of the resource. Valid values:
+    #
+    # - `IN_SYNC` – The resource matches its template definition.
+    #
+    # - `MODIFIED` – Resource properties were modified outside CloudFormation.
+    #
+    # - `DELETED` – The resource was deleted outside CloudFormation.
+    #
+    # - `NOT_CHECKED` – CloudFormation doesn’t currently return this value.
+    #
+    # - `UNKNOWN` – Drift status could not be determined.
+    #
+    # - `UNSUPPORTED` – Resource type does not support actual state comparison.
+    #
+    # Only present for drift-aware change sets.
     property resource_drift_status : StackResourceDriftStatus | Nil
 
+    # List of resource attributes for which drift was ignored.
     property resource_drift_ignored_attributes : Array(ResourceDriftIgnoredAttribute) | Nil
 
+    # For the `Modify` action, a list of `ResourceChangeDetail` structures that describes the changes
+    # that CloudFormation will make to the resource.
     property details : Array(ResourceChangeDetail) | Nil
 
+    # The change set ID of the nested change set.
     property change_set_id : String | Nil
 
+    # Contains information about the module from which the resource was created, if the resource was
+    # created from a module included in the stack template.
     property module_info : ModuleInfo | Nil
 
+    # An encoded JSON string that contains the context of the resource before the change is executed.
     property before_context : String | Nil
 
+    # An encoded JSON string that contains the context of the resource after the change is executed.
     property after_context : String | Nil
 
+    # Information about the resource's state from the previous CloudFormation deployment.
     property previous_deployment_context : String | Nil
 
     def initialize(

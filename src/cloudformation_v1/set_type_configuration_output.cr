@@ -2,6 +2,9 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class SetTypeConfigurationOutput
+    # The Amazon Resource Name (ARN) for the configuration data in this account and Region.
+    #
+    # Conditional: You must specify `ConfigurationArn`, or `Type` and `TypeName`.
     property configuration_arn : String | Nil
 
     def initialize(

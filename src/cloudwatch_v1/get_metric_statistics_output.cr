@@ -2,9 +2,11 @@ module Amazonite::CloudWatchV1
   class GetMetricStatisticsOutput
     include JSON::Serializable
 
+    # A label for the specified metric.
     @[JSON::Field(key: "Label")]
     property label : String | Nil
 
+    # The data points for the specified metric.
     @[JSON::Field(key: "Datapoints")]
     property datapoints : Array(Datapoint) | Nil
 

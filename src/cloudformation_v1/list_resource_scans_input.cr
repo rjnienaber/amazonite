@@ -3,10 +3,15 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListResourceScansInput
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
+    # If the number of available results exceeds this maximum, the response includes a `NextToken`
+    # value that you can use for the `NextToken` parameter to get the next set of results. The default
+    # value is 10. The maximum value is 100.
     property max_results : Int32 | Nil
 
+    # The scan type that you want to get summary information about. The default is `FULL`.
     property scan_type_filter : ScanType | Nil
 
     def initialize(

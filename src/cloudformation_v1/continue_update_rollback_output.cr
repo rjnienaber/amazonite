@@ -1,4 +1,5 @@
 module Amazonite::CloudFormationV1
+  # The output for a ContinueUpdateRollback operation.
   class ContinueUpdateRollbackOutput
     def initialize
     end

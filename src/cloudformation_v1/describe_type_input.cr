@@ -3,16 +3,34 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribeTypeInput
+    # The kind of extension.
+    #
+    # Conditional: You must specify either `TypeName` and `Type`, or `Arn`.
     property type : RegistryType | Nil
 
+    # The name of the extension.
+    #
+    # Conditional: You must specify either `TypeName` and `Type`, or `Arn`.
     property type_name : String | Nil
 
+    # The Amazon Resource Name (ARN) of the extension.
+    #
+    # Conditional: You must specify either `TypeName` and `Type`, or `Arn`.
     property arn : String | Nil
 
+    # The ID of a specific version of the extension. The version ID is the value at the end of the
+    # Amazon Resource Name (ARN) assigned to the extension version when it is registered.
+    #
+    # If you specify a `VersionId`, `DescribeType` returns information about that specific extension
+    # version. Otherwise, it returns information about the default extension version.
     property version_id : String | Nil
 
+    # The publisher ID of the extension publisher.
+    #
+    # Extensions provided by Amazon Web Services are not assigned a publisher ID.
     property publisher_id : String | Nil
 
+    # The version number of a public third-party extension.
     property public_version_number : String | Nil
 
     def initialize(

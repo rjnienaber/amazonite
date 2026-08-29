@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribeGeneratedTemplateInput
+    # The name or Amazon Resource Name (ARN) of a generated template.
     property generated_template_name : String
 
     def initialize(

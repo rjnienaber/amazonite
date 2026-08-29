@@ -1,11 +1,16 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Contains drift information for a resource property, including actual value, previous deployment
+  # value, and drift detection timestamp.
   class LiveResourceDrift
+    # The configuration value from the previous CloudFormation deployment.
     property previous_value : String | Nil
 
+    # The current live configuration value of the resource property.
     property actual_value : String | Nil
 
+    # The timestamp when drift was detected for this resource property.
     property drift_detection_timestamp : Time | Nil
 
     def initialize(

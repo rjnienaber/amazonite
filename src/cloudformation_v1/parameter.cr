@@ -1,13 +1,24 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The `Parameter` data type.
   class Parameter
+    # The key associated with the parameter. If you don't specify a key and value for a particular
+    # parameter, CloudFormation uses the default value that's specified in your template.
     property parameter_key : String | Nil
 
+    # The input value associated with the parameter.
     property parameter_value : String | Nil
 
+    # During a stack update, use the existing parameter value that the stack is using for a given
+    # parameter key. If you specify `true`, do not specify a parameter value.
     property use_previous_value : Bool | Nil
 
+    # Read-only. The value that corresponds to a Systems Manager parameter key. This field is returned
+    # only for Systems Manager parameter types in the template. For more information, see [Specify
+    # existing resources at runtime with CloudFormation-supplied parameter
+    # types](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-supplied-parameter-types.html)
+    # in the *CloudFormation User Guide*.
     property resolved_value : String | Nil
 
     def initialize(

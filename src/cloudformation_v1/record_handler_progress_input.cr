@@ -3,18 +3,32 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class RecordHandlerProgressInput
+    # Reserved for use by the [CloudFormation
+    # CLI](https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/what-is-cloudformation-cli.html).
     property bearer_token : String
 
+    # Reserved for use by the [CloudFormation
+    # CLI](https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/what-is-cloudformation-cli.html).
     property operation_status : OperationStatus
 
+    # Reserved for use by the [CloudFormation
+    # CLI](https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/what-is-cloudformation-cli.html).
     property current_operation_status : OperationStatus | Nil
 
+    # Reserved for use by the [CloudFormation
+    # CLI](https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/what-is-cloudformation-cli.html).
     property status_message : String | Nil
 
+    # Reserved for use by the [CloudFormation
+    # CLI](https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/what-is-cloudformation-cli.html).
     property error_code : HandlerErrorCode | Nil
 
+    # Reserved for use by the [CloudFormation
+    # CLI](https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/what-is-cloudformation-cli.html).
     property resource_model : String | Nil
 
+    # Reserved for use by the [CloudFormation
+    # CLI](https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/what-is-cloudformation-cli.html).
     property client_request_token : String | Nil
 
     def initialize(

@@ -2,29 +2,57 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The `StackSummary` Data Type
   class StackSummary
+    # Unique stack identifier.
     property stack_id : String | Nil
 
+    # The name associated with the stack.
     property stack_name : String
 
+    # The template description of the template used to create the stack.
     property template_description : String | Nil
 
+    # The time the stack was created.
     property creation_time : Time
 
+    # The time the stack was last updated. This field will only be returned if the stack has been
+    # updated at least once.
     property last_updated_time : Time | Nil
 
+    # The time the stack was deleted.
     property deletion_time : Time | Nil
 
+    # The current status of the stack.
     property stack_status : StackStatus
 
+    # Success/Failure message associated with the stack status.
     property stack_status_reason : String | Nil
 
+    # For nested stacks, the stack ID of the direct parent of this stack. For the first level of
+    # nested stacks, the root stack is also the parent stack.
+    #
+    # For more information, see [Nested
+    # stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-nested-stacks.html)
+    # in the *CloudFormation User Guide*.
     property parent_id : String | Nil
 
+    # For nested stacks, the stack ID of the top-level stack to which the nested stack ultimately
+    # belongs.
+    #
+    # For more information, see [Nested
+    # stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-nested-stacks.html)
+    # in the *CloudFormation User Guide*.
     property root_id : String | Nil
 
+    # Summarizes information about whether a stack's actual configuration differs, or has *drifted*,
+    # from its expected configuration, as defined in the stack template and any values specified as
+    # template parameters. For more information, see [Detect unmanaged configuration changes to stacks
+    # and resources with drift
+    # detection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-drift.html).
     property drift_information : StackDriftInformationSummary | Nil
 
+    # Information about the most recent operations performed on this stack.
     property last_operations : Array(OperationEntry) | Nil
 
     def initialize(

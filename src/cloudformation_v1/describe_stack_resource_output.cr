@@ -1,5 +1,8 @@
 module Amazonite::CloudFormationV1
+  # The output for a DescribeStackResource action.
   class DescribeStackResourceOutput
+    # A `StackResourceDetail` structure that contains the description of the specified resource in the
+    # specified stack.
     property stack_resource_detail : StackResourceDetail | Nil
 
     def initialize(

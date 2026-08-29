@@ -1,13 +1,18 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The `TemplateParameter` data type.
   class TemplateParameter
+    # The name associated with the parameter.
     property parameter_key : String | Nil
 
+    # The default value associated with the parameter.
     property default_value : String | Nil
 
+    # Flag indicating whether the parameter should be displayed as plain text in logs and UIs.
     property no_echo : Bool | Nil
 
+    # User defined description associated with the parameter.
     property description : String | Nil
 
     def initialize(

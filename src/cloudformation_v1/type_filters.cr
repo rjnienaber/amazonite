@@ -2,11 +2,30 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Filter criteria to use in determining which extensions to return.
   class TypeFilters
+    # The category of extensions to return.
+    #
+    # - `REGISTERED`: Private extensions that have been registered for this account and Region.
+    #
+    # - `ACTIVATED`: Public extensions that have been activated for this account and Region.
+    #
+    # - `THIRD_PARTY`: Extensions available for use from publishers other than Amazon. This includes:
+    #
+    # - Private extensions registered in the account.
+    #
+    # - Public extensions from publishers other than Amazon, whether activated or not.
+    #
+    # - `AWS_TYPES`: Extensions available for use from Amazon.
     property category : Category | Nil
 
+    # The id of the publisher of the extension.
+    #
+    # Extensions published by Amazon aren't assigned a publisher ID. Use the `AWS_TYPES` category to
+    # specify a list of types published by Amazon.
     property publisher_id : String | Nil
 
+    # A prefix to use as a filter for results.
     property type_name_prefix : String | Nil
 
     def initialize(

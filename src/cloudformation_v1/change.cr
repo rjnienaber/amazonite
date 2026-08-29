@@ -2,11 +2,20 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The `Change` structure describes the changes CloudFormation will perform if you execute the
+  # change set.
   class Change
+    # The type of entity that CloudFormation changes.
+    #
+    # - `Resource` This change is for a resource.
     property type : ChangeType | Nil
 
+    # Is either `null`, if no Hooks invoke for the resource, or contains the number of Hooks that will
+    # invoke for the resource.
     property hook_invocation_count : Int32 | Nil
 
+    # A `ResourceChange` structure that describes the resource and action that CloudFormation will
+    # perform.
     property resource_change : ResourceChange | Nil
 
     def initialize(

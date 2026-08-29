@@ -2,15 +2,27 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The output for ValidateTemplate action.
   class ValidateTemplateOutput
+    # A list of `TemplateParameter` structures.
     property parameters : Array(TemplateParameter) | Nil
 
+    # The description found within the template.
     property description : String | Nil
 
+    # The capabilities found within the template. If your template contains IAM resources, you must
+    # specify the CAPABILITY_IAM or CAPABILITY_NAMED_IAM value for this parameter when you use the
+    # CreateStack or UpdateStack actions with your template; otherwise, those actions return an
+    # InsufficientCapabilities error.
+    #
+    # For more information, see [Acknowledging IAM resources in CloudFormation
+    # templates](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html#using-iam-capabilities).
     property capabilities : Array(Capability) | Nil
 
+    # The list of resources that generated the values in the `Capabilities` response element.
     property capabilities_reason : String | Nil
 
+    # A list of the transforms that are declared in the template.
     property declared_transforms : Array(String) | Nil
 
     def initialize(

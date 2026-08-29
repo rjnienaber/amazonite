@@ -3,18 +3,25 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribeChangeSetHooksOutput
+    # The change set identifier (stack ID).
     property change_set_id : String | Nil
 
+    # The change set name.
     property change_set_name : String | Nil
 
+    # List of Hook objects.
     property hooks : Array(ChangeSetHook) | Nil
 
+    # Provides the status of the change set Hook.
     property status : ChangeSetHooksStatus | Nil
 
+    # Pagination token, `null` or empty if no more results.
     property next_token : String | Nil
 
+    # The stack identifier (stack ID).
     property stack_id : String | Nil
 
+    # The stack name.
     property stack_name : String | Nil
 
     def initialize(

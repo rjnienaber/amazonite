@@ -3,30 +3,56 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class GetHookResultOutput
+    # The unique identifier of the Hook result.
     property hook_result_id : String | Nil
 
+    # The specific point in the provisioning process where the Hook is invoked.
     property invocation_point : HookInvocationPoint | Nil
 
+    # The failure mode of the invocation.
     property failure_mode : HookFailureMode | Nil
 
+    # The name of the Hook that was invoked.
     property type_name : String | Nil
 
+    # The original public type name of the Hook when an alias is used.
+    #
+    # For example, if you activate `AWS::Hooks::GuardHook` with alias `MyCompany::Custom::GuardHook`,
+    # then `TypeName` will be `MyCompany::Custom::GuardHook` and `OriginalTypeName` will be
+    # `AWS::Hooks::GuardHook`.
     property original_type_name : String | Nil
 
+    # The version identifier of the Hook that was invoked.
     property type_version_id : String | Nil
 
+    # The version identifier of the Hook configuration data that was used during invocation.
     property type_configuration_version_id : String | Nil
 
+    # The Amazon Resource Name (ARN) of the Hook.
     property type_arn : String | Nil
 
+    # The status of the Hook invocation. The following statuses are possible:
+    #
+    # - `HOOK_IN_PROGRESS`: The Hook is currently running.
+    #
+    # - `HOOK_COMPLETE_SUCCEEDED`: The Hook completed successfully.
+    #
+    # - `HOOK_COMPLETE_FAILED`: The Hook completed but failed validation.
+    #
+    # - `HOOK_FAILED`: The Hook encountered an error during execution.
     property status : HookStatus | Nil
 
+    # A message that provides additional details about the Hook invocation status.
     property hook_status_reason : String | Nil
 
+    # The timestamp when the Hook was invoked.
     property invoked_at : Time | Nil
 
+    # Information about the target of the Hook invocation.
     property target : HookTarget | Nil
 
+    # A list of objects with additional information and guidance that can help you resolve a failed
+    # Hook invocation.
     property annotations : Array(Annotation) | Nil
 
     def initialize(

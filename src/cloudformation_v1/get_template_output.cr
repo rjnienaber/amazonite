@@ -2,9 +2,17 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The output for GetTemplate action.
   class GetTemplateOutput
+    # Structure that contains the template body.
+    #
+    # CloudFormation returns the same template that was used when the stack was created.
     property template_body : String | Nil
 
+    # The stage of the template that you can retrieve. For stacks, the `Original` and `Processed`
+    # templates are always available. For change sets, the `Original` template is always available.
+    # After CloudFormation finishes creating the change set, the `Processed` template becomes
+    # available.
     property stages_available : Array(TemplateStage) | Nil
 
     def initialize(

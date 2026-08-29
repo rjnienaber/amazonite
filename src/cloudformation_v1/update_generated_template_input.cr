@@ -2,16 +2,26 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class UpdateGeneratedTemplateInput
+    # The name or Amazon Resource Name (ARN) of a generated template.
     property generated_template_name : String
 
+    # An optional new name to assign to the generated template.
     property new_generated_template_name : String | Nil
 
+    # An optional list of resources to be added to the generated template.
     property add_resources : Array(ResourceDefinition) | Nil
 
+    # A list of logical ids for resources to remove from the generated template.
     property remove_resources : Array(String) | Nil
 
+    # If `true`, update the resource properties in the generated template with their current live
+    # state. This feature is useful when the resource properties in your generated a template does not
+    # reflect the live state of the resource properties. This happens when a user update the resource
+    # properties after generating a template.
     property refresh_all_resources : Bool | Nil
 
+    # The configuration details of the generated template, including the `DeletionPolicy` and
+    # `UpdateReplacePolicy`.
     property template_configuration : TemplateConfiguration | Nil
 
     def initialize(

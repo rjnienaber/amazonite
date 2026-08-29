@@ -2,8 +2,13 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListGeneratedTemplatesInput
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
+    # If the number of available results exceeds this maximum, the response includes a `NextToken`
+    # value that you can use for the `NextToken` parameter to get the next set of results. By default
+    # the `ListGeneratedTemplates` API action will return at most 50 results in each response. The
+    # maximum value is 100.
     property max_results : Int32 | Nil
 
     def initialize(

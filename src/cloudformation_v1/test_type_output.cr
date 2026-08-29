@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class TestTypeOutput
+    # The Amazon Resource Name (ARN) of the extension.
     property type_version_arn : String | Nil
 
     def initialize(

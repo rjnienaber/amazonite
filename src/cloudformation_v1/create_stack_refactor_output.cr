@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class CreateStackRefactorOutput
+    # The ID associated with the stack refactor created from the CreateStackRefactor action.
     property stack_refactor_id : String
 
     def initialize(

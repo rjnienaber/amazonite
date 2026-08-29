@@ -3,24 +3,50 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribeResourceScanOutput
+    # The Amazon Resource Name (ARN) of the resource scan. The format is
+    # `arn:${Partition}:cloudformation:${Region}:${Account}:resourceScan/${Id}`. An example is
+    # `arn:aws:cloudformation:*us-east-1*:*123456789012*:resourceScan/*f5b490f7-7ed4-428a-aa06-31ff25db0772*
+    # `.
     property resource_scan_id : String | Nil
 
+    # Status of the resource scan.
+    #
+    # IN_PROGRESS The resource scan is still in progress.
+    #
+    # COMPLETE The resource scan is complete.
+    #
+    # EXPIRED The resource scan has expired.
+    #
+    # FAILED The resource scan has failed.
     property status : ResourceScanStatus | Nil
 
+    # The reason for the resource scan status, providing more information if a failure happened.
     property status_reason : String | Nil
 
+    # The time that the resource scan was started.
     property start_time : Time | Nil
 
+    # The time that the resource scan was finished.
     property end_time : Time | Nil
 
+    # The percentage of the resource scan that has been completed.
     property percentage_completed : Float64 | Nil
 
+    # The list of resource types for the specified scan. Resource types are only available for scans
+    # with a `Status` set to `COMPLETE` or `FAILED `.
     property resource_types : Array(String) | Nil
 
+    # The number of resources that were listed. This is only available for scans with a `Status` set
+    # to `COMPLETE`, `EXPIRED`, or `FAILED `.
     property resources_scanned : Int32 | Nil
 
+    # The number of resources that were read. This is only available for scans with a `Status` set to
+    # `COMPLETE`, `EXPIRED`, or `FAILED`.
+    #
+    # This field may be 0 if the resource scan failed with a `ResourceScanLimitExceededException`.
     property resources_read : Int32 | Nil
 
+    # The scan filters that were used.
     property scan_filters : Array(ScanFilter) | Nil
 
     def initialize(

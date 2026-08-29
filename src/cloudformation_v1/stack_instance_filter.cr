@@ -2,9 +2,12 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The filter to apply to stack instances
   class StackInstanceFilter
+    # The type of filter to apply.
     property name : StackInstanceFilterName | Nil
 
+    # The status to filter by.
     property values : String | Nil
 
     def initialize(

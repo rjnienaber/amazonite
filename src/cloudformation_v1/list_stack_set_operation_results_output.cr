@@ -2,8 +2,14 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListStackSetOperationResultsOutput
+    # A list of `StackSetOperationResultSummary` structures that contain information about the
+    # specified operation results, for accounts and Amazon Web Services Regions that are included in
+    # the operation.
     property summaries : Array(StackSetOperationResultSummary) | Nil
 
+    # If the request doesn't return all results, `NextToken` is set to a token. To retrieve the next
+    # set of results, call `ListOperationResults` again and assign that token to the request object's
+    # `NextToken` parameter. If there are no remaining results, `NextToken` is set to `null`.
     property next_token : String | Nil
 
     def initialize(

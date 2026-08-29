@@ -2,25 +2,46 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The output for the GetTemplateSummary action.
   class GetTemplateSummaryOutput
+    # A list of parameter declarations that describe various properties for each parameter.
     property parameters : Array(ParameterDeclaration) | Nil
 
+    # The value that's defined in the `Description` property of the template.
     property description : String | Nil
 
+    # The capabilities found within the template. If your template contains IAM resources, you must
+    # specify the `CAPABILITY_IAM` or `CAPABILITY_NAMED_IAM` value for this parameter when you use the
+    # CreateStack or UpdateStack actions with your template; otherwise, those actions return an
+    # `InsufficientCapabilities` error.
+    #
+    # For more information, see [Acknowledging IAM resources in CloudFormation
+    # templates](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html#using-iam-capabilities).
     property capabilities : Array(Capability) | Nil
 
+    # The list of resources that generated the values in the `Capabilities` response element.
     property capabilities_reason : String | Nil
 
+    # A list of all the template resource types that are defined in the template, such as
+    # `AWS::EC2::Instance`, `AWS::Dynamo::Table`, and `Custom::MyCustomInstance`.
     property resource_types : Array(String) | Nil
 
+    # The Amazon Web Services template format version, which identifies the capabilities of the
+    # template.
     property version : String | Nil
 
+    # The value that's defined for the `Metadata` property of the template.
     property metadata : String | Nil
 
+    # A list of the transforms that are declared in the template.
     property declared_transforms : Array(String) | Nil
 
+    # A list of resource identifier summaries that describe the target resources of an import
+    # operation and the properties you can provide during the import to identify the target resources.
+    # For example, `BucketName` is a possible identifier property for an `AWS::S3::Bucket` resource.
     property resource_identifier_summaries : Array(ResourceIdentifierSummary) | Nil
 
+    # An object that contains any warnings returned.
     property warnings : Warnings | Nil
 
     def initialize(

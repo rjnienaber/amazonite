@@ -1,4 +1,5 @@
 module Amazonite::CloudFormationV1
+  # The output for the DeleteChangeSet action.
   class DeleteChangeSetOutput
     def initialize
     end

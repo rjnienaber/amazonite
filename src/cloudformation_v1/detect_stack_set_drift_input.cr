@@ -3,12 +3,32 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DetectStackSetDriftInput
+    # The name of the StackSet on which to perform the drift detection operation.
     property stack_set_name : String
 
+    # The user-specified preferences for how CloudFormation performs a StackSet operation.
+    #
+    # For more information about maximum concurrent accounts and failure tolerance, see [StackSet
+    # operation
+    # options](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-concepts.html#stackset-ops-options).
     property operation_preferences : StackSetOperationPreferences | Nil
 
+    # *The ID of the StackSet operation.*
     property operation_id : String | Nil
 
+    # [Service-managed permissions] Specifies whether you are acting as an account administrator in
+    # the organization's management account or as a delegated administrator in a member account.
+    #
+    # By default, `SELF` is specified. Use `SELF` for StackSets with self-managed permissions.
+    #
+    # - If you are signed in to the management account, specify `SELF`.
+    #
+    # - If you are signed in to a delegated administrator account, specify `DELEGATED_ADMIN`.
+    #
+    # Your Amazon Web Services account must be registered as a delegated administrator in the
+    # management account. For more information, see [Register a delegated
+    # administrator](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-delegated-admin.html)
+    # in the *CloudFormation User Guide*.
     property call_as : CallAs | Nil
 
     def initialize(

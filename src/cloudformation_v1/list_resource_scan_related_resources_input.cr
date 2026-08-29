@@ -2,12 +2,20 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListResourceScanRelatedResourcesInput
+    # The Amazon Resource Name (ARN) of the resource scan.
     property resource_scan_id : String
 
+    # The list of resources for which you want to get the related resources. Up to 100 resources can
+    # be provided.
     property resources : Array(ScannedResourceIdentifier) = [] of ScannedResourceIdentifier
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
+    # If the number of available results exceeds this maximum, the response includes a `NextToken`
+    # value that you can use for the `NextToken` parameter to get the next set of results. By default
+    # the `ListResourceScanRelatedResources` API action will return up to 100 results in each
+    # response. The maximum value is 100.
     property max_results : Int32 | Nil
 
     def initialize(

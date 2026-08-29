@@ -2,6 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class StartResourceScanOutput
+    # The Amazon Resource Name (ARN) of the resource scan. The format is
+    # `arn:${Partition}:cloudformation:${Region}:${Account}:resourceScan/${Id}`. An example is
+    # `arn:aws:cloudformation:*us-east-1*:*123456789012*:resourceScan/*f5b490f7-7ed4-428a-aa06-31ff25db0772*
+    # `.
     property resource_scan_id : String | Nil
 
     def initialize(

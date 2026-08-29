@@ -1,9 +1,14 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Contains logging configuration information for an extension.
   class LoggingConfig
+    # The Amazon Resource Name (ARN) of the role that CloudFormation should assume when sending log
+    # entries to CloudWatch Logs.
     property log_role_arn : String
 
+    # The Amazon CloudWatch Logs group to which CloudFormation sends error logging information when
+    # invoking the extension's handlers.
     property log_group_name : String
 
     def initialize(

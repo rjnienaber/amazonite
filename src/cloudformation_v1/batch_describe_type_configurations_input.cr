@@ -1,5 +1,6 @@
 module Amazonite::CloudFormationV1
   class BatchDescribeTypeConfigurationsInput
+    # The list of identifiers for the desired extension configurations.
     property type_configuration_identifiers : Array(TypeConfigurationIdentifier) = [] of TypeConfigurationIdentifier
 
     def initialize(

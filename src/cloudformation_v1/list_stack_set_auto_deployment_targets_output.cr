@@ -2,8 +2,14 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListStackSetAutoDeploymentTargetsOutput
+    # An array of summaries of the deployment targets for the StackSet.
     property summaries : Array(StackSetAutoDeploymentTargetSummary) | Nil
 
+    # If the request doesn't return all the remaining results, `NextToken` is set to a token. To
+    # retrieve the next set of results, call
+    # [ListStackSetAutoDeploymentTargets](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListStackSetAutoDeploymentTargets.html)
+    # again and use that value for the `NextToken` parameter. If the request returns all results,
+    # `NextToken` is set to an empty string.
     property next_token : String | Nil
 
     def initialize(

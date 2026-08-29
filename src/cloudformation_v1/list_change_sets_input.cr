@@ -1,9 +1,12 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The input for the ListChangeSets action.
   class ListChangeSetsInput
+    # The name or the Amazon Resource Name (ARN) of the stack for which you want to list change sets.
     property stack_name : String
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
     def initialize(

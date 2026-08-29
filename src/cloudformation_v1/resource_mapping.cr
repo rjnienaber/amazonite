@@ -1,7 +1,10 @@
 module Amazonite::CloudFormationV1
+  # Specifies the current source of the resource and the destination of where it will be moved to.
   class ResourceMapping
+    # The source stack `StackName` and `LogicalResourceId` for the resource being refactored.
     property source : ResourceLocation
 
+    # The destination stack `StackName` and `LogicalResourceId` for the resource being refactored.
     property destination : ResourceLocation
 
     def initialize(

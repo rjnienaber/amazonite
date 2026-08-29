@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ActivateTypeOutput
+    # The Amazon Resource Name (ARN) of the activated extension in this account and Region.
     property arn : String | Nil
 
     def initialize(

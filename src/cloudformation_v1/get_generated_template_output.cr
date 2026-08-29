@@ -3,8 +3,27 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class GetGeneratedTemplateOutput
+    # The status of the template generation. Supported values are:
+    #
+    # - `CreatePending` - the creation of the template is pending.
+    #
+    # - `CreateInProgress` - the creation of the template is in progress.
+    #
+    # - `DeletePending` - the deletion of the template is pending.
+    #
+    # - `DeleteInProgress` - the deletion of the template is in progress.
+    #
+    # - `UpdatePending` - the update of the template is pending.
+    #
+    # - `UpdateInProgress` - the update of the template is in progress.
+    #
+    # - `Failed` - the template operation failed.
+    #
+    # - `Complete` - the template operation is complete.
     property status : GeneratedTemplateStatus | Nil
 
+    # The template body of the generated template, in the language specified by the `Language`
+    # parameter.
     property template_body : String | Nil
 
     def initialize(

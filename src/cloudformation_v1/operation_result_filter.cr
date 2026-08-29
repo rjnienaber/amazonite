@@ -2,9 +2,12 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The status that operation results are filtered by.
   class OperationResultFilter
+    # The type of filter to apply.
     property name : OperationResultFilterName | Nil
 
+    # The value to filter by.
     property values : String | Nil
 
     def initialize(

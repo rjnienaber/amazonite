@@ -2,59 +2,87 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Contains detailed information about an event that occurred during a CloudFormation operation.
   class OperationEvent
+    # A unique identifier for this event.
     property event_id : String | Nil
 
+    # The unique ID name of the instance of the stack.
     property stack_id : String | Nil
 
+    # The unique identifier of the operation this event belongs to.
     property operation_id : String | Nil
 
+    # The type of operation.
     property operation_type : OperationType | Nil
 
+    # The current status of the operation.
     property operation_status : BeaconStackOperationStatus | Nil
 
+    # The type of event.
     property event_type : EventType | Nil
 
+    # The logical name of the resource as specified in the template.
     property logical_resource_id : String | Nil
 
+    # The name or unique identifier that corresponds to a physical instance ID of a resource.
     property physical_resource_id : String | Nil
 
+    # Type of resource.
     property resource_type : String | Nil
 
+    # Time the status was updated.
     property timestamp : Time | Nil
 
+    # The time when the event started.
     property start_time : Time | Nil
 
+    # The time when the event ended.
     property end_time : Time | Nil
 
+    # Current status of the resource.
     property resource_status : ResourceStatus | Nil
 
+    # Success or failure message associated with the resource.
     property resource_status_reason : String | Nil
 
+    # The properties used to create the resource.
     property resource_properties : String | Nil
 
+    # A unique identifier for the request that initiated this operation.
     property client_request_token : String | Nil
 
+    # The type name of the Hook that was invoked.
     property hook_type : String | Nil
 
+    # The status of the Hook invocation.
     property hook_status : HookStatus | Nil
 
+    # Additional information about the Hook status.
     property hook_status_reason : String | Nil
 
+    # The point in the operation lifecycle when the Hook was invoked.
     property hook_invocation_point : HookInvocationPoint | Nil
 
+    # Specifies how Hook failures are handled.
     property hook_failure_mode : HookFailureMode | Nil
 
+    # Additional status information about the operation.
     property detailed_status : DetailedStatus | Nil
 
+    # Specifies how validation failures are handled.
     property validation_failure_mode : HookFailureMode | Nil
 
+    # The name of the validation that was performed.
     property validation_name : String | Nil
 
+    # The status of the validation.
     property validation_status : ValidationStatus | Nil
 
+    # Additional information about the validation status.
     property validation_status_reason : String | Nil
 
+    # The path within the resource where the validation was applied.
     property validation_path : String | Nil
 
     def initialize(

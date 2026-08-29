@@ -1,9 +1,13 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The output for a DescribeStacks action.
   class DescribeStacksOutput
+    # A list of stack structures.
     property stacks : Array(Stack) | Nil
 
+    # If the output exceeds 1 MB in size, a string that identifies the next page of stacks. If no
+    # additional page exists, this value is null.
     property next_token : String | Nil
 
     def initialize(

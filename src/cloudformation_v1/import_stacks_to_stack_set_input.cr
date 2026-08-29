@@ -3,18 +3,38 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ImportStacksToStackSetInput
+    # The name of the StackSet. The name must be unique in the Region where you create your StackSet.
     property stack_set_name : String
 
+    # The IDs of the stacks you are importing into a StackSet. You import up to 10 stacks per StackSet
+    # at a time.
+    #
+    # Specify either `StackIds` or `StackIdsUrl`.
     property stack_ids : Array(String) | Nil
 
+    # The Amazon S3 URL which contains list of stack ids to be inputted.
+    #
+    # Specify either `StackIds` or `StackIdsUrl`.
     property stack_ids_url : String | Nil
 
+    # The list of OU ID's to which the imported stacks must be mapped as deployment targets.
     property organizational_unit_ids : Array(String) | Nil
 
+    # The user-specified preferences for how CloudFormation performs a StackSet operation.
+    #
+    # For more information about maximum concurrent accounts and failure tolerance, see [StackSet
+    # operation
+    # options](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-concepts.html#stackset-ops-options).
     property operation_preferences : StackSetOperationPreferences | Nil
 
+    # A unique, user defined, identifier for the StackSet operation.
     property operation_id : String | Nil
 
+    # By default, `SELF` is specified. Use `SELF` for StackSets with self-managed permissions.
+    #
+    # - If you are signed in to the management account, specify `SELF`.
+    #
+    # - For service managed StackSets, specify `DELEGATED_ADMIN`.
     property call_as : CallAs | Nil
 
     def initialize(

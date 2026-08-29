@@ -2,6 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class UpdateGeneratedTemplateOutput
+    # The Amazon Resource Name (ARN) of the generated template. The format is
+    # `arn:${Partition}:cloudformation:${Region}:${Account}:generatedtemplate/${Id}`. For example,
+    # `arn:aws:cloudformation:*us-east-1*:*123456789012*:generatedtemplate/*2e8465c1-9a80-43ea-a3a3-4f2d692fe6dc*
+    # `.
     property generated_template_id : String | Nil
 
     def initialize(

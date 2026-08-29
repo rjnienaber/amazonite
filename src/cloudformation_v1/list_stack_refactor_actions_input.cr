@@ -2,10 +2,15 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListStackRefactorActionsInput
+    # The ID associated with the stack refactor created from the CreateStackRefactor action.
     property stack_refactor_id : String
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
+    # The maximum number of results to be returned with a single call. If the number of available
+    # results exceeds this maximum, the response includes a `NextToken` value that you can assign to
+    # the `NextToken` request parameter to get the next set of results.
     property max_results : Int32 | Nil
 
     def initialize(

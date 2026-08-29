@@ -1,5 +1,9 @@
 module Amazonite::CloudFormationV1
+  # A set of criteria that CloudFormation uses to validate parameter values. Although other
+  # constraints might be defined in the stack template, CloudFormation returns only the
+  # `AllowedValues` property.
   class ParameterConstraints
+    # A list of values that are permitted for a parameter.
     property allowed_values : Array(String) | Nil
 
     def initialize(

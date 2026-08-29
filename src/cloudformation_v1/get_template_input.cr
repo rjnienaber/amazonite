@@ -2,11 +2,26 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The input for a GetTemplate action.
   class GetTemplateInput
+    # The name or the unique stack ID that's associated with the stack, which aren't always
+    # interchangeable:
+    #
+    # - Running stacks: You can specify either the stack's name or its unique stack ID.
+    #
+    # - Deleted stacks: You must specify the unique stack ID.
     property stack_name : String | Nil
 
+    # The name or Amazon Resource Name (ARN) of a change set for which CloudFormation returns the
+    # associated template. If you specify a name, you must also specify the `StackName`.
     property change_set_name : String | Nil
 
+    # For templates that include transforms, the stage of the template that CloudFormation returns. To
+    # get the user-submitted template, specify `Original`. To get the template after CloudFormation
+    # has processed all transforms, specify `Processed`.
+    #
+    # If the template doesn't include transforms, `Original` and `Processed` return the same template.
+    # By default, CloudFormation specifies `Processed`.
     property template_stage : TemplateStage | Nil
 
     def initialize(

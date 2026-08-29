@@ -2,8 +2,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class RollbackStackOutput
+    # Unique identifier of the stack.
     property stack_id : String | Nil
 
+    # A unique identifier for this rollback operation that can be used to track the operation's
+    # progress and events.
     property operation_id : String | Nil
 
     def initialize(

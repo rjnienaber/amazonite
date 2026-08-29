@@ -1,11 +1,16 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Detailed information concerning an error generated during the setting of configuration data for
+  # a CloudFormation extension.
   class BatchDescribeTypeConfigurationsError
+    # The error code.
     property error_code : String | Nil
 
+    # The error message.
     property error_message : String | Nil
 
+    # Identifying information for the configuration of a CloudFormation extension.
     property type_configuration_identifier : TypeConfigurationIdentifier | Nil
 
     def initialize(

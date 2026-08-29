@@ -1,13 +1,18 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # A summary of the progress of the template generation.
   class TemplateProgress
+    # The number of resources that succeeded the template generation.
     property resources_succeeded : Int32 | Nil
 
+    # The number of resources that failed the template generation.
     property resources_failed : Int32 | Nil
 
+    # The number of resources that are in-process for the template generation.
     property resources_processing : Int32 | Nil
 
+    # The number of resources that are still pending the template generation.
     property resources_pending : Int32 | Nil
 
     def initialize(

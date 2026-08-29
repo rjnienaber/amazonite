@@ -1,5 +1,7 @@
 module Amazonite::CloudFormationV1
+  # The output for a DescribeStackResources action.
   class DescribeStackResourcesOutput
+    # A list of `StackResource` structures.
     property stack_resources : Array(StackResource) | Nil
 
     def initialize(

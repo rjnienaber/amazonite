@@ -2,6 +2,7 @@ private alias ACF = Amazonite::CloudFormationV1
 
 module Amazonite::CloudFormationV1
   class DescribeOrganizationsAccessOutput
+    # Presents the status of the `OrganizationAccess`.
     property status : OrganizationStatus | Nil
 
     def initialize(

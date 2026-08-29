@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class CreateGeneratedTemplateOutput
+    # The ID of the generated template.
     property generated_template_id : String | Nil
 
     def initialize(

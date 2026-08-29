@@ -2,8 +2,12 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class StartResourceScanInput
+    # A unique identifier for this `StartResourceScan` request. Specify this token if you plan to
+    # retry requests so that CloudFormation knows that you're not attempting to start a new resource
+    # scan.
     property client_request_token : String | Nil
 
+    # The scan filters to use.
     property scan_filters : Array(ScanFilter) | Nil
 
     def initialize(

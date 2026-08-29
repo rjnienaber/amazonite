@@ -2,25 +2,48 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # Describes the stack and the action that CloudFormation will perform on it if you execute the
+  # stack refactor.
   class StackRefactorAction
+    # The action that CloudFormation takes on the stack.
     property action : StackRefactorActionType | Nil
 
+    # The type that will be evaluated in the `StackRefactorAction`. The following are potential
+    # `Entity` types:
+    #
+    # - `Stack`
+    #
+    # - `Resource`
     property entity : StackRefactorActionEntity | Nil
 
+    # The name or unique identifier associated with the physical instance of the resource.
     property physical_resource_id : String | Nil
 
+    # A key-value pair that identifies the target resource. The key is an identifier property (for
+    # example, `BucketName` for `AWS::S3::Bucket` resources) and the value is the actual property
+    # value (for example, `MyS3Bucket`).
     property resource_identifier : String | Nil
 
+    # A description to help you identify the refactor.
     property description : String | Nil
 
+    # The detection type is one of the following:
+    #
+    # - Auto: CloudFormation figured out the mapping on its own.
+    #
+    # - Manual: The customer provided the mapping in the `ResourceMapping` parameter.
     property detection : StackRefactorDetection | Nil
 
+    # The description of the detection type.
     property detection_reason : String | Nil
 
+    # Assigns one or more tags to specified resources.
     property tag_resources : Array(Tag) | Nil
 
+    # Removes one or more tags to specified resources.
     property untag_resources : Array(String) | Nil
 
+    # The mapping for the stack resource `Source` and stack resource `Destination`.
     property resource_mapping : ResourceMapping | Nil
 
     def initialize(

@@ -1,5 +1,6 @@
 module Amazonite::CloudFormationV1
   class DescribeStackSetOutput
+    # The specified StackSet.
     property stack_set : StackSet | Nil
 
     def initialize(

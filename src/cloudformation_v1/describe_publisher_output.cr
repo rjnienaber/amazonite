@@ -3,12 +3,17 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribePublisherOutput
+    # The ID of the extension publisher.
     property publisher_id : String | Nil
 
+    # Whether the publisher is verified. Currently, all registered publishers are verified.
     property publisher_status : PublisherStatus | Nil
 
+    # The type of account used as the identity provider when registering this publisher with
+    # CloudFormation.
     property identity_provider : IdentityProvider | Nil
 
+    # The URL to the publisher's profile with the identity provider.
     property publisher_profile : String | Nil
 
     def initialize(

@@ -2,25 +2,65 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The field that CloudFormation will change, such as the name of a resource's property, and
+  # whether the resource will be recreated.
   class ResourceTargetDefinition
+    # Indicates which resource attribute is triggering this update, such as a change in the resource
+    # attribute's `Metadata`, `Properties`, or `Tags`.
     property attribute : ResourceAttribute | Nil
 
+    # If the `Attribute` value is `Properties`, the name of the property. For all other attributes,
+    # the value is null.
     property name : String | Nil
 
+    # If the `Attribute` value is `Properties`, indicates whether a change to this property causes the
+    # resource to be recreated. The value can be `Never`, `Always`, or `Conditionally`. To determine
+    # the conditions for a `Conditionally` recreation, see the update behavior for that property in
+    # the [Amazon Web Services resource and property types
+    # reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)
+    # in the *CloudFormation User Guide*.
     property requires_recreation : RequiresRecreation | Nil
 
+    # The property path of the property.
     property path : String | Nil
 
+    # The value of the property before the change is executed. Large values can be truncated.
     property before_value : String | Nil
 
+    # The value of the property after the change is executed. Large values can be truncated.
     property after_value : String | Nil
 
+    # Indicates the source of the before value. Valid values:
+    #
+    # - `ACTUAL_STATE` – The before value represents current actual state.
+    #
+    # - `PREVIOUS_DEPLOYMENT_STATE` – The before value represents the previous CloudFormation
+    # deployment state.
+    #
+    # Only present for drift-aware change sets.
     property before_value_from : BeforeValueFrom | Nil
 
+    # Indicates the source of the after value. Valid value:
+    #
+    # - `TEMPLATE` – The after value comes from the new template.
+    #
+    # Only present for drift-aware change sets.
     property after_value_from : AfterValueFrom | Nil
 
+    # Detailed drift information for the resource property, including actual values, previous
+    # deployment values, and drift detection timestamps.
     property drift : LiveResourceDrift | Nil
 
+    # The type of change to be made to the property if the change is executed.
+    #
+    # - `Add` The item will be added.
+    #
+    # - `Remove` The item will be removed.
+    #
+    # - `Modify` The item will be modified.
+    #
+    # - `SyncWithActual` The drift status of this item will be reset but the item will not be
+    # modified.
     property attribute_change_type : AttributeChangeType | Nil
 
     def initialize(

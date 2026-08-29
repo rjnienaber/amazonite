@@ -3,8 +3,22 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribeStackSetInput
+    # The name or unique ID of the StackSet whose description you want.
     property stack_set_name : String
 
+    # [Service-managed permissions] Specifies whether you are acting as an account administrator in
+    # the organization's management account or as a delegated administrator in a member account.
+    #
+    # By default, `SELF` is specified. Use `SELF` for StackSets with self-managed permissions.
+    #
+    # - If you are signed in to the management account, specify `SELF`.
+    #
+    # - If you are signed in to a delegated administrator account, specify `DELEGATED_ADMIN`.
+    #
+    # Your Amazon Web Services account must be registered as a delegated administrator in the
+    # management account. For more information, see [Register a delegated
+    # administrator](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-delegated-admin.html)
+    # in the *CloudFormation User Guide*.
     property call_as : CallAs | Nil
 
     def initialize(

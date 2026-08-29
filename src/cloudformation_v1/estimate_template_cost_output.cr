@@ -1,7 +1,10 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The output for a EstimateTemplateCost action.
   class EstimateTemplateCostOutput
+    # An Amazon Web Services Simple Monthly Calculator URL with a query string that describes the
+    # resources required to run the template.
     property url : String | Nil
 
     def initialize(

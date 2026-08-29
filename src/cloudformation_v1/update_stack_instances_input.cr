@@ -3,20 +3,84 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class UpdateStackInstancesInput
+    # The name or unique ID of the StackSet associated with the stack instances.
     property stack_set_name : String
 
+    # [Self-managed permissions] The account IDs of one or more Amazon Web Services accounts in which
+    # you want to update parameter values for stack instances. The overridden parameter values will be
+    # applied to all stack instances in the specified accounts and Amazon Web Services Regions.
+    #
+    # You can specify `Accounts` or `DeploymentTargets`, but not both.
     property accounts : Array(String) | Nil
 
+    # [Service-managed permissions] The Organizations accounts in which you want to update parameter
+    # values for stack instances. If your update targets OUs, the overridden parameter values only
+    # apply to the accounts that are currently in the target OUs and their child OUs. Accounts added
+    # to the target OUs and their child OUs in the future won't use the overridden values.
+    #
+    # You can specify `Accounts` or `DeploymentTargets`, but not both.
     property deployment_targets : DeploymentTargets | Nil
 
+    # The names of one or more Amazon Web Services Regions in which you want to update parameter
+    # values for stack instances. The overridden parameter values will be applied to all stack
+    # instances in the specified accounts and Amazon Web Services Regions.
     property regions : Array(String) = [] of String
 
+    # A list of input parameters whose values you want to update for the specified stack instances.
+    #
+    # Any overridden parameter values will be applied to all stack instances in the specified accounts
+    # and Amazon Web Services Regions. When specifying parameters and their values, be aware of how
+    # CloudFormation sets parameter values during stack instance update operations:
+    #
+    # - To override the current value for a parameter, include the parameter and specify its value.
+    #
+    # - To leave an overridden parameter set to its present value, include the parameter and specify
+    # `UsePreviousValue` as `true`. (You can't specify both a value and set `UsePreviousValue` to
+    # `true`.)
+    #
+    # - To set an overridden parameter back to the value specified in the StackSet, specify a
+    # parameter list but don't include the parameter in the list.
+    #
+    # - To leave all parameters set to their present values, don't specify this property at all.
+    #
+    # During StackSet updates, any parameter values overridden for a stack instance aren't updated,
+    # but retain their overridden value.
+    #
+    # You can only override the parameter *values* that are specified in the StackSet. To add or
+    # delete a parameter itself, use `UpdateStackSet` to update the StackSet template. If you add a
+    # parameter to a template, before you can override the parameter value specified in the StackSet
+    # you must first use
+    # [UpdateStackSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_UpdateStackSet.html)
+    # to update all stack instances with the updated template and parameter value specified in the
+    # StackSet. Once a stack instance has been updated with the new parameter, you can then override
+    # the parameter value using `UpdateStackInstances`.
     property parameter_overrides : Array(Parameter) | Nil
 
+    # Preferences for how CloudFormation performs this StackSet operation.
     property operation_preferences : StackSetOperationPreferences | Nil
 
+    # The unique identifier for this StackSet operation.
+    #
+    # The operation ID also functions as an idempotency token, to ensure that CloudFormation performs
+    # the StackSet operation only once, even if you retry the request multiple times. You might retry
+    # StackSet operation requests to ensure that CloudFormation successfully received them.
+    #
+    # If you don't specify an operation ID, the SDK generates one automatically.
     property operation_id : String | Nil
 
+    # [Service-managed permissions] Specifies whether you are acting as an account administrator in
+    # the organization's management account or as a delegated administrator in a member account.
+    #
+    # By default, `SELF` is specified. Use `SELF` for StackSets with self-managed permissions.
+    #
+    # - If you are signed in to the management account, specify `SELF`.
+    #
+    # - If you are signed in to a delegated administrator account, specify `DELEGATED_ADMIN`.
+    #
+    # Your Amazon Web Services account must be registered as a delegated administrator in the
+    # management account. For more information, see [Register a delegated
+    # administrator](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-delegated-admin.html)
+    # in the *CloudFormation User Guide*.
     property call_as : CallAs | Nil
 
     def initialize(

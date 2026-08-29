@@ -2,12 +2,17 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribeChangeSetHooksInput
+    # The name or Amazon Resource Name (ARN) of the change set that you want to describe.
     property change_set_name : String
 
+    # If you specified the name of a change set, specify the stack name or stack ID (ARN) of the
+    # change set you want to describe.
     property stack_name : String | Nil
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
+    # If specified, lists only the Hooks related to the specified `LogicalResourceId`.
     property logical_resource_id : String | Nil
 
     def initialize(

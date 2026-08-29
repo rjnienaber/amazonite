@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::StsV1
   class DecodeAuthorizationMessageRequest
+    # The encoded message that was returned with the response.
     property encoded_message : String
 
     def initialize(

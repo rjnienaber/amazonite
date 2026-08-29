@@ -2,8 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class UpdateTerminationProtectionInput
+    # Whether to enable termination protection on the specified stack.
     property enable_termination_protection : Bool
 
+    # The name or unique ID of the stack for which you want to set termination protection.
     property stack_name : String
 
     def initialize(

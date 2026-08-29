@@ -1,9 +1,12 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The location of the resource in a stack template.
   class ResourceLocation
+    # The name associated with the stack.
     property stack_name : String
 
+    # The logical name of the resource specified in the template.
     property logical_resource_id : String
 
     def initialize(

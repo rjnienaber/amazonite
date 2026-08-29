@@ -1,9 +1,28 @@
 private alias ACF = Amazonite::CloudFormationV1
 
 module Amazonite::CloudFormationV1
+  # The configuration details of a generated template.
   class TemplateConfiguration
+    # The `DeletionPolicy` assigned to resources in the generated template. Supported values are:
+    #
+    # - `DELETE` - delete all resources when the stack is deleted.
+    #
+    # - `RETAIN` - retain all resources when the stack is deleted.
+    #
+    # For more information, see [DeletionPolicy
+    # attribute](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html)
+    # in the *CloudFormation User Guide*.
     property deletion_policy : GeneratedTemplateDeletionPolicy | Nil
 
+    # The `UpdateReplacePolicy` assigned to resources in the generated template. Supported values are:
+    #
+    # - `DELETE` - delete all resources when the resource is replaced during an update operation.
+    #
+    # - `RETAIN` - retain all resources when the resource is replaced during an update operation.
+    #
+    # For more information, see [UpdateReplacePolicy
+    # attribute](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-updatereplacepolicy.html)
+    # in the *CloudFormation User Guide*.
     property update_replace_policy : GeneratedTemplateUpdateReplacePolicy | Nil
 
     def initialize(

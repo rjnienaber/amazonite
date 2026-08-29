@@ -2,8 +2,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListImportsOutput
+    # A list of stack names that are importing the specified exported output value.
     property imports : Array(String) | Nil
 
+    # A string that identifies the next page of exports. If there is no additional page, this value is
+    # null.
     property next_token : String | Nil
 
     def initialize(

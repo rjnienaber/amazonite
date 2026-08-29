@@ -2,9 +2,14 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The input for ListStacks action.
   class ListStacksInput
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
+    # Stack status to use as a filter. Specify one or more stack status codes to list only stacks with
+    # the specified status codes. For a complete list of stack status codes, see the `StackStatus`
+    # parameter of the Stack data type.
     property stack_status_filter : Array(StackStatus) | Nil
 
     def initialize(

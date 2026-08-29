@@ -1,15 +1,44 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The input for the ExecuteChangeSet action.
   class ExecuteChangeSetInput
+    # The name or Amazon Resource Name (ARN) of the change set that you want use to update the
+    # specified stack.
     property change_set_name : String
 
+    # If you specified the name of a change set, specify the stack name or Amazon Resource Name (ARN)
+    # that's associated with the change set you want to execute.
     property stack_name : String | Nil
 
+    # A unique identifier for this `ExecuteChangeSet` request. Specify this token if you plan to retry
+    # requests so that CloudFormation knows that you're not attempting to execute a change set to
+    # update a stack with the same name. You might retry `ExecuteChangeSet` requests to ensure that
+    # CloudFormation successfully received them.
     property client_request_token : String | Nil
 
+    # Preserves the state of previously provisioned resources when an operation fails. This parameter
+    # can't be specified when the `OnStackFailure` parameter to the
+    # [CreateChangeSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateChangeSet.html)
+    # API operation was specified.
+    #
+    # - `True` - if the stack creation fails, do nothing. This is equivalent to specifying
+    # `DO_NOTHING` for the `OnStackFailure` parameter to the
+    # [CreateChangeSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateChangeSet.html)
+    # API operation.
+    #
+    # - `False` - if the stack creation fails, roll back the stack. This is equivalent to specifying
+    # `ROLLBACK` for the `OnStackFailure` parameter to the
+    # [CreateChangeSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateChangeSet.html)
+    # API operation.
+    #
+    # Default: `True`
     property disable_rollback : Bool | Nil
 
+    # When set to `true`, newly created resources are deleted when the operation rolls back. This
+    # includes newly created resources marked with a deletion policy of `Retain`.
+    #
+    # Default: `false`
     property retain_except_on_create : Bool | Nil
 
     def initialize(

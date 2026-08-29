@@ -2,39 +2,93 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # A structure that contains information about a StackSet. With StackSets, you can provision stacks
+  # across Amazon Web Services accounts and Regions from a single CloudFormation template. Each
+  # stack is based on the same CloudFormation template, but you can customize individual stacks
+  # using parameters.
   class StackSet
+    # The name that's associated with the StackSet.
     property stack_set_name : String | Nil
 
+    # The ID of the StackSet.
     property stack_set_id : String | Nil
 
+    # A description of the StackSet that you specify when the StackSet is created or updated.
     property description : String | Nil
 
+    # The status of the StackSet.
     property status : StackSetStatus | Nil
 
+    # The structure that contains the body of the template that was used to create or update the
+    # StackSet.
     property template_body : String | Nil
 
+    # A list of input parameters for a StackSet.
     property parameters : Array(Parameter) | Nil
 
+    # The capabilities that are allowed in the StackSet. Some StackSet templates might include
+    # resources that can affect permissions in your Amazon Web Services account—for example, by
+    # creating new Identity and Access Management (IAM) users. For more information, see
+    # [Acknowledging IAM resources in CloudFormation
+    # templates](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/control-access-with-iam.html#using-iam-capabilities).
     property capabilities : Array(Capability) | Nil
 
+    # A list of tags that specify information about the StackSet. A maximum number of 50 tags can be
+    # specified.
     property tags : Array(Tag) | Nil
 
+    # The Amazon Resource Name (ARN) of the StackSet.
     property stack_set_arn : String | Nil
 
+    # The Amazon Resource Name (ARN) of the IAM role used to create or update the stack set.
+    #
+    # Use customized administrator roles to control which users or groups can manage specific
+    # StackSets within the same administrator account. For more information, see [Prerequisites for
+    # using CloudFormation
+    # StackSets](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs.html)
+    # in the *CloudFormation User Guide*.
     property administration_role_arn : String | Nil
 
+    # The name of the IAM execution role used to create or update the StackSet.
+    #
+    # Use customized execution roles to control which stack resources users and groups can include in
+    # their StackSets.
     property execution_role_name : String | Nil
 
+    # Detailed information about the drift status of the StackSet.
+    #
+    # For StackSets, contains information about the last *completed* drift operation performed on the
+    # StackSet. Information about drift operations currently in progress isn't included.
     property stack_set_drift_detection_details : StackSetDriftDetectionDetails | Nil
 
+    # Describes whether StackSets automatically deploys to Organizations accounts that are added to a
+    # target organization or organizational unit (OU). Valid only if the StackSet uses service-managed
+    # permissions.
     property auto_deployment : AutoDeployment | Nil
 
+    # Describes how the IAM roles required for StackSet operations are created.
+    #
+    # - With `self-managed` permissions, you must create the administrator and execution roles
+    # required to deploy to target accounts. For more information, see [Grant self-managed
+    # permissions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs-self-managed.html).
+    #
+    # - With `service-managed` permissions, StackSets automatically creates the IAM roles required to
+    # deploy to accounts managed by Organizations. For more information, see [Activate trusted access
+    # for StackSets with
+    # Organizations](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-activate-trusted-access.html).
     property permission_model : PermissionModels | Nil
 
+    # [Service-managed permissions] The organization root ID or organizational unit (OU) IDs that you
+    # specified for
+    # [DeploymentTargets](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_DeploymentTargets.html).
     property organizational_unit_ids : Array(String) | Nil
 
+    # Describes whether StackSets performs non-conflicting operations concurrently and queues
+    # conflicting operations.
     property managed_execution : ManagedExecution | Nil
 
+    # Returns a list of all Amazon Web Services Regions the given StackSet has stack instances
+    # deployed in. The Amazon Web Services Regions list output is in no particular order.
     property regions : Array(String) | Nil
 
     def initialize(

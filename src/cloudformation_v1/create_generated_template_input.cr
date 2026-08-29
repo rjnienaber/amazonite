@@ -2,12 +2,20 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class CreateGeneratedTemplateInput
+    # An optional list of resources to be included in the generated template.
+    #
+    # If no resources are specified,the template will be created without any resources. Resources can
+    # be added to the template using the `UpdateGeneratedTemplate` API action.
     property resources : Array(ResourceDefinition) | Nil
 
+    # The name assigned to the generated template.
     property generated_template_name : String
 
+    # An optional name or ARN of a stack to use as the base stack for the generated template.
     property stack_name : String | Nil
 
+    # The configuration details of the generated template, including the `DeletionPolicy` and
+    # `UpdateReplacePolicy`.
     property template_configuration : TemplateConfiguration | Nil
 
     def initialize(

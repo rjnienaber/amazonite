@@ -3,26 +3,59 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribeGeneratedTemplateOutput
+    # The Amazon Resource Name (ARN) of the generated template. The format is
+    # `arn:${Partition}:cloudformation:${Region}:${Account}:generatedtemplate/${Id}`. For example,
+    # `arn:aws:cloudformation:*us-east-1*:*123456789012*:generatedtemplate/*2e8465c1-9a80-43ea-a3a3-4f2d692fe6dc*
+    # `.
     property generated_template_id : String | Nil
 
+    # The name of the generated template.
     property generated_template_name : String | Nil
 
+    # A list of objects describing the details of the resources in the template generation.
     property resources : Array(ResourceDetail) | Nil
 
+    # The status of the template generation. Supported values are:
+    #
+    # - `CreatePending` - the creation of the template is pending.
+    #
+    # - `CreateInProgress` - the creation of the template is in progress.
+    #
+    # - `DeletePending` - the deletion of the template is pending.
+    #
+    # - `DeleteInProgress` - the deletion of the template is in progress.
+    #
+    # - `UpdatePending` - the update of the template is pending.
+    #
+    # - `UpdateInProgress` - the update of the template is in progress.
+    #
+    # - `Failed` - the template operation failed.
+    #
+    # - `Complete` - the template operation is complete.
     property status : GeneratedTemplateStatus | Nil
 
+    # The reason for the current template generation status. This will provide more details if a
+    # failure happened.
     property status_reason : String | Nil
 
+    # The time the generated template was created.
     property creation_time : Time | Nil
 
+    # The time the generated template was last updated.
     property last_updated_time : Time | Nil
 
+    # An object describing the progress of the template generation.
     property progress : TemplateProgress | Nil
 
+    # The stack ARN of the base stack if a base stack was provided when generating the template.
     property stack_id : String | Nil
 
+    # The configuration details of the generated template, including the `DeletionPolicy` and
+    # `UpdateReplacePolicy`.
     property template_configuration : TemplateConfiguration | Nil
 
+    # The number of warnings generated for this template. The warnings are found in the details of
+    # each of the resources in the template.
     property total_warnings : Int32 | Nil
 
     def initialize(

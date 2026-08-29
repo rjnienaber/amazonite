@@ -2,17 +2,44 @@ private alias ACF = Amazonite::CloudFormationV1
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The structure that contains information about a specified operation's results for a given
+  # account in a given Region.
   class StackSetOperationResultSummary
+    # [Self-managed permissions] The name of the Amazon Web Services account for this operation
+    # result.
     property account : String | Nil
 
+    # The name of the Amazon Web Services Region for this operation result.
     property region : String | Nil
 
+    # The result status of the StackSet operation for the given account in the given Region.
+    #
+    # - `CANCELLED`: The operation in the specified account and Region has been canceled. This is
+    # either because a user has stopped the StackSet operation, or because the failure tolerance of
+    # the StackSet operation has been exceeded.
+    #
+    # - `FAILED`: The operation in the specified account and Region failed.
+    #
+    # If the StackSet operation fails in enough accounts within a Region, the failure tolerance for
+    # the StackSet operation as a whole might be exceeded.
+    #
+    # - `RUNNING`: The operation in the specified account and Region is currently in progress.
+    #
+    # - `PENDING`: The operation in the specified account and Region has yet to start.
+    #
+    # - `SUCCEEDED`: The operation in the specified account and Region completed successfully.
     property status : StackSetOperationResultStatus | Nil
 
+    # The reason for the assigned result status.
     property status_reason : String | Nil
 
+    # The results of the account gate function CloudFormation invokes, if present, before proceeding
+    # with StackSet operations in an account.
     property account_gate_result : AccountGateResult | Nil
 
+    # [Service-managed permissions] The organization root ID or organizational unit (OU) IDs that you
+    # specified for
+    # [DeploymentTargets](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_DeploymentTargets.html).
     property organizational_unit_id : String | Nil
 
     def initialize(

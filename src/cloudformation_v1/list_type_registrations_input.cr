@@ -3,16 +3,32 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListTypeRegistrationsInput
+    # The kind of extension.
+    #
+    # Conditional: You must specify either `TypeName` and `Type`, or `Arn`.
     property type : RegistryType | Nil
 
+    # The name of the extension.
+    #
+    # Conditional: You must specify either `TypeName` and `Type`, or `Arn`.
     property type_name : String | Nil
 
+    # The Amazon Resource Name (ARN) of the extension.
+    #
+    # Conditional: You must specify either `TypeName` and `Type`, or `Arn`.
     property type_arn : String | Nil
 
+    # The current status of the extension registration request.
+    #
+    # The default is `IN_PROGRESS`.
     property registration_status_filter : RegistrationStatus | Nil
 
+    # The maximum number of results to be returned with a single call. If the number of available
+    # results exceeds this maximum, the response includes a `NextToken` value that you can assign to
+    # the `NextToken` request parameter to get the next set of results.
     property max_results : Int32 | Nil
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
     def initialize(

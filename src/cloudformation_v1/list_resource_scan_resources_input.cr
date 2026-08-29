@@ -2,18 +2,30 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListResourceScanResourcesInput
+    # The Amazon Resource Name (ARN) of the resource scan.
     property resource_scan_id : String
 
+    # If specified, the returned resources will have the specified resource identifier (or one of them
+    # in the case where the resource has multiple identifiers).
     property resource_identifier : String | Nil
 
+    # If specified, the returned resources will be of any of the resource types with the specified
+    # prefix.
     property resource_type_prefix : String | Nil
 
+    # If specified, the returned resources will have a matching tag key.
     property tag_key : String | Nil
 
+    # If specified, the returned resources will have a matching tag value.
     property tag_value : String | Nil
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
+    # If the number of available results exceeds this maximum, the response includes a `NextToken`
+    # value that you can use for the `NextToken` parameter to get the next set of results. By default
+    # the `ListResourceScanResources` API action will return at most 100 results in each response. The
+    # maximum value is 100.
     property max_results : Int32 | Nil
 
     def initialize(

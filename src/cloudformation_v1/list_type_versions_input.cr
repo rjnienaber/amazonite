@@ -3,18 +3,45 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListTypeVersionsInput
+    # The kind of the extension.
+    #
+    # Conditional: You must specify either `TypeName` and `Type`, or `Arn`.
     property type : RegistryType | Nil
 
+    # The name of the extension for which you want version summary information.
+    #
+    # Conditional: You must specify either `TypeName` and `Type`, or `Arn`.
     property type_name : String | Nil
 
+    # The Amazon Resource Name (ARN) of the extension for which you want version summary information.
+    #
+    # Conditional: You must specify either `TypeName` and `Type`, or `Arn`.
     property arn : String | Nil
 
+    # The maximum number of results to be returned with a single call. If the number of available
+    # results exceeds this maximum, the response includes a `NextToken` value that you can assign to
+    # the `NextToken` request parameter to get the next set of results.
     property max_results : Int32 | Nil
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     property next_token : String | Nil
 
+    # The deprecation status of the extension versions that you want to get summary information about.
+    #
+    # Valid values include:
+    #
+    # - `LIVE`: The extension version is registered and can be used in CloudFormation operations,
+    # dependent on its provisioning behavior and visibility scope.
+    #
+    # - `DEPRECATED`: The extension version has been deregistered and can no longer be used in
+    # CloudFormation operations.
+    #
+    # The default is `LIVE`.
     property deprecated_status : DeprecatedStatus | Nil
 
+    # The publisher ID of the extension publisher.
+    #
+    # Extensions published by Amazon aren't assigned a publisher ID.
     property publisher_id : String | Nil
 
     def initialize(

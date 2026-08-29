@@ -2,8 +2,13 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class ListStackSetsOutput
+    # A list of `StackSetSummary` structures that contain information about the user's StackSets.
     property summaries : Array(StackSetSummary) | Nil
 
+    # If the request doesn't return all of the remaining results, `NextToken` is set to a token. To
+    # retrieve the next set of results, call `ListStackInstances` again and assign that token to the
+    # request object's `NextToken` parameter. If the request returns all results, `NextToken` is set
+    # to `null`.
     property next_token : String | Nil
 
     def initialize(

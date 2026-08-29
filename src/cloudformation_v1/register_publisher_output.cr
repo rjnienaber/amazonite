@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class RegisterPublisherOutput
+    # The ID assigned this account by CloudFormation for publishing extensions.
     property publisher_id : String | Nil
 
     def initialize(

@@ -3,12 +3,23 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DeregisterTypeInput
+    # The Amazon Resource Name (ARN) of the extension.
+    #
+    # Conditional: You must specify either `TypeName` and `Type`, or `Arn`.
     property arn : String | Nil
 
+    # The kind of extension.
+    #
+    # Conditional: You must specify either `TypeName` and `Type`, or `Arn`.
     property type : RegistryType | Nil
 
+    # The name of the extension.
+    #
+    # Conditional: You must specify either `TypeName` and `Type`, or `Arn`.
     property type_name : String | Nil
 
+    # The ID of a specific version of the extension. The version ID is the value at the end of the
+    # Amazon Resource Name (ARN) assigned to the extension version when it is registered.
     property version_id : String | Nil
 
     def initialize(

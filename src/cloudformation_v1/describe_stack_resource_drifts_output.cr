@@ -2,8 +2,21 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribeStackResourceDriftsOutput
+    # Drift information for the resources that have been checked for drift in the specified stack.
+    # This includes actual and expected configuration values for resources where CloudFormation
+    # detects drift.
+    #
+    # For a given stack, there will be one `StackResourceDrift` for each stack resource that has been
+    # checked for drift. Resources that haven't yet been checked for drift aren't included. Resources
+    # that do not currently support drift detection aren't checked, and so not included. For a list of
+    # resources that support drift detection, see [Resource type support for imports and drift
+    # detection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-supported-resources.html).
     property stack_resource_drifts : Array(StackResourceDrift) = [] of StackResourceDrift
 
+    # If the request doesn't return all the remaining results, `NextToken` is set to a token. To
+    # retrieve the next set of results, call `DescribeStackResourceDrifts` again and assign that token
+    # to the request object's `NextToken` parameter. If the request returns all results, `NextToken`
+    # is set to `null`.
     property next_token : String | Nil
 
     def initialize(

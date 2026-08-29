@@ -1,11 +1,16 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # A specific property that is impacted by a warning.
   class WarningProperty
+    # The path of the property. For example, if this is for the `S3Bucket` member of the `Code`
+    # property, the property path would be `Code/S3Bucket`.
     property property_path : String | Nil
 
+    # If `true`, the specified property is required.
     property required : Bool | Nil
 
+    # The description of the property from the resource provider schema.
     property description : String | Nil
 
     def initialize(

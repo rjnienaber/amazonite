@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class CreateStackSetOutput
+    # The ID of the StackSet that you're creating.
     property stack_set_id : String | Nil
 
     def initialize(

@@ -1,9 +1,12 @@
 private alias ACF = Amazonite::CloudFormationV1
 
 module Amazonite::CloudFormationV1
+  # Specifies target details for an activated Hook.
   class ChangeSetHookTargetDetails
+    # The Hook target type.
     property target_type : HookTargetType | Nil
 
+    # Required if `TargetType` is `RESOURCE`.
     property resource_target_details : ChangeSetHookResourceTargetDetails | Nil
 
     def initialize(

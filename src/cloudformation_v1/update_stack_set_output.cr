@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class UpdateStackSetOutput
+    # The unique ID for this StackSet operation.
     property operation_id : String | Nil
 
     def initialize(

@@ -1,9 +1,24 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
+  # The input for the CancelUpdateStack action.
   class CancelUpdateStackInput
+    # If you don't pass a parameter to `StackName`, the API returns a response that describes all
+    # resources in the account.
+    #
+    # The IAM policy below can be added to IAM policies when you want to limit resource-level
+    # permissions and avoid returning a response when no parameter is sent in the request:
+    #
+    # `{ "Version": "2012-10-17", "Statement": [{ "Effect": "Deny", "Action":
+    # "cloudformation:DescribeStacks", "NotResource": "arn:aws:cloudformation:*:*:stack/*/*" }] }`
+    #
+    # The name or the unique stack ID that's associated with the stack.
     property stack_name : String
 
+    # A unique identifier for this `CancelUpdateStack` request. Specify this token if you plan to
+    # retry requests so that CloudFormation knows that you're not attempting to cancel an update on a
+    # stack with the same name. You might retry `CancelUpdateStack` requests to ensure that
+    # CloudFormation successfully received them.
     property client_request_token : String | Nil
 
     def initialize(

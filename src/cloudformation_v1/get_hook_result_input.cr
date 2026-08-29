@@ -2,6 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class GetHookResultInput
+    # The unique identifier (ID) of the Hook invocation result that you want details about. You can
+    # get the ID from the
+    # [ListHookResults](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListHookResults.html)
+    # operation.
     property hook_result_id : String | Nil
 
     def initialize(

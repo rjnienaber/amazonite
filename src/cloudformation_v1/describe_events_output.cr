@@ -2,8 +2,13 @@ private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   class DescribeEventsOutput
+    # A list of operation events that match the specified criteria.
     property operation_events : Array(OperationEvent) | Nil
 
+    # If the request doesn't return all the remaining results, `NextToken` is set to a token. To
+    # retrieve the next set of results, call `DescribeEvents` again and assign that token to the
+    # request object's `NextToken` parameter. If the request returns all results, `NextToken` is set
+    # to `null`.
     property next_token : String | Nil
 
     def initialize(
