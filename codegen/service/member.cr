@@ -1,17 +1,19 @@
 module Amazonite::Codegen::Service
   class Member
     private KNOWN_KEYS = ["shape", "documentation", "idempotencyToken", "box", "deprecated", "deprecatedMessage",
-                          "location", "locationName", "jsonvalue", # TODO: should return JSON::Any for this?
+                          "location", "locationName", "jsonName", "jsonvalue", # TODO: should return JSON::Any for this?
                           "contextParam", "flattened",
     ]
 
     @is_enum_type : Bool?
+    @enum_type : Enum?
     @is_time_type : Bool?
     @is_blob_type : Bool?
     @shape_name : String
     @location : String?
     @location_name : String?
     @documentation : String?
+    @json_name : String?
 
     getter name, shape_name, location, location_name, documentation
 
@@ -22,6 +24,7 @@ module Amazonite::Codegen::Service
       @location = json["location"]?.try(&.as_s)
       @location_name = json["locationName"]?.try(&.as_s)
       @documentation = json["documentation"]?.try(&.as_s)
+      @json_name = json["jsonName"]?.try(&.as_s)
     end
 
     # For a "uri"/"querystring"/"header" member, the wire name to use - the
@@ -30,6 +33,15 @@ module Amazonite::Codegen::Service
     # in the URI template always matches the member name exactly).
     def wire_name
       @location_name || @name
+    end
+
+    # The JSON body key to use for a plain (non-http-routed) member - unlike
+    # wire_name, this is never influenced by httpLabel/httpQuery/httpHeader
+    # (rest-json-only routing traits that some JSON-protocol services carry
+    # vestigially on an ordinary body member), only by an explicit jsonName
+    # override or the member's own name.
+    def json_wire_name
+      @json_name || @name
     end
 
     def label?
@@ -68,8 +80,8 @@ module Amazonite::Codegen::Service
       @is_enum_type ||= @resolver.enum?(shape_name)
     end
 
-    def enum_type
-      @enum_type ||= resolver.enum(shape_name)
+    def enum_type : Enum
+      @enum_type ||= @resolver.enum(shape_name)
     end
 
     def list_of_enum?

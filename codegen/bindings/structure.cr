@@ -74,6 +74,7 @@ module Amazonite::Codegen::Bindings
 
       Crinja.value({
         name:            member.name,
+        wire_name:       member.json_wire_name,
         snake_case_name: member.snake_case_name,
         type:            member_type(member),
         has_converter:   !!converter,
@@ -127,17 +128,19 @@ module Amazonite::Codegen::Bindings
       # required (non-nilable) - it's never actually read back through
       # JSON, since rest-json operations build/consume these members via
       # the URI, query string, or headers directly.
-      zero_value(member.crystal_type(true)) if not_in_body?(member) && member.required?
+      zero_value(member) if not_in_body?(member) && member.required?
     end
 
-    private def zero_value(crystal_type : String) : String
-      case crystal_type
+    private def zero_value(member) : String
+      return "#{@module_alias}::#{member.crystal_type(true)}::#{member.enum_type.values.first}" if member.enum_type?
+
+      case member.crystal_type(true)
       when "String"             then "\"\""
       when "Bool"               then "false"
       when "Int32", "Int64"     then "0"
       when "Float32", "Float64" then "0.0"
       else
-        raise Exception.new("no zero value known for required non-body member of type '#{crystal_type}'")
+        raise Exception.new("no zero value known for required non-body member of type '#{member.crystal_type(true)}'")
       end
     end
 

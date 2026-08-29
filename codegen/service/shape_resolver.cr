@@ -2,7 +2,7 @@ module Amazonite::Codegen::Service
   class ShapeResolver
     private KNOWN_DATA_STRUCTS    = ["structure", "list", "map"]
     private KNOWN_PRIMITIVE_TYPES = ["string", "boolean", "timestamp", "long", "integer", "blob",
-                                     "double", "float"]
+                                     "double", "float", "document"]
     private KNOWN_AWS_TYPES = KNOWN_DATA_STRUCTS + KNOWN_PRIMITIVE_TYPES
 
     def self.load_json(json : JSON::Any)
@@ -87,6 +87,7 @@ module Amazonite::Codegen::Service
       when "long"      then "Int64"
       when "float"     then "Float32"
       when "double"    then "Float64"
+      when "document"  then "JSON::Any"
       end
     end
 

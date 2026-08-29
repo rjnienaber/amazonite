@@ -1,0 +1,20 @@
+module Amazonite::ApiGatewayV1
+  # Represents a collection of Authorizer resources.
+  class Authorizers
+    include JSON::Serializable
+
+    # The current page of elements from this collection.
+    @[JSON::Field(key: "item")]
+    property items : Array(Authorizer) | Nil
+
+    # The current pagination position in the paged result set.
+    @[JSON::Field(key: "position", ignore: true)]
+    property position : String | Nil
+
+    def initialize(
+      @items : Array(Authorizer) | Nil = nil,
+      @position : String | Nil = nil,
+    )
+    end
+  end
+end

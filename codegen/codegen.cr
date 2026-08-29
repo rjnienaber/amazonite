@@ -24,6 +24,7 @@ module Amazonite::Codegen
     "cloudwatch"      => "1",
     "sts"             => "1",
     "cloudformation"  => "1",
+    "api-gateway"     => "1",
   }
 
   # Operations that can't be modeled as a plain request/response call and

@@ -1,0 +1,26 @@
+module Amazonite::ApiGatewayV1
+  # Requests API Gateway to change information about a Deployment resource.
+  class UpdateDeploymentRequest
+    include JSON::Serializable
+
+    # The string identifier of the associated RestApi.
+    @[JSON::Field(key: "restApiId", ignore: true)]
+    property rest_api_id : String = ""
+
+    # The replacement identifier for the Deployment resource to change information about.
+    @[JSON::Field(key: "deploymentId", ignore: true)]
+    property deployment_id : String = ""
+
+    # For more information about supported patch operations, see [Patch
+    # Operations](https://docs.aws.amazon.com/apigateway/latest/api/patch-operations.html).
+    @[JSON::Field(key: "patchOperations")]
+    property patch_operations : Array(PatchOperation) | Nil
+
+    def initialize(
+      @rest_api_id : String,
+      @deployment_id : String,
+      @patch_operations : Array(PatchOperation) | Nil = nil,
+    )
+    end
+  end
+end
