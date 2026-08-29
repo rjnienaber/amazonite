@@ -2,8 +2,18 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class RemoveUserFromGroupRequest
+    # The name of the group to update.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property group_name : String
 
+    # The name of the user to remove.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property user_name : String
 
     def initialize(

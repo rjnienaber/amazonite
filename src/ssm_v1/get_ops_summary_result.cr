@@ -2,9 +2,11 @@ module Amazonite::SsmV1
   class GetOpsSummaryResult
     include JSON::Serializable
 
+    # The list of aggregated details and filtered OpsData.
     @[JSON::Field(key: "Entities")]
     property entities : Array(OpsEntity) | Nil
 
+    # The token for the next set of items to return. Use this token to get the next set of results.
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 

@@ -1,11 +1,20 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about an MFA device.
+  #
+  # This data type is used as a response element in the
+  # [ListMFADevices](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListMFADevices.html)
+  # operation.
   class MFADevice
+    # The user with whom the MFA device is associated.
     property user_name : String
 
+    # The serial number that uniquely identifies the MFA device. For virtual MFA devices, the serial
+    # number is the device ARN.
     property serial_number : String
 
+    # The date when the MFA device was enabled for the user.
     property enable_date : Time
 
     def initialize(

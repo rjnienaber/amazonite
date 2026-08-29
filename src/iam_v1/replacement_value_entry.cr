@@ -1,5 +1,8 @@
 module Amazonite::IamV1
+  # Contains the list of replacement values for a single template parameter used when creating a
+  # role from a role template.
   class ReplacementValueEntry
+    # The list of replacement values for the template parameter.
     property values : Array(String) = [] of String
 
     def initialize(

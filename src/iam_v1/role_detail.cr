@@ -1,29 +1,64 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about an IAM role, including all of the role's policies.
+  #
+  # This data type is used as a response element in the
+  # [GetAccountAuthorizationDetails](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountAuthorizationDetails.html)
+  # operation.
   class RoleDetail
+    # The path to the role. For more information about paths, see [IAM
+    # identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html) in the
+    # *IAM User Guide*.
     property path : String | Nil
 
+    # The friendly name that identifies the role.
     property role_name : String | Nil
 
+    # The stable and unique string identifying the role. For more information about IDs, see [IAM
+    # identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html) in the
+    # *IAM User Guide*.
     property role_id : String | Nil
 
     property arn : String | Nil
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the role
+    # was created.
     property create_date : Time | Nil
 
+    # The trust policy that grants permission to assume the role.
     property assume_role_policy_document : String | Nil
 
+    # A list of instance profiles that contain this role.
     property instance_profile_list : Array(InstanceProfile) | Nil
 
+    # A list of inline policies embedded in the role. These policies are the role's access
+    # (permissions) policies.
     property role_policy_list : Array(PolicyDetail) | Nil
 
+    # A list of managed policies attached to the role. These policies are the role's access
+    # (permissions) policies.
     property attached_managed_policies : Array(AttachedPolicy) | Nil
 
+    # The ARN of the policy used to set the permissions boundary for the role.
+    #
+    # For more information about permissions boundaries, see [Permissions boundaries for IAM
+    # identities ](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html)
+    # in the *IAM User Guide*.
     property permissions_boundary : AttachedPermissionsBoundary | Nil
 
+    # A list of tags that are attached to the role. For more information about tagging, see [Tagging
+    # IAM resources](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html) in the *IAM User
+    # Guide*.
     property tags : Array(Tag) | Nil
 
+    # Contains information about the last time that an IAM role was used. This includes the date and
+    # time and the Region in which the role was last used. Activity is only reported for the trailing
+    # 400 days. This period can be shorter if your Region began supporting these features within the
+    # last year. The role might have been used more than 400 days ago. For more information, see
+    # [Regions where data is
+    # tracked](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_access-advisor.html#access-advisor_tracking-period)
+    # in the *IAM User Guide*.
     property role_last_used : RoleLastUsed | Nil
 
     def initialize(

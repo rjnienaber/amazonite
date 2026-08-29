@@ -2,8 +2,15 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class TagOpenIDConnectProviderRequest
+    # The ARN of the OIDC identity provider in IAM to which you want to add tags.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property open_id_connect_provider_arn : String
 
+    # The list of tags that you want to attach to the OIDC identity provider in IAM. Each tag consists
+    # of a key name and an associated value.
     property tags : Array(Tag) = [] of Tag
 
     def initialize(

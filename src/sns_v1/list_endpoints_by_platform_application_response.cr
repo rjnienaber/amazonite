@@ -1,9 +1,13 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Response for `ListEndpointsByPlatformApplication` action.
   class ListEndpointsByPlatformApplicationResponse
+    # Endpoints returned for `ListEndpointsByPlatformApplication` action.
     property endpoints : Array(Endpoint) | Nil
 
+    # `NextToken` string is returned when calling `ListEndpointsByPlatformApplication` action if
+    # additional records are available after the first page results.
     property next_token : String | Nil
 
     def initialize(

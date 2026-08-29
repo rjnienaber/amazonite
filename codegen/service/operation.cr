@@ -26,7 +26,9 @@ module Amazonite::Codegen::Service
       end
     end
 
-    getter name, http, input, output, errors
+    @documentation : String?
+
+    getter name, http, input, output, errors, documentation
 
     def initialize(json : JSON::Any)
       Utils.verify_keys(KNOWN_KEYS, json)
@@ -35,6 +37,7 @@ module Amazonite::Codegen::Service
       @input = json["input"]? ? json["input"]["shape"].as_s : nil
       @output = json["output"]? ? json["output"]["shape"].as_s : nil
       @errors = json["errors"]? ? json["errors"].as_a.map { |e| error_ref(e) } : [] of ErrorRef
+      @documentation = json["documentation"]?.try(&.as_s)
     end
 
     private def error_ref(json : JSON::Any) : ErrorRef

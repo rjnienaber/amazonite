@@ -1,5 +1,8 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetPolicy](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetPolicy.html) request.
   class GetPolicyResponse
+    # A structure containing details about the policy.
     property policy : Policy | Nil
 
     def initialize(

@@ -2,17 +2,24 @@ private alias AS = Amazonite::SnsV1
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # A list of phone numbers and their metadata.
   class PhoneNumberInformation
+    # The date and time when the phone number was created.
     property created_at : Time | Nil
 
+    # The phone number.
     property phone_number : String | Nil
 
+    # The status of the phone number.
     property status : String | Nil
 
+    # The two-character code for the country or region, in ISO 3166-1 alpha-2 format.
     property iso_2_country_code : String | Nil
 
+    # The list of supported routes.
     property route_type : RouteType | Nil
 
+    # The capabilities of each phone number.
     property number_capabilities : Array(NumberCapability) | Nil
 
     def initialize(

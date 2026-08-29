@@ -2,8 +2,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class TagResourceRequest
+    # The ARN of the topic to which to add tags.
     property resource_arn : String
 
+    # The tags to be added to the specified topic. A tag consists of a required key and an optional
+    # value.
     property tags : Array(Tag) = [] of Tag
 
     def initialize(

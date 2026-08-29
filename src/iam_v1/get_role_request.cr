@@ -2,6 +2,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GetRoleRequest
+    # The name of the IAM role to get information about.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property role_name : String
 
     def initialize(

@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for `DeletePlatformApplication` action.
   class DeletePlatformApplicationInput
+    # `PlatformApplicationArn` of platform application object to delete.
     property platform_application_arn : String
 
     def initialize(

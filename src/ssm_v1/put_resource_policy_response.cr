@@ -2,9 +2,11 @@ module Amazonite::SsmV1
   class PutResourcePolicyResponse
     include JSON::Serializable
 
+    # The policy ID. To update a policy, you must specify `PolicyId` and `PolicyHash`.
     @[JSON::Field(key: "PolicyId")]
     property policy_id : String | Nil
 
+    # ID of the current policy version.
     @[JSON::Field(key: "PolicyHash")]
     property policy_hash : String | Nil
 

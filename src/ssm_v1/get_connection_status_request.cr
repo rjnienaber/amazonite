@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class GetConnectionStatusRequest
     include JSON::Serializable
 
+    # The managed node ID.
     @[JSON::Field(key: "Target")]
     property target : String
 

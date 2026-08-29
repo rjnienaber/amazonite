@@ -2,15 +2,28 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about an X.509 signing certificate.
+  #
+  # This data type is used as a response element in the
+  # [UploadSigningCertificate](https://docs.aws.amazon.com/IAM/latest/APIReference/API_UploadSigningCertificate.html)
+  # and
+  # [ListSigningCertificates](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListSigningCertificates.html)
+  # operations.
   class SigningCertificate
+    # The name of the user the signing certificate is associated with.
     property user_name : String
 
+    # The ID for the signing certificate.
     property certificate_id : String
 
+    # The contents of the signing certificate.
     property certificate_body : String
 
+    # The status of the signing certificate. `Active` means that the key is valid for API calls, while
+    # `Inactive` means it is not.
     property status : StatusType
 
+    # The date when the signing certificate was uploaded.
     property upload_date : Time | Nil
 
     def initialize(

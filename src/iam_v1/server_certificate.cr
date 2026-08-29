@@ -1,13 +1,24 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about a server certificate.
+  #
+  # This data type is used as a response element in the
+  # [GetServerCertificate](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetServerCertificate.html)
+  # operation.
   class ServerCertificate
+    # The meta information of the server certificate, such as its name, path, ID, and ARN.
     property server_certificate_metadata : ServerCertificateMetadata
 
+    # The contents of the public key certificate.
     property certificate_body : String
 
+    # The contents of the public key certificate chain.
     property certificate_chain : String | Nil
 
+    # A list of tags that are attached to the server certificate. For more information about tagging,
+    # see [Tagging IAM resources](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html) in
+    # the *IAM User Guide*.
     property tags : Array(Tag) | Nil
 
     def initialize(

@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for GetTopicAttributes action.
   class GetTopicAttributesInput
+    # The ARN of the topic whose properties you want to get.
     property topic_arn : String
 
     def initialize(

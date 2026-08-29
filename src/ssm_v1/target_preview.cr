@@ -1,10 +1,14 @@
 module Amazonite::SsmV1
+  # Information about the resources that would be included in the actual runbook execution, if it
+  # were to be run.
   class TargetPreview
     include JSON::Serializable
 
+    # The number of resources of a certain type included in an execution preview.
     @[JSON::Field(key: "Count")]
     property count : Int32 | Nil
 
+    # A type of resource that was included in the execution preview.
     @[JSON::Field(key: "TargetType")]
     property target_type : String | Nil
 

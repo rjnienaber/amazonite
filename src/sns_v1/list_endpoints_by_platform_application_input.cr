@@ -1,9 +1,13 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for `ListEndpointsByPlatformApplication` action.
   class ListEndpointsByPlatformApplicationInput
+    # `PlatformApplicationArn` for `ListEndpointsByPlatformApplicationInput` action.
     property platform_application_arn : String
 
+    # `NextToken` string is used when calling `ListEndpointsByPlatformApplication` action to retrieve
+    # additional records that are available after the first page results.
     property next_token : String | Nil
 
     def initialize(

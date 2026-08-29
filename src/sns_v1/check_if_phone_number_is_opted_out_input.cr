@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # The input for the `CheckIfPhoneNumberIsOptedOut` action.
   class CheckIfPhoneNumberIsOptedOutInput
+    # The phone number for which you want to check the opt out status.
     property phone_number : String
 
     def initialize(

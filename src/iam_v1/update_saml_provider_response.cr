@@ -1,7 +1,11 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [UpdateSAMLProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateSAMLProvider.html)
+  # request.
   class UpdateSAMLProviderResponse
+    # The Amazon Resource Name (ARN) of the SAML provider that was updated.
     property saml_provider_arn : String | Nil
 
     def initialize(

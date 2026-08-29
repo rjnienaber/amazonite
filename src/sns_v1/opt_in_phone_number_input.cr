@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for the OptInPhoneNumber action.
   class OptInPhoneNumberInput
+    # The phone number to opt in. Use E.164 format.
     property phone_number : String
 
     def initialize(

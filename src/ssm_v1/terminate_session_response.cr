@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class TerminateSessionResponse
     include JSON::Serializable
 
+    # The ID of the session that has been terminated.
     @[JSON::Field(key: "SessionId")]
     property session_id : String | Nil
 

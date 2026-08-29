@@ -2,6 +2,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GetInstanceProfileRequest
+    # The name of the instance profile to get information about.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property instance_profile_name : String
 
     def initialize(

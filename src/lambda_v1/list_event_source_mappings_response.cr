@@ -2,9 +2,11 @@ module Amazonite::LambdaV1
   class ListEventSourceMappingsResponse
     include JSON::Serializable
 
+    # A pagination token that's returned when the response doesn't contain all event source mappings.
     @[JSON::Field(key: "NextMarker")]
     property next_marker : String | Nil
 
+    # A list of event source mappings.
     @[JSON::Field(key: "EventSourceMappings")]
     property event_source_mappings : Array(EventSourceMappingConfiguration) | Nil
 

@@ -1,4 +1,5 @@
 module Amazonite::SnsV1
+  # The response for the OptInPhoneNumber action.
   class OptInPhoneNumberResponse
     def initialize
     end

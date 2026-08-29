@@ -2,13 +2,23 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains a reference to a `Statement` element in a policy document that determines the result of
+  # the simulation.
+  #
+  # This data type is used by the `MatchedStatements` member of the `
+  # [EvaluationResult](https://docs.aws.amazon.com/IAM/latest/APIReference/API_EvaluationResult.html)
+  # ` type.
   class Statement
+    # The identifier of the policy that was provided as an input.
     property source_policy_id : String | Nil
 
+    # The type of the policy.
     property source_policy_type : PolicySourceType | Nil
 
+    # The row and column of the beginning of the `Statement` in an IAM policy.
     property start_position : Position | Nil
 
+    # The row and column of the end of a `Statement` in an IAM policy.
     property end_position : Position | Nil
 
     def initialize(

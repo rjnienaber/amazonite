@@ -4,24 +4,50 @@ module Amazonite::SecretsManagerV1
   class GetSecretValueResponse
     include JSON::Serializable
 
+    # The ARN of the secret.
     @[JSON::Field(key: "ARN")]
     property arn : String | Nil
 
+    # The friendly name of the secret.
     @[JSON::Field(key: "Name")]
     property name : String | Nil
 
+    # The unique identifier of this version of the secret.
     @[JSON::Field(key: "VersionId")]
     property version_id : String | Nil
 
+    # The decrypted secret value, if the secret value was originally provided as binary data in the
+    # form of a byte array. When you retrieve a `SecretBinary` using the HTTP API, the Python SDK, or
+    # the Amazon Web Services CLI, the value is Base64-encoded. Otherwise, it is not encoded.
+    #
+    # If the secret was created by using the Secrets Manager console, or if the secret value was
+    # originally provided as a string, then this field is omitted. The secret value appears in
+    # `SecretString` instead.
+    #
+    # Sensitive: This field contains sensitive information, so the service does not include it in
+    # CloudTrail log entries. If you create your own log entries, you must also avoid logging the
+    # information in this field.
     @[JSON::Field(key: "SecretBinary", converter: Core::Base64Converter)]
     property secret_binary : Bytes | Nil
 
+    # The decrypted secret value, if the secret value was originally provided as a string or through
+    # the Secrets Manager console.
+    #
+    # If this secret was created by using the console, then Secrets Manager stores the information as
+    # a JSON structure of key/value pairs.
+    #
+    # Sensitive: This field contains sensitive information, so the service does not include it in
+    # CloudTrail log entries. If you create your own log entries, you must also avoid logging the
+    # information in this field.
     @[JSON::Field(key: "SecretString")]
     property secret_string : String | Nil
 
+    # A list of all of the staging labels currently attached to this version of the secret.
     @[JSON::Field(key: "VersionStages")]
     property version_stages : Array(String) | Nil
 
+    # The date and time that this version of the secret was created. If you don't specify which
+    # version in `VersionId` or `VersionStage`, then Secrets Manager uses the `AWSCURRENT` version.
     @[JSON::Field(key: "CreatedDate", converter: Core::AWSEpochConverter)]
     property created_date : Time | Nil
 

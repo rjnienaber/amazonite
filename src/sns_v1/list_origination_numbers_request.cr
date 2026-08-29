@@ -2,8 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class ListOriginationNumbersRequest
+    # Token that the previous `ListOriginationNumbers` request returns.
     property next_token : String | Nil
 
+    # The maximum number of origination numbers to return.
     property max_results : Int32 | Nil
 
     def initialize(

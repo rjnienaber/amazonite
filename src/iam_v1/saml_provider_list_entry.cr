@@ -1,11 +1,15 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the list of SAML providers for this account.
   class SAMLProviderListEntry
+    # The Amazon Resource Name (ARN) of the SAML provider.
     property arn : String | Nil
 
+    # The expiration date and time for the SAML provider.
     property valid_until : Time | Nil
 
+    # The date and time when the SAML provider was created.
     property create_date : Time | Nil
 
     def initialize(

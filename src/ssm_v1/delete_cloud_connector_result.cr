@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class DeleteCloudConnectorResult
     include JSON::Serializable
 
+    # The ID of the cloud connector that was deleted.
     @[JSON::Field(key: "CloudConnectorId")]
     property cloud_connector_id : String | Nil
 

@@ -1,7 +1,9 @@
 module Amazonite::SsmV1
+  # Information about the user or resource that created an OpsItem event.
   class OpsItemIdentity
     include JSON::Serializable
 
+    # The Amazon Resource Name (ARN) of the IAM entity that created the OpsItem event.
     @[JSON::Field(key: "Arn")]
     property arn : String | Nil
 

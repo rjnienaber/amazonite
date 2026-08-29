@@ -1,7 +1,9 @@
 module Amazonite::SnsV1
   class PublishBatchResponse
+    # A list of successful `PublishBatch` responses.
     property successful : Array(PublishBatchResultEntry) | Nil
 
+    # A list of failed `PublishBatch` responses.
     property failed : Array(BatchResultErrorEntry) | Nil
 
     def initialize(

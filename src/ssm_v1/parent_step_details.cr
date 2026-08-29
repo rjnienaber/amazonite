@@ -1,19 +1,25 @@
 module Amazonite::SsmV1
+  # A detailed status of the parent step.
   class ParentStepDetails
     include JSON::Serializable
 
+    # The unique ID of a step execution.
     @[JSON::Field(key: "StepExecutionId")]
     property step_execution_id : String | Nil
 
+    # The name of the step.
     @[JSON::Field(key: "StepName")]
     property step_name : String | Nil
 
+    # The name of the automation action.
     @[JSON::Field(key: "Action")]
     property action : String | Nil
 
+    # The current repetition of the loop represented by an integer.
     @[JSON::Field(key: "Iteration")]
     property iteration : Int32 | Nil
 
+    # The current value of the specified iterator in the loop.
     @[JSON::Field(key: "IteratorValue")]
     property iterator_value : String | Nil
 

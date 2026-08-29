@@ -1,17 +1,31 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about a virtual MFA device.
   class VirtualMFADevice
+    # The serial number associated with `VirtualMFADevice`.
     property serial_number : String
 
+    # The base32 seed defined as specified in [RFC3548](https://tools.ietf.org/html/rfc3548.txt). The
+    # `Base32StringSeed` is base32-encoded.
     property base_32_string_seed : Bytes | Nil
 
+    # A QR code PNG image that encodes
+    # `otpauth://totp/$virtualMFADeviceName@$AccountName?secret=$Base32String` where
+    # `$virtualMFADeviceName` is one of the create call arguments. `AccountName` is the user name if
+    # set (otherwise, the account ID otherwise), and `Base32String` is the seed in base32 format. The
+    # `Base32String` value is base64-encoded.
     property qr_code_png : Bytes | Nil
 
+    # The IAM user associated with this virtual MFA device.
     property user : User | Nil
 
+    # The date and time on which the virtual MFA device was enabled.
     property enable_date : Time | Nil
 
+    # A list of tags that are attached to the virtual MFA device. For more information about tagging,
+    # see [Tagging IAM resources](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html) in
+    # the *IAM User Guide*.
     property tags : Array(Tag) | Nil
 
     def initialize(

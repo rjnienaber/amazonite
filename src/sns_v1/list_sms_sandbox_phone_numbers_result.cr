@@ -2,8 +2,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class ListSMSSandboxPhoneNumbersResult
+    # A list of the calling account's pending and verified phone numbers.
     property phone_numbers : Array(SMSSandboxPhoneNumber) = [] of SMSSandboxPhoneNumber
 
+    # A `NextToken` string is returned when you call the `ListSMSSandboxPhoneNumbersInput` operation
+    # if additional pages of records are available.
     property next_token : String | Nil
 
     def initialize(

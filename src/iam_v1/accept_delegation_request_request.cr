@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class AcceptDelegationRequestRequest
+    # The unique identifier of the delegation request to accept.
     property delegation_request_id : String
 
     def initialize(

@@ -2,8 +2,18 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class AddRoleToInstanceProfileRequest
+    # The name of the instance profile to update.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property instance_profile_name : String
 
+    # The name of the role to add.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property role_name : String
 
     def initialize(

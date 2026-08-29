@@ -10,7 +10,8 @@ module {{ service.module_name }}
       super("{{ operations.target_prefix }}", "{{ operations.endpoint_prefix }}", "{{ operations.json_version }}", {% if operations.has_errors %}EXCEPTION_FACTORY, {% else %}nil, {% endif %}config)
     end{% for operation in operations.operations %}
 
-    def {{ operation.function_name }}{% if operation.has_input %}(input : {{ operation.input }}){% endif %} : {{ operation.output }}
+{% if operation.has_doc %}{{ operation.doc }}
+{% endif %}    def {{ operation.function_name }}{% if operation.has_input %}(input : {{ operation.input }}){% endif %} : {{ operation.output }}
       Log.info { "performing '{{ operation.command }}' operation" }
 {% if operation.is_rest -%}
       path = {{ operation.path_literal }}

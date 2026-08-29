@@ -2,6 +2,9 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GenerateOrganizationsAccessReportResponse
+    # The job identifier that you can use in the
+    # [GetOrganizationsAccessReport](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetOrganizationsAccessReport.html)
+    # operation.
     property job_id : String | Nil
 
     def initialize(

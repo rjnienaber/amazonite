@@ -2,9 +2,11 @@ module Amazonite::SsmV1
   class DescribeMaintenanceWindowsForTargetResult
     include JSON::Serializable
 
+    # Information about the maintenance window targets and tasks a managed node is associated with.
     @[JSON::Field(key: "WindowIdentities")]
     property window_identities : Array(MaintenanceWindowIdentityForTarget) | Nil
 
+    # The token for the next set of items to return. (You use this token in the next call.)
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 

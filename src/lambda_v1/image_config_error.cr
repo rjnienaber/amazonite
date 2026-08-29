@@ -1,10 +1,13 @@
 module Amazonite::LambdaV1
+  # Error response to `GetFunctionConfiguration`.
   class ImageConfigError
     include JSON::Serializable
 
+    # Error code.
     @[JSON::Field(key: "ErrorCode")]
     property error_code : String | Nil
 
+    # Error message.
     @[JSON::Field(key: "Message")]
     property message : String | Nil
 

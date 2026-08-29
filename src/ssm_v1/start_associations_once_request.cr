@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class StartAssociationsOnceRequest
     include JSON::Serializable
 
+    # The association IDs that you want to run immediately and only one time.
     @[JSON::Field(key: "AssociationIds")]
     property association_ids : Array(String) = [] of String
 

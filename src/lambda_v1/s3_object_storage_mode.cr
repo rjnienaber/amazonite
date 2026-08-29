@@ -1,6 +1,9 @@
 private alias AL = Amazonite::LambdaV1
 
 module Amazonite::LambdaV1
+  # The method Lambda uses to store a function's deployment package — either by copying the package
+  # into Lambda-managed storage (`COPY`) or by referencing it directly from the source Amazon S3
+  # bucket (`REFERENCE`).
   enum S3ObjectStorageMode
     Copy
     Reference

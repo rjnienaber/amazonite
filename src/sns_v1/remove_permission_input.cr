@@ -1,9 +1,12 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for RemovePermission action.
   class RemovePermissionInput
+    # The ARN of the topic whose access control policy you wish to modify.
     property topic_arn : String
 
+    # The unique label of the statement you want to remove.
     property label : String
 
     def initialize(

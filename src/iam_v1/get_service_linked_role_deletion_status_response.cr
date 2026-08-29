@@ -2,8 +2,10 @@ private alias AI = Amazonite::IamV1
 
 module Amazonite::IamV1
   class GetServiceLinkedRoleDeletionStatusResponse
+    # The status of the deletion.
     property status : DeletionTaskStatusType
 
+    # An object that contains details about the reason the deletion failed.
     property reason : DeletionTaskFailureReasonType | Nil
 
     def initialize(

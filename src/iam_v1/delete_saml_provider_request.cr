@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class DeleteSAMLProviderRequest
+    # The Amazon Resource Name (ARN) of the SAML provider to delete.
     property saml_provider_arn : String
 
     def initialize(

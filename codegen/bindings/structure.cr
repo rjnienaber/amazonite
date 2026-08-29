@@ -8,8 +8,10 @@ module Amazonite::Codegen::Bindings
     @query_adds : Array(Crinja::Value)
     @xml_reads : Array(Crinja::Value)
     @module_alias : String
+    @doc : String?
 
-    getter name, members, has_parameters, parameters, needs_core_alias, needs_module_alias, query_adds, xml_reads
+    getter name, members, has_parameters, parameters, needs_core_alias, needs_module_alias, query_adds, xml_reads,
+      doc, has_doc
 
     def initialize(shape : Amazonite::Codegen::Service::Structure, module_alias : String, is_rest : Bool, is_query : Bool = false)
       @name = shape.name
@@ -18,6 +20,8 @@ module Amazonite::Codegen::Bindings
       @is_rest = is_rest
       @module_alias = module_alias
       @payload_member = shape.payload_member
+      @doc = Amazonite::Codegen::Service::Utils.doc_comment(shape.documentation)
+      @has_doc = !!@doc
       @members = shape.members.map { |member| member_value(member, module_alias) }
       if is_query
         @query_adds = shape.members.map { |member| Crinja.value({stmt: query_param_stmt(member)}) }
@@ -66,6 +70,7 @@ module Amazonite::Codegen::Bindings
     private def member_value(member, module_alias)
       converter = raw_payload?(member) ? nil : member_converter(member, module_alias)
       default = member_default(member)
+      doc = Amazonite::Codegen::Service::Utils.doc_comment(member.documentation)
 
       Crinja.value({
         name:            member.name,
@@ -76,6 +81,8 @@ module Amazonite::Codegen::Bindings
         has_default:     !!default,
         default:         default,
         ignore:          not_in_body?(member),
+        doc:             doc,
+        has_doc:         !!doc,
       })
     end
 

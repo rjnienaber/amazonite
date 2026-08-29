@@ -1,7 +1,9 @@
 module Amazonite::DynamoDBV2
+  # Details for the requested item.
   class ItemResponse
     include JSON::Serializable
 
+    # Map of attribute data consisting of the data type and attribute value.
     @[JSON::Field(key: "Item")]
     property item : Hash(String, AttributeValue) | Nil
 

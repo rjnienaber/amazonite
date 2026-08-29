@@ -1,9 +1,13 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains an inline policy template that the service embeds in roles that you create from a role
+  # template.
   class InlinePolicy
+    # The name of the inline policy.
     property policy_name : String
 
+    # The inline policy document.
     property policy_document : String
 
     def initialize(

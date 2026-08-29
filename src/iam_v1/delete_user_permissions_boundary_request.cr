@@ -2,6 +2,8 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class DeleteUserPermissionsBoundaryRequest
+    # The name (friendly name, not ARN) of the IAM user from which you want to remove the permissions
+    # boundary.
     property user_name : String
 
     def initialize(

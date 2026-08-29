@@ -2,9 +2,13 @@ module Amazonite::SsmV1
   class DisassociateOpsItemRelatedItemRequest
     include JSON::Serializable
 
+    # The ID of the OpsItem for which you want to delete an association between the OpsItem and a
+    # related item.
     @[JSON::Field(key: "OpsItemId")]
     property ops_item_id : String
 
+    # The ID of the association for which you want to delete an association between the OpsItem and a
+    # related item.
     @[JSON::Field(key: "AssociationId")]
     property association_id : String
 

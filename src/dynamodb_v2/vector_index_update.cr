@@ -1,10 +1,13 @@
 module Amazonite::DynamoDBV2
+  # A vector index to be added to or removed from a table.
   class VectorIndexUpdate
     include JSON::Serializable
 
+    # The configuration for creating a new vector index on the table.
     @[JSON::Field(key: "Create")]
     property create : CreateVectorIndexAction | Nil
 
+    # The configuration for deleting an existing vector index from the table.
     @[JSON::Field(key: "Delete")]
     property delete : DeleteVectorIndexAction | Nil
 

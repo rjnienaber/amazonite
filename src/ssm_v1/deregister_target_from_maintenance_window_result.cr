@@ -2,9 +2,11 @@ module Amazonite::SsmV1
   class DeregisterTargetFromMaintenanceWindowResult
     include JSON::Serializable
 
+    # The ID of the maintenance window the target was removed from.
     @[JSON::Field(key: "WindowId")]
     property window_id : String | Nil
 
+    # The ID of the removed target definition.
     @[JSON::Field(key: "WindowTargetId")]
     property window_target_id : String | Nil
 

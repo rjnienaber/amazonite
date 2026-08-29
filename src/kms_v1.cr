@@ -1,4 +1,5 @@
 require "json"
+require "xml"
 
 require "./core/*"
 require "./kms_v1/*"

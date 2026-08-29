@@ -2,8 +2,17 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class DeleteSigningCertificateRequest
+    # The name of the user the signing certificate belongs to.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property user_name : String | Nil
 
+    # The ID of the signing certificate to delete.
+    #
+    # The format of this parameter, as described by its [regex](http://wikipedia.org/wiki/regex)
+    # pattern, is a string of characters that can be upper- or lower-cased letters or digits.
     property certificate_id : String
 
     def initialize(

@@ -2,12 +2,18 @@ module Amazonite::SecretsManagerV1
   class BatchGetSecretValueResponse
     include JSON::Serializable
 
+    # A list of secret values.
     @[JSON::Field(key: "SecretValues")]
     property secret_values : Array(SecretValueEntry) | Nil
 
+    # Secrets Manager includes this value if there's more output available than what is included in
+    # the current response. This can occur even when the response includes no values at all, such as
+    # when you ask for a filtered view of a long list. To get the next results, call
+    # `BatchGetSecretValue` again with this value.
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 
+    # A list of errors Secrets Manager encountered while attempting to retrieve individual secrets.
     @[JSON::Field(key: "Errors")]
     property errors : Array(APIErrorType) | Nil
 

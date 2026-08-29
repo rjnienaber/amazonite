@@ -2,6 +2,12 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GenerateServiceLastAccessedDetailsResponse
+    # The `JobId` that you can use in the
+    # [GetServiceLastAccessedDetails](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetServiceLastAccessedDetails.html)
+    # or
+    # [GetServiceLastAccessedDetailsWithEntities](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetServiceLastAccessedDetailsWithEntities.html)
+    # operations. The `JobId` returned by `GenerateServiceLastAccessedDetail` must be used by the same
+    # role within a session, or by the same user when used to call `GetServiceLastAccessedDetail`.
     property job_id : String | Nil
 
     def initialize(

@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class DeleteSMSSandboxPhoneNumberInput
+    # The destination phone number to delete.
     property phone_number : String
 
     def initialize(

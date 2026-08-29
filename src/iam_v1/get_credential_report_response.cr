@@ -2,11 +2,18 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetCredentialReport](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetCredentialReport.html)
+  # request.
   class GetCredentialReportResponse
+    # Contains the credential report. The report is Base64-encoded.
     property content : Bytes | Nil
 
+    # The format (MIME type) of the credential report.
     property report_format : ReportFormatType | Nil
 
+    # The date and time when the credential report was created, in [ISO 8601 date-time
+    # format](http://www.iso.org/iso/iso8601).
     property generated_time : Time | Nil
 
     def initialize(

@@ -3,10 +3,15 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GetHumanReadableSummaryResponse
+    # Summary content in the specified locale. Summary content is non-empty only if the `SummaryState`
+    # is `AVAILABLE`.
     property summary_content : String | Nil
 
+    # The locale that this response was generated for. This maps to the input locale.
     property locale : String | Nil
 
+    # State of summary generation. This generation process is asynchronous and this attribute
+    # indicates the state of the generation process.
     property summary_state : SummaryStateType | Nil
 
     def initialize(

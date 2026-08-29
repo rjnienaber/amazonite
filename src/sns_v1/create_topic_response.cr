@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Response from CreateTopic action.
   class CreateTopicResponse
+    # The Amazon Resource Name (ARN) assigned to the created topic.
     property topic_arn : String | Nil
 
     def initialize(

@@ -1,7 +1,10 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for `ListPlatformApplications` action.
   class ListPlatformApplicationsInput
+    # `NextToken` string is used when calling `ListPlatformApplications` action to retrieve additional
+    # records that are available after the first page results.
     property next_token : String | Nil
 
     def initialize(

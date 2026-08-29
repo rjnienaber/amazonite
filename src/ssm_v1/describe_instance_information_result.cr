@@ -2,9 +2,12 @@ module Amazonite::SsmV1
   class DescribeInstanceInformationResult
     include JSON::Serializable
 
+    # The managed node information list.
     @[JSON::Field(key: "InstanceInformationList")]
     property instance_information_list : Array(InstanceInformation) | Nil
 
+    # The token to use when requesting the next set of items. If there are no additional items to
+    # return, the string is empty.
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 

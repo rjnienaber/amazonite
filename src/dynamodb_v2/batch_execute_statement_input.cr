@@ -4,6 +4,7 @@ module Amazonite::DynamoDBV2
   class BatchExecuteStatementInput
     include JSON::Serializable
 
+    # The list of PartiQL statements representing the batch to run.
     @[JSON::Field(key: "Statements")]
     property statements : Array(BatchStatementRequest) = [] of BatchStatementRequest
 

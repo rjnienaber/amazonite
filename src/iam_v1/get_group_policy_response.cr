@@ -1,11 +1,21 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetGroupPolicy](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetGroupPolicy.html)
+  # request.
   class GetGroupPolicyResponse
+    # The group the policy is associated with.
     property group_name : String
 
+    # The name of the policy.
     property policy_name : String
 
+    # The policy document.
+    #
+    # IAM stores policies in JSON format. However, resources that were created using CloudFormation
+    # templates can be formatted in YAML. CloudFormation always converts a YAML policy to JSON format
+    # before submitting it to IAM.
     property policy_document : String
 
     def initialize(

@@ -1,15 +1,32 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetOpenIDConnectProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetOpenIDConnectProvider.html)
+  # request.
   class GetOpenIDConnectProviderResponse
+    # The URL that the IAM OIDC provider resource object is associated with. For more information, see
+    # [CreateOpenIDConnectProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateOpenIDConnectProvider.html).
     property url : String | Nil
 
+    # A list of client IDs (also known as audiences) that are associated with the specified IAM OIDC
+    # provider resource object. For more information, see
+    # [CreateOpenIDConnectProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateOpenIDConnectProvider.html).
     property client_id_list : Array(String) | Nil
 
+    # A list of certificate thumbprints that are associated with the specified IAM OIDC provider
+    # resource object. For more information, see
+    # [CreateOpenIDConnectProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateOpenIDConnectProvider.html).
     property thumbprint_list : Array(String) | Nil
 
+    # The date and time when the IAM OIDC provider resource object was created in the Amazon Web
+    # Services account.
     property create_date : Time | Nil
 
+    # A list of tags that are attached to the specified IAM OIDC provider. The returned list of tags
+    # is sorted by tag key. For more information about tagging, see [Tagging IAM
+    # resources](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html) in the *IAM User
+    # Guide*.
     property tags : Array(Tag) | Nil
 
     def initialize(

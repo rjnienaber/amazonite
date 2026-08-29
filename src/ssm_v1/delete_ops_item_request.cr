@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class DeleteOpsItemRequest
     include JSON::Serializable
 
+    # The ID of the OpsItem that you want to delete.
     @[JSON::Field(key: "OpsItemId")]
     property ops_item_id : String
 

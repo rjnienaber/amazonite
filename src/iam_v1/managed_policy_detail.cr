@@ -1,29 +1,73 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about a managed policy, including the policy's ARN, versions, and the
+  # number of principal entities (users, groups, and roles) that the policy is attached to.
+  #
+  # This data type is used as a response element in the
+  # [GetAccountAuthorizationDetails](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountAuthorizationDetails.html)
+  # operation.
+  #
+  # For more information about managed policies, see [Managed policies and inline
+  # policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-vs-inline.html) in
+  # the *IAM User Guide*.
   class ManagedPolicyDetail
+    # The friendly name (not ARN) identifying the policy.
     property policy_name : String | Nil
 
+    # The stable and unique string identifying the policy.
+    #
+    # For more information about IDs, see [IAM
+    # identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html) in the
+    # *IAM User Guide*.
     property policy_id : String | Nil
 
     property arn : String | Nil
 
+    # The path to the policy.
+    #
+    # For more information about paths, see [IAM
+    # identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html) in the
+    # *IAM User Guide*.
     property path : String | Nil
 
+    # The identifier for the version of the policy that is set as the default (operative) version.
+    #
+    # For more information about policy versions, see [Versioning for managed
+    # policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-versions.html) in
+    # the *IAM User Guide*.
     property default_version_id : String | Nil
 
+    # The number of principal entities (users, groups, and roles) that the policy is attached to.
     property attachment_count : Int32 | Nil
 
+    # The number of entities (users and roles) for which the policy is used as the permissions
+    # boundary.
+    #
+    # For more information about permissions boundaries, see [Permissions boundaries for IAM
+    # identities ](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html)
+    # in the *IAM User Guide*.
     property permissions_boundary_usage_count : Int32 | Nil
 
+    # Specifies whether the policy can be attached to an IAM user, group, or role.
     property is_attachable : Bool | Nil
 
+    # A friendly description of the policy.
     property description : String | Nil
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the
+    # policy was created.
     property create_date : Time | Nil
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the
+    # policy was last updated.
+    #
+    # When a policy has only one version, this field contains the date and time when the policy was
+    # created. When a policy has more than one version, this field contains the date and time when the
+    # most recent policy version was created.
     property update_date : Time | Nil
 
+    # A list containing information about the versions of the policy.
     property policy_version_list : Array(PolicyVersion) | Nil
 
     def initialize(

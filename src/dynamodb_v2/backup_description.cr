@@ -1,13 +1,18 @@
 module Amazonite::DynamoDBV2
+  # Contains the description of the backup created for the table.
   class BackupDescription
     include JSON::Serializable
 
+    # Contains the details of the backup created for the table.
     @[JSON::Field(key: "BackupDetails")]
     property backup_details : BackupDetails | Nil
 
+    # Contains the details of the table when the backup was created.
     @[JSON::Field(key: "SourceTableDetails")]
     property source_table_details : SourceTableDetails | Nil
 
+    # Contains the details of the features enabled on the table when the backup was created. For
+    # example, LSIs, GSIs, streams, TTL.
     @[JSON::Field(key: "SourceTableFeatureDetails")]
     property source_table_feature_details : SourceTableFeatureDetails | Nil
 

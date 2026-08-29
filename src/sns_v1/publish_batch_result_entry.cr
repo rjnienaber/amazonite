@@ -1,11 +1,20 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Encloses data related to a successful message in a batch request for topic.
   class PublishBatchResultEntry
+    # The `Id` of an entry in a batch request.
     property id : String | Nil
 
+    # An identifier for the message.
     property message_id : String | Nil
 
+    # This parameter applies only to FIFO (first-in-first-out) topics.
+    #
+    # The large, non-consecutive number that Amazon SNS assigns to each message.
+    #
+    # The length of `SequenceNumber` is 128 bits. `SequenceNumber` continues to increase for a
+    # particular `MessageGroupId`.
     property sequence_number : String | Nil
 
     def initialize(

@@ -1,15 +1,37 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about an IAM group entity.
+  #
+  # This data type is used as a response element in the following operations:
+  #
+  # - [CreateGroup](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateGroup.html)
+  #
+  # - [GetGroup](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetGroup.html)
+  #
+  # - [ListGroups](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListGroups.html)
   class Group
+    # The path to the group. For more information about paths, see [IAM
+    # identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html) in the
+    # *IAM User Guide*.
     property path : String
 
+    # The friendly name that identifies the group.
     property group_name : String
 
+    # The stable and unique string identifying the group. For more information about IDs, see [IAM
+    # identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html) in the
+    # *IAM User Guide*.
     property group_id : String
 
+    # The Amazon Resource Name (ARN) specifying the group. For more information about ARNs and how to
+    # use them in policies, see [IAM
+    # identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html) in the
+    # *IAM User Guide*.
     property arn : String
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the
+    # group was created.
     property create_date : Time
 
     def initialize(

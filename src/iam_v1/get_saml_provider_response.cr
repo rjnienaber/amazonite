@@ -2,19 +2,32 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetSAMLProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetSAMLProvider.html)
+  # request.
   class GetSAMLProviderResponse
+    # The unique identifier assigned to the SAML provider.
     property saml_provider_uuid : String | Nil
 
+    # The XML metadata document that includes information about an identity provider.
     property saml_metadata_document : String | Nil
 
+    # The date and time when the SAML provider was created.
     property create_date : Time | Nil
 
+    # The expiration date and time for the SAML provider.
     property valid_until : Time | Nil
 
+    # A list of tags that are attached to the specified IAM SAML provider. The returned list of tags
+    # is sorted by tag key. For more information about tagging, see [Tagging IAM
+    # resources](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html) in the *IAM User
+    # Guide*.
     property tags : Array(Tag) | Nil
 
+    # Specifies the encryption setting for the SAML provider.
     property assertion_encryption_mode : AssertionEncryptionModeType | Nil
 
+    # The private key metadata for the SAML provider.
     property private_key_list : Array(SAMLPrivateKey) | Nil
 
     def initialize(

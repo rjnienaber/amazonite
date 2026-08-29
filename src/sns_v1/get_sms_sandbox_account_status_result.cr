@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class GetSMSSandboxAccountStatusResult
+    # Indicates whether the calling Amazon Web Services account is in the SMS sandbox.
     property is_in_sandbox : Bool
 
     def initialize(

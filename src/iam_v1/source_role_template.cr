@@ -1,9 +1,12 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about the role template that a role was created from.
   class SourceRoleTemplate
+    # The Amazon Resource Name (ARN) of the role template that the role was created from.
     property template_arn : String
 
+    # The minor version of the role template that was used to create the role.
     property template_minor_version : Int32
 
     def initialize(

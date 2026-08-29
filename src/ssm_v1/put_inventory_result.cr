@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class PutInventoryResult
     include JSON::Serializable
 
+    # Information about the request.
     @[JSON::Field(key: "Message")]
     property message : String | Nil
 

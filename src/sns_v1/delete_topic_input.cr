@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class DeleteTopicInput
+    # The ARN of the topic you want to delete.
     property topic_arn : String
 
     def initialize(

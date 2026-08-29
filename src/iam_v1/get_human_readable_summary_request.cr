@@ -2,8 +2,13 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GetHumanReadableSummaryRequest
+    # Arn of the entity to be summarized. At this time, the only supported entity type is
+    # `delegation-request`
     property entity_arn : String
 
+    # A string representing the locale to use for the summary generation. The supported locale strings
+    # are based on the [ Supported languages of the Amazon Web Services Management Console
+    # ](/awsconsolehelpdocs/latest/gsg/change-language.html#supported-languages).
     property locale : String | Nil
 
     def initialize(

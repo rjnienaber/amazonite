@@ -1,7 +1,9 @@
 module Amazonite::SqsV1
+  # A list of received messages.
   class ReceiveMessageResult
     include JSON::Serializable
 
+    # A list of messages.
     @[JSON::Field(key: "Messages")]
     property messages : Array(Message) | Nil
 

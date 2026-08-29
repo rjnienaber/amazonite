@@ -1,6 +1,7 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the Amazon Resource Name (ARN) for an IAM OpenID Connect provider.
   class OpenIDConnectProviderListEntry
     property arn : String | Nil
 

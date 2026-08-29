@@ -1,25 +1,50 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about the account password policy.
+  #
+  # This data type is used as a response element in the
+  # [GetAccountPasswordPolicy](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountPasswordPolicy.html)
+  # operation.
   class PasswordPolicy
+    # Minimum length to require for IAM user passwords.
     property minimum_password_length : Int32 | Nil
 
+    # Specifies whether IAM user passwords must contain at least one of the following symbols:
+    #
+    # ! @ # $ % ^ & * ( ) _ + - = [ ] { } | '
     property require_symbols : Bool | Nil
 
+    # Specifies whether IAM user passwords must contain at least one numeric character (0 to 9).
     property require_numbers : Bool | Nil
 
+    # Specifies whether IAM user passwords must contain at least one uppercase character (A to Z).
     property require_uppercase_characters : Bool | Nil
 
+    # Specifies whether IAM user passwords must contain at least one lowercase character (a to z).
     property require_lowercase_characters : Bool | Nil
 
+    # Specifies whether IAM users are allowed to change their own password. Gives IAM users
+    # permissions to `iam:ChangePassword` for only their user and to the
+    # `iam:GetAccountPasswordPolicy` action. This option does not attach a permissions policy to each
+    # user, rather the permissions are applied at the account-level for all users by IAM.
     property allow_users_to_change_password : Bool | Nil
 
+    # Indicates whether passwords in the account expire. Returns true if `MaxPasswordAge` contains a
+    # value greater than 0. Returns false if MaxPasswordAge is 0 or not present.
     property expire_passwords : Bool | Nil
 
+    # The number of days that an IAM user password is valid.
     property max_password_age : Int32 | Nil
 
+    # Specifies the number of previous passwords that IAM users are prevented from reusing.
     property password_reuse_prevention : Int32 | Nil
 
+    # Specifies whether IAM users are prevented from setting a new password via the Amazon Web
+    # Services Management Console after their password has expired. The IAM user cannot access the
+    # console until an administrator resets the password. IAM users with `iam:ChangePassword`
+    # permission and active access keys can reset their own expired console password using the CLI or
+    # API.
     property hard_expiry : Bool | Nil
 
     def initialize(

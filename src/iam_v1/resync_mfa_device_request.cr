@@ -2,12 +2,28 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class ResyncMFADeviceRequest
+    # The name of the user whose MFA device you want to resynchronize.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property user_name : String
 
+    # Serial number that uniquely identifies the MFA device.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property serial_number : String
 
+    # An authentication code emitted by the device.
+    #
+    # The format for this parameter is a sequence of six digits.
     property authentication_code_1 : String
 
+    # A subsequent authentication code emitted by the device.
+    #
+    # The format for this parameter is a sequence of six digits.
     property authentication_code_2 : String
 
     def initialize(

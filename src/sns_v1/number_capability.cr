@@ -1,6 +1,7 @@
 private alias AS = Amazonite::SnsV1
 
 module Amazonite::SnsV1
+  # Enum listing out all supported number capabilities.
   enum NumberCapability
     Sms
     Mms

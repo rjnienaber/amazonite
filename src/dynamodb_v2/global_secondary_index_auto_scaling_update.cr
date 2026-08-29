@@ -1,7 +1,10 @@
 module Amazonite::DynamoDBV2
+  # Represents the auto scaling settings of a global secondary index for a global table that will be
+  # modified.
   class GlobalSecondaryIndexAutoScalingUpdate
     include JSON::Serializable
 
+    # The name of the global secondary index.
     @[JSON::Field(key: "IndexName")]
     property index_name : String | Nil
 

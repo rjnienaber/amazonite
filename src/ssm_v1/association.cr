@@ -1,45 +1,74 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
+  # Describes an association of a Amazon Web Services Systems Manager document (SSM document) and a
+  # managed node.
   class Association
     include JSON::Serializable
 
+    # The name of the SSM document.
     @[JSON::Field(key: "Name")]
     property name : String | Nil
 
+    # The managed node ID.
     @[JSON::Field(key: "InstanceId")]
     property instance_id : String | Nil
 
+    # The ID created by the system when you create an association. An association is a binding between
+    # a document and a set of targets with a schedule.
     @[JSON::Field(key: "AssociationId")]
     property association_id : String | Nil
 
+    # The association version.
     @[JSON::Field(key: "AssociationVersion")]
     property association_version : String | Nil
 
+    # The version of the document used in the association. If you change a document version for a
+    # State Manager association, Systems Manager immediately runs the association unless you
+    # previously specifed the `apply-only-at-cron-interval` parameter.
+    #
+    # State Manager doesn't support running associations that use a new version of a document if that
+    # document is shared from another account. State Manager always runs the `default` version of a
+    # document if shared from another account, even though the Systems Manager console shows that a
+    # new version was processed. If you want to run an association using a new version of a document
+    # shared form another account, you must set the document version to `default`.
     @[JSON::Field(key: "DocumentVersion")]
     property document_version : String | Nil
 
+    # The managed nodes targeted by the request to create an association. You can target all managed
+    # nodes in an Amazon Web Services account by specifying the `InstanceIds` key with a value of `*`.
     @[JSON::Field(key: "Targets")]
     property targets : Array(Target) | Nil
 
+    # The date on which the association was last run.
     @[JSON::Field(key: "LastExecutionDate", converter: Core::AWSEpochConverter)]
     property last_execution_date : Time | Nil
 
+    # Information about the association.
     @[JSON::Field(key: "Overview")]
     property overview : AssociationOverview | Nil
 
+    # A cron expression that specifies a schedule when the association runs. The schedule runs in
+    # Coordinated Universal Time (UTC).
     @[JSON::Field(key: "ScheduleExpression")]
     property schedule_expression : String | Nil
 
+    # The association name.
     @[JSON::Field(key: "AssociationName")]
     property association_name : String | Nil
 
+    # Number of days to wait after the scheduled day to run an association.
     @[JSON::Field(key: "ScheduleOffset")]
     property schedule_offset : Int32 | Nil
 
+    # The number of hours that an association can run on specified targets. After the resulting cutoff
+    # time passes, associations that are currently running are cancelled, and no pending executions
+    # are started on remaining targets.
     @[JSON::Field(key: "Duration")]
     property duration : Int32 | Nil
 
+    # A key-value mapping of document parameters to target resources. Both Targets and TargetMaps
+    # can't be specified together.
     @[JSON::Field(key: "TargetMaps")]
     property target_maps : Array(Hash(String, Array(String))) | Nil
 

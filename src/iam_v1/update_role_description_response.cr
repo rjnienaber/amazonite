@@ -1,5 +1,6 @@
 module Amazonite::IamV1
   class UpdateRoleDescriptionResponse
+    # A structure that contains details about the modified role.
     property role : Role | Nil
 
     def initialize(

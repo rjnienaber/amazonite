@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class GetDataProtectionPolicyResponse
+    # Retrieves the `DataProtectionPolicy` in JSON string format.
     property data_protection_policy : String | Nil
 
     def initialize(

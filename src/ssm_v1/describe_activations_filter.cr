@@ -1,12 +1,15 @@
 private alias AS = Amazonite::SsmV1
 
 module Amazonite::SsmV1
+  # Filter for the DescribeActivation API.
   class DescribeActivationsFilter
     include JSON::Serializable
 
+    # The name of the filter.
     @[JSON::Field(key: "FilterKey", converter: AS::DescribeActivationsFilterKeys)]
     property filter_key : DescribeActivationsFilterKeys | Nil
 
+    # The filter values.
     @[JSON::Field(key: "FilterValues")]
     property filter_values : Array(String) | Nil
 

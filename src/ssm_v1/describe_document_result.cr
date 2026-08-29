@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class DescribeDocumentResult
     include JSON::Serializable
 
+    # Information about the SSM document.
     @[JSON::Field(key: "Document")]
     property document : DocumentDescription | Nil
 

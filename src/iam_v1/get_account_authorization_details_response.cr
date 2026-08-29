@@ -1,17 +1,31 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetAccountAuthorizationDetails](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountAuthorizationDetails.html)
+  # request.
   class GetAccountAuthorizationDetailsResponse
+    # A list containing information about IAM users.
     property user_detail_list : Array(UserDetail) | Nil
 
+    # A list containing information about IAM groups.
     property group_detail_list : Array(GroupDetail) | Nil
 
+    # A list containing information about IAM roles.
     property role_detail_list : Array(RoleDetail) | Nil
 
+    # A list containing information about managed policies.
     property policies : Array(ManagedPolicyDetail) | Nil
 
+    # A flag that indicates whether there are more items to return. If your results were truncated,
+    # you can make a subsequent pagination request using the `Marker` request parameter to retrieve
+    # more items. Note that IAM might return fewer than the `MaxItems` number of results even when
+    # there are more results available. We recommend that you check `IsTruncated` after every call to
+    # ensure that you receive all your results.
     property is_truncated : Bool | Nil
 
+    # When `IsTruncated` is `true`, this element is present and contains the value to use for the
+    # `Marker` parameter in a subsequent pagination request.
     property marker : String | Nil
 
     def initialize(

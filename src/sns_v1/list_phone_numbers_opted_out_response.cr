@@ -1,9 +1,14 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # The response from the `ListPhoneNumbersOptedOut` action.
   class ListPhoneNumbersOptedOutResponse
+    # A list of phone numbers that are opted out of receiving SMS messages. The list is paginated, and
+    # each page can contain up to 100 phone numbers.
     property phone_numbers : Array(String) | Nil
 
+    # A `NextToken` string is returned when you call the `ListPhoneNumbersOptedOut` action if
+    # additional records are available after the first page of results.
     property next_token : String | Nil
 
     def initialize(
