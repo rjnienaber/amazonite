@@ -1,9 +1,9 @@
-private alias AF = Amazonite::ForecastV2
+private alias AF = Amazonite::Forecast
 private alias Core = Amazonite::Core
 
-module Amazonite::ForecastV2
+module Amazonite::Forecast
   class Client < Core::Client
-    Log = ::Log.for("amazonite.forecast_v2.client")
+    Log = ::Log.for("amazonite.forecast.client")
 
     def initialize(config = Core::Config.new)
       super("AmazonForecast", "forecast", "1.1", nil, config)

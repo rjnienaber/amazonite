@@ -3,7 +3,7 @@ require "../../spec_helper"
 def render_enum(spec_file, shape_name)
   source = ServiceJson.load(spec_file)
 
-  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", "2", source)
+  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", source)
 
   e = description.resolver.find(shape_name).as(Amazonite::Codegen::Service::Enum)
   shape_binding = Amazonite::Codegen::Bindings::Enum.new(e)

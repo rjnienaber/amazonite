@@ -1,6 +1,6 @@
-private alias ADDB = Amazonite::DynamoDBV2
+private alias ADDB = Amazonite::DynamoDB
 
-module Amazonite::DynamoDBV2
+module Amazonite::DynamoDB
   enum BillingMode
     Provisioned
     PayPerRequest

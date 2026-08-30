@@ -1,6 +1,6 @@
 private alias Core = Amazonite::Core
 
-module Amazonite::ComprehendV2
+module Amazonite::Comprehend
   # Specifies one of the label or labels that categorize the document being analyzed.
   class DocumentLabel
     include JSON::Serializable

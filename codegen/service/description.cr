@@ -18,11 +18,16 @@ module Amazonite::Codegen::Service
     getter aws_version, api_version, version, lower_version, metadata, resolver
     property operations
 
-    def initialize(@aws_version : String, @api_version : String, @version_number : String, json : JSON::Any)
+    def initialize(@aws_version : String, @api_version : String, json : JSON::Any)
       Utils.verify_keys(KNOWN_KEYS, json)
 
       @metadata = Metadata.new(json["metadata"])
 
+      # Only a genuine version baked into AWS's own serviceId (e.g. "Elastic
+      # Load Balancing v2", "WAFV2") produces a module version suffix. There
+      # is no other source of truth for versioning a service module - Smithy
+      # ships only the current model per service, with no dated-file history
+      # to count.
       version_match = @metadata.service_id.split(/(?=[vV]\d+$)/)
       if version_match.size > 1
         @service_id, version_part = version_match
@@ -35,7 +40,7 @@ module Amazonite::Codegen::Service
         @version = version_part.upcase
       else
         @service_id = version_match[0]
-        @version = "V#{@version_number}"
+        @version = ""
       end
       @lower_version = @version.downcase
 
@@ -49,6 +54,10 @@ module Amazonite::Codegen::Service
 
     def lower_name
       @lower_name ||= @service_id.gsub(" ", "_").downcase
+    end
+
+    def module_slug
+      @lower_version.empty? ? lower_name : "#{lower_name}_#{@lower_version}"
     end
 
     def has_errors

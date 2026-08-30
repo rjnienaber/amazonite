@@ -1,4 +1,4 @@
-module Amazonite::DynamoDBV2
+module Amazonite::DynamoDB
   # Represents the amount of provisioned throughput capacity consumed on a table or an index.
   class Capacity
     include JSON::Serializable

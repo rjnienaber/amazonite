@@ -1,6 +1,6 @@
 private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBV2
+module Amazonite::DynamoDB
   class InternalServerError < Core::ResponseException
   end
 

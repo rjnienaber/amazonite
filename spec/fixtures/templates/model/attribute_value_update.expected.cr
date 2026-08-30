@@ -1,7 +1,7 @@
-private alias ADDB = Amazonite::DynamoDBV2
+private alias ADDB = Amazonite::DynamoDB
 private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBV2
+module Amazonite::DynamoDB
   # For the `UpdateItem` operation, represents the attributes to be modified, the action to perform
   # on each, and the new value for each.
   #

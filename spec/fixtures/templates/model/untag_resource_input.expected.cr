@@ -1,6 +1,6 @@
 private alias Core = Amazonite::Core
 
-module Amazonite::BackupGatewayV2
+module Amazonite::BackupGateway
   class UntagResourceInput
     include JSON::Serializable
 

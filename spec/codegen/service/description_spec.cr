@@ -2,7 +2,7 @@ require "../../spec_helper"
 
 def create_description(schema_filename : String)
   source = ServiceJson.load(schema_filename)
-  Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", "2", source)
+  Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", source)
 end
 
 describe Amazonite::Codegen::Service::Description do
@@ -25,11 +25,11 @@ describe Amazonite::Codegen::Service::Description do
 
   describe "#module_name" do
     it "handles 'DynamoDB'" do
-      dynamodb_description.module_name.should eq("Amazonite::DynamoDBV2")
+      dynamodb_description.module_name.should eq("Amazonite::DynamoDB")
     end
 
     it "handles 'ACM PCA'" do
-      acm_pca_description.module_name.should eq("Amazonite::AcmPcaV2")
+      acm_pca_description.module_name.should eq("Amazonite::AcmPca")
     end
 
     it "handles 'Kinesis Analytics V2'" do
@@ -46,6 +46,16 @@ describe Amazonite::Codegen::Service::Description do
 
     it "handles 'SESv2'" do
       ses_description.module_name.should eq("Amazonite::SesV2")
+    end
+  end
+
+  describe "#module_slug" do
+    it "has no suffix when the service has no built-in version" do
+      dynamodb_description.module_slug.should eq("dynamodb")
+    end
+
+    it "carries the version when it's built into the serviceId" do
+      waf_description.module_slug.should eq("waf_v2")
     end
   end
 

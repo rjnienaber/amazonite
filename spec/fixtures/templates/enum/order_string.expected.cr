@@ -1,6 +1,6 @@
-private alias AADS = Amazonite::ApplicationDiscoveryServiceV2
+private alias AADS = Amazonite::ApplicationDiscoveryService
 
-module Amazonite::ApplicationDiscoveryServiceV2
+module Amazonite::ApplicationDiscoveryService
   enum OrderString
     Asc
     Desc

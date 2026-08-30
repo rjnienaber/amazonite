@@ -1,6 +1,6 @@
 private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBV2
+module Amazonite::DynamoDB
   # Represents the output of a `BatchGetItem` operation.
   class BatchGetItemOutput
     include JSON::Serializable

@@ -35,9 +35,9 @@ temporary credentials automatically, so a `Client.new` behaves the way you'd exp
 Here's an example that creates a table in DynamoDB:
 
 ```crystal
-require "amazonite/dynamodb_v2"
+require "amazonite/dynamodb"
 
-private alias DB = Amazonite::DynamoDBV2
+private alias DB = Amazonite::DynamoDB
 
 model = DB::CreateTableInput.new(
   "Music",

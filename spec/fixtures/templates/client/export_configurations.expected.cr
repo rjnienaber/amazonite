@@ -1,9 +1,9 @@
-private alias AADS = Amazonite::ApplicationDiscoveryServiceV2
+private alias AADS = Amazonite::ApplicationDiscoveryService
 private alias Core = Amazonite::Core
 
-module Amazonite::ApplicationDiscoveryServiceV2
+module Amazonite::ApplicationDiscoveryService
   class Client < Core::Client
-    Log = ::Log.for("amazonite.application_discovery_service_v2.client")
+    Log = ::Log.for("amazonite.application_discovery_service.client")
 
     def initialize(config = Core::Config.new)
       super("AWSPoseidonService_V2015_11_01", "discovery", "1.1", nil, config)

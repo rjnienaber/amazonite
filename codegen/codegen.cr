@@ -7,30 +7,24 @@ require "./render"
 require "./service/*"
 
 module Amazonite::Codegen
-  # service name (as used in api-models-aws) => version_number to pass into
-  # Description. The version suffix on a generated module name (e.g. the "2"
-  # in dynamodb_v2) is a historical artifact of aws-sdk-js's multi-dated-file
-  # history and isn't re-derivable from Smithy (which ships only the current
-  # model per service) - so it's tracked explicitly here per target rather
-  # than computed, to avoid ever silently renaming an already-published
-  # module.
-  TARGETS = {
-    "dynamodb"        => "2",
-    "ssm"             => "1",
-    "sqs"             => "1",
-    "kms"             => "1",
-    "secrets-manager" => "1",
-    "lambda"          => "1",
-    "sns"             => "1",
-    "iam"             => "1",
-    "cloudwatch"      => "1",
-    "sts"             => "1",
-    "cloudformation"  => "1",
-    "api-gateway"     => "1",
-    "eventbridge"     => "1",
-    "cloudwatch-logs" => "1",
-    "kinesis"         => "1",
-  }
+  # service names (as used in api-models-aws) to generate a module for.
+  TARGETS = [
+    "dynamodb",
+    "ssm",
+    "sqs",
+    "kms",
+    "secrets-manager",
+    "lambda",
+    "sns",
+    "iam",
+    "cloudwatch",
+    "sts",
+    "cloudformation",
+    "api-gateway",
+    "eventbridge",
+    "cloudwatch-logs",
+    "kinesis",
+  ]
 
   # Operations that can't be modeled as a plain request/response call and
   # are excluded from generation, keyed by service. InvokeWithResponseStream
@@ -52,18 +46,18 @@ module Amazonite::Codegen
 
     targets = TARGETS
     unless cli.services.empty?
-      unknown = cli.services - TARGETS.keys
-      raise Exception.new("unknown --service value(s): #{unknown.join(", ")} (known targets: #{TARGETS.keys.join(", ")})") unless unknown.empty?
-      targets = TARGETS.select { |service, _| cli.services.includes?(service) }
+      unknown = cli.services - TARGETS
+      raise Exception.new("unknown --service value(s): #{unknown.join(", ")} (known targets: #{TARGETS.join(", ")})") unless unknown.empty?
+      targets = TARGETS.select { |service| cli.services.includes?(service) }
     end
 
     aws_version = Service::Files.submodule_commit_sha
 
-    targets.each do |service, version_number|
+    targets.each do |service|
       translator = Service::Files.translator(service)
       ::Log.info { "processing: #{service} (api version #{translator.api_version})" }
 
-      description = Service::Description.new(aws_version, translator.api_version, version_number, translator.translate)
+      description = Service::Description.new(aws_version, translator.api_version, translator.translate)
 
       unless cli.protocols.empty?
         unless cli.protocols.includes?(description.metadata.protocol)
@@ -76,9 +70,8 @@ module Amazonite::Codegen
       description.operations.reject! { |op| excluded.includes?(op.name) } if excluded
 
       src_dir = File.expand_path(cli.output_dir)
-      module_name = "#{description.lower_name}_#{description.lower_version}"
-      module_dir = File.join(src_dir, module_name)
-      module_file_path = File.join(src_dir, "#{module_name}.cr")
+      module_dir = File.join(src_dir, description.module_slug)
+      module_file_path = File.join(src_dir, "#{description.module_slug}.cr")
 
       FileUtils.rm_rf(module_dir)
       FileUtils.rm_rf(module_file_path)

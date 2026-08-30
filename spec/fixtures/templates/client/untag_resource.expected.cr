@@ -1,9 +1,9 @@
-private alias ADDB = Amazonite::DynamoDBV2
+private alias ADDB = Amazonite::DynamoDB
 private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBV2
+module Amazonite::DynamoDB
   class Client < Core::Client
-    Log = ::Log.for("amazonite.dynamodb_v2.client")
+    Log = ::Log.for("amazonite.dynamodb.client")
 
     def initialize(config = Core::Config.new)
       super("DynamoDB_20120810", "dynamodb", "1.0", nil, config)

@@ -1,7 +1,7 @@
-private alias ADDB = Amazonite::DynamoDBV2
+private alias ADDB = Amazonite::DynamoDB
 private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBV2
+module Amazonite::DynamoDB
   # Contains the details of the backup created for the table.
   class BackupDetails
     include JSON::Serializable

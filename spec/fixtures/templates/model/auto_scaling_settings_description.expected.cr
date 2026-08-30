@@ -1,6 +1,6 @@
 private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBV2
+module Amazonite::DynamoDB
   # Represents the auto scaling settings for a global table or global secondary index.
   class AutoScalingSettingsDescription
     include JSON::Serializable

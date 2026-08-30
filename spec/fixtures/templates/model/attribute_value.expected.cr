@@ -1,6 +1,6 @@
 private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBV2
+module Amazonite::DynamoDB
   # Represents the data for an attribute.
   #
   # Each attribute value is described as a name-value pair. The name is the data type, and the value

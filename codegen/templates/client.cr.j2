@@ -3,7 +3,7 @@ private alias Core = Amazonite::Core
 
 module {{ service.module_name }}
   class Client < Core::Client
-    Log {% if operations.has_errors %}              {% endif %}= ::Log.for("amazonite.{{ service.lower_name }}_{{ service.lower_version }}.client")
+    Log {% if operations.has_errors %}              {% endif %}= ::Log.for("amazonite.{{ service.module_slug }}.client")
 {% if operations.has_errors %}    EXCEPTION_FACTORY = ExceptionFactory.new
 {% endif %}
     def initialize(config = Core::Config.new)

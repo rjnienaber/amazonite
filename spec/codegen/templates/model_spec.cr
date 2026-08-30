@@ -3,7 +3,7 @@ require "../../spec_helper"
 def render_model(shape_name, spec_filename = "dynamodb-2012-08-10.normal.json")
   source = ServiceJson.load(spec_filename)
 
-  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", "2", source)
+  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", source)
 
   structure = description.resolver.find(shape_name).as(Amazonite::Codegen::Service::Structure)
   shape_binding = Amazonite::Codegen::Bindings::Structure.new(structure, description.module_alias, false)

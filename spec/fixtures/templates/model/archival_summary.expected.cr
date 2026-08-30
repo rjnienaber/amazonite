@@ -1,6 +1,6 @@
 private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBV2
+module Amazonite::DynamoDB
   # Contains details of a table archival operation.
   class ArchivalSummary
     include JSON::Serializable

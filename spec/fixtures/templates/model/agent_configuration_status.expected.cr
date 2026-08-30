@@ -1,6 +1,6 @@
 private alias Core = Amazonite::Core
 
-module Amazonite::ApplicationDiscoveryServiceV2
+module Amazonite::ApplicationDiscoveryService
   # Information about agents that were instructed to start collecting data. Information includes the
   # agent ID, a description of the operation, and whether the agent configuration was updated.
   class AgentConfigurationStatus

@@ -1,9 +1,9 @@
-private alias ADDB = Amazonite::DynamoDBV2
+private alias ADDB = Amazonite::DynamoDB
 private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBV2
+module Amazonite::DynamoDB
   class Client < Core::Client
-    Log               = ::Log.for("amazonite.dynamodb_v2.client")
+    Log               = ::Log.for("amazonite.dynamodb.client")
     EXCEPTION_FACTORY = ExceptionFactory.new
 
     def initialize(config = Core::Config.new)

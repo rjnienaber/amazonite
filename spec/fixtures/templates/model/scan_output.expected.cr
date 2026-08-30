@@ -1,6 +1,6 @@
 private alias Core = Amazonite::Core
 
-module Amazonite::DynamoDBV2
+module Amazonite::DynamoDB
   # Represents the output of a `Scan` operation.
   class ScanOutput
     include JSON::Serializable
