@@ -49,7 +49,6 @@ module Amazonite::DynamoDBV2
       if value = @auto_scaling_role_arn
         raise Core::ValidationError.new("AutoScalingRoleArn length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("AutoScalingRoleArn length must be <= 1600") if value.size > 1600
-        raise Core::ValidationError.new("AutoScalingRoleArn does not match the required pattern") unless value.matches?(Regex.new("^[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*$"))
       end
 
       if value = @scaling_policy_update

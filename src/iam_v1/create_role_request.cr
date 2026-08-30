@@ -143,7 +143,7 @@ module Amazonite::IamV1
       if value = @path
         raise Core::ValidationError.new("Path length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("Path length must be <= 512") if value.size > 512
-        raise Core::ValidationError.new("Path does not match the required pattern") unless value.matches?(Regex.new("^(\\u002F)|(\\u002F[\\u0021-\\u007E]+\\u002F)$"))
+        raise Core::ValidationError.new("Path does not match the required pattern") unless value.matches?(Regex.new("^(/)|(/[!-~]+/)$"))
       end
 
       if value = @role_name
@@ -155,13 +155,13 @@ module Amazonite::IamV1
       if value = @assume_role_policy_document
         raise Core::ValidationError.new("AssumeRolePolicyDocument length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("AssumeRolePolicyDocument length must be <= 131072") if value.size > 131072
-        raise Core::ValidationError.new("AssumeRolePolicyDocument does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+$"))
+        raise Core::ValidationError.new("AssumeRolePolicyDocument does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
       end
 
       if value = @description
         raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
         raise Core::ValidationError.new("Description length must be <= 1000") if value.size > 1000
-        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
       end
 
       if value = @max_session_duration

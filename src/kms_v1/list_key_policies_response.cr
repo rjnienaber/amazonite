@@ -30,7 +30,7 @@ module Amazonite::KmsV1
       if value = @next_marker
         raise Core::ValidationError.new("NextMarker length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("NextMarker length must be <= 1024") if value.size > 1024
-        raise Core::ValidationError.new("NextMarker does not match the required pattern") unless value.matches?(Regex.new("^[\\u0020-\\u00FF]*$"))
+        raise Core::ValidationError.new("NextMarker does not match the required pattern") unless value.matches?(Regex.new("^[ -ÿ]*$"))
       end
     end
 

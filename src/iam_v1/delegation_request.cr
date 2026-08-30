@@ -236,13 +236,13 @@ module Amazonite::IamV1
       if value = @description
         raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
         raise Core::ValidationError.new("Description length must be <= 1000") if value.size > 1000
-        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
       end
 
       if value = @request_message
         raise Core::ValidationError.new("RequestMessage length must be >= 0") if value.size < 0
         raise Core::ValidationError.new("RequestMessage length must be <= 200") if value.size > 200
-        raise Core::ValidationError.new("RequestMessage does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+        raise Core::ValidationError.new("RequestMessage does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
       end
 
       if value = @permissions
@@ -267,7 +267,7 @@ module Amazonite::IamV1
       if value = @requestor_name
         raise Core::ValidationError.new("RequestorName length must be >= 0") if value.size < 0
         raise Core::ValidationError.new("RequestorName length must be <= 30") if value.size > 30
-        raise Core::ValidationError.new("RequestorName does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+        raise Core::ValidationError.new("RequestorName does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
       end
 
       if value = @session_duration
@@ -284,13 +284,13 @@ module Amazonite::IamV1
       if value = @notes
         raise Core::ValidationError.new("Notes length must be >= 0") if value.size < 0
         raise Core::ValidationError.new("Notes length must be <= 500") if value.size > 500
-        raise Core::ValidationError.new("Notes does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+        raise Core::ValidationError.new("Notes does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
       end
 
       if value = @rejection_reason
         raise Core::ValidationError.new("RejectionReason length must be >= 0") if value.size < 0
         raise Core::ValidationError.new("RejectionReason length must be <= 500") if value.size > 500
-        raise Core::ValidationError.new("RejectionReason does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+        raise Core::ValidationError.new("RejectionReason does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
       end
     end
 

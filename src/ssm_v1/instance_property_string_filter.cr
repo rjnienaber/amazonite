@@ -29,7 +29,6 @@ module Amazonite::SsmV1
       if value = @key
         raise Core::ValidationError.new("Key length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("Key length must be <= 100000") if value.size > 100000
-        raise Core::ValidationError.new("Key does not match the required pattern") unless value.matches?(Regex.new("^.{1,100000}$"))
       end
 
       if value = @values

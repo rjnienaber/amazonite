@@ -72,7 +72,7 @@ module Amazonite::IamV1
       if value = @path
         raise Core::ValidationError.new("Path length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("Path length must be <= 512") if value.size > 512
-        raise Core::ValidationError.new("Path does not match the required pattern") unless value.matches?(Regex.new("^(\\u002F)|(\\u002F[\\u0021-\\u007E]+\\u002F)$"))
+        raise Core::ValidationError.new("Path does not match the required pattern") unless value.matches?(Regex.new("^(/)|(/[!-~]+/)$"))
       end
 
       if value = @group_name

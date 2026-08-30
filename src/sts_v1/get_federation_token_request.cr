@@ -170,7 +170,7 @@ module Amazonite::StsV1
       if value = @policy
         raise Core::ValidationError.new("Policy length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("Policy length must be <= 2048") if value.size > 2048
-        raise Core::ValidationError.new("Policy does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+$"))
+        raise Core::ValidationError.new("Policy does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
       end
 
       if value = @policy_arns

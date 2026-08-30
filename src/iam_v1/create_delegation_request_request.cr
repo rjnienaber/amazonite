@@ -130,7 +130,7 @@ module Amazonite::IamV1
       if value = @description
         raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
         raise Core::ValidationError.new("Description length must be <= 1000") if value.size > 1000
-        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
       end
 
       if value = @permissions
@@ -140,13 +140,13 @@ module Amazonite::IamV1
       if value = @request_message
         raise Core::ValidationError.new("RequestMessage length must be >= 0") if value.size < 0
         raise Core::ValidationError.new("RequestMessage length must be <= 200") if value.size > 200
-        raise Core::ValidationError.new("RequestMessage does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+        raise Core::ValidationError.new("RequestMessage does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
       end
 
       if value = @requestor_workflow_id
         raise Core::ValidationError.new("RequestorWorkflowId length must be >= 5") if value.size < 5
         raise Core::ValidationError.new("RequestorWorkflowId length must be <= 400") if value.size > 400
-        raise Core::ValidationError.new("RequestorWorkflowId does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]+$"))
+        raise Core::ValidationError.new("RequestorWorkflowId does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]+$"))
       end
 
       if value = @redirect_url

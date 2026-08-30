@@ -54,7 +54,7 @@ module Amazonite::StsV1
       if value = @arn
         raise Core::ValidationError.new("Arn length must be >= 20") if value.size < 20
         raise Core::ValidationError.new("Arn length must be <= 2048") if value.size > 2048
-        raise Core::ValidationError.new("Arn does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u0085\\u00A0-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]+$"))
+        raise Core::ValidationError.new("Arn does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~\u0085\u00A0-퟿\uE000-�က0-ჿFF]+$"))
       end
     end
 

@@ -66,7 +66,7 @@ module Amazonite::IamV1
       if value = @description
         raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
         raise Core::ValidationError.new("Description length must be <= 1000") if value.size > 1000
-        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
       end
 
       if value = @max_session_duration

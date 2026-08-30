@@ -273,7 +273,7 @@ module Amazonite::IamV1
       if value = @description
         raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
         raise Core::ValidationError.new("Description length must be <= 512") if value.size > 512
-        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
       end
 
       if value = @managed_by_value
@@ -289,7 +289,7 @@ module Amazonite::IamV1
       if value = @role_path_pattern
         raise Core::ValidationError.new("RolePathPattern length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("RolePathPattern length must be <= 256") if value.size > 256
-        raise Core::ValidationError.new("RolePathPattern does not match the required pattern") unless value.matches?(Regex.new("^/[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*/$"))
+        raise Core::ValidationError.new("RolePathPattern does not match the required pattern") unless value.matches?(Regex.new("^/[\t\n\r -~¡-ÿ]*/$"))
       end
 
       if value = @role_description_pattern
@@ -300,7 +300,7 @@ module Amazonite::IamV1
       if value = @assume_role_policy_document_template
         raise Core::ValidationError.new("AssumeRolePolicyDocumentTemplate length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("AssumeRolePolicyDocumentTemplate length must be <= 131072") if value.size > 131072
-        raise Core::ValidationError.new("AssumeRolePolicyDocumentTemplate does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+$"))
+        raise Core::ValidationError.new("AssumeRolePolicyDocumentTemplate does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
       end
 
       if value = @inline_policy_templates

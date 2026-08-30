@@ -23,7 +23,6 @@ module Amazonite::DynamoDBV2
       if value = @policy_name
         raise Core::ValidationError.new("PolicyName length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("PolicyName length must be <= 256") if value.size > 256
-        raise Core::ValidationError.new("PolicyName does not match the required pattern") unless value.matches?(Regex.new("^\\p{Print}+$"))
       end
 
       if value = @target_tracking_scaling_policy_configuration

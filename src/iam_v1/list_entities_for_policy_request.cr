@@ -108,13 +108,13 @@ module Amazonite::IamV1
       if value = @path_prefix
         raise Core::ValidationError.new("PathPrefix length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("PathPrefix length must be <= 512") if value.size > 512
-        raise Core::ValidationError.new("PathPrefix does not match the required pattern") unless value.matches?(Regex.new("^(\\u002F)|(\\u002F[\\u0021-\\u007E]+\\u002F)$"))
+        raise Core::ValidationError.new("PathPrefix does not match the required pattern") unless value.matches?(Regex.new("^(/)|(/[!-~]+/)$"))
       end
 
       if value = @marker
         raise Core::ValidationError.new("Marker length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("Marker length must be <= 320") if value.size > 320
-        raise Core::ValidationError.new("Marker does not match the required pattern") unless value.matches?(Regex.new("^[\\u0020-\\u00FF]+$"))
+        raise Core::ValidationError.new("Marker does not match the required pattern") unless value.matches?(Regex.new("^[ -ÿ]+$"))
       end
 
       if value = @max_items

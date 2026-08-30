@@ -98,7 +98,7 @@ module Amazonite::IamV1
       if value = @add_private_key
         raise Core::ValidationError.new("AddPrivateKey length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("AddPrivateKey length must be <= 16384") if value.size > 16384
-        raise Core::ValidationError.new("AddPrivateKey does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+$"))
+        raise Core::ValidationError.new("AddPrivateKey does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
       end
     end
 
