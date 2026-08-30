@@ -1,0 +1,15 @@
+module Amazonite::CloudWatchLogsV1
+  class ListIntegrationsResponse
+    include JSON::Serializable
+
+    # An array, where each object in the array contains information about one CloudWatch Logs
+    # integration in this account.
+    @[JSON::Field(key: "integrationSummaries")]
+    property integration_summaries : Array(IntegrationSummary) | Nil
+
+    def initialize(
+      @integration_summaries : Array(IntegrationSummary) | Nil = nil,
+    )
+    end
+  end
+end

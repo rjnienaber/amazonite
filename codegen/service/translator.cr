@@ -238,7 +238,18 @@ module Amazonite::Codegen::Service
     end
 
     private def build_structure_shape(json : JSON::Builder, shape : JSON::Any)
-      members = shape["members"]?.try(&.as_h) || {} of String => JSON::Any
+      all_members = shape["members"]?.try(&.as_h) || {} of String => JSON::Any
+      # A Smithy event-stream union can carry an error shape directly as one
+      # of its variants (representing "the stream failed with this error").
+      # Error shapes are deliberately never added to the resolver (see
+      # build_shapes) since the exception factory template generates their
+      # classes separately - skip such a member here rather than crash
+      # resolving a shape name build_shapes intentionally never registered.
+      # This repo doesn't generate the surrounding event-stream operation
+      # at all (see EXCLUDED_OPERATIONS), so the union itself is otherwise
+      # unused - dropping just this member keeps codegen from crashing on
+      # this shape reference without requiring full reachability analysis.
+      members = all_members.reject { |_, member| error_shape?(member["target"].as_s) }
       required = members.select { |_, member| required?(member) }.keys
       payload_member = members.find { |_, member| member["traits"]?.try(&.["smithy.api#httpPayload"]?) }.try(&.[0])
 
@@ -327,6 +338,10 @@ module Amazonite::Codegen::Service
 
     private def required?(member : JSON::Any) : Bool
       !!member["traits"]?.try(&.["smithy.api#required"]?)
+    end
+
+    private def error_shape?(target : String) : Bool
+      !!@shapes[target]["traits"]?.try(&.["smithy.api#error"]?)
     end
 
     private def local_name(shape_id : String) : String

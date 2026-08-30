@@ -1,0 +1,20 @@
+module Amazonite::CloudWatchLogsV1
+  class DescribeAccountPoliciesResponse
+    include JSON::Serializable
+
+    # An array of structures that contain information about the CloudWatch Logs account policies that
+    # match the specified filters.
+    @[JSON::Field(key: "accountPolicies")]
+    property account_policies : Array(AccountPolicy) | Nil
+
+    # The token to use when requesting the next set of items. The token expires after 24 hours.
+    @[JSON::Field(key: "nextToken")]
+    property next_token : String | Nil
+
+    def initialize(
+      @account_policies : Array(AccountPolicy) | Nil = nil,
+      @next_token : String | Nil = nil,
+    )
+    end
+  end
+end

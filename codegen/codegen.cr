@@ -26,6 +26,7 @@ module Amazonite::Codegen
     "cloudformation"  => "1",
     "api-gateway"     => "1",
     "eventbridge"     => "1",
+    "cloudwatch-logs" => "1",
   }
 
   # Operations that can't be modeled as a plain request/response call and
@@ -36,7 +37,8 @@ module Amazonite::Codegen
   # represent, so it's dropped rather than mis-generated (same precedent as
   # OpsWorks being dropped from the aws-sdk-js -> Smithy cutover).
   EXCLUDED_OPERATIONS = {
-    "lambda" => ["InvokeWithResponseStream"],
+    "lambda"          => ["InvokeWithResponseStream"],
+    "cloudwatch-logs" => ["GetLogObject", "StartLiveTail"],
   }
 
   def self.main

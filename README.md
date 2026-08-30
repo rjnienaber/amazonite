@@ -82,6 +82,7 @@ API types that can be generated:
 | CloudFormation | ✅             |✅                 |                                                                       |
 | API Gateway   | ✅              |✅                 |                                                                       |
 | EventBridge   | ✅              |✅                 |                                                                       |
+| CloudWatch Logs | ✅            |✅                 | GetLogObject and StartLiveTail aren't generated - use event-stream framing, not a plain request/response |
 | S3            |  🚫             | 🚫                | Consider using [awscr-s3](https://github.com/taylorfinnell/awscr-s3)  |
 
 For example usage, please look at [the integration tests](integration). If you need an API that is not listed here,
