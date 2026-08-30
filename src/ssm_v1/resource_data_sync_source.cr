@@ -40,5 +40,7 @@ module Amazonite::SsmV1
       @enable_all_ops_data_sources : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@source_type, @aws_organizations_source, @source_regions, @include_future_regions, @enable_all_ops_data_sources)
   end
 end

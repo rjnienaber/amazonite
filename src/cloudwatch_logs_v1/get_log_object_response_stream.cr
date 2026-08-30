@@ -11,5 +11,7 @@ module Amazonite::CloudWatchLogsV1
       @fields : FieldsData | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@fields)
   end
 end

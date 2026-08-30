@@ -70,5 +70,7 @@ module Amazonite::CloudWatchV1
       @order_by : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@rule_name, @start_time, @end_time, @period, @max_contributor_count, @metrics, @order_by)
   end
 end

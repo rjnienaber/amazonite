@@ -16,5 +16,7 @@ module Amazonite::LambdaV1
       @error : RuntimeVersionError | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@runtime_version_arn, @error)
   end
 end

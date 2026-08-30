@@ -35,5 +35,7 @@ module Amazonite::SsmV1
       @parameters : Hash(String, Array(String)) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@target, @document_name, @reason, @parameters)
   end
 end

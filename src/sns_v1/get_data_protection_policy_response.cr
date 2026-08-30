@@ -24,5 +24,7 @@ module Amazonite::SnsV1
         data_protection_policy: Core::XMLValue.string(node.xpath_node("*[local-name()='DataProtectionPolicy']")),
       )
     end
+
+    def_equals_and_hash(@data_protection_policy)
   end
 end

@@ -25,5 +25,7 @@ module Amazonite::CloudWatchLogsV1
       @max_results : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_identifier, @vpc_endpoint_id, @next_token, @max_results)
   end
 end

@@ -23,5 +23,7 @@ module Amazonite::LambdaV1
       @error : ErrorObject | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@callback_id, @result, @error)
   end
 end

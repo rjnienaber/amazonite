@@ -32,5 +32,7 @@ module Amazonite::SsmV1
       @resource_uri : String,
     )
     end
+
+    def_equals_and_hash(@ops_item_id, @association_type, @resource_type, @resource_uri)
   end
 end

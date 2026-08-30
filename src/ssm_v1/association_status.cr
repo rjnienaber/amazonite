@@ -29,5 +29,7 @@ module Amazonite::SsmV1
       @additional_info : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@date, @name, @message, @additional_info)
   end
 end

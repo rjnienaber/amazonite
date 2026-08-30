@@ -89,5 +89,7 @@ module Amazonite::CloudWatchLogsV1
       @emit_system_fields : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_name, @filter_name, @filter_pattern, @destination_arn, @role_arn, @distribution, @apply_on_transformed_logs, @field_selection_criteria, @emit_system_fields)
   end
 end

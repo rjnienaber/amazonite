@@ -16,5 +16,7 @@ module Amazonite::SsmV1
       @output_source_type : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@output_source_id, @output_source_type)
   end
 end

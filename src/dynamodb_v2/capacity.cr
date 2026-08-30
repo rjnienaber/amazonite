@@ -21,5 +21,7 @@ module Amazonite::DynamoDBV2
       @capacity_units : Float64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@read_capacity_units, @write_capacity_units, @capacity_units)
   end
 end

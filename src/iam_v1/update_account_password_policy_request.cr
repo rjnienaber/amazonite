@@ -142,5 +142,7 @@ module Amazonite::IamV1
         hard_expiry: Core::XMLValue.bool(node.xpath_node("*[local-name()='HardExpiry']")),
       )
     end
+
+    def_equals_and_hash(@minimum_password_length, @require_symbols, @require_numbers, @require_uppercase_characters, @require_lowercase_characters, @allow_users_to_change_password, @max_password_age, @password_reuse_prevention, @hard_expiry)
   end
 end

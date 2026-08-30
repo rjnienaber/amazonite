@@ -68,5 +68,7 @@ module Amazonite::IamV1
         authentication_code_2: Core::XMLValue.string(node.xpath_node("*[local-name()='AuthenticationCode2']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@user_name, @serial_number, @authentication_code_1, @authentication_code_2)
   end
 end

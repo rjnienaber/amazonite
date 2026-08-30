@@ -12,5 +12,7 @@ module Amazonite::SsmV1
       @type_name : String,
     )
     end
+
+    def_equals_and_hash(@type_name)
   end
 end

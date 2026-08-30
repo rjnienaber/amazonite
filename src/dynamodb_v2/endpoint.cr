@@ -16,5 +16,7 @@ module Amazonite::DynamoDBV2
       @cache_period_in_minutes : Int64,
     )
     end
+
+    def_equals_and_hash(@address, @cache_period_in_minutes)
   end
 end

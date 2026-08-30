@@ -167,5 +167,7 @@ module Amazonite::SqsV1
       @attributes : Hash(QueueAttributeName, String),
     )
     end
+
+    def_equals_and_hash(@queue_url, @attributes)
   end
 end

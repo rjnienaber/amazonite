@@ -54,5 +54,7 @@ module Amazonite::IamV1
         max_items: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxItems']")),
       )
     end
+
+    def_equals_and_hash(@saml_provider_arn, @marker, @max_items)
   end
 end

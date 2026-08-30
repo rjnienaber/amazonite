@@ -16,5 +16,7 @@ module Amazonite::SsmV1
       @baseline_id : String,
     )
     end
+
+    def_equals_and_hash(@baseline_id)
   end
 end

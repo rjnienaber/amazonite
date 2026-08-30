@@ -45,5 +45,7 @@ module Amazonite::IamV1
         status: ((n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil).not_nil!,
       )
     end
+
+    def_equals_and_hash(@user_name, @ssh_public_key_id, @status)
   end
 end

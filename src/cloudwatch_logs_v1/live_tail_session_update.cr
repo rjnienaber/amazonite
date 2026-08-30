@@ -21,5 +21,7 @@ module Amazonite::CloudWatchLogsV1
       @session_results : Array(LiveTailSessionLogEvent) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@session_metadata, @session_results)
   end
 end

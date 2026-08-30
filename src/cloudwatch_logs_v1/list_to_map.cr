@@ -49,5 +49,7 @@ module Amazonite::CloudWatchLogsV1
       @flattened_element : FlattenedElement | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@source, @key, @value_key, @target, @flatten, @flattened_element)
   end
 end

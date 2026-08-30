@@ -98,5 +98,7 @@ module Amazonite::IamV1
         max_items: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxItems']")),
       )
     end
+
+    def_equals_and_hash(@policy_arn, @entity_filter, @path_prefix, @policy_usage_filter, @marker, @max_items)
   end
 end

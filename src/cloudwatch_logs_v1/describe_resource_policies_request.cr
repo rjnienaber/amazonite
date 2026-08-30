@@ -27,5 +27,7 @@ module Amazonite::CloudWatchLogsV1
       @policy_scope : PolicyScope | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_token, @limit, @resource_arn, @policy_scope)
   end
 end

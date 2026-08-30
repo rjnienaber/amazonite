@@ -11,5 +11,7 @@ module Amazonite::DynamoDBV2
       @region_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@region_name)
   end
 end

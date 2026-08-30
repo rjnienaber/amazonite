@@ -15,5 +15,7 @@ module Amazonite::SsmV1
       @policy_hash : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@policy_id, @policy_hash)
   end
 end

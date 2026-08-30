@@ -93,5 +93,7 @@ module Amazonite::KmsV1
       @bypass_policy_lockout_safety_check : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @policy_name, @policy, @bypass_policy_lockout_safety_check)
   end
 end

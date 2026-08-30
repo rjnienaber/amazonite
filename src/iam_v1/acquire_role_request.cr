@@ -48,5 +48,7 @@ module Amazonite::IamV1
         replacement_values: node.xpath_nodes("*[local-name()='ReplacementValues']/*[local-name()='entry']").each_with_object({} of String => ReplacementValueEntry) { |entry, hash| hash[entry.xpath_node("*[local-name()='key']").not_nil!.content] = ReplacementValueEntry.from_xml(entry.xpath_node("*[local-name()='value']").not_nil!) },
       )
     end
+
+    def_equals_and_hash(@template_arn, @template_minor_version, @replacement_values)
   end
 end

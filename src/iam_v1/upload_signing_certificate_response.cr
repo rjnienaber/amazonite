@@ -23,5 +23,7 @@ module Amazonite::IamV1
         certificate: node.xpath_node("*[local-name()='Certificate']").try { |n| SigningCertificate.from_xml(n) }.not_nil!,
       )
     end
+
+    def_equals_and_hash(@certificate)
   end
 end

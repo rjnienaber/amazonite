@@ -53,5 +53,7 @@ module Amazonite::KmsV1
       @vpc_endpoint_service_owner : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@connectivity, @access_key_id, @uri_endpoint, @uri_path, @vpc_endpoint_service_name, @vpc_endpoint_service_owner)
   end
 end

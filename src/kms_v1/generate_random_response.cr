@@ -29,5 +29,7 @@ module Amazonite::KmsV1
       @ciphertext_for_recipient : Bytes | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@plaintext, @ciphertext_for_recipient)
   end
 end

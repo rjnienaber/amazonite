@@ -19,5 +19,7 @@ module Amazonite::EventBridgeV1
       @endpoint_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@entries, @endpoint_id)
   end
 end

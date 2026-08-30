@@ -33,5 +33,7 @@ module Amazonite::SsmV1
       @sub_type : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@type_name, @next_token, @max_results, @aggregator, @sub_type)
   end
 end

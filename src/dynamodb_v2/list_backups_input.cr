@@ -51,5 +51,7 @@ module Amazonite::DynamoDBV2
       @backup_type : BackupTypeFilter | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @limit, @time_range_lower_bound, @time_range_upper_bound, @exclusive_start_backup_arn, @backup_type)
   end
 end

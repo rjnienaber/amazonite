@@ -36,5 +36,7 @@ module Amazonite::LambdaV1
       @reverse_order : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@durable_execution_arn, @include_execution_data, @max_items, @marker, @reverse_order)
   end
 end

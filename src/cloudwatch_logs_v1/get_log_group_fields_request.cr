@@ -30,5 +30,7 @@ module Amazonite::CloudWatchLogsV1
       @log_group_identifier : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_name, @time, @log_group_identifier)
   end
 end

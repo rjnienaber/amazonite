@@ -60,5 +60,7 @@ module Amazonite::SsmV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@activation_id, @description, @default_instance_name, @iam_role, @registration_limit, @registrations_count, @expiration_date, @expired, @created_date, @tags)
   end
 end

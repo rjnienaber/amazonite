@@ -47,5 +47,7 @@ module Amazonite::SsmV1
       @updated_at : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@cloud_connector_arn, @display_name, @description, @role_arn, @configuration, @config_connector_arn, @created_at, @updated_at)
   end
 end

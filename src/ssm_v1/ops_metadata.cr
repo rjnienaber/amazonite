@@ -33,5 +33,7 @@ module Amazonite::SsmV1
       @creation_date : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@resource_id, @ops_metadata_arn, @last_modified_date, @last_modified_user, @creation_date)
   end
 end

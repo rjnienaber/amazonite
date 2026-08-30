@@ -34,5 +34,7 @@ module Amazonite::ApiGatewayV1
       @position : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@usage_plan_id, @start_date, @end_date, @items, @position)
   end
 end

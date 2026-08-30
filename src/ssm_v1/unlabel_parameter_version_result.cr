@@ -15,5 +15,7 @@ module Amazonite::SsmV1
       @invalid_labels : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@removed_labels, @invalid_labels)
   end
 end

@@ -62,5 +62,7 @@ module Amazonite::SsmV1
       @target_locations : Array(TargetLocation) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@document_name, @document_version, @parameters, @target_parameter_name, @targets, @target_maps, @max_concurrency, @max_errors, @target_locations)
   end
 end

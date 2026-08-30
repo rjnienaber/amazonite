@@ -23,5 +23,7 @@ module Amazonite::LambdaV1
       @ipv_6_allowed_for_dual_stack : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@subnet_ids, @security_group_ids, @ipv_6_allowed_for_dual_stack)
   end
 end

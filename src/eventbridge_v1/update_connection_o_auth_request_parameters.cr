@@ -29,5 +29,7 @@ module Amazonite::EventBridgeV1
       @o_auth_http_parameters : ConnectionHttpParameters | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@client_parameters, @authorization_endpoint, @http_method, @o_auth_http_parameters)
   end
 end

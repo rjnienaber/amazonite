@@ -21,5 +21,7 @@ module Amazonite::SsmV1
       @tier : ParameterTier | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@version, @tier)
   end
 end

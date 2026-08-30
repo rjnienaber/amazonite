@@ -20,5 +20,7 @@ module Amazonite::SsmV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@reason, @targets, @tags)
   end
 end

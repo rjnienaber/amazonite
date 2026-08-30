@@ -11,5 +11,7 @@ module Amazonite::SsmV1
       @service_setting : ServiceSetting | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@service_setting)
   end
 end

@@ -33,5 +33,7 @@ module Amazonite::CloudWatchLogsV1
       @event_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_stream_name, @timestamp, @message, @ingestion_time, @event_id)
   end
 end

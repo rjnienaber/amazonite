@@ -68,5 +68,7 @@ module Amazonite::IamV1
         marker: Core::XMLValue.string(node.xpath_node("*[local-name()='Marker']")),
       )
     end
+
+    def_equals_and_hash(@policy_groups, @policy_users, @policy_roles, @is_truncated, @marker)
   end
 end

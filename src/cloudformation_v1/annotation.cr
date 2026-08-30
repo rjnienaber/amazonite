@@ -78,5 +78,7 @@ module Amazonite::CloudFormationV1
         severity_level: (n = node.xpath_node("*[local-name()='SeverityLevel']")) ? ACF::AnnotationSeverityLevel.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@annotation_name, @status, @status_message, @remediation_message, @remediation_link, @severity_level)
   end
 end

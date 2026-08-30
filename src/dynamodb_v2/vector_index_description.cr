@@ -73,5 +73,7 @@ module Amazonite::DynamoDBV2
       @index_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@index_name, @search_schema, @projection, @vector_attribute, @dimensions, @distance_function, @index_status, @backfilling, @index_size_bytes, @item_count, @index_arn)
   end
 end

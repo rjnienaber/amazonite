@@ -11,5 +11,7 @@ module Amazonite::SsmV1
       @patch_filters : Array(PatchFilter),
     )
     end
+
+    def_equals_and_hash(@patch_filters)
   end
 end

@@ -31,5 +31,7 @@ module Amazonite::SnsV1
         publish_batch_request_entries: node.xpath_nodes("*[local-name()='PublishBatchRequestEntries']/*[local-name()='member']").map { |n| PublishBatchRequestEntry.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@topic_arn, @publish_batch_request_entries)
   end
 end

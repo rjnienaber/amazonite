@@ -96,5 +96,7 @@ module Amazonite::SsmV1
       @available_security_updates_compliance_status : PatchComplianceStatus | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@baseline_id, @name, @operating_system, @global_filters, @approval_rules, @approved_patches, @approved_patches_compliance_level, @approved_patches_enable_non_security, @rejected_patches, @rejected_patches_action, @patch_groups, @created_date, @modified_date, @description, @sources, @available_security_updates_compliance_status)
   end
 end

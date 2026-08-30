@@ -29,5 +29,7 @@ module Amazonite::KmsV1
       @attestation_document : Bytes | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_encryption_algorithm, @attestation_document)
   end
 end

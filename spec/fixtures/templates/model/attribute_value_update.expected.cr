@@ -88,5 +88,7 @@ module Amazonite::DynamoDBV2
       @action : AttributeAction | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@value, @action)
   end
 end

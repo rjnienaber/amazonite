@@ -32,5 +32,7 @@ module Amazonite::CloudWatchLogsV1
       @query_language : QueryLanguage | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_name, @status, @max_results, @next_token, @query_language)
   end
 end

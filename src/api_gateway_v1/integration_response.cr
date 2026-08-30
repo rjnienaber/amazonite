@@ -52,5 +52,7 @@ module Amazonite::ApiGatewayV1
       @content_handling : ContentHandlingStrategy | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@status_code, @selection_pattern, @response_parameters, @response_templates, @content_handling)
   end
 end

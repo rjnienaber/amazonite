@@ -85,5 +85,7 @@ module Amazonite::IamV1
         private_key_list: node.xpath_nodes("*[local-name()='PrivateKeyList']/*[local-name()='member']").map { |n| SAMLPrivateKey.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@saml_provider_uuid, @saml_metadata_document, @create_date, @valid_until, @tags, @assertion_encryption_mode, @private_key_list)
   end
 end

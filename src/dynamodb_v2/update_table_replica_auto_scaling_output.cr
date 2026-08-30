@@ -10,5 +10,7 @@ module Amazonite::DynamoDBV2
       @table_auto_scaling_description : TableAutoScalingDescription | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_auto_scaling_description)
   end
 end

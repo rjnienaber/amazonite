@@ -27,5 +27,7 @@ module Amazonite::CloudWatchLogsV1
       @bearer_token_authentication_enabled : Bool,
     )
     end
+
+    def_equals_and_hash(@log_group_identifier, @bearer_token_authentication_enabled)
   end
 end

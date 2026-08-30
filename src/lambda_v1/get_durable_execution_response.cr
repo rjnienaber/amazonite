@@ -90,5 +90,7 @@ module Amazonite::LambdaV1
       @durable_config : DurableConfig | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@durable_execution_arn, @durable_execution_name, @function_arn, @input_payload, @result, @error, @start_timestamp, @status, @end_timestamp, @version, @trace_header, @execution_data_included, @durable_config)
   end
 end

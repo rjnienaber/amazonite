@@ -22,5 +22,7 @@ module Amazonite::LambdaV1
       @function_scaling_config : FunctionScalingConfig | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@function_name, @qualifier, @function_scaling_config)
   end
 end

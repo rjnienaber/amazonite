@@ -39,5 +39,7 @@ module Amazonite::DynamoDBV2
       @inaccessible_encryption_date_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@status, @sse_type, @kms_master_key_arn, @inaccessible_encryption_date_time)
   end
 end

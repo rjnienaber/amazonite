@@ -73,5 +73,7 @@ module Amazonite::SsmV1
       @window_target_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_execution_id, @task_execution_id, @invocation_id, @execution_id, @task_type, @parameters, @status, @status_details, @start_time, @end_time, @owner_information, @window_target_id)
   end
 end

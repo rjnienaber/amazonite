@@ -11,5 +11,7 @@ module Amazonite::CloudWatchV1
       @failures : Array(PartialFailure) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@failures)
   end
 end

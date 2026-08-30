@@ -20,5 +20,7 @@ module Amazonite::LambdaV1
       @untrusted_artifact_on_deployment : CodeSigningPolicy | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@untrusted_artifact_on_deployment)
   end
 end

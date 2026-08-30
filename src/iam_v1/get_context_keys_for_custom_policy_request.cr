@@ -35,5 +35,7 @@ module Amazonite::IamV1
         policy_input_list: node.xpath_nodes("*[local-name()='PolicyInputList']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@policy_input_list)
   end
 end

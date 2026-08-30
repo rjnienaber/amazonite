@@ -25,5 +25,7 @@ module Amazonite::IamV1
         policy_version: node.xpath_node("*[local-name()='PolicyVersion']").try { |n| PolicyVersion.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@policy_version)
   end
 end

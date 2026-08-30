@@ -198,5 +198,7 @@ module Amazonite::SsmV1
       @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@command_id, @document_name, @document_version, @comment, @expires_after, @parameters, @instance_ids, @targets, @requested_date_time, @status, @status_details, @output_s3_region, @output_s3_bucket_name, @output_s3_key_prefix, @max_concurrency, @max_errors, @target_count, @completed_count, @error_count, @delivery_timed_out_count, @service_role, @notification_config, @cloud_watch_output_config, @timeout_seconds, @alarm_configuration, @triggered_alarms)
   end
 end

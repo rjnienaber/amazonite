@@ -39,5 +39,7 @@ module Amazonite::SsmV1
       @end_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_id, @window_execution_id, @status, @status_details, @start_time, @end_time)
   end
 end

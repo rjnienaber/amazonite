@@ -22,5 +22,7 @@ module Amazonite::CloudWatchLogsV1
       @transformed_event_message : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@event_number, @event_message, @transformed_event_message)
   end
 end

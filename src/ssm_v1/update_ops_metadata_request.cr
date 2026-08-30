@@ -20,5 +20,7 @@ module Amazonite::SsmV1
       @keys_to_delete : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@ops_metadata_arn, @metadata_to_update, @keys_to_delete)
   end
 end

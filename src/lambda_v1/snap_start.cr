@@ -16,5 +16,7 @@ module Amazonite::LambdaV1
       @apply_on : SnapStartApplyOn | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@apply_on)
   end
 end

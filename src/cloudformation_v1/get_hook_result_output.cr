@@ -146,5 +146,7 @@ module Amazonite::CloudFormationV1
         annotations: node.xpath_nodes("*[local-name()='Annotations']/*[local-name()='member']").map { |n| Annotation.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@hook_result_id, @invocation_point, @failure_mode, @type_name, @original_type_name, @type_version_id, @type_configuration_version_id, @type_arn, @status, @hook_status_reason, @invoked_at, @target, @annotations)
   end
 end

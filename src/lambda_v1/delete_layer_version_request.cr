@@ -15,5 +15,7 @@ module Amazonite::LambdaV1
       @version_number : Int64,
     )
     end
+
+    def_equals_and_hash(@layer_name, @version_number)
   end
 end

@@ -10,5 +10,7 @@ module Amazonite::SecretsManagerV1
       @random_password : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@random_password)
   end
 end

@@ -26,5 +26,7 @@ module Amazonite::IamV1
         policy_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='PolicyArn']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@policy_arn)
   end
 end

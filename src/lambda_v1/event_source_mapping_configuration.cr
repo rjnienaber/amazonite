@@ -230,5 +230,7 @@ module Amazonite::LambdaV1
       @provisioned_poller_config : ProvisionedPollerConfig | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@uuid, @starting_position, @starting_position_timestamp, @batch_size, @maximum_batching_window_in_seconds, @parallelization_factor, @event_source_arn, @filter_criteria, @filter_criteria_error, @kms_key_arn, @metrics_config, @logging_config, @scaling_config, @function_arn, @last_modified, @last_processing_result, @state, @state_transition_reason, @destination_config, @topics, @queues, @source_access_configurations, @self_managed_event_source, @maximum_record_age_in_seconds, @bisect_batch_on_function_error, @maximum_retry_attempts, @tumbling_window_in_seconds, @function_response_types, @amazon_managed_kafka_event_source_config, @self_managed_kafka_event_source_config, @document_db_event_source_config, @event_source_mapping_arn, @provisioned_poller_config)
   end
 end

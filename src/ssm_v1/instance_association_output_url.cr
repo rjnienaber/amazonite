@@ -11,5 +11,7 @@ module Amazonite::SsmV1
       @s3_output_url : S3OutputUrl | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@s3_output_url)
   end
 end

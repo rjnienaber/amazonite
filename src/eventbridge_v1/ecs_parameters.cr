@@ -111,5 +111,7 @@ module Amazonite::EventBridgeV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@task_definition_arn, @task_count, @launch_type, @network_configuration, @platform_version, @group, @capacity_provider_strategy, @enable_ecs_managed_tags, @enable_execute_command, @placement_constraints, @placement_strategy, @propagate_tags, @reference_id, @tags)
   end
 end

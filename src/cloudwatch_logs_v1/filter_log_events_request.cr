@@ -105,5 +105,7 @@ module Amazonite::CloudWatchLogsV1
       @unmask : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_name, @log_group_identifier, @log_stream_names, @log_stream_name_prefix, @start_time, @end_time, @filter_pattern, @next_token, @limit, @start_from_head, @interleaved, @unmask)
   end
 end

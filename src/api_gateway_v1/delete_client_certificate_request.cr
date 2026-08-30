@@ -11,5 +11,7 @@ module Amazonite::ApiGatewayV1
       @client_certificate_id : String,
     )
     end
+
+    def_equals_and_hash(@client_certificate_id)
   end
 end

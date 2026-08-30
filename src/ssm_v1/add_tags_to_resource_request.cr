@@ -51,5 +51,7 @@ module Amazonite::SsmV1
       @tags : Array(Tag),
     )
     end
+
+    def_equals_and_hash(@resource_type, @resource_id, @tags)
   end
 end

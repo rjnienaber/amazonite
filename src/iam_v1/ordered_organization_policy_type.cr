@@ -31,5 +31,7 @@ module Amazonite::IamV1
         service_control_policy_input_list: node.xpath_nodes("*[local-name()='ServiceControlPolicyInputList']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@service_control_policy_input_list)
   end
 end

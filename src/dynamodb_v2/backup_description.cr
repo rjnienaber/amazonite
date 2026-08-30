@@ -22,5 +22,7 @@ module Amazonite::DynamoDBV2
       @source_table_feature_details : SourceTableFeatureDetails | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@backup_details, @source_table_details, @source_table_feature_details)
   end
 end

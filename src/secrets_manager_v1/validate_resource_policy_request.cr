@@ -18,5 +18,7 @@ module Amazonite::SecretsManagerV1
       @secret_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_id, @resource_policy)
   end
 end

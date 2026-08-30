@@ -21,5 +21,7 @@ module Amazonite::EventBridgeV1
       @body_parameters : Array(ConnectionBodyParameter) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@header_parameters, @query_string_parameters, @body_parameters)
   end
 end

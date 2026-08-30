@@ -12,5 +12,7 @@ module Amazonite::IamV1
       new(
       )
     end
+
+    def_equals_and_hash()
   end
 end

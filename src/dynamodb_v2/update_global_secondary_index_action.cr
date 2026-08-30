@@ -32,5 +32,7 @@ module Amazonite::DynamoDBV2
       @warm_throughput : WarmThroughput | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@index_name, @provisioned_throughput, @on_demand_throughput, @warm_throughput)
   end
 end

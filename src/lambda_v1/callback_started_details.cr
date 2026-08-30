@@ -23,5 +23,7 @@ module Amazonite::LambdaV1
       @timeout : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@callback_id, @heartbeat_timeout, @timeout)
   end
 end

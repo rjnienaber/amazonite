@@ -10,5 +10,7 @@ module Amazonite::LambdaV1
       @code_signing_config_arn : String,
     )
     end
+
+    def_equals_and_hash(@code_signing_config_arn)
   end
 end

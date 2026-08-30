@@ -10,5 +10,7 @@ module Amazonite::CloudWatchLogsV1
       @policy : Policy | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@policy)
   end
 end

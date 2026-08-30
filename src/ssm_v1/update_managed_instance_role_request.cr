@@ -22,5 +22,7 @@ module Amazonite::SsmV1
       @iam_role : String,
     )
     end
+
+    def_equals_and_hash(@instance_id, @iam_role)
   end
 end

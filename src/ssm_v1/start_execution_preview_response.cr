@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @execution_preview_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@execution_preview_id)
   end
 end

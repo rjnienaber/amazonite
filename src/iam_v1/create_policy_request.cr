@@ -109,5 +109,7 @@ module Amazonite::IamV1
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@policy_name, @path, @policy_document, @description, @tags)
   end
 end

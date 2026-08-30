@@ -24,5 +24,7 @@ module Amazonite::CloudFormationV1
         public_type_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='PublicTypeArn']")),
       )
     end
+
+    def_equals_and_hash(@public_type_arn)
   end
 end

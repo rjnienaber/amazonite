@@ -14,5 +14,7 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@aggregate_log_group_summaries, @next_token)
   end
 end

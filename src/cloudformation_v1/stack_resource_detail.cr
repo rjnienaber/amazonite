@@ -128,5 +128,7 @@ module Amazonite::CloudFormationV1
         module_info: node.xpath_node("*[local-name()='ModuleInfo']").try { |n| ModuleInfo.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@stack_name, @stack_id, @logical_resource_id, @physical_resource_id, @resource_type, @last_updated_timestamp, @resource_status, @resource_status_reason, @description, @metadata, @drift_information, @module_info)
   end
 end

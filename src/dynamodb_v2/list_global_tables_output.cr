@@ -15,5 +15,7 @@ module Amazonite::DynamoDBV2
       @last_evaluated_global_table_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@global_tables, @last_evaluated_global_table_name)
   end
 end

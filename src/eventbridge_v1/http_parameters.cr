@@ -26,5 +26,7 @@ module Amazonite::EventBridgeV1
       @query_string_parameters : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@path_parameter_values, @header_parameters, @query_string_parameters)
   end
 end

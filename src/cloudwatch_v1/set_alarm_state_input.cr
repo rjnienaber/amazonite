@@ -31,5 +31,7 @@ module Amazonite::CloudWatchV1
       @state_reason_data : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@alarm_name, @state_value, @state_reason, @state_reason_data)
   end
 end

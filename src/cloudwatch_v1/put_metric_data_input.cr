@@ -68,5 +68,7 @@ module Amazonite::CloudWatchV1
       @strict_entity_validation : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@namespace, @metric_data, @entity_metric_data, @strict_entity_validation)
   end
 end

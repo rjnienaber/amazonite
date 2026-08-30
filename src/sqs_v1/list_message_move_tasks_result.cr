@@ -10,5 +10,7 @@ module Amazonite::SqsV1
       @results : Array(ListMessageMoveTasksResultEntry) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@results)
   end
 end

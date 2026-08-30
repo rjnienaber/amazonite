@@ -34,5 +34,7 @@ module Amazonite::CloudWatchLogsV1
       @entity : Entity | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_name, @log_stream_name, @log_events, @sequence_token, @entity)
   end
 end

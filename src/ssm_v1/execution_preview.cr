@@ -11,5 +11,7 @@ module Amazonite::SsmV1
       @automation : AutomationExecutionPreview | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@automation)
   end
 end

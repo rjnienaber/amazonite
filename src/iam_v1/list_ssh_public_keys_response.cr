@@ -50,5 +50,7 @@ module Amazonite::IamV1
         marker: Core::XMLValue.string(node.xpath_node("*[local-name()='Marker']")),
       )
     end
+
+    def_equals_and_hash(@ssh_public_keys, @is_truncated, @marker)
   end
 end

@@ -12,5 +12,7 @@ module Amazonite::CloudWatchV1
       @dataset_identifier : String,
     )
     end
+
+    def_equals_and_hash(@dataset_identifier)
   end
 end

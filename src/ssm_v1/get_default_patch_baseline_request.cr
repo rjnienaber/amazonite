@@ -12,5 +12,7 @@ module Amazonite::SsmV1
       @operating_system : OperatingSystem | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@operating_system)
   end
 end

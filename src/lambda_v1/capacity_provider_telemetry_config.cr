@@ -11,5 +11,7 @@ module Amazonite::LambdaV1
       @logging_config : CapacityProviderLoggingConfig | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@logging_config)
   end
 end

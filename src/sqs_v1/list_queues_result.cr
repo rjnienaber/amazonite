@@ -18,5 +18,7 @@ module Amazonite::SqsV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@queue_urls, @next_token)
   end
 end

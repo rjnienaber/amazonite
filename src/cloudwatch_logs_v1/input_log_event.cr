@@ -18,5 +18,7 @@ module Amazonite::CloudWatchLogsV1
       @message : String,
     )
     end
+
+    def_equals_and_hash(@timestamp, @message)
   end
 end

@@ -46,5 +46,7 @@ module Amazonite::CloudWatchV1
       @messages : Array(MessageData) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @label, @timestamps, @values, @status_code, @messages)
   end
 end

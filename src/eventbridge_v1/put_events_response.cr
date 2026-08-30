@@ -20,5 +20,7 @@ module Amazonite::EventBridgeV1
       @entries : Array(PutEventsResultEntry) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@failed_entry_count, @entries)
   end
 end

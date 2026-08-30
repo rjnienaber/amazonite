@@ -295,5 +295,7 @@ module Amazonite::DynamoDBV2
       @expression_attribute_values : Hash(String, AttributeValue) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @index_name, @select, @attributes_to_get, @limit, @consistent_read, @key_conditions, @query_filter, @conditional_operator, @scan_index_forward, @exclusive_start_key, @return_consumed_capacity, @projection_expression, @filter_expression, @key_condition_expression, @expression_attribute_names, @expression_attribute_values)
   end
 end

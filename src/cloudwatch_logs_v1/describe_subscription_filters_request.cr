@@ -26,5 +26,7 @@ module Amazonite::CloudWatchLogsV1
       @limit : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_name, @filter_name_prefix, @next_token, @limit)
   end
 end

@@ -15,5 +15,7 @@ module Amazonite::CloudWatchV1
       @datapoints : Array(Datapoint) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@label, @datapoints)
   end
 end

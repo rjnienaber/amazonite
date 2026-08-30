@@ -23,5 +23,7 @@ module Amazonite::CloudWatchLogsV1
       @ingestion_time : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@timestamp, @message, @ingestion_time)
   end
 end

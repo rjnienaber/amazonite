@@ -50,5 +50,7 @@ module Amazonite::CloudWatchLogsV1
       @destination_prefix : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@task_name, @log_group_name, @log_stream_name_prefix, @from, @to, @destination, @destination_prefix)
   end
 end

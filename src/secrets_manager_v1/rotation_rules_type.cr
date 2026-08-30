@@ -58,5 +58,7 @@ module Amazonite::SecretsManagerV1
       @schedule_expression : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@automatically_after_days, @duration, @schedule_expression)
   end
 end

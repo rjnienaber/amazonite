@@ -32,5 +32,7 @@ module Amazonite::SsmV1
       @sync_source : ResourceDataSyncSource | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@sync_name, @s3_destination, @sync_type, @sync_source)
   end
 end

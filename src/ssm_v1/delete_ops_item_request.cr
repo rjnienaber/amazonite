@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @ops_item_id : String,
     )
     end
+
+    def_equals_and_hash(@ops_item_id)
   end
 end

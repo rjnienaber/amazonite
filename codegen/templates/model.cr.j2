@@ -27,6 +27,8 @@
         {{ read.name }}: {{ read.expr }},{% endfor %}
       )
     end
+
+    def_equals_and_hash({% for member in shape.members %}@{{ member.snake_case_name }}, {% endfor %})
 {% else -%}
     include JSON::Serializable
 {% for member in shape.members %}
@@ -38,6 +40,8 @@
       @{{ parameter.name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %},{% endfor %}
     ){% endif %}
     end
+
+    def_equals_and_hash({% for member in shape.members %}@{{ member.snake_case_name }}, {% endfor %})
 {% endif -%}
   end
 end

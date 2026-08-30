@@ -25,5 +25,7 @@ module Amazonite::StsV1
         access_key_id: Core::XMLValue.string(node.xpath_node("*[local-name()='AccessKeyId']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@access_key_id)
   end
 end

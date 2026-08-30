@@ -57,5 +57,7 @@ module Amazonite::SsmV1
       @upload_type : ComplianceUploadType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@resource_id, @resource_type, @compliance_type, @execution_summary, @items, @item_content_hash, @upload_type)
   end
 end

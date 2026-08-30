@@ -23,5 +23,7 @@ module Amazonite::SsmV1
       @type : AssociationFilterOperatorType,
     )
     end
+
+    def_equals_and_hash(@key, @value, @type)
   end
 end

@@ -39,5 +39,7 @@ module Amazonite::IamV1
         resources: node.xpath_nodes("*[local-name()='Resources']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@region, @resources)
   end
 end

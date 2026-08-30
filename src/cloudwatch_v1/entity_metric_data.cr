@@ -17,5 +17,7 @@ module Amazonite::CloudWatchV1
       @metric_data : Array(MetricDatum) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@entity, @metric_data)
   end
 end

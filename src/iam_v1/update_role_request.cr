@@ -55,5 +55,7 @@ module Amazonite::IamV1
         max_session_duration: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxSessionDuration']")),
       )
     end
+
+    def_equals_and_hash(@role_name, @description, @max_session_duration)
   end
 end

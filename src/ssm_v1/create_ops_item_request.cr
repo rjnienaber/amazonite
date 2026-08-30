@@ -148,5 +148,7 @@ module Amazonite::SsmV1
       @account_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@description, @ops_item_type, @operational_data, @notifications, @priority, @related_ops_items, @source, @title, @tags, @category, @severity, @actual_start_time, @actual_end_time, @planned_start_time, @planned_end_time, @account_id)
   end
 end

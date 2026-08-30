@@ -37,5 +37,7 @@ module Amazonite::KmsV1
       @on_demand_rotation_start_date : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_rotation_enabled, @key_id, @rotation_period_in_days, @next_rotation_date, @on_demand_rotation_start_date)
   end
 end

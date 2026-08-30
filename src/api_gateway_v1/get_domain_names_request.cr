@@ -24,5 +24,7 @@ module Amazonite::ApiGatewayV1
       @resource_owner : ResourceOwner | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@position, @limit, @resource_owner)
   end
 end

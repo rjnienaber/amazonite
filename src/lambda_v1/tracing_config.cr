@@ -14,5 +14,7 @@ module Amazonite::LambdaV1
       @mode : TracingMode | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@mode)
   end
 end

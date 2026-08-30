@@ -27,5 +27,7 @@ module Amazonite::CloudWatchLogsV1
       @deletion_protection_enabled : Bool,
     )
     end
+
+    def_equals_and_hash(@log_group_identifier, @deletion_protection_enabled)
   end
 end

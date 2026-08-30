@@ -37,5 +37,7 @@ module Amazonite::LambdaV1
       @resolved_s3_object : ResolvedS3Object | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@location, @code_sha_256, @code_size, @signing_profile_version_arn, @signing_job_arn, @resolved_s3_object)
   end
 end

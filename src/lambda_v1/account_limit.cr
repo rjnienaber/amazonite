@@ -33,5 +33,7 @@ module Amazonite::LambdaV1
       @unreserved_concurrent_executions : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@total_code_size, @code_size_unzipped, @code_size_zipped, @concurrent_executions, @unreserved_concurrent_executions)
   end
 end

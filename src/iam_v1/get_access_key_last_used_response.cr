@@ -40,5 +40,7 @@ module Amazonite::IamV1
         access_key_last_used: node.xpath_node("*[local-name()='AccessKeyLastUsed']").try { |n| AccessKeyLastUsed.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@user_name, @access_key_last_used)
   end
 end

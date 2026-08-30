@@ -56,5 +56,7 @@ module Amazonite::KmsV1
       @grantee_service_principal : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@limit, @marker, @key_id, @grant_id, @grantee_principal, @grantee_service_principal)
   end
 end

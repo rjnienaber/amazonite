@@ -25,5 +25,7 @@ module Amazonite::DynamoDBV2
       @delete : DeleteGlobalTableWitnessGroupMemberAction | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@create, @delete)
   end
 end

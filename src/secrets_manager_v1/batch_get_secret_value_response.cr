@@ -23,5 +23,7 @@ module Amazonite::SecretsManagerV1
       @errors : Array(APIErrorType) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_values, @next_token, @errors)
   end
 end

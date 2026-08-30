@@ -12,5 +12,7 @@ module Amazonite::EventBridgeV1
       @client_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@client_id)
   end
 end

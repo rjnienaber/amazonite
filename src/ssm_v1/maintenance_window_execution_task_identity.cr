@@ -59,5 +59,7 @@ module Amazonite::SsmV1
       @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_execution_id, @task_execution_id, @status, @status_details, @start_time, @end_time, @task_arn, @task_type, @alarm_configuration, @triggered_alarms)
   end
 end

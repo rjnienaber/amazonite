@@ -91,5 +91,7 @@ module Amazonite::KmsV1
       @dry_run : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @plaintext, @encryption_context, @grant_tokens, @encryption_algorithm, @dry_run)
   end
 end

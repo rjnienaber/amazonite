@@ -37,5 +37,7 @@ module Amazonite::DynamoDBV2
       @scale_out_cooldown : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@disable_scale_in, @scale_in_cooldown, @scale_out_cooldown, @target_value)
   end
 end

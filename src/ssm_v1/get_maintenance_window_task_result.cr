@@ -124,5 +124,7 @@ module Amazonite::SsmV1
       @alarm_configuration : AlarmConfiguration | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_id, @window_task_id, @targets, @task_arn, @service_role_arn, @task_type, @task_parameters, @task_invocation_parameters, @priority, @max_concurrency, @max_errors, @logging_info, @name, @description, @cutoff_behavior, @alarm_configuration)
   end
 end

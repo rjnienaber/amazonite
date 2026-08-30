@@ -48,5 +48,7 @@ module Amazonite::CloudWatchLogsV1
       @log_event_filter_pattern : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_identifiers, @log_stream_names, @log_stream_name_prefixes, @log_event_filter_pattern)
   end
 end

@@ -236,5 +236,7 @@ module Amazonite::SsmV1
       @association_dispatch_assume_role : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @document_version, @instance_id, @parameters, @targets, @schedule_expression, @output_location, @association_name, @automation_target_parameter_name, @max_errors, @max_concurrency, @compliance_severity, @sync_compliance, @apply_only_at_cron_interval, @calendar_names, @target_locations, @schedule_offset, @duration, @target_maps, @tags, @alarm_configuration, @association_dispatch_assume_role)
   end
 end

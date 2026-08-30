@@ -32,5 +32,7 @@ module Amazonite::ApiGatewayV1
       @vpc_endpoint_ids : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@types, @ip_address_type, @vpc_endpoint_ids)
   end
 end

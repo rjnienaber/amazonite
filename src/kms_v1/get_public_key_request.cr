@@ -38,5 +38,7 @@ module Amazonite::KmsV1
       @grant_tokens : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @grant_tokens)
   end
 end

@@ -44,5 +44,7 @@ module Amazonite::StsV1
         value: Core::XMLValue.string(node.xpath_node("*[local-name()='Value']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@key, @value)
   end
 end

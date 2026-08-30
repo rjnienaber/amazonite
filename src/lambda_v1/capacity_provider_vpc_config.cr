@@ -18,5 +18,7 @@ module Amazonite::LambdaV1
       @security_group_ids : Array(String),
     )
     end
+
+    def_equals_and_hash(@subnet_ids, @security_group_ids)
   end
 end

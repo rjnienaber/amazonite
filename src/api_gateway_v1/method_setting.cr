@@ -65,5 +65,7 @@ module Amazonite::ApiGatewayV1
       @unauthorized_cache_control_header_strategy : UnauthorizedCacheControlHeaderStrategy | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@metrics_enabled, @logging_level, @data_trace_enabled, @throttling_burst_limit, @throttling_rate_limit, @caching_enabled, @cache_ttl_in_seconds, @cache_data_encrypted, @require_authorization_for_cache_control, @unauthorized_cache_control_header_strategy)
   end
 end

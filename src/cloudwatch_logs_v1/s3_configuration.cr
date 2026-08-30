@@ -28,5 +28,7 @@ module Amazonite::CloudWatchLogsV1
       @kms_key_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@destination_identifier, @role_arn, @owner_account_id, @kms_key_id)
   end
 end

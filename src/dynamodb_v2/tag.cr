@@ -28,5 +28,7 @@ module Amazonite::DynamoDBV2
       @value : String,
     )
     end
+
+    def_equals_and_hash(@key, @value)
   end
 end

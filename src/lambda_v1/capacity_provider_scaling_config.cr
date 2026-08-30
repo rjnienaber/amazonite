@@ -26,5 +26,7 @@ module Amazonite::LambdaV1
       @scaling_policies : Array(TargetTrackingScalingPolicy) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@max_v_cpu_count, @scaling_mode, @scaling_policies)
   end
 end

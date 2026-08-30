@@ -114,5 +114,7 @@ module Amazonite::CloudWatchLogsV1
       @delivery_source_configuration : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @resource_arn, @log_type, @tags, @delivery_source_configuration)
   end
 end

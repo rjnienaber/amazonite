@@ -34,5 +34,7 @@ module Amazonite::DynamoDBV2
       @scaling_policy_update : AutoScalingPolicyUpdate | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@minimum_units, @maximum_units, @auto_scaling_disabled, @auto_scaling_role_arn, @scaling_policy_update)
   end
 end

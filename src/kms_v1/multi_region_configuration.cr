@@ -28,5 +28,7 @@ module Amazonite::KmsV1
       @replica_keys : Array(MultiRegionKey) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@multi_region_key_type, @primary_key, @replica_keys)
   end
 end

@@ -97,5 +97,7 @@ module Amazonite::CloudWatchV1
       @include_linked_accounts_metrics : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @include_filters, @exclude_filters, @firehose_arn, @role_arn, @output_format, @tags, @statistics_configurations, @include_linked_accounts_metrics)
   end
 end

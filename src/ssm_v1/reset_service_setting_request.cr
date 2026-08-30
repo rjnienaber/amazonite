@@ -32,5 +32,7 @@ module Amazonite::SsmV1
       @setting_id : String,
     )
     end
+
+    def_equals_and_hash(@setting_id)
   end
 end

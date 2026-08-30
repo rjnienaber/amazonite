@@ -22,5 +22,7 @@ module Amazonite::CloudFormationV1
         stack_resource_drift: node.xpath_node("*[local-name()='StackResourceDrift']").try { |n| StackResourceDrift.from_xml(n) }.not_nil!,
       )
     end
+
+    def_equals_and_hash(@stack_resource_drift)
   end
 end

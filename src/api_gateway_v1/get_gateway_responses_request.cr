@@ -26,5 +26,7 @@ module Amazonite::ApiGatewayV1
       @limit : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@rest_api_id, @position, @limit)
   end
 end

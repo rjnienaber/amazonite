@@ -43,5 +43,7 @@ module Amazonite::IamV1
         attachment_name: Core::XMLValue.string(node.xpath_node("*[local-name()='AttachmentName']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@policy_name, @attachment_type, @attachment_name)
   end
 end

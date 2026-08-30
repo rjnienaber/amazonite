@@ -23,5 +23,7 @@ module Amazonite::LambdaV1
       @runtime_version_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@update_runtime_on, @function_arn, @runtime_version_arn)
   end
 end

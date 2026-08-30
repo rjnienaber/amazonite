@@ -160,5 +160,7 @@ module Amazonite::LambdaV1
       @invocation_completed_details : InvocationCompletedDetails | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@event_type, @sub_type, @event_id, @id, @name, @event_timestamp, @parent_id, @execution_started_details, @execution_succeeded_details, @execution_failed_details, @execution_timed_out_details, @execution_stopped_details, @context_started_details, @context_succeeded_details, @context_failed_details, @wait_started_details, @wait_succeeded_details, @wait_cancelled_details, @step_started_details, @step_succeeded_details, @step_failed_details, @chained_invoke_started_details, @chained_invoke_succeeded_details, @chained_invoke_failed_details, @chained_invoke_timed_out_details, @chained_invoke_stopped_details, @callback_started_details, @callback_succeeded_details, @callback_failed_details, @callback_timed_out_details, @invocation_completed_details)
   end
 end

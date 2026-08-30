@@ -24,5 +24,7 @@ module Amazonite::LambdaV1
       @working_directory : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@entry_point, @command, @working_directory)
   end
 end

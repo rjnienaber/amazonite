@@ -22,5 +22,7 @@ module Amazonite::SsmV1
       @non_compliant_summary : NonCompliantSummary | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@compliance_type, @compliant_summary, @non_compliant_summary)
   end
 end

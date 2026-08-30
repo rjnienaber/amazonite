@@ -89,5 +89,7 @@ module Amazonite::CloudWatchLogsV1
       @status_reason : DeliverySourceStatusReason | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @arn, @resource_arns, @service, @log_type, @tags, @delivery_source_configuration, @status, @status_reason)
   end
 end

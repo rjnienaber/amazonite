@@ -17,5 +17,7 @@ module Amazonite::EventBridgeV1
       @secondary : Secondary,
     )
     end
+
+    def_equals_and_hash(@primary, @secondary)
   end
 end

@@ -16,5 +16,7 @@ module Amazonite::DynamoDBV2
       @exception_description : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@exception_name, @exception_description)
   end
 end

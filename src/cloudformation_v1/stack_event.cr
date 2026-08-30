@@ -205,5 +205,7 @@ module Amazonite::CloudFormationV1
         detailed_status: (n = node.xpath_node("*[local-name()='DetailedStatus']")) ? ACF::DetailedStatus.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@stack_id, @event_id, @stack_name, @operation_id, @logical_resource_id, @physical_resource_id, @resource_type, @timestamp, @resource_status, @resource_status_reason, @resource_properties, @client_request_token, @hook_type, @hook_status, @hook_status_reason, @hook_invocation_point, @hook_invocation_id, @hook_failure_mode, @detailed_status)
   end
 end

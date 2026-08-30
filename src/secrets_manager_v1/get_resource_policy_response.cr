@@ -22,5 +22,7 @@ module Amazonite::SecretsManagerV1
       @resource_policy : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@arn, @name, @resource_policy)
   end
 end

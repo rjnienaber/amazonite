@@ -10,5 +10,7 @@ module Amazonite::DynamoDBV2
       @backup_arn : String,
     )
     end
+
+    def_equals_and_hash(@backup_arn)
   end
 end

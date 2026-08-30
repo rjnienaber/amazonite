@@ -18,5 +18,7 @@ module Amazonite::CloudWatchLogsV1
       @lookup_table_configuration : LookupTableConfiguration | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@s3_configuration, @lookup_table_configuration)
   end
 end

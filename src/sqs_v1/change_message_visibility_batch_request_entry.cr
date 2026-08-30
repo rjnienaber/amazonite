@@ -26,5 +26,7 @@ module Amazonite::SqsV1
       @visibility_timeout : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @receipt_handle, @visibility_timeout)
   end
 end

@@ -25,5 +25,7 @@ module Amazonite::CloudFormationV1
         registration_token: Core::XMLValue.string(node.xpath_node("*[local-name()='RegistrationToken']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@registration_token)
   end
 end

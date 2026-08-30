@@ -18,5 +18,7 @@ module Amazonite::CloudWatchLogsV1
       @entries : Array(TypeConverterEntry),
     )
     end
+
+    def_equals_and_hash(@entries)
   end
 end

@@ -29,5 +29,7 @@ module Amazonite::CloudWatchLogsV1
       @limit : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@task_id, @status_code, @next_token, @limit)
   end
 end

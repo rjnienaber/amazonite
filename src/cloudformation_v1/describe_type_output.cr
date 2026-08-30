@@ -388,5 +388,7 @@ module Amazonite::CloudFormationV1
         auto_update: Core::XMLValue.bool(node.xpath_node("*[local-name()='AutoUpdate']")),
       )
     end
+
+    def_equals_and_hash(@arn, @type, @type_name, @default_version_id, @is_default_version, @type_tests_status, @type_tests_status_description, @description, @schema, @provisioning_type, @deprecated_status, @logging_config, @required_activated_types, @execution_role_arn, @visibility, @source_url, @documentation_url, @last_updated, @time_created, @configuration_schema, @publisher_id, @original_type_name, @original_type_arn, @public_version_number, @latest_public_version, @is_activated, @auto_update)
   end
 end

@@ -76,5 +76,7 @@ module Amazonite::IamV1
         add_private_key: Core::XMLValue.string(node.xpath_node("*[local-name()='AddPrivateKey']")),
       )
     end
+
+    def_equals_and_hash(@saml_metadata_document, @name, @tags, @assertion_encryption_mode, @add_private_key)
   end
 end

@@ -18,5 +18,7 @@ module Amazonite::LambdaV1
       @next_marker : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@operations, @next_marker)
   end
 end

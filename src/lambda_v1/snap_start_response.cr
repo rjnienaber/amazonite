@@ -22,5 +22,7 @@ module Amazonite::LambdaV1
       @optimization_status : SnapStartOptimizationStatus | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@apply_on, @optimization_status)
   end
 end

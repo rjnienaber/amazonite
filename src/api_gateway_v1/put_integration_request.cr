@@ -141,5 +141,7 @@ module Amazonite::ApiGatewayV1
       @integration_target : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@rest_api_id, @resource_id, @http_method, @type, @integration_http_method, @uri, @connection_type, @connection_id, @credentials, @request_parameters, @request_templates, @passthrough_behavior, @cache_namespace, @cache_key_parameters, @content_handling, @timeout_in_millis, @tls_config, @response_transfer_mode, @integration_target)
   end
 end

@@ -27,5 +27,7 @@ module Amazonite::DynamoDBV2
       @warm_throughput : GlobalSecondaryIndexWarmThroughputDescription | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@index_name, @provisioned_throughput_override, @on_demand_throughput_override, @warm_throughput)
   end
 end

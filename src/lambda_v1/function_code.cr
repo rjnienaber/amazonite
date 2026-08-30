@@ -55,5 +55,7 @@ module Amazonite::LambdaV1
       @source_kms_key_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@zip_file, @s3_bucket, @s3_key, @s3_object_version, @s3_object_storage_mode, @image_uri, @source_kms_key_arn)
   end
 end

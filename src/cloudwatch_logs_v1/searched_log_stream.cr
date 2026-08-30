@@ -16,5 +16,7 @@ module Amazonite::CloudWatchLogsV1
       @searched_completely : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_stream_name, @searched_completely)
   end
 end

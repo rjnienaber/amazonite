@@ -41,5 +41,7 @@ module Amazonite::DynamoDBV2
       @vector_indexes : Array(VectorIndexInfo) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@local_secondary_indexes, @global_secondary_indexes, @stream_description, @time_to_live_description, @sse_description, @vector_indexes)
   end
 end

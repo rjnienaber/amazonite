@@ -142,5 +142,7 @@ module Amazonite::KmsV1
       @xks_proxy_connectivity : XksProxyConnectivityType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@custom_key_store_id, @new_custom_key_store_name, @key_store_password, @cloud_hsm_cluster_id, @xks_proxy_uri_endpoint, @xks_proxy_uri_path, @xks_proxy_vpc_endpoint_service_name, @xks_proxy_vpc_endpoint_service_owner, @xks_proxy_authentication_credential, @xks_proxy_connectivity)
   end
 end

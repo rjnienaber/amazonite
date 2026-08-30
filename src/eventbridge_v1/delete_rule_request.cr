@@ -24,5 +24,7 @@ module Amazonite::EventBridgeV1
       @force : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @event_bus_name, @force)
   end
 end

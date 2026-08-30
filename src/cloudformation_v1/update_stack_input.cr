@@ -363,5 +363,7 @@ module Amazonite::CloudFormationV1
         disable_validation: Core::XMLValue.bool(node.xpath_node("*[local-name()='DisableValidation']")),
       )
     end
+
+    def_equals_and_hash(@stack_name, @template_body, @template_url, @use_previous_template, @stack_policy_during_update_body, @stack_policy_during_update_url, @parameters, @capabilities, @resource_types, @role_arn, @rollback_configuration, @stack_policy_body, @stack_policy_url, @notification_ar_ns, @tags, @disable_rollback, @client_request_token, @retain_except_on_create, @deployment_config, @disable_validation)
   end
 end

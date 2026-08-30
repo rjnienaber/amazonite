@@ -45,5 +45,7 @@ module Amazonite::SsmV1
       @payload : Bytes | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@client_context, @qualifier, @payload)
   end
 end

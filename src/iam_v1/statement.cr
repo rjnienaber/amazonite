@@ -58,5 +58,7 @@ module Amazonite::IamV1
         end_position: node.xpath_node("*[local-name()='EndPosition']").try { |n| Position.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@source_policy_id, @source_policy_type, @start_position, @end_position)
   end
 end

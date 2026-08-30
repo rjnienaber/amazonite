@@ -27,5 +27,7 @@ module Amazonite::DynamoDBV2
       @update : Update | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@condition_check, @put, @delete, @update)
   end
 end

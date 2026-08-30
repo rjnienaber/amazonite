@@ -68,5 +68,7 @@ module Amazonite::CloudFormationV1
         declared_transforms: node.xpath_nodes("*[local-name()='DeclaredTransforms']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@parameters, @description, @capabilities, @capabilities_reason, @declared_transforms)
   end
 end

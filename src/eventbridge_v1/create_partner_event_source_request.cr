@@ -19,5 +19,7 @@ module Amazonite::EventBridgeV1
       @account : String,
     )
     end
+
+    def_equals_and_hash(@name, @account)
   end
 end

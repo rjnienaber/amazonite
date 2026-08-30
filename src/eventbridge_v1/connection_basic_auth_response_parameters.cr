@@ -11,5 +11,7 @@ module Amazonite::EventBridgeV1
       @username : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@username)
   end
 end

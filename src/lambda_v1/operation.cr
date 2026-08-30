@@ -80,5 +80,7 @@ module Amazonite::LambdaV1
       @chained_invoke_details : ChainedInvokeDetails | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @parent_id, @name, @type, @sub_type, @start_timestamp, @end_timestamp, @status, @execution_details, @context_details, @step_details, @wait_details, @callback_details, @chained_invoke_details)
   end
 end

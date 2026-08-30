@@ -13,5 +13,7 @@ module Amazonite::CloudWatchLogsV1
       @open_search_resource_config : OpenSearchResourceConfig | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@open_search_resource_config)
   end
 end

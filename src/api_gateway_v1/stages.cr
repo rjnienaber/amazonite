@@ -11,5 +11,7 @@ module Amazonite::ApiGatewayV1
       @item : Array(Stage) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@item)
   end
 end

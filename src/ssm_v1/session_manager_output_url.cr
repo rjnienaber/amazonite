@@ -16,5 +16,7 @@ module Amazonite::SsmV1
       @cloud_watch_output_url : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@s3_output_url, @cloud_watch_output_url)
   end
 end

@@ -21,5 +21,7 @@ module Amazonite::CloudWatchLogsV1
       @extracted_values : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@event_number, @event_message, @extracted_values)
   end
 end

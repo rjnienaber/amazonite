@@ -21,5 +21,7 @@ module Amazonite::LambdaV1
       @schema_registry_config : KafkaSchemaRegistryConfig | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@consumer_group_id, @schema_registry_config)
   end
 end

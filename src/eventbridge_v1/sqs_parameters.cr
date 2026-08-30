@@ -11,5 +11,7 @@ module Amazonite::EventBridgeV1
       @message_group_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@message_group_id)
   end
 end

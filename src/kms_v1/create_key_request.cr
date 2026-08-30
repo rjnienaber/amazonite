@@ -324,5 +324,7 @@ module Amazonite::KmsV1
       @xks_key_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@policy, @description, @key_usage, @customer_master_key_spec, @key_spec, @origin, @custom_key_store_id, @bypass_policy_lockout_safety_check, @tags, @multi_region, @xks_key_id)
   end
 end

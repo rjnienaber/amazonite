@@ -39,5 +39,7 @@ module Amazonite::CloudWatchLogsV1
       @kms_key_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@lookup_table_arn, @description, @table_body, @query_id, @kms_key_id)
   end
 end

@@ -21,5 +21,7 @@ module Amazonite::DynamoDBV2
       @update_kinesis_streaming_configuration : UpdateKinesisStreamingConfiguration | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @stream_arn, @update_kinesis_streaming_configuration)
   end
 end

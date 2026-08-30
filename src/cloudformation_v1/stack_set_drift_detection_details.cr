@@ -134,5 +134,7 @@ module Amazonite::CloudFormationV1
         failed_stack_instances_count: Core::XMLValue.i32(node.xpath_node("*[local-name()='FailedStackInstancesCount']")),
       )
     end
+
+    def_equals_and_hash(@drift_status, @drift_detection_status, @last_drift_check_timestamp, @total_stack_instances_count, @drifted_stack_instances_count, @in_sync_stack_instances_count, @in_progress_stack_instances_count, @failed_stack_instances_count)
   end
 end

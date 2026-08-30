@@ -28,5 +28,7 @@ module Amazonite::StsV1
         credentials: node.xpath_node("*[local-name()='Credentials']").try { |n| Credentials.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@credentials)
   end
 end

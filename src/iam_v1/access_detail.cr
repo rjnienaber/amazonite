@@ -98,5 +98,7 @@ module Amazonite::IamV1
         total_authenticated_entities: Core::XMLValue.i32(node.xpath_node("*[local-name()='TotalAuthenticatedEntities']")),
       )
     end
+
+    def_equals_and_hash(@service_name, @service_namespace, @region, @entity_path, @last_authenticated_time, @total_authenticated_entities)
   end
 end

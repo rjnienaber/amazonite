@@ -13,5 +13,7 @@ module Amazonite::LambdaV1
       @target_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@target_arn)
   end
 end

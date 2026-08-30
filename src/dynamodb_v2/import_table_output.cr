@@ -12,5 +12,7 @@ module Amazonite::DynamoDBV2
       @import_table_description : ImportTableDescription,
     )
     end
+
+    def_equals_and_hash(@import_table_description)
   end
 end

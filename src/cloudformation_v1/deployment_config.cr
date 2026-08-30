@@ -45,5 +45,7 @@ module Amazonite::CloudFormationV1
         disable_rollback: Core::XMLValue.bool(node.xpath_node("*[local-name()='DisableRollback']")),
       )
     end
+
+    def_equals_and_hash(@mode, @disable_rollback)
   end
 end

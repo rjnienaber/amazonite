@@ -22,5 +22,7 @@ module Amazonite::IamV1
         group: node.xpath_node("*[local-name()='Group']").try { |n| Group.from_xml(n) }.not_nil!,
       )
     end
+
+    def_equals_and_hash(@group)
   end
 end

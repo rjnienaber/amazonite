@@ -45,5 +45,7 @@ module Amazonite::SsmV1
       @value : String,
     )
     end
+
+    def_equals_and_hash(@key, @value)
   end
 end

@@ -31,5 +31,7 @@ module Amazonite::EventBridgeV1
       @retry_strategy : BatchRetryStrategy | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@job_definition, @job_name, @array_properties, @retry_strategy)
   end
 end

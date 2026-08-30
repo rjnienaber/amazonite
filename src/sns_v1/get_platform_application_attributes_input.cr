@@ -23,5 +23,7 @@ module Amazonite::SnsV1
         platform_application_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='PlatformApplicationArn']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@platform_application_arn)
   end
 end

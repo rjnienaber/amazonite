@@ -56,5 +56,7 @@ module Amazonite::CloudWatchLogsV1
       @emit_system_field_dimensions : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@filter_name, @filter_pattern, @metric_transformations, @creation_time, @log_group_name, @apply_on_transformed_logs, @field_selection_criteria, @emit_system_field_dimensions)
   end
 end

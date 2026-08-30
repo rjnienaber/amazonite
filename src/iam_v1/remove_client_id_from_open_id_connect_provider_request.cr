@@ -38,5 +38,7 @@ module Amazonite::IamV1
         client_id: Core::XMLValue.string(node.xpath_node("*[local-name()='ClientID']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@open_id_connect_provider_arn, @client_id)
   end
 end

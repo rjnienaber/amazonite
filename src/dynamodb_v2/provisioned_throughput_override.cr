@@ -13,5 +13,7 @@ module Amazonite::DynamoDBV2
       @read_capacity_units : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@read_capacity_units)
   end
 end

@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @ops_metadata_arn : String,
     )
     end
+
+    def_equals_and_hash(@ops_metadata_arn)
   end
 end

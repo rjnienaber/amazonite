@@ -24,5 +24,7 @@ module Amazonite::SsmV1
       @type : NodeFilterOperatorType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key, @values, @type)
   end
 end

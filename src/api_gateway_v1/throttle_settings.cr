@@ -17,5 +17,7 @@ module Amazonite::ApiGatewayV1
       @rate_limit : Float64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@burst_limit, @rate_limit)
   end
 end

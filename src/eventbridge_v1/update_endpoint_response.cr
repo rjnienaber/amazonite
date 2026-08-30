@@ -52,5 +52,7 @@ module Amazonite::EventBridgeV1
       @state : EndpointState | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @arn, @routing_config, @replication_config, @event_buses, @role_arn, @endpoint_id, @endpoint_url, @state)
   end
 end

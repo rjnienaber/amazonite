@@ -83,5 +83,7 @@ module Amazonite::IamV1
         service_name: Core::XMLValue.string(node.xpath_node("*[local-name()='ServiceName']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@user_name, @status, @service_user_name, @service_credential_alias, @create_date, @expiration_date, @service_specific_credential_id, @service_name)
   end
 end

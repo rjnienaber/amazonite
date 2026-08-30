@@ -34,5 +34,7 @@ module Amazonite::KmsV1
       @kms_request_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@operation, @timestamp, @cloud_trail_event_id, @kms_request_id)
   end
 end

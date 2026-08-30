@@ -97,5 +97,7 @@ module Amazonite::SecretsManagerV1
       @rotate_immediately : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_id, @client_request_token, @rotation_lambda_arn, @rotation_rules, @external_secret_rotation_metadata, @external_secret_rotation_role_arn, @rotate_immediately)
   end
 end

@@ -41,5 +41,7 @@ module Amazonite::SsmV1
       @target_locations_url : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@parameters, @target_parameter_name, @targets, @target_maps, @target_locations, @target_locations_url)
   end
 end

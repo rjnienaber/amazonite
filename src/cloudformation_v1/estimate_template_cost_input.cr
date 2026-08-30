@@ -52,5 +52,7 @@ module Amazonite::CloudFormationV1
         parameters: node.xpath_nodes("*[local-name()='Parameters']/*[local-name()='member']").map { |n| Parameter.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@template_body, @template_url, @parameters)
   end
 end

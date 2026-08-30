@@ -21,5 +21,7 @@ module Amazonite::SqsV1
       @queue_owner_aws_account_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@queue_name, @queue_owner_aws_account_id)
   end
 end

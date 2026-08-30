@@ -40,5 +40,7 @@ module Amazonite::DynamoDBV2
       @key_type : KeyType,
     )
     end
+
+    def_equals_and_hash(@attribute_name, @key_type)
   end
 end

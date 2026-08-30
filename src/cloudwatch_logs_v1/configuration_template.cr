@@ -91,5 +91,7 @@ module Amazonite::CloudWatchLogsV1
       @s3_tables_integration : S3TablesIntegration | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@service, @log_type, @resource_type, @delivery_destination_type, @default_delivery_config_values, @allowed_fields, @allowed_output_formats, @allowed_action_for_allow_vended_logs_delivery_for_resource, @allowed_field_delimiters, @allowed_suffix_path_fields, @delivery_source_configuration, @s3_tables_integration)
   end
 end

@@ -107,5 +107,7 @@ module Amazonite::SecretsManagerV1
       @rotation_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_id, @client_request_token, @secret_binary, @secret_string, @version_stages, @rotation_token)
   end
 end

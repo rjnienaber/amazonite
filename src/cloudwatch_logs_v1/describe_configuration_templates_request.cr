@@ -42,5 +42,7 @@ module Amazonite::CloudWatchLogsV1
       @limit : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@service, @log_types, @resource_types, @delivery_destination_types, @next_token, @limit)
   end
 end

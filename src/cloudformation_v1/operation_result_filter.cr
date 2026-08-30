@@ -35,5 +35,7 @@ module Amazonite::CloudFormationV1
         values: Core::XMLValue.string(node.xpath_node("*[local-name()='Values']")),
       )
     end
+
+    def_equals_and_hash(@name, @values)
   end
 end

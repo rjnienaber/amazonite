@@ -30,5 +30,7 @@ module Amazonite::DynamoDBV2
       @contributor_insights_mode : ContributorInsightsMode | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @index_name, @contributor_insights_status, @contributor_insights_mode)
   end
 end

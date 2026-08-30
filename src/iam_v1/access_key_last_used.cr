@@ -69,5 +69,7 @@ module Amazonite::IamV1
         region: Core::XMLValue.string(node.xpath_node("*[local-name()='Region']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@last_used_date, @service_name, @region)
   end
 end

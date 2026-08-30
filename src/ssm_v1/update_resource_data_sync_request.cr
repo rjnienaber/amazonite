@@ -20,5 +20,7 @@ module Amazonite::SsmV1
       @sync_source : ResourceDataSyncSource,
     )
     end
+
+    def_equals_and_hash(@sync_name, @sync_type, @sync_source)
   end
 end

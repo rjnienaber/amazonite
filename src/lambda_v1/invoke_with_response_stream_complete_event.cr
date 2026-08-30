@@ -21,5 +21,7 @@ module Amazonite::LambdaV1
       @log_result : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@error_code, @error_details, @log_result)
   end
 end

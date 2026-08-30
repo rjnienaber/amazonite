@@ -21,5 +21,7 @@ module Amazonite::ApiGatewayV1
       @throttle : Hash(String, ThrottleSettings) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@api_id, @stage, @throttle)
   end
 end

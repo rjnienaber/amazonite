@@ -15,5 +15,7 @@ module Amazonite::LambdaV1
       @revision_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@statement, @revision_id)
   end
 end

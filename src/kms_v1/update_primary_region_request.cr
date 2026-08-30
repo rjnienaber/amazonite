@@ -29,5 +29,7 @@ module Amazonite::KmsV1
       @primary_region : String,
     )
     end
+
+    def_equals_and_hash(@key_id, @primary_region)
   end
 end

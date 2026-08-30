@@ -37,5 +37,7 @@ module Amazonite::CloudWatchV1
       @last_updated_timestamp : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@alarm_mute_rule_arn, @expire_date, @status, @mute_type, @last_updated_timestamp)
   end
 end

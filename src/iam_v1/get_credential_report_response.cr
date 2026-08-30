@@ -47,5 +47,7 @@ module Amazonite::IamV1
         generated_time: Core::XMLValue.time(node.xpath_node("*[local-name()='GeneratedTime']")),
       )
     end
+
+    def_equals_and_hash(@content, @report_format, @generated_time)
   end
 end

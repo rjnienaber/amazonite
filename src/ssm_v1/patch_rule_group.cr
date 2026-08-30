@@ -11,5 +11,7 @@ module Amazonite::SsmV1
       @patch_rules : Array(PatchRule),
     )
     end
+
+    def_equals_and_hash(@patch_rules)
   end
 end

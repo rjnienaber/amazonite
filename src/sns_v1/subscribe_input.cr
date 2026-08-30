@@ -162,5 +162,7 @@ module Amazonite::SnsV1
         return_subscription_arn: Core::XMLValue.bool(node.xpath_node("*[local-name()='ReturnSubscriptionArn']")),
       )
     end
+
+    def_equals_and_hash(@topic_arn, @protocol, @endpoint, @attributes, @return_subscription_arn)
   end
 end

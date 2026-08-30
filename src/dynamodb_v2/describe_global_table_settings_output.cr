@@ -15,5 +15,7 @@ module Amazonite::DynamoDBV2
       @replica_settings : Array(ReplicaSettingsDescription) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@global_table_name, @replica_settings)
   end
 end

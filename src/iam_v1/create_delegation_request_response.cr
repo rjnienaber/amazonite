@@ -39,5 +39,7 @@ module Amazonite::IamV1
         delegation_request_id: Core::XMLValue.string(node.xpath_node("*[local-name()='DelegationRequestId']")),
       )
     end
+
+    def_equals_and_hash(@console_deep_link, @delegation_request_id)
   end
 end

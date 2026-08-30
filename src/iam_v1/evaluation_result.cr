@@ -165,5 +165,7 @@ module Amazonite::IamV1
         resource_specific_results: node.xpath_nodes("*[local-name()='ResourceSpecificResults']/*[local-name()='member']").map { |n| ResourceSpecificResult.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@eval_action_name, @eval_resource_name, @eval_decision, @matched_statements, @missing_context_values, @organizations_decision_detail, @permissions_boundary_decision_detail, @eval_decision_details, @resource_specific_results)
   end
 end

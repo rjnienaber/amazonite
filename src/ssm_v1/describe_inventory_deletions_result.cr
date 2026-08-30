@@ -15,5 +15,7 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@inventory_deletions, @next_token)
   end
 end

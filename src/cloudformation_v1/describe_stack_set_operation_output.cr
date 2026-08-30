@@ -22,5 +22,7 @@ module Amazonite::CloudFormationV1
         stack_set_operation: node.xpath_node("*[local-name()='StackSetOperation']").try { |n| StackSetOperation.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@stack_set_operation)
   end
 end

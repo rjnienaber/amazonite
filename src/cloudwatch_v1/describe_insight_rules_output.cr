@@ -16,5 +16,7 @@ module Amazonite::CloudWatchV1
       @insight_rules : Array(InsightRule) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_token, @insight_rules)
   end
 end

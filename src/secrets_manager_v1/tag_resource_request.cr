@@ -26,5 +26,7 @@ module Amazonite::SecretsManagerV1
       @tags : Array(Tag),
     )
     end
+
+    def_equals_and_hash(@secret_id, @tags)
   end
 end

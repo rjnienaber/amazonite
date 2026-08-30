@@ -42,5 +42,7 @@ module Amazonite::SecretsManagerV1
       @sort_by : SortByType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@include_planned_deletion, @max_results, @next_token, @filters, @sort_order, @sort_by)
   end
 end

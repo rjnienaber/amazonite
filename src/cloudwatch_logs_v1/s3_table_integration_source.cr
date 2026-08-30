@@ -39,5 +39,7 @@ module Amazonite::CloudWatchLogsV1
       @parent_source_identifier : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@identifier, @data_source, @status, @status_reason, @created_time_stamp, @parent_source_identifier)
   end
 end

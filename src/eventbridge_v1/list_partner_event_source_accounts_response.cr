@@ -21,5 +21,7 @@ module Amazonite::EventBridgeV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@partner_event_source_accounts, @next_token)
   end
 end

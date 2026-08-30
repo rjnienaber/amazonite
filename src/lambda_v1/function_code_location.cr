@@ -44,5 +44,7 @@ module Amazonite::LambdaV1
       @error : FunctionCodeLocationError | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@repository_type, @location, @image_uri, @resolved_image_uri, @resolved_s3_object, @source_kms_key_arn, @error)
   end
 end

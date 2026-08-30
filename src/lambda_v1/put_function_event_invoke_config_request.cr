@@ -57,5 +57,7 @@ module Amazonite::LambdaV1
       @destination_config : DestinationConfig | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@function_name, @qualifier, @maximum_retry_attempts, @maximum_event_age_in_seconds, @destination_config)
   end
 end

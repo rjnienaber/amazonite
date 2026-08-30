@@ -36,5 +36,7 @@ module Amazonite::DynamoDBV2
       @replica_table_class : TableClass | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@region_name, @replica_provisioned_read_capacity_units, @replica_provisioned_read_capacity_auto_scaling_settings_update, @replica_global_secondary_index_settings_update, @replica_table_class)
   end
 end

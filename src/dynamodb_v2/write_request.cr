@@ -18,5 +18,7 @@ module Amazonite::DynamoDBV2
       @delete_request : DeleteRequest | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@put_request, @delete_request)
   end
 end

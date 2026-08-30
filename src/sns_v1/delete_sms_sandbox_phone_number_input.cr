@@ -22,5 +22,7 @@ module Amazonite::SnsV1
         phone_number: Core::XMLValue.string(node.xpath_node("*[local-name()='PhoneNumber']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@phone_number)
   end
 end

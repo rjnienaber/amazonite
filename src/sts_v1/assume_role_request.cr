@@ -300,5 +300,7 @@ module Amazonite::StsV1
         provided_contexts: node.xpath_nodes("*[local-name()='ProvidedContexts']/*[local-name()='member']").map { |n| ProvidedContext.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@role_arn, @role_session_name, @policy_arns, @policy, @duration_seconds, @tags, @transitive_tag_keys, @external_id, @serial_number, @token_code, @source_identity, @provided_contexts)
   end
 end

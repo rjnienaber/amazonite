@@ -107,5 +107,7 @@ module Amazonite::CloudWatchLogsV1
       @last_updated_time : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@scheduled_query_arn, @name, @description, @query_language, @query_string, @log_group_identifiers, @schedule_expression, @timezone, @start_time_offset, @end_time_offset, @destination_configuration, @state, @schedule_type, @last_triggered_time, @last_execution_status, @schedule_start_time, @schedule_end_time, @execution_role_arn, @creation_time, @last_updated_time)
   end
 end

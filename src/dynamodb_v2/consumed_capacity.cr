@@ -54,5 +54,7 @@ module Amazonite::DynamoDBV2
       @vector_indexes : Hash(String, VectorCapacity) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @capacity_units, @read_capacity_units, @write_capacity_units, @table, @local_secondary_indexes, @global_secondary_indexes, @vector_indexes)
   end
 end

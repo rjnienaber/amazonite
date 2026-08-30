@@ -26,5 +26,7 @@ module Amazonite::DynamoDBV2
       @size_estimate_range_gb : Array(Float64) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@item_collection_key, @size_estimate_range_gb)
   end
 end

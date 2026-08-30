@@ -45,5 +45,7 @@ module Amazonite::IamV1
         encoding: ((n = node.xpath_node("*[local-name()='Encoding']")) ? AI::EncodingType.from_json_object_key?(n.content) : nil).not_nil!,
       )
     end
+
+    def_equals_and_hash(@user_name, @ssh_public_key_id, @encoding)
   end
 end

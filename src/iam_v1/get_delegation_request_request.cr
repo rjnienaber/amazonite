@@ -38,5 +38,7 @@ module Amazonite::IamV1
         delegation_permission_check: Core::XMLValue.bool(node.xpath_node("*[local-name()='DelegationPermissionCheck']")),
       )
     end
+
+    def_equals_and_hash(@delegation_request_id, @delegation_permission_check)
   end
 end

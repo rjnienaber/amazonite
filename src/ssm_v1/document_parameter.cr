@@ -31,5 +31,7 @@ module Amazonite::SsmV1
       @default_value : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @type, @description, @default_value)
   end
 end

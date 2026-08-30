@@ -38,5 +38,7 @@ module Amazonite::IamV1
         organizations_policy_id: Core::XMLValue.string(node.xpath_node("*[local-name()='OrganizationsPolicyId']")),
       )
     end
+
+    def_equals_and_hash(@entity_path, @organizations_policy_id)
   end
 end

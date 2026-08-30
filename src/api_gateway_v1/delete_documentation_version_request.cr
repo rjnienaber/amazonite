@@ -16,5 +16,7 @@ module Amazonite::ApiGatewayV1
       @documentation_version : String,
     )
     end
+
+    def_equals_and_hash(@rest_api_id, @documentation_version)
   end
 end

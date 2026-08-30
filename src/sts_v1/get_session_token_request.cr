@@ -62,5 +62,7 @@ module Amazonite::StsV1
         token_code: Core::XMLValue.string(node.xpath_node("*[local-name()='TokenCode']")),
       )
     end
+
+    def_equals_and_hash(@duration_seconds, @serial_number, @token_code)
   end
 end

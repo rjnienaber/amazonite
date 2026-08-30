@@ -23,5 +23,7 @@ module Amazonite::EventBridgeV1
       @is_value_secret : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key, @value, @is_value_secret)
   end
 end

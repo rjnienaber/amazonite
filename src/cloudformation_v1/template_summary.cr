@@ -101,5 +101,7 @@ module Amazonite::CloudFormationV1
         number_of_resources: Core::XMLValue.i32(node.xpath_node("*[local-name()='NumberOfResources']")),
       )
     end
+
+    def_equals_and_hash(@generated_template_id, @generated_template_name, @status, @status_reason, @creation_time, @last_updated_time, @number_of_resources)
   end
 end

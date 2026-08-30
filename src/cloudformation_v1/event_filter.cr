@@ -26,5 +26,7 @@ module Amazonite::CloudFormationV1
         failed_events: Core::XMLValue.bool(node.xpath_node("*[local-name()='FailedEvents']")),
       )
     end
+
+    def_equals_and_hash(@failed_events)
   end
 end

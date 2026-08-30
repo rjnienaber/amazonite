@@ -22,5 +22,7 @@ module Amazonite::IamV1
         saml_provider_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='SAMLProviderArn']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@saml_provider_arn)
   end
 end

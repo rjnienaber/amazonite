@@ -12,5 +12,7 @@ module Amazonite::EventBridgeV1
       @pipeline_parameter_list : Array(SageMakerPipelineParameter) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@pipeline_parameter_list)
   end
 end

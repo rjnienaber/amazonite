@@ -57,5 +57,7 @@ module Amazonite::CloudFormationV1
         physical_resource_id: Core::XMLValue.string(node.xpath_node("*[local-name()='PhysicalResourceId']")),
       )
     end
+
+    def_equals_and_hash(@stack_name, @logical_resource_id, @physical_resource_id)
   end
 end

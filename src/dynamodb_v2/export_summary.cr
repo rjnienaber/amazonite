@@ -23,5 +23,7 @@ module Amazonite::DynamoDBV2
       @export_type : ExportType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@export_arn, @export_status, @export_type)
   end
 end

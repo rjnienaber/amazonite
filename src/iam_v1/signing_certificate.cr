@@ -61,5 +61,7 @@ module Amazonite::IamV1
         upload_date: Core::XMLValue.time(node.xpath_node("*[local-name()='UploadDate']")),
       )
     end
+
+    def_equals_and_hash(@user_name, @certificate_id, @certificate_body, @status, @upload_date)
   end
 end

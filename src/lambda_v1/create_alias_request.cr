@@ -43,5 +43,7 @@ module Amazonite::LambdaV1
       @routing_config : AliasRoutingConfiguration | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@function_name, @name, @function_version, @description, @routing_config)
   end
 end

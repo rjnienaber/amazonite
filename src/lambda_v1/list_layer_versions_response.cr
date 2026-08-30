@@ -15,5 +15,7 @@ module Amazonite::LambdaV1
       @layer_versions : Array(LayerVersionsListItem) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_marker, @layer_versions)
   end
 end

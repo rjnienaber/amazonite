@@ -25,5 +25,7 @@ module Amazonite::EventBridgeV1
       @expression : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@type, @expression)
   end
 end

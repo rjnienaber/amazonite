@@ -16,5 +16,7 @@ module Amazonite::LambdaV1
       @functions : Array(FunctionConfiguration) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_marker, @functions)
   end
 end

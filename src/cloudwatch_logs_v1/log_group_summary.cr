@@ -25,5 +25,7 @@ module Amazonite::CloudWatchLogsV1
       @log_group_class : LogGroupClass | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_name, @log_group_arn, @log_group_class)
   end
 end

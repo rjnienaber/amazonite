@@ -26,5 +26,7 @@ module Amazonite::IamV1
         service_specific_credential: node.xpath_node("*[local-name()='ServiceSpecificCredential']").try { |n| ServiceSpecificCredential.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@service_specific_credential)
   end
 end

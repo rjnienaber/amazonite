@@ -45,5 +45,7 @@ module Amazonite::StsV1
         assumed_principal: Core::XMLValue.string(node.xpath_node("*[local-name()='AssumedPrincipal']")),
       )
     end
+
+    def_equals_and_hash(@credentials, @packed_policy_size, @assumed_principal)
   end
 end

@@ -35,5 +35,7 @@ module Amazonite::SsmV1
       @filters : Array(CommandFilter) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@command_id, @instance_id, @max_results, @next_token, @filters)
   end
 end

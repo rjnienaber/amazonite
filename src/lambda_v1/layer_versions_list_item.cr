@@ -53,5 +53,7 @@ module Amazonite::LambdaV1
       @license_info : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@layer_version_arn, @version, @description, @created_date, @compatible_architectures, @compatible_runtimes, @license_info)
   end
 end

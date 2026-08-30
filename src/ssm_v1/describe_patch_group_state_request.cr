@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @patch_group : String,
     )
     end
+
+    def_equals_and_hash(@patch_group)
   end
 end

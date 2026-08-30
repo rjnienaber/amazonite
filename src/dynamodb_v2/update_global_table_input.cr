@@ -15,5 +15,7 @@ module Amazonite::DynamoDBV2
       @replica_updates : Array(ReplicaUpdate),
     )
     end
+
+    def_equals_and_hash(@global_table_name, @replica_updates)
   end
 end

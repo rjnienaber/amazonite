@@ -16,5 +16,7 @@ module Amazonite::CloudWatchV1
       @dashboard_validation_messages : Array(DashboardValidationMessage) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@dashboard_validation_messages)
   end
 end

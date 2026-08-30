@@ -31,5 +31,7 @@ module Amazonite::CloudFormationV1
         logical_resource_ids: node.xpath_nodes("*[local-name()='LogicalResourceIds']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@stack_name, @logical_resource_ids)
   end
 end

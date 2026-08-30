@@ -22,5 +22,7 @@ module Amazonite::CloudFormationV1
         stack_refactor_id: Core::XMLValue.string(node.xpath_node("*[local-name()='StackRefactorId']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@stack_refactor_id)
   end
 end

@@ -22,5 +22,7 @@ module Amazonite::CloudFormationV1
         generated_template_name: Core::XMLValue.string(node.xpath_node("*[local-name()='GeneratedTemplateName']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@generated_template_name)
   end
 end

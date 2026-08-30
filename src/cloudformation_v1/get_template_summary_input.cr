@@ -100,5 +100,7 @@ module Amazonite::CloudFormationV1
         template_summary_config: node.xpath_node("*[local-name()='TemplateSummaryConfig']").try { |n| TemplateSummaryConfig.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@template_body, @template_url, @stack_name, @stack_set_name, @call_as, @template_summary_config)
   end
 end

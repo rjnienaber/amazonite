@@ -13,5 +13,7 @@ module Amazonite::EventBridgeV1
       @awsvpc_configuration : AwsVpcConfiguration | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@awsvpc_configuration)
   end
 end

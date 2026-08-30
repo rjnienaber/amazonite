@@ -15,5 +15,7 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@syslog_configurations, @next_token)
   end
 end

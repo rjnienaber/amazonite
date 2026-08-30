@@ -21,5 +21,7 @@ module Amazonite::SecretsManagerV1
       @force_overwrite_replica_secret : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_id, @add_replica_regions, @force_overwrite_replica_secret)
   end
 end

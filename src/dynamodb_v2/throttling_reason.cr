@@ -55,5 +55,7 @@ module Amazonite::DynamoDBV2
       @resource : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@reason, @resource)
   end
 end

@@ -10,5 +10,7 @@ module Amazonite::DynamoDBV2
       @table_description : TableDescription | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_description)
   end
 end

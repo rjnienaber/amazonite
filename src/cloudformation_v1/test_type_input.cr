@@ -86,5 +86,7 @@ module Amazonite::CloudFormationV1
         log_delivery_bucket: Core::XMLValue.string(node.xpath_node("*[local-name()='LogDeliveryBucket']")),
       )
     end
+
+    def_equals_and_hash(@arn, @type, @type_name, @version_id, @log_delivery_bucket)
   end
 end

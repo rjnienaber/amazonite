@@ -19,5 +19,7 @@ module Amazonite::CloudWatchLogsV1
       @session_update : LiveTailSessionUpdate | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@session_start, @session_update)
   end
 end

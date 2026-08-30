@@ -148,5 +148,7 @@ module Amazonite::CloudFormationV1
         hook_execution_target: Core::XMLValue.string(node.xpath_node("*[local-name()='HookExecutionTarget']")),
       )
     end
+
+    def_equals_and_hash(@hook_result_id, @invocation_point, @failure_mode, @type_name, @type_version_id, @type_configuration_version_id, @status, @hook_status_reason, @invoked_at, @target_type, @target_id, @type_arn, @hook_execution_target)
   end
 end

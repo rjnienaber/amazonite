@@ -23,5 +23,7 @@ module Amazonite::CloudWatchLogsV1
       @next_backward_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@events, @next_forward_token, @next_backward_token)
   end
 end

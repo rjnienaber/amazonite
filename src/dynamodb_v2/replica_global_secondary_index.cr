@@ -23,5 +23,7 @@ module Amazonite::DynamoDBV2
       @on_demand_throughput_override : OnDemandThroughputOverride | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@index_name, @provisioned_throughput_override, @on_demand_throughput_override)
   end
 end

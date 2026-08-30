@@ -142,5 +142,7 @@ module Amazonite::SsmV1
       @parent_step_details : ParentStepDetails | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@step_name, @action, @timeout_seconds, @on_failure, @max_attempts, @execution_start_time, @execution_end_time, @step_status, @response_code, @inputs, @outputs, @response, @failure_message, @warning_message, @failure_details, @step_execution_id, @overridden_parameters, @is_end, @next_step, @is_critical, @valid_next_steps, @targets, @target_location, @triggered_alarms, @parent_step_details)
   end
 end

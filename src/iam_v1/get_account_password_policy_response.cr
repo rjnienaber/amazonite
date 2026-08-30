@@ -23,5 +23,7 @@ module Amazonite::IamV1
         password_policy: node.xpath_node("*[local-name()='PasswordPolicy']").try { |n| PasswordPolicy.from_xml(n) }.not_nil!,
       )
     end
+
+    def_equals_and_hash(@password_policy)
   end
 end

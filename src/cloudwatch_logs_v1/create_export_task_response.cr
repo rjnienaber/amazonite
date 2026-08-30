@@ -10,5 +10,7 @@ module Amazonite::CloudWatchLogsV1
       @task_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@task_id)
   end
 end

@@ -11,5 +11,7 @@ module Amazonite::CloudWatchLogsV1
       @log_group_fields : Array(LogGroupField) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_fields)
   end
 end

@@ -32,5 +32,7 @@ module Amazonite::CloudFormationV1
         log_group_name: Core::XMLValue.string(node.xpath_node("*[local-name()='LogGroupName']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@log_role_arn, @log_group_name)
   end
 end

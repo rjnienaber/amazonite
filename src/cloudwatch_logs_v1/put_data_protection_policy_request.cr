@@ -45,5 +45,7 @@ module Amazonite::CloudWatchLogsV1
       @policy_document : String,
     )
     end
+
+    def_equals_and_hash(@log_group_identifier, @policy_document)
   end
 end

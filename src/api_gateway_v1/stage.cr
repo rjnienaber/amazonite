@@ -102,5 +102,7 @@ module Amazonite::ApiGatewayV1
       @last_updated_date : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@deployment_id, @client_certificate_id, @stage_name, @description, @cache_cluster_enabled, @cache_cluster_size, @cache_cluster_status, @method_settings, @variables, @documentation_version, @access_log_settings, @canary_settings, @tracing_enabled, @web_acl_arn, @tags, @created_date, @last_updated_date)
   end
 end

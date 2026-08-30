@@ -49,5 +49,7 @@ module Amazonite::SsmV1
       @type : InstancePatchStateOperatorType,
     )
     end
+
+    def_equals_and_hash(@key, @values, @type)
   end
 end

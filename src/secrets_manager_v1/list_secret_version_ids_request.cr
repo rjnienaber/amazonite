@@ -35,5 +35,7 @@ module Amazonite::SecretsManagerV1
       @include_deprecated : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_id, @max_results, @next_token, @include_deprecated)
   end
 end

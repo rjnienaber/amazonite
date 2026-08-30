@@ -30,5 +30,7 @@ module Amazonite::CloudWatchLogsV1
       @force_update : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@destination_name, @access_policy, @force_update)
   end
 end

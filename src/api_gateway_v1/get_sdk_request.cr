@@ -31,5 +31,7 @@ module Amazonite::ApiGatewayV1
       @parameters : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@rest_api_id, @stage_name, @sdk_type, @parameters)
   end
 end

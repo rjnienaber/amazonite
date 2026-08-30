@@ -30,5 +30,7 @@ module Amazonite::LambdaV1
       @max_items : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@durable_execution_arn, @checkpoint_token, @marker, @max_items)
   end
 end

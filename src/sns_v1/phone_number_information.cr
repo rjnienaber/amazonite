@@ -71,5 +71,7 @@ module Amazonite::SnsV1
         number_capabilities: node.xpath_nodes("*[local-name()='NumberCapabilities']/*[local-name()='member']").compact_map { |n| AS::NumberCapability.from_json_object_key?(n.content) },
       )
     end
+
+    def_equals_and_hash(@created_at, @phone_number, @status, @iso_2_country_code, @route_type, @number_capabilities)
   end
 end

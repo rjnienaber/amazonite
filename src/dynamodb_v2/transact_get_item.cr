@@ -12,5 +12,7 @@ module Amazonite::DynamoDBV2
       @get : Get,
     )
     end
+
+    def_equals_and_hash(@get)
   end
 end

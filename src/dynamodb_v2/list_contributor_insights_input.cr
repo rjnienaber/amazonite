@@ -21,5 +21,7 @@ module Amazonite::DynamoDBV2
       @max_results : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @next_token, @max_results)
   end
 end

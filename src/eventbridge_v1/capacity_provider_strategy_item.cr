@@ -27,5 +27,7 @@ module Amazonite::EventBridgeV1
       @base : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@capacity_provider, @weight, @base)
   end
 end

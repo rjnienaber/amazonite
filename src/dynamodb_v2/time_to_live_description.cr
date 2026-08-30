@@ -18,5 +18,7 @@ module Amazonite::DynamoDBV2
       @attribute_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@time_to_live_status, @attribute_name)
   end
 end

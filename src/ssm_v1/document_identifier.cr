@@ -91,5 +91,7 @@ module Amazonite::SsmV1
       @author : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @created_date, @display_name, @owner, @version_name, @platform_types, @document_version, @document_type, @schema_version, @document_format, @target_type, @tags, @requires, @review_status, @author)
   end
 end

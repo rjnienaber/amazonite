@@ -11,5 +11,7 @@ module Amazonite::ApiGatewayV1
       @tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@tags)
   end
 end

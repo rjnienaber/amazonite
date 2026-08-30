@@ -28,5 +28,7 @@ module Amazonite::CloudWatchLogsV1
       @status : OpenSearchResourceStatus | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@application_endpoint, @application_arn, @application_id, @status)
   end
 end

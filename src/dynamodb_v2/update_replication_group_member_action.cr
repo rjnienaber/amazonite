@@ -41,5 +41,7 @@ module Amazonite::DynamoDBV2
       @table_class_override : TableClass | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@region_name, @kms_master_key_id, @provisioned_throughput_override, @on_demand_throughput_override, @global_secondary_indexes, @table_class_override)
   end
 end

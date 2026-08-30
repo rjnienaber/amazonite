@@ -78,5 +78,7 @@ module Amazonite::CloudWatchLogsV1
       @state : ScheduledQueryState | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@identifier, @description, @query_language, @query_string, @log_group_identifiers, @schedule_expression, @timezone, @start_time_offset, @end_time_offset, @destination_configuration, @schedule_start_time, @schedule_end_time, @execution_role_arn, @state)
   end
 end

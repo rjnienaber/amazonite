@@ -23,5 +23,7 @@ module Amazonite::SsmV1
       @operator : InstancePropertyFilterOperator | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key, @values, @operator)
   end
 end

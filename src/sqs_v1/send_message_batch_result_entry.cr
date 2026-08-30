@@ -50,5 +50,7 @@ module Amazonite::SqsV1
       @sequence_number : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @message_id, @md5_of_message_body, @md5_of_message_attributes, @md5_of_message_system_attributes, @sequence_number)
   end
 end

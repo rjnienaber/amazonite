@@ -38,5 +38,7 @@ module Amazonite::DynamoDBV2
       @delete : DeleteGlobalSecondaryIndexAction | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@update, @create, @delete)
   end
 end

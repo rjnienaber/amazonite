@@ -46,5 +46,7 @@ module Amazonite::SecretsManagerV1
       @created_date : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@arn, @name, @version_id, @secret_binary, @secret_string, @version_stages, @created_date)
   end
 end

@@ -51,5 +51,7 @@ module Amazonite::EventBridgeV1
       @last_authorized_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@connection_arn, @name, @connection_state, @state_reason, @authorization_type, @creation_time, @last_modified_time, @last_authorized_time)
   end
 end

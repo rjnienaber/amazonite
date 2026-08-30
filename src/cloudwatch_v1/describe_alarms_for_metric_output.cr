@@ -10,5 +10,7 @@ module Amazonite::CloudWatchV1
       @metric_alarms : Array(MetricAlarm) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@metric_alarms)
   end
 end

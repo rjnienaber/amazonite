@@ -22,5 +22,7 @@ module Amazonite::ApiGatewayV1
       @position : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@warnings, @items, @position)
   end
 end

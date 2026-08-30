@@ -18,5 +18,7 @@ module Amazonite::CloudWatchLogsV1
       @status_message : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@status, @status_message)
   end
 end

@@ -40,5 +40,7 @@ module Amazonite::SsmV1
       @client_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@type_name, @schema_delete_option, @dry_run, @client_token)
   end
 end

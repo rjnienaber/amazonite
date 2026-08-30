@@ -11,5 +11,7 @@ module Amazonite::SsmV1
       @reviewer_response : Array(DocumentReviewerResponseSource) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@reviewer_response)
   end
 end

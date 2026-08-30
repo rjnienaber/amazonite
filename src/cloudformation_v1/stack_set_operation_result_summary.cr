@@ -91,5 +91,7 @@ module Amazonite::CloudFormationV1
         organizational_unit_id: Core::XMLValue.string(node.xpath_node("*[local-name()='OrganizationalUnitId']")),
       )
     end
+
+    def_equals_and_hash(@account, @region, @status, @status_reason, @account_gate_result, @organizational_unit_id)
   end
 end

@@ -55,5 +55,7 @@ module Amazonite::CloudWatchLogsV1
       @unit : StandardUnit | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@metric_name, @metric_namespace, @metric_value, @default_value, @dimensions, @unit)
   end
 end

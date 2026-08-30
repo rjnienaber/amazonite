@@ -11,5 +11,7 @@ module Amazonite::LambdaV1
       @error : EventError,
     )
     end
+
+    def_equals_and_hash(@error)
   end
 end

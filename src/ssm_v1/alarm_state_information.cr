@@ -18,5 +18,7 @@ module Amazonite::SsmV1
       @state : ExternalAlarmState,
     )
     end
+
+    def_equals_and_hash(@name, @state)
   end
 end

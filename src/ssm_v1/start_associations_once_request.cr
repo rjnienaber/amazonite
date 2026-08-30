@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @association_ids : Array(String),
     )
     end
+
+    def_equals_and_hash(@association_ids)
   end
 end

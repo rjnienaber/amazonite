@@ -94,5 +94,7 @@ module Amazonite::SsmV1
       @change_details : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@scheduled_time, @document_name, @document_version, @parameters, @change_request_name, @client_token, @auto_approve, @runbooks, @tags, @scheduled_end_time, @change_details)
   end
 end

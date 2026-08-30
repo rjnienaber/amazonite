@@ -17,5 +17,7 @@ module Amazonite::SsmV1
       @severity_summary : SeveritySummary | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@non_compliant_count, @severity_summary)
   end
 end

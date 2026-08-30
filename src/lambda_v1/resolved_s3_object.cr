@@ -21,5 +21,7 @@ module Amazonite::LambdaV1
       @s3_object_version : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@s3_bucket, @s3_key, @s3_object_version)
   end
 end

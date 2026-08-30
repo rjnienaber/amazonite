@@ -135,5 +135,7 @@ module Amazonite::SsmV1
       @output_s3_key_prefix : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @status, @status_details, @response_code, @response_start_date_time, @response_finish_date_time, @output, @standard_output_url, @standard_error_url, @output_s3_region, @output_s3_bucket_name, @output_s3_key_prefix)
   end
 end

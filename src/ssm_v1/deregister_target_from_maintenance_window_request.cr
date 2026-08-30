@@ -22,5 +22,7 @@ module Amazonite::SsmV1
       @safe : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_id, @window_target_id, @safe)
   end
 end

@@ -25,5 +25,7 @@ module Amazonite::IamV1
         ssh_public_key: node.xpath_node("*[local-name()='SSHPublicKey']").try { |n| SSHPublicKey.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@ssh_public_key)
   end
 end

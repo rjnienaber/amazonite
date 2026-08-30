@@ -134,5 +134,7 @@ module Amazonite::EventBridgeV1
       @app_sync_parameters : AppSyncParameters | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @arn, @role_arn, @input, @input_path, @input_transformer, @kinesis_parameters, @run_command_parameters, @ecs_parameters, @batch_parameters, @sqs_parameters, @http_parameters, @redshift_data_parameters, @sage_maker_pipeline_parameters, @dead_letter_config, @retry_policy, @app_sync_parameters)
   end
 end

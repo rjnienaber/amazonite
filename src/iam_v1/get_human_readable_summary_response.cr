@@ -45,5 +45,7 @@ module Amazonite::IamV1
         summary_state: (n = node.xpath_node("*[local-name()='SummaryState']")) ? AI::SummaryStateType.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@summary_content, @locale, @summary_state)
   end
 end

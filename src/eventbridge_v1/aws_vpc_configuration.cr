@@ -29,5 +29,7 @@ module Amazonite::EventBridgeV1
       @assign_public_ip : AssignPublicIp | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@subnets, @security_groups, @assign_public_ip)
   end
 end

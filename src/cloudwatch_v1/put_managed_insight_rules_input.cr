@@ -10,5 +10,7 @@ module Amazonite::CloudWatchV1
       @managed_rules : Array(ManagedRule),
     )
     end
+
+    def_equals_and_hash(@managed_rules)
   end
 end

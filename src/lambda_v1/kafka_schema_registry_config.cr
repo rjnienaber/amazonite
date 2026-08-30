@@ -41,5 +41,7 @@ module Amazonite::LambdaV1
       @schema_validation_configs : Array(KafkaSchemaValidationConfig) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@schema_registry_uri, @event_record_format, @access_configs, @schema_validation_configs)
   end
 end

@@ -14,5 +14,7 @@ module Amazonite::CloudWatchLogsV1
       @error_type : EntityRejectionErrorType,
     )
     end
+
+    def_equals_and_hash(@error_type)
   end
 end

@@ -44,5 +44,7 @@ module Amazonite::CloudWatchLogsV1
       @max_value : Float64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_name, @value_type, @default_value, @supported_values, @min_value, @max_value)
   end
 end

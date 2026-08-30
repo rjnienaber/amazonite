@@ -22,5 +22,7 @@ module Amazonite::StsV1
         encoded_message: Core::XMLValue.string(node.xpath_node("*[local-name()='EncodedMessage']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@encoded_message)
   end
 end

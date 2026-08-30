@@ -37,5 +37,7 @@ module Amazonite::SsmV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@display_name, @role_arn, @description, @configuration, @config_connector_arn, @tags)
   end
 end

@@ -22,5 +22,7 @@ module Amazonite::CloudWatchLogsV1
       @enable_hive_compatible_path : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@suffix_path, @enable_hive_compatible_path)
   end
 end

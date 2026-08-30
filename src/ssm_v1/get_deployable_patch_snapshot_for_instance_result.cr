@@ -27,5 +27,7 @@ module Amazonite::SsmV1
       @product : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@instance_id, @snapshot_id, @snapshot_download_url, @product)
   end
 end

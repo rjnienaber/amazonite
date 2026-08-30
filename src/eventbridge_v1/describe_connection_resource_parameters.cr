@@ -21,5 +21,7 @@ module Amazonite::EventBridgeV1
       @resource_association_arn : String,
     )
     end
+
+    def_equals_and_hash(@resource_configuration_arn, @resource_association_arn)
   end
 end

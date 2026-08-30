@@ -11,5 +11,7 @@ module Amazonite::SsmV1
       @instance : InstanceInfo | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@instance)
   end
 end

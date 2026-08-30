@@ -20,5 +20,7 @@ module Amazonite::KmsV1
       @marker : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@limit, @marker)
   end
 end

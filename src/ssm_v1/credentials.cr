@@ -29,5 +29,7 @@ module Amazonite::SsmV1
       @expiration_time : Time,
     )
     end
+
+    def_equals_and_hash(@access_key_id, @secret_access_key, @session_token, @expiration_time)
   end
 end

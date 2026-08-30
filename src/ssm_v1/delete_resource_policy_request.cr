@@ -21,5 +21,7 @@ module Amazonite::SsmV1
       @policy_hash : String,
     )
     end
+
+    def_equals_and_hash(@resource_arn, @policy_id, @policy_hash)
   end
 end

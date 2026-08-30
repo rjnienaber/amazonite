@@ -37,5 +37,7 @@ module Amazonite::EventBridgeV1
       @connectivity_parameters : DescribeConnectionConnectivityParameters | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@basic_auth_parameters, @o_auth_parameters, @api_key_auth_parameters, @invocation_http_parameters, @connectivity_parameters)
   end
 end

@@ -28,5 +28,7 @@ module Amazonite::LambdaV1
       @revision_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@resource_arn, @policy, @revision_id)
   end
 end

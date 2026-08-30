@@ -14,5 +14,7 @@ module Amazonite::SecretsManagerV1
       @secret_id : String,
     )
     end
+
+    def_equals_and_hash(@secret_id)
   end
 end

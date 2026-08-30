@@ -20,5 +20,7 @@ module Amazonite::LambdaV1
       @target_value : Float64,
     )
     end
+
+    def_equals_and_hash(@predefined_metric_type, @target_value)
   end
 end

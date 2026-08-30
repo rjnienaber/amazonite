@@ -13,5 +13,7 @@ module Amazonite::CloudWatchV1
       @status : OTelEnrichmentStatus,
     )
     end
+
+    def_equals_and_hash(@status)
   end
 end

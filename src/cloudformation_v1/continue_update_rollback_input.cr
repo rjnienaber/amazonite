@@ -94,5 +94,7 @@ module Amazonite::CloudFormationV1
         client_request_token: Core::XMLValue.string(node.xpath_node("*[local-name()='ClientRequestToken']")),
       )
     end
+
+    def_equals_and_hash(@stack_name, @role_arn, @resources_to_skip, @client_request_token)
   end
 end

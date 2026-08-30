@@ -12,5 +12,7 @@ module Amazonite::SsmV1
       @azure_configuration : AzureConfiguration | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@azure_configuration)
   end
 end

@@ -66,5 +66,7 @@ module Amazonite::DynamoDBV2
       @search_condition_expression : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @index_name, @return_consumed_capacity, @expression_attribute_names, @expression_attribute_values, @projection_expression, @search_vector, @search_condition_expression, @top_k)
   end
 end

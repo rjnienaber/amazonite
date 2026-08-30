@@ -72,5 +72,7 @@ module Amazonite::SsmV1
       @enable_non_security : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@patch_filter_group, @compliance_level, @approve_after_days, @approve_until_date, @enable_non_security)
   end
 end

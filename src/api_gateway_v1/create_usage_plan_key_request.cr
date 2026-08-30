@@ -22,5 +22,7 @@ module Amazonite::ApiGatewayV1
       @key_type : String,
     )
     end
+
+    def_equals_and_hash(@usage_plan_id, @key_id, @key_type)
   end
 end

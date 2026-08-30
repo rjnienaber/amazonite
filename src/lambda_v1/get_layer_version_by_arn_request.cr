@@ -10,5 +10,7 @@ module Amazonite::LambdaV1
       @arn : String,
     )
     end
+
+    def_equals_and_hash(@arn)
   end
 end

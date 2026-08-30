@@ -152,5 +152,7 @@ module Amazonite::ApiGatewayV1
       @routing_mode : RoutingMode | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@domain_name, @domain_name_id, @domain_name_arn, @certificate_name, @certificate_arn, @certificate_upload_date, @regional_domain_name, @regional_hosted_zone_id, @regional_certificate_name, @regional_certificate_arn, @distribution_domain_name, @distribution_hosted_zone_id, @endpoint_configuration, @domain_name_status, @domain_name_status_message, @security_policy, @endpoint_access_mode, @tags, @mutual_tls_authentication, @ownership_verification_certificate_arn, @management_policy, @policy, @routing_mode)
   end
 end

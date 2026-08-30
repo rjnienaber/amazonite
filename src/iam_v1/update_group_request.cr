@@ -55,5 +55,7 @@ module Amazonite::IamV1
         new_group_name: Core::XMLValue.string(node.xpath_node("*[local-name()='NewGroupName']")),
       )
     end
+
+    def_equals_and_hash(@group_name, @new_path, @new_group_name)
   end
 end

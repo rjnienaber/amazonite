@@ -15,5 +15,7 @@ module Amazonite::SsmV1
       @ops_item_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@ops_item_id, @ops_item_arn)
   end
 end

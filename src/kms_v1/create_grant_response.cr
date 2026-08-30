@@ -23,5 +23,7 @@ module Amazonite::KmsV1
       @grant_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@grant_token, @grant_id)
   end
 end

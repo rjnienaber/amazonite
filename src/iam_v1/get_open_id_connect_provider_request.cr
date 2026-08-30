@@ -29,5 +29,7 @@ module Amazonite::IamV1
         open_id_connect_provider_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='OpenIDConnectProviderArn']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@open_id_connect_provider_arn)
   end
 end

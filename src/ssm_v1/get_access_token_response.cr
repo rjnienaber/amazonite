@@ -17,5 +17,7 @@ module Amazonite::SsmV1
       @access_request_status : AccessRequestStatus | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@credentials, @access_request_status)
   end
 end

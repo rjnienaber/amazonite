@@ -21,5 +21,7 @@ module Amazonite::SsmV1
       @output_s3_key_prefix : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@output_s3_region, @output_s3_bucket_name, @output_s3_key_prefix)
   end
 end

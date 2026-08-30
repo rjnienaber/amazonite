@@ -36,5 +36,7 @@ module Amazonite::CloudWatchLogsV1
       @tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @role_arn, @description, @kms_key_id, @tags)
   end
 end

@@ -26,5 +26,7 @@ module Amazonite::DynamoDBV2
       @region_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@exclusive_start_global_table_name, @limit, @region_name)
   end
 end

@@ -32,5 +32,7 @@ module Amazonite::SsmV1
       @targets : ConfigurationTargets | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@tenant_id, @tenant_display_name, @application_id, @application_display_name, @targets)
   end
 end

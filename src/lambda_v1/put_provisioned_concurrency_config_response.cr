@@ -40,5 +40,7 @@ module Amazonite::LambdaV1
       @last_modified : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@requested_provisioned_concurrent_executions, @allocated_provisioned_concurrent_executions, @available_provisioned_concurrent_executions, @status, @status_reason, @last_modified)
   end
 end

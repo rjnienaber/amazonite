@@ -36,5 +36,7 @@ module Amazonite::DynamoDBV2
       @non_key_attributes : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@projection_type, @non_key_attributes)
   end
 end

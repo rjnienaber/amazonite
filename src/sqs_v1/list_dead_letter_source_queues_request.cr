@@ -23,5 +23,7 @@ module Amazonite::SqsV1
       @max_results : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@queue_url, @next_token, @max_results)
   end
 end

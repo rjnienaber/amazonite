@@ -13,5 +13,7 @@ module Amazonite::CloudWatchLogsV1
       @anomaly_detector_arn : String,
     )
     end
+
+    def_equals_and_hash(@anomaly_detector_arn)
   end
 end

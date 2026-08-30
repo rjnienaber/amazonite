@@ -42,5 +42,7 @@ module Amazonite::IamV1
         enable_date: Core::XMLValue.time(node.xpath_node("*[local-name()='EnableDate']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@user_name, @serial_number, @enable_date)
   end
 end

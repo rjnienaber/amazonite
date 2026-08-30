@@ -98,5 +98,7 @@ module Amazonite::SecretsManagerV1
       @type : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_id, @client_request_token, @description, @kms_key_id, @secret_binary, @secret_string, @type)
   end
 end

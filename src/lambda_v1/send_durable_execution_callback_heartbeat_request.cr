@@ -10,5 +10,7 @@ module Amazonite::LambdaV1
       @callback_id : String,
     )
     end
+
+    def_equals_and_hash(@callback_id)
   end
 end

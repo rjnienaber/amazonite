@@ -26,5 +26,7 @@ module Amazonite::SnsV1
         topic_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='TopicArn']")),
       )
     end
+
+    def_equals_and_hash(@topic_arn)
   end
 end

@@ -23,5 +23,7 @@ module Amazonite::CloudWatchLogsV1
       @import_filter : ImportFilter | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@import_source_arn, @import_role_arn, @import_filter)
   end
 end

@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @automation_execution : AutomationExecution | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@automation_execution)
   end
 end

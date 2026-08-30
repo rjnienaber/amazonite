@@ -10,5 +10,7 @@ module Amazonite::EventBridgeV1
       @archive_name : String,
     )
     end
+
+    def_equals_and_hash(@archive_name)
   end
 end

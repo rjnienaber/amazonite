@@ -75,5 +75,7 @@ module Amazonite::EventBridgeV1
       @trace_header : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@time, @source, @resources, @detail_type, @detail, @event_bus_name, @trace_header)
   end
 end

@@ -24,5 +24,7 @@ module Amazonite::StsV1
         account: Core::XMLValue.string(node.xpath_node("*[local-name()='Account']")),
       )
     end
+
+    def_equals_and_hash(@account)
   end
 end

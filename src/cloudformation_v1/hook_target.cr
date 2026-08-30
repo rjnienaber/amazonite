@@ -45,5 +45,7 @@ module Amazonite::CloudFormationV1
         action: ((n = node.xpath_node("*[local-name()='Action']")) ? ACF::HookTargetAction.from_json_object_key?(n.content) : nil).not_nil!,
       )
     end
+
+    def_equals_and_hash(@target_type, @target_type_name, @target_id, @action)
   end
 end

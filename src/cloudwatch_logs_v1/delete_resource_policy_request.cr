@@ -21,5 +21,7 @@ module Amazonite::CloudWatchLogsV1
       @expected_revision_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@policy_name, @resource_arn, @expected_revision_id)
   end
 end

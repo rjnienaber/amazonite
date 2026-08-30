@@ -57,5 +57,7 @@ module Amazonite::EventBridgeV1
       @policy : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@event_bus_name, @action, @principal, @statement_id, @condition, @policy)
   end
 end

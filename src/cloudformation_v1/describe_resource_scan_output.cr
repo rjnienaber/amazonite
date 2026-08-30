@@ -122,5 +122,7 @@ module Amazonite::CloudFormationV1
         scan_filters: node.xpath_nodes("*[local-name()='ScanFilters']/*[local-name()='member']").map { |n| ScanFilter.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@resource_scan_id, @status, @status_reason, @start_time, @end_time, @percentage_completed, @resource_types, @resources_scanned, @resources_read, @scan_filters)
   end
 end

@@ -106,5 +106,7 @@ module Amazonite::DynamoDBV2
       @global_table_settings_replication_mode : GlobalTableSettingsReplicationMode | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@region_name, @replica_status, @replica_arn, @replica_status_description, @replica_status_percent_progress, @kms_master_key_id, @provisioned_throughput_override, @on_demand_throughput_override, @warm_throughput, @global_secondary_indexes, @replica_inaccessible_date_time, @replica_table_class_summary, @global_table_settings_replication_mode)
   end
 end

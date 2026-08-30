@@ -62,5 +62,7 @@ module Amazonite::SsmV1
       @last_sync_status_message : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@sync_name, @sync_type, @sync_source, @s3_destination, @last_sync_time, @last_successful_sync_time, @sync_last_modified_time, @last_status, @sync_created_time, @last_sync_status_message)
   end
 end

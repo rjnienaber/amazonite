@@ -22,5 +22,7 @@ module Amazonite::CloudWatchLogsV1
       @max_items : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@query_id, @next_token, @max_items)
   end
 end

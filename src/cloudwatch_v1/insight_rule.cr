@@ -46,5 +46,7 @@ module Amazonite::CloudWatchV1
       @apply_on_transformed_logs : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @state, @schema, @definition, @managed_rule, @apply_on_transformed_logs)
   end
 end

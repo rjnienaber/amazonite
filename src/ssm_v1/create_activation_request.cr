@@ -75,5 +75,7 @@ module Amazonite::SsmV1
       @registration_metadata : Array(RegistrationMetadataItem) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@description, @default_instance_name, @iam_role, @registration_limit, @expiration_date, @tags, @registration_metadata)
   end
 end

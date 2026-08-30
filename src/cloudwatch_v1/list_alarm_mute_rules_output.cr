@@ -16,5 +16,7 @@ module Amazonite::CloudWatchV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@alarm_mute_rule_summaries, @next_token)
   end
 end

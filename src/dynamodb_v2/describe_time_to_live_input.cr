@@ -11,5 +11,7 @@ module Amazonite::DynamoDBV2
       @table_name : String,
     )
     end
+
+    def_equals_and_hash(@table_name)
   end
 end

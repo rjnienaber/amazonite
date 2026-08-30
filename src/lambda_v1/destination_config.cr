@@ -19,5 +19,7 @@ module Amazonite::LambdaV1
       @on_failure : OnFailure | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@on_success, @on_failure)
   end
 end

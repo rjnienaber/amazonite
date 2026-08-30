@@ -122,5 +122,7 @@ module Amazonite::CloudFormationV1
         managed_execution: node.xpath_node("*[local-name()='ManagedExecution']").try { |n| ManagedExecution.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@stack_set_name, @stack_set_id, @description, @status, @auto_deployment, @permission_model, @drift_status, @last_drift_check_timestamp, @managed_execution)
   end
 end

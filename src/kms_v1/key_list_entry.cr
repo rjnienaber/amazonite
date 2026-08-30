@@ -16,5 +16,7 @@ module Amazonite::KmsV1
       @key_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @key_arn)
   end
 end

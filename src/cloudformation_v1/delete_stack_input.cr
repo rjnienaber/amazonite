@@ -99,5 +99,7 @@ module Amazonite::CloudFormationV1
         deployment_config: node.xpath_node("*[local-name()='DeploymentConfig']").try { |n| DeploymentConfig.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@stack_name, @retain_resources, @role_arn, @client_request_token, @deletion_mode, @deployment_config)
   end
 end

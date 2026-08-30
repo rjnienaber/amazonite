@@ -15,5 +15,7 @@ module Amazonite::LambdaV1
       @aliases : Array(AliasConfiguration) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_marker, @aliases)
   end
 end

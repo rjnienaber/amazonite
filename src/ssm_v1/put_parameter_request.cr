@@ -237,5 +237,7 @@ module Amazonite::SsmV1
       @data_type : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @description, @value, @type, @key_id, @overwrite, @allowed_pattern, @tags, @tier, @policies, @data_type)
   end
 end

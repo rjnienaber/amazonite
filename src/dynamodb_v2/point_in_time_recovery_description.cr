@@ -36,5 +36,7 @@ module Amazonite::DynamoDBV2
       @latest_restorable_date_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@point_in_time_recovery_status, @recovery_period_in_days, @earliest_restorable_date_time, @latest_restorable_date_time)
   end
 end

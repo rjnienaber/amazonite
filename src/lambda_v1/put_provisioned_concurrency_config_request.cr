@@ -31,5 +31,7 @@ module Amazonite::LambdaV1
       @provisioned_concurrent_executions : Int32,
     )
     end
+
+    def_equals_and_hash(@function_name, @qualifier, @provisioned_concurrent_executions)
   end
 end

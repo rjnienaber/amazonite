@@ -13,5 +13,7 @@ module Amazonite::CloudWatchLogsV1
       @destination_resource_arn : String,
     )
     end
+
+    def_equals_and_hash(@destination_resource_arn)
   end
 end

@@ -47,5 +47,7 @@ module Amazonite::CloudWatchLogsV1
       @locale : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@source, @target, @target_format, @match_patterns, @source_timezone, @target_timezone, @locale)
   end
 end

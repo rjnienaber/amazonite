@@ -48,5 +48,7 @@ module Amazonite::CloudWatchV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@query_string, @log_group_identifiers, @query_arn, @scheduled_query_role_arn, @schedule_configuration, @aggregation_expression, @tags)
   end
 end

@@ -39,5 +39,7 @@ module Amazonite::CloudWatchLogsV1
       @creation_time : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@destination_name, @target_arn, @role_arn, @access_policy, @arn, @creation_time)
   end
 end

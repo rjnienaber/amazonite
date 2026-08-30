@@ -54,5 +54,7 @@ module Amazonite::IamV1
         custom_suffix: Core::XMLValue.string(node.xpath_node("*[local-name()='CustomSuffix']")),
       )
     end
+
+    def_equals_and_hash(@aws_service_name, @description, @custom_suffix)
   end
 end

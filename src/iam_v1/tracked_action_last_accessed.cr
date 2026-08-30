@@ -65,5 +65,7 @@ module Amazonite::IamV1
         last_accessed_region: Core::XMLValue.string(node.xpath_node("*[local-name()='LastAccessedRegion']")),
       )
     end
+
+    def_equals_and_hash(@action_name, @last_accessed_entity, @last_accessed_time, @last_accessed_region)
   end
 end

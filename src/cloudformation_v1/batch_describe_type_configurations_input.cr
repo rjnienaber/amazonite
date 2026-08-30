@@ -22,5 +22,7 @@ module Amazonite::CloudFormationV1
         type_configuration_identifiers: node.xpath_nodes("*[local-name()='TypeConfigurationIdentifiers']/*[local-name()='member']").map { |n| TypeConfigurationIdentifier.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@type_configuration_identifiers)
   end
 end

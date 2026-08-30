@@ -80,5 +80,7 @@ module Amazonite::IamV1
         immutable: Core::XMLValue.bool(node.xpath_node("*[local-name()='Immutable']")),
       )
     end
+
+    def_equals_and_hash(@name, @type, @sub_type, @description, @is_required, @default_value, @immutable)
   end
 end

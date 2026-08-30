@@ -29,5 +29,7 @@ module Amazonite::CloudFormationV1
         stack_name: Core::XMLValue.string(node.xpath_node("*[local-name()='StackName']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@enable_termination_protection, @stack_name)
   end
 end

@@ -26,5 +26,7 @@ module Amazonite::SsmV1
       @with_decryption : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@names, @with_decryption)
   end
 end

@@ -18,5 +18,7 @@ module Amazonite::DynamoDBV2
       @limit : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@exclusive_start_table_name, @limit)
   end
 end

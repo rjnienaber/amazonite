@@ -38,5 +38,7 @@ module Amazonite::IamV1
         new_password: Core::XMLValue.string(node.xpath_node("*[local-name()='NewPassword']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@old_password, @new_password)
   end
 end

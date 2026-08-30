@@ -17,5 +17,7 @@ module Amazonite::CloudWatchV1
       @state : String,
     )
     end
+
+    def_equals_and_hash(@rule_name, @state)
   end
 end

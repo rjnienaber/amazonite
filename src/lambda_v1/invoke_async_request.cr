@@ -26,5 +26,7 @@ module Amazonite::LambdaV1
       @invoke_args : String,
     )
     end
+
+    def_equals_and_hash(@function_name, @invoke_args)
   end
 end

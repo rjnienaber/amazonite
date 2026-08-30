@@ -15,5 +15,7 @@ module Amazonite::SsmV1
       @invalid_parameters : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@parameters, @invalid_parameters)
   end
 end

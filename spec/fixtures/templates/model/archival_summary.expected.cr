@@ -29,5 +29,7 @@ module Amazonite::DynamoDBV2
       @archival_backup_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@archival_date_time, @archival_reason, @archival_backup_arn)
   end
 end

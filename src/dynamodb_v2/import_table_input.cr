@@ -47,5 +47,7 @@ module Amazonite::DynamoDBV2
       @input_compression_type : InputCompressionType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@client_token, @s3_bucket_source, @input_format, @input_format_options, @input_compression_type, @table_creation_parameters)
   end
 end

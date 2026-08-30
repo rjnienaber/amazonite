@@ -26,5 +26,7 @@ module Amazonite::LambdaV1
       @uri : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@type, @uri)
   end
 end

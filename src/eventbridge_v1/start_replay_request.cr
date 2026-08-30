@@ -39,5 +39,7 @@ module Amazonite::EventBridgeV1
       @description : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@replay_name, @description, @event_source_arn, @event_start_time, @event_end_time, @destination)
   end
 end

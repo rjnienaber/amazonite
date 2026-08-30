@@ -27,5 +27,7 @@ module Amazonite::CloudWatchLogsV1
       @transformer_config : Array(Processor) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_identifier, @creation_time, @last_modified_time, @transformer_config)
   end
 end

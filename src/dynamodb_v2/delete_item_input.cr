@@ -156,5 +156,7 @@ module Amazonite::DynamoDBV2
       @return_values_on_condition_check_failure : ReturnValuesOnConditionCheckFailure | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @key, @expected, @conditional_operator, @return_values, @return_consumed_capacity, @return_item_collection_metrics, @condition_expression, @expression_attribute_names, @expression_attribute_values, @return_values_on_condition_check_failure)
   end
 end

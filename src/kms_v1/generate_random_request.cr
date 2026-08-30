@@ -45,5 +45,7 @@ module Amazonite::KmsV1
       @recipient : RecipientInfo | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@number_of_bytes, @custom_key_store_id, @recipient)
   end
 end

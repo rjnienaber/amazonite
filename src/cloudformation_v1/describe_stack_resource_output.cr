@@ -24,5 +24,7 @@ module Amazonite::CloudFormationV1
         stack_resource_detail: node.xpath_node("*[local-name()='StackResourceDetail']").try { |n| StackResourceDetail.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@stack_resource_detail)
   end
 end

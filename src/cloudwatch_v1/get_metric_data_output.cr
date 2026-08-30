@@ -26,5 +26,7 @@ module Amazonite::CloudWatchV1
       @messages : Array(MessageData) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@metric_data_results, @next_token, @messages)
   end
 end

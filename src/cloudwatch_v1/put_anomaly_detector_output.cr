@@ -10,5 +10,7 @@ module Amazonite::CloudWatchV1
       @anomaly_detector_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@anomaly_detector_id)
   end
 end

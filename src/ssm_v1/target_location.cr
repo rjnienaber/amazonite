@@ -74,5 +74,7 @@ module Amazonite::SsmV1
       @targets_max_errors : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@accounts, @regions, @target_location_max_concurrency, @target_location_max_errors, @execution_role_name, @target_location_alarm_configuration, @include_child_organization_units, @exclude_accounts, @targets, @targets_max_concurrency, @targets_max_errors)
   end
 end

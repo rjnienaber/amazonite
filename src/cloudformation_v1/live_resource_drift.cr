@@ -44,5 +44,7 @@ module Amazonite::CloudFormationV1
         drift_detection_timestamp: Core::XMLValue.time(node.xpath_node("*[local-name()='DriftDetectionTimestamp']")),
       )
     end
+
+    def_equals_and_hash(@previous_value, @actual_value, @drift_detection_timestamp)
   end
 end

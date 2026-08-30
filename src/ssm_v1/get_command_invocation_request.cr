@@ -30,5 +30,7 @@ module Amazonite::SsmV1
       @plugin_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@command_id, @instance_id, @plugin_name)
   end
 end

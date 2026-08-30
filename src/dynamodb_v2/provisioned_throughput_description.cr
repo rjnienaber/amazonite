@@ -47,5 +47,7 @@ module Amazonite::DynamoDBV2
       @write_capacity_units : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@last_increase_date_time, @last_decrease_date_time, @number_of_decreases_today, @read_capacity_units, @write_capacity_units)
   end
 end

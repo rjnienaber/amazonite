@@ -16,5 +16,7 @@ module Amazonite::SsmV1
       @instance_ids : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@command_id, @instance_ids)
   end
 end

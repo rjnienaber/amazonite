@@ -24,5 +24,7 @@ module Amazonite::IamV1
         deletion_task_id: Core::XMLValue.string(node.xpath_node("*[local-name()='DeletionTaskId']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@deletion_task_id)
   end
 end

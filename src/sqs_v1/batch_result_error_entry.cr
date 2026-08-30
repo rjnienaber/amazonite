@@ -26,5 +26,7 @@ module Amazonite::SqsV1
       @message : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @sender_fault, @code, @message)
   end
 end

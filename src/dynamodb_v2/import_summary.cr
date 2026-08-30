@@ -51,5 +51,7 @@ module Amazonite::DynamoDBV2
       @end_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@import_arn, @import_status, @table_arn, @s3_bucket_source, @cloud_watch_log_group_arn, @input_format, @start_time, @end_time)
   end
 end

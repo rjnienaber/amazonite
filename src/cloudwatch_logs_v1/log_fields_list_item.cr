@@ -16,5 +16,7 @@ module Amazonite::CloudWatchLogsV1
       @log_field_type : LogFieldType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_field_name, @log_field_type)
   end
 end

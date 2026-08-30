@@ -13,5 +13,7 @@ module Amazonite::EventBridgeV1
       @resource_configuration_arn : String,
     )
     end
+
+    def_equals_and_hash(@resource_configuration_arn)
   end
 end

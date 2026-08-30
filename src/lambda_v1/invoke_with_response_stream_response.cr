@@ -28,5 +28,7 @@ module Amazonite::LambdaV1
       @response_stream_content_type : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@status_code, @executed_version, @event_stream, @response_stream_content_type)
   end
 end

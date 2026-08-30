@@ -11,5 +11,7 @@ module Amazonite::CloudWatchLogsV1
       @integration_summaries : Array(IntegrationSummary) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@integration_summaries)
   end
 end

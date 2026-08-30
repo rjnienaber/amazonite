@@ -56,5 +56,7 @@ module Amazonite::LambdaV1
       @invoke_mode : InvokeMode | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@function_url, @function_arn, @auth_type, @cors, @creation_time, @last_modified_time, @invoke_mode)
   end
 end

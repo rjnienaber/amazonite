@@ -30,5 +30,7 @@ module Amazonite::CloudWatchV1
       @datapoints : Array(InsightRuleContributorDatapoint),
     )
     end
+
+    def_equals_and_hash(@keys, @approximate_aggregate_value, @datapoints)
   end
 end

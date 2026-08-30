@@ -31,5 +31,7 @@ module Amazonite::DynamoDBV2
       @replicas : Array(ReplicaAutoScalingDescription) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @table_status, @replicas)
   end
 end

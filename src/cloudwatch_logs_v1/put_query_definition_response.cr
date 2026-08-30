@@ -10,5 +10,7 @@ module Amazonite::CloudWatchLogsV1
       @query_definition_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@query_definition_id)
   end
 end

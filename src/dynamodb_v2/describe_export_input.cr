@@ -10,5 +10,7 @@ module Amazonite::DynamoDBV2
       @export_arn : String,
     )
     end
+
+    def_equals_and_hash(@export_arn)
   end
 end

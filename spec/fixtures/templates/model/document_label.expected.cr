@@ -22,5 +22,7 @@ module Amazonite::ComprehendV2
       @page : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @score, @page)
   end
 end

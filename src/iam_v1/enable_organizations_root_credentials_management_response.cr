@@ -34,5 +34,7 @@ module Amazonite::IamV1
         enabled_features: node.xpath_nodes("*[local-name()='EnabledFeatures']/*[local-name()='member']").compact_map { |n| AI::FeatureType.from_json_object_key?(n.content) },
       )
     end
+
+    def_equals_and_hash(@organization_id, @enabled_features)
   end
 end

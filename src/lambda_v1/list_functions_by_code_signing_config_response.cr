@@ -15,5 +15,7 @@ module Amazonite::LambdaV1
       @function_arns : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_marker, @function_arns)
   end
 end

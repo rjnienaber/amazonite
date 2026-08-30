@@ -39,5 +39,7 @@ module Amazonite::DynamoDBV2
       @replica_status : ReplicaStatus | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@region_name, @global_secondary_indexes, @replica_provisioned_read_capacity_auto_scaling_settings, @replica_provisioned_write_capacity_auto_scaling_settings, @replica_status)
   end
 end

@@ -11,5 +11,7 @@ module Amazonite::SsmV1
       @value : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@value)
   end
 end

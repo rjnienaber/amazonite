@@ -71,5 +71,7 @@ module Amazonite::CloudFormationV1
         parameter_constraints: node.xpath_node("*[local-name()='ParameterConstraints']").try { |n| ParameterConstraints.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@parameter_key, @default_value, @parameter_type, @no_echo, @description, @parameter_constraints)
   end
 end

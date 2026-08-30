@@ -119,5 +119,7 @@ module Amazonite::CloudFormationV1
         resource_mapping: node.xpath_node("*[local-name()='ResourceMapping']").try { |n| ResourceMapping.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@action, @entity, @physical_resource_id, @resource_identifier, @description, @detection, @detection_reason, @tag_resources, @untag_resources, @resource_mapping)
   end
 end

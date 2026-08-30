@@ -21,5 +21,7 @@ module Amazonite::CloudWatchLogsV1
       @creation_time : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@import_id, @import_destination_arn, @creation_time)
   end
 end

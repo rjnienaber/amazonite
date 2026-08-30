@@ -23,5 +23,7 @@ module Amazonite::IamV1
         access_key: node.xpath_node("*[local-name()='AccessKey']").try { |n| AccessKey.from_xml(n) }.not_nil!,
       )
     end
+
+    def_equals_and_hash(@access_key)
   end
 end

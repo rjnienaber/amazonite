@@ -16,5 +16,7 @@ module Amazonite::CloudWatchLogsV1
       @data_source : DataSource,
     )
     end
+
+    def_equals_and_hash(@integration_arn, @data_source)
   end
 end

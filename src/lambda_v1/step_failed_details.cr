@@ -16,5 +16,7 @@ module Amazonite::LambdaV1
       @retry_details : RetryDetails,
     )
     end
+
+    def_equals_and_hash(@error, @retry_details)
   end
 end

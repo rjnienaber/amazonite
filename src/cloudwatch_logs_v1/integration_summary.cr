@@ -26,5 +26,7 @@ module Amazonite::CloudWatchLogsV1
       @integration_status : IntegrationStatus | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@integration_name, @integration_type, @integration_status)
   end
 end

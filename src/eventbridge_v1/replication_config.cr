@@ -13,5 +13,7 @@ module Amazonite::EventBridgeV1
       @state : ReplicationState | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@state)
   end
 end

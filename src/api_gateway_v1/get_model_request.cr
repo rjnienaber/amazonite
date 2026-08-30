@@ -22,5 +22,7 @@ module Amazonite::ApiGatewayV1
       @flatten : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@rest_api_id, @model_name, @flatten)
   end
 end

@@ -23,5 +23,7 @@ module Amazonite::SnsV1
         subscription_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='SubscriptionArn']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@subscription_arn)
   end
 end

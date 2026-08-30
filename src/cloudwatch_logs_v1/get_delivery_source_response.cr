@@ -10,5 +10,7 @@ module Amazonite::CloudWatchLogsV1
       @delivery_source : DeliverySource | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@delivery_source)
   end
 end

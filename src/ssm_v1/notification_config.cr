@@ -33,5 +33,7 @@ module Amazonite::SsmV1
       @notification_type : NotificationType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@notification_arn, @notification_events, @notification_type)
   end
 end

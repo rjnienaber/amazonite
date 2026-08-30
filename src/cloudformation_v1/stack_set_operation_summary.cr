@@ -122,5 +122,7 @@ module Amazonite::CloudFormationV1
         operation_preferences: node.xpath_node("*[local-name()='OperationPreferences']").try { |n| StackSetOperationPreferences.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@operation_id, @action, @status, @creation_timestamp, @end_timestamp, @status_reason, @status_details, @operation_preferences)
   end
 end

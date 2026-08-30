@@ -55,5 +55,7 @@ module Amazonite::IamV1
         new_user_name: Core::XMLValue.string(node.xpath_node("*[local-name()='NewUserName']")),
       )
     end
+
+    def_equals_and_hash(@user_name, @new_path, @new_user_name)
   end
 end

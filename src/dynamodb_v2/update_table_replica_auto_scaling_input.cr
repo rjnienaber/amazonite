@@ -26,5 +26,7 @@ module Amazonite::DynamoDBV2
       @replica_updates : Array(ReplicaAutoScalingUpdate) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@global_secondary_index_updates, @table_name, @provisioned_write_capacity_auto_scaling_update, @replica_updates)
   end
 end

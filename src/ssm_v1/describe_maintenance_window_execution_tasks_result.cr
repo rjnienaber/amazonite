@@ -16,5 +16,7 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_execution_task_identities, @next_token)
   end
 end

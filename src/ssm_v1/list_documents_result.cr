@@ -16,5 +16,7 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@document_identifiers, @next_token)
   end
 end

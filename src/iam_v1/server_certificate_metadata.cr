@@ -76,5 +76,7 @@ module Amazonite::IamV1
         expiration: Core::XMLValue.time(node.xpath_node("*[local-name()='Expiration']")),
       )
     end
+
+    def_equals_and_hash(@path, @server_certificate_name, @server_certificate_id, @arn, @upload_date, @expiration)
   end
 end

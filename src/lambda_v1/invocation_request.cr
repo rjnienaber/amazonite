@@ -84,5 +84,7 @@ module Amazonite::LambdaV1
       @tenant_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@function_name, @invocation_type, @log_type, @client_context, @durable_execution_name, @payload, @qualifier, @tenant_id)
   end
 end

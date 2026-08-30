@@ -39,5 +39,7 @@ module Amazonite::CloudWatchLogsV1
       @metric_namespace : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_name, @filter_name_prefix, @next_token, @limit, @metric_name, @metric_namespace)
   end
 end

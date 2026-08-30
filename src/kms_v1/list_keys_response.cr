@@ -23,5 +23,7 @@ module Amazonite::KmsV1
       @truncated : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@keys, @next_marker, @truncated)
   end
 end

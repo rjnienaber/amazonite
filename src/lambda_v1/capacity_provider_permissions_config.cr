@@ -13,5 +13,7 @@ module Amazonite::LambdaV1
       @capacity_provider_operator_role_arn : String,
     )
     end
+
+    def_equals_and_hash(@capacity_provider_operator_role_arn)
   end
 end

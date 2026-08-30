@@ -28,5 +28,7 @@ module Amazonite::EventBridgeV1
       @creation_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@archive_arn, @state, @state_reason, @creation_time)
   end
 end

@@ -20,5 +20,7 @@ module Amazonite::CloudWatchV1
       @value : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@code, @value)
   end
 end

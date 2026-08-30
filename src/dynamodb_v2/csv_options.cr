@@ -19,5 +19,7 @@ module Amazonite::DynamoDBV2
       @header_list : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@delimiter, @header_list)
   end
 end

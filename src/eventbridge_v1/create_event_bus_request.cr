@@ -83,5 +83,7 @@ module Amazonite::EventBridgeV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @event_source_name, @description, @kms_key_identifier, @dead_letter_config, @log_config, @tags)
   end
 end

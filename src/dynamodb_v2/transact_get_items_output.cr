@@ -25,5 +25,7 @@ module Amazonite::DynamoDBV2
       @responses : Array(ItemResponse) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@consumed_capacity, @responses)
   end
 end

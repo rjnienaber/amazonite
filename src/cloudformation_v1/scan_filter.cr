@@ -31,5 +31,7 @@ module Amazonite::CloudFormationV1
         types: node.xpath_nodes("*[local-name()='Types']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@types)
   end
 end

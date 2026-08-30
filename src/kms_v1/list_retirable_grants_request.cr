@@ -44,5 +44,7 @@ module Amazonite::KmsV1
       @retiring_service_principal : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@limit, @marker, @retiring_principal, @retiring_service_principal)
   end
 end

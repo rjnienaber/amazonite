@@ -17,5 +17,7 @@ module Amazonite::DynamoDBV2
       @search_results : Array(SearchResultItem) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@consumed_capacity, @search_results)
   end
 end

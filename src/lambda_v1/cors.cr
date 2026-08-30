@@ -47,5 +47,7 @@ module Amazonite::LambdaV1
       @max_age : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@allow_credentials, @allow_headers, @allow_methods, @allow_origins, @expose_headers, @max_age)
   end
 end

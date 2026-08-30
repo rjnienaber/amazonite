@@ -25,5 +25,7 @@ module Amazonite::SnsV1
         endpoint_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='EndpointArn']")),
       )
     end
+
+    def_equals_and_hash(@endpoint_arn)
   end
 end

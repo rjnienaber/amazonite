@@ -16,5 +16,7 @@ module Amazonite::DynamoDBV2
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@export_summaries, @next_token)
   end
 end

@@ -39,5 +39,7 @@ module Amazonite::IamV1
         timestamp: Core::XMLValue.time(node.xpath_node("*[local-name()='Timestamp']")),
       )
     end
+
+    def_equals_and_hash(@key_id, @timestamp)
   end
 end

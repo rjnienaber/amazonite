@@ -151,5 +151,7 @@ module Amazonite::SqsV1
       @message_group_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@queue_url, @message_body, @delay_seconds, @message_attributes, @message_system_attributes, @message_deduplication_id, @message_group_id)
   end
 end

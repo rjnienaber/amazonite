@@ -17,5 +17,7 @@ module Amazonite::SqsV1
       @failed : Array(BatchResultErrorEntry),
     )
     end
+
+    def_equals_and_hash(@successful, @failed)
   end
 end

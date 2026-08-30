@@ -200,5 +200,7 @@ module Amazonite::DynamoDBV2
       @attribute_value_list : Array(AttributeValue) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@value, @exists, @comparison_operator, @attribute_value_list)
   end
 end

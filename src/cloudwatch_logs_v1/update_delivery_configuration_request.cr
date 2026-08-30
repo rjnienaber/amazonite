@@ -28,5 +28,7 @@ module Amazonite::CloudWatchLogsV1
       @s3_delivery_configuration : S3DeliveryConfiguration | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @record_fields, @field_delimiter, @s3_delivery_configuration)
   end
 end

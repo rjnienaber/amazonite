@@ -51,5 +51,7 @@ module Amazonite::CloudWatchLogsV1
       @overwrite_if_exists : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@source, @destination, @field_delimiter, @key_value_delimiter, @key_prefix, @non_match_value, @overwrite_if_exists)
   end
 end

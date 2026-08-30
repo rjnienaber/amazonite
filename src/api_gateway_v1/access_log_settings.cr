@@ -19,5 +19,7 @@ module Amazonite::ApiGatewayV1
       @destination_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@format, @destination_arn)
   end
 end

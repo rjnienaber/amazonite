@@ -14,5 +14,7 @@ module Amazonite::SsmV1
       @destination_data_sharing_type : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@destination_data_sharing_type)
   end
 end

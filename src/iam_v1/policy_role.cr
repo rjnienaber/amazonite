@@ -44,5 +44,7 @@ module Amazonite::IamV1
         role_id: Core::XMLValue.string(node.xpath_node("*[local-name()='RoleId']")),
       )
     end
+
+    def_equals_and_hash(@role_name, @role_id)
   end
 end

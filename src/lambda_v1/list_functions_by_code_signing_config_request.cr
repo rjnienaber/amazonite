@@ -21,5 +21,7 @@ module Amazonite::LambdaV1
       @max_items : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@code_signing_config_arn, @marker, @max_items)
   end
 end

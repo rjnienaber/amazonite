@@ -16,5 +16,7 @@ module Amazonite::SsmV1
       @baseline_identity : PatchBaselineIdentity | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@patch_group, @baseline_identity)
   end
 end

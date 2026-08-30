@@ -32,5 +32,7 @@ module Amazonite::SsmV1
       @stream_url : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@session_id, @token_value, @stream_url)
   end
 end

@@ -28,5 +28,7 @@ module Amazonite::CloudFormationV1
         destination: node.xpath_node("*[local-name()='Destination']").try { |n| ResourceLocation.from_xml(n) }.not_nil!,
       )
     end
+
+    def_equals_and_hash(@source, @destination)
   end
 end

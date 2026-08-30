@@ -158,5 +158,7 @@ module Amazonite::SsmV1
       @alarm_configuration : AlarmConfiguration | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@instance_ids, @targets, @document_name, @document_version, @document_hash, @document_hash_type, @timeout_seconds, @comment, @parameters, @output_s3_region, @output_s3_bucket_name, @output_s3_key_prefix, @max_concurrency, @max_errors, @service_role_arn, @notification_config, @cloud_watch_output_config, @alarm_configuration)
   end
 end

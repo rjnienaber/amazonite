@@ -34,5 +34,7 @@ module Amazonite::IamV1
         locale: Core::XMLValue.string(node.xpath_node("*[local-name()='Locale']")),
       )
     end
+
+    def_equals_and_hash(@entity_arn, @locale)
   end
 end

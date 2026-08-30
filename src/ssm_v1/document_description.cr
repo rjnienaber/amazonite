@@ -171,5 +171,7 @@ module Amazonite::SsmV1
       @category_enum : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@sha_1, @hash, @hash_type, @name, @display_name, @version_name, @owner, @created_date, @status, @status_information, @document_version, @description, @parameters, @platform_types, @document_type, @schema_version, @latest_version, @default_version, @document_format, @target_type, @tags, @attachments_information, @requires, @author, @review_information, @approved_version, @pending_review_version, @review_status, @category, @category_enum)
   end
 end

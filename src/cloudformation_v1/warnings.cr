@@ -25,5 +25,7 @@ module Amazonite::CloudFormationV1
         unrecognized_resource_types: node.xpath_nodes("*[local-name()='UnrecognizedResourceTypes']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@unrecognized_resource_types)
   end
 end

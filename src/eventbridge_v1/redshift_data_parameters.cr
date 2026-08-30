@@ -47,5 +47,7 @@ module Amazonite::EventBridgeV1
       @sqls : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_manager_arn, @database, @db_user, @sql, @statement_name, @with_event, @sqls)
   end
 end

@@ -32,5 +32,7 @@ module Amazonite::DynamoDBV2
       @table_max_write_capacity_units : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@account_max_read_capacity_units, @account_max_write_capacity_units, @table_max_read_capacity_units, @table_max_write_capacity_units)
   end
 end

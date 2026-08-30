@@ -26,5 +26,7 @@ module Amazonite::IamV1
         server_certificate_name: Core::XMLValue.string(node.xpath_node("*[local-name()='ServerCertificateName']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@server_certificate_name)
   end
 end

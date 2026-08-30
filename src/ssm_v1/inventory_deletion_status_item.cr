@@ -47,5 +47,7 @@ module Amazonite::SsmV1
       @last_status_update_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@deletion_id, @type_name, @deletion_start_time, @last_status, @last_status_message, @deletion_summary, @last_status_update_time)
   end
 end

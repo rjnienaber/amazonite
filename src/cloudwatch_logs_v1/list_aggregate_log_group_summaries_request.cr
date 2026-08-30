@@ -70,5 +70,7 @@ module Amazonite::CloudWatchLogsV1
       @limit : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@account_identifiers, @include_linked_accounts, @log_group_class, @log_group_name_pattern, @data_sources, @group_by, @next_token, @limit)
   end
 end

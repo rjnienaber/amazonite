@@ -24,5 +24,7 @@ module Amazonite::CloudWatchV1
       @metric_timezone : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@excluded_time_ranges, @metric_timezone)
   end
 end

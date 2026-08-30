@@ -26,5 +26,7 @@ module Amazonite::LambdaV1
       @signing_job_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@arn, @code_size, @signing_profile_version_arn, @signing_job_arn)
   end
 end

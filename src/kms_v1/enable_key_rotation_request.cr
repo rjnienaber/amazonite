@@ -44,5 +44,7 @@ module Amazonite::KmsV1
       @rotation_period_in_days : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @rotation_period_in_days)
   end
 end

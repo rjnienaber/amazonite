@@ -54,5 +54,7 @@ module Amazonite::EventBridgeV1
       @kms_key_identifier : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @description, @authorization_type, @auth_parameters, @invocation_connectivity_parameters, @kms_key_identifier)
   end
 end

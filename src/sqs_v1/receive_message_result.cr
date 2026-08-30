@@ -11,5 +11,7 @@ module Amazonite::SqsV1
       @messages : Array(Message) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@messages)
   end
 end

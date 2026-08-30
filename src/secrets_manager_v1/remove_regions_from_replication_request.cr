@@ -15,5 +15,7 @@ module Amazonite::SecretsManagerV1
       @remove_replica_regions : Array(String),
     )
     end
+
+    def_equals_and_hash(@secret_id, @remove_replica_regions)
   end
 end

@@ -28,5 +28,7 @@ module Amazonite::KmsV1
       @mac_algorithm : MacAlgorithmSpec | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @mac_valid, @mac_algorithm)
   end
 end

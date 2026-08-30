@@ -36,5 +36,7 @@ module Amazonite::KmsV1
       @marker : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@custom_key_store_id, @custom_key_store_name, @limit, @marker)
   end
 end

@@ -175,5 +175,7 @@ module Amazonite::CloudWatchLogsV1
       @upper_case_string : UpperCaseString | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@add_keys, @copy_value, @csv, @date_time_converter, @delete_keys, @grok, @list_to_map, @lower_case_string, @move_keys, @parse_cloudfront, @parsejson, @parse_key_value, @parse_route_53, @parse_to_ocsf, @parse_postgres, @parsevpc, @parsewaf, @rename_keys, @split_string, @substitute_string, @trim_string, @type_converter, @upper_case_string)
   end
 end

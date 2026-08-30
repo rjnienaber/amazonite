@@ -146,5 +146,7 @@ module Amazonite::IamV1
         role_last_used: node.xpath_node("*[local-name()='RoleLastUsed']").try { |n| RoleLastUsed.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@path, @role_name, @role_id, @arn, @create_date, @assume_role_policy_document, @instance_profile_list, @role_policy_list, @attached_managed_policies, @permissions_boundary, @tags, @role_last_used)
   end
 end

@@ -15,5 +15,7 @@ module Amazonite::SsmV1
       @ops_item_summaries : Array(OpsItemSummary) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_token, @ops_item_summaries)
   end
 end

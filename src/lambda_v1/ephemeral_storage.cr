@@ -13,5 +13,7 @@ module Amazonite::LambdaV1
       @size : Int32,
     )
     end
+
+    def_equals_and_hash(@size)
   end
 end

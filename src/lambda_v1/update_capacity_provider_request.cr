@@ -24,5 +24,7 @@ module Amazonite::LambdaV1
       @telemetry_config : CapacityProviderTelemetryConfig | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@capacity_provider_name, @capacity_provider_scaling_config, @propagate_tags, @telemetry_config)
   end
 end

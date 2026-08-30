@@ -54,5 +54,7 @@ module Amazonite::EventBridgeV1
       @last_modified_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@api_destination_arn, @name, @api_destination_state, @connection_arn, @invocation_endpoint, @http_method, @invocation_rate_limit_per_second, @creation_time, @last_modified_time)
   end
 end

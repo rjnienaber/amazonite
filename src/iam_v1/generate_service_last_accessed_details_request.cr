@@ -37,5 +37,7 @@ module Amazonite::IamV1
         granularity: (n = node.xpath_node("*[local-name()='Granularity']")) ? AI::AccessAdvisorUsageGranularityType.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@arn, @granularity)
   end
 end

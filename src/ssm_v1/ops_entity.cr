@@ -16,5 +16,7 @@ module Amazonite::SsmV1
       @data : Hash(String, OpsEntityItem) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @data)
   end
 end

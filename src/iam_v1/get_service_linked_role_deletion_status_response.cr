@@ -31,5 +31,7 @@ module Amazonite::IamV1
         reason: node.xpath_node("*[local-name()='Reason']").try { |n| DeletionTaskFailureReasonType.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@status, @reason)
   end
 end

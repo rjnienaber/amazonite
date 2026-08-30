@@ -110,5 +110,7 @@ module Amazonite::CloudWatchV1
       @account_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @metric_stat, @expression, @label, @return_data, @period, @account_id)
   end
 end

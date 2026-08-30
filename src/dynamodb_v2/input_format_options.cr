@@ -12,5 +12,7 @@ module Amazonite::DynamoDBV2
       @csv : CsvOptions | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@csv)
   end
 end

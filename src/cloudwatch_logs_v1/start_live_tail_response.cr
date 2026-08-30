@@ -11,5 +11,7 @@ module Amazonite::CloudWatchLogsV1
       @response_stream : StartLiveTailResponseStream | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@response_stream)
   end
 end

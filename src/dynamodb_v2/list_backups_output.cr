@@ -24,5 +24,7 @@ module Amazonite::DynamoDBV2
       @last_evaluated_backup_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@backup_summaries, @last_evaluated_backup_arn)
   end
 end

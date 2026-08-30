@@ -28,5 +28,7 @@ module Amazonite::CloudWatchLogsV1
       @schedule_type : ScheduleType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@max_results, @next_token, @state, @schedule_type)
   end
 end

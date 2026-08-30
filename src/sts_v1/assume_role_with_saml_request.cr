@@ -132,5 +132,7 @@ module Amazonite::StsV1
         duration_seconds: Core::XMLValue.i32(node.xpath_node("*[local-name()='DurationSeconds']")),
       )
     end
+
+    def_equals_and_hash(@role_arn, @principal_arn, @saml_assertion, @policy_arns, @policy, @duration_seconds)
   end
 end

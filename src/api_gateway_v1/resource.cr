@@ -31,5 +31,7 @@ module Amazonite::ApiGatewayV1
       @resource_methods : Hash(String, Method) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @parent_id, @path_part, @path, @resource_methods)
   end
 end

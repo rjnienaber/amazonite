@@ -52,5 +52,7 @@ module Amazonite::SsmV1
       @description : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_id, @window_target_id, @resource_type, @targets, @owner_information, @name, @description)
   end
 end

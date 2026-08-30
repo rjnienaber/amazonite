@@ -24,5 +24,7 @@ module Amazonite::CloudFormationV1
         publisher_id: Core::XMLValue.string(node.xpath_node("*[local-name()='PublisherId']")),
       )
     end
+
+    def_equals_and_hash(@publisher_id)
   end
 end

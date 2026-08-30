@@ -17,5 +17,7 @@ module Amazonite::EventBridgeV1
       @partition_key_path : String,
     )
     end
+
+    def_equals_and_hash(@partition_key_path)
   end
 end

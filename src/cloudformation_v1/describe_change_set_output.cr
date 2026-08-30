@@ -280,5 +280,7 @@ module Amazonite::CloudFormationV1
         deployment_config: node.xpath_node("*[local-name()='DeploymentConfig']").try { |n| DeploymentConfig.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@change_set_name, @change_set_id, @stack_id, @stack_name, @description, @parameters, @creation_time, @execution_status, @status, @status_reason, @stack_drift_status, @notification_ar_ns, @rollback_configuration, @capabilities, @tags, @changes, @next_token, @include_nested_stacks, @parent_change_set_id, @root_change_set_id, @on_stack_failure, @import_existing_resources, @deployment_mode, @deployment_config)
   end
 end

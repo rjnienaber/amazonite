@@ -30,5 +30,7 @@ module Amazonite::SsmV1
       @force : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @document_version, @version_name, @force)
   end
 end

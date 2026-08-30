@@ -15,5 +15,7 @@ module Amazonite::SsmV1
       @patch_group : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@baseline_id, @patch_group)
   end
 end

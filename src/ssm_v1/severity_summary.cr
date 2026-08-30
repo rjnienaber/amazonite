@@ -42,5 +42,7 @@ module Amazonite::SsmV1
       @unspecified_count : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@critical_count, @high_count, @medium_count, @low_count, @informational_count, @unspecified_count)
   end
 end

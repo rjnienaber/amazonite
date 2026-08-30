@@ -69,5 +69,7 @@ module Amazonite::CloudFormationV1
         type_name: Core::XMLValue.string(node.xpath_node("*[local-name()='TypeName']")),
       )
     end
+
+    def_equals_and_hash(@type_arn, @type_configuration_alias, @type_configuration_arn, @type, @type_name)
   end
 end

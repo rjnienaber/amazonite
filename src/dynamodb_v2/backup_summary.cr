@@ -68,5 +68,7 @@ module Amazonite::DynamoDBV2
       @backup_size_bytes : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @table_id, @table_arn, @backup_arn, @backup_name, @backup_creation_date_time, @backup_expiry_date_time, @backup_status, @backup_type, @backup_size_bytes)
   end
 end

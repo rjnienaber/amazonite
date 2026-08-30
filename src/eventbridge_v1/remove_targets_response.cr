@@ -15,5 +15,7 @@ module Amazonite::EventBridgeV1
       @failed_entries : Array(RemoveTargetsResultEntry) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@failed_entry_count, @failed_entries)
   end
 end

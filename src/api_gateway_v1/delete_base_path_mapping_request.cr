@@ -23,5 +23,7 @@ module Amazonite::ApiGatewayV1
       @domain_name_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@domain_name, @domain_name_id, @base_path)
   end
 end

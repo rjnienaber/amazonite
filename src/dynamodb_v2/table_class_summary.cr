@@ -20,5 +20,7 @@ module Amazonite::DynamoDBV2
       @last_update_date_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_class, @last_update_date_time)
   end
 end

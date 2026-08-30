@@ -16,5 +16,7 @@ module Amazonite::CloudWatchLogsV1
       @datasource_type : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@datasource_name, @datasource_type)
   end
 end

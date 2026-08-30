@@ -68,5 +68,7 @@ module Amazonite::SqsV1
       @message_attributes : Hash(String, MessageAttributeValue) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@message_id, @receipt_handle, @md5_of_body, @body, @attributes, @md5_of_message_attributes, @message_attributes)
   end
 end

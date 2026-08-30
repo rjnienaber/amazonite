@@ -36,5 +36,7 @@ module Amazonite::IamV1
         ssh_public_key_id: Core::XMLValue.string(node.xpath_node("*[local-name()='SSHPublicKeyId']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@user_name, @ssh_public_key_id)
   end
 end

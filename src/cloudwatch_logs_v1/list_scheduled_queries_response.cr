@@ -14,5 +14,7 @@ module Amazonite::CloudWatchLogsV1
       @scheduled_queries : Array(ScheduledQuerySummary) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_token, @scheduled_queries)
   end
 end

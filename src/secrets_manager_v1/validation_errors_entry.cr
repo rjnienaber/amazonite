@@ -17,5 +17,7 @@ module Amazonite::SecretsManagerV1
       @error_message : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@check_name, @error_message)
   end
 end

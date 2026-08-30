@@ -13,5 +13,7 @@ module Amazonite::SsmV1
       @names : Array(String),
     )
     end
+
+    def_equals_and_hash(@names)
   end
 end

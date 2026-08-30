@@ -24,5 +24,7 @@ module Amazonite::SsmV1
       @reviewer : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@reviewed_time, @status, @reviewer)
   end
 end

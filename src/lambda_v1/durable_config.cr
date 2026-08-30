@@ -28,5 +28,7 @@ module Amazonite::LambdaV1
       @execution_timeout : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@kms_key_arn, @retention_period_in_days, @execution_timeout)
   end
 end

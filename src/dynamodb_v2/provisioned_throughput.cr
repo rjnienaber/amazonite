@@ -31,5 +31,7 @@ module Amazonite::DynamoDBV2
       @write_capacity_units : Int64,
     )
     end
+
+    def_equals_and_hash(@read_capacity_units, @write_capacity_units)
   end
 end

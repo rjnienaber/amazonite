@@ -18,5 +18,7 @@ module Amazonite::CloudWatchLogsV1
       @completion_time : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@creation_time, @completion_time)
   end
 end

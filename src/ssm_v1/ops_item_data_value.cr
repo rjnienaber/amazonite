@@ -18,5 +18,7 @@ module Amazonite::SsmV1
       @type : OpsItemDataType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@value, @type)
   end
 end

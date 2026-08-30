@@ -54,5 +54,7 @@ module Amazonite::SecretsManagerV1
       @require_each_included_type : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@password_length, @exclude_characters, @exclude_numbers, @exclude_punctuation, @exclude_uppercase, @exclude_lowercase, @include_space, @require_each_included_type)
   end
 end

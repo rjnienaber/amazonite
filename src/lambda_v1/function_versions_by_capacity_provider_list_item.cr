@@ -19,5 +19,7 @@ module Amazonite::LambdaV1
       @state : State,
     )
     end
+
+    def_equals_and_hash(@function_arn, @state)
   end
 end

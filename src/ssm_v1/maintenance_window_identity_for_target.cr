@@ -16,5 +16,7 @@ module Amazonite::SsmV1
       @name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_id, @name)
   end
 end

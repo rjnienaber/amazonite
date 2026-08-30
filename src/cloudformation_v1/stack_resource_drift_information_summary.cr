@@ -52,5 +52,7 @@ module Amazonite::CloudFormationV1
         last_check_timestamp: Core::XMLValue.time(node.xpath_node("*[local-name()='LastCheckTimestamp']")),
       )
     end
+
+    def_equals_and_hash(@stack_resource_drift_status, @last_check_timestamp)
   end
 end

@@ -82,5 +82,7 @@ module Amazonite::CloudWatchV1
       @storage_resolution : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@metric_name, @dimensions, @timestamp, @value, @statistic_values, @values, @counts, @unit, @storage_resolution)
   end
 end

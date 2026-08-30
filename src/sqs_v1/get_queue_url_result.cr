@@ -13,5 +13,7 @@ module Amazonite::SqsV1
       @queue_url : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@queue_url)
   end
 end

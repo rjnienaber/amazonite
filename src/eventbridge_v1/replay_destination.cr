@@ -17,5 +17,7 @@ module Amazonite::EventBridgeV1
       @filter_arns : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@arn, @filter_arns)
   end
 end

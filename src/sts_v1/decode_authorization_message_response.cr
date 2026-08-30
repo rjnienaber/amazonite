@@ -26,5 +26,7 @@ module Amazonite::StsV1
         decoded_message: Core::XMLValue.string(node.xpath_node("*[local-name()='DecodedMessage']")),
       )
     end
+
+    def_equals_and_hash(@decoded_message)
   end
 end

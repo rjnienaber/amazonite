@@ -21,5 +21,7 @@ module Amazonite::LambdaV1
       @execution_environment_memory_gi_b_per_v_cpu : Float64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@capacity_provider_arn, @per_execution_environment_max_concurrency, @execution_environment_memory_gi_b_per_v_cpu)
   end
 end

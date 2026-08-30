@@ -101,5 +101,7 @@ module Amazonite::CloudFormationV1
         public_version_number: Core::XMLValue.string(node.xpath_node("*[local-name()='PublicVersionNumber']")),
       )
     end
+
+    def_equals_and_hash(@type, @type_name, @version_id, @is_default_version, @arn, @time_created, @description, @public_version_number)
   end
 end

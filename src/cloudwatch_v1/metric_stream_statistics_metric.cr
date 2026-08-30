@@ -17,5 +17,7 @@ module Amazonite::CloudWatchV1
       @metric_name : String,
     )
     end
+
+    def_equals_and_hash(@namespace, @metric_name)
   end
 end

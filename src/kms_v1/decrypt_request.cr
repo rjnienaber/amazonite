@@ -136,5 +136,7 @@ module Amazonite::KmsV1
       @dry_run_modifiers : Array(DryRunModifierType) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@ciphertext_blob, @encryption_context, @grant_tokens, @key_id, @encryption_algorithm, @recipient, @dry_run, @dry_run_modifiers)
   end
 end

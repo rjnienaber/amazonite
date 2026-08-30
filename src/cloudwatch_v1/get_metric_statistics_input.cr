@@ -111,5 +111,7 @@ module Amazonite::CloudWatchV1
       @unit : StandardUnit | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@namespace, @metric_name, @dimensions, @start_time, @end_time, @period, @statistics, @extended_statistics, @unit)
   end
 end

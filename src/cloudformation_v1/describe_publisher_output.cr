@@ -53,5 +53,7 @@ module Amazonite::CloudFormationV1
         publisher_profile: Core::XMLValue.string(node.xpath_node("*[local-name()='PublisherProfile']")),
       )
     end
+
+    def_equals_and_hash(@publisher_id, @publisher_status, @identity_provider, @publisher_profile)
   end
 end

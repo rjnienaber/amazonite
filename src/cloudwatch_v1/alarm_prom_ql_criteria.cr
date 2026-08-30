@@ -26,5 +26,7 @@ module Amazonite::CloudWatchV1
       @recovery_period : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@query, @pending_period, @recovery_period)
   end
 end

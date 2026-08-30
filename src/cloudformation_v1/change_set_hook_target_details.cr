@@ -34,5 +34,7 @@ module Amazonite::CloudFormationV1
         resource_target_details: node.xpath_node("*[local-name()='ResourceTargetDetails']").try { |n| ChangeSetHookResourceTargetDetails.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@target_type, @resource_target_details)
   end
 end

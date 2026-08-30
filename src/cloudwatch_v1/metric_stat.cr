@@ -48,5 +48,7 @@ module Amazonite::CloudWatchV1
       @unit : StandardUnit | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@metric, @period, @stat, @unit)
   end
 end

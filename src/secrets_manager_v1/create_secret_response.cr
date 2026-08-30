@@ -34,5 +34,7 @@ module Amazonite::SecretsManagerV1
       @replication_status : Array(ReplicationStatusType) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@arn, @name, @version_id, @replication_status)
   end
 end

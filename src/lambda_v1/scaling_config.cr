@@ -12,5 +12,7 @@ module Amazonite::LambdaV1
       @maximum_concurrency : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@maximum_concurrency)
   end
 end

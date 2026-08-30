@@ -46,5 +46,7 @@ module Amazonite::IamV1
         password_reset_required: Core::XMLValue.bool(node.xpath_node("*[local-name()='PasswordResetRequired']")),
       )
     end
+
+    def_equals_and_hash(@user_name, @create_date, @password_reset_required)
   end
 end

@@ -24,5 +24,7 @@ module Amazonite::CloudWatchLogsV1
       @tags : Hash(String, String),
     )
     end
+
+    def_equals_and_hash(@resource_arn, @tags)
   end
 end

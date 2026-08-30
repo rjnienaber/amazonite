@@ -49,5 +49,7 @@ module Amazonite::CloudFormationV1
         resource_change: node.xpath_node("*[local-name()='ResourceChange']").try { |n| ResourceChange.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@type, @hook_invocation_count, @resource_change)
   end
 end

@@ -17,5 +17,7 @@ module Amazonite::DynamoDBV2
       @time_to_live_specification : TimeToLiveSpecification,
     )
     end
+
+    def_equals_and_hash(@table_name, @time_to_live_specification)
   end
 end

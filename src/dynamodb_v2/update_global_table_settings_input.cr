@@ -47,5 +47,7 @@ module Amazonite::DynamoDBV2
       @replica_settings_update : Array(ReplicaSettingsUpdate) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@global_table_name, @global_table_billing_mode, @global_table_provisioned_write_capacity_units, @global_table_provisioned_write_capacity_auto_scaling_settings_update, @global_table_global_secondary_index_settings_update, @replica_settings_update)
   end
 end

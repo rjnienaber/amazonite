@@ -24,5 +24,7 @@ module Amazonite::KmsV1
       @replica_tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@replica_key_metadata, @replica_policy, @replica_tags)
   end
 end

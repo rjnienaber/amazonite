@@ -19,5 +19,7 @@ module Amazonite::CloudWatchLogsV1
       @force : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@integration_name, @force)
   end
 end

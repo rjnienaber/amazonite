@@ -15,5 +15,7 @@ module Amazonite::LambdaV1
       @attribute : KafkaSchemaValidationAttribute | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@attribute)
   end
 end

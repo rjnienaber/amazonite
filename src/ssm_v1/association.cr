@@ -88,5 +88,7 @@ module Amazonite::SsmV1
       @target_maps : Array(Hash(String, Array(String))) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @instance_id, @association_id, @association_version, @document_version, @targets, @last_execution_date, @overview, @schedule_expression, @association_name, @schedule_offset, @duration, @target_maps)
   end
 end

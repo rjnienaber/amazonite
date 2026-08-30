@@ -67,5 +67,7 @@ module Amazonite::IamV1
         create_date: Core::XMLValue.time(node.xpath_node("*[local-name()='CreateDate']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@path, @group_name, @group_id, @arn, @create_date)
   end
 end

@@ -10,5 +10,7 @@ module Amazonite::EventBridgeV1
       @rule_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@rule_arn)
   end
 end

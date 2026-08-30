@@ -212,5 +212,7 @@ module Amazonite::SnsV1
         message_group_id: Core::XMLValue.string(node.xpath_node("*[local-name()='MessageGroupId']")),
       )
     end
+
+    def_equals_and_hash(@topic_arn, @target_arn, @phone_number, @message, @subject, @message_structure, @message_attributes, @message_deduplication_id, @message_group_id)
   end
 end

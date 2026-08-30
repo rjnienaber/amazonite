@@ -95,5 +95,7 @@ module Amazonite::CloudFormationV1
         is_default_configuration: Core::XMLValue.bool(node.xpath_node("*[local-name()='IsDefaultConfiguration']")),
       )
     end
+
+    def_equals_and_hash(@arn, @alias, @configuration, @last_updated, @type_arn, @type_name, @is_default_configuration)
   end
 end

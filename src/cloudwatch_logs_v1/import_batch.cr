@@ -24,5 +24,7 @@ module Amazonite::CloudWatchLogsV1
       @error_message : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@batch_id, @status, @error_message)
   end
 end

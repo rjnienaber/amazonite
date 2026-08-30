@@ -81,5 +81,7 @@ module Amazonite::KmsV1
       @rotation_type : RotationType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @key_material_id, @key_material_description, @import_state, @key_material_state, @expiration_model, @valid_to, @rotation_date, @rotation_type)
   end
 end

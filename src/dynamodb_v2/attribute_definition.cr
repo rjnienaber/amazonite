@@ -24,5 +24,7 @@ module Amazonite::DynamoDBV2
       @attribute_type : ScalarAttributeType,
     )
     end
+
+    def_equals_and_hash(@attribute_name, @attribute_type)
   end
 end

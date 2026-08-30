@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @cloud_connector_id : String,
     )
     end
+
+    def_equals_and_hash(@cloud_connector_id)
   end
 end

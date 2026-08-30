@@ -32,5 +32,7 @@ module Amazonite::DynamoDBV2
       @last_evaluated_key : Hash(String, AttributeValue) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@items, @next_token, @consumed_capacity, @last_evaluated_key)
   end
 end

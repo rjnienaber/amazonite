@@ -31,5 +31,7 @@ module Amazonite::LambdaV1
       @client_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@durable_execution_arn, @checkpoint_token, @updates, @client_token)
   end
 end

@@ -44,5 +44,7 @@ module Amazonite::IamV1
         type: (n = node.xpath_node("*[local-name()='Type']")) ? AI::PolicyParameterTypeEnum.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@name, @values, @type)
   end
 end

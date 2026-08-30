@@ -26,5 +26,7 @@ module Amazonite::LambdaV1
       @reserved_concurrent_executions : Int32,
     )
     end
+
+    def_equals_and_hash(@function_name, @reserved_concurrent_executions)
   end
 end

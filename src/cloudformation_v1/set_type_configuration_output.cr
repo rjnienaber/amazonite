@@ -26,5 +26,7 @@ module Amazonite::CloudFormationV1
         configuration_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='ConfigurationArn']")),
       )
     end
+
+    def_equals_and_hash(@configuration_arn)
   end
 end

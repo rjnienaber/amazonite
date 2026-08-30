@@ -24,5 +24,7 @@ module Amazonite::DynamoDBV2
       @status : IndexStatus | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@read_units_per_second, @write_units_per_second, @status)
   end
 end

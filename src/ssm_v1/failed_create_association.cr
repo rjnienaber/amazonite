@@ -23,5 +23,7 @@ module Amazonite::SsmV1
       @fault : Fault | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@entry, @message, @fault)
   end
 end

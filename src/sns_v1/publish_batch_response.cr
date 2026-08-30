@@ -31,5 +31,7 @@ module Amazonite::SnsV1
         failed: node.xpath_nodes("*[local-name()='Failed']/*[local-name()='member']").map { |n| BatchResultErrorEntry.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@successful, @failed)
   end
 end

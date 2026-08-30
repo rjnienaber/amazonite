@@ -58,5 +58,7 @@ module Amazonite::CloudWatchLogsV1
       @user_identity : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@query_language, @query_id, @query_string, @status, @create_time, @log_group_name, @query_duration, @bytes_scanned, @user_identity)
   end
 end

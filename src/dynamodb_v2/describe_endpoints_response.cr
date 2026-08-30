@@ -10,5 +10,7 @@ module Amazonite::DynamoDBV2
       @endpoints : Array(Endpoint),
     )
     end
+
+    def_equals_and_hash(@endpoints)
   end
 end

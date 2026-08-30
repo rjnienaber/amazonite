@@ -57,5 +57,7 @@ module Amazonite::CloudWatchV1
       @owning_account : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@namespace, @metric_name, @dimensions, @next_token, @recently_active, @include_linked_accounts, @owning_account)
   end
 end

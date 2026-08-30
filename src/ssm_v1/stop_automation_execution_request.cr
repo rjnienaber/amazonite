@@ -18,5 +18,7 @@ module Amazonite::SsmV1
       @type : StopType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@automation_execution_id, @type)
   end
 end

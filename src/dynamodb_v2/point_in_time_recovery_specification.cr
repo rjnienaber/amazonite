@@ -18,5 +18,7 @@ module Amazonite::DynamoDBV2
       @recovery_period_in_days : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@point_in_time_recovery_enabled, @recovery_period_in_days)
   end
 end

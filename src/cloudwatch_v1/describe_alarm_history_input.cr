@@ -56,5 +56,7 @@ module Amazonite::CloudWatchV1
       @scan_by : ScanBy | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@alarm_name, @alarm_contributor_id, @alarm_types, @history_item_type, @start_date, @end_date, @max_records, @next_token, @scan_by)
   end
 end

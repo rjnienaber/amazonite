@@ -87,5 +87,7 @@ module Amazonite::IamV1
         permissions_boundary_decision_detail: node.xpath_node("*[local-name()='PermissionsBoundaryDecisionDetail']").try { |n| PermissionsBoundaryDecisionDetail.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@eval_resource_name, @eval_resource_decision, @matched_statements, @missing_context_values, @eval_decision_details, @permissions_boundary_decision_detail)
   end
 end

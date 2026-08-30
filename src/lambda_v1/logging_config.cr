@@ -35,5 +35,7 @@ module Amazonite::LambdaV1
       @log_group : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_format, @application_log_level, @system_log_level, @log_group)
   end
 end

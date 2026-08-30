@@ -28,5 +28,7 @@ module Amazonite::KmsV1
       @description : String,
     )
     end
+
+    def_equals_and_hash(@key_id, @description)
   end
 end

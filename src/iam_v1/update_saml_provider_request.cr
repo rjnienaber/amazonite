@@ -67,5 +67,7 @@ module Amazonite::IamV1
         remove_private_key: Core::XMLValue.string(node.xpath_node("*[local-name()='RemovePrivateKey']")),
       )
     end
+
+    def_equals_and_hash(@saml_metadata_document, @saml_provider_arn, @assertion_encryption_mode, @add_private_key, @remove_private_key)
   end
 end

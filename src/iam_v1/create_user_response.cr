@@ -24,5 +24,7 @@ module Amazonite::IamV1
         user: node.xpath_node("*[local-name()='User']").try { |n| User.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@user)
   end
 end

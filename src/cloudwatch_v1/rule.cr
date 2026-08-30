@@ -16,5 +16,7 @@ module Amazonite::CloudWatchV1
       @schedule : Schedule,
     )
     end
+
+    def_equals_and_hash(@schedule)
   end
 end

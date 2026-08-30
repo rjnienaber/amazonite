@@ -61,5 +61,7 @@ module Amazonite::ApiGatewayV1
       @tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @value, @name, @customer_id, @description, @enabled, @created_date, @last_updated_date, @stage_keys, @tags)
   end
 end

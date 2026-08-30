@@ -32,5 +32,7 @@ module Amazonite::SsmV1
       @execution_preview : ExecutionPreview | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@execution_preview_id, @ended_at, @status, @status_message, @execution_preview)
   end
 end

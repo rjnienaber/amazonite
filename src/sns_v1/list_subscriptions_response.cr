@@ -35,5 +35,7 @@ module Amazonite::SnsV1
         next_token: Core::XMLValue.string(node.xpath_node("*[local-name()='NextToken']")),
       )
     end
+
+    def_equals_and_hash(@subscriptions, @next_token)
   end
 end

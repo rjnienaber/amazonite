@@ -157,5 +157,7 @@ module Amazonite::DynamoDBV2
       @attribute_value_list : Array(AttributeValue) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@attribute_value_list, @comparison_operator)
   end
 end

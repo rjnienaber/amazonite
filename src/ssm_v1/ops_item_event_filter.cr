@@ -24,5 +24,7 @@ module Amazonite::SsmV1
       @operator : OpsItemEventFilterOperator,
     )
     end
+
+    def_equals_and_hash(@key, @values, @operator)
   end
 end

@@ -90,5 +90,7 @@ module Amazonite::CloudFormationV1
         call_as: (n = node.xpath_node("*[local-name()='CallAs']")) ? ACF::CallAs.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@stack_set_name, @stack_ids, @stack_ids_url, @organizational_unit_ids, @operation_preferences, @operation_id, @call_as)
   end
 end

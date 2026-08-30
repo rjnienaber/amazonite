@@ -15,5 +15,7 @@ module Amazonite::CloudWatchLogsV1
       @with_keys : Array(String),
     )
     end
+
+    def_equals_and_hash(@with_keys)
   end
 end

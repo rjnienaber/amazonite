@@ -11,5 +11,7 @@ module Amazonite::EventBridgeV1
       @health_check : String,
     )
     end
+
+    def_equals_and_hash(@health_check)
   end
 end

@@ -115,5 +115,7 @@ module Amazonite::SsmV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@content, @requires, @attachments, @name, @display_name, @version_name, @document_type, @document_format, @target_type, @tags)
   end
 end

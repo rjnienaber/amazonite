@@ -15,5 +15,7 @@ module Amazonite::LambdaV1
       @layers : Array(LayersListItem) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_marker, @layers)
   end
 end

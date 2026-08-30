@@ -42,5 +42,7 @@ module Amazonite::SsmV1
       @shared : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@filters, @parameter_filters, @max_results, @next_token, @shared)
   end
 end

@@ -16,5 +16,7 @@ module Amazonite::DynamoDBV2
       @index_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @index_name)
   end
 end

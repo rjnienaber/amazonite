@@ -84,5 +84,7 @@ module Amazonite::ApiGatewayV1
       @authorization_scopes : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@http_method, @authorization_type, @authorizer_id, @api_key_required, @request_validator_id, @operation_name, @request_parameters, @request_models, @method_responses, @method_integration, @authorization_scopes)
   end
 end

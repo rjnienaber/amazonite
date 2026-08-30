@@ -49,5 +49,7 @@ module Amazonite::LambdaV1
       @kms_key_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@durable_execution_arn, @durable_execution_name, @function_arn, @status, @start_timestamp, @end_timestamp, @kms_key_arn)
   end
 end

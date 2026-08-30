@@ -50,5 +50,7 @@ module Amazonite::CloudWatchLogsV1
       @baseline : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@anomaly_id, @pattern_id, @anomaly_detector_arn, @suppression_type, @suppression_period, @baseline)
   end
 end

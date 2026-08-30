@@ -36,5 +36,7 @@ module Amazonite::ApiGatewayV1
       @tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@domain_name_access_association_arn, @domain_name_arn, @access_association_source_type, @access_association_source, @tags)
   end
 end

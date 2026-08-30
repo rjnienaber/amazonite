@@ -24,5 +24,7 @@ module Amazonite::SsmV1
       @type : ComplianceQueryOperatorType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key, @values, @type)
   end
 end

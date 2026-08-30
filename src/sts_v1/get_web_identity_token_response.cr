@@ -40,5 +40,7 @@ module Amazonite::StsV1
         expiration: Core::XMLValue.time(node.xpath_node("*[local-name()='Expiration']")),
       )
     end
+
+    def_equals_and_hash(@web_identity_token, @expiration)
   end
 end

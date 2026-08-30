@@ -33,5 +33,7 @@ module Amazonite::SsmV1
       @execution_type : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@execution_time, @execution_id, @execution_type)
   end
 end

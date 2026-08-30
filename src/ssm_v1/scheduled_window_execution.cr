@@ -21,5 +21,7 @@ module Amazonite::SsmV1
       @execution_time : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_id, @name, @execution_time)
   end
 end

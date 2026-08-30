@@ -35,5 +35,7 @@ module Amazonite::CloudWatchLogsV1
       @source : IndexSource | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_identifier, @last_update_time, @policy_document, @policy_name, @source)
   end
 end

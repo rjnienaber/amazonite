@@ -20,5 +20,7 @@ module Amazonite::LambdaV1
       @recursive_loop : RecursiveLoop | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@recursive_loop)
   end
 end

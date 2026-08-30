@@ -63,5 +63,7 @@ module Amazonite::IamV1
         sort_key: (n = node.xpath_node("*[local-name()='SortKey']")) ? AI::SortKeyType.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@job_id, @max_items, @marker, @sort_key)
   end
 end

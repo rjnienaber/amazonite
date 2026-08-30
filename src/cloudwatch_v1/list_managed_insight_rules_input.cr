@@ -22,5 +22,7 @@ module Amazonite::CloudWatchV1
       @max_results : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@resource_arn, @next_token, @max_results)
   end
 end

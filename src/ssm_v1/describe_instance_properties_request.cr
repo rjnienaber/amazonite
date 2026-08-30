@@ -26,5 +26,7 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@instance_property_filter_list, @filters_with_operator, @max_results, @next_token)
   end
 end

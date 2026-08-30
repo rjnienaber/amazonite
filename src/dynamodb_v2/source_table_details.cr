@@ -65,5 +65,7 @@ module Amazonite::DynamoDBV2
       @billing_mode : BillingMode | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @table_id, @table_arn, @table_size_bytes, @key_schema, @table_creation_date_time, @provisioned_throughput, @on_demand_throughput, @item_count, @billing_mode)
   end
 end

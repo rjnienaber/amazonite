@@ -21,5 +21,7 @@ module Amazonite::EventBridgeV1
       @event_bus_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@rule, @event_bus_name, @targets)
   end
 end

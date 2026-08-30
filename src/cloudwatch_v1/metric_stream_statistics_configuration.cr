@@ -33,5 +33,7 @@ module Amazonite::CloudWatchV1
       @additional_statistics : Array(String),
     )
     end
+
+    def_equals_and_hash(@include_metrics, @additional_statistics)
   end
 end

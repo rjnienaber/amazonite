@@ -28,5 +28,7 @@ module Amazonite::SsmV1
       @association_version : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @instance_id, @association_id, @association_version)
   end
 end

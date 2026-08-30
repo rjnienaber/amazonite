@@ -75,5 +75,7 @@ module Amazonite::IamV1
         entity_name: Core::XMLValue.string(node.xpath_node("*[local-name()='EntityName']")),
       )
     end
+
+    def_equals_and_hash(@policy_name, @policy_type, @policy_arn, @entity_type, @entity_name)
   end
 end

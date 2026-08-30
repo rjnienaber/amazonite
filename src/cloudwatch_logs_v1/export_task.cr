@@ -53,5 +53,7 @@ module Amazonite::CloudWatchLogsV1
       @execution_info : ExportTaskExecutionInfo | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@task_id, @task_name, @log_group_name, @from, @to, @destination, @destination_prefix, @status, @execution_info)
   end
 end

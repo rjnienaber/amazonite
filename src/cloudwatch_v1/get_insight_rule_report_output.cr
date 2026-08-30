@@ -38,5 +38,7 @@ module Amazonite::CloudWatchV1
       @metric_datapoints : Array(InsightRuleMetricDatapoint) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_labels, @aggregation_statistic, @aggregate_value, @approximate_unique_count, @contributors, @metric_datapoints)
   end
 end

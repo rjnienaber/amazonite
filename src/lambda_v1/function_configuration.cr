@@ -258,5 +258,7 @@ module Amazonite::LambdaV1
       @durable_config : DurableConfig | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@function_name, @function_arn, @runtime, @role, @handler, @code_size, @description, @timeout, @memory_size, @last_modified, @code_sha_256, @version, @vpc_config, @dead_letter_config, @environment, @kms_key_arn, @tracing_config, @master_arn, @revision_id, @layers, @state, @state_reason, @state_reason_code, @last_update_status, @last_update_status_reason, @last_update_status_reason_code, @file_system_configs, @signing_profile_version_arn, @signing_job_arn, @package_type, @image_config_response, @architectures, @ephemeral_storage, @snap_start, @runtime_version_config, @logging_config, @tenancy_config, @capacity_provider_config, @config_sha_256, @durable_config)
   end
 end

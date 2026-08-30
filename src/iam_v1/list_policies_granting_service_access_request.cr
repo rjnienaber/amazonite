@@ -51,5 +51,7 @@ module Amazonite::IamV1
         service_namespaces: node.xpath_nodes("*[local-name()='ServiceNamespaces']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@marker, @arn, @service_namespaces)
   end
 end

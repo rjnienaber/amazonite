@@ -51,5 +51,7 @@ module Amazonite::CloudFormationV1
         include_property_values: Core::XMLValue.bool(node.xpath_node("*[local-name()='IncludePropertyValues']")),
       )
     end
+
+    def_equals_and_hash(@change_set_name, @stack_name, @next_token, @include_property_values)
   end
 end

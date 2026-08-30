@@ -111,5 +111,7 @@ module Amazonite::SsmV1
       @planned_end_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@created_by, @created_time, @last_modified_by, @last_modified_time, @priority, @source, @status, @ops_item_id, @title, @operational_data, @category, @severity, @ops_item_type, @actual_start_time, @actual_end_time, @planned_start_time, @planned_end_time)
   end
 end

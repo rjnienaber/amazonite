@@ -50,5 +50,7 @@ module Amazonite::CloudWatchV1
       @alarm_contributor_attributes : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@alarm_name, @alarm_contributor_id, @alarm_type, @timestamp, @history_item_type, @history_summary, @history_data, @alarm_contributor_attributes)
   end
 end

@@ -40,5 +40,7 @@ module Amazonite::SecretsManagerV1
       @force_delete_without_recovery : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_id, @recovery_window_in_days, @force_delete_without_recovery)
   end
 end

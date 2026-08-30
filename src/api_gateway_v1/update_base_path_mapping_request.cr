@@ -29,5 +29,7 @@ module Amazonite::ApiGatewayV1
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@domain_name, @domain_name_id, @base_path, @patch_operations)
   end
 end

@@ -54,5 +54,7 @@ module Amazonite::DynamoDBV2
       @backup_expiry_date_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@backup_arn, @backup_name, @backup_size_bytes, @backup_status, @backup_type, @backup_creation_date_time, @backup_expiry_date_time)
   end
 end

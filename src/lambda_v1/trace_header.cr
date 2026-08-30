@@ -11,5 +11,7 @@ module Amazonite::LambdaV1
       @x_amzn_trace_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@x_amzn_trace_id)
   end
 end

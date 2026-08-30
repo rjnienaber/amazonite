@@ -55,5 +55,7 @@ module Amazonite::SnsV1
         binary_value: Core::XMLValue.bytes(node.xpath_node("*[local-name()='BinaryValue']")),
       )
     end
+
+    def_equals_and_hash(@data_type, @string_value, @binary_value)
   end
 end

@@ -26,5 +26,7 @@ module Amazonite::CloudWatchV1
       @end_time_offset : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@schedule_expression, @start_time_offset, @end_time_offset)
   end
 end

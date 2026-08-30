@@ -37,5 +37,7 @@ module Amazonite::IamV1
         code: Core::XMLValue.string(node.xpath_node("*[local-name()='Code']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@message, @code)
   end
 end

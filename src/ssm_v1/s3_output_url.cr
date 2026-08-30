@@ -12,5 +12,7 @@ module Amazonite::SsmV1
       @output_url : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@output_url)
   end
 end

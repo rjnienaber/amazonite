@@ -192,5 +192,7 @@ module Amazonite::CloudFormationV1
         status_details: node.xpath_node("*[local-name()='StatusDetails']").try { |n| StackSetOperationStatusDetails.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@operation_id, @stack_set_id, @action, @status, @operation_preferences, @retain_stacks, @administration_role_arn, @execution_role_name, @creation_timestamp, @end_timestamp, @deployment_targets, @stack_set_drift_detection_details, @status_reason, @status_details)
   end
 end

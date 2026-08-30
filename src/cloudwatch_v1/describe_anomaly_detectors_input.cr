@@ -54,5 +54,7 @@ module Amazonite::CloudWatchV1
       @anomaly_detector_types : Array(AnomalyDetectorType) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@anomaly_detector_ids, @next_token, @max_results, @namespace, @metric_name, @dimensions, @anomaly_detector_types)
   end
 end

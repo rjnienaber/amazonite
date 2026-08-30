@@ -32,5 +32,7 @@ module Amazonite::KmsV1
       @parameters_valid_to : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @import_token, @public_key, @parameters_valid_to)
   end
 end

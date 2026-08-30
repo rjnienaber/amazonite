@@ -62,5 +62,7 @@ module Amazonite::IamV1
         permission_check_result: (n = node.xpath_node("*[local-name()='PermissionCheckResult']")) ? AI::PermissionCheckResultType.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@delegation_request, @permission_check_status, @permission_check_result)
   end
 end

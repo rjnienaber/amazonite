@@ -90,5 +90,7 @@ module Amazonite::CloudFormationV1
         warnings: node.xpath_nodes("*[local-name()='Warnings']/*[local-name()='member']").map { |n| WarningDetail.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@resource_type, @logical_resource_id, @resource_identifier, @resource_status, @resource_status_reason, @warnings)
   end
 end

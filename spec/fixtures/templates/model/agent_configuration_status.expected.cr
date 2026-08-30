@@ -24,5 +24,7 @@ module Amazonite::ApplicationDiscoveryServiceV2
       @description : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@agent_id, @operation_succeeded, @description)
   end
 end

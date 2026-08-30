@@ -25,5 +25,7 @@ module Amazonite::IamV1
         open_id_connect_provider_list: node.xpath_nodes("*[local-name()='OpenIDConnectProviderList']/*[local-name()='member']").map { |n| OpenIDConnectProviderListEntry.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@open_id_connect_provider_list)
   end
 end

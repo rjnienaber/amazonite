@@ -16,5 +16,7 @@ module Amazonite::KmsV1
       @region : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@arn, @region)
   end
 end

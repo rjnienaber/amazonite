@@ -17,5 +17,7 @@ module Amazonite::SsmV1
       @status : ConnectionStatus | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@target, @status)
   end
 end

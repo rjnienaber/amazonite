@@ -166,5 +166,7 @@ module Amazonite::CloudWatchV1
       @warm_up_configuration : WarmUpConfiguration | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@alarm_name, @alarm_description, @scheduled_query_configuration, @action_log_line_count, @action_log_line_role_arn, @actions_enabled, @ok_actions, @alarm_actions, @insufficient_data_actions, @query_results_to_evaluate, @query_results_to_alarm, @threshold, @comparison_operator, @treat_missing_data, @tags, @warm_up_configuration)
   end
 end

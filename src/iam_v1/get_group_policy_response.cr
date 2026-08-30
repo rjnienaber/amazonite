@@ -43,5 +43,7 @@ module Amazonite::IamV1
         policy_document: Core::XMLValue.string(node.xpath_node("*[local-name()='PolicyDocument']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@group_name, @policy_name, @policy_document)
   end
 end

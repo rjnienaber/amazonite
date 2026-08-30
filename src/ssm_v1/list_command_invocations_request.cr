@@ -38,5 +38,7 @@ module Amazonite::SsmV1
       @details : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@command_id, @instance_id, @max_results, @next_token, @filters, @details)
   end
 end

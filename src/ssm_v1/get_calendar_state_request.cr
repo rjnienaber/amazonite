@@ -18,5 +18,7 @@ module Amazonite::SsmV1
       @at_time : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@calendar_names, @at_time)
   end
 end

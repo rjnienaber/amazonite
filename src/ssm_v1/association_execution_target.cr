@@ -53,5 +53,7 @@ module Amazonite::SsmV1
       @output_source : OutputSource | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@association_id, @association_version, @execution_id, @resource_id, @resource_type, @status, @detailed_status, @last_execution_date, @output_source)
   end
 end

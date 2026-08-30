@@ -30,5 +30,7 @@ module Amazonite::CloudWatchV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@template_name, @resource_arn, @tags)
   end
 end

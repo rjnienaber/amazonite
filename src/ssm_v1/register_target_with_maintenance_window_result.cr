@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @window_target_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_target_id)
   end
 end

@@ -254,5 +254,7 @@ module Amazonite::DynamoDBV2
       @consistent_read : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @index_name, @attributes_to_get, @limit, @select, @scan_filter, @conditional_operator, @exclusive_start_key, @return_consumed_capacity, @total_segments, @segment, @projection_expression, @filter_expression, @expression_attribute_names, @expression_attribute_values, @consistent_read)
   end
 end

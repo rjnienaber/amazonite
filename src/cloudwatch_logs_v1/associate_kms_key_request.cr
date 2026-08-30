@@ -43,5 +43,7 @@ module Amazonite::CloudWatchLogsV1
       @resource_identifier : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_name, @kms_key_id, @resource_identifier)
   end
 end

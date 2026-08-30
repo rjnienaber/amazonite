@@ -13,5 +13,7 @@ module Amazonite::CloudWatchLogsV1
       @storage_tier : StorageTier,
     )
     end
+
+    def_equals_and_hash(@storage_tier)
   end
 end

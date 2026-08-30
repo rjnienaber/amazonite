@@ -88,5 +88,7 @@ module Amazonite::CloudFormationV1
         scan_type: (n = node.xpath_node("*[local-name()='ScanType']")) ? ACF::ScanType.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@resource_scan_id, @status, @status_reason, @start_time, @end_time, @percentage_completed, @scan_type)
   end
 end

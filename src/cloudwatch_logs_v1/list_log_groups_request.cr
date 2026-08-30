@@ -80,5 +80,7 @@ module Amazonite::CloudWatchLogsV1
       @log_group_tags : Array(TagFilter) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_name_pattern, @log_group_class, @include_linked_accounts, @account_identifiers, @next_token, @limit, @data_sources, @field_index_names, @log_group_tags)
   end
 end

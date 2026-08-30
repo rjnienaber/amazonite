@@ -36,5 +36,7 @@ module Amazonite::SecretsManagerV1
       @version_stage : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_id, @version_id, @version_stage)
   end
 end

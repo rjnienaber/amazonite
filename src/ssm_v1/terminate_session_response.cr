@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @session_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@session_id)
   end
 end

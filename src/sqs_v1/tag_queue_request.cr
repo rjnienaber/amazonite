@@ -15,5 +15,7 @@ module Amazonite::SqsV1
       @tags : Hash(String, String),
     )
     end
+
+    def_equals_and_hash(@queue_url, @tags)
   end
 end

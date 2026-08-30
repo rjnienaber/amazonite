@@ -11,5 +11,7 @@ module Amazonite::LambdaV1
       @next_attempt_delay_seconds : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_attempt_delay_seconds)
   end
 end

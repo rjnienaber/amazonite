@@ -17,5 +17,7 @@ module Amazonite::CloudWatchV1
       @metric_data_queries : Array(MetricDataQuery) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@metric_data_queries)
   end
 end

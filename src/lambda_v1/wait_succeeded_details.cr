@@ -11,5 +11,7 @@ module Amazonite::LambdaV1
       @duration : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@duration)
   end
 end

@@ -10,5 +10,7 @@ module Amazonite::EventBridgeV1
       @entries : Array(PutPartnerEventsRequestEntry),
     )
     end
+
+    def_equals_and_hash(@entries)
   end
 end

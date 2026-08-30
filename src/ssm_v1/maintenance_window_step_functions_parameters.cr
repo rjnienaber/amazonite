@@ -33,5 +33,7 @@ module Amazonite::SsmV1
       @name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@input, @name)
   end
 end

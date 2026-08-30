@@ -57,5 +57,7 @@ module Amazonite::SsmV1
       @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@association_id, @association_version, @execution_id, @status, @detailed_status, @created_time, @last_execution_date, @resource_count_by_status, @alarm_configuration, @triggered_alarms)
   end
 end

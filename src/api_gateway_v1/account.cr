@@ -27,5 +27,7 @@ module Amazonite::ApiGatewayV1
       @api_key_version : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@cloudwatch_role_arn, @throttle_settings, @features, @api_key_version)
   end
 end

@@ -21,5 +21,7 @@ module Amazonite::DynamoDBV2
       @item : Hash(String, AttributeValue) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@error, @table_name, @item)
   end
 end

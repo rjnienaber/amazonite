@@ -24,5 +24,7 @@ module Amazonite::DynamoDBV2
       @search_schema_element_type : SearchSchemaElementType,
     )
     end
+
+    def_equals_and_hash(@attribute_name, @search_schema_element_type)
   end
 end

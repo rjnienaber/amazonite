@@ -26,5 +26,7 @@ module Amazonite::CloudFormationV1
         stack_drift_detection_id: Core::XMLValue.string(node.xpath_node("*[local-name()='StackDriftDetectionId']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@stack_drift_detection_id)
   end
 end

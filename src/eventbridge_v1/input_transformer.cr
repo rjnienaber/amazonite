@@ -68,5 +68,7 @@ module Amazonite::EventBridgeV1
       @input_paths_map : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@input_paths_map, @input_template)
   end
 end

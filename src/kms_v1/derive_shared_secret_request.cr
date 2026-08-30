@@ -109,5 +109,7 @@ module Amazonite::KmsV1
       @recipient : RecipientInfo | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @key_agreement_algorithm, @public_key, @grant_tokens, @dry_run, @recipient)
   end
 end

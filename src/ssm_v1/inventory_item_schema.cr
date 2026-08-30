@@ -29,5 +29,7 @@ module Amazonite::SsmV1
       @display_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@type_name, @version, @attributes, @display_name)
   end
 end

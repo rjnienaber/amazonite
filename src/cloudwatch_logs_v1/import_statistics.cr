@@ -11,5 +11,7 @@ module Amazonite::CloudWatchLogsV1
       @bytes_imported : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@bytes_imported)
   end
 end

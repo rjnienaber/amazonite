@@ -46,5 +46,7 @@ module Amazonite::CloudWatchLogsV1
       @application_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@kms_key_arn, @data_source_role_arn, @dashboard_viewer_principals, @application_arn, @retention_days)
   end
 end

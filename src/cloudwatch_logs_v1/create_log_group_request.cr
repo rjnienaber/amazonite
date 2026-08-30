@@ -61,5 +61,7 @@ module Amazonite::CloudWatchLogsV1
       @deletion_protection_enabled : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_name, @kms_key_id, @tags, @log_group_class, @deletion_protection_enabled)
   end
 end

@@ -11,5 +11,7 @@ module Amazonite::SsmV1
       @subscriptions : Array(AzureSubscription) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@subscriptions)
   end
 end

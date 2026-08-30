@@ -28,5 +28,7 @@ module Amazonite::CloudFormationV1
         stack_policy_body: Core::XMLValue.string(node.xpath_node("*[local-name()='StackPolicyBody']")),
       )
     end
+
+    def_equals_and_hash(@stack_policy_body)
   end
 end

@@ -36,5 +36,7 @@ module Amazonite::SecretsManagerV1
       @last_accessed_date : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@region, @kms_key_id, @status, @status_message, @last_accessed_date)
   end
 end

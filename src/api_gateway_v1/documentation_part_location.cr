@@ -53,5 +53,7 @@ module Amazonite::ApiGatewayV1
       @name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@type, @path, @method, @status_code, @name)
   end
 end

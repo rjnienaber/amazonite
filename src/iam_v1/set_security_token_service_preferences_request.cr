@@ -29,5 +29,7 @@ module Amazonite::IamV1
         global_endpoint_token_version: ((n = node.xpath_node("*[local-name()='GlobalEndpointTokenVersion']")) ? AI::GlobalEndpointTokenVersion.from_json_object_key?(n.content) : nil).not_nil!,
       )
     end
+
+    def_equals_and_hash(@global_endpoint_token_version)
   end
 end

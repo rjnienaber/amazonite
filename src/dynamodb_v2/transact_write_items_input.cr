@@ -47,5 +47,7 @@ module Amazonite::DynamoDBV2
       @client_request_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@transact_items, @return_consumed_capacity, @return_item_collection_metrics, @client_request_token)
   end
 end

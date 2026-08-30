@@ -11,5 +11,7 @@ module Amazonite::ApiGatewayV1
       @items : Array(SdkType) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@items)
   end
 end

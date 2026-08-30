@@ -187,5 +187,7 @@ module Amazonite::CloudWatchV1
       @actions_suppressor_extension_period : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@actions_enabled, @alarm_actions, @alarm_description, @alarm_name, @alarm_rule, @insufficient_data_actions, @ok_actions, @tags, @actions_suppressor, @actions_suppressor_wait_period, @actions_suppressor_extension_period)
   end
 end

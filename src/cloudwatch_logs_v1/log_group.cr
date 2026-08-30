@@ -114,5 +114,7 @@ module Amazonite::CloudWatchLogsV1
       @bearer_token_authentication_enabled : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_name, @creation_time, @retention_in_days, @metric_filter_count, @arn, @stored_bytes, @kms_key_id, @data_protection_status, @inherited_properties, @log_group_class, @log_group_arn, @deletion_protection_enabled, @bearer_token_authentication_enabled)
   end
 end

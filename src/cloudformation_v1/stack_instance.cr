@@ -166,5 +166,7 @@ module Amazonite::CloudFormationV1
         last_operation_id: Core::XMLValue.string(node.xpath_node("*[local-name()='LastOperationId']")),
       )
     end
+
+    def_equals_and_hash(@stack_set_id, @region, @account, @stack_id, @parameter_overrides, @status, @stack_instance_status, @status_reason, @organizational_unit_id, @drift_status, @last_drift_check_timestamp, @last_operation_id)
   end
 end

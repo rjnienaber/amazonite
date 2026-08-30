@@ -15,5 +15,7 @@ module Amazonite::BackupGatewayV2
       @tag_keys : Array(String),
     )
     end
+
+    def_equals_and_hash(@resource_arn, @tag_keys)
   end
 end

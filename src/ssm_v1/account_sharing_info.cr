@@ -17,5 +17,7 @@ module Amazonite::SsmV1
       @shared_document_version : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@account_id, @shared_document_version)
   end
 end

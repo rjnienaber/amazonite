@@ -20,5 +20,7 @@ module Amazonite::KmsV1
       @raw_secret_access_key : String,
     )
     end
+
+    def_equals_and_hash(@access_key_id, @raw_secret_access_key)
   end
 end

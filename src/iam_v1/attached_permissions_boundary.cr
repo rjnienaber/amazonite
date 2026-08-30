@@ -43,5 +43,7 @@ module Amazonite::IamV1
         permissions_boundary_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='PermissionsBoundaryArn']")),
       )
     end
+
+    def_equals_and_hash(@permissions_boundary_type, @permissions_boundary_arn)
   end
 end

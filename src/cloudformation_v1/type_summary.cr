@@ -186,5 +186,7 @@ module Amazonite::CloudFormationV1
         is_activated: Core::XMLValue.bool(node.xpath_node("*[local-name()='IsActivated']")),
       )
     end
+
+    def_equals_and_hash(@type, @type_name, @default_version_id, @type_arn, @last_updated, @description, @publisher_id, @original_type_name, @public_version_number, @latest_public_version, @publisher_identity, @publisher_name, @is_activated)
   end
 end

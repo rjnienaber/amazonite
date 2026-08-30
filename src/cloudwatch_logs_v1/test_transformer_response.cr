@@ -11,5 +11,7 @@ module Amazonite::CloudWatchLogsV1
       @transformed_logs : Array(TransformedLogRecord) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@transformed_logs)
   end
 end

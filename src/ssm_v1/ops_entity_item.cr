@@ -16,5 +16,7 @@ module Amazonite::SsmV1
       @content : Array(Hash(String, String)) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@capture_time, @content)
   end
 end

@@ -45,5 +45,7 @@ module Amazonite::DynamoDBV2
       @return_item_collection_metrics : ReturnItemCollectionMetrics | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@request_items, @return_consumed_capacity, @return_item_collection_metrics)
   end
 end

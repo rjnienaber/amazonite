@@ -25,5 +25,7 @@ module Amazonite::SsmV1
       @association_dispatch_assume_role : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@entries, @association_dispatch_assume_role)
   end
 end

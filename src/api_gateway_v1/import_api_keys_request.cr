@@ -26,5 +26,7 @@ module Amazonite::ApiGatewayV1
       @fail_on_warnings : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@body, @format, @fail_on_warnings)
   end
 end

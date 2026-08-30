@@ -26,5 +26,7 @@ module Amazonite::IamV1
         instance_profile_name: Core::XMLValue.string(node.xpath_node("*[local-name()='InstanceProfileName']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@instance_profile_name)
   end
 end

@@ -11,5 +11,7 @@ module Amazonite::LambdaV1
       @result : EventResult,
     )
     end
+
+    def_equals_and_hash(@result)
   end
 end

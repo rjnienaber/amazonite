@@ -48,5 +48,7 @@ module Amazonite::DynamoDBV2
       @item_collection_metrics : ItemCollectionMetrics | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@attributes, @consumed_capacity, @item_collection_metrics)
   end
 end

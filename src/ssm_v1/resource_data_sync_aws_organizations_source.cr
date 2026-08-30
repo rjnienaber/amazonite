@@ -21,5 +21,7 @@ module Amazonite::SsmV1
       @organizational_units : Array(ResourceDataSyncOrganizationalUnit) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@organization_source_type, @organizational_units)
   end
 end

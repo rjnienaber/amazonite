@@ -24,5 +24,7 @@ module Amazonite::CloudWatchV1
       @kms_key_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@dataset_id, @arn, @kms_key_arn)
   end
 end

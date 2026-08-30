@@ -12,5 +12,7 @@ module Amazonite::LambdaV1
       @input_payload : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@input_payload)
   end
 end

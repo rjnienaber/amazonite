@@ -15,5 +15,7 @@ module Amazonite::LambdaV1
       @result : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@callback_id, @result)
   end
 end

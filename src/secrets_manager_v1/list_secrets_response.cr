@@ -18,5 +18,7 @@ module Amazonite::SecretsManagerV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_list, @next_token)
   end
 end

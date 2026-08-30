@@ -21,5 +21,7 @@ module Amazonite::SsmV1
       @default_version_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @default_version, @default_version_name)
   end
 end

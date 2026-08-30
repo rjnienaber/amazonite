@@ -52,5 +52,7 @@ module Amazonite::DynamoDBV2
       @confirm_remove_self_resource_access : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@resource_arn, @policy, @expected_revision_id, @confirm_remove_self_resource_access)
   end
 end

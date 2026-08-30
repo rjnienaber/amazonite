@@ -139,5 +139,7 @@ module Amazonite::IamV1
         source_role_template: node.xpath_node("*[local-name()='SourceRoleTemplate']").try { |n| SourceRoleTemplate.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@path, @role_name, @role_id, @arn, @create_date, @assume_role_policy_document, @description, @max_session_duration, @permissions_boundary, @tags, @role_last_used, @source_role_template)
   end
 end

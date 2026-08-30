@@ -136,5 +136,7 @@ module Amazonite::CloudFormationV1
         major_version: Core::XMLValue.i64(node.xpath_node("*[local-name()='MajorVersion']")),
       )
     end
+
+    def_equals_and_hash(@type, @public_type_arn, @publisher_id, @type_name, @type_name_alias, @auto_update, @logging_config, @execution_role_arn, @version_bump, @major_version)
   end
 end

@@ -10,5 +10,7 @@ module Amazonite::DynamoDBV2
       @continuous_backups_description : ContinuousBackupsDescription | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@continuous_backups_description)
   end
 end

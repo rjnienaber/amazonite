@@ -26,5 +26,7 @@ module Amazonite::CloudWatchV1
       @kms_key_arn : String,
     )
     end
+
+    def_equals_and_hash(@dataset_identifier, @kms_key_arn)
   end
 end

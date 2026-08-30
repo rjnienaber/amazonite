@@ -18,5 +18,7 @@ module Amazonite::LambdaV1
       @invoke_complete : InvokeWithResponseStreamCompleteEvent | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@payload_chunk, @invoke_complete)
   end
 end

@@ -12,5 +12,7 @@ module Amazonite::LambdaV1
       @stop_timestamp : Time,
     )
     end
+
+    def_equals_and_hash(@stop_timestamp)
   end
 end

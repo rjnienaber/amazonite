@@ -11,5 +11,7 @@ module Amazonite::SsmV1
       @command : Command | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@command)
   end
 end

@@ -37,5 +37,7 @@ module Amazonite::SsmV1
       @aggregators : Array(OpsAggregator) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@aggregator_type, @type_name, @attribute_name, @values, @filters, @aggregators)
   end
 end

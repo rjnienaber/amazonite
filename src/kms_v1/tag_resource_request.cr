@@ -32,5 +32,7 @@ module Amazonite::KmsV1
       @tags : Array(Tag),
     )
     end
+
+    def_equals_and_hash(@key_id, @tags)
   end
 end

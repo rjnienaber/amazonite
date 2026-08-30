@@ -33,5 +33,7 @@ module Amazonite::EventBridgeV1
       @state : EventSourceState | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@account, @creation_time, @expiration_time, @state)
   end
 end

@@ -38,5 +38,7 @@ module Amazonite::IamV1
         certificate_id: Core::XMLValue.string(node.xpath_node("*[local-name()='CertificateId']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@user_name, @certificate_id)
   end
 end

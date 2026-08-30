@@ -16,5 +16,7 @@ module Amazonite::EventBridgeV1
       @password : String,
     )
     end
+
+    def_equals_and_hash(@username, @password)
   end
 end

@@ -25,5 +25,7 @@ module Amazonite::LambdaV1
       @code_signing_policies : CodeSigningPolicies | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@code_signing_config_arn, @description, @allowed_publishers, @code_signing_policies)
   end
 end

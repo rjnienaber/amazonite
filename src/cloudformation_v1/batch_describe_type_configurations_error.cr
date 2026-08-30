@@ -44,5 +44,7 @@ module Amazonite::CloudFormationV1
         type_configuration_identifier: node.xpath_node("*[local-name()='TypeConfigurationIdentifier']").try { |n| TypeConfigurationIdentifier.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@error_code, @error_message, @type_configuration_identifier)
   end
 end

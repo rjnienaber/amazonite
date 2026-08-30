@@ -24,5 +24,7 @@ module Amazonite::KmsV1
       @id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id)
   end
 end

@@ -18,5 +18,7 @@ module Amazonite::SsmV1
       @parameter_version : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@invalid_labels, @parameter_version)
   end
 end

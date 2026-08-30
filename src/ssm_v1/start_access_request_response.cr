@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @access_request_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@access_request_id)
   end
 end

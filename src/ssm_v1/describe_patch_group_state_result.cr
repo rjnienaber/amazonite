@@ -90,5 +90,7 @@ module Amazonite::SsmV1
       @instances_with_available_security_updates : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@instances, @instances_with_installed_patches, @instances_with_installed_other_patches, @instances_with_installed_pending_reboot_patches, @instances_with_installed_rejected_patches, @instances_with_missing_patches, @instances_with_failed_patches, @instances_with_not_applicable_patches, @instances_with_unreported_not_applicable_patches, @instances_with_critical_non_compliant_patches, @instances_with_security_non_compliant_patches, @instances_with_other_non_compliant_patches, @instances_with_available_security_updates)
   end
 end

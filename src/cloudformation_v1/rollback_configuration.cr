@@ -72,5 +72,7 @@ module Amazonite::CloudFormationV1
         monitoring_time_in_minutes: Core::XMLValue.i32(node.xpath_node("*[local-name()='MonitoringTimeInMinutes']")),
       )
     end
+
+    def_equals_and_hash(@rollback_triggers, @monitoring_time_in_minutes)
   end
 end

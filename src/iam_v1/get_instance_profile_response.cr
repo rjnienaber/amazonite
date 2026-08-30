@@ -23,5 +23,7 @@ module Amazonite::IamV1
         instance_profile: node.xpath_node("*[local-name()='InstanceProfile']").try { |n| InstanceProfile.from_xml(n) }.not_nil!,
       )
     end
+
+    def_equals_and_hash(@instance_profile)
   end
 end

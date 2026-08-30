@@ -18,5 +18,7 @@ module Amazonite::CloudWatchLogsV1
       @end_event_time : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@start_event_time, @end_event_time)
   end
 end

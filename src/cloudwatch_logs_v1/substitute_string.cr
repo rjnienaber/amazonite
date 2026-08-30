@@ -17,5 +17,7 @@ module Amazonite::CloudWatchLogsV1
       @entries : Array(SubstituteStringEntry),
     )
     end
+
+    def_equals_and_hash(@entries)
   end
 end

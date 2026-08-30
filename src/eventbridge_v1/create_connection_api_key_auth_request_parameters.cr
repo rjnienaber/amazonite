@@ -16,5 +16,7 @@ module Amazonite::EventBridgeV1
       @api_key_value : String,
     )
     end
+
+    def_equals_and_hash(@api_key_name, @api_key_value)
   end
 end

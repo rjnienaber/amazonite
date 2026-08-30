@@ -35,5 +35,7 @@ module Amazonite::IamV1
         parameters: node.xpath_nodes("*[local-name()='Parameters']/*[local-name()='member']").map { |n| PolicyParameter.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@policy_template_arn, @parameters)
   end
 end

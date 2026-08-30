@@ -58,5 +58,7 @@ module Amazonite::CloudFormationV1
         resolved_value: Core::XMLValue.string(node.xpath_node("*[local-name()='ResolvedValue']")),
       )
     end
+
+    def_equals_and_hash(@parameter_key, @parameter_value, @use_previous_value, @resolved_value)
   end
 end

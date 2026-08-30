@@ -45,5 +45,7 @@ module Amazonite::DynamoDBV2
       @on_demand_throughput : OnDemandThroughput | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@index_name, @key_schema, @projection, @provisioned_throughput, @on_demand_throughput)
   end
 end

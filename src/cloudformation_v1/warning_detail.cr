@@ -52,5 +52,7 @@ module Amazonite::CloudFormationV1
         properties: node.xpath_nodes("*[local-name()='Properties']/*[local-name()='member']").map { |n| WarningProperty.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@type, @properties)
   end
 end

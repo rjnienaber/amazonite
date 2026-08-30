@@ -55,5 +55,7 @@ module Amazonite::CloudWatchV1
       @apply_on_transformed_logs : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@rule_name, @rule_state, @rule_definition, @tags, @apply_on_transformed_logs)
   end
 end

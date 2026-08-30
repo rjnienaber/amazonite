@@ -26,5 +26,7 @@ module Amazonite::IamV1
         account_alias: Core::XMLValue.string(node.xpath_node("*[local-name()='AccountAlias']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@account_alias)
   end
 end

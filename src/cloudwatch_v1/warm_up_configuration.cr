@@ -30,5 +30,7 @@ module Amazonite::CloudWatchV1
       @only_start_evaluating_after_warm_up_period_ends : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@warm_up_period_duration_in_minutes, @only_start_evaluating_after_warm_up_period_ends)
   end
 end

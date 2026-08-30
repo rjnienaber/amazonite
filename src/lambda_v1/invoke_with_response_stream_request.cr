@@ -65,5 +65,7 @@ module Amazonite::LambdaV1
       @invocation_type : ResponseStreamingInvocationType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@function_name, @log_type, @client_context, @qualifier, @payload, @tenant_id, @invocation_type)
   end
 end

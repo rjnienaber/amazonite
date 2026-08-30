@@ -34,5 +34,7 @@ module Amazonite::StsV1
         arn: Core::XMLValue.string(node.xpath_node("*[local-name()='Arn']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@assumed_role_id, @arn)
   end
 end

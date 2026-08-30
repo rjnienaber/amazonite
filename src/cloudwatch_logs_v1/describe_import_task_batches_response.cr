@@ -26,5 +26,7 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@import_source_arn, @import_id, @import_batches, @next_token)
   end
 end

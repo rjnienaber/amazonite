@@ -12,5 +12,7 @@ module Amazonite::LambdaV1
       @pattern : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@pattern)
   end
 end

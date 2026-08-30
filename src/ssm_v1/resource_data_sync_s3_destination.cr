@@ -39,5 +39,7 @@ module Amazonite::SsmV1
       @destination_data_sharing : ResourceDataSyncDestinationDataSharing | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@bucket_name, @prefix, @sync_format, @region, @awskms_key_arn, @destination_data_sharing)
   end
 end

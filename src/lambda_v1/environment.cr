@@ -14,5 +14,7 @@ module Amazonite::LambdaV1
       @variables : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@variables)
   end
 end

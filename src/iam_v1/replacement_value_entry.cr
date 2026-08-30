@@ -24,5 +24,7 @@ module Amazonite::IamV1
         values: node.xpath_nodes("*[local-name()='Values']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@values)
   end
 end

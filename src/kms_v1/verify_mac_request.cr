@@ -60,5 +60,7 @@ module Amazonite::KmsV1
       @dry_run : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@message, @key_id, @mac_algorithm, @mac, @grant_tokens, @dry_run)
   end
 end

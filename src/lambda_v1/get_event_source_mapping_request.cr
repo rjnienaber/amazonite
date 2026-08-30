@@ -10,5 +10,7 @@ module Amazonite::LambdaV1
       @uuid : String,
     )
     end
+
+    def_equals_and_hash(@uuid)
   end
 end

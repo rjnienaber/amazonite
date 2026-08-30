@@ -42,5 +42,7 @@ module Amazonite::CloudFormationV1
         type_configurations: node.xpath_nodes("*[local-name()='TypeConfigurations']/*[local-name()='member']").map { |n| TypeConfigurationDetails.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@errors, @unprocessed_type_configurations, @type_configurations)
   end
 end

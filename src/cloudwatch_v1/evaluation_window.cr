@@ -25,5 +25,7 @@ module Amazonite::CloudWatchV1
       @sliding_window : SlidingWindow | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@wall_clock_window, @sliding_window)
   end
 end

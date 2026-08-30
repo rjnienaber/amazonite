@@ -37,5 +37,7 @@ module Amazonite::IamV1
         column: Core::XMLValue.i32(node.xpath_node("*[local-name()='Column']")),
       )
     end
+
+    def_equals_and_hash(@line, @column)
   end
 end

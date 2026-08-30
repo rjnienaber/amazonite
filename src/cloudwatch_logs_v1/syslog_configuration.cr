@@ -29,5 +29,7 @@ module Amazonite::CloudWatchLogsV1
       @created_at : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_arn, @source_type, @vpc_endpoint_id, @created_at)
   end
 end

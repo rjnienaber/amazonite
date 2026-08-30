@@ -95,5 +95,7 @@ module Amazonite::CloudFormationV1
         timestamp: Core::XMLValue.time(node.xpath_node("*[local-name()='Timestamp']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@stack_id, @logical_resource_id, @physical_resource_id, @physical_resource_id_context, @resource_type, @property_differences, @stack_resource_drift_status, @timestamp)
   end
 end

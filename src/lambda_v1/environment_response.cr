@@ -18,5 +18,7 @@ module Amazonite::LambdaV1
       @error : EnvironmentError | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@variables, @error)
   end
 end

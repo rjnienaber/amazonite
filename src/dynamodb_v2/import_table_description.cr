@@ -108,5 +108,7 @@ module Amazonite::DynamoDBV2
       @failure_message : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@import_arn, @import_status, @table_arn, @table_id, @client_token, @s3_bucket_source, @error_count, @cloud_watch_log_group_arn, @input_format, @input_format_options, @input_compression_type, @table_creation_parameters, @start_time, @end_time, @processed_size_bytes, @processed_item_count, @imported_item_count, @failure_code, @failure_message)
   end
 end

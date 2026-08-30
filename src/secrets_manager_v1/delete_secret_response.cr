@@ -24,5 +24,7 @@ module Amazonite::SecretsManagerV1
       @deletion_date : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@arn, @name, @deletion_date)
   end
 end

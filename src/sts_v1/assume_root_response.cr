@@ -47,5 +47,7 @@ module Amazonite::StsV1
         source_identity: Core::XMLValue.string(node.xpath_node("*[local-name()='SourceIdentity']")),
       )
     end
+
+    def_equals_and_hash(@credentials, @source_identity)
   end
 end

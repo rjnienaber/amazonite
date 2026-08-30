@@ -144,5 +144,7 @@ module Amazonite::SsmV1
       @cloud_watch_output_config : CloudWatchOutputConfig | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@command_id, @instance_id, @instance_name, @comment, @document_name, @document_version, @requested_date_time, @status, @status_details, @trace_output, @standard_output_url, @standard_error_url, @command_plugins, @service_role, @notification_config, @cloud_watch_output_config)
   end
 end

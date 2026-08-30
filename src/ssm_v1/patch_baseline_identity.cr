@@ -35,5 +35,7 @@ module Amazonite::SsmV1
       @default_baseline : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@baseline_id, @baseline_name, @operating_system, @baseline_description, @default_baseline)
   end
 end

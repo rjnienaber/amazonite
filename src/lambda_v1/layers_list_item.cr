@@ -22,5 +22,7 @@ module Amazonite::LambdaV1
       @latest_matching_version : LayerVersionsListItem | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@layer_name, @layer_arn, @latest_matching_version)
   end
 end

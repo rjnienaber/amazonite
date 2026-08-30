@@ -26,5 +26,7 @@ module Amazonite::DynamoDBV2
       @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@transact_statements, @client_request_token, @return_consumed_capacity)
   end
 end

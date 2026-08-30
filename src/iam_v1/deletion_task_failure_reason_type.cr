@@ -42,5 +42,7 @@ module Amazonite::IamV1
         role_usage_list: node.xpath_nodes("*[local-name()='RoleUsageList']/*[local-name()='member']").map { |n| RoleUsageType.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@reason, @role_usage_list)
   end
 end

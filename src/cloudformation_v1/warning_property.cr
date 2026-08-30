@@ -44,5 +44,7 @@ module Amazonite::CloudFormationV1
         description: Core::XMLValue.string(node.xpath_node("*[local-name()='Description']")),
       )
     end
+
+    def_equals_and_hash(@property_path, @required, @description)
   end
 end

@@ -44,5 +44,7 @@ module Amazonite::SnsV1
         status: (n = node.xpath_node("*[local-name()='Status']")) ? AS::SMSSandboxPhoneNumberVerificationStatus.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@phone_number, @status)
   end
 end

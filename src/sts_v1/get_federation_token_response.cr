@@ -52,5 +52,7 @@ module Amazonite::StsV1
         packed_policy_size: Core::XMLValue.i32(node.xpath_node("*[local-name()='PackedPolicySize']")),
       )
     end
+
+    def_equals_and_hash(@credentials, @federated_user, @packed_policy_size)
   end
 end

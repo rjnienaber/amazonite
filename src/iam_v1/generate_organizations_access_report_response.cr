@@ -26,5 +26,7 @@ module Amazonite::IamV1
         job_id: Core::XMLValue.string(node.xpath_node("*[local-name()='JobId']")),
       )
     end
+
+    def_equals_and_hash(@job_id)
   end
 end

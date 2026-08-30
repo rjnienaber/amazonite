@@ -29,5 +29,7 @@ module Amazonite::SsmV1
       @document_format : DocumentFormat | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @version_name, @document_version, @document_format)
   end
 end

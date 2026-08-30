@@ -56,5 +56,7 @@ module Amazonite::CloudFormationV1
         type_version_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='TypeVersionArn']")),
       )
     end
+
+    def_equals_and_hash(@progress_status, @description, @type_arn, @type_version_arn)
   end
 end

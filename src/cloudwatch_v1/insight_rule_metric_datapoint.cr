@@ -69,5 +69,7 @@ module Amazonite::CloudWatchV1
       @maximum : Float64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@timestamp, @unique_contributors, @max_contributor_value, @sample_count, @average, @sum, @minimum, @maximum)
   end
 end

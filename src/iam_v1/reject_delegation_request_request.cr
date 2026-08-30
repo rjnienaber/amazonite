@@ -31,5 +31,7 @@ module Amazonite::IamV1
         notes: Core::XMLValue.string(node.xpath_node("*[local-name()='Notes']")),
       )
     end
+
+    def_equals_and_hash(@delegation_request_id, @notes)
   end
 end

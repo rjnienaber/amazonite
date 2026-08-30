@@ -37,5 +37,7 @@ module Amazonite::SsmV1
       @payload : Hash(String, Array(String)) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@automation_execution_id, @signal_type, @payload)
   end
 end

@@ -195,5 +195,7 @@ module Amazonite::CloudFormationV1
         previous_deployment_context: Core::XMLValue.string(node.xpath_node("*[local-name()='PreviousDeploymentContext']")),
       )
     end
+
+    def_equals_and_hash(@policy_action, @action, @logical_resource_id, @physical_resource_id, @resource_type, @replacement, @scope, @resource_drift_status, @resource_drift_ignored_attributes, @details, @change_set_id, @module_info, @before_context, @after_context, @previous_deployment_context)
   end
 end

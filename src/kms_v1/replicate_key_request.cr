@@ -150,5 +150,7 @@ module Amazonite::KmsV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @replica_region, @policy, @bypass_policy_lockout_safety_check, @description, @tags)
   end
 end

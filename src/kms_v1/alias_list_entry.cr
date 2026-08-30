@@ -35,5 +35,7 @@ module Amazonite::KmsV1
       @last_updated_date : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@alias_name, @alias_arn, @target_key_id, @creation_date, @last_updated_date)
   end
 end

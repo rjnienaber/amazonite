@@ -29,5 +29,7 @@ module Amazonite::SnsV1
         one_time_password: Core::XMLValue.string(node.xpath_node("*[local-name()='OneTimePassword']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@phone_number, @one_time_password)
   end
 end

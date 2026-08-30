@@ -16,5 +16,7 @@ module Amazonite::DynamoDBV2
       @delete : DeleteVectorIndexAction | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@create, @delete)
   end
 end

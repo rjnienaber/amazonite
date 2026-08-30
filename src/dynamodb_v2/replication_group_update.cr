@@ -33,5 +33,7 @@ module Amazonite::DynamoDBV2
       @delete : DeleteReplicationGroupMemberAction | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@create, @update, @delete)
   end
 end

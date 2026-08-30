@@ -82,5 +82,7 @@ module Amazonite::CloudFormationV1
         retain_except_on_create: Core::XMLValue.bool(node.xpath_node("*[local-name()='RetainExceptOnCreate']")),
       )
     end
+
+    def_equals_and_hash(@change_set_name, @stack_name, @client_request_token, @disable_rollback, @retain_except_on_create)
   end
 end

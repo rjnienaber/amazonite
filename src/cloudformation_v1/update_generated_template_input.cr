@@ -71,5 +71,7 @@ module Amazonite::CloudFormationV1
         template_configuration: node.xpath_node("*[local-name()='TemplateConfiguration']").try { |n| TemplateConfiguration.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@generated_template_name, @new_generated_template_name, @add_resources, @remove_resources, @refresh_all_resources, @template_configuration)
   end
 end

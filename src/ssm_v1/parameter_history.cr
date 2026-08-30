@@ -81,5 +81,7 @@ module Amazonite::SsmV1
       @data_type : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @type, @key_id, @last_modified_date, @last_modified_user, @description, @value, @allowed_pattern, @version, @labels, @tier, @policies, @data_type)
   end
 end

@@ -19,5 +19,7 @@ module Amazonite::LambdaV1
       @checkpoint_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@checkpoint_token, @new_execution_state)
   end
 end

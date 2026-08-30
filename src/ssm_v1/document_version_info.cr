@@ -63,5 +63,7 @@ module Amazonite::SsmV1
       @review_status : ReviewStatus | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @display_name, @document_version, @version_name, @created_date, @is_default_version, @document_format, @status, @status_information, @review_status)
   end
 end

@@ -150,5 +150,7 @@ module Amazonite::SecretsManagerV1
       @type : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @client_request_token, @description, @kms_key_id, @secret_binary, @secret_string, @tags, @add_replica_regions, @force_overwrite_replica_secret, @type)
   end
 end

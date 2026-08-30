@@ -26,5 +26,7 @@ module Amazonite::SsmV1
       @next_transition_time : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@state, @at_time, @next_transition_time)
   end
 end

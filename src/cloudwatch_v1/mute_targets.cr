@@ -18,5 +18,7 @@ module Amazonite::CloudWatchV1
       @alarm_names : Array(String),
     )
     end
+
+    def_equals_and_hash(@alarm_names)
   end
 end

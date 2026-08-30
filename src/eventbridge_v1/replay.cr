@@ -57,5 +57,7 @@ module Amazonite::EventBridgeV1
       @replay_end_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@replay_name, @event_source_arn, @state, @state_reason, @event_start_time, @event_end_time, @event_last_replayed_time, @replay_start_time, @replay_end_time)
   end
 end

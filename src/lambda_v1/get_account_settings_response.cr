@@ -15,5 +15,7 @@ module Amazonite::LambdaV1
       @account_usage : AccountUsage | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@account_limit, @account_usage)
   end
 end

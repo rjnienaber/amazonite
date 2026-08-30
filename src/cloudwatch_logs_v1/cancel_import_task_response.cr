@@ -34,5 +34,7 @@ module Amazonite::CloudWatchLogsV1
       @last_updated_time : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@import_id, @import_statistics, @import_status, @creation_time, @last_updated_time)
   end
 end

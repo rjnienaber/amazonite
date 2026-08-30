@@ -26,5 +26,7 @@ module Amazonite::LambdaV1
       @function_name : String,
     )
     end
+
+    def_equals_and_hash(@code_signing_config_arn, @function_name)
   end
 end

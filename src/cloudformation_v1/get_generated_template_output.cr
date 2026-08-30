@@ -51,5 +51,7 @@ module Amazonite::CloudFormationV1
         template_body: Core::XMLValue.string(node.xpath_node("*[local-name()='TemplateBody']")),
       )
     end
+
+    def_equals_and_hash(@status, @template_body)
   end
 end

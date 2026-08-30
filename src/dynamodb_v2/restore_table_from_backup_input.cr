@@ -57,5 +57,7 @@ module Amazonite::DynamoDBV2
       @vector_index_override : Array(VectorIndex) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@target_table_name, @backup_arn, @billing_mode_override, @global_secondary_index_override, @local_secondary_index_override, @provisioned_throughput_override, @on_demand_throughput_override, @sse_specification_override, @vector_index_override)
   end
 end

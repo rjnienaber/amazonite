@@ -19,5 +19,7 @@ module Amazonite::LambdaV1
       @heartbeat_timeout_seconds : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@timeout_seconds, @heartbeat_timeout_seconds)
   end
 end

@@ -17,5 +17,7 @@ module Amazonite::SqsV1
       @entries : Array(ChangeMessageVisibilityBatchRequestEntry),
     )
     end
+
+    def_equals_and_hash(@queue_url, @entries)
   end
 end

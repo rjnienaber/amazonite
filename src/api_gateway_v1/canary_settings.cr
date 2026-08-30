@@ -28,5 +28,7 @@ module Amazonite::ApiGatewayV1
       @use_stage_cache : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@percent_traffic, @deployment_id, @stage_variable_overrides, @use_stage_cache)
   end
 end

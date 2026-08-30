@@ -155,5 +155,7 @@ module Amazonite::IamV1
         policy_version_list: node.xpath_nodes("*[local-name()='PolicyVersionList']/*[local-name()='member']").map { |n| PolicyVersion.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@policy_name, @policy_id, @arn, @path, @default_version_id, @attachment_count, @permissions_boundary_usage_count, @is_attachable, @description, @create_date, @update_date, @policy_version_list)
   end
 end

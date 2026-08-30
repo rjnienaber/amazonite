@@ -11,5 +11,7 @@ module Amazonite::LambdaV1
       @wait_seconds : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@wait_seconds)
   end
 end

@@ -52,5 +52,7 @@ module Amazonite::IamV1
         marker: Core::XMLValue.string(node.xpath_node("*[local-name()='Marker']")),
       )
     end
+
+    def_equals_and_hash(@job_id, @max_items, @marker)
   end
 end

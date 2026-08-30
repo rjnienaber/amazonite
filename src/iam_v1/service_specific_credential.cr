@@ -105,5 +105,7 @@ module Amazonite::IamV1
         status: ((n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil).not_nil!,
       )
     end
+
+    def_equals_and_hash(@create_date, @expiration_date, @service_name, @service_user_name, @service_password, @service_credential_alias, @service_credential_secret, @service_specific_credential_id, @user_name, @status)
   end
 end

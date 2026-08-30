@@ -51,5 +51,7 @@ module Amazonite::CloudFormationV1
         stack_definitions: node.xpath_nodes("*[local-name()='StackDefinitions']/*[local-name()='member']").map { |n| StackDefinition.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@description, @enable_stack_creation, @resource_mappings, @stack_definitions)
   end
 end

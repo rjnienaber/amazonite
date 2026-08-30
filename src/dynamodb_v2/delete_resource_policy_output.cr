@@ -13,5 +13,7 @@ module Amazonite::DynamoDBV2
       @revision_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@revision_id)
   end
 end

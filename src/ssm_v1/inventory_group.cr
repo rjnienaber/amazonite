@@ -19,5 +19,7 @@ module Amazonite::SsmV1
       @filters : Array(InventoryFilter),
     )
     end
+
+    def_equals_and_hash(@name, @filters)
   end
 end

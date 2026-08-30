@@ -16,5 +16,7 @@ module Amazonite::CloudWatchV1
       @entries : Array(MetricStreamEntry) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_token, @entries)
   end
 end

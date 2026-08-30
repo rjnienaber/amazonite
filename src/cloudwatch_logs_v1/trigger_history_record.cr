@@ -34,5 +34,7 @@ module Amazonite::CloudWatchLogsV1
       @destinations : Array(ScheduledQueryDestination) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@query_id, @execution_status, @triggered_timestamp, @error_message, @destinations)
   end
 end

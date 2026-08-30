@@ -14,5 +14,7 @@ module Amazonite::CloudWatchLogsV1
       @retention_in_days : Int32,
     )
     end
+
+    def_equals_and_hash(@log_group_name, @retention_in_days)
   end
 end

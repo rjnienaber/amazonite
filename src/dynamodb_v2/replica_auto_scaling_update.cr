@@ -20,5 +20,7 @@ module Amazonite::DynamoDBV2
       @replica_provisioned_read_capacity_auto_scaling_update : AutoScalingSettingsUpdate | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@region_name, @replica_global_secondary_index_updates, @replica_provisioned_read_capacity_auto_scaling_update)
   end
 end

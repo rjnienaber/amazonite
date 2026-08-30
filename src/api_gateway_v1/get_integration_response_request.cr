@@ -26,5 +26,7 @@ module Amazonite::ApiGatewayV1
       @status_code : String,
     )
     end
+
+    def_equals_and_hash(@rest_api_id, @resource_id, @http_method, @status_code)
   end
 end

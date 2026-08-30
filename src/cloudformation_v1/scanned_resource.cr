@@ -55,5 +55,7 @@ module Amazonite::CloudFormationV1
         managed_by_stack: Core::XMLValue.bool(node.xpath_node("*[local-name()='ManagedByStack']")),
       )
     end
+
+    def_equals_and_hash(@resource_type, @resource_identifier, @managed_by_stack)
   end
 end

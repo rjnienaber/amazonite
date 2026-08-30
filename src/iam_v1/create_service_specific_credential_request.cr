@@ -51,5 +51,7 @@ module Amazonite::IamV1
         credential_age_days: Core::XMLValue.i32(node.xpath_node("*[local-name()='CredentialAgeDays']")),
       )
     end
+
+    def_equals_and_hash(@user_name, @service_name, @credential_age_days)
   end
 end

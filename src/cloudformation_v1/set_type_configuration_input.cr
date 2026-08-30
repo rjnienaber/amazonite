@@ -80,5 +80,7 @@ module Amazonite::CloudFormationV1
         type: (n = node.xpath_node("*[local-name()='Type']")) ? ACF::ThirdPartyType.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@type_arn, @configuration, @configuration_alias, @type_name, @type)
   end
 end

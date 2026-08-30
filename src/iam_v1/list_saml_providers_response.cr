@@ -25,5 +25,7 @@ module Amazonite::IamV1
         saml_provider_list: node.xpath_nodes("*[local-name()='SAMLProviderList']/*[local-name()='member']").map { |n| SAMLProviderListEntry.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@saml_provider_list)
   end
 end

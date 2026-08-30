@@ -17,5 +17,7 @@ module Amazonite::LambdaV1
       @include_execution_data : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@durable_execution_arn, @include_execution_data)
   end
 end

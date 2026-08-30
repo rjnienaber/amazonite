@@ -41,5 +41,7 @@ module Amazonite::SecretsManagerV1
       @block_public_policy : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_id, @resource_policy, @block_public_policy)
   end
 end

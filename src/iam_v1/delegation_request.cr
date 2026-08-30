@@ -221,5 +221,7 @@ module Amazonite::IamV1
         updated_time: Core::XMLValue.time(node.xpath_node("*[local-name()='UpdatedTime']")),
       )
     end
+
+    def_equals_and_hash(@delegation_request_id, @owner_account_id, @description, @request_message, @permissions, @permission_policy, @role_permission_restriction_arns, @owner_id, @approver_id, @state, @expiration_time, @requestor_id, @requestor_name, @create_date, @session_duration, @redirect_url, @notes, @rejection_reason, @only_send_by_owner, @updated_time)
   end
 end

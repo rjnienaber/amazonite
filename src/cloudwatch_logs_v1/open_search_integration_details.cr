@@ -86,5 +86,7 @@ module Amazonite::CloudWatchLogsV1
       @lifecycle_policy : OpenSearchLifecyclePolicy | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@data_source, @application, @collection, @workspace, @encryption_policy, @network_policy, @access_policy, @lifecycle_policy)
   end
 end

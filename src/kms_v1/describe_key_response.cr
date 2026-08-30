@@ -10,5 +10,7 @@ module Amazonite::KmsV1
       @key_metadata : KeyMetadata | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_metadata)
   end
 end

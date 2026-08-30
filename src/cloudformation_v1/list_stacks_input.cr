@@ -37,5 +37,7 @@ module Amazonite::CloudFormationV1
         stack_status_filter: node.xpath_nodes("*[local-name()='StackStatusFilter']/*[local-name()='member']").compact_map { |n| ACF::StackStatus.from_json_object_key?(n.content) },
       )
     end
+
+    def_equals_and_hash(@next_token, @stack_status_filter)
   end
 end

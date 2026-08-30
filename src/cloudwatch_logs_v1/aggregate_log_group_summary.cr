@@ -20,5 +20,7 @@ module Amazonite::CloudWatchLogsV1
       @grouping_identifiers : Array(GroupingIdentifier) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_count, @grouping_identifiers)
   end
 end

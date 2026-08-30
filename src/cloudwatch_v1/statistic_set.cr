@@ -26,5 +26,7 @@ module Amazonite::CloudWatchV1
       @maximum : Float64,
     )
     end
+
+    def_equals_and_hash(@sample_count, @sum, @minimum, @maximum)
   end
 end

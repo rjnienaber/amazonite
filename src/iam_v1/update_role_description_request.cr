@@ -29,5 +29,7 @@ module Amazonite::IamV1
         description: Core::XMLValue.string(node.xpath_node("*[local-name()='Description']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@role_name, @description)
   end
 end

@@ -26,5 +26,7 @@ module Amazonite::SsmV1
       @lambda : MaintenanceWindowLambdaParameters | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@run_command, @automation, @step_functions, @lambda)
   end
 end

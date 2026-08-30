@@ -15,5 +15,7 @@ module Amazonite::CloudWatchLogsV1
       @delivery_destination_policy : String,
     )
     end
+
+    def_equals_and_hash(@delivery_destination_name, @delivery_destination_policy)
   end
 end

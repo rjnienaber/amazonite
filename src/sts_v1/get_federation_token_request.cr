@@ -159,5 +159,7 @@ module Amazonite::StsV1
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@name, @policy, @policy_arns, @duration_seconds, @tags)
   end
 end

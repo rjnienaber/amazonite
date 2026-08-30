@@ -20,5 +20,7 @@ module Amazonite::LambdaV1
       @local_mount_path : String,
     )
     end
+
+    def_equals_and_hash(@arn, @local_mount_path)
   end
 end

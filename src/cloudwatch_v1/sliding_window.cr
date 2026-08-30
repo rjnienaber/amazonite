@@ -11,5 +11,7 @@ module Amazonite::CloudWatchV1
 
     def initialize
     end
+
+    def_equals_and_hash()
   end
 end

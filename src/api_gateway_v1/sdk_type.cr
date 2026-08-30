@@ -26,5 +26,7 @@ module Amazonite::ApiGatewayV1
       @configuration_properties : Array(SdkConfigurationProperty) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @friendly_name, @description, @configuration_properties)
   end
 end

@@ -18,5 +18,7 @@ module Amazonite::SsmV1
       @comment : Array(DocumentReviewCommentSource) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@action, @comment)
   end
 end

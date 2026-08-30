@@ -11,5 +11,7 @@ module Amazonite::LambdaV1
       @resource : String,
     )
     end
+
+    def_equals_and_hash(@resource)
   end
 end

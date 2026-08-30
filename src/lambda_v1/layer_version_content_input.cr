@@ -41,5 +41,7 @@ module Amazonite::LambdaV1
       @zip_file : Bytes | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@s3_bucket, @s3_key, @s3_object_version, @s3_object_storage_mode, @zip_file)
   end
 end

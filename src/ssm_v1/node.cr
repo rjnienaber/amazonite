@@ -33,5 +33,7 @@ module Amazonite::SsmV1
       @node_type : NodeType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@capture_time, @id, @owner, @region, @node_type)
   end
 end

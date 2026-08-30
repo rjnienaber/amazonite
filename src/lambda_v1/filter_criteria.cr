@@ -11,5 +11,7 @@ module Amazonite::LambdaV1
       @filters : Array(Filter) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@filters)
   end
 end

@@ -35,5 +35,7 @@ module Amazonite::EventBridgeV1
       @role_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @description, @routing_config, @replication_config, @event_buses, @role_arn)
   end
 end

@@ -45,5 +45,7 @@ module Amazonite::IamV1
         serial_number: Core::XMLValue.string(node.xpath_node("*[local-name()='SerialNumber']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@user_name, @serial_number)
   end
 end

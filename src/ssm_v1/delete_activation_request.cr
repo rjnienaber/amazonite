@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @activation_id : String,
     )
     end
+
+    def_equals_and_hash(@activation_id)
   end
 end

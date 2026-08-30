@@ -51,5 +51,7 @@ module Amazonite::KmsV1
       @key_origin : OriginType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @shared_secret, @ciphertext_for_recipient, @key_agreement_algorithm, @key_origin)
   end
 end

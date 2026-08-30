@@ -33,5 +33,7 @@ module Amazonite::LambdaV1
       @destination : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@destination)
   end
 end

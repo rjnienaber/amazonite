@@ -35,5 +35,7 @@ module Amazonite::CloudWatchLogsV1
       @mapping_version : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@source, @event_source, @ocsf_version, @mapping_version)
   end
 end

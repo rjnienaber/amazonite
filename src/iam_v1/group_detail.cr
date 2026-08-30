@@ -87,5 +87,7 @@ module Amazonite::IamV1
         attached_managed_policies: node.xpath_nodes("*[local-name()='AttachedManagedPolicies']/*[local-name()='member']").map { |n| AttachedPolicy.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@path, @group_name, @group_id, @arn, @create_date, @group_policy_list, @attached_managed_policies)
   end
 end

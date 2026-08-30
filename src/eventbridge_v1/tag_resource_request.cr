@@ -15,5 +15,7 @@ module Amazonite::EventBridgeV1
       @tags : Array(Tag),
     )
     end
+
+    def_equals_and_hash(@resource_arn, @tags)
   end
 end

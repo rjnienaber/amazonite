@@ -111,5 +111,7 @@ module Amazonite::ApiGatewayV1
       @api_status_message : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @name, @description, @created_date, @version, @warnings, @binary_media_types, @minimum_compression_size, @api_key_source, @endpoint_configuration, @policy, @tags, @disable_execute_api_endpoint, @root_resource_id, @security_policy, @endpoint_access_mode, @api_status, @api_status_message)
   end
 end

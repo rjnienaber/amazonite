@@ -61,5 +61,7 @@ module Amazonite::CloudWatchLogsV1
       @stored_bytes : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_stream_name, @creation_time, @first_event_timestamp, @last_event_timestamp, @last_ingestion_time, @upload_sequence_token, @arn, @stored_bytes)
   end
 end

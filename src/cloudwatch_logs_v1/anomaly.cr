@@ -121,5 +121,7 @@ module Amazonite::CloudWatchLogsV1
       @is_pattern_level_suppression : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@anomaly_id, @pattern_id, @anomaly_detector_arn, @pattern_string, @pattern_regex, @priority, @first_seen, @last_seen, @description, @active, @state, @histogram, @log_samples, @pattern_tokens, @log_group_arn_list, @suppressed, @suppressed_date, @suppressed_until, @is_pattern_level_suppression)
   end
 end

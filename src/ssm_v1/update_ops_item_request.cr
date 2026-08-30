@@ -118,5 +118,7 @@ module Amazonite::SsmV1
       @ops_item_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@description, @operational_data, @operational_data_to_delete, @notifications, @priority, @related_ops_items, @status, @ops_item_id, @title, @category, @severity, @actual_start_time, @actual_end_time, @planned_start_time, @planned_end_time, @ops_item_arn)
   end
 end

@@ -40,5 +40,7 @@ module Amazonite::IamV1
         thumbprint_list: node.xpath_nodes("*[local-name()='ThumbprintList']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@open_id_connect_provider_arn, @thumbprint_list)
   end
 end

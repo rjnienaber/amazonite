@@ -70,5 +70,7 @@ module Amazonite::KmsV1
       @key_agreement_algorithms : Array(KeyAgreementAlgorithmSpec) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @public_key, @customer_master_key_spec, @key_spec, @key_usage, @encryption_algorithms, @signing_algorithms, @key_agreement_algorithms)
   end
 end

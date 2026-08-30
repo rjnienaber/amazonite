@@ -22,5 +22,7 @@ module Amazonite::EventBridgeV1
       @error_message : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@target_id, @error_code, @error_message)
   end
 end

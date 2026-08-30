@@ -17,5 +17,7 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@resource_compliance_summary_items, @next_token)
   end
 end

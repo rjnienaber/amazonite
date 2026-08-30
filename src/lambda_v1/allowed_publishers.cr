@@ -12,5 +12,7 @@ module Amazonite::LambdaV1
       @signing_profile_version_arns : Array(String),
     )
     end
+
+    def_equals_and_hash(@signing_profile_version_arns)
   end
 end

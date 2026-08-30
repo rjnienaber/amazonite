@@ -42,5 +42,7 @@ module Amazonite::DynamoDBV2
       @global_table_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@replication_group, @global_table_arn, @creation_date_time, @global_table_status, @global_table_name)
   end
 end

@@ -37,5 +37,7 @@ module Amazonite::IamV1
         user_name: Core::XMLValue.string(node.xpath_node("*[local-name()='UserName']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@group_name, @user_name)
   end
 end

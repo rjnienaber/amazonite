@@ -51,5 +51,7 @@ module Amazonite::SsmV1
       @last_modified_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@ops_item_id, @association_id, @resource_type, @association_type, @resource_uri, @created_by, @created_time, @last_modified_by, @last_modified_time)
   end
 end

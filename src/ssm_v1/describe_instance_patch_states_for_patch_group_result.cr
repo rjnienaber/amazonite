@@ -16,5 +16,7 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@instance_patch_states, @next_token)
   end
 end

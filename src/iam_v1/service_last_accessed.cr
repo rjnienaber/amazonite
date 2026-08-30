@@ -113,5 +113,7 @@ module Amazonite::IamV1
         tracked_actions_last_accessed: node.xpath_nodes("*[local-name()='TrackedActionsLastAccessed']/*[local-name()='member']").map { |n| TrackedActionLastAccessed.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@service_name, @last_authenticated, @service_namespace, @last_authenticated_entity, @last_authenticated_region, @total_authenticated_entities, @tracked_actions_last_accessed)
   end
 end

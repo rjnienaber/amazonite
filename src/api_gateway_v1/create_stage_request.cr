@@ -68,5 +68,7 @@ module Amazonite::ApiGatewayV1
       @tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@rest_api_id, @stage_name, @deployment_id, @description, @cache_cluster_enabled, @cache_cluster_size, @variables, @documentation_version, @canary_settings, @tracing_enabled, @tags)
   end
 end

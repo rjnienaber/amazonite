@@ -34,5 +34,7 @@ module Amazonite::EventBridgeV1
       @event : String,
     )
     end
+
+    def_equals_and_hash(@event_pattern, @event)
   end
 end

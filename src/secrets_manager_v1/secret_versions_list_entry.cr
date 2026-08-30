@@ -34,5 +34,7 @@ module Amazonite::SecretsManagerV1
       @kms_key_ids : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@version_id, @version_stages, @last_accessed_date, @created_date, @kms_key_ids)
   end
 end

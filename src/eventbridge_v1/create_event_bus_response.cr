@@ -37,5 +37,7 @@ module Amazonite::EventBridgeV1
       @log_config : LogConfig | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@event_bus_arn, @description, @kms_key_identifier, @dead_letter_config, @log_config)
   end
 end

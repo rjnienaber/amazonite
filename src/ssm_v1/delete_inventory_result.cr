@@ -24,5 +24,7 @@ module Amazonite::SsmV1
       @deletion_summary : InventoryDeletionSummary | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@deletion_id, @type_name, @deletion_summary)
   end
 end

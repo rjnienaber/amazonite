@@ -48,5 +48,7 @@ module Amazonite::CloudWatchV1
       @expire_date : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @description, @rule, @mute_targets, @tags, @start_date, @expire_date)
   end
 end

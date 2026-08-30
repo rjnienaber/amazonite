@@ -21,5 +21,7 @@ module Amazonite::CloudWatchLogsV1
       @type : Type,
     )
     end
+
+    def_equals_and_hash(@key, @type)
   end
 end

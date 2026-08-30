@@ -121,5 +121,7 @@ module Amazonite::SsmV1
       @replace : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@baseline_id, @name, @global_filters, @approval_rules, @approved_patches, @approved_patches_compliance_level, @approved_patches_enable_non_security, @rejected_patches, @rejected_patches_action, @description, @sources, @available_security_updates_compliance_status, @replace)
   end
 end

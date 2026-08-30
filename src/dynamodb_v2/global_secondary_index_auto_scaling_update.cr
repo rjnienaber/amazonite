@@ -16,5 +16,7 @@ module Amazonite::DynamoDBV2
       @provisioned_write_capacity_auto_scaling_update : AutoScalingSettingsUpdate | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@index_name, @provisioned_write_capacity_auto_scaling_update)
   end
 end

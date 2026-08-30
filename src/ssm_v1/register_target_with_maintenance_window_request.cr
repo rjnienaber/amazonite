@@ -80,5 +80,7 @@ module Amazonite::SsmV1
       @client_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_id, @resource_type, @targets, @owner_information, @name, @description, @client_token)
   end
 end

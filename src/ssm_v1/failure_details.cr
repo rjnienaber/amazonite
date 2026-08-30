@@ -23,5 +23,7 @@ module Amazonite::SsmV1
       @details : Hash(String, Array(String)) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@failure_stage, @failure_type, @details)
   end
 end

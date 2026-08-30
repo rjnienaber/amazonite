@@ -16,5 +16,7 @@ module Amazonite::LambdaV1
       @execution_timeout : Int32,
     )
     end
+
+    def_equals_and_hash(@input, @execution_timeout)
   end
 end

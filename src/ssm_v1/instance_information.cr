@@ -148,5 +148,7 @@ module Amazonite::SsmV1
       @source_location : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@instance_id, @ping_status, @last_ping_date_time, @agent_version, @is_latest_version, @platform_type, @platform_name, @platform_version, @activation_id, @iam_role, @registration_date, @resource_type, @name, @ip_address, @computer_name, @association_status, @last_association_execution_date, @last_successful_association_execution_date, @association_overview, @source_id, @source_type, @source_location)
   end
 end

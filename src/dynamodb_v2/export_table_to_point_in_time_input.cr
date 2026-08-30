@@ -83,5 +83,7 @@ module Amazonite::DynamoDBV2
       @incremental_export_specification : IncrementalExportSpecification | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_arn, @export_time, @client_token, @s3_bucket, @s3_bucket_owner, @s3_prefix, @s3_sse_algorithm, @s3_sse_kms_key_id, @export_format, @export_type, @incremental_export_specification)
   end
 end

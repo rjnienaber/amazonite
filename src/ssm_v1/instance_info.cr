@@ -89,5 +89,7 @@ module Amazonite::SsmV1
       @availability_zone_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@agent_type, @agent_version, @computer_name, @instance_status, @ip_address, @managed_status, @name, @platform_type, @platform_name, @platform_version, @resource_type, @source_type, @source_id, @source_location, @availability_zone, @availability_zone_id)
   end
 end

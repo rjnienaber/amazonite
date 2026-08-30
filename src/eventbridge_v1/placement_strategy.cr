@@ -29,5 +29,7 @@ module Amazonite::EventBridgeV1
       @field : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@type, @field)
   end
 end

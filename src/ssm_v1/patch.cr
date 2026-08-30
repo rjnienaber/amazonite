@@ -137,5 +137,7 @@ module Amazonite::SsmV1
       @repository : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @release_date, @title, @description, @content_url, @vendor, @product_family, @product, @classification, @msrc_severity, @kb_number, @msrc_number, @language, @advisory_ids, @bugzilla_ids, @cve_ids, @name, @epoch, @version, @release, @arch, @severity, @repository)
   end
 end

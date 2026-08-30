@@ -18,5 +18,7 @@ module Amazonite::DynamoDBV2
       @point_in_time_recovery_description : PointInTimeRecoveryDescription | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@continuous_backups_status, @point_in_time_recovery_description)
   end
 end

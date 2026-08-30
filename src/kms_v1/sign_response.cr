@@ -36,5 +36,7 @@ module Amazonite::KmsV1
       @signing_algorithm : SigningAlgorithmSpec | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @signature, @signing_algorithm)
   end
 end

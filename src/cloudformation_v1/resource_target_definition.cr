@@ -136,5 +136,7 @@ module Amazonite::CloudFormationV1
         attribute_change_type: (n = node.xpath_node("*[local-name()='AttributeChangeType']")) ? ACF::AttributeChangeType.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@attribute, @name, @requires_recreation, @path, @before_value, @after_value, @before_value_from, @after_value_from, @drift, @attribute_change_type)
   end
 end

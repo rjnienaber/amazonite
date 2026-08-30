@@ -206,5 +206,7 @@ module Amazonite::CloudFormationV1
         regions: node.xpath_nodes("*[local-name()='Regions']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@stack_set_name, @stack_set_id, @description, @status, @template_body, @parameters, @capabilities, @tags, @stack_set_arn, @administration_role_arn, @execution_role_name, @stack_set_drift_detection_details, @auto_deployment, @permission_model, @organizational_unit_ids, @managed_execution, @regions)
   end
 end

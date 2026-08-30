@@ -38,5 +38,7 @@ module Amazonite::LambdaV1
       @description : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@code_signing_config_id, @code_signing_config_arn, @description, @allowed_publishers, @code_signing_policies, @last_modified)
   end
 end

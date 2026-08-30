@@ -36,5 +36,7 @@ module Amazonite::DynamoDBV2
       @projection : Projection | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@index_name, @key_schema, @projection)
   end
 end

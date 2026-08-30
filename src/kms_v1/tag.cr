@@ -24,5 +24,7 @@ module Amazonite::KmsV1
       @tag_value : String,
     )
     end
+
+    def_equals_and_hash(@tag_key, @tag_value)
   end
 end

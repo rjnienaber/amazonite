@@ -138,5 +138,7 @@ module Amazonite::CloudFormationV1
         concurrency_mode: (n = node.xpath_node("*[local-name()='ConcurrencyMode']")) ? ACF::ConcurrencyMode.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@region_concurrency_type, @region_order, @failure_tolerance_count, @failure_tolerance_percentage, @max_concurrent_count, @max_concurrent_percentage, @concurrency_mode)
   end
 end

@@ -45,5 +45,7 @@ module Amazonite::CloudWatchV1
       @output_format : MetricStreamOutputFormat | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@arn, @creation_date, @last_update_date, @name, @firehose_arn, @state, @output_format)
   end
 end

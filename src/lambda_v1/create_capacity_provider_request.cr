@@ -56,5 +56,7 @@ module Amazonite::LambdaV1
       @telemetry_config : CapacityProviderTelemetryConfig | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@capacity_provider_name, @vpc_config, @permissions_config, @instance_requirements, @capacity_provider_scaling_config, @kms_key_arn, @tags, @propagate_tags, @telemetry_config)
   end
 end

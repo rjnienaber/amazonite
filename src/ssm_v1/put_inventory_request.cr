@@ -15,5 +15,7 @@ module Amazonite::SsmV1
       @items : Array(InventoryItem),
     )
     end
+
+    def_equals_and_hash(@instance_id, @items)
   end
 end

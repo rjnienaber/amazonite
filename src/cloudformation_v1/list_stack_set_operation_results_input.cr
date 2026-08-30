@@ -80,5 +80,7 @@ module Amazonite::CloudFormationV1
         filters: node.xpath_nodes("*[local-name()='Filters']/*[local-name()='member']").map { |n| OperationResultFilter.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@stack_set_name, @operation_id, @next_token, @max_results, @call_as, @filters)
   end
 end

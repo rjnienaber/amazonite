@@ -49,5 +49,7 @@ module Amazonite::KmsV1
       @key_material_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@ciphertext_blob, @plaintext, @key_id, @ciphertext_for_recipient, @key_material_id)
   end
 end

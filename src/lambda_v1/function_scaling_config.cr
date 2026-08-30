@@ -17,5 +17,7 @@ module Amazonite::LambdaV1
       @max_execution_environments : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@min_execution_environments, @max_execution_environments)
   end
 end

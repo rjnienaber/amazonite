@@ -50,5 +50,7 @@ module Amazonite::CloudFormationV1
         status: ((n = node.xpath_node("*[local-name()='Status']")) ? ACF::ResourceSignalStatus.from_json_object_key?(n.content) : nil).not_nil!,
       )
     end
+
+    def_equals_and_hash(@stack_name, @logical_resource_id, @unique_id, @status)
   end
 end

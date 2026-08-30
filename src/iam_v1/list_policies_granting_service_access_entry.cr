@@ -48,5 +48,7 @@ module Amazonite::IamV1
         policies: node.xpath_nodes("*[local-name()='Policies']/*[local-name()='member']").map { |n| PolicyGrantingServiceAccess.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@service_namespace, @policies)
   end
 end

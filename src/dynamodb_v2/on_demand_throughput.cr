@@ -25,5 +25,7 @@ module Amazonite::DynamoDBV2
       @max_write_request_units : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@max_read_request_units, @max_write_request_units)
   end
 end

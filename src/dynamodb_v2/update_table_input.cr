@@ -164,5 +164,7 @@ module Amazonite::DynamoDBV2
       @vector_index_updates : Array(VectorIndexUpdate) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@attribute_definitions, @table_name, @billing_mode, @provisioned_throughput, @global_secondary_index_updates, @stream_specification, @sse_specification, @replica_updates, @table_class, @deletion_protection_enabled, @multi_region_consistency, @global_table_witness_updates, @on_demand_throughput, @warm_throughput, @global_table_settings_replication_mode, @vector_index_updates)
   end
 end

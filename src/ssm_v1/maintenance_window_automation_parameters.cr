@@ -33,5 +33,7 @@ module Amazonite::SsmV1
       @parameters : Hash(String, Array(String)) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@document_version, @parameters)
   end
 end

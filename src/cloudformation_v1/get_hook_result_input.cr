@@ -27,5 +27,7 @@ module Amazonite::CloudFormationV1
         hook_result_id: Core::XMLValue.string(node.xpath_node("*[local-name()='HookResultId']")),
       )
     end
+
+    def_equals_and_hash(@hook_result_id)
   end
 end

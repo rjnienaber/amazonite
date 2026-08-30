@@ -91,5 +91,7 @@ module Amazonite::CloudFormationV1
         account_filter_type: (n = node.xpath_node("*[local-name()='AccountFilterType']")) ? ACF::AccountFilterType.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@accounts, @accounts_url, @organizational_unit_ids, @account_filter_type)
   end
 end

@@ -78,5 +78,7 @@ module Amazonite::KmsV1
       @retiring_service_principal : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @grant_id, @name, @creation_date, @grantee_principal, @retiring_principal, @issuing_account, @operations, @constraints, @grantee_service_principal, @retiring_service_principal)
   end
 end

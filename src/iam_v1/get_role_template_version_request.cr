@@ -36,5 +36,7 @@ module Amazonite::IamV1
         minor_version: Core::XMLValue.i32(node.xpath_node("*[local-name()='MinorVersion']")),
       )
     end
+
+    def_equals_and_hash(@template_arn, @minor_version)
   end
 end

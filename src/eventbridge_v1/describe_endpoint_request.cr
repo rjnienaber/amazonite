@@ -17,5 +17,7 @@ module Amazonite::EventBridgeV1
       @home_region : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @home_region)
   end
 end

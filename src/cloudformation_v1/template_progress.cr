@@ -52,5 +52,7 @@ module Amazonite::CloudFormationV1
         resources_pending: Core::XMLValue.i32(node.xpath_node("*[local-name()='ResourcesPending']")),
       )
     end
+
+    def_equals_and_hash(@resources_succeeded, @resources_failed, @resources_processing, @resources_pending)
   end
 end

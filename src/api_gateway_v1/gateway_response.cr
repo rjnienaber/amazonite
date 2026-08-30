@@ -37,5 +37,7 @@ module Amazonite::ApiGatewayV1
       @default_response : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@response_type, @status_code, @response_parameters, @response_templates, @default_response)
   end
 end

@@ -15,5 +15,7 @@ module Amazonite::DynamoDBV2
       @replication_group : Array(Replica),
     )
     end
+
+    def_equals_and_hash(@global_table_name, @replication_group)
   end
 end

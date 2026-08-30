@@ -72,5 +72,7 @@ module Amazonite::SsmV1
       @access_type : AccessType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@session_id, @target, @status, @start_date, @end_date, @document_name, @owner, @reason, @details, @output_url, @max_session_duration, @access_type)
   end
 end

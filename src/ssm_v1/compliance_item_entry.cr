@@ -37,5 +37,7 @@ module Amazonite::SsmV1
       @details : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @title, @severity, @status, @details)
   end
 end

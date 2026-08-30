@@ -17,5 +17,7 @@ module Amazonite::CloudWatchLogsV1
       @log_event_messages : Array(String),
     )
     end
+
+    def_equals_and_hash(@transformer_config, @log_event_messages)
   end
 end

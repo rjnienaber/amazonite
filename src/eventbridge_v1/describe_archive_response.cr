@@ -73,5 +73,7 @@ module Amazonite::EventBridgeV1
       @creation_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@archive_arn, @archive_name, @event_source_arn, @description, @event_pattern, @state, @state_reason, @kms_key_identifier, @retention_days, @size_bytes, @event_count, @creation_time)
   end
 end

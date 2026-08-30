@@ -28,5 +28,7 @@ module Amazonite::CloudWatchV1
       @failure_description : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@failure_resource, @exception_type, @failure_code, @failure_description)
   end
 end

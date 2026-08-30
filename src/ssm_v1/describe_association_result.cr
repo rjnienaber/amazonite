@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @association_description : AssociationDescription | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@association_description)
   end
 end

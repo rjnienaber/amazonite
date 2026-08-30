@@ -29,5 +29,7 @@ module Amazonite::CloudWatchLogsV1
       @attributes : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_attributes, @attributes)
   end
 end

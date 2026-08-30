@@ -21,5 +21,7 @@ module Amazonite::DynamoDBV2
       @expected_revision_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@resource_arn, @expected_revision_id)
   end
 end

@@ -134,5 +134,7 @@ module Amazonite::CloudFormationV1
         last_operations: node.xpath_nodes("*[local-name()='LastOperations']/*[local-name()='member']").map { |n| OperationEntry.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@stack_id, @stack_name, @template_description, @creation_time, @last_updated_time, @deletion_time, @stack_status, @stack_status_reason, @parent_id, @root_id, @drift_information, @last_operations)
   end
 end

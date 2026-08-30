@@ -31,5 +31,7 @@ module Amazonite::SsmV1
       @iterator_value : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@step_execution_id, @step_name, @action, @iteration, @iterator_value)
   end
 end

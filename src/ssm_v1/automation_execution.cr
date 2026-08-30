@@ -199,5 +199,7 @@ module Amazonite::SsmV1
       @variables : Hash(String, Array(String)) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@automation_execution_id, @document_name, @document_version, @execution_start_time, @execution_end_time, @automation_execution_status, @step_executions, @step_executions_truncated, @parameters, @outputs, @failure_message, @warning_message, @mode, @parent_automation_execution_id, @executed_by, @current_step_name, @current_action, @target_parameter_name, @targets, @target_maps, @resolved_targets, @max_concurrency, @max_errors, @target, @target_locations, @progress_counters, @alarm_configuration, @triggered_alarms, @target_locations_url, @automation_subtype, @scheduled_time, @runbooks, @ops_item_id, @association_id, @change_request_name, @variables)
   end
 end

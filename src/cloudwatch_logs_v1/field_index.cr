@@ -67,5 +67,7 @@ module Amazonite::CloudWatchLogsV1
       @index_category : IndexCategory | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_identifier, @field_index_name, @last_scan_time, @first_event_time, @last_event_time, @type, @index_category)
   end
 end

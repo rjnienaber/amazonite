@@ -66,5 +66,7 @@ module Amazonite::CloudFormationV1
         supported_major_versions: node.xpath_nodes("*[local-name()='SupportedMajorVersions']/*[local-name()='member']").map { |n| n.content.to_i32 },
       )
     end
+
+    def_equals_and_hash(@type_name_alias, @original_type_name, @publisher_id, @supported_major_versions)
   end
 end

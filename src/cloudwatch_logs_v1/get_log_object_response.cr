@@ -12,5 +12,7 @@ module Amazonite::CloudWatchLogsV1
       @field_stream : GetLogObjectResponseStream | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@field_stream)
   end
 end

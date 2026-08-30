@@ -38,5 +38,7 @@ module Amazonite::DynamoDBV2
       @distance_function : VectorDistanceFunction | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@index_name, @vector_attribute, @search_schema, @projection, @dimensions, @distance_function)
   end
 end

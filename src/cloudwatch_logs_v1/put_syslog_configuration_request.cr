@@ -15,5 +15,7 @@ module Amazonite::CloudWatchLogsV1
       @vpc_endpoint_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_identifier, @vpc_endpoint_id)
   end
 end

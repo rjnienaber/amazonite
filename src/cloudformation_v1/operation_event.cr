@@ -260,5 +260,7 @@ module Amazonite::CloudFormationV1
         validation_path: Core::XMLValue.string(node.xpath_node("*[local-name()='ValidationPath']")),
       )
     end
+
+    def_equals_and_hash(@event_id, @stack_id, @operation_id, @operation_type, @operation_status, @event_type, @logical_resource_id, @physical_resource_id, @resource_type, @timestamp, @start_time, @end_time, @resource_status, @resource_status_reason, @resource_properties, @client_request_token, @hook_type, @hook_status, @hook_status_reason, @hook_invocation_point, @hook_failure_mode, @detailed_status, @validation_failure_mode, @validation_name, @validation_status, @validation_status_reason, @validation_path)
   end
 end

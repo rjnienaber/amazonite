@@ -92,5 +92,7 @@ module Amazonite::CloudFormationV1
         target_details: node.xpath_node("*[local-name()='TargetDetails']").try { |n| ChangeSetHookTargetDetails.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@invocation_point, @failure_mode, @type_name, @type_version_id, @type_configuration_version_id, @target_details)
   end
 end

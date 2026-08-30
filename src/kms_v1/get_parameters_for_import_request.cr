@@ -71,5 +71,7 @@ module Amazonite::KmsV1
       @wrapping_key_spec : WrappingKeySpec,
     )
     end
+
+    def_equals_and_hash(@key_id, @wrapping_algorithm, @wrapping_key_spec)
   end
 end

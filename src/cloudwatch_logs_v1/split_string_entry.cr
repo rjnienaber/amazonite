@@ -18,5 +18,7 @@ module Amazonite::CloudWatchLogsV1
       @delimiter : String,
     )
     end
+
+    def_equals_and_hash(@source, @delimiter)
   end
 end

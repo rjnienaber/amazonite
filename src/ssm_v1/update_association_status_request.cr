@@ -20,5 +20,7 @@ module Amazonite::SsmV1
       @association_status : AssociationStatus,
     )
     end
+
+    def_equals_and_hash(@name, @instance_id, @association_status)
   end
 end

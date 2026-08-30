@@ -22,5 +22,7 @@ module Amazonite::CloudFormationV1
         stack_instance: node.xpath_node("*[local-name()='StackInstance']").try { |n| StackInstance.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@stack_instance)
   end
 end

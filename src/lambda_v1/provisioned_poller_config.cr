@@ -33,5 +33,7 @@ module Amazonite::LambdaV1
       @poller_group_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@minimum_pollers, @maximum_pollers, @poller_group_name)
   end
 end

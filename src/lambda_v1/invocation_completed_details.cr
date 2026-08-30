@@ -30,5 +30,7 @@ module Amazonite::LambdaV1
       @error : EventError | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@start_timestamp, @end_timestamp, @request_id, @error)
   end
 end

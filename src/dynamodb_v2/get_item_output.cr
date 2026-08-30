@@ -21,5 +21,7 @@ module Amazonite::DynamoDBV2
       @consumed_capacity : ConsumedCapacity | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@item, @consumed_capacity)
   end
 end

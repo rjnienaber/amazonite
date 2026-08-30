@@ -15,5 +15,7 @@ module Amazonite::LambdaV1
       @tags : Hash(String, String),
     )
     end
+
+    def_equals_and_hash(@resource, @tags)
   end
 end

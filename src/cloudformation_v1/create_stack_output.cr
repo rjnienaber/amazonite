@@ -35,5 +35,7 @@ module Amazonite::CloudFormationV1
         operation_id: Core::XMLValue.string(node.xpath_node("*[local-name()='OperationId']")),
       )
     end
+
+    def_equals_and_hash(@stack_id, @operation_id)
   end
 end

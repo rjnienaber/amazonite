@@ -73,5 +73,7 @@ module Amazonite::SsmV1
       @enabled : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_id, @name, @description, @start_date, @end_date, @schedule, @schedule_timezone, @schedule_offset, @duration, @cutoff, @allow_unassociated_targets, @enabled)
   end
 end

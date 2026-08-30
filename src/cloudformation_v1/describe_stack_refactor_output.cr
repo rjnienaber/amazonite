@@ -81,5 +81,7 @@ module Amazonite::CloudFormationV1
         status_reason: Core::XMLValue.string(node.xpath_node("*[local-name()='StatusReason']")),
       )
     end
+
+    def_equals_and_hash(@description, @stack_refactor_id, @stack_ids, @execution_status, @execution_status_reason, @status, @status_reason)
   end
 end

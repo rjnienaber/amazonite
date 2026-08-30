@@ -22,5 +22,7 @@ module Amazonite::DynamoDBV2
       @s3_key_prefix : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@s3_bucket_owner, @s3_bucket, @s3_key_prefix)
   end
 end

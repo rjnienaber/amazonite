@@ -125,5 +125,7 @@ module Amazonite::SsmV1
       @target_locations_url : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@document_name, @document_version, @parameters, @client_token, @mode, @target_parameter_name, @targets, @target_maps, @max_concurrency, @max_errors, @target_locations, @tags, @alarm_configuration, @target_locations_url)
   end
 end

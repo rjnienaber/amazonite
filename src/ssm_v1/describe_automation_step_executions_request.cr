@@ -32,5 +32,7 @@ module Amazonite::SsmV1
       @reverse_order : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@automation_execution_id, @filters, @next_token, @max_results, @reverse_order)
   end
 end

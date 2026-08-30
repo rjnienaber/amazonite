@@ -174,5 +174,7 @@ module Amazonite::SsmV1
       @other_non_compliant_count : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@instance_id, @patch_group, @baseline_id, @snapshot_id, @install_override_list, @owner_information, @installed_count, @installed_other_count, @installed_pending_reboot_count, @installed_rejected_count, @missing_count, @failed_count, @unreported_not_applicable_count, @not_applicable_count, @available_security_update_count, @operation_start_time, @operation_end_time, @operation, @last_no_reboot_install_operation_time, @reboot_option, @critical_non_compliant_count, @security_non_compliant_count, @other_non_compliant_count)
   end
 end

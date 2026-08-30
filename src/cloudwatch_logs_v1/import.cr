@@ -56,5 +56,7 @@ module Amazonite::CloudWatchLogsV1
       @error_message : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@import_id, @import_source_arn, @import_status, @import_destination_arn, @import_statistics, @import_filter, @creation_time, @last_updated_time, @error_message)
   end
 end

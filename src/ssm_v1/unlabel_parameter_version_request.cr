@@ -23,5 +23,7 @@ module Amazonite::SsmV1
       @labels : Array(String),
     )
     end
+
+    def_equals_and_hash(@name, @parameter_version, @labels)
   end
 end

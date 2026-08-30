@@ -24,5 +24,7 @@ module Amazonite::CloudWatchV1
       @rule_state : ManagedRuleState | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@template_name, @resource_arn, @rule_state)
   end
 end

@@ -40,5 +40,7 @@ module Amazonite::IamV1
         service_specific_credential_id: Core::XMLValue.string(node.xpath_node("*[local-name()='ServiceSpecificCredentialId']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@user_name, @service_specific_credential_id)
   end
 end

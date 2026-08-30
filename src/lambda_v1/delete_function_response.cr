@@ -10,5 +10,7 @@ module Amazonite::LambdaV1
       @status_code : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@status_code)
   end
 end

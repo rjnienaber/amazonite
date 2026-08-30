@@ -15,5 +15,7 @@ module Amazonite::SsmV1
       @policies : Array(GetResourcePoliciesResponseEntry) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_token, @policies)
   end
 end

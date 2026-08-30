@@ -138,5 +138,7 @@ module Amazonite::SecretsManagerV1
       @primary_region : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@arn, @name, @type, @description, @kms_key_id, @rotation_enabled, @rotation_lambda_arn, @rotation_rules, @external_secret_rotation_metadata, @external_secret_rotation_role_arn, @last_rotated_date, @last_changed_date, @last_accessed_date, @deleted_date, @next_rotation_date, @tags, @secret_versions_to_stages, @owning_service, @created_date, @primary_region)
   end
 end

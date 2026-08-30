@@ -26,5 +26,7 @@ module Amazonite::KmsV1
       @encryption_algorithm : EncryptionAlgorithmSpec | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@ciphertext_blob, @key_id, @encryption_algorithm)
   end
 end

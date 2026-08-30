@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @parameter : Parameter | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@parameter)
   end
 end

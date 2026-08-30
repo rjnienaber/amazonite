@@ -15,5 +15,7 @@ module Amazonite::SecretsManagerV1
       @name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@arn, @name)
   end
 end

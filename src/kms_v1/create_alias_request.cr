@@ -43,5 +43,7 @@ module Amazonite::KmsV1
       @target_key_id : String,
     )
     end
+
+    def_equals_and_hash(@alias_name, @target_key_id)
   end
 end

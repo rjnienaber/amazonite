@@ -52,5 +52,7 @@ module Amazonite::SsmV1
       @type : InventoryQueryOperatorType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key, @values, @type)
   end
 end

@@ -28,5 +28,7 @@ module Amazonite::SsmV1
       @filters : Array(SessionFilter) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@state, @max_results, @next_token, @filters)
   end
 end

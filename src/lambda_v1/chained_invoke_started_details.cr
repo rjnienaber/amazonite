@@ -32,5 +32,7 @@ module Amazonite::LambdaV1
       @durable_execution_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@function_name, @tenant_id, @input, @executed_version, @durable_execution_arn)
   end
 end

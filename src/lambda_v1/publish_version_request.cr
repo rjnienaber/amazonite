@@ -46,5 +46,7 @@ module Amazonite::LambdaV1
       @publish_to : FunctionVersionLatestPublished | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@function_name, @code_sha_256, @description, @revision_id, @publish_to)
   end
 end

@@ -80,5 +80,7 @@ module Amazonite::EventBridgeV1
       @event_bus_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @schedule_expression, @event_pattern, @state, @description, @role_arn, @tags, @event_bus_name)
   end
 end

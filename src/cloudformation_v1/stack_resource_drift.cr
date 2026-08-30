@@ -150,5 +150,7 @@ module Amazonite::CloudFormationV1
         drift_status_reason: Core::XMLValue.string(node.xpath_node("*[local-name()='DriftStatusReason']")),
       )
     end
+
+    def_equals_and_hash(@stack_id, @logical_resource_id, @physical_resource_id, @physical_resource_id_context, @resource_type, @expected_properties, @actual_properties, @property_differences, @stack_resource_drift_status, @timestamp, @module_info, @drift_status_reason)
   end
 end

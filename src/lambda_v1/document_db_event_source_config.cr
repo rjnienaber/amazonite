@@ -26,5 +26,7 @@ module Amazonite::LambdaV1
       @full_document : FullDocument | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@database_name, @collection_name, @full_document)
   end
 end

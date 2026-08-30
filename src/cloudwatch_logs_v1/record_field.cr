@@ -25,5 +25,7 @@ module Amazonite::CloudWatchLogsV1
       @mandatory : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @mandatory)
   end
 end

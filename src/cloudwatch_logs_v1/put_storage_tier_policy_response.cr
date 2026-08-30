@@ -18,5 +18,7 @@ module Amazonite::CloudWatchLogsV1
       @last_updated_time : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@storage_tier, @last_updated_time)
   end
 end

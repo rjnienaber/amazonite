@@ -61,5 +61,7 @@ module Amazonite::SsmV1
       @status : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@setting_id, @setting_value, @last_modified_date, @last_modified_user, @arn, @status)
   end
 end

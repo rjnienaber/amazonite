@@ -38,5 +38,7 @@ module Amazonite::SecretsManagerV1
       @values : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key, @values)
   end
 end

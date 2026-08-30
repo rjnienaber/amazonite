@@ -16,5 +16,7 @@ module Amazonite::DynamoDBV2
       @point_in_time_recovery_specification : PointInTimeRecoverySpecification,
     )
     end
+
+    def_equals_and_hash(@table_name, @point_in_time_recovery_specification)
   end
 end

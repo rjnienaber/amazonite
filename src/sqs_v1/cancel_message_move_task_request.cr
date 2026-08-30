@@ -10,5 +10,7 @@ module Amazonite::SqsV1
       @task_handle : String,
     )
     end
+
+    def_equals_and_hash(@task_handle)
   end
 end

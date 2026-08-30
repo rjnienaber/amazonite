@@ -15,5 +15,7 @@ module Amazonite::SecretsManagerV1
       @validation_errors : Array(ValidationErrorsEntry) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@policy_validation_passed, @validation_errors)
   end
 end

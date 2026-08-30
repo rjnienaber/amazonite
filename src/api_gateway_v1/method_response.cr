@@ -34,5 +34,7 @@ module Amazonite::ApiGatewayV1
       @response_models : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@status_code, @response_parameters, @response_models)
   end
 end

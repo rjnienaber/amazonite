@@ -65,5 +65,7 @@ module Amazonite::CloudWatchLogsV1
       @tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @arn, @delivery_source_name, @delivery_destination_arn, @delivery_destination_type, @record_fields, @field_delimiter, @s3_delivery_configuration, @tags)
   end
 end

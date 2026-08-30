@@ -12,5 +12,7 @@ module Amazonite::CloudWatchV1
       @prom_ql_criteria : AlarmPromQLCriteria | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@prom_ql_criteria)
   end
 end

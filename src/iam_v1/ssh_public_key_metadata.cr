@@ -51,5 +51,7 @@ module Amazonite::IamV1
         upload_date: Core::XMLValue.time(node.xpath_node("*[local-name()='UploadDate']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@user_name, @ssh_public_key_id, @status, @upload_date)
   end
 end

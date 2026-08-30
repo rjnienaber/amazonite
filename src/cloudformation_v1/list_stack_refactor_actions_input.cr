@@ -42,5 +42,7 @@ module Amazonite::CloudFormationV1
         max_results: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxResults']")),
       )
     end
+
+    def_equals_and_hash(@stack_refactor_id, @next_token, @max_results)
   end
 end

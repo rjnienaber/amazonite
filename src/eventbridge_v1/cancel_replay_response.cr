@@ -22,5 +22,7 @@ module Amazonite::EventBridgeV1
       @state_reason : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@replay_arn, @state, @state_reason)
   end
 end

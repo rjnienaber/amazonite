@@ -179,5 +179,7 @@ module Amazonite::SsmV1
       @change_request_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@automation_execution_id, @document_name, @document_version, @automation_execution_status, @execution_start_time, @execution_end_time, @executed_by, @log_file, @outputs, @mode, @parent_automation_execution_id, @current_step_name, @current_action, @failure_message, @warning_message, @target_parameter_name, @targets, @target_maps, @resolved_targets, @max_concurrency, @max_errors, @target, @automation_type, @alarm_configuration, @triggered_alarms, @target_locations_url, @automation_subtype, @scheduled_time, @runbooks, @ops_item_id, @association_id, @change_request_name)
   end
 end

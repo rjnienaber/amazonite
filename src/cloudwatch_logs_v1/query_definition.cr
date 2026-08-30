@@ -48,5 +48,7 @@ module Amazonite::CloudWatchLogsV1
       @parameters : Array(QueryParameter) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@query_language, @query_definition_id, @name, @query_string, @last_modified, @log_group_names, @parameters)
   end
 end

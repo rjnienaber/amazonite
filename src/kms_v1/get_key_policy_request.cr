@@ -27,5 +27,7 @@ module Amazonite::KmsV1
       @policy_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @policy_name)
   end
 end

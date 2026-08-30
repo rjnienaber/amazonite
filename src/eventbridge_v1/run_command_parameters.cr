@@ -13,5 +13,7 @@ module Amazonite::EventBridgeV1
       @run_command_targets : Array(RunCommandTarget),
     )
     end
+
+    def_equals_and_hash(@run_command_targets)
   end
 end

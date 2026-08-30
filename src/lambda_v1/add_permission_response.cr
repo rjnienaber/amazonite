@@ -10,5 +10,7 @@ module Amazonite::LambdaV1
       @statement : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@statement)
   end
 end

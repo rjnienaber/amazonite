@@ -121,5 +121,7 @@ module Amazonite::IamV1
         only_send_by_owner: Core::XMLValue.bool(node.xpath_node("*[local-name()='OnlySendByOwner']")),
       )
     end
+
+    def_equals_and_hash(@owner_account_id, @description, @permissions, @request_message, @requestor_workflow_id, @redirect_url, @notification_channel, @session_duration, @only_send_by_owner)
   end
 end

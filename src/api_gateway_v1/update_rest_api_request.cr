@@ -17,5 +17,7 @@ module Amazonite::ApiGatewayV1
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@rest_api_id, @patch_operations)
   end
 end

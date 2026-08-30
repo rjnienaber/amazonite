@@ -20,5 +20,7 @@ module Amazonite::SsmV1
       @filters : Array(CloudConnectorFilter) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@max_results, @next_token, @filters)
   end
 end

@@ -15,5 +15,7 @@ module Amazonite::CloudWatchV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@alarm_history_items, @next_token)
   end
 end

@@ -102,5 +102,7 @@ module Amazonite::IamV1
         error_details: node.xpath_node("*[local-name()='ErrorDetails']").try { |n| ErrorDetails.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@job_status, @job_creation_date, @job_completion_date, @number_of_services_accessible, @number_of_services_not_accessed, @access_details, @is_truncated, @marker, @error_details)
   end
 end

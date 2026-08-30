@@ -32,5 +32,7 @@ module Amazonite::CloudFormationV1
         next_token: Core::XMLValue.string(node.xpath_node("*[local-name()='NextToken']")),
       )
     end
+
+    def_equals_and_hash(@export_name, @next_token)
   end
 end

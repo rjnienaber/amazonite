@@ -55,5 +55,7 @@ module Amazonite::CloudFormationV1
         template_stage: (n = node.xpath_node("*[local-name()='TemplateStage']")) ? ACF::TemplateStage.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@stack_name, @change_set_name, @template_stage)
   end
 end

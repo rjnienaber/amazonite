@@ -55,5 +55,7 @@ module Amazonite::IamV1
         inline_policy_identifier: node.xpath_node("*[local-name()='InlinePolicyIdentifier']").try { |n| InlinePolicyIdentifierType.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@policy_type, @policy_arn, @inline_policy_identifier)
   end
 end

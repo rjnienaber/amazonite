@@ -15,5 +15,7 @@ module Amazonite::SsmV1
       @window_task_id : String,
     )
     end
+
+    def_equals_and_hash(@window_id, @window_task_id)
   end
 end

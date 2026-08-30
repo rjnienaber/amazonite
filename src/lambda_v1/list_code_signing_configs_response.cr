@@ -15,5 +15,7 @@ module Amazonite::LambdaV1
       @code_signing_configs : Array(CodeSigningConfig) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_marker, @code_signing_configs)
   end
 end

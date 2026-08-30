@@ -22,5 +22,7 @@ module Amazonite::SsmV1
       @groups : Array(InventoryGroup) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@expression, @aggregators, @groups)
   end
 end

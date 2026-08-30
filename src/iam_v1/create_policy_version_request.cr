@@ -70,5 +70,7 @@ module Amazonite::IamV1
         set_as_default: Core::XMLValue.bool(node.xpath_node("*[local-name()='SetAsDefault']")),
       )
     end
+
+    def_equals_and_hash(@policy_arn, @policy_document, @set_as_default)
   end
 end

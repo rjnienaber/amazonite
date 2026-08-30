@@ -39,5 +39,7 @@ module Amazonite::SsmV1
       @shared_document_version : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @permission_type, @account_ids_to_add, @account_ids_to_remove, @shared_document_version)
   end
 end

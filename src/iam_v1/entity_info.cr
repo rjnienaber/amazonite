@@ -59,5 +59,7 @@ module Amazonite::IamV1
         path: Core::XMLValue.string(node.xpath_node("*[local-name()='Path']")),
       )
     end
+
+    def_equals_and_hash(@arn, @name, @type, @id, @path)
   end
 end

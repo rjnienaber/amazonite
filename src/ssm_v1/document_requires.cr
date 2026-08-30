@@ -27,5 +27,7 @@ module Amazonite::SsmV1
       @version_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @version, @require_type, @version_name)
   end
 end

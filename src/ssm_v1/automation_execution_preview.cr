@@ -40,5 +40,7 @@ module Amazonite::SsmV1
       @total_accounts : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@step_previews, @regions, @target_previews, @total_accounts)
   end
 end

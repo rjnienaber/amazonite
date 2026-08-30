@@ -26,5 +26,7 @@ module Amazonite::IamV1
         summary_map: node.xpath_nodes("*[local-name()='SummaryMap']/*[local-name()='entry']").each_with_object({} of SummaryKeyType => Int32) { |entry, hash| hash[entry.xpath_node("*[local-name()='key']").not_nil!.content] = entry.xpath_node("*[local-name()='value']").not_nil!.content.to_i32 },
       )
     end
+
+    def_equals_and_hash(@summary_map)
   end
 end

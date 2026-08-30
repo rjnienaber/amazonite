@@ -11,5 +11,7 @@ module Amazonite::KmsV1
       @alias_name : String,
     )
     end
+
+    def_equals_and_hash(@alias_name)
   end
 end

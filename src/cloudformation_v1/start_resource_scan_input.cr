@@ -35,5 +35,7 @@ module Amazonite::CloudFormationV1
         scan_filters: node.xpath_nodes("*[local-name()='ScanFilters']/*[local-name()='member']").map { |n| ScanFilter.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@client_request_token, @scan_filters)
   end
 end

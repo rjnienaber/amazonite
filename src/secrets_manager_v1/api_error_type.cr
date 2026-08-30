@@ -24,5 +24,7 @@ module Amazonite::SecretsManagerV1
       @message : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@secret_id, @error_code, @message)
   end
 end

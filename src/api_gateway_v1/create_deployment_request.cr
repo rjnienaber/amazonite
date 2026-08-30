@@ -58,5 +58,7 @@ module Amazonite::ApiGatewayV1
       @tracing_enabled : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@rest_api_id, @stage_name, @stage_description, @description, @cache_cluster_enabled, @cache_cluster_size, @variables, @canary_settings, @tracing_enabled)
   end
 end

@@ -33,5 +33,7 @@ module Amazonite::LambdaV1
       @concurrency : Concurrency | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@configuration, @code, @tags, @tags_error, @concurrency)
   end
 end

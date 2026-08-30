@@ -83,5 +83,7 @@ module Amazonite::CloudWatchV1
       @metric_math_anomaly_detector : MetricMathAnomalyDetector | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@namespace, @metric_name, @dimensions, @stat, @configuration, @metric_characteristics, @single_metric_anomaly_detector, @metric_math_anomaly_detector)
   end
 end

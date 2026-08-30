@@ -30,5 +30,7 @@ module Amazonite::CloudWatchLogsV1
       @rejected_entity_info : RejectedEntityInfo | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_sequence_token, @rejected_log_events_info, @rejected_entity_info)
   end
 end

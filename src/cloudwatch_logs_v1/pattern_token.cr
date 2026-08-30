@@ -43,5 +43,7 @@ module Amazonite::CloudWatchLogsV1
       @inferred_token_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@dynamic_token_position, @is_dynamic, @token_string, @enumerations, @inferred_token_name)
   end
 end

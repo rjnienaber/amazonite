@@ -25,5 +25,7 @@ module Amazonite::LambdaV1
       @tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@description, @allowed_publishers, @code_signing_policies, @tags)
   end
 end

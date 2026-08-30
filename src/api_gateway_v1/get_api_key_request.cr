@@ -16,5 +16,7 @@ module Amazonite::ApiGatewayV1
       @include_value : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@api_key, @include_value)
   end
 end

@@ -52,5 +52,7 @@ module Amazonite::CloudFormationV1
         export_name: Core::XMLValue.string(node.xpath_node("*[local-name()='ExportName']")),
       )
     end
+
+    def_equals_and_hash(@output_key, @output_value, @description, @export_name)
   end
 end

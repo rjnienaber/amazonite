@@ -15,5 +15,7 @@ module Amazonite::SsmV1
       @document_version : String,
     )
     end
+
+    def_equals_and_hash(@name, @document_version)
   end
 end

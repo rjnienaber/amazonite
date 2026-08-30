@@ -33,5 +33,7 @@ module Amazonite::SsmV1
       @scope : ValidationFindingScope | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@type, @code, @message, @provider_message, @scope)
   end
 end

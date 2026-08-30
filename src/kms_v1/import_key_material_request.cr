@@ -116,5 +116,7 @@ module Amazonite::KmsV1
       @key_material_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @import_token, @encrypted_key_material, @valid_to, @expiration_model, @import_type, @key_material_description, @key_material_id)
   end
 end

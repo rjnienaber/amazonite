@@ -10,5 +10,7 @@ module Amazonite::CloudWatchLogsV1
       @log_group_name : String,
     )
     end
+
+    def_equals_and_hash(@log_group_name)
   end
 end

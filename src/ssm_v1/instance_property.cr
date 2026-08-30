@@ -155,5 +155,7 @@ module Amazonite::SsmV1
       @availability_zone : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @instance_id, @instance_type, @instance_role, @key_name, @instance_state, @architecture, @ip_address, @launch_time, @ping_status, @last_ping_date_time, @agent_version, @platform_type, @platform_name, @platform_version, @activation_id, @iam_role, @registration_date, @resource_type, @computer_name, @association_status, @last_association_execution_date, @last_successful_association_execution_date, @association_overview, @source_id, @source_type, @source_location, @availability_zone)
   end
 end

@@ -18,5 +18,7 @@ module Amazonite::EventBridgeV1
       @maximum_event_age_in_seconds : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@maximum_retry_attempts, @maximum_event_age_in_seconds)
   end
 end

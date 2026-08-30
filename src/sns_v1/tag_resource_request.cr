@@ -32,5 +32,7 @@ module Amazonite::SnsV1
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
       )
     end
+
+    def_equals_and_hash(@resource_arn, @tags)
   end
 end

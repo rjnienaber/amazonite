@@ -16,5 +16,7 @@ module Amazonite::DynamoDBV2
       @policy_name : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@policy_name, @target_tracking_scaling_policy_configuration)
   end
 end

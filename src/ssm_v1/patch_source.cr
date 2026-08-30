@@ -49,5 +49,7 @@ module Amazonite::SsmV1
       @configuration : String,
     )
     end
+
+    def_equals_and_hash(@name, @products, @configuration)
   end
 end

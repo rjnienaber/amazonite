@@ -28,5 +28,7 @@ module Amazonite::DynamoDBV2
       @return_values_on_condition_check_failure : ReturnValuesOnConditionCheckFailure | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@statement, @parameters, @return_values_on_condition_check_failure)
   end
 end

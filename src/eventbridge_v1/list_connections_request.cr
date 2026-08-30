@@ -33,5 +33,7 @@ module Amazonite::EventBridgeV1
       @limit : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name_prefix, @connection_state, @next_token, @limit)
   end
 end

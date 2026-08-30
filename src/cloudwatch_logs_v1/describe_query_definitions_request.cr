@@ -29,5 +29,7 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@query_language, @query_definition_name_prefix, @max_results, @next_token)
   end
 end

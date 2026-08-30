@@ -16,5 +16,7 @@ module Amazonite::LambdaV1
       @message : String,
     )
     end
+
+    def_equals_and_hash(@error_code, @message)
   end
 end

@@ -62,5 +62,7 @@ module Amazonite::CloudWatchLogsV1
       @tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_arn_list, @detector_name, @evaluation_frequency, @filter_pattern, @kms_key_id, @anomaly_visibility_time, @tags)
   end
 end

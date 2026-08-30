@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @document : DocumentDescription | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@document)
   end
 end

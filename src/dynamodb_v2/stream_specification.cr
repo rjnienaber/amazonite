@@ -29,5 +29,7 @@ module Amazonite::DynamoDBV2
       @stream_view_type : StreamViewType | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@stream_enabled, @stream_view_type)
   end
 end

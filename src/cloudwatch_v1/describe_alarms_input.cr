@@ -93,5 +93,7 @@ module Amazonite::CloudWatchV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@alarm_names, @alarm_name_prefix, @alarm_types, @children_of_alarm_name, @parents_of_alarm_name, @state_value, @action_prefix, @max_records, @next_token)
   end
 end

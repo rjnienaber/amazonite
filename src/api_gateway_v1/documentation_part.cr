@@ -29,5 +29,7 @@ module Amazonite::ApiGatewayV1
       @properties : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @location, @properties)
   end
 end

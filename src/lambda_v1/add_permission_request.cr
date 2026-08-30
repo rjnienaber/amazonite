@@ -93,5 +93,7 @@ module Amazonite::LambdaV1
       @principal_org_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@function_name, @statement_id, @action, @principal, @source_arn, @function_url_auth_type, @invoked_via_function_url, @source_account, @event_source_token, @qualifier, @revision_id, @principal_org_id)
   end
 end

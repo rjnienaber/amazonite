@@ -25,5 +25,7 @@ module Amazonite::SsmV1
       @description : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@cloud_connector_id, @display_name, @configuration, @description)
   end
 end

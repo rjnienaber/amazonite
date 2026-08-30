@@ -23,5 +23,7 @@ module Amazonite::IamV1
         virtual_mfa_device: node.xpath_node("*[local-name()='VirtualMFADevice']").try { |n| VirtualMFADevice.from_xml(n) }.not_nil!,
       )
     end
+
+    def_equals_and_hash(@virtual_mfa_device)
   end
 end

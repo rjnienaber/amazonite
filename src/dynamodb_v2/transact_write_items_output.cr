@@ -21,5 +21,7 @@ module Amazonite::DynamoDBV2
       @item_collection_metrics : Hash(String, Array(ItemCollectionMetrics)) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@consumed_capacity, @item_collection_metrics)
   end
 end

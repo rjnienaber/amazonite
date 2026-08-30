@@ -62,5 +62,7 @@ module Amazonite::CloudWatchLogsV1
       @anomaly_visibility_time : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@anomaly_detector_arn, @detector_name, @log_group_arn_list, @evaluation_frequency, @filter_pattern, @anomaly_detector_status, @kms_key_id, @creation_time_stamp, @last_modified_time_stamp, @anomaly_visibility_time)
   end
 end

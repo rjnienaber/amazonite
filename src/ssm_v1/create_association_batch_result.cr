@@ -15,5 +15,7 @@ module Amazonite::SsmV1
       @failed : Array(FailedCreateAssociation) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@successful, @failed)
   end
 end

@@ -72,5 +72,7 @@ module Amazonite::SsmV1
       @next_execution_time : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_id, @name, @description, @enabled, @duration, @cutoff, @schedule, @schedule_timezone, @schedule_offset, @end_date, @start_date, @next_execution_time)
   end
 end

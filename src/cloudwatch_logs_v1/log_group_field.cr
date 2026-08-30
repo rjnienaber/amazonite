@@ -17,5 +17,7 @@ module Amazonite::CloudWatchLogsV1
       @percent : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @percent)
   end
 end

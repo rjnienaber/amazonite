@@ -31,5 +31,7 @@ module Amazonite::CloudWatchV1
       @state_transitioned_timestamp : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@contributor_id, @contributor_attributes, @state_reason, @state_transitioned_timestamp)
   end
 end

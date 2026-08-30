@@ -15,5 +15,7 @@ module Amazonite::LambdaV1
       @event_source_mappings : Array(EventSourceMappingConfiguration) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@next_marker, @event_source_mappings)
   end
 end

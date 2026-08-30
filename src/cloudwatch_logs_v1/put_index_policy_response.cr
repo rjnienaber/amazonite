@@ -10,5 +10,7 @@ module Amazonite::CloudWatchLogsV1
       @index_policy : IndexPolicy | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@index_policy)
   end
 end

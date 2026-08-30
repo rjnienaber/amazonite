@@ -59,5 +59,7 @@ module Amazonite::CloudWatchV1
       @mute_type : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @alarm_mute_rule_arn, @description, @rule, @mute_targets, @start_date, @expire_date, @status, @last_updated_timestamp, @mute_type)
   end
 end

@@ -102,5 +102,7 @@ module Amazonite::SsmV1
       @timeout_seconds : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@comment, @cloud_watch_output_config, @document_hash, @document_hash_type, @document_version, @notification_config, @output_s3_bucket_name, @output_s3_key_prefix, @parameters, @service_role_arn, @timeout_seconds)
   end
 end

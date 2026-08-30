@@ -47,5 +47,7 @@ module Amazonite::EventBridgeV1
       @kms_key_identifier : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@archive_name, @description, @event_pattern, @retention_days, @kms_key_identifier)
   end
 end

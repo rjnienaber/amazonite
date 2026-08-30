@@ -45,5 +45,7 @@ module Amazonite::IamV1
         is_truncated: Core::XMLValue.bool(node.xpath_node("*[local-name()='isTruncated']")),
       )
     end
+
+    def_equals_and_hash(@delegation_requests, @marker, @is_truncated)
   end
 end

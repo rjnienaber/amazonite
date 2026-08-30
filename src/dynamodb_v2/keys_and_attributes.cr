@@ -80,5 +80,7 @@ module Amazonite::DynamoDBV2
       @expression_attribute_names : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@keys, @attributes_to_get, @consistent_read, @projection_expression, @expression_attribute_names)
   end
 end

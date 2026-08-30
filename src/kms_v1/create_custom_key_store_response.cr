@@ -10,5 +10,7 @@ module Amazonite::KmsV1
       @custom_key_store_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@custom_key_store_id)
   end
 end

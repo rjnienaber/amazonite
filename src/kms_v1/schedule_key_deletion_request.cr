@@ -36,5 +36,7 @@ module Amazonite::KmsV1
       @pending_window_in_days : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @pending_window_in_days)
   end
 end

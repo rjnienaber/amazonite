@@ -75,5 +75,7 @@ module Amazonite::LambdaV1
       @chained_invoke_options : ChainedInvokeOptions | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@id, @parent_id, @name, @type, @sub_type, @action, @payload, @error, @context_options, @step_options, @wait_options, @callback_options, @chained_invoke_options)
   end
 end

@@ -19,5 +19,7 @@ module Amazonite::LambdaV1
       @scheduled_end_timestamp : Time,
     )
     end
+
+    def_equals_and_hash(@duration, @scheduled_end_timestamp)
   end
 end

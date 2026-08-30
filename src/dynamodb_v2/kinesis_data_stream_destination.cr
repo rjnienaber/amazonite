@@ -29,5 +29,7 @@ module Amazonite::DynamoDBV2
       @approximate_creation_date_time_precision : ApproximateCreationDateTimePrecision | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@stream_arn, @destination_status, @destination_status_description, @approximate_creation_date_time_precision)
   end
 end

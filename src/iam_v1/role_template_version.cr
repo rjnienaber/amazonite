@@ -251,5 +251,7 @@ module Amazonite::IamV1
         update_timestamp: Core::XMLValue.time(node.xpath_node("*[local-name()='UpdateTimestamp']")),
       )
     end
+
+    def_equals_and_hash(@template_arn, @template_name, @template_version_id, @description, @major_version, @default_minor_version, @managed_by_type, @managed_by_value, @enabled, @minor_version, @role_name_pattern, @role_path_pattern, @role_description_pattern, @assume_role_policy_document_template, @inline_policy_templates, @managed_policy_arns, @permission_boundary_arn, @parameters_definition, @role_tags_template, @max_session_duration, @version_enabled, @create_timestamp, @update_timestamp)
   end
 end

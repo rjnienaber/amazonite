@@ -10,5 +10,7 @@ module Amazonite::CloudWatchV1
       @alarm_mute_rule_name : String,
     )
     end
+
+    def_equals_and_hash(@alarm_mute_rule_name)
   end
 end

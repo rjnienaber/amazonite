@@ -28,5 +28,7 @@ module Amazonite::SsmV1
       @use_s3_dual_stack_endpoint : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@instance_id, @snapshot_id, @baseline_override, @use_s3_dual_stack_endpoint)
   end
 end

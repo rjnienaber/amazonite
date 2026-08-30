@@ -25,5 +25,7 @@ module Amazonite::SsmV1
       @organizational_unit_path : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@account_id, @organizational_unit_id, @organizational_unit_path)
   end
 end

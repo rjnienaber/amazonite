@@ -16,5 +16,7 @@ module Amazonite::EventBridgeV1
       @resource_parameters : DescribeConnectionResourceParameters,
     )
     end
+
+    def_equals_and_hash(@resource_parameters)
   end
 end

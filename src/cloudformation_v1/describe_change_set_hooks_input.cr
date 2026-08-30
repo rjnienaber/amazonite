@@ -50,5 +50,7 @@ module Amazonite::CloudFormationV1
         logical_resource_id: Core::XMLValue.string(node.xpath_node("*[local-name()='LogicalResourceId']")),
       )
     end
+
+    def_equals_and_hash(@change_set_name, @stack_name, @next_token, @logical_resource_id)
   end
 end

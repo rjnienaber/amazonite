@@ -34,5 +34,7 @@ module Amazonite::LambdaV1
       @max_items : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@compatible_architecture, @compatible_runtime, @marker, @max_items)
   end
 end

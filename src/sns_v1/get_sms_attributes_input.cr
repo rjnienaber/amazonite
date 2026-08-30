@@ -29,5 +29,7 @@ module Amazonite::SnsV1
         attributes: node.xpath_nodes("*[local-name()='attributes']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@attributes)
   end
 end

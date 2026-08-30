@@ -26,5 +26,7 @@ module Amazonite::LambdaV1
       @stack_trace : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@error_message, @error_type, @error_data, @stack_trace)
   end
 end

@@ -20,5 +20,7 @@ module Amazonite::IamV1
         role_template_version: node.xpath_node("*[local-name()='RoleTemplateVersion']").try { |n| RoleTemplateVersion.from_xml(n) }.not_nil!,
       )
     end
+
+    def_equals_and_hash(@role_template_version)
   end
 end

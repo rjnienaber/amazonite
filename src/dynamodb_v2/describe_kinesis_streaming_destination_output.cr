@@ -15,5 +15,7 @@ module Amazonite::DynamoDBV2
       @kinesis_data_stream_destinations : Array(KinesisDataStreamDestination) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@table_name, @kinesis_data_stream_destinations)
   end
 end

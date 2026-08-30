@@ -32,5 +32,7 @@ module Amazonite::EventBridgeV1
       @max_results : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name_prefix, @home_region, @next_token, @max_results)
   end
 end

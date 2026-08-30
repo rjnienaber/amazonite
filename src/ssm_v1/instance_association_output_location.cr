@@ -16,5 +16,7 @@ module Amazonite::SsmV1
       @s3_location : S3OutputLocation | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@s3_location)
   end
 end

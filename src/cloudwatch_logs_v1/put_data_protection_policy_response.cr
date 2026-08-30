@@ -20,5 +20,7 @@ module Amazonite::CloudWatchLogsV1
       @last_updated_time : Int64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@log_group_identifier, @policy_document, @last_updated_time)
   end
 end

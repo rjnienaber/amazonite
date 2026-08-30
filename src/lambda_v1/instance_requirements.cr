@@ -28,5 +28,7 @@ module Amazonite::LambdaV1
       @excluded_instance_types : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@architectures, @allowed_instance_types, @excluded_instance_types)
   end
 end

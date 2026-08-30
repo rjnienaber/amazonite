@@ -26,5 +26,7 @@ module Amazonite::LambdaV1
       @name : String,
     )
     end
+
+    def_equals_and_hash(@function_name, @name)
   end
 end

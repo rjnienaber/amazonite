@@ -27,5 +27,7 @@ module Amazonite::IamV1
         issuer_identifier: Core::XMLValue.string(node.xpath_node("*[local-name()='IssuerIdentifier']")),
       )
     end
+
+    def_equals_and_hash(@issuer_identifier)
   end
 end

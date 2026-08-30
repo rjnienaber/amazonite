@@ -49,5 +49,7 @@ module Amazonite::StsV1
         arn: Core::XMLValue.string(node.xpath_node("*[local-name()='Arn']")),
       )
     end
+
+    def_equals_and_hash(@user_id, @account, @arn)
   end
 end

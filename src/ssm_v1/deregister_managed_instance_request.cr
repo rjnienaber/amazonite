@@ -10,5 +10,7 @@ module Amazonite::SsmV1
       @instance_id : String,
     )
     end
+
+    def_equals_and_hash(@instance_id)
   end
 end

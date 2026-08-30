@@ -37,5 +37,7 @@ module Amazonite::StsV1
         context_assertion: Core::XMLValue.string(node.xpath_node("*[local-name()='ContextAssertion']")),
       )
     end
+
+    def_equals_and_hash(@provider_arn, @context_assertion)
   end
 end

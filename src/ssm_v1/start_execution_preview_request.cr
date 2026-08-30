@@ -21,5 +21,7 @@ module Amazonite::SsmV1
       @execution_inputs : ExecutionInputs | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@document_name, @document_version, @execution_inputs)
   end
 end

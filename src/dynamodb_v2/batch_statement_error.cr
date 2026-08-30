@@ -24,5 +24,7 @@ module Amazonite::DynamoDBV2
       @item : Hash(String, AttributeValue) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@code, @message, @item)
   end
 end

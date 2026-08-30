@@ -59,5 +59,7 @@ module Amazonite::CloudFormationV1
         type_name_prefix: Core::XMLValue.string(node.xpath_node("*[local-name()='TypeNamePrefix']")),
       )
     end
+
+    def_equals_and_hash(@category, @publisher_id, @type_name_prefix)
   end
 end

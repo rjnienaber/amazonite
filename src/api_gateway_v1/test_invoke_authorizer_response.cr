@@ -43,5 +43,7 @@ module Amazonite::ApiGatewayV1
       @claims : Hash(String, String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@client_status, @log, @latency, @principal_id, @policy, @authorization, @claims)
   end
 end

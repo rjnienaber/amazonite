@@ -67,5 +67,7 @@ module Amazonite::KmsV1
       @source_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@encryption_context_subset, @encryption_context_equals, @source_arn)
   end
 end

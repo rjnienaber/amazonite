@@ -18,5 +18,7 @@ module Amazonite::CloudWatchLogsV1
       @open_search_integration_details : OpenSearchIntegrationDetails | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@open_search_integration_details)
   end
 end

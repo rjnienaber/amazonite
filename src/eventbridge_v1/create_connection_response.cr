@@ -28,5 +28,7 @@ module Amazonite::EventBridgeV1
       @last_modified_time : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@connection_arn, @connection_state, @creation_time, @last_modified_time)
   end
 end

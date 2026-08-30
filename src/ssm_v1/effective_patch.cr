@@ -22,5 +22,7 @@ module Amazonite::SsmV1
       @patch_status : PatchStatus | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@patch, @patch_status)
   end
 end

@@ -30,5 +30,7 @@ module Amazonite::KmsV1
       @key_creation_date : Time | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@key_id, @key_last_usage, @tracking_start_date, @key_creation_date)
   end
 end

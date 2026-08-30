@@ -18,5 +18,7 @@ module Amazonite::DynamoDBV2
       @score : Float64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@item, @score)
   end
 end

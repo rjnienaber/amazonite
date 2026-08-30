@@ -90,5 +90,7 @@ module Amazonite::CloudWatchLogsV1
       @log_group_identifiers : Array(String) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@account_identifiers, @log_group_name_prefix, @log_group_name_pattern, @next_token, @limit, @include_linked_accounts, @log_group_class, @log_group_identifiers)
   end
 end

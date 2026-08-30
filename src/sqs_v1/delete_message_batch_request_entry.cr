@@ -21,5 +21,7 @@ module Amazonite::SqsV1
       @receipt_handle : String,
     )
     end
+
+    def_equals_and_hash(@id, @receipt_handle)
   end
 end

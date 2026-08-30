@@ -5,6 +5,6 @@ require "./core/*"
 require "./cloudwatch_v1/*"
 
 module Amazonite::CloudWatchV1
-  VERSION     = "db9aecc"
+  VERSION     = "66407b31"
   API_VERSION = "2010-08-01"
 end

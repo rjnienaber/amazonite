@@ -20,5 +20,7 @@ module Amazonite::LambdaV1
       @next_marker : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@capacity_provider_arn, @function_versions, @next_marker)
   end
 end

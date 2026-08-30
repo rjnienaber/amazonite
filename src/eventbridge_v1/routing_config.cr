@@ -12,5 +12,7 @@ module Amazonite::EventBridgeV1
       @failover_config : FailoverConfig,
     )
     end
+
+    def_equals_and_hash(@failover_config)
   end
 end

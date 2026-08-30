@@ -36,5 +36,7 @@ module Amazonite::IamV1
         tag_keys: node.xpath_nodes("*[local-name()='TagKeys']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def_equals_and_hash(@role_name, @tag_keys)
   end
 end

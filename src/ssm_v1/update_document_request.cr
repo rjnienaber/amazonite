@@ -56,5 +56,7 @@ module Amazonite::SsmV1
       @target_type : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@content, @attachments, @name, @display_name, @version_name, @document_version, @document_format, @target_type)
   end
 end

@@ -86,5 +86,7 @@ module Amazonite::ApiGatewayV1
       @endpoint_access_mode : EndpointAccessMode | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @description, @version, @clone_from, @binary_media_types, @minimum_compression_size, @api_key_source, @endpoint_configuration, @policy, @tags, @disable_execute_api_endpoint, @security_policy, @endpoint_access_mode)
   end
 end

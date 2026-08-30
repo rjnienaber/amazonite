@@ -57,5 +57,7 @@ module Amazonite::CloudFormationV1
         difference_type: ((n = node.xpath_node("*[local-name()='DifferenceType']")) ? ACF::DifferenceType.from_json_object_key?(n.content) : nil).not_nil!,
       )
     end
+
+    def_equals_and_hash(@property_path, @expected_value, @actual_value, @difference_type)
   end
 end

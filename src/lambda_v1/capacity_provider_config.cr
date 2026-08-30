@@ -11,5 +11,7 @@ module Amazonite::LambdaV1
       @lambda_managed_instances_capacity_provider_config : LambdaManagedInstancesCapacityProviderConfig,
     )
     end
+
+    def_equals_and_hash(@lambda_managed_instances_capacity_provider_config)
   end
 end

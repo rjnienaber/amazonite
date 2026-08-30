@@ -17,5 +17,7 @@ module Amazonite::EventBridgeV1
       @client_secret : String,
     )
     end
+
+    def_equals_and_hash(@client_id, @client_secret)
   end
 end

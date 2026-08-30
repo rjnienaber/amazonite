@@ -38,5 +38,7 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@identifier, @start_time, @end_time, @execution_statuses, @max_results, @next_token)
   end
 end

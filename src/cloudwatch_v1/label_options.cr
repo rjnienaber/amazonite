@@ -20,5 +20,7 @@ module Amazonite::CloudWatchV1
       @timezone : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@timezone)
   end
 end

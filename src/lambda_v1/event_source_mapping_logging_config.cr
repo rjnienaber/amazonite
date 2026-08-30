@@ -17,5 +17,7 @@ module Amazonite::LambdaV1
       @system_log_level : EventSourceMappingSystemLogLevel | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@system_log_level)
   end
 end

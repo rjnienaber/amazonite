@@ -57,5 +57,7 @@ module Amazonite::CloudWatchLogsV1
       @result_count : Float64 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@records_matched, @records_scanned, @estimated_records_skipped, @bytes_scanned, @estimated_bytes_skipped, @log_groups_scanned, @result_count)
   end
 end

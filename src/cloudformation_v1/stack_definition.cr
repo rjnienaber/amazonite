@@ -43,5 +43,7 @@ module Amazonite::CloudFormationV1
         template_url: Core::XMLValue.string(node.xpath_node("*[local-name()='TemplateURL']")),
       )
     end
+
+    def_equals_and_hash(@stack_name, @template_body, @template_url)
   end
 end

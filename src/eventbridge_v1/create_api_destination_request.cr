@@ -38,5 +38,7 @@ module Amazonite::EventBridgeV1
       @invocation_rate_limit_per_second : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @description, @connection_arn, @invocation_endpoint, @http_method, @invocation_rate_limit_per_second)
   end
 end

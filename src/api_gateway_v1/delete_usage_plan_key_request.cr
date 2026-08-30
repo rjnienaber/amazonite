@@ -18,5 +18,7 @@ module Amazonite::ApiGatewayV1
       @key_id : String,
     )
     end
+
+    def_equals_and_hash(@usage_plan_id, @key_id)
   end
 end

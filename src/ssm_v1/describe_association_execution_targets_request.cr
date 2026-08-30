@@ -37,5 +37,7 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@association_id, @execution_id, @filters, @max_results, @next_token)
   end
 end

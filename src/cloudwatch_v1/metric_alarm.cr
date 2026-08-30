@@ -215,5 +215,7 @@ module Amazonite::CloudWatchV1
       @evaluation_interval : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@alarm_name, @alarm_arn, @alarm_description, @alarm_configuration_updated_timestamp, @actions_enabled, @ok_actions, @alarm_actions, @insufficient_data_actions, @state_value, @state_reason, @state_reason_data, @state_updated_timestamp, @metric_name, @namespace, @statistic, @extended_statistic, @dimensions, @period, @unit, @evaluation_periods, @datapoints_to_alarm, @threshold, @comparison_operator, @treat_missing_data, @evaluate_low_sample_count_percentile, @metrics, @threshold_metric_id, @evaluation_state, @state_transitioned_timestamp, @evaluation_window, @warm_up_configuration, @evaluation_criteria, @evaluation_interval)
   end
 end

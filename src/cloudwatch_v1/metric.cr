@@ -21,5 +21,7 @@ module Amazonite::CloudWatchV1
       @dimensions : Array(Dimension) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@namespace, @metric_name, @dimensions)
   end
 end

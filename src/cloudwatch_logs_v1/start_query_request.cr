@@ -81,5 +81,7 @@ module Amazonite::CloudWatchLogsV1
       @limit : Int32 | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@query_language, @log_group_name, @log_group_names, @log_group_identifiers, @start_time, @end_time, @query_string, @limit)
   end
 end

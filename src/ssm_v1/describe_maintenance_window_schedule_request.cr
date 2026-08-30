@@ -39,5 +39,7 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@window_id, @targets, @resource_type, @filters, @max_results, @next_token)
   end
 end

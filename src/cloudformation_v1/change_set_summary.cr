@@ -139,5 +139,7 @@ module Amazonite::CloudFormationV1
         import_existing_resources: Core::XMLValue.bool(node.xpath_node("*[local-name()='ImportExistingResources']")),
       )
     end
+
+    def_equals_and_hash(@stack_id, @stack_name, @change_set_id, @change_set_name, @execution_status, @status, @status_reason, @creation_time, @description, @include_nested_stacks, @parent_change_set_id, @root_change_set_id, @import_existing_resources)
   end
 end

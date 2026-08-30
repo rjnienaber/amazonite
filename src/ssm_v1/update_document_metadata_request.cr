@@ -20,5 +20,7 @@ module Amazonite::SsmV1
       @document_version : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @document_version, @document_reviews)
   end
 end

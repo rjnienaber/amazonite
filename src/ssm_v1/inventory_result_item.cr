@@ -33,5 +33,7 @@ module Amazonite::SsmV1
       @content_hash : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@type_name, @schema_version, @capture_time, @content_hash, @content)
   end
 end

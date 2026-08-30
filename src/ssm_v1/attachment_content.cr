@@ -33,5 +33,7 @@ module Amazonite::SsmV1
       @url : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@name, @size, @hash, @hash_type, @url)
   end
 end

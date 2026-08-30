@@ -23,5 +23,7 @@ module Amazonite::DynamoDBV2
       @provisioned_read_capacity_auto_scaling_settings_update : AutoScalingSettingsUpdate | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@index_name, @provisioned_read_capacity_units, @provisioned_read_capacity_auto_scaling_settings_update)
   end
 end

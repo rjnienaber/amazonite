@@ -41,5 +41,7 @@ module Amazonite::IamV1
         version_id: Core::XMLValue.string(node.xpath_node("*[local-name()='VersionId']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@policy_arn, @version_id)
   end
 end

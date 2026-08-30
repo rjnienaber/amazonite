@@ -18,5 +18,7 @@ module Amazonite::SecretsManagerV1
       @kms_key_id : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@region, @kms_key_id)
   end
 end

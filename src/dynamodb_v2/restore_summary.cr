@@ -28,5 +28,7 @@ module Amazonite::DynamoDBV2
       @source_table_arn : String | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@source_backup_arn, @source_table_arn, @restore_date_time, @restore_in_progress)
   end
 end

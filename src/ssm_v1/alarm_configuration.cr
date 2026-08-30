@@ -19,5 +19,7 @@ module Amazonite::SsmV1
       @ignore_poll_alarm_failure : Bool | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@ignore_poll_alarm_failure, @alarms)
   end
 end

@@ -137,5 +137,7 @@ module Amazonite::CloudFormationV1
         total_warnings: Core::XMLValue.i32(node.xpath_node("*[local-name()='TotalWarnings']")),
       )
     end
+
+    def_equals_and_hash(@generated_template_id, @generated_template_name, @resources, @status, @status_reason, @creation_time, @last_updated_time, @progress, @stack_id, @template_configuration, @total_warnings)
   end
 end

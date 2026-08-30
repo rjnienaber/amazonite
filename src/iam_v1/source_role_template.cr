@@ -30,5 +30,7 @@ module Amazonite::IamV1
         template_minor_version: Core::XMLValue.i32(node.xpath_node("*[local-name()='TemplateMinorVersion']")).not_nil!,
       )
     end
+
+    def_equals_and_hash(@template_arn, @template_minor_version)
   end
 end

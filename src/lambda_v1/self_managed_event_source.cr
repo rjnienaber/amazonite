@@ -12,5 +12,7 @@ module Amazonite::LambdaV1
       @endpoints : Hash(EndPointType, Array(String)) | Nil = nil,
     )
     end
+
+    def_equals_and_hash(@endpoints)
   end
 end

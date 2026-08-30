@@ -44,5 +44,7 @@ module Amazonite::CloudFormationV1
         resource_action: (n = node.xpath_node("*[local-name()='ResourceAction']")) ? ACF::ChangeAction.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def_equals_and_hash(@logical_resource_id, @resource_type, @resource_action)
   end
 end

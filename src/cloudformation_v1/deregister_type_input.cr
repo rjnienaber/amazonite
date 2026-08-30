@@ -59,5 +59,7 @@ module Amazonite::CloudFormationV1
         version_id: Core::XMLValue.string(node.xpath_node("*[local-name()='VersionId']")),
       )
     end
+
+    def_equals_and_hash(@arn, @type, @type_name, @version_id)
   end
 end
