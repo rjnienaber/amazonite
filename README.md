@@ -1,11 +1,34 @@
 # Amazonite AWS SDK
 ![example workflow](https://github.com/rjnienaber/amazonite/actions/workflows/ci.yml/badge.svg)
+[![shard version](https://img.shields.io/github/v/tag/rjnienaber/amazonite?label=version)](https://github.com/rjnienaber/amazonite/tags)
+[![license](https://img.shields.io/github/license/rjnienaber/amazonite)](LICENSE)
+![crystal](https://img.shields.io/badge/crystal-%3E%3D%201.5.1-black)
 
-Amazonite is an unofficial AWS SDK for Crystal.
+Amazonite is an unofficial AWS SDK for Crystal, generated directly from AWS's own API models so
+service coverage tracks AWS rather than a hand-maintained subset. It resolves credentials the same
+way the official SDKs do (env vars, profiles, SSO, ECS, EC2 instance metadata) and refreshes
+temporary credentials automatically, so a `Client.new` behaves the way you'd expect coming from
+`boto3` or the AWS SDK for JS/Go/etc.
 
 [API documentation](https://rjnienaber.github.io/amazonite/) is generated with `crystal docs` and published on every push to `master`.
 
 > Amazonite is not affiliated with, endorsed by, or sponsored by Amazon.com, Inc. or its affiliates. "AWS" and "Amazon" are trademarks of Amazon.com, Inc. or its affiliates.
+
+* Typed clients and models generated from AWS's own API definitions, not maintained by hand
+* Automatic credential resolution across env vars, profiles, SSO, ECS, and EC2 instance metadata
+* Automatic refresh of temporary credentials (AssumeRole, SSO, ECS, EC2) as they near expiry
+* 15 AWS services supported today, with integration tests for each - see [Supported APIs](#supported-apis)
+* API docs regenerated and published on every push to `master`
+
+## Contents
+
+- [Usage](#usage)
+- [Credentials](#credentials)
+- [Supported APIs](#supported-apis)
+- [Installation](#installation)
+- [Development](#development)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
 
 ## Usage
 
@@ -47,8 +70,9 @@ Artist
 
 ## Credentials
 
-`Client.new`/`Config.new` accept `access_key_id`/`secret_access_key`/`region` directly, but if you leave
-them out, credentials are resolved automatically from the following sources, in order:
+Amazonite follows the same credential provider chain as the official AWS SDKs, so you generally don't
+need to configure credentials yourself. `Client.new`/`Config.new` accept `access_key_id`/`secret_access_key`/`region`
+directly, but if you leave them out, credentials are resolved automatically from the following sources, in order:
 
 1. Environment variables (`AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY`/`AWS_SESSION_TOKEN`)
 2. A static profile in `~/.aws/credentials` (via `AWS_PROFILE` or `Config.new(profile: "...")`)
