@@ -86,10 +86,6 @@ Temporary credentials (from AssumeRole, SSO, ECS, or EC2) are refreshed automati
 expiry.
 
 ## Supported APIs
-API types that can be generated:
-* `json`
-* `rest-json`
-* `query`
 
 | Name          | Supported?      |Integration Tests  | Notes                                                                 |
 | ------------- | :-------------: | :---------------: |-------------                                                          |
