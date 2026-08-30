@@ -1,6 +1,8 @@
 require "file_utils"
 require "json"
+require "log"
 require "./bindings/*"
+require "./cli"
 require "./render"
 require "./service/*"
 
@@ -41,18 +43,37 @@ module Amazonite::Codegen
     "cloudwatch-logs" => ["GetLogObject", "StartLiveTail"],
   }
 
-  def self.main
+  def self.main(args = ARGV)
+    cli = Cli.new.parse(args)
+    ::Log.setup(level: cli.log_level)
+    Service::Files.models_dir = cli.models_dir
+
+    targets = TARGETS
+    unless cli.services.empty?
+      unknown = cli.services - TARGETS.keys
+      raise Exception.new("unknown --service value(s): #{unknown.join(", ")} (known targets: #{TARGETS.keys.join(", ")})") unless unknown.empty?
+      targets = TARGETS.select { |service, _| cli.services.includes?(service) }
+    end
+
     aws_version = Service::Files.submodule_commit_sha
 
-    TARGETS.each do |service, version_number|
+    targets.each do |service, version_number|
       translator = Service::Files.translator(service)
-      puts "processing: #{service} (api version #{translator.api_version})"
+      ::Log.info { "processing: #{service} (api version #{translator.api_version})" }
 
       description = Service::Description.new(aws_version, translator.api_version, version_number, translator.translate)
+
+      unless cli.protocols.empty?
+        unless cli.protocols.includes?(description.metadata.protocol)
+          ::Log.info { "  skipping #{service}: protocol '#{description.metadata.protocol}' not in --protocol filter" }
+          next
+        end
+      end
+
       excluded = EXCLUDED_OPERATIONS[service]?
       description.operations.reject! { |op| excluded.includes?(op.name) } if excluded
 
-      src_dir = File.join(Dir.current, "tmp")
+      src_dir = File.expand_path(cli.output_dir)
       module_name = "#{description.lower_name}_#{description.lower_version}"
       module_dir = File.join(src_dir, module_name)
       module_file_path = File.join(src_dir, "#{module_name}.cr")
@@ -62,27 +83,27 @@ module Amazonite::Codegen
 
       render = Render.new(description)
 
-      puts "  generating enums"
+      ::Log.info { "  generating enums" }
       description.enums.each do |shape|
         render.enum_file(shape, File.join(module_dir, "#{shape.snake_case_name}.cr"))
       end
 
-      puts "  generating structures"
+      ::Log.info { "  generating structures" }
       description.structures.each do |shape|
         render.model_file(shape, File.join(module_dir, "#{shape.snake_case_name}.cr"))
       end
 
-      puts "  generating exception factory"
+      ::Log.info { "  generating exception factory" }
       render.exception_factory_file(File.join(module_dir, "exception_factory.cr"))
 
-      puts "  generating client"
+      ::Log.info { "  generating client" }
       render.client_file(File.join(module_dir, "client.cr"))
 
-      puts "  generating module"
+      ::Log.info { "  generating module" }
       render.to_file("module.cr", module_file_path)
     end
 
-    puts "finished building"
+    ::Log.info { "finished building" }
   end
 end
 

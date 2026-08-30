@@ -110,6 +110,12 @@ Once you've cloned the repo, have a look at the `scripts` directory for some scr
 * `./scripts/watch_integration.cr`
   * watches for code changes and executes integration tests
 
+`codegen/codegen.cr` (built as `bin/codegen`, or run directly with `crystal run codegen/codegen.cr --`) accepts flags to point it at a different `api-models-aws` checkout, change the output directory, control log verbosity, and restrict which services/protocols get generated. Run it with `-h` for the full list, e.g.:
+
+```
+crystal run codegen/codegen.cr -- --models-dir ../api-models-aws --output-dir tmp --service dynamodb --service ssm --log-level debug
+```
+
 ## Contributing
 
 1. Fork it (<https://github.com/rjnienaber/amazonite/fork>)

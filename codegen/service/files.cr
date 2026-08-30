@@ -5,7 +5,10 @@ module Amazonite::Codegen::Service
   # Locates and parses a service's Smithy JSON AST model from the
   # api-models-aws submodule.
   class Files
-    MODELS_DIR = "api-models-aws/models"
+    # Root of the api-models-aws checkout (submodule by default, but
+    # overridable via the codegen CLI's --models-dir so a developer can point
+    # at an arbitrary clone instead).
+    class_property models_dir : String = "api-models-aws"
 
     # api-models-aws directory names don't always match the service slugs
     # used historically (dynamodb, ssm, ...) - only the exceptions need an
@@ -34,7 +37,7 @@ module Amazonite::Codegen::Service
       dir = SERVICE_DIRS.fetch(slug, slug)
       # Dir[] glob patterns always use "/" regardless of platform - File.join
       # would emit "\" on Windows and silently match nothing there.
-      pattern = "#{MODELS_DIR}/#{dir}/service/#{date || "*"}/*.json"
+      pattern = "#{models_dir}/models/#{dir}/service/#{date || "*"}/*.json"
       matches = Dir[pattern]
       raise Exception.new("couldn't find Smithy model for '#{name}' (looked for #{pattern})") if matches.empty?
       raise Exception.new("multiple Smithy model files found for '#{name}': #{matches}") if matches.size > 1
@@ -45,7 +48,7 @@ module Amazonite::Codegen::Service
     def self.submodule_commit_sha : String
       @@submodule_commit_sha ||= begin
         output = IO::Memory.new
-        Process.run("git", ["-C", "api-models-aws", "rev-parse", "--short", "HEAD"], output: output)
+        Process.run("git", ["-C", models_dir, "rev-parse", "--short", "HEAD"], output: output)
         output.to_s.strip
       end
     end
