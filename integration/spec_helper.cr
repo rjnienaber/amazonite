@@ -13,6 +13,7 @@ require "amazonite/cloudformation_v1"
 require "amazonite/api_gateway_v1"
 require "amazonite/eventbridge_v1"
 require "amazonite/cloudwatch_logs_v1"
+require "amazonite/kinesis_v1"
 require "./helpers"
 
 def wait_until(&)

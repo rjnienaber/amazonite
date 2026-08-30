@@ -27,6 +27,7 @@ module Amazonite::Codegen
     "api-gateway"     => "1",
     "eventbridge"     => "1",
     "cloudwatch-logs" => "1",
+    "kinesis"         => "1",
   }
 
   # Operations that can't be modeled as a plain request/response call and
@@ -39,6 +40,7 @@ module Amazonite::Codegen
   EXCLUDED_OPERATIONS = {
     "lambda"          => ["InvokeWithResponseStream"],
     "cloudwatch-logs" => ["GetLogObject", "StartLiveTail"],
+    "kinesis"         => ["SubscribeToShard"],
   }
 
   def self.main
