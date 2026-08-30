@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   # After you call SubscribeToShard, Kinesis Data Streams sends events of this type over an HTTP/2
   # connection to your consumer.
@@ -31,5 +33,25 @@ module Amazonite::KinesisV1
       @child_shards : Array(ChildShard) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @records
+        value.each(&.validate!)
+      end
+
+      if value = @continuation_sequence_number
+        raise Core::ValidationError.new("ContinuationSequenceNumber does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,128})$"))
+      end
+
+      if value = @millis_behind_latest
+        raise Core::ValidationError.new("MillisBehindLatest value must be >= 0") if value < 0
+      end
+
+      if value = @child_shards
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@records, @continuation_sequence_number, @millis_behind_latest, @child_shards)
   end
 end

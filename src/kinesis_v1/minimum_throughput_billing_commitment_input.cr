@@ -25,5 +25,10 @@ module Amazonite::KinesisV1
       @status : MinimumThroughputBillingCommitmentInputStatus,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@status)
   end
 end

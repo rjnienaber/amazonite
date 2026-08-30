@@ -48,5 +48,15 @@ module Amazonite::KinesisV1
       @timestamp : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @shard_id
+        raise Core::ValidationError.new("ShardId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ShardId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ShardId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+    end
+
+    def_equals_and_hash(@type, @shard_id, @timestamp)
   end
 end

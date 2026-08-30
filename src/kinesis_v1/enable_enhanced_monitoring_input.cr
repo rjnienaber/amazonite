@@ -51,5 +51,32 @@ module Amazonite::KinesisV1
       @stream_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @stream_name
+        raise Core::ValidationError.new("StreamName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StreamName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("StreamName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @shard_level_metrics
+        raise Core::ValidationError.new("ShardLevelMetrics must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("ShardLevelMetrics must have at most 7 item(s)") if value.size > 7
+      end
+
+      if value = @stream_arn
+        raise Core::ValidationError.new("StreamARN length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StreamARN length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("StreamARN does not match the required pattern") unless value.matches?(Regex.new("^arn:aws.*:kinesis:.*:\\d{12}:stream/\\S+$"))
+      end
+
+      if value = @stream_id
+        raise Core::ValidationError.new("StreamId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StreamId length must be <= 24") if value.size > 24
+        raise Core::ValidationError.new("StreamId does not match the required pattern") unless value.matches?(Regex.new("^[a-z0-9]{20}-[a-z0-9]{3}$"))
+      end
+    end
+
+    def_equals_and_hash(@stream_name, @shard_level_metrics, @stream_arn, @stream_id)
   end
 end

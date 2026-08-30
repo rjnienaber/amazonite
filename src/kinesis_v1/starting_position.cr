@@ -45,5 +45,13 @@ module Amazonite::KinesisV1
       @timestamp : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @sequence_number
+        raise Core::ValidationError.new("SequenceNumber does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,128})$"))
+      end
+    end
+
+    def_equals_and_hash(@type, @sequence_number, @timestamp)
   end
 end

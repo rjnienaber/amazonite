@@ -29,5 +29,10 @@ module Amazonite::KinesisV1
       @earliest_allowed_end_at : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@status, @started_at, @ended_at, @earliest_allowed_end_at)
   end
 end

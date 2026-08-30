@@ -10,5 +10,10 @@ module Amazonite::KinesisV1
       @policy : String,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@policy)
   end
 end

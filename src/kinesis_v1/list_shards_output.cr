@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   class ListShardsOutput
     include JSON::Serializable
@@ -27,5 +29,18 @@ module Amazonite::KinesisV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @shards
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1048576") if value.size > 1048576
+      end
+    end
+
+    def_equals_and_hash(@shards, @next_token)
   end
 end

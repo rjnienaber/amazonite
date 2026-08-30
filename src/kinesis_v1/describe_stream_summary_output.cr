@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   class DescribeStreamSummaryOutput
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::KinesisV1
       @stream_description_summary : StreamDescriptionSummary,
     )
     end
+
+    def validate! : Nil
+      if value = @stream_description_summary
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@stream_description_summary)
   end
 end

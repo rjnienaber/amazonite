@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   class DescribeLimitsOutput
     include JSON::Serializable
@@ -25,5 +27,29 @@ module Amazonite::KinesisV1
       @on_demand_stream_count_limit : Int32,
     )
     end
+
+    def validate! : Nil
+      if value = @shard_limit
+        raise Core::ValidationError.new("ShardLimit value must be >= 0") if value < 0
+        raise Core::ValidationError.new("ShardLimit value must be <= 1000000") if value > 1000000
+      end
+
+      if value = @open_shard_count
+        raise Core::ValidationError.new("OpenShardCount value must be >= 0") if value < 0
+        raise Core::ValidationError.new("OpenShardCount value must be <= 1000000") if value > 1000000
+      end
+
+      if value = @on_demand_stream_count
+        raise Core::ValidationError.new("OnDemandStreamCount value must be >= 0") if value < 0
+        raise Core::ValidationError.new("OnDemandStreamCount value must be <= 1000000") if value > 1000000
+      end
+
+      if value = @on_demand_stream_count_limit
+        raise Core::ValidationError.new("OnDemandStreamCountLimit value must be >= 0") if value < 0
+        raise Core::ValidationError.new("OnDemandStreamCountLimit value must be <= 1000000") if value > 1000000
+      end
+    end
+
+    def_equals_and_hash(@shard_limit, @open_shard_count, @on_demand_stream_count, @on_demand_stream_count_limit)
   end
 end

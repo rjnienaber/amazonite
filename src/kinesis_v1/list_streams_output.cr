@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   # Represents the output for `ListStreams`.
   class ListStreamsOutput
@@ -25,5 +27,18 @@ module Amazonite::KinesisV1
       @stream_summaries : Array(StreamSummary) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1048576") if value.size > 1048576
+      end
+
+      if value = @stream_summaries
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@stream_names, @has_more_streams, @next_token, @stream_summaries)
   end
 end

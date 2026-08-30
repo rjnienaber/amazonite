@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   # This is a tagged union for all of the types of events an enhanced fan-out consumer can receive
   # over HTTP/2 after a call to SubscribeToShard.
@@ -14,5 +16,13 @@ module Amazonite::KinesisV1
       @subscribe_to_shard_event : SubscribeToShardEvent | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @subscribe_to_shard_event
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@subscribe_to_shard_event)
   end
 end

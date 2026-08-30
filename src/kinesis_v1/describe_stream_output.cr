@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   # Represents the output for `DescribeStream`.
   class DescribeStreamOutput
@@ -12,5 +14,13 @@ module Amazonite::KinesisV1
       @stream_description : StreamDescription,
     )
     end
+
+    def validate! : Nil
+      if value = @stream_description
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@stream_description)
   end
 end
