@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class UpdateAssociationStatusRequest
     include JSON::Serializable
@@ -19,6 +21,20 @@ module Amazonite::SsmV1
       @instance_id : String,
       @association_status : AssociationStatus,
     )
+    end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.:/]{3,128}$"))
+      end
+
+      if value = @instance_id
+        raise Core::ValidationError.new("InstanceId does not match the required pattern") unless value.matches?(Regex.new("^(^i-(\\w{8}|\\w{17})$)|(^mi-\\w{17}$)$"))
+      end
+
+      if value = @association_status
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@name, @instance_id, @association_status)

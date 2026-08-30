@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # The response from the GetDurableExecutionState operation, containing the current execution state
   # for replay.
@@ -19,6 +21,12 @@ module Amazonite::LambdaV1
       @operations : Array(Operation),
       @next_marker : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @operations
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@operations, @next_marker)

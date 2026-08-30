@@ -58,6 +58,29 @@ module Amazonite::StsV1
       )
     end
 
+    def validate! : Nil
+      if value = @audience
+        raise Core::ValidationError.new("Audience must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Audience must have at most 10 item(s)") if value.size > 10
+      end
+
+      if value = @duration_seconds
+        raise Core::ValidationError.new("DurationSeconds value must be >= 60") if value < 60
+        raise Core::ValidationError.new("DurationSeconds value must be <= 3600") if value > 3600
+      end
+
+      if value = @signing_algorithm
+        raise Core::ValidationError.new("SigningAlgorithm length must be >= 5") if value.size < 5
+        raise Core::ValidationError.new("SigningAlgorithm length must be <= 5") if value.size > 5
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@audience, @duration_seconds, @signing_algorithm, @tags)
   end
 end

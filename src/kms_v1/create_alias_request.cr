@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class CreateAliasRequest
     include JSON::Serializable
@@ -42,6 +44,19 @@ module Amazonite::KmsV1
       @alias_name : String,
       @target_key_id : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @alias_name
+        raise Core::ValidationError.new("AliasName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AliasName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("AliasName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9:/_-]+$"))
+      end
+
+      if value = @target_key_id
+        raise Core::ValidationError.new("TargetKeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TargetKeyId length must be <= 2048") if value.size > 2048
+      end
     end
 
     def_equals_and_hash(@alias_name, @target_key_id)

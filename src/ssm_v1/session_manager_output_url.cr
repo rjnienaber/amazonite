@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Reserved for future use.
   class SessionManagerOutputUrl
@@ -15,6 +17,18 @@ module Amazonite::SsmV1
       @s3_output_url : String | Nil = nil,
       @cloud_watch_output_url : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @s3_output_url
+        raise Core::ValidationError.new("S3OutputUrl length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("S3OutputUrl length must be <= 2083") if value.size > 2083
+      end
+
+      if value = @cloud_watch_output_url
+        raise Core::ValidationError.new("CloudWatchOutputUrl length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CloudWatchOutputUrl length must be <= 2083") if value.size > 2083
+      end
     end
 
     def_equals_and_hash(@s3_output_url, @cloud_watch_output_url)

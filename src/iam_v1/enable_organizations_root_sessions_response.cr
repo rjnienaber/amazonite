@@ -35,6 +35,14 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @organization_id
+        raise Core::ValidationError.new("OrganizationId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("OrganizationId length must be <= 34") if value.size > 34
+        raise Core::ValidationError.new("OrganizationId does not match the required pattern") unless value.matches?(Regex.new("^o-[a-z0-9]{10,32}$"))
+      end
+    end
+
     def_equals_and_hash(@organization_id, @enabled_features)
   end
 end

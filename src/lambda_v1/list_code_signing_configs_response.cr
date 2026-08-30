@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class ListCodeSigningConfigsResponse
     include JSON::Serializable
@@ -14,6 +16,12 @@ module Amazonite::LambdaV1
       @next_marker : String | Nil = nil,
       @code_signing_configs : Array(CodeSigningConfig) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @code_signing_configs
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@next_marker, @code_signing_configs)

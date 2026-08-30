@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # This structure represents one anomaly that has been found by a logs anomaly detector.
@@ -120,6 +121,63 @@ module Amazonite::CloudWatchLogsV1
       @suppressed_until : Int64 | Nil = nil,
       @is_pattern_level_suppression : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @anomaly_id
+        raise Core::ValidationError.new("anomalyId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("anomalyId length must be <= 36") if value.size > 36
+      end
+
+      if value = @pattern_id
+        raise Core::ValidationError.new("patternId length must be >= 32") if value.size < 32
+        raise Core::ValidationError.new("patternId length must be <= 32") if value.size > 32
+      end
+
+      if value = @anomaly_detector_arn
+        raise Core::ValidationError.new("anomalyDetectorArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("anomalyDetectorArn does not match the required pattern") unless value.matches?(Regex.new("^[\\w#+=/:,.@-]*$"))
+      end
+
+      if value = @pattern_string
+        raise Core::ValidationError.new("patternString length must be >= 1") if value.size < 1
+      end
+
+      if value = @pattern_regex
+        raise Core::ValidationError.new("patternRegex length must be >= 1") if value.size < 1
+      end
+
+      if value = @priority
+        raise Core::ValidationError.new("priority length must be >= 1") if value.size < 1
+      end
+
+      if value = @first_seen
+        raise Core::ValidationError.new("firstSeen value must be >= 0") if value < 0
+      end
+
+      if value = @last_seen
+        raise Core::ValidationError.new("lastSeen value must be >= 0") if value < 0
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("description length must be >= 1") if value.size < 1
+      end
+
+      if value = @log_samples
+        value.each(&.validate!)
+      end
+
+      if value = @pattern_tokens
+        value.each(&.validate!)
+      end
+
+      if value = @suppressed_date
+        raise Core::ValidationError.new("suppressedDate value must be >= 0") if value < 0
+      end
+
+      if value = @suppressed_until
+        raise Core::ValidationError.new("suppressedUntil value must be >= 0") if value < 0
+      end
     end
 
     def_equals_and_hash(@anomaly_id, @pattern_id, @anomaly_detector_arn, @pattern_string, @pattern_regex, @priority, @first_seen, @last_seen, @description, @active, @state, @histogram, @log_samples, @pattern_tokens, @log_group_arn_list, @suppressed, @suppressed_date, @suppressed_until, @is_pattern_level_suppression)

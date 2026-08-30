@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # This structure describes one log event field that is used as an index in at least one index
@@ -66,6 +67,32 @@ module Amazonite::CloudWatchLogsV1
       @type : IndexType | Nil = nil,
       @index_category : IndexCategory | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @log_group_identifier
+        raise Core::ValidationError.new("logGroupIdentifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupIdentifier length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("logGroupIdentifier does not match the required pattern") unless value.matches?(Regex.new("^[\\w#+=/:,.@-]*$"))
+      end
+
+      if value = @field_index_name
+        raise Core::ValidationError.new("fieldIndexName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("fieldIndexName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("fieldIndexName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+
+      if value = @last_scan_time
+        raise Core::ValidationError.new("lastScanTime value must be >= 0") if value < 0
+      end
+
+      if value = @first_event_time
+        raise Core::ValidationError.new("firstEventTime value must be >= 0") if value < 0
+      end
+
+      if value = @last_event_time
+        raise Core::ValidationError.new("lastEventTime value must be >= 0") if value < 0
+      end
     end
 
     def_equals_and_hash(@log_group_identifier, @field_index_name, @last_scan_time, @first_event_time, @last_event_time, @type, @index_category)

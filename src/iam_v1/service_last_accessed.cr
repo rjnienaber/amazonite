@@ -114,6 +114,23 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @service_namespace
+        raise Core::ValidationError.new("ServiceNamespace length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ServiceNamespace length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("ServiceNamespace does not match the required pattern") unless value.matches?(Regex.new("^[\\w-]*$"))
+      end
+
+      if value = @last_authenticated_entity
+        raise Core::ValidationError.new("LastAuthenticatedEntity length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("LastAuthenticatedEntity length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @tracked_actions_last_accessed
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@service_name, @last_authenticated, @service_namespace, @last_authenticated_entity, @last_authenticated_region, @total_authenticated_entities, @tracked_actions_last_accessed)
   end
 end

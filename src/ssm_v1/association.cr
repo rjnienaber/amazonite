@@ -89,6 +89,62 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.:/]{3,128}$"))
+      end
+
+      if value = @instance_id
+        raise Core::ValidationError.new("InstanceId does not match the required pattern") unless value.matches?(Regex.new("^(^i-(\\w{8}|\\w{17})$)|(^mi-\\w{17}$)$"))
+      end
+
+      if value = @association_id
+        raise Core::ValidationError.new("AssociationId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @association_version
+        raise Core::ValidationError.new("AssociationVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST)|([1-9][0-9]*)$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @targets
+        raise Core::ValidationError.new("Targets must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Targets must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @overview
+        value.validate!
+      end
+
+      if value = @schedule_expression
+        raise Core::ValidationError.new("ScheduleExpression length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ScheduleExpression length must be <= 256") if value.size > 256
+      end
+
+      if value = @association_name
+        raise Core::ValidationError.new("AssociationName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @schedule_offset
+        raise Core::ValidationError.new("ScheduleOffset value must be >= 1") if value < 1
+        raise Core::ValidationError.new("ScheduleOffset value must be <= 6") if value > 6
+      end
+
+      if value = @duration
+        raise Core::ValidationError.new("Duration value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Duration value must be <= 24") if value > 24
+      end
+
+      if value = @target_maps
+        raise Core::ValidationError.new("TargetMaps must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("TargetMaps must have at most 300 item(s)") if value.size > 300
+      end
+    end
+
     def_equals_and_hash(@name, @instance_id, @association_id, @association_version, @document_version, @targets, @last_execution_date, @overview, @schedule_expression, @association_name, @schedule_offset, @duration, @target_maps)
   end
 end

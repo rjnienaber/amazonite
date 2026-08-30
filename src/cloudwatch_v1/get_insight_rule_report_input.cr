@@ -71,6 +71,24 @@ module Amazonite::CloudWatchV1
     )
     end
 
+    def validate! : Nil
+      if value = @rule_name
+        raise Core::ValidationError.new("RuleName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RuleName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("RuleName does not match the required pattern") unless value.matches?(Regex.new("^[\\x20-\\x7E]+$"))
+      end
+
+      if value = @period
+        raise Core::ValidationError.new("Period value must be >= 1") if value < 1
+      end
+
+      if value = @order_by
+        raise Core::ValidationError.new("OrderBy length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OrderBy length must be <= 32") if value.size > 32
+        raise Core::ValidationError.new("OrderBy does not match the required pattern") unless value.matches?(Regex.new("^[\\x20-\\x7E]+$"))
+      end
+    end
+
     def_equals_and_hash(@rule_name, @start_time, @end_time, @period, @max_contributor_count, @metrics, @order_by)
   end
 end

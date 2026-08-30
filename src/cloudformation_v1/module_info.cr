@@ -58,6 +58,9 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@type_hierarchy, @logical_id_hierarchy)
   end
 end

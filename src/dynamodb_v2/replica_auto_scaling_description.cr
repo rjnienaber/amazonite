@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the auto scaling settings of the replica.
@@ -38,6 +39,20 @@ module Amazonite::DynamoDBV2
       @replica_provisioned_write_capacity_auto_scaling_settings : AutoScalingSettingsDescription | Nil = nil,
       @replica_status : ReplicaStatus | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @global_secondary_indexes
+        value.each(&.validate!)
+      end
+
+      if value = @replica_provisioned_read_capacity_auto_scaling_settings
+        value.validate!
+      end
+
+      if value = @replica_provisioned_write_capacity_auto_scaling_settings
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@region_name, @global_secondary_indexes, @replica_provisioned_read_capacity_auto_scaling_settings, @replica_provisioned_write_capacity_auto_scaling_settings, @replica_status)

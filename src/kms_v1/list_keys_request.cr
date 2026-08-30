@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class ListKeysRequest
     include JSON::Serializable
@@ -19,6 +21,19 @@ module Amazonite::KmsV1
       @limit : Int32 | Nil = nil,
       @marker : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @limit
+        raise Core::ValidationError.new("Limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Limit value must be <= 1000") if value > 1000
+      end
+
+      if value = @marker
+        raise Core::ValidationError.new("Marker length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Marker length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("Marker does not match the required pattern") unless value.matches?(Regex.new("^[\\u0020-\\u00FF]*$"))
+      end
     end
 
     def_equals_and_hash(@limit, @marker)

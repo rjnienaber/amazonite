@@ -23,6 +23,13 @@ module Amazonite::StsV1
       )
     end
 
+    def validate! : Nil
+      if value = @encoded_message
+        raise Core::ValidationError.new("EncodedMessage length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EncodedMessage length must be <= 10240") if value.size > 10240
+      end
+    end
+
     def_equals_and_hash(@encoded_message)
   end
 end

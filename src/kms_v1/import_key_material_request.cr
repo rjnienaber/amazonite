@@ -117,6 +117,35 @@ module Amazonite::KmsV1
     )
     end
 
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @import_token
+        raise Core::ValidationError.new("ImportToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ImportToken length must be <= 6144") if value.size > 6144
+      end
+
+      if value = @encrypted_key_material
+        raise Core::ValidationError.new("EncryptedKeyMaterial length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EncryptedKeyMaterial length must be <= 6144") if value.size > 6144
+      end
+
+      if value = @key_material_description
+        raise Core::ValidationError.new("KeyMaterialDescription length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KeyMaterialDescription length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("KeyMaterialDescription does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9:/_\\s.-]+$"))
+      end
+
+      if value = @key_material_id
+        raise Core::ValidationError.new("KeyMaterialId length must be >= 64") if value.size < 64
+        raise Core::ValidationError.new("KeyMaterialId length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("KeyMaterialId does not match the required pattern") unless value.matches?(Regex.new("^[a-f0-9]+$"))
+      end
+    end
+
     def_equals_and_hash(@key_id, @import_token, @encrypted_key_material, @valid_to, @expiration_model, @import_type, @key_material_description, @key_material_id)
   end
 end

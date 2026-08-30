@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   class DeleteInventoryRequest
@@ -39,6 +40,18 @@ module Amazonite::SsmV1
       @dry_run : Bool | Nil = nil,
       @client_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @type_name
+        raise Core::ValidationError.new("TypeName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TypeName length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("TypeName does not match the required pattern") unless value.matches?(Regex.new("^(AWS|Custom):.*$"))
+      end
+
+      if value = @client_token
+        raise Core::ValidationError.new("ClientToken does not match the required pattern") unless value.matches?(Regex.new("^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"))
+      end
     end
 
     def_equals_and_hash(@type_name, @schema_delete_option, @dry_run, @client_token)

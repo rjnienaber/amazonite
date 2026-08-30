@@ -156,6 +156,96 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Name length must be <= 255") if value.size > 255
+      end
+
+      if value = @instance_id
+        raise Core::ValidationError.new("InstanceId does not match the required pattern") unless value.matches?(Regex.new("^(^i-(\\w{8}|\\w{17})$)|(^mi-\\w{17}$)$"))
+      end
+
+      if value = @instance_type
+        raise Core::ValidationError.new("InstanceType length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("InstanceType length must be <= 120") if value.size > 120
+      end
+
+      if value = @instance_role
+        raise Core::ValidationError.new("InstanceRole length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("InstanceRole length must be <= 120") if value.size > 120
+      end
+
+      if value = @key_name
+        raise Core::ValidationError.new("KeyName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KeyName length must be <= 255") if value.size > 255
+      end
+
+      if value = @instance_state
+        raise Core::ValidationError.new("InstanceState length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("InstanceState length must be <= 120") if value.size > 120
+      end
+
+      if value = @architecture
+        raise Core::ValidationError.new("Architecture length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Architecture length must be <= 120") if value.size > 120
+      end
+
+      if value = @ip_address
+        raise Core::ValidationError.new("IPAddress length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("IPAddress length must be <= 46") if value.size > 46
+      end
+
+      if value = @agent_version
+        raise Core::ValidationError.new("AgentVersion does not match the required pattern") unless value.matches?(Regex.new("^[0-9]{1,6}(\\.[0-9]{1,6}){2,3}$"))
+      end
+
+      if value = @platform_name
+        raise Core::ValidationError.new("PlatformName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("PlatformName length must be <= 120") if value.size > 120
+      end
+
+      if value = @platform_version
+        raise Core::ValidationError.new("PlatformVersion length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("PlatformVersion length must be <= 120") if value.size > 120
+      end
+
+      if value = @activation_id
+        raise Core::ValidationError.new("ActivationId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"))
+      end
+
+      if value = @iam_role
+        raise Core::ValidationError.new("IamRole length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("IamRole length must be <= 64") if value.size > 64
+      end
+
+      if value = @computer_name
+        raise Core::ValidationError.new("ComputerName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ComputerName length must be <= 255") if value.size > 255
+      end
+
+      if value = @association_overview
+        value.validate!
+      end
+
+      if value = @source_id
+        raise Core::ValidationError.new("SourceId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SourceId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("SourceId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9:_-]*$"))
+      end
+
+      if value = @source_location
+        raise Core::ValidationError.new("SourceLocation length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SourceLocation length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("SourceLocation does not match the required pattern") unless value.matches?(Regex.new("^.{1,128}$"))
+      end
+
+      if value = @availability_zone
+        raise Core::ValidationError.new("AvailabilityZone length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("AvailabilityZone length must be <= 120") if value.size > 120
+      end
+    end
+
     def_equals_and_hash(@name, @instance_id, @instance_type, @instance_role, @key_name, @instance_state, @architecture, @ip_address, @launch_time, @ping_status, @last_ping_date_time, @agent_version, @platform_type, @platform_name, @platform_version, @activation_id, @iam_role, @registration_date, @resource_type, @computer_name, @association_status, @last_association_execution_date, @last_successful_association_execution_date, @association_overview, @source_id, @source_type, @source_location, @availability_zone)
   end
 end

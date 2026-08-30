@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DeleteResourcePolicyRequest
     include JSON::Serializable
@@ -20,6 +22,13 @@ module Amazonite::SsmV1
       @policy_id : String,
       @policy_hash : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @resource_arn
+        raise Core::ValidationError.new("ResourceArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("ResourceArn length must be <= 2048") if value.size > 2048
+      end
     end
 
     def_equals_and_hash(@resource_arn, @policy_id, @policy_hash)

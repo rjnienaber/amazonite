@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListNodesSummaryRequest
     include JSON::Serializable
@@ -39,6 +41,30 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
       @max_results : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @sync_name
+        raise Core::ValidationError.new("SyncName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SyncName length must be <= 64") if value.size > 64
+      end
+
+      if value = @filters
+        raise Core::ValidationError.new("Filters must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Filters must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @aggregators
+        raise Core::ValidationError.new("Aggregators must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Aggregators must have at most 2 item(s)") if value.size > 2
+        value.each(&.validate!)
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 50") if value > 50
+      end
     end
 
     def_equals_and_hash(@sync_name, @filters, @aggregators, @next_token, @max_results)

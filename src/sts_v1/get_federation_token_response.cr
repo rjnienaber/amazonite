@@ -53,6 +53,20 @@ module Amazonite::StsV1
       )
     end
 
+    def validate! : Nil
+      if value = @credentials
+        value.validate!
+      end
+
+      if value = @federated_user
+        value.validate!
+      end
+
+      if value = @packed_policy_size
+        raise Core::ValidationError.new("PackedPolicySize value must be >= 0") if value < 0
+      end
+    end
+
     def_equals_and_hash(@credentials, @federated_user, @packed_policy_size)
   end
 end

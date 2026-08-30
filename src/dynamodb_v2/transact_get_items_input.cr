@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   class TransactGetItemsInput
@@ -18,6 +19,14 @@ module Amazonite::DynamoDBV2
       @transact_items : Array(TransactGetItem),
       @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @transact_items
+        raise Core::ValidationError.new("TransactItems must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("TransactItems must have at most 100 item(s)") if value.size > 100
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@transact_items, @return_consumed_capacity)

@@ -137,6 +137,27 @@ module Amazonite::KmsV1
     )
     end
 
+    def validate! : Nil
+      if value = @ciphertext_blob
+        raise Core::ValidationError.new("CiphertextBlob length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CiphertextBlob length must be <= 6144") if value.size > 6144
+      end
+
+      if value = @grant_tokens
+        raise Core::ValidationError.new("GrantTokens must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("GrantTokens must have at most 10 item(s)") if value.size > 10
+      end
+
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @recipient
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@ciphertext_blob, @encryption_context, @grant_tokens, @key_id, @encryption_algorithm, @recipient, @dry_run, @dry_run_modifiers)
   end
 end

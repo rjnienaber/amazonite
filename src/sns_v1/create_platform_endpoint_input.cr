@@ -56,6 +56,9 @@ module Amazonite::SnsV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@platform_application_arn, @token, @custom_user_data, @attributes)
   end
 end

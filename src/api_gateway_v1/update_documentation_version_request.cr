@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Updates an existing documentation version of an API.
   class UpdateDocumentationVersionRequest
@@ -21,6 +23,12 @@ module Amazonite::ApiGatewayV1
       @documentation_version : String,
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @patch_operations
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@rest_api_id, @documentation_version, @patch_operations)

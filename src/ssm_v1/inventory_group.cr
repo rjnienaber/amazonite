@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # A user-defined set of one or more filters on which to aggregate inventory data. Groups return a
   # count of resources that match and don't match the specified criteria.
@@ -18,6 +20,19 @@ module Amazonite::SsmV1
       @name : String,
       @filters : Array(InventoryFilter),
     )
+    end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 200") if value.size > 200
+      end
+
+      if value = @filters
+        raise Core::ValidationError.new("Filters must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Filters must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@name, @filters)

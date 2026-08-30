@@ -51,6 +51,12 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @policies
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@policies, @is_truncated, @marker)
   end
 end

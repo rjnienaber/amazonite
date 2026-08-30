@@ -50,6 +50,17 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @hook_invocation_count
+        raise Core::ValidationError.new("HookInvocationCount value must be >= 1") if value < 1
+        raise Core::ValidationError.new("HookInvocationCount value must be <= 100") if value > 100
+      end
+
+      if value = @resource_change
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@type, @hook_invocation_count, @resource_change)
   end
 end

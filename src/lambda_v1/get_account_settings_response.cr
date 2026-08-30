@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class GetAccountSettingsResponse
     include JSON::Serializable
@@ -14,6 +16,16 @@ module Amazonite::LambdaV1
       @account_limit : AccountLimit | Nil = nil,
       @account_usage : AccountUsage | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @account_limit
+        value.validate!
+      end
+
+      if value = @account_usage
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@account_limit, @account_usage)

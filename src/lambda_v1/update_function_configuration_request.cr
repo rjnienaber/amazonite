@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   class UpdateFunctionConfigurationRequest
@@ -181,6 +182,93 @@ module Amazonite::LambdaV1
       @capacity_provider_config : CapacityProviderConfig | Nil = nil,
       @durable_config : DurableConfig | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @function_name
+        raise Core::ValidationError.new("FunctionName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("FunctionName length must be <= 140") if value.size > 140
+        raise Core::ValidationError.new("FunctionName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:)?((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_]+)(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @role
+        raise Core::ValidationError.new("Role length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Role length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("Role does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+$"))
+      end
+
+      if value = @handler
+        raise Core::ValidationError.new("Handler length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Handler length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Handler does not match the required pattern") unless value.matches?(Regex.new("^[^\\s]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 256") if value.size > 256
+      end
+
+      if value = @timeout
+        raise Core::ValidationError.new("Timeout value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Timeout value must be <= 5400") if value > 5400
+      end
+
+      if value = @memory_size
+        raise Core::ValidationError.new("MemorySize value must be >= 128") if value < 128
+        raise Core::ValidationError.new("MemorySize value must be <= 32768") if value > 32768
+      end
+
+      if value = @vpc_config
+        value.validate!
+      end
+
+      if value = @environment
+        value.validate!
+      end
+
+      if value = @dead_letter_config
+        value.validate!
+      end
+
+      if value = @kms_key_arn
+        raise Core::ValidationError.new("KMSKeyArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KMSKeyArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("KMSKeyArn does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*)|()$"))
+      end
+
+      if value = @tracing_config
+        value.validate!
+      end
+
+      if value = @file_system_configs
+        raise Core::ValidationError.new("FileSystemConfigs must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("FileSystemConfigs must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+
+      if value = @image_config
+        value.validate!
+      end
+
+      if value = @ephemeral_storage
+        value.validate!
+      end
+
+      if value = @snap_start
+        value.validate!
+      end
+
+      if value = @logging_config
+        value.validate!
+      end
+
+      if value = @capacity_provider_config
+        value.validate!
+      end
+
+      if value = @durable_config
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@function_name, @role, @handler, @description, @timeout, @memory_size, @vpc_config, @environment, @runtime, @dead_letter_config, @kms_key_arn, @tracing_config, @revision_id, @layers, @file_system_configs, @image_config, @ephemeral_storage, @snap_start, @logging_config, @capacity_provider_config, @durable_config)

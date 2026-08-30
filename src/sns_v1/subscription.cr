@@ -62,6 +62,9 @@ module Amazonite::SnsV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@subscription_arn, @owner, @protocol, @endpoint, @topic_arn)
   end
 end

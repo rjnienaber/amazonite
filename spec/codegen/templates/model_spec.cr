@@ -92,4 +92,11 @@ describe "model.cr.j2 template" do
     expected = load_fixture("templates", "model", "agent_configuration_status.expected.cr").strip
     actual.should eq_diff expected
   end
+
+  it "generates #validate! for length/pattern-constrained scalars and recurses into nested structures/lists in 'RestoreTableFromBackupInput'" do
+    actual = render_model("RestoreTableFromBackupInput")
+
+    expected = load_fixture("templates", "model", "restore_table_from_backup_input.expected.cr").strip
+    actual.should eq_diff expected
+  end
 end

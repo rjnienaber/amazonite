@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   class StartAutomationExecutionRequest
@@ -124,6 +125,75 @@ module Amazonite::SsmV1
       @alarm_configuration : AlarmConfiguration | Nil = nil,
       @target_locations_url : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @document_name
+        raise Core::ValidationError.new("DocumentName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.:/]{3,128}$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @parameters
+        raise Core::ValidationError.new("Parameters must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("Parameters must have at most 200 entry(s)") if value.size > 200
+      end
+
+      if value = @client_token
+        raise Core::ValidationError.new("ClientToken length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("ClientToken length must be <= 36") if value.size > 36
+        raise Core::ValidationError.new("ClientToken does not match the required pattern") unless value.matches?(Regex.new("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
+      end
+
+      if value = @target_parameter_name
+        raise Core::ValidationError.new("TargetParameterName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TargetParameterName length must be <= 50") if value.size > 50
+      end
+
+      if value = @targets
+        raise Core::ValidationError.new("Targets must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Targets must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+
+      if value = @target_maps
+        raise Core::ValidationError.new("TargetMaps must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("TargetMaps must have at most 300 item(s)") if value.size > 300
+      end
+
+      if value = @max_concurrency
+        raise Core::ValidationError.new("MaxConcurrency length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MaxConcurrency length must be <= 7") if value.size > 7
+        raise Core::ValidationError.new("MaxConcurrency does not match the required pattern") unless value.matches?(Regex.new("^([1-9][0-9]*|[1-9][0-9]%|[1-9]%|100%)$"))
+      end
+
+      if value = @max_errors
+        raise Core::ValidationError.new("MaxErrors length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MaxErrors length must be <= 7") if value.size > 7
+        raise Core::ValidationError.new("MaxErrors does not match the required pattern") unless value.matches?(Regex.new("^([1-9][0-9]*|[0]|[1-9][0-9]%|[0-9]%|100%)$"))
+      end
+
+      if value = @target_locations
+        raise Core::ValidationError.new("TargetLocations must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("TargetLocations must have at most 100 item(s)") if value.size > 100
+        value.each(&.validate!)
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 1000 item(s)") if value.size > 1000
+        value.each(&.validate!)
+      end
+
+      if value = @alarm_configuration
+        value.validate!
+      end
+
+      if value = @target_locations_url
+        raise Core::ValidationError.new("TargetLocationsURL does not match the required pattern") unless value.matches?(Regex.new("^https:\\/\\/[-a-zA-Z0-9@:%._\\+~#=]{1,253}\\.s3(\\.[a-z\\d-]{9,16})?\\.amazonaws\\.com\\/.{1,2000}$"))
+      end
     end
 
     def_equals_and_hash(@document_name, @document_version, @parameters, @client_token, @mode, @target_parameter_name, @targets, @target_maps, @max_concurrency, @max_errors, @target_locations, @tags, @alarm_configuration, @target_locations_url)

@@ -97,6 +97,19 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @url
+        raise Core::ValidationError.new("Url length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Url length must be <= 255") if value.size > 255
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@url, @client_id_list, @thumbprint_list, @tags)
   end
 end

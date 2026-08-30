@@ -30,6 +30,9 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@stream_enabled, @stream_view_type)
   end
 end

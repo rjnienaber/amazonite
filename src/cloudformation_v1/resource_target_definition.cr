@@ -137,6 +137,12 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @drift
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@attribute, @name, @requires_recreation, @path, @before_value, @after_value, @before_value_from, @after_value_from, @drift, @attribute_change_type)
   end
 end

@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents *a single element* of a key schema. A key schema specifies the attributes that make
@@ -39,6 +40,13 @@ module Amazonite::DynamoDBV2
       @attribute_name : String,
       @key_type : KeyType,
     )
+    end
+
+    def validate! : Nil
+      if value = @attribute_name
+        raise Core::ValidationError.new("AttributeName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AttributeName length must be <= 255") if value.size > 255
+      end
     end
 
     def_equals_and_hash(@attribute_name, @key_type)

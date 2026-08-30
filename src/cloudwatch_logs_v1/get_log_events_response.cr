@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class GetLogEventsResponse
     include JSON::Serializable
@@ -22,6 +24,20 @@ module Amazonite::CloudWatchLogsV1
       @next_forward_token : String | Nil = nil,
       @next_backward_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @events
+        value.each(&.validate!)
+      end
+
+      if value = @next_forward_token
+        raise Core::ValidationError.new("nextForwardToken length must be >= 1") if value.size < 1
+      end
+
+      if value = @next_backward_token
+        raise Core::ValidationError.new("nextBackwardToken length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@events, @next_forward_token, @next_backward_token)

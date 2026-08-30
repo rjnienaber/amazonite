@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class GetOpsItemResponse
     include JSON::Serializable
@@ -9,6 +11,12 @@ module Amazonite::SsmV1
     def initialize(
       @ops_item : OpsItem | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @ops_item
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@ops_item)

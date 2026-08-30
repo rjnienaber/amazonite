@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class GetCodeSigningConfigResponse
     include JSON::Serializable
@@ -9,6 +11,12 @@ module Amazonite::LambdaV1
     def initialize(
       @code_signing_config : CodeSigningConfig,
     )
+    end
+
+    def validate! : Nil
+      if value = @code_signing_config
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@code_signing_config)

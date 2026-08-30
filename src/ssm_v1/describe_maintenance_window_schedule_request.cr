@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   class DescribeMaintenanceWindowScheduleRequest
@@ -38,6 +39,30 @@ module Amazonite::SsmV1
       @max_results : Int32 | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @window_id
+        raise Core::ValidationError.new("WindowId length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("WindowId length must be <= 20") if value.size > 20
+        raise Core::ValidationError.new("WindowId does not match the required pattern") unless value.matches?(Regex.new("^mw-[0-9a-f]{17}$"))
+      end
+
+      if value = @targets
+        raise Core::ValidationError.new("Targets must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Targets must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @filters
+        raise Core::ValidationError.new("Filters must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Filters must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+      end
     end
 
     def_equals_and_hash(@window_id, @targets, @resource_type, @filters, @max_results, @next_token)

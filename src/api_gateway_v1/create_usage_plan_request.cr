@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # The POST request to create a usage plan with the name, description, throttle limits and quota
   # limits, as well as the associated API stages, specified in the payload.
@@ -37,6 +39,20 @@ module Amazonite::ApiGatewayV1
       @quota : QuotaSettings | Nil = nil,
       @tags : Hash(String, String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @api_stages
+        value.each(&.validate!)
+      end
+
+      if value = @throttle
+        value.validate!
+      end
+
+      if value = @quota
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@name, @description, @api_stages, @throttle, @quota, @tags)

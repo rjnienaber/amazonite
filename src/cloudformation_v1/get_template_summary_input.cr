@@ -101,6 +101,30 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @template_body
+        raise Core::ValidationError.new("TemplateBody length must be >= 1") if value.size < 1
+      end
+
+      if value = @template_url
+        raise Core::ValidationError.new("TemplateURL length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TemplateURL length must be <= 5120") if value.size > 5120
+      end
+
+      if value = @stack_name
+        raise Core::ValidationError.new("StackName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackName does not match the required pattern") unless value.matches?(Regex.new("^([a-zA-Z][-a-zA-Z0-9]*)|(arn:\\b(aws|aws-us-gov|aws-cn)\\b:[-a-zA-Z0-9:/._+]*)$"))
+      end
+
+      if value = @stack_set_name
+        raise Core::ValidationError.new("StackSetName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z][-a-zA-Z0-9]*(?::[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12})?$"))
+      end
+
+      if value = @template_summary_config
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@template_body, @template_url, @stack_name, @stack_set_name, @call_as, @template_summary_config)
   end
 end

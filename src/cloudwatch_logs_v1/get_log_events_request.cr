@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class GetLogEventsRequest
     include JSON::Serializable
@@ -68,6 +70,43 @@ module Amazonite::CloudWatchLogsV1
       @start_from_head : Bool | Nil = nil,
       @unmask : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @log_group_name
+        raise Core::ValidationError.new("logGroupName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("logGroupName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+
+      if value = @log_group_identifier
+        raise Core::ValidationError.new("logGroupIdentifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupIdentifier length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("logGroupIdentifier does not match the required pattern") unless value.matches?(Regex.new("^[\\w#+=/:,.@-]*$"))
+      end
+
+      if value = @log_stream_name
+        raise Core::ValidationError.new("logStreamName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logStreamName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("logStreamName does not match the required pattern") unless value.matches?(Regex.new("^[^:*]*$"))
+      end
+
+      if value = @start_time
+        raise Core::ValidationError.new("startTime value must be >= 0") if value < 0
+      end
+
+      if value = @end_time
+        raise Core::ValidationError.new("endTime value must be >= 0") if value < 0
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("limit value must be <= 10000") if value > 10000
+      end
     end
 
     def_equals_and_hash(@log_group_name, @log_group_identifier, @log_stream_name, @start_time, @end_time, @next_token, @limit, @start_from_head, @unmask)

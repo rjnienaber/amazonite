@@ -36,6 +36,14 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @values
+        raise Core::ValidationError.new("Values length must be >= 6") if value.size < 6
+        raise Core::ValidationError.new("Values length must be <= 9") if value.size > 9
+        raise Core::ValidationError.new("Values does not match the required pattern") unless value.matches?(Regex.new("^\\S{6,9}$"))
+      end
+    end
+
     def_equals_and_hash(@name, @values)
   end
 end

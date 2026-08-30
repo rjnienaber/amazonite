@@ -27,6 +27,9 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@failed_events)
   end
 end

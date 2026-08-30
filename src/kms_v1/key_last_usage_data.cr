@@ -35,6 +35,9 @@ module Amazonite::KmsV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@operation, @timestamp, @cloud_trail_event_id, @kms_request_id)
   end
 end

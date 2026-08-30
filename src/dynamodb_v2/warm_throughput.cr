@@ -19,6 +19,9 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@read_units_per_second, @write_units_per_second)
   end
 end

@@ -242,6 +242,16 @@ describe Config do
     end
   end
 
+  describe "#validate_input?" do
+    it "defaults to true" do
+      Config.new(key, secret, region).validate_input?.should be_true
+    end
+
+    it "can be disabled from the constructor" do
+      Config.new(key, secret, region, validate_input: false).validate_input?.should be_false
+    end
+  end
+
   describe "#user_agent" do
     it "uses default user agent" do
       config = MockConfig.new(key, secret, region)

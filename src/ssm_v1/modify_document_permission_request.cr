@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   class ModifyDocumentPermissionRequest
@@ -38,6 +39,28 @@ module Amazonite::SsmV1
       @account_ids_to_remove : Array(String) | Nil = nil,
       @shared_document_version : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @account_ids_to_add
+        raise Core::ValidationError.new("AccountIdsToAdd must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AccountIdsToAdd must have at most 20 item(s)") if value.size > 20
+      end
+
+      if value = @account_ids_to_remove
+        raise Core::ValidationError.new("AccountIdsToRemove must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AccountIdsToRemove must have at most 20 item(s)") if value.size > 20
+      end
+
+      if value = @shared_document_version
+        raise Core::ValidationError.new("SharedDocumentVersion length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SharedDocumentVersion length must be <= 8") if value.size > 8
+        raise Core::ValidationError.new("SharedDocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|[$]ALL)$"))
+      end
     end
 
     def_equals_and_hash(@name, @permission_type, @account_ids_to_add, @account_ids_to_remove, @shared_document_version)

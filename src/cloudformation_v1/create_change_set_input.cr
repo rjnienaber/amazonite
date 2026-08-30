@@ -387,6 +387,72 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @stack_name
+        raise Core::ValidationError.new("StackName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackName does not match the required pattern") unless value.matches?(Regex.new("^([a-zA-Z][-a-zA-Z0-9]*)|(arn:\\b(aws|aws-us-gov|aws-cn)\\b:[-a-zA-Z0-9:/._+]*)$"))
+      end
+
+      if value = @template_body
+        raise Core::ValidationError.new("TemplateBody length must be >= 1") if value.size < 1
+      end
+
+      if value = @template_url
+        raise Core::ValidationError.new("TemplateURL length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TemplateURL length must be <= 5120") if value.size > 5120
+      end
+
+      if value = @parameters
+        value.each(&.validate!)
+      end
+
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleARN length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("RoleARN length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @rollback_configuration
+        value.validate!
+      end
+
+      if value = @notification_ar_ns
+        raise Core::ValidationError.new("NotificationARNs must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("NotificationARNs must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+
+      if value = @change_set_name
+        raise Core::ValidationError.new("ChangeSetName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChangeSetName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ChangeSetName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z][-a-zA-Z0-9]*$"))
+      end
+
+      if value = @client_token
+        raise Core::ValidationError.new("ClientToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ClientToken length must be <= 128") if value.size > 128
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @resources_to_import
+        raise Core::ValidationError.new("ResourcesToImport must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("ResourcesToImport must have at most 200 item(s)") if value.size > 200
+        value.each(&.validate!)
+      end
+
+      if value = @deployment_config
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@stack_name, @template_body, @template_url, @use_previous_template, @parameters, @capabilities, @resource_types, @role_arn, @rollback_configuration, @notification_ar_ns, @tags, @change_set_name, @client_token, @description, @change_set_type, @resources_to_import, @include_nested_stacks, @on_stack_failure, @import_existing_resources, @deployment_mode, @deployment_config, @disable_validation)
   end
 end

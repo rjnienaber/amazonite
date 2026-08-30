@@ -54,6 +54,20 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @publisher_id
+        raise Core::ValidationError.new("PublisherId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PublisherId length must be <= 40") if value.size > 40
+        raise Core::ValidationError.new("PublisherId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-zA-Z]{12,40}$"))
+      end
+
+      if value = @publisher_profile
+        raise Core::ValidationError.new("PublisherProfile length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("PublisherProfile length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("PublisherProfile does not match the required pattern") unless value.matches?(Regex.new("^(http:|https:)+[^\\s]+[\\w]$"))
+      end
+    end
+
     def_equals_and_hash(@publisher_id, @publisher_status, @identity_provider, @publisher_profile)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # The filter criteria used for import tasks
   class ImportFilter
@@ -17,6 +19,16 @@ module Amazonite::CloudWatchLogsV1
       @start_event_time : Int64 | Nil = nil,
       @end_event_time : Int64 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @start_event_time
+        raise Core::ValidationError.new("startEventTime value must be >= 0") if value < 0
+      end
+
+      if value = @end_event_time
+        raise Core::ValidationError.new("endEventTime value must be >= 0") if value < 0
+      end
     end
 
     def_equals_and_hash(@start_event_time, @end_event_time)

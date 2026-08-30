@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SecretsManagerV1
   # A structure that defines the rotation configuration for the secret.
   class RotationRulesType
@@ -57,6 +59,25 @@ module Amazonite::SecretsManagerV1
       @duration : String | Nil = nil,
       @schedule_expression : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @automatically_after_days
+        raise Core::ValidationError.new("AutomaticallyAfterDays value must be >= 1") if value < 1
+        raise Core::ValidationError.new("AutomaticallyAfterDays value must be <= 1000") if value > 1000
+      end
+
+      if value = @duration
+        raise Core::ValidationError.new("Duration length must be >= 2") if value.size < 2
+        raise Core::ValidationError.new("Duration length must be <= 3") if value.size > 3
+        raise Core::ValidationError.new("Duration does not match the required pattern") unless value.matches?(Regex.new("^[0-9]+h$"))
+      end
+
+      if value = @schedule_expression
+        raise Core::ValidationError.new("ScheduleExpression length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ScheduleExpression length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("ScheduleExpression does not match the required pattern") unless value.matches?(Regex.new("^[0-9A-Za-z\\(\\)#\\?\\*\\-\\/, ]+$"))
+      end
     end
 
     def_equals_and_hash(@automatically_after_days, @duration, @schedule_expression)

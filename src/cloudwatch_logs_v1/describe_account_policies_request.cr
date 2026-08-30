@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class DescribeAccountPoliciesRequest
@@ -33,6 +34,17 @@ module Amazonite::CloudWatchLogsV1
       @account_identifiers : Array(String) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @account_identifiers
+        raise Core::ValidationError.new("accountIdentifiers must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("accountIdentifiers must have at most 20 item(s)") if value.size > 20
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@policy_type, @policy_name, @account_identifiers, @next_token)

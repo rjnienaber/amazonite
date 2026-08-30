@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The `EffectivePatch` structure defines metadata about a patch along with the approval state of
   # the patch in a particular patch baseline. The approval state includes information about whether
@@ -21,6 +23,16 @@ module Amazonite::SsmV1
       @patch : Patch | Nil = nil,
       @patch_status : PatchStatus | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @patch
+        value.validate!
+      end
+
+      if value = @patch_status
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@patch, @patch_status)

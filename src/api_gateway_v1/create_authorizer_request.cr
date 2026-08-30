@@ -93,6 +93,9 @@ module Amazonite::ApiGatewayV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@rest_api_id, @name, @type, @providerar_ns, @auth_type, @authorizer_uri, @authorizer_credentials, @identity_source, @identity_validation_expression, @authorizer_result_ttl_in_seconds)
   end
 end

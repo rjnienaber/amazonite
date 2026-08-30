@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This structure contains information about the integration configuration. For an integration with
   # OpenSearch Service, this includes information about OpenSearch Service resources such as the
@@ -17,6 +19,12 @@ module Amazonite::CloudWatchLogsV1
     def initialize(
       @open_search_integration_details : OpenSearchIntegrationDetails | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @open_search_integration_details
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@open_search_integration_details)

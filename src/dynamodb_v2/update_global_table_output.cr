@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class UpdateGlobalTableOutput
     include JSON::Serializable
@@ -9,6 +11,12 @@ module Amazonite::DynamoDBV2
     def initialize(
       @global_table_description : GlobalTableDescription | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @global_table_description
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@global_table_description)

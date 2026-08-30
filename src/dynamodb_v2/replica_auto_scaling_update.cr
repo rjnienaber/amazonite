@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the auto scaling settings of a replica that will be modified.
   class ReplicaAutoScalingUpdate
@@ -19,6 +21,16 @@ module Amazonite::DynamoDBV2
       @replica_global_secondary_index_updates : Array(ReplicaGlobalSecondaryIndexAutoScalingUpdate) | Nil = nil,
       @replica_provisioned_read_capacity_auto_scaling_update : AutoScalingSettingsUpdate | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @replica_global_secondary_index_updates
+        value.each(&.validate!)
+      end
+
+      if value = @replica_provisioned_read_capacity_auto_scaling_update
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@region_name, @replica_global_secondary_index_updates, @replica_provisioned_read_capacity_auto_scaling_update)

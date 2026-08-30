@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # The format options for the data that was imported into the target table. There is one value,
   # CsvOption.
@@ -11,6 +13,12 @@ module Amazonite::DynamoDBV2
     def initialize(
       @csv : CsvOptions | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @csv
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@csv)

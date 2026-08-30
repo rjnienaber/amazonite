@@ -106,6 +106,32 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @service_user_name
+        raise Core::ValidationError.new("ServiceUserName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("ServiceUserName length must be <= 200") if value.size > 200
+        raise Core::ValidationError.new("ServiceUserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]*$"))
+      end
+
+      if value = @service_credential_alias
+        raise Core::ValidationError.new("ServiceCredentialAlias length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("ServiceCredentialAlias length must be <= 200") if value.size > 200
+        raise Core::ValidationError.new("ServiceCredentialAlias does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @service_specific_credential_id
+        raise Core::ValidationError.new("ServiceSpecificCredentialId length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("ServiceSpecificCredentialId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ServiceSpecificCredentialId does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+    end
+
     def_equals_and_hash(@create_date, @expiration_date, @service_name, @service_user_name, @service_password, @service_credential_alias, @service_credential_secret, @service_specific_credential_id, @user_name, @status)
   end
 end

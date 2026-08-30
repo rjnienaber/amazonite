@@ -252,6 +252,82 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @template_arn
+        raise Core::ValidationError.new("TemplateArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("TemplateArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @template_name
+        raise Core::ValidationError.new("TemplateName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TemplateName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("TemplateName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.\\-]+$"))
+      end
+
+      if value = @template_version_id
+        raise Core::ValidationError.new("TemplateVersionId length must be >= 16") if value.size < 16
+        raise Core::ValidationError.new("TemplateVersionId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("TemplateVersionId does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+      end
+
+      if value = @managed_by_value
+        raise Core::ValidationError.new("ManagedByValue length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ManagedByValue length must be <= 128") if value.size > 128
+      end
+
+      if value = @role_name_pattern
+        raise Core::ValidationError.new("RoleNamePattern length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RoleNamePattern length must be <= 256") if value.size > 256
+      end
+
+      if value = @role_path_pattern
+        raise Core::ValidationError.new("RolePathPattern length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RolePathPattern length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("RolePathPattern does not match the required pattern") unless value.matches?(Regex.new("^/[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*/$"))
+      end
+
+      if value = @role_description_pattern
+        raise Core::ValidationError.new("RoleDescriptionPattern length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RoleDescriptionPattern length must be <= 512") if value.size > 512
+      end
+
+      if value = @assume_role_policy_document_template
+        raise Core::ValidationError.new("AssumeRolePolicyDocumentTemplate length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AssumeRolePolicyDocumentTemplate length must be <= 131072") if value.size > 131072
+        raise Core::ValidationError.new("AssumeRolePolicyDocumentTemplate does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+$"))
+      end
+
+      if value = @inline_policy_templates
+        value.each(&.validate!)
+      end
+
+      if value = @permission_boundary_arn
+        raise Core::ValidationError.new("PermissionBoundaryArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("PermissionBoundaryArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @parameters_definition
+        value.each(&.validate!)
+      end
+
+      if value = @role_tags_template
+        raise Core::ValidationError.new("RoleTagsTemplate must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("RoleTagsTemplate must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+
+      if value = @max_session_duration
+        raise Core::ValidationError.new("MaxSessionDuration value must be >= 3600") if value < 3600
+        raise Core::ValidationError.new("MaxSessionDuration value must be <= 43200") if value > 43200
+      end
+    end
+
     def_equals_and_hash(@template_arn, @template_name, @template_version_id, @description, @major_version, @default_minor_version, @managed_by_type, @managed_by_value, @enabled, @minor_version, @role_name_pattern, @role_path_pattern, @role_description_pattern, @assume_role_policy_document_template, @inline_policy_templates, @managed_policy_arns, @permission_boundary_arn, @parameters_definition, @role_tags_template, @max_session_duration, @version_enabled, @create_timestamp, @update_timestamp)
   end
 end

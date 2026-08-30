@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class DescribeExportOutput
     include JSON::Serializable
@@ -9,6 +11,12 @@ module Amazonite::DynamoDBV2
     def initialize(
       @export_description : ExportDescription | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @export_description
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@export_description)

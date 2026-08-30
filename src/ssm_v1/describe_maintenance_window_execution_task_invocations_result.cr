@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeMaintenanceWindowExecutionTaskInvocationsResult
     include JSON::Serializable
@@ -15,6 +17,12 @@ module Amazonite::SsmV1
       @window_execution_task_invocation_identities : Array(MaintenanceWindowExecutionTaskInvocationIdentity) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @window_execution_task_invocation_identities
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@window_execution_task_invocation_identities, @next_token)

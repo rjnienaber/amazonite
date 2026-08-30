@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   # The function's Amazon CloudWatch Logs configuration settings.
@@ -34,6 +35,14 @@ module Amazonite::LambdaV1
       @system_log_level : SystemLogLevel | Nil = nil,
       @log_group : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @log_group
+        raise Core::ValidationError.new("LogGroup length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("LogGroup length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("LogGroup does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
     end
 
     def_equals_and_hash(@log_format, @application_log_level, @system_log_level, @log_group)

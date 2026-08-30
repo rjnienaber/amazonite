@@ -29,6 +29,13 @@ module Amazonite::LambdaV1
     )
     end
 
+    def validate! : Nil
+      if value = @metrics
+        raise Core::ValidationError.new("Metrics must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Metrics must have at most 3 item(s)") if value.size > 3
+      end
+    end
+
     def_equals_and_hash(@metrics)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class TransactWriteItemsOutput
     include JSON::Serializable
@@ -20,6 +22,12 @@ module Amazonite::DynamoDBV2
       @consumed_capacity : Array(ConsumedCapacity) | Nil = nil,
       @item_collection_metrics : Hash(String, Array(ItemCollectionMetrics)) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @consumed_capacity
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@consumed_capacity, @item_collection_metrics)

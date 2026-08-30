@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class UpdateArchiveRequest
     include JSON::Serializable
@@ -46,6 +48,35 @@ module Amazonite::EventBridgeV1
       @retention_days : Int32 | Nil = nil,
       @kms_key_identifier : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @archive_name
+        raise Core::ValidationError.new("ArchiveName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ArchiveName length must be <= 48") if value.size > 48
+        raise Core::ValidationError.new("ArchiveName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new(".*"))
+      end
+
+      if value = @event_pattern
+        raise Core::ValidationError.new("EventPattern length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("EventPattern length must be <= 4096") if value.size > 4096
+      end
+
+      if value = @retention_days
+        raise Core::ValidationError.new("RetentionDays value must be >= 0") if value < 0
+      end
+
+      if value = @kms_key_identifier
+        raise Core::ValidationError.new("KmsKeyIdentifier length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KmsKeyIdentifier length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("KmsKeyIdentifier does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-/:]*$"))
+      end
     end
 
     def_equals_and_hash(@archive_name, @description, @event_pattern, @retention_days, @kms_key_identifier)

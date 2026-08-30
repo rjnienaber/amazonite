@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # The response from the GetDurableExecutionHistory operation, containing the execution history and
   # events.
@@ -19,6 +21,12 @@ module Amazonite::LambdaV1
       @events : Array(Event),
       @next_marker : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @events
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@events, @next_marker)

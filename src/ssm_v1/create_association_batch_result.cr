@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class CreateAssociationBatchResult
     include JSON::Serializable
@@ -14,6 +16,16 @@ module Amazonite::SsmV1
       @successful : Array(AssociationDescription) | Nil = nil,
       @failed : Array(FailedCreateAssociation) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @successful
+        value.each(&.validate!)
+      end
+
+      if value = @failed
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@successful, @failed)

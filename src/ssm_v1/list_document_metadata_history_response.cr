@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListDocumentMetadataHistoryResponse
     include JSON::Serializable
@@ -30,6 +32,20 @@ module Amazonite::SsmV1
       @metadata : DocumentMetadataResponseInfo | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @metadata
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@name, @document_version, @author, @metadata, @next_token)

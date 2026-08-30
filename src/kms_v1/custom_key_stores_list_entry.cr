@@ -216,6 +216,33 @@ module Amazonite::KmsV1
     )
     end
 
+    def validate! : Nil
+      if value = @custom_key_store_id
+        raise Core::ValidationError.new("CustomKeyStoreId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CustomKeyStoreId length must be <= 64") if value.size > 64
+      end
+
+      if value = @custom_key_store_name
+        raise Core::ValidationError.new("CustomKeyStoreName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CustomKeyStoreName length must be <= 256") if value.size > 256
+      end
+
+      if value = @cloud_hsm_cluster_id
+        raise Core::ValidationError.new("CloudHsmClusterId length must be >= 19") if value.size < 19
+        raise Core::ValidationError.new("CloudHsmClusterId length must be <= 24") if value.size > 24
+        raise Core::ValidationError.new("CloudHsmClusterId does not match the required pattern") unless value.matches?(Regex.new("^cluster-[2-7a-zA-Z]{11,16}$"))
+      end
+
+      if value = @trust_anchor_certificate
+        raise Core::ValidationError.new("TrustAnchorCertificate length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TrustAnchorCertificate length must be <= 5000") if value.size > 5000
+      end
+
+      if value = @xks_proxy_configuration
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@custom_key_store_id, @custom_key_store_name, @cloud_hsm_cluster_id, @trust_anchor_certificate, @connection_state, @connection_error_code, @creation_date, @custom_key_store_type, @xks_proxy_configuration)
   end
 end

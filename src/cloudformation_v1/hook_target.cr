@@ -46,6 +46,20 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @target_type_name
+        raise Core::ValidationError.new("TargetTypeName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TargetTypeName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("TargetTypeName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9]{2,64}::[a-zA-Z0-9]{2,64}::[a-zA-Z0-9]{2,64}$"))
+      end
+
+      if value = @target_id
+        raise Core::ValidationError.new("TargetId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TargetId length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("TargetId does not match the required pattern") unless value.matches?(Regex.new("^[^_]*$"))
+      end
+    end
+
     def_equals_and_hash(@target_type, @target_type_name, @target_id, @action)
   end
 end

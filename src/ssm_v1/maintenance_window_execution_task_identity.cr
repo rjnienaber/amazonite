@@ -60,6 +60,40 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @window_execution_id
+        raise Core::ValidationError.new("WindowExecutionId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("WindowExecutionId length must be <= 36") if value.size > 36
+        raise Core::ValidationError.new("WindowExecutionId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @task_execution_id
+        raise Core::ValidationError.new("TaskExecutionId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("TaskExecutionId length must be <= 36") if value.size > 36
+        raise Core::ValidationError.new("TaskExecutionId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @status_details
+        raise Core::ValidationError.new("StatusDetails length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StatusDetails length must be <= 250") if value.size > 250
+      end
+
+      if value = @task_arn
+        raise Core::ValidationError.new("TaskArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TaskArn length must be <= 1600") if value.size > 1600
+      end
+
+      if value = @alarm_configuration
+        value.validate!
+      end
+
+      if value = @triggered_alarms
+        raise Core::ValidationError.new("TriggeredAlarms must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("TriggeredAlarms must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@window_execution_id, @task_execution_id, @status, @status_details, @start_time, @end_time, @task_arn, @task_type, @alarm_configuration, @triggered_alarms)
   end
 end

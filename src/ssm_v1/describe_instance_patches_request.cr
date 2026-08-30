@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeInstancePatchesRequest
     include JSON::Serializable
@@ -46,6 +48,23 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
       @max_results : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @instance_id
+        raise Core::ValidationError.new("InstanceId does not match the required pattern") unless value.matches?(Regex.new("^(^i-(\\w{8}|\\w{17})$)|(^mi-\\w{17}$)$"))
+      end
+
+      if value = @filters
+        raise Core::ValidationError.new("Filters must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Filters must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 10") if value < 10
+        raise Core::ValidationError.new("MaxResults value must be <= 100") if value > 100
+      end
     end
 
     def_equals_and_hash(@instance_id, @filters, @next_token, @max_results)

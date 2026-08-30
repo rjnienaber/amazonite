@@ -1,4 +1,5 @@
 private alias ACW = Amazonite::CloudWatchV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchV1
   class PutMetricStreamInput
@@ -96,6 +97,39 @@ module Amazonite::CloudWatchV1
       @statistics_configurations : Array(MetricStreamStatisticsConfiguration) | Nil = nil,
       @include_linked_accounts_metrics : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 255") if value.size > 255
+      end
+
+      if value = @include_filters
+        value.each(&.validate!)
+      end
+
+      if value = @exclude_filters
+        value.each(&.validate!)
+      end
+
+      if value = @firehose_arn
+        raise Core::ValidationError.new("FirehoseArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("FirehoseArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RoleArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+
+      if value = @statistics_configurations
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@name, @include_filters, @exclude_filters, @firehose_arn, @role_arn, @output_format, @tags, @statistics_configurations, @include_linked_accounts_metrics)

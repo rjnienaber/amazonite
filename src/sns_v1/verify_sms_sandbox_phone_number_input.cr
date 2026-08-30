@@ -30,6 +30,20 @@ module Amazonite::SnsV1
       )
     end
 
+    def validate! : Nil
+      if value = @phone_number
+        raise Core::ValidationError.new("PhoneNumber length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("PhoneNumber length must be <= 20") if value.size > 20
+        raise Core::ValidationError.new("PhoneNumber does not match the required pattern") unless value.matches?(Regex.new("^(\\+[0-9]{8,}|[0-9]{0,9})$"))
+      end
+
+      if value = @one_time_password
+        raise Core::ValidationError.new("OneTimePassword length must be >= 5") if value.size < 5
+        raise Core::ValidationError.new("OneTimePassword length must be <= 8") if value.size > 8
+        raise Core::ValidationError.new("OneTimePassword does not match the required pattern") unless value.matches?(Regex.new("^[0-9]+$"))
+      end
+    end
+
     def_equals_and_hash(@phone_number, @one_time_password)
   end
 end

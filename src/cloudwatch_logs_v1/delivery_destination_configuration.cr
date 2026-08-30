@@ -14,6 +14,9 @@ module Amazonite::CloudWatchLogsV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@destination_resource_arn)
   end
 end

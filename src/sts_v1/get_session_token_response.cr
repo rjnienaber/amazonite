@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::StsV1
   # Contains the response to a successful GetSessionToken request, including temporary Amazon Web
   # Services credentials that can be used to make Amazon Web Services requests.
@@ -27,6 +29,12 @@ module Amazonite::StsV1
       new(
         credentials: node.xpath_node("*[local-name()='Credentials']").try { |n| Credentials.from_xml(n) },
       )
+    end
+
+    def validate! : Nil
+      if value = @credentials
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@credentials)

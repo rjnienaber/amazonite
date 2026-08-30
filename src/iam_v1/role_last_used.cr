@@ -52,6 +52,9 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@last_used_date, @region)
   end
 end

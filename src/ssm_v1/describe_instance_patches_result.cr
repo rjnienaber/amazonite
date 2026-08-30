@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeInstancePatchesResult
     include JSON::Serializable
@@ -29,6 +31,12 @@ module Amazonite::SsmV1
       @patches : Array(PatchComplianceData) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @patches
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@patches, @next_token)

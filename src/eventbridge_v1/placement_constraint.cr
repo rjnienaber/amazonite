@@ -1,4 +1,5 @@
 private alias AEB = Amazonite::EventBridgeV1
+private alias Core = Amazonite::Core
 
 module Amazonite::EventBridgeV1
   # An object representing a constraint on task placement. To learn more, see [Task Placement
@@ -24,6 +25,13 @@ module Amazonite::EventBridgeV1
       @type : PlacementConstraintType | Nil = nil,
       @expression : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @expression
+        raise Core::ValidationError.new("expression length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("expression length must be <= 2000") if value.size > 2000
+      end
     end
 
     def_equals_and_hash(@type, @expression)

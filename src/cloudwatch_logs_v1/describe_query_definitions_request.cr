@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class DescribeQueryDefinitionsRequest
@@ -28,6 +29,22 @@ module Amazonite::CloudWatchLogsV1
       @max_results : Int32 | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @query_definition_name_prefix
+        raise Core::ValidationError.new("queryDefinitionNamePrefix length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("queryDefinitionNamePrefix length must be <= 255") if value.size > 255
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("maxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("maxResults value must be <= 1000") if value > 1000
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@query_language, @query_definition_name_prefix, @max_results, @next_token)

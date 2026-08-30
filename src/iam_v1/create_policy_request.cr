@@ -110,6 +110,37 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @policy_name
+        raise Core::ValidationError.new("PolicyName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PolicyName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("PolicyName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @path
+        raise Core::ValidationError.new("Path length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Path length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("Path does not match the required pattern") unless value.matches?(Regex.new("^((/[A-Za-z0-9\\.,\\+@=_-]+)*)/$"))
+      end
+
+      if value = @policy_document
+        raise Core::ValidationError.new("PolicyDocument length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PolicyDocument length must be <= 131072") if value.size > 131072
+        raise Core::ValidationError.new("PolicyDocument does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1000") if value.size > 1000
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@policy_name, @path, @policy_document, @description, @tags)
   end
 end

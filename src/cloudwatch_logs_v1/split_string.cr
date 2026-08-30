@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Use this processor to split a field into an array of strings using a delimiting character.
   #
@@ -15,6 +17,14 @@ module Amazonite::CloudWatchLogsV1
     def initialize(
       @entries : Array(SplitStringEntry),
     )
+    end
+
+    def validate! : Nil
+      if value = @entries
+        raise Core::ValidationError.new("entries must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("entries must have at most 10 item(s)") if value.size > 10
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@entries)

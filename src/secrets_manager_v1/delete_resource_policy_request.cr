@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SecretsManagerV1
   class DeleteResourcePolicyRequest
     include JSON::Serializable
@@ -13,6 +15,13 @@ module Amazonite::SecretsManagerV1
     def initialize(
       @secret_id : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @secret_id
+        raise Core::ValidationError.new("SecretId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SecretId length must be <= 2048") if value.size > 2048
+      end
     end
 
     def_equals_and_hash(@secret_id)

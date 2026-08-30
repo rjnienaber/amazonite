@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SqsV1
   # Contains the details of a single Amazon SQS message along with an `Id`.
   class SendMessageBatchRequestEntry
@@ -142,6 +144,16 @@ module Amazonite::SqsV1
       @message_deduplication_id : String | Nil = nil,
       @message_group_id : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @message_attributes
+        value.each_value(&.validate!)
+      end
+
+      if value = @message_system_attributes
+        value.each_value(&.validate!)
+      end
     end
 
     def_equals_and_hash(@id, @message_body, @delay_seconds, @message_attributes, @message_system_attributes, @message_deduplication_id, @message_group_id)

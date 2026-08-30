@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Represents an update integration response request.
   class UpdateIntegrationResponseRequest
@@ -31,6 +33,16 @@ module Amazonite::ApiGatewayV1
       @status_code : String,
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @status_code
+        raise Core::ValidationError.new("statusCode does not match the required pattern") unless value.matches?(Regex.new("^[1-5]\\d\\d$"))
+      end
+
+      if value = @patch_operations
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@rest_api_id, @resource_id, @http_method, @status_code, @patch_operations)

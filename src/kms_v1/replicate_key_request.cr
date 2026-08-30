@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class ReplicateKeyRequest
     include JSON::Serializable
@@ -149,6 +151,34 @@ module Amazonite::KmsV1
       @description : String | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @replica_region
+        raise Core::ValidationError.new("ReplicaRegion length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ReplicaRegion length must be <= 32") if value.size > 32
+        raise Core::ValidationError.new("ReplicaRegion does not match the required pattern") unless value.matches?(Regex.new("^([a-z]+-){2,3}\\d+$"))
+      end
+
+      if value = @policy
+        raise Core::ValidationError.new("Policy length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Policy length must be <= 131072") if value.size > 131072
+        raise Core::ValidationError.new("Policy does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 8192") if value.size > 8192
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@key_id, @replica_region, @policy, @bypass_policy_lockout_safety_check, @description, @tags)

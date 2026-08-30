@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [CreateUser](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateUser.html) request.
@@ -23,6 +25,12 @@ module Amazonite::IamV1
       new(
         user: node.xpath_node("*[local-name()='User']").try { |n| User.from_xml(n) },
       )
+    end
+
+    def validate! : Nil
+      if value = @user
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@user)

@@ -33,6 +33,9 @@ module Amazonite::ApiGatewayV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@types, @ip_address_type, @vpc_endpoint_ids)
   end
 end

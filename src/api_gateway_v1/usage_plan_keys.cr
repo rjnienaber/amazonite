@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Represents the collection of usage plan keys added to usage plans for the associated API keys
   # and, possibly, other types of keys.
@@ -16,6 +18,12 @@ module Amazonite::ApiGatewayV1
       @items : Array(UsagePlanKey) | Nil = nil,
       @position : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @items
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@items, @position)

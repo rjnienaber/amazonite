@@ -52,6 +52,20 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @ops_item_id
+        raise Core::ValidationError.new("OpsItemId does not match the required pattern") unless value.matches?(Regex.new("^(oi)-[0-9a-f]{12}$"))
+      end
+
+      if value = @created_by
+        value.validate!
+      end
+
+      if value = @last_modified_by
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@ops_item_id, @association_id, @resource_type, @association_type, @resource_uri, @created_by, @created_time, @last_modified_by, @last_modified_time)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListAssociationVersionsResult
     include JSON::Serializable
@@ -14,6 +16,13 @@ module Amazonite::SsmV1
       @association_versions : Array(AssociationVersionInfo) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @association_versions
+        raise Core::ValidationError.new("AssociationVersions must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@association_versions, @next_token)

@@ -112,6 +112,45 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @priority
+        raise Core::ValidationError.new("Priority value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Priority value must be <= 5") if value > 5
+      end
+
+      if value = @source
+        raise Core::ValidationError.new("Source length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Source length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Source does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+
+      if value = @ops_item_id
+        raise Core::ValidationError.new("OpsItemId does not match the required pattern") unless value.matches?(Regex.new("^(oi)-[0-9a-f]{12}$"))
+      end
+
+      if value = @title
+        raise Core::ValidationError.new("Title length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Title length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("Title does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+
+      if value = @operational_data
+        value.each_value(&.validate!)
+      end
+
+      if value = @category
+        raise Core::ValidationError.new("Category length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Category length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Category does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+
+      if value = @severity
+        raise Core::ValidationError.new("Severity length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Severity length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Severity does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+    end
+
     def_equals_and_hash(@created_by, @created_time, @last_modified_by, @last_modified_time, @priority, @source, @status, @ops_item_id, @title, @operational_data, @category, @severity, @ops_item_type, @actual_start_time, @actual_end_time, @planned_start_time, @planned_end_time)
   end
 end

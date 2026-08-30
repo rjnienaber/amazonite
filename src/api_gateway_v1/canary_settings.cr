@@ -29,6 +29,9 @@ module Amazonite::ApiGatewayV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@percent_traffic, @deployment_id, @stage_variable_overrides, @use_stage_cache)
   end
 end

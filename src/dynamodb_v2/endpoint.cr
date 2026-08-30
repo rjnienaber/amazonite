@@ -17,6 +17,9 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@address, @cache_period_in_minutes)
   end
 end

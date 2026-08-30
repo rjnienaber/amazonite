@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # The parameters for the GetLogObject operation.
   class GetLogObjectRequest
@@ -18,6 +20,13 @@ module Amazonite::CloudWatchLogsV1
       @log_object_pointer : String,
       @unmask : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @log_object_pointer
+        raise Core::ValidationError.new("logObjectPointer length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logObjectPointer length must be <= 512") if value.size > 512
+      end
     end
 
     def_equals_and_hash(@unmask, @log_object_pointer)

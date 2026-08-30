@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   class GetAccessTokenResponse
@@ -16,6 +17,12 @@ module Amazonite::SsmV1
       @credentials : Credentials | Nil = nil,
       @access_request_status : AccessRequestStatus | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @credentials
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@credentials, @access_request_status)

@@ -19,6 +19,9 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@filter_key, @filter_values)
   end
 end

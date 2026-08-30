@@ -49,6 +49,19 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @template_arn
+        raise Core::ValidationError.new("TemplateArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("TemplateArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @replacement_values
+        raise Core::ValidationError.new("ReplacementValues must have at least 0 entry(s)") if value.size < 0
+        raise Core::ValidationError.new("ReplacementValues must have at most 30 entry(s)") if value.size > 30
+        value.each_value(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@template_arn, @template_minor_version, @replacement_values)
   end
 end

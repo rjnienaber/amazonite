@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Request to update an existing Authorizer resource.
   class UpdateAuthorizerRequest
@@ -21,6 +23,12 @@ module Amazonite::ApiGatewayV1
       @authorizer_id : String,
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @patch_operations
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@rest_api_id, @authorizer_id, @patch_operations)

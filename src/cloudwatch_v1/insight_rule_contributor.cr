@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # One of the unique contributors found by a Contributor Insights rule. If the rule contains
   # multiple keys, then a unique contributor is a unique combination of values from all the keys in
@@ -29,6 +31,12 @@ module Amazonite::CloudWatchV1
       @approximate_aggregate_value : Float64,
       @datapoints : Array(InsightRuleContributorDatapoint),
     )
+    end
+
+    def validate! : Nil
+      if value = @datapoints
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@keys, @approximate_aggregate_value, @datapoints)

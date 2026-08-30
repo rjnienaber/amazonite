@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListResourceDataSyncRequest
     include JSON::Serializable
@@ -22,6 +24,18 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
       @max_results : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @sync_type
+        raise Core::ValidationError.new("SyncType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SyncType length must be <= 64") if value.size > 64
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 50") if value > 50
+      end
     end
 
     def_equals_and_hash(@sync_type, @next_token, @max_results)

@@ -1,4 +1,5 @@
 private alias AK = Amazonite::KmsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::KmsV1
   class CreateKeyRequest
@@ -323,6 +324,34 @@ module Amazonite::KmsV1
       @multi_region : Bool | Nil = nil,
       @xks_key_id : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @policy
+        raise Core::ValidationError.new("Policy length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Policy length must be <= 131072") if value.size > 131072
+        raise Core::ValidationError.new("Policy does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 8192") if value.size > 8192
+      end
+
+      if value = @custom_key_store_id
+        raise Core::ValidationError.new("CustomKeyStoreId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CustomKeyStoreId length must be <= 64") if value.size > 64
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+
+      if value = @xks_key_id
+        raise Core::ValidationError.new("XksKeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("XksKeyId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("XksKeyId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-_.]+$"))
+      end
     end
 
     def_equals_and_hash(@policy, @description, @key_usage, @customer_master_key_spec, @key_spec, @origin, @custom_key_store_id, @bypass_policy_lockout_safety_check, @tags, @multi_region, @xks_key_id)

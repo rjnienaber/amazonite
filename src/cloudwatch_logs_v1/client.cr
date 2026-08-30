@@ -59,6 +59,7 @@ module Amazonite::CloudWatchLogsV1
     # key is disabled, you receive an `InvalidParameterException` error.
     def associate_kms_key(input : ACWL::AssociateKmsKeyRequest) : Core::Response
       Log.info { "performing 'AssociateKmsKey' operation" }
+      input.validate! if config.validate_input?
       response = post("AssociateKmsKey", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -68,6 +69,7 @@ module Amazonite::CloudWatchLogsV1
     # Athena, Amazon Redshift, and Apache Spark.
     def associate_source_to_s3_table_integration(input : ACWL::AssociateSourceToS3TableIntegrationRequest) : Core::ParsedResponse(ACWL::AssociateSourceToS3TableIntegrationResponse)
       Log.info { "performing 'AssociateSourceToS3TableIntegration' operation" }
+      input.validate! if config.validate_input?
       response = post("AssociateSourceToS3TableIntegration", "/", input.to_json)
       Core::ParsedResponse(ACWL::AssociateSourceToS3TableIntegrationResponse).new(response)
     end
@@ -77,6 +79,7 @@ module Amazonite::CloudWatchLogsV1
     # The task must be in the `PENDING` or `RUNNING` state.
     def cancel_export_task(input : ACWL::CancelExportTaskRequest) : Core::Response
       Log.info { "performing 'CancelExportTask' operation" }
+      input.validate! if config.validate_input?
       response = post("CancelExportTask", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -85,6 +88,7 @@ module Amazonite::CloudWatchLogsV1
     # Store.
     def cancel_import_task(input : ACWL::CancelImportTaskRequest) : Core::ParsedResponse(ACWL::CancelImportTaskResponse)
       Log.info { "performing 'CancelImportTask' operation" }
+      input.validate! if config.validate_input?
       response = post("CancelImportTask", "/", input.to_json)
       Core::ParsedResponse(ACWL::CancelImportTaskResponse).new(response)
     end
@@ -127,6 +131,7 @@ module Amazonite::CloudWatchLogsV1
     # [UpdateDeliveryConfiguration](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_UpdateDeliveryConfiguration.html).
     def create_delivery(input : ACWL::CreateDeliveryRequest) : Core::ParsedResponse(ACWL::CreateDeliveryResponse)
       Log.info { "performing 'CreateDelivery' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateDelivery", "/", input.to_json)
       Core::ParsedResponse(ACWL::CreateDeliveryResponse).new(response)
     end
@@ -161,6 +166,7 @@ module Amazonite::CloudWatchLogsV1
     # the exported log field data by using Linux utilities.
     def create_export_task(input : ACWL::CreateExportTaskRequest) : Core::ParsedResponse(ACWL::CreateExportTaskResponse)
       Log.info { "performing 'CreateExportTask' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateExportTask", "/", input.to_json)
       Core::ParsedResponse(ACWL::CreateExportTaskResponse).new(response)
     end
@@ -216,6 +222,7 @@ module Amazonite::CloudWatchLogsV1
     # - The data being imported must be within the specified source's retention period.
     def create_import_task(input : ACWL::CreateImportTaskRequest) : Core::ParsedResponse(ACWL::CreateImportTaskResponse)
       Log.info { "performing 'CreateImportTask' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateImportTask", "/", input.to_json)
       Core::ParsedResponse(ACWL::CreateImportTaskResponse).new(response)
     end
@@ -249,6 +256,7 @@ module Amazonite::CloudWatchLogsV1
     # masking](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data.html).
     def create_log_anomaly_detector(input : ACWL::CreateLogAnomalyDetectorRequest) : Core::ParsedResponse(ACWL::CreateLogAnomalyDetectorResponse)
       Log.info { "performing 'CreateLogAnomalyDetector' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateLogAnomalyDetector", "/", input.to_json)
       Core::ParsedResponse(ACWL::CreateLogAnomalyDetectorResponse).new(response)
     end
@@ -283,6 +291,7 @@ module Amazonite::CloudWatchLogsV1
     # Keys](https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html).
     def create_log_group(input : ACWL::CreateLogGroupRequest) : Core::Response
       Log.info { "performing 'CreateLogGroup' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateLogGroup", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -303,6 +312,7 @@ module Amazonite::CloudWatchLogsV1
     # - Don't use ':' (colon) or '*' (asterisk) characters.
     def create_log_stream(input : ACWL::CreateLogStreamRequest) : Core::Response
       Log.info { "performing 'CreateLogStream' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateLogStream", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -316,6 +326,7 @@ module Amazonite::CloudWatchLogsV1
     # header row with column names, use UTF-8 encoding, and not exceed 10 MB.
     def create_lookup_table(input : ACWL::CreateLookupTableRequest) : Core::ParsedResponse(ACWL::CreateLookupTableResponse)
       Log.info { "performing 'CreateLookupTable' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateLookupTable", "/", input.to_json)
       Core::ParsedResponse(ACWL::CreateLookupTableResponse).new(response)
     end
@@ -326,6 +337,7 @@ module Amazonite::CloudWatchLogsV1
     # analysis or further processing.
     def create_scheduled_query(input : ACWL::CreateScheduledQueryRequest) : Core::ParsedResponse(ACWL::CreateScheduledQueryResponse)
       Log.info { "performing 'CreateScheduledQuery' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateScheduledQuery", "/", input.to_json)
       Core::ParsedResponse(ACWL::CreateScheduledQueryResponse).new(response)
     end
@@ -360,6 +372,7 @@ module Amazonite::CloudWatchLogsV1
     # queries.
     def delete_account_policy(input : ACWL::DeleteAccountPolicyRequest) : Core::Response
       Log.info { "performing 'DeleteAccountPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteAccountPolicy", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -370,6 +383,7 @@ module Amazonite::CloudWatchLogsV1
     # [PutDataProtectionPolicy](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDataProtectionPolicy.html).
     def delete_data_protection_policy(input : ACWL::DeleteDataProtectionPolicyRequest) : Core::Response
       Log.info { "performing 'DeleteDataProtectionPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteDataProtectionPolicy", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -380,6 +394,7 @@ module Amazonite::CloudWatchLogsV1
     # delivery source.
     def delete_delivery(input : ACWL::DeleteDeliveryRequest) : Core::Response
       Log.info { "performing 'DeleteDelivery' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteDelivery", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -393,6 +408,7 @@ module Amazonite::CloudWatchLogsV1
     # operation and check the `deliveryDestinationArn` field in the results.
     def delete_delivery_destination(input : ACWL::DeleteDeliveryDestinationRequest) : Core::Response
       Log.info { "performing 'DeleteDeliveryDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteDeliveryDestination", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -401,6 +417,7 @@ module Amazonite::CloudWatchLogsV1
     # [PutDeliveryDestinationPolicy](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html).
     def delete_delivery_destination_policy(input : ACWL::DeleteDeliveryDestinationPolicyRequest) : Core::Response
       Log.info { "performing 'DeleteDeliveryDestinationPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteDeliveryDestinationPolicy", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -414,6 +431,7 @@ module Amazonite::CloudWatchLogsV1
     # operation and check the `deliverySourceName` field in the results.
     def delete_delivery_source(input : ACWL::DeleteDeliverySourceRequest) : Core::Response
       Log.info { "performing 'DeleteDeliverySource' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteDeliverySource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -423,6 +441,7 @@ module Amazonite::CloudWatchLogsV1
     # destination.
     def delete_destination(input : ACWL::DeleteDestinationRequest) : Core::Response
       Log.info { "performing 'DeleteDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteDestination", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -445,6 +464,7 @@ module Amazonite::CloudWatchLogsV1
     # group.
     def delete_index_policy(input : ACWL::DeleteIndexPolicyRequest) : Core::ParsedResponse(ACWL::DeleteIndexPolicyResponse)
       Log.info { "performing 'DeleteIndexPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteIndexPolicy", "/", input.to_json)
       Core::ParsedResponse(ACWL::DeleteIndexPolicyResponse).new(response)
     end
@@ -456,6 +476,7 @@ module Amazonite::CloudWatchLogsV1
     # no longer be accessible.
     def delete_integration(input : ACWL::DeleteIntegrationRequest) : Core::ParsedResponse(ACWL::DeleteIntegrationResponse)
       Log.info { "performing 'DeleteIntegration' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteIntegration", "/", input.to_json)
       Core::ParsedResponse(ACWL::DeleteIntegrationResponse).new(response)
     end
@@ -463,6 +484,7 @@ module Amazonite::CloudWatchLogsV1
     # Deletes the specified CloudWatch Logs anomaly detector.
     def delete_log_anomaly_detector(input : ACWL::DeleteLogAnomalyDetectorRequest) : Core::Response
       Log.info { "performing 'DeleteLogAnomalyDetector' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteLogAnomalyDetector", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -471,6 +493,7 @@ module Amazonite::CloudWatchLogsV1
     # with the log group.
     def delete_log_group(input : ACWL::DeleteLogGroupRequest) : Core::Response
       Log.info { "performing 'DeleteLogGroup' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteLogGroup", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -479,6 +502,7 @@ module Amazonite::CloudWatchLogsV1
     # with the log stream.
     def delete_log_stream(input : ACWL::DeleteLogStreamRequest) : Core::Response
       Log.info { "performing 'DeleteLogStream' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteLogStream", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -489,6 +513,7 @@ module Amazonite::CloudWatchLogsV1
     # review any saved queries or dashboards that may reference it.
     def delete_lookup_table(input : ACWL::DeleteLookupTableRequest) : Core::Response
       Log.info { "performing 'DeleteLookupTable' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteLookupTable", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -496,6 +521,7 @@ module Amazonite::CloudWatchLogsV1
     # Deletes the specified metric filter.
     def delete_metric_filter(input : ACWL::DeleteMetricFilterRequest) : Core::Response
       Log.info { "performing 'DeleteMetricFilter' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteMetricFilter", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -508,6 +534,7 @@ module Amazonite::CloudWatchLogsV1
     # You must have the `logs:DeleteQueryDefinition` permission to be able to perform this operation.
     def delete_query_definition(input : ACWL::DeleteQueryDefinitionRequest) : Core::ParsedResponse(ACWL::DeleteQueryDefinitionResponse)
       Log.info { "performing 'DeleteQueryDefinition' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteQueryDefinition", "/", input.to_json)
       Core::ParsedResponse(ACWL::DeleteQueryDefinitionResponse).new(response)
     end
@@ -516,6 +543,7 @@ module Amazonite::CloudWatchLogsV1
     # policy to put log events to this account.
     def delete_resource_policy(input : ACWL::DeleteResourcePolicyRequest) : Core::Response
       Log.info { "performing 'DeleteResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteResourcePolicy", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -525,6 +553,7 @@ module Amazonite::CloudWatchLogsV1
     # Log events do not expire if they belong to log groups without a retention policy.
     def delete_retention_policy(input : ACWL::DeleteRetentionPolicyRequest) : Core::Response
       Log.info { "performing 'DeleteRetentionPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteRetentionPolicy", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -533,6 +562,7 @@ module Amazonite::CloudWatchLogsV1
     # configured actions and associated resources.
     def delete_scheduled_query(input : ACWL::DeleteScheduledQueryRequest) : Core::ParsedResponse(ACWL::DeleteScheduledQueryResponse)
       Log.info { "performing 'DeleteScheduledQuery' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteScheduledQuery", "/", input.to_json)
       Core::ParsedResponse(ACWL::DeleteScheduledQueryResponse).new(response)
     end
@@ -540,6 +570,7 @@ module Amazonite::CloudWatchLogsV1
     # Deletes the specified subscription filter.
     def delete_subscription_filter(input : ACWL::DeleteSubscriptionFilterRequest) : Core::Response
       Log.info { "performing 'DeleteSubscriptionFilter' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteSubscriptionFilter", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -548,6 +579,7 @@ module Amazonite::CloudWatchLogsV1
     # ingested through the specified VPC endpoint.
     def delete_syslog_configuration(input : ACWL::DeleteSyslogConfigurationRequest) : Core::Response
       Log.info { "performing 'DeleteSyslogConfiguration' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteSyslogConfiguration", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -561,6 +593,7 @@ module Amazonite::CloudWatchLogsV1
     # relied on the transformed versions of the log events.
     def delete_transformer(input : ACWL::DeleteTransformerRequest) : Core::Response
       Log.info { "performing 'DeleteTransformer' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteTransformer", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -583,6 +616,7 @@ module Amazonite::CloudWatchLogsV1
     # `logs:DescribeAccountPolicies` permissions.
     def describe_account_policies(input : ACWL::DescribeAccountPoliciesRequest) : Core::ParsedResponse(ACWL::DescribeAccountPoliciesResponse)
       Log.info { "performing 'DescribeAccountPolicies' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAccountPolicies", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeAccountPoliciesResponse).new(response)
     end
@@ -592,6 +626,7 @@ module Amazonite::CloudWatchLogsV1
     # [CreateDelivery](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html).
     def describe_configuration_templates(input : ACWL::DescribeConfigurationTemplatesRequest) : Core::ParsedResponse(ACWL::DescribeConfigurationTemplatesResponse)
       Log.info { "performing 'DescribeConfigurationTemplates' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeConfigurationTemplates", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeConfigurationTemplatesResponse).new(response)
     end
@@ -610,6 +645,7 @@ module Amazonite::CloudWatchLogsV1
     # services.](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html)
     def describe_deliveries(input : ACWL::DescribeDeliveriesRequest) : Core::ParsedResponse(ACWL::DescribeDeliveriesResponse)
       Log.info { "performing 'DescribeDeliveries' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeDeliveries", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeDeliveriesResponse).new(response)
     end
@@ -617,6 +653,7 @@ module Amazonite::CloudWatchLogsV1
     # Retrieves a list of the delivery destinations that have been created in the account.
     def describe_delivery_destinations(input : ACWL::DescribeDeliveryDestinationsRequest) : Core::ParsedResponse(ACWL::DescribeDeliveryDestinationsResponse)
       Log.info { "performing 'DescribeDeliveryDestinations' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeDeliveryDestinations", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeDeliveryDestinationsResponse).new(response)
     end
@@ -624,6 +661,7 @@ module Amazonite::CloudWatchLogsV1
     # Retrieves a list of the delivery sources that have been created in the account.
     def describe_delivery_sources(input : ACWL::DescribeDeliverySourcesRequest) : Core::ParsedResponse(ACWL::DescribeDeliverySourcesResponse)
       Log.info { "performing 'DescribeDeliverySources' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeDeliverySources", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeDeliverySourcesResponse).new(response)
     end
@@ -631,6 +669,7 @@ module Amazonite::CloudWatchLogsV1
     # Lists all your destinations. The results are ASCII-sorted by destination name.
     def describe_destinations(input : ACWL::DescribeDestinationsRequest) : Core::ParsedResponse(ACWL::DescribeDestinationsResponse)
       Log.info { "performing 'DescribeDestinations' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeDestinations", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeDestinationsResponse).new(response)
     end
@@ -639,6 +678,7 @@ module Amazonite::CloudWatchLogsV1
     # on task ID or task status.
     def describe_export_tasks(input : ACWL::DescribeExportTasksRequest) : Core::ParsedResponse(ACWL::DescribeExportTasksResponse)
       Log.info { "performing 'DescribeExportTasks' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeExportTasks", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeExportTasksResponse).new(response)
     end
@@ -651,6 +691,7 @@ module Amazonite::CloudWatchLogsV1
     # [PutIndexPolicy](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutIndexPolicy.html).
     def describe_field_indexes(input : ACWL::DescribeFieldIndexesRequest) : Core::ParsedResponse(ACWL::DescribeFieldIndexesResponse)
       Log.info { "performing 'DescribeFieldIndexes' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeFieldIndexes", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeFieldIndexesResponse).new(response)
     end
@@ -660,6 +701,7 @@ module Amazonite::CloudWatchLogsV1
     # subset of stored events grouped by their eventTime.
     def describe_import_task_batches(input : ACWL::DescribeImportTaskBatchesRequest) : Core::ParsedResponse(ACWL::DescribeImportTaskBatchesResponse)
       Log.info { "performing 'DescribeImportTaskBatches' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeImportTaskBatches", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeImportTaskBatchesResponse).new(response)
     end
@@ -667,6 +709,7 @@ module Amazonite::CloudWatchLogsV1
     # Lists and describes import tasks, with optional filtering by import status and source ARN.
     def describe_import_tasks(input : ACWL::DescribeImportTasksRequest) : Core::ParsedResponse(ACWL::DescribeImportTasksResponse)
       Log.info { "performing 'DescribeImportTasks' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeImportTasks", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeImportTasksResponse).new(response)
     end
@@ -686,6 +729,7 @@ module Amazonite::CloudWatchLogsV1
     # instead.
     def describe_index_policies(input : ACWL::DescribeIndexPoliciesRequest) : Core::ParsedResponse(ACWL::DescribeIndexPoliciesResponse)
       Log.info { "performing 'DescribeIndexPolicies' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeIndexPolicies", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeIndexPoliciesResponse).new(response)
     end
@@ -707,6 +751,7 @@ module Amazonite::CloudWatchLogsV1
     # observability](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html).
     def describe_log_groups(input : ACWL::DescribeLogGroupsRequest) : Core::ParsedResponse(ACWL::DescribeLogGroupsResponse)
       Log.info { "performing 'DescribeLogGroups' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeLogGroups", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeLogGroupsResponse).new(response)
     end
@@ -726,6 +771,7 @@ module Amazonite::CloudWatchLogsV1
     # observability](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html).
     def describe_log_streams(input : ACWL::DescribeLogStreamsRequest) : Core::ParsedResponse(ACWL::DescribeLogStreamsResponse)
       Log.info { "performing 'DescribeLogStreams' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeLogStreams", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeLogStreamsResponse).new(response)
     end
@@ -734,6 +780,7 @@ module Amazonite::CloudWatchLogsV1
     # table name prefix. Results are sorted by table name in ascending order.
     def describe_lookup_tables(input : ACWL::DescribeLookupTablesRequest) : Core::ParsedResponse(ACWL::DescribeLookupTablesResponse)
       Log.info { "performing 'DescribeLookupTables' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeLookupTables", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeLookupTablesResponse).new(response)
     end
@@ -743,6 +790,7 @@ module Amazonite::CloudWatchLogsV1
     # name.
     def describe_metric_filters(input : ACWL::DescribeMetricFiltersRequest) : Core::ParsedResponse(ACWL::DescribeMetricFiltersResponse)
       Log.info { "performing 'DescribeMetricFilters' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeMetricFilters", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeMetricFiltersResponse).new(response)
     end
@@ -757,6 +805,7 @@ module Amazonite::CloudWatchLogsV1
     # account.
     def describe_queries(input : ACWL::DescribeQueriesRequest) : Core::ParsedResponse(ACWL::DescribeQueriesResponse)
       Log.info { "performing 'DescribeQueries' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeQueries", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeQueriesResponse).new(response)
     end
@@ -769,6 +818,7 @@ module Amazonite::CloudWatchLogsV1
     # definitions that have names that start with a certain string.
     def describe_query_definitions(input : ACWL::DescribeQueryDefinitionsRequest) : Core::ParsedResponse(ACWL::DescribeQueryDefinitionsResponse)
       Log.info { "performing 'DescribeQueryDefinitions' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeQueryDefinitions", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeQueryDefinitionsResponse).new(response)
     end
@@ -776,6 +826,7 @@ module Amazonite::CloudWatchLogsV1
     # Lists the resource policies in this account.
     def describe_resource_policies(input : ACWL::DescribeResourcePoliciesRequest) : Core::ParsedResponse(ACWL::DescribeResourcePoliciesResponse)
       Log.info { "performing 'DescribeResourcePolicies' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeResourcePolicies", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeResourcePoliciesResponse).new(response)
     end
@@ -784,6 +835,7 @@ module Amazonite::CloudWatchLogsV1
     # filters or filter the results by prefix. The results are ASCII-sorted by filter name.
     def describe_subscription_filters(input : ACWL::DescribeSubscriptionFiltersRequest) : Core::ParsedResponse(ACWL::DescribeSubscriptionFiltersResponse)
       Log.info { "performing 'DescribeSubscriptionFilters' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeSubscriptionFilters", "/", input.to_json)
       Core::ParsedResponse(ACWL::DescribeSubscriptionFiltersResponse).new(response)
     end
@@ -812,6 +864,7 @@ module Amazonite::CloudWatchLogsV1
     # It can take up to 5 minutes for this operation to take effect.
     def disassociate_kms_key(input : ACWL::DisassociateKmsKeyRequest) : Core::Response
       Log.info { "performing 'DisassociateKmsKey' operation" }
+      input.validate! if config.validate_input?
       response = post("DisassociateKmsKey", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -820,6 +873,7 @@ module Amazonite::CloudWatchLogsV1
     # associated data from the integration.
     def disassociate_source_from_s3_table_integration(input : ACWL::DisassociateSourceFromS3TableIntegrationRequest) : Core::ParsedResponse(ACWL::DisassociateSourceFromS3TableIntegrationResponse)
       Log.info { "performing 'DisassociateSourceFromS3TableIntegration' operation" }
+      input.validate! if config.validate_input?
       response = post("DisassociateSourceFromS3TableIntegration", "/", input.to_json)
       Core::ParsedResponse(ACWL::DisassociateSourceFromS3TableIntegrationResponse).new(response)
     end
@@ -869,6 +923,7 @@ module Amazonite::CloudWatchLogsV1
     # query.](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html)
     def filter_log_events(input : ACWL::FilterLogEventsRequest) : Core::ParsedResponse(ACWL::FilterLogEventsResponse)
       Log.info { "performing 'FilterLogEvents' operation" }
+      input.validate! if config.validate_input?
       response = post("FilterLogEvents", "/", input.to_json)
       Core::ParsedResponse(ACWL::FilterLogEventsResponse).new(response)
     end
@@ -876,6 +931,7 @@ module Amazonite::CloudWatchLogsV1
     # Returns information about a log group data protection policy.
     def get_data_protection_policy(input : ACWL::GetDataProtectionPolicyRequest) : Core::ParsedResponse(ACWL::GetDataProtectionPolicyResponse)
       Log.info { "performing 'GetDataProtectionPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("GetDataProtectionPolicy", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetDataProtectionPolicyResponse).new(response)
     end
@@ -898,6 +954,7 @@ module Amazonite::CloudWatchLogsV1
     # operation.
     def get_delivery(input : ACWL::GetDeliveryRequest) : Core::ParsedResponse(ACWL::GetDeliveryResponse)
       Log.info { "performing 'GetDelivery' operation" }
+      input.validate! if config.validate_input?
       response = post("GetDelivery", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetDeliveryResponse).new(response)
     end
@@ -905,6 +962,7 @@ module Amazonite::CloudWatchLogsV1
     # Retrieves complete information about one delivery destination.
     def get_delivery_destination(input : ACWL::GetDeliveryDestinationRequest) : Core::ParsedResponse(ACWL::GetDeliveryDestinationResponse)
       Log.info { "performing 'GetDeliveryDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("GetDeliveryDestination", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetDeliveryDestinationResponse).new(response)
     end
@@ -914,6 +972,7 @@ module Amazonite::CloudWatchLogsV1
     # [PutDeliveryDestinationPolicy](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html).
     def get_delivery_destination_policy(input : ACWL::GetDeliveryDestinationPolicyRequest) : Core::ParsedResponse(ACWL::GetDeliveryDestinationPolicyResponse)
       Log.info { "performing 'GetDeliveryDestinationPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("GetDeliveryDestinationPolicy", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetDeliveryDestinationPolicyResponse).new(response)
     end
@@ -921,6 +980,7 @@ module Amazonite::CloudWatchLogsV1
     # Retrieves complete information about one delivery source.
     def get_delivery_source(input : ACWL::GetDeliverySourceRequest) : Core::ParsedResponse(ACWL::GetDeliverySourceResponse)
       Log.info { "performing 'GetDeliverySource' operation" }
+      input.validate! if config.validate_input?
       response = post("GetDeliverySource", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetDeliverySourceResponse).new(response)
     end
@@ -928,6 +988,7 @@ module Amazonite::CloudWatchLogsV1
     # Returns information about one integration between CloudWatch Logs and OpenSearch Service.
     def get_integration(input : ACWL::GetIntegrationRequest) : Core::ParsedResponse(ACWL::GetIntegrationResponse)
       Log.info { "performing 'GetIntegration' operation" }
+      input.validate! if config.validate_input?
       response = post("GetIntegration", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetIntegrationResponse).new(response)
     end
@@ -936,6 +997,7 @@ module Amazonite::CloudWatchLogsV1
     # is valid.
     def get_log_anomaly_detector(input : ACWL::GetLogAnomalyDetectorRequest) : Core::ParsedResponse(ACWL::GetLogAnomalyDetectorResponse)
       Log.info { "performing 'GetLogAnomalyDetector' operation" }
+      input.validate! if config.validate_input?
       response = post("GetLogAnomalyDetector", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetLogAnomalyDetectorResponse).new(response)
     end
@@ -976,6 +1038,7 @@ module Amazonite::CloudWatchLogsV1
     # query.](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html)
     def get_log_events(input : ACWL::GetLogEventsRequest) : Core::ParsedResponse(ACWL::GetLogEventsResponse)
       Log.info { "performing 'GetLogEvents' operation" }
+      input.validate! if config.validate_input?
       response = post("GetLogEvents", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetLogEventsResponse).new(response)
     end
@@ -984,6 +1047,7 @@ module Amazonite::CloudWatchLogsV1
     # modifications introduced through pipelines, such as new fields or changed field types.
     def get_log_fields(input : ACWL::GetLogFieldsRequest) : Core::ParsedResponse(ACWL::GetLogFieldsResponse)
       Log.info { "performing 'GetLogFields' operation" }
+      input.validate! if config.validate_input?
       response = post("GetLogFields", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetLogFieldsResponse).new(response)
     end
@@ -1012,6 +1076,7 @@ module Amazonite::CloudWatchLogsV1
     # observability](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html).
     def get_log_group_fields(input : ACWL::GetLogGroupFieldsRequest) : Core::ParsedResponse(ACWL::GetLogGroupFieldsResponse)
       Log.info { "performing 'GetLogGroupFields' operation" }
+      input.validate! if config.validate_input?
       response = post("GetLogGroupFields", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetLogGroupFieldsResponse).new(response)
     end
@@ -1023,6 +1088,7 @@ module Amazonite::CloudWatchLogsV1
     # The full unparsed log event is returned within `@message`.
     def get_log_record(input : ACWL::GetLogRecordRequest) : Core::ParsedResponse(ACWL::GetLogRecordResponse)
       Log.info { "performing 'GetLogRecord' operation" }
+      input.validate! if config.validate_input?
       response = post("GetLogRecord", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetLogRecordResponse).new(response)
     end
@@ -1030,6 +1096,7 @@ module Amazonite::CloudWatchLogsV1
     # Retrieves the full content of a lookup table, including the CSV data.
     def get_lookup_table(input : ACWL::GetLookupTableRequest) : Core::ParsedResponse(ACWL::GetLookupTableResponse)
       Log.info { "performing 'GetLookupTable' operation" }
+      input.validate! if config.validate_input?
       response = post("GetLookupTable", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetLookupTableResponse).new(response)
     end
@@ -1066,6 +1133,7 @@ module Amazonite::CloudWatchLogsV1
     # observability](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html).
     def get_query_results(input : ACWL::GetQueryResultsRequest) : Core::ParsedResponse(ACWL::GetQueryResultsResponse)
       Log.info { "performing 'GetQueryResults' operation" }
+      input.validate! if config.validate_input?
       response = post("GetQueryResults", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetQueryResultsResponse).new(response)
     end
@@ -1074,6 +1142,7 @@ module Amazonite::CloudWatchLogsV1
     # status, and metadata.
     def get_scheduled_query(input : ACWL::GetScheduledQueryRequest) : Core::ParsedResponse(ACWL::GetScheduledQueryResponse)
       Log.info { "performing 'GetScheduledQuery' operation" }
+      input.validate! if config.validate_input?
       response = post("GetScheduledQuery", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetScheduledQueryResponse).new(response)
     end
@@ -1082,6 +1151,7 @@ module Amazonite::CloudWatchLogsV1
     # query results and destination processing status.
     def get_scheduled_query_history(input : ACWL::GetScheduledQueryHistoryRequest) : Core::ParsedResponse(ACWL::GetScheduledQueryHistoryResponse)
       Log.info { "performing 'GetScheduledQueryHistory' operation" }
+      input.validate! if config.validate_input?
       response = post("GetScheduledQueryHistory", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetScheduledQueryHistoryResponse).new(response)
     end
@@ -1089,6 +1159,7 @@ module Amazonite::CloudWatchLogsV1
     # Returns the storage tier policy for the account.
     def get_storage_tier_policy(input : ACWL::GetStorageTierPolicyRequest) : Core::ParsedResponse(ACWL::GetStorageTierPolicyResponse)
       Log.info { "performing 'GetStorageTierPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("GetStorageTierPolicy", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetStorageTierPolicyResponse).new(response)
     end
@@ -1100,6 +1171,7 @@ module Amazonite::CloudWatchLogsV1
     # [DescribeAccountPolicies](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeAccountPolicies.html).
     def get_transformer(input : ACWL::GetTransformerRequest) : Core::ParsedResponse(ACWL::GetTransformerResponse)
       Log.info { "performing 'GetTransformer' operation" }
+      input.validate! if config.validate_input?
       response = post("GetTransformer", "/", input.to_json)
       Core::ParsedResponse(ACWL::GetTransformerResponse).new(response)
     end
@@ -1117,6 +1189,7 @@ module Amazonite::CloudWatchLogsV1
     # results. By default, it returns up to 50 results and includes a token to retrieve more results.
     def list_aggregate_log_group_summaries(input : ACWL::ListAggregateLogGroupSummariesRequest) : Core::ParsedResponse(ACWL::ListAggregateLogGroupSummariesResponse)
       Log.info { "performing 'ListAggregateLogGroupSummaries' operation" }
+      input.validate! if config.validate_input?
       response = post("ListAggregateLogGroupSummaries", "/", input.to_json)
       Core::ParsedResponse(ACWL::ListAggregateLogGroupSummariesResponse).new(response)
     end
@@ -1125,6 +1198,7 @@ module Amazonite::CloudWatchLogsV1
     # structure format of each anomaly object that is returned, see the example in this section.
     def list_anomalies(input : ACWL::ListAnomaliesRequest) : Core::ParsedResponse(ACWL::ListAnomaliesResponse)
       Log.info { "performing 'ListAnomalies' operation" }
+      input.validate! if config.validate_input?
       response = post("ListAnomalies", "/", input.to_json)
       Core::ParsedResponse(ACWL::ListAnomaliesResponse).new(response)
     end
@@ -1134,6 +1208,7 @@ module Amazonite::CloudWatchLogsV1
     # OpenSearch Service.
     def list_integrations(input : ACWL::ListIntegrationsRequest) : Core::ParsedResponse(ACWL::ListIntegrationsResponse)
       Log.info { "performing 'ListIntegrations' operation" }
+      input.validate! if config.validate_input?
       response = post("ListIntegrations", "/", input.to_json)
       Core::ParsedResponse(ACWL::ListIntegrationsResponse).new(response)
     end
@@ -1141,6 +1216,7 @@ module Amazonite::CloudWatchLogsV1
     # Retrieves a list of the log anomaly detectors in the account.
     def list_log_anomaly_detectors(input : ACWL::ListLogAnomalyDetectorsRequest) : Core::ParsedResponse(ACWL::ListLogAnomalyDetectorsResponse)
       Log.info { "performing 'ListLogAnomalyDetectors' operation" }
+      input.validate! if config.validate_input?
       response = post("ListLogAnomalyDetectors", "/", input.to_json)
       Core::ParsedResponse(ACWL::ListLogAnomalyDetectorsResponse).new(response)
     end
@@ -1159,6 +1235,7 @@ module Amazonite::CloudWatchLogsV1
     # and includes a token to use in a subsequent operation to return more results.
     def list_log_groups(input : ACWL::ListLogGroupsRequest) : Core::ParsedResponse(ACWL::ListLogGroupsResponse)
       Log.info { "performing 'ListLogGroups' operation" }
+      input.validate! if config.validate_input?
       response = post("ListLogGroups", "/", input.to_json)
       Core::ParsedResponse(ACWL::ListLogGroupsResponse).new(response)
     end
@@ -1172,6 +1249,7 @@ module Amazonite::CloudWatchLogsV1
     # costs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs-Field-Indexing.html).
     def list_log_groups_for_query(input : ACWL::ListLogGroupsForQueryRequest) : Core::ParsedResponse(ACWL::ListLogGroupsForQueryResponse)
       Log.info { "performing 'ListLogGroupsForQuery' operation" }
+      input.validate! if config.validate_input?
       response = post("ListLogGroupsForQuery", "/", input.to_json)
       Core::ParsedResponse(ACWL::ListLogGroupsForQueryResponse).new(response)
     end
@@ -1180,6 +1258,7 @@ module Amazonite::CloudWatchLogsV1
     # only enabled or disabled queries.
     def list_scheduled_queries(input : ACWL::ListScheduledQueriesRequest) : Core::ParsedResponse(ACWL::ListScheduledQueriesResponse)
       Log.info { "performing 'ListScheduledQueries' operation" }
+      input.validate! if config.validate_input?
       response = post("ListScheduledQueries", "/", input.to_json)
       Core::ParsedResponse(ACWL::ListScheduledQueriesResponse).new(response)
     end
@@ -1188,6 +1267,7 @@ module Amazonite::CloudWatchLogsV1
     # data sources are currently associated for query access.
     def list_sources_for_s3_table_integration(input : ACWL::ListSourcesForS3TableIntegrationRequest) : Core::ParsedResponse(ACWL::ListSourcesForS3TableIntegrationResponse)
       Log.info { "performing 'ListSourcesForS3TableIntegration' operation" }
+      input.validate! if config.validate_input?
       response = post("ListSourcesForS3TableIntegration", "/", input.to_json)
       Core::ParsedResponse(ACWL::ListSourcesForS3TableIntegrationResponse).new(response)
     end
@@ -1196,6 +1276,7 @@ module Amazonite::CloudWatchLogsV1
     # VPC endpoint.
     def list_syslog_configurations(input : ACWL::ListSyslogConfigurationsRequest) : Core::ParsedResponse(ACWL::ListSyslogConfigurationsResponse)
       Log.info { "performing 'ListSyslogConfigurations' operation" }
+      input.validate! if config.validate_input?
       response = post("ListSyslogConfigurations", "/", input.to_json)
       Core::ParsedResponse(ACWL::ListSyslogConfigurationsResponse).new(response)
     end
@@ -1204,6 +1285,7 @@ module Amazonite::CloudWatchLogsV1
     # destinations support tagging.
     def list_tags_for_resource(input : ACWL::ListTagsForResourceRequest) : Core::ParsedResponse(ACWL::ListTagsForResourceResponse)
       Log.info { "performing 'ListTagsForResource' operation" }
+      input.validate! if config.validate_input?
       response = post("ListTagsForResource", "/", input.to_json)
       Core::ParsedResponse(ACWL::ListTagsForResourceResponse).new(response)
     end
@@ -1215,6 +1297,7 @@ module Amazonite::CloudWatchLogsV1
     # Lists the tags for the specified log group.
     def list_tags_log_group(input : ACWL::ListTagsLogGroupRequest) : Core::ParsedResponse(ACWL::ListTagsLogGroupResponse)
       Log.info { "performing 'ListTagsLogGroup' operation" }
+      input.validate! if config.validate_input?
       response = post("ListTagsLogGroup", "/", input.to_json)
       Core::ParsedResponse(ACWL::ListTagsLogGroupResponse).new(response)
     end
@@ -1559,6 +1642,7 @@ module Amazonite::CloudWatchLogsV1
     # groups matching `"/aws/lambda"`.
     def put_account_policy(input : ACWL::PutAccountPolicyRequest) : Core::ParsedResponse(ACWL::PutAccountPolicyResponse)
       Log.info { "performing 'PutAccountPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutAccountPolicy", "/", input.to_json)
       Core::ParsedResponse(ACWL::PutAccountPolicyResponse).new(response)
     end
@@ -1570,6 +1654,7 @@ module Amazonite::CloudWatchLogsV1
     # Parameters](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/CommonParameters.html).
     def put_bearer_token_authentication(input : ACWL::PutBearerTokenAuthenticationRequest) : Core::Response
       Log.info { "performing 'PutBearerTokenAuthentication' operation" }
+      input.validate! if config.validate_input?
       response = post("PutBearerTokenAuthentication", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -1603,6 +1688,7 @@ module Amazonite::CloudWatchLogsV1
     # then the two policies are cumulative. Any sensitive term specified in either policy is masked.
     def put_data_protection_policy(input : ACWL::PutDataProtectionPolicyRequest) : Core::ParsedResponse(ACWL::PutDataProtectionPolicyResponse)
       Log.info { "performing 'PutDataProtectionPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutDataProtectionPolicy", "/", input.to_json)
       Core::ParsedResponse(ACWL::PutDataProtectionPolicyResponse).new(response)
     end
@@ -1645,6 +1731,7 @@ module Amazonite::CloudWatchLogsV1
     # destination parameters are overwritten with the new parameter values that you specify.
     def put_delivery_destination(input : ACWL::PutDeliveryDestinationRequest) : Core::ParsedResponse(ACWL::PutDeliveryDestinationResponse)
       Log.info { "performing 'PutDeliveryDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("PutDeliveryDestination", "/", input.to_json)
       Core::ParsedResponse(ACWL::PutDeliveryDestinationResponse).new(response)
     end
@@ -1679,6 +1766,7 @@ module Amazonite::CloudWatchLogsV1
     # needed policies.
     def put_delivery_destination_policy(input : ACWL::PutDeliveryDestinationPolicyRequest) : Core::ParsedResponse(ACWL::PutDeliveryDestinationPolicyResponse)
       Log.info { "performing 'PutDeliveryDestinationPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutDeliveryDestinationPolicy", "/", input.to_json)
       Core::ParsedResponse(ACWL::PutDeliveryDestinationPolicyResponse).new(response)
     end
@@ -1719,6 +1807,7 @@ module Amazonite::CloudWatchLogsV1
     # parameters are overwritten with the new parameter values that you specify.
     def put_delivery_source(input : ACWL::PutDeliverySourceRequest) : Core::ParsedResponse(ACWL::PutDeliverySourceResponse)
       Log.info { "performing 'PutDeliverySource' operation" }
+      input.validate! if config.validate_input?
       response = post("PutDeliverySource", "/", input.to_json)
       Core::ParsedResponse(ACWL::PutDeliverySourceResponse).new(response)
     end
@@ -1742,6 +1831,7 @@ module Amazonite::CloudWatchLogsV1
     # To perform a `PutDestination` operation, you must also have the `iam:PassRole` permission.
     def put_destination(input : ACWL::PutDestinationRequest) : Core::ParsedResponse(ACWL::PutDestinationResponse)
       Log.info { "performing 'PutDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("PutDestination", "/", input.to_json)
       Core::ParsedResponse(ACWL::PutDestinationResponse).new(response)
     end
@@ -1752,6 +1842,7 @@ module Amazonite::CloudWatchLogsV1
     # to authorize claims to register a subscription filter against a given destination.
     def put_destination_policy(input : ACWL::PutDestinationPolicyRequest) : Core::Response
       Log.info { "performing 'PutDestinationPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutDestinationPolicy", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -1820,6 +1911,7 @@ module Amazonite::CloudWatchLogsV1
     # groups, but data source-based account policies may still apply.
     def put_index_policy(input : ACWL::PutIndexPolicyRequest) : Core::ParsedResponse(ACWL::PutIndexPolicyResponse)
       Log.info { "performing 'PutIndexPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutIndexPolicy", "/", input.to_json)
       Core::ParsedResponse(ACWL::PutIndexPolicyResponse).new(response)
     end
@@ -1837,6 +1929,7 @@ module Amazonite::CloudWatchLogsV1
     # integration.
     def put_integration(input : ACWL::PutIntegrationRequest) : Core::ParsedResponse(ACWL::PutIntegrationResponse)
       Log.info { "performing 'PutIntegration' operation" }
+      input.validate! if config.validate_input?
       response = post("PutIntegration", "/", input.to_json)
       Core::ParsedResponse(ACWL::PutIntegrationResponse).new(response)
     end
@@ -1882,6 +1975,7 @@ module Amazonite::CloudWatchLogsV1
     # non-valid Amazon Web Services access key ID or secret key.
     def put_log_events(input : ACWL::PutLogEventsRequest) : Core::ParsedResponse(ACWL::PutLogEventsResponse)
       Log.info { "performing 'PutLogEvents' operation" }
+      input.validate! if config.validate_input?
       response = post("PutLogEvents", "/", input.to_json)
       Core::ParsedResponse(ACWL::PutLogEventsResponse).new(response)
     end
@@ -1893,6 +1987,7 @@ module Amazonite::CloudWatchLogsV1
     # Parameters](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/CommonParameters.html).
     def put_log_group_deletion_protection(input : ACWL::PutLogGroupDeletionProtectionRequest) : Core::Response
       Log.info { "performing 'PutLogGroupDeletionProtection' operation" }
+      input.validate! if config.validate_input?
       response = post("PutLogGroupDeletionProtection", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -1926,6 +2021,7 @@ module Amazonite::CloudWatchLogsV1
     # Charges](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html).
     def put_metric_filter(input : ACWL::PutMetricFilterRequest) : Core::Response
       Log.info { "performing 'PutMetricFilter' operation" }
+      input.validate! if config.validate_input?
       response = post("PutMetricFilter", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -1944,6 +2040,7 @@ module Amazonite::CloudWatchLogsV1
     # You must have the `logs:PutQueryDefinition` permission to be able to perform this operation.
     def put_query_definition(input : ACWL::PutQueryDefinitionRequest) : Core::ParsedResponse(ACWL::PutQueryDefinitionResponse)
       Log.info { "performing 'PutQueryDefinition' operation" }
+      input.validate! if config.validate_input?
       response = post("PutQueryDefinition", "/", input.to_json)
       Core::ParsedResponse(ACWL::PutQueryDefinitionResponse).new(response)
     end
@@ -1965,6 +2062,7 @@ module Amazonite::CloudWatchLogsV1
     # control involving these principals, use the IAM policies.
     def put_resource_policy(input : ACWL::PutResourcePolicyRequest) : Core::ParsedResponse(ACWL::PutResourcePolicyResponse)
       Log.info { "performing 'PutResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(ACWL::PutResourcePolicyResponse).new(response)
     end
@@ -1990,6 +2088,7 @@ module Amazonite::CloudWatchLogsV1
     # storing.
     def put_retention_policy(input : ACWL::PutRetentionPolicyRequest) : Core::Response
       Log.info { "performing 'PutRetentionPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutRetentionPolicy", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -1999,6 +2098,7 @@ module Amazonite::CloudWatchLogsV1
     # storage tier based on access frequency.
     def put_storage_tier_policy(input : ACWL::PutStorageTierPolicyRequest) : Core::ParsedResponse(ACWL::PutStorageTierPolicyResponse)
       Log.info { "performing 'PutStorageTierPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutStorageTierPolicy", "/", input.to_json)
       Core::ParsedResponse(ACWL::PutStorageTierPolicyResponse).new(response)
     end
@@ -2039,6 +2139,7 @@ module Amazonite::CloudWatchLogsV1
     # must also have the `iam:PassRole` permission.
     def put_subscription_filter(input : ACWL::PutSubscriptionFilterRequest) : Core::Response
       Log.info { "performing 'PutSubscriptionFilter' operation" }
+      input.validate! if config.validate_input?
       response = post("PutSubscriptionFilter", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -2047,6 +2148,7 @@ module Amazonite::CloudWatchLogsV1
     # through the specified VPC endpoint into the log group.
     def put_syslog_configuration(input : ACWL::PutSyslogConfigurationRequest) : Core::Response
       Log.info { "performing 'PutSyslogConfiguration' operation" }
+      input.validate! if config.validate_input?
       response = post("PutSyslogConfiguration", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -2085,6 +2187,7 @@ module Amazonite::CloudWatchLogsV1
     # log-group level transformer. It ignores the account-level transformer.
     def put_transformer(input : ACWL::PutTransformerRequest) : Core::Response
       Log.info { "performing 'PutTransformer' operation" }
+      input.validate! if config.validate_input?
       response = post("PutTransformer", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -2138,6 +2241,7 @@ module Amazonite::CloudWatchLogsV1
     # been added to dashboards.
     def start_query(input : ACWL::StartQueryRequest) : Core::ParsedResponse(ACWL::StartQueryResponse)
       Log.info { "performing 'StartQuery' operation" }
+      input.validate! if config.validate_input?
       response = post("StartQuery", "/", input.to_json)
       Core::ParsedResponse(ACWL::StartQueryResponse).new(response)
     end
@@ -2150,6 +2254,7 @@ module Amazonite::CloudWatchLogsV1
     # identified by the query ID, not the scheduled query configuration itself.
     def stop_query(input : ACWL::StopQueryRequest) : Core::ParsedResponse(ACWL::StopQueryResponse)
       Log.info { "performing 'StopQuery' operation" }
+      input.validate! if config.validate_input?
       response = post("StopQuery", "/", input.to_json)
       Core::ParsedResponse(ACWL::StopQueryResponse).new(response)
     end
@@ -2175,6 +2280,7 @@ module Amazonite::CloudWatchLogsV1
     # resources using tags](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html).
     def tag_log_group(input : ACWL::TagLogGroupRequest) : Core::Response
       Log.info { "performing 'TagLogGroup' operation" }
+      input.validate! if config.validate_input?
       response = post("TagLogGroup", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -2197,6 +2303,7 @@ module Amazonite::CloudWatchLogsV1
     # You can associate as many as 50 tags with a CloudWatch Logs resource.
     def tag_resource(input : ACWL::TagResourceRequest) : Core::Response
       Log.info { "performing 'TagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("TagResource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -2205,6 +2312,7 @@ module Amazonite::CloudWatchLogsV1
     # this operation to validate the correctness of a metric filter pattern.
     def test_metric_filter(input : ACWL::TestMetricFilterRequest) : Core::ParsedResponse(ACWL::TestMetricFilterResponse)
       Log.info { "performing 'TestMetricFilter' operation" }
+      input.validate! if config.validate_input?
       response = post("TestMetricFilter", "/", input.to_json)
       Core::ParsedResponse(ACWL::TestMetricFilterResponse).new(response)
     end
@@ -2214,6 +2322,7 @@ module Amazonite::CloudWatchLogsV1
     # events and the transformed versions.
     def test_transformer(input : ACWL::TestTransformerRequest) : Core::ParsedResponse(ACWL::TestTransformerResponse)
       Log.info { "performing 'TestTransformer' operation" }
+      input.validate! if config.validate_input?
       response = post("TestTransformer", "/", input.to_json)
       Core::ParsedResponse(ACWL::TestTransformerResponse).new(response)
     end
@@ -2234,6 +2343,7 @@ module Amazonite::CloudWatchLogsV1
     # assign.
     def untag_log_group(input : ACWL::UntagLogGroupRequest) : Core::Response
       Log.info { "performing 'UntagLogGroup' operation" }
+      input.validate! if config.validate_input?
       response = post("UntagLogGroup", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -2241,6 +2351,7 @@ module Amazonite::CloudWatchLogsV1
     # Removes one or more tags from the specified resource.
     def untag_resource(input : ACWL::UntagResourceRequest) : Core::Response
       Log.info { "performing 'UntagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("UntagResource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -2259,6 +2370,7 @@ module Amazonite::CloudWatchLogsV1
     # `suppressionPeriod` parameters.
     def update_anomaly(input : ACWL::UpdateAnomalyRequest) : Core::Response
       Log.info { "performing 'UpdateAnomaly' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateAnomaly", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -2269,6 +2381,7 @@ module Amazonite::CloudWatchLogsV1
     # operation to change the source or destination of the delivery.
     def update_delivery_configuration(input : ACWL::UpdateDeliveryConfigurationRequest) : Core::ParsedResponse(ACWL::UpdateDeliveryConfigurationResponse)
       Log.info { "performing 'UpdateDeliveryConfiguration' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateDeliveryConfiguration", "/", input.to_json)
       Core::ParsedResponse(ACWL::UpdateDeliveryConfigurationResponse).new(response)
     end
@@ -2276,6 +2389,7 @@ module Amazonite::CloudWatchLogsV1
     # Updates an existing log anomaly detector.
     def update_log_anomaly_detector(input : ACWL::UpdateLogAnomalyDetectorRequest) : Core::Response
       Log.info { "performing 'UpdateLogAnomalyDetector' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateLogAnomalyDetector", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -2287,6 +2401,7 @@ module Amazonite::CloudWatchLogsV1
     # `tableBody` or `queryId`, but not both.
     def update_lookup_table(input : ACWL::UpdateLookupTableRequest) : Core::ParsedResponse(ACWL::UpdateLookupTableResponse)
       Log.info { "performing 'UpdateLookupTable' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateLookupTable", "/", input.to_json)
       Core::ParsedResponse(ACWL::UpdateLookupTableResponse).new(response)
     end
@@ -2295,6 +2410,7 @@ module Amazonite::CloudWatchLogsV1
     # allowing modification of query parameters, schedule, and destinations.
     def update_scheduled_query(input : ACWL::UpdateScheduledQueryRequest) : Core::ParsedResponse(ACWL::UpdateScheduledQueryResponse)
       Log.info { "performing 'UpdateScheduledQuery' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateScheduledQuery", "/", input.to_json)
       Core::ParsedResponse(ACWL::UpdateScheduledQueryResponse).new(response)
     end

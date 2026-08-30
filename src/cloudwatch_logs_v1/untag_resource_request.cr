@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class UntagResourceRequest
     include JSON::Serializable
@@ -23,6 +25,19 @@ module Amazonite::CloudWatchLogsV1
       @resource_arn : String,
       @tag_keys : Array(String),
     )
+    end
+
+    def validate! : Nil
+      if value = @resource_arn
+        raise Core::ValidationError.new("resourceArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("resourceArn length must be <= 1011") if value.size > 1011
+        raise Core::ValidationError.new("resourceArn does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=/:,.@-]*$"))
+      end
+
+      if value = @tag_keys
+        raise Core::ValidationError.new("tagKeys must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("tagKeys must have at most 50 item(s)") if value.size > 50
+      end
     end
 
     def_equals_and_hash(@resource_arn, @tag_keys)

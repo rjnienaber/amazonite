@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class PutIndexPolicyRequest
     include JSON::Serializable
@@ -27,6 +29,19 @@ module Amazonite::CloudWatchLogsV1
       @log_group_identifier : String,
       @policy_document : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @log_group_identifier
+        raise Core::ValidationError.new("logGroupIdentifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupIdentifier length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("logGroupIdentifier does not match the required pattern") unless value.matches?(Regex.new("^[\\w#+=/:,.@-]*$"))
+      end
+
+      if value = @policy_document
+        raise Core::ValidationError.new("policyDocument length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("policyDocument length must be <= 51200") if value.size > 51200
+      end
     end
 
     def_equals_and_hash(@log_group_identifier, @policy_document)

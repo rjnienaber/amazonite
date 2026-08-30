@@ -160,6 +160,12 @@ module Amazonite::SnsV1
       )
     end
 
+    def validate! : Nil
+      if value = @message_attributes
+        value.each_value(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@id, @message, @subject, @message_structure, @message_attributes, @message_deduplication_id, @message_group_id)
   end
 end

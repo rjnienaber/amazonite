@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListOpsMetadataRequest
     include JSON::Serializable
@@ -20,6 +22,19 @@ module Amazonite::SsmV1
       @max_results : Int32 | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @filters
+        raise Core::ValidationError.new("Filters must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Filters must have at most 10 item(s)") if value.size > 10
+        value.each(&.validate!)
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 50") if value > 50
+      end
     end
 
     def_equals_and_hash(@filters, @max_results, @next_token)

@@ -27,6 +27,13 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @stack_drift_detection_id
+        raise Core::ValidationError.new("StackDriftDetectionId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackDriftDetectionId length must be <= 36") if value.size > 36
+      end
+    end
+
     def_equals_and_hash(@stack_drift_detection_id)
   end
 end

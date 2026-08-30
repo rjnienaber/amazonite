@@ -85,6 +85,16 @@ module Amazonite::CloudWatchV1
     )
     end
 
+    def validate! : Nil
+      if value = @metric_data_queries
+        value.each(&.validate!)
+      end
+
+      if value = @label_options
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@metric_data_queries, @start_time, @end_time, @next_token, @scan_by, @max_datapoints, @label_options)
   end
 end

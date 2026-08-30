@@ -16,6 +16,9 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@policy_id, @policy_hash)
   end
 end

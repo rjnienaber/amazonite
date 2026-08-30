@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Contains the description of the backup created for the table.
   class BackupDescription
@@ -21,6 +23,20 @@ module Amazonite::DynamoDBV2
       @source_table_details : SourceTableDetails | Nil = nil,
       @source_table_feature_details : SourceTableFeatureDetails | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @backup_details
+        value.validate!
+      end
+
+      if value = @source_table_details
+        value.validate!
+      end
+
+      if value = @source_table_feature_details
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@backup_details, @source_table_details, @source_table_feature_details)

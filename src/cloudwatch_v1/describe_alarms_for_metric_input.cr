@@ -1,4 +1,5 @@
 private alias ACW = Amazonite::CloudWatchV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchV1
   class DescribeAlarmsForMetricInput
@@ -43,6 +44,29 @@ module Amazonite::CloudWatchV1
       @period : Int32 | Nil = nil,
       @unit : StandardUnit | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @metric_name
+        raise Core::ValidationError.new("MetricName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MetricName length must be <= 255") if value.size > 255
+      end
+
+      if value = @namespace
+        raise Core::ValidationError.new("Namespace length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Namespace length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("Namespace does not match the required pattern") unless value.matches?(Regex.new("^[^:]"))
+      end
+
+      if value = @dimensions
+        raise Core::ValidationError.new("Dimensions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Dimensions must have at most 30 item(s)") if value.size > 30
+        value.each(&.validate!)
+      end
+
+      if value = @period
+        raise Core::ValidationError.new("Period value must be >= 1") if value < 1
+      end
     end
 
     def_equals_and_hash(@metric_name, @namespace, @statistic, @extended_statistic, @dimensions, @period, @unit)

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class PutProvisionedConcurrencyConfigRequest
     include JSON::Serializable
@@ -30,6 +32,24 @@ module Amazonite::LambdaV1
       @qualifier : String,
       @provisioned_concurrent_executions : Int32,
     )
+    end
+
+    def validate! : Nil
+      if value = @function_name
+        raise Core::ValidationError.new("FunctionName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("FunctionName length must be <= 140") if value.size > 140
+        raise Core::ValidationError.new("FunctionName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:)?((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_]+)(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @qualifier
+        raise Core::ValidationError.new("Qualifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Qualifier length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Qualifier does not match the required pattern") unless value.matches?(Regex.new("^(|[a-zA-Z0-9$_-]+)$"))
+      end
+
+      if value = @provisioned_concurrent_executions
+        raise Core::ValidationError.new("ProvisionedConcurrentExecutions value must be >= 1") if value < 1
+      end
     end
 
     def_equals_and_hash(@function_name, @qualifier, @provisioned_concurrent_executions)

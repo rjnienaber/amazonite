@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SecretsManagerV1
   class BatchGetSecretValueRequest
     include JSON::Serializable
@@ -31,6 +33,29 @@ module Amazonite::SecretsManagerV1
       @max_results : Int32 | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @secret_id_list
+        raise Core::ValidationError.new("SecretIdList must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("SecretIdList must have at most 20 item(s)") if value.size > 20
+      end
+
+      if value = @filters
+        raise Core::ValidationError.new("Filters must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Filters must have at most 10 item(s)") if value.size > 10
+        value.each(&.validate!)
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 20") if value > 20
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 4096") if value.size > 4096
+      end
     end
 
     def_equals_and_hash(@secret_id_list, @filters, @max_results, @next_token)

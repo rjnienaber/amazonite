@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This structure defines a query parameter for a saved CloudWatch Logs Insights query definition.
   # Query parameters are supported only for Logs Insights QL queries. They are placeholder variables
@@ -24,6 +26,24 @@ module Amazonite::CloudWatchLogsV1
       @default_value : String | Nil = nil,
       @description : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("name length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z_][a-zA-Z0-9_]*$"))
+      end
+
+      if value = @default_value
+        raise Core::ValidationError.new("defaultValue length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("defaultValue length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("description length must be <= 512") if value.size > 512
+      end
     end
 
     def_equals_and_hash(@name, @default_value, @description)

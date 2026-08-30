@@ -1,4 +1,5 @@
 private alias AAG = Amazonite::ApiGatewayV1
+private alias Core = Amazonite::Core
 
 module Amazonite::ApiGatewayV1
   # Updates a GatewayResponse of a specified response type on the given RestApi.
@@ -23,6 +24,12 @@ module Amazonite::ApiGatewayV1
       @response_type : GatewayResponseType,
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @patch_operations
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@rest_api_id, @response_type, @patch_operations)

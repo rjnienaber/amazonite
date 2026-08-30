@@ -361,6 +361,88 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+      if value = @attribute_definitions
+        value.each(&.validate!)
+      end
+
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("TableName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("TableName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @key_schema
+        raise Core::ValidationError.new("KeySchema must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+
+      if value = @provisioned_throughput
+        value.validate!
+      end
+
+      if value = @table_id
+        raise Core::ValidationError.new("TableId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"))
+      end
+
+      if value = @billing_mode_summary
+        value.validate!
+      end
+
+      if value = @local_secondary_indexes
+        value.each(&.validate!)
+      end
+
+      if value = @global_secondary_indexes
+        value.each(&.validate!)
+      end
+
+      if value = @stream_specification
+        value.validate!
+      end
+
+      if value = @latest_stream_arn
+        raise Core::ValidationError.new("LatestStreamArn length must be >= 37") if value.size < 37
+        raise Core::ValidationError.new("LatestStreamArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @replicas
+        value.each(&.validate!)
+      end
+
+      if value = @global_table_witnesses
+        value.each(&.validate!)
+      end
+
+      if value = @restore_summary
+        value.validate!
+      end
+
+      if value = @sse_description
+        value.validate!
+      end
+
+      if value = @archival_summary
+        value.validate!
+      end
+
+      if value = @table_class_summary
+        value.validate!
+      end
+
+      if value = @on_demand_throughput
+        value.validate!
+      end
+
+      if value = @warm_throughput
+        value.validate!
+      end
+
+      if value = @vector_indexes
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@attribute_definitions, @table_name, @key_schema, @table_status, @creation_date_time, @provisioned_throughput, @table_size_bytes, @item_count, @table_arn, @table_id, @billing_mode_summary, @local_secondary_indexes, @global_secondary_indexes, @stream_specification, @latest_stream_label, @latest_stream_arn, @global_table_version, @replicas, @global_table_witnesses, @global_table_settings_replication_mode, @restore_summary, @sse_description, @archival_summary, @table_class_summary, @deletion_protection_enabled, @on_demand_throughput, @warm_throughput, @multi_region_consistency, @vector_indexes)
   end
 end

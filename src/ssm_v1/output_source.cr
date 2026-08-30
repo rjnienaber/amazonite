@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Information about the source where the association execution details are stored.
   class OutputSource
@@ -15,6 +17,13 @@ module Amazonite::SsmV1
       @output_source_id : String | Nil = nil,
       @output_source_type : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @output_source_id
+        raise Core::ValidationError.new("OutputSourceId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("OutputSourceId length must be <= 36") if value.size > 36
+      end
     end
 
     def_equals_and_hash(@output_source_id, @output_source_type)

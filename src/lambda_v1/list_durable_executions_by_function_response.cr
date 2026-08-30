@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # The response from the ListDurableExecutionsByFunction operation, containing a list of durable
   # executions and pagination information.
@@ -17,6 +19,12 @@ module Amazonite::LambdaV1
       @durable_executions : Array(Execution) | Nil = nil,
       @next_marker : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @durable_executions
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@durable_executions, @next_marker)

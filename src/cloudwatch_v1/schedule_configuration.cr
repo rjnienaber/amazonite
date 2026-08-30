@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # Contains the schedule expression and time-range offsets that define when a scheduled query runs
   # and what time range each execution covers.
@@ -25,6 +27,23 @@ module Amazonite::CloudWatchV1
       @start_time_offset : Int64,
       @end_time_offset : Int64 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @schedule_expression
+        raise Core::ValidationError.new("ScheduleExpression length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ScheduleExpression length must be <= 256") if value.size > 256
+      end
+
+      if value = @start_time_offset
+        raise Core::ValidationError.new("StartTimeOffset value must be >= 1") if value < 1
+        raise Core::ValidationError.new("StartTimeOffset value must be <= 2592000") if value > 2592000
+      end
+
+      if value = @end_time_offset
+        raise Core::ValidationError.new("EndTimeOffset value must be >= 0") if value < 0
+        raise Core::ValidationError.new("EndTimeOffset value must be <= 2592000") if value > 2592000
+      end
     end
 
     def_equals_and_hash(@schedule_expression, @start_time_offset, @end_time_offset)

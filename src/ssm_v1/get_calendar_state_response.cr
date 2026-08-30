@@ -27,6 +27,9 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@state, @at_time, @next_transition_time)
   end
 end

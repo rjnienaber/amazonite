@@ -120,6 +120,35 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @type_name
+        raise Core::ValidationError.new("TypeName length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("TypeName length must be <= 204") if value.size > 204
+        raise Core::ValidationError.new("TypeName does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}(::MODULE){0,1}$"))
+      end
+
+      if value = @schema_handler_package
+        raise Core::ValidationError.new("SchemaHandlerPackage length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SchemaHandlerPackage length must be <= 4096") if value.size > 4096
+      end
+
+      if value = @logging_config
+        value.validate!
+      end
+
+      if value = @execution_role_arn
+        raise Core::ValidationError.new("ExecutionRoleArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ExecutionRoleArn length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("ExecutionRoleArn does not match the required pattern") unless value.matches?(Regex.new("^arn:.+:iam::[0-9]{12}:role/.+$"))
+      end
+
+      if value = @client_request_token
+        raise Core::ValidationError.new("ClientRequestToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ClientRequestToken length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ClientRequestToken does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+    end
+
     def_equals_and_hash(@type, @type_name, @schema_handler_package, @logging_config, @execution_role_arn, @client_request_token)
   end
 end

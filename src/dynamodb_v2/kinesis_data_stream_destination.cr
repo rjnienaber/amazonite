@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Describes a Kinesis data stream destination.
@@ -28,6 +29,13 @@ module Amazonite::DynamoDBV2
       @destination_status_description : String | Nil = nil,
       @approximate_creation_date_time_precision : ApproximateCreationDateTimePrecision | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @stream_arn
+        raise Core::ValidationError.new("StreamArn length must be >= 37") if value.size < 37
+        raise Core::ValidationError.new("StreamArn length must be <= 1024") if value.size > 1024
+      end
     end
 
     def_equals_and_hash(@stream_arn, @destination_status, @destination_status_description, @approximate_creation_date_time_precision)

@@ -60,6 +60,25 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @path_prefix
+        raise Core::ValidationError.new("PathPrefix length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PathPrefix length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("PathPrefix does not match the required pattern") unless value.matches?(Regex.new("^\\u002F[\\u0021-\\u007F]*$"))
+      end
+
+      if value = @marker
+        raise Core::ValidationError.new("Marker length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Marker length must be <= 320") if value.size > 320
+        raise Core::ValidationError.new("Marker does not match the required pattern") unless value.matches?(Regex.new("^[\\u0020-\\u00FF]+$"))
+      end
+
+      if value = @max_items
+        raise Core::ValidationError.new("MaxItems value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxItems value must be <= 1000") if value > 1000
+      end
+    end
+
     def_equals_and_hash(@path_prefix, @marker, @max_items)
   end
 end

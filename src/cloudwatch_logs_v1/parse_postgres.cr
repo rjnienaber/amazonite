@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Use this processor to parse RDS for PostgreSQL vended logs, extract fields, and and convert them
   # into a JSON format. This processor always processes the entire log event message. For more
@@ -20,6 +22,13 @@ module Amazonite::CloudWatchLogsV1
     def initialize(
       @source : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @source
+        raise Core::ValidationError.new("source length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("source length must be <= 128") if value.size > 128
+      end
     end
 
     def_equals_and_hash(@source)

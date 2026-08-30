@@ -30,6 +30,7 @@ module Amazonite::DynamoDBV2
     # Use the `DescribeTable` action to check the status of the table.
     def delete_table(input : ADDB::DeleteTableInput) : Core::ParsedResponse(ADDB::DeleteTableOutput)
       Log.info { "performing 'DeleteTable' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteTable", "/", input.to_json)
       Core::ParsedResponse(ADDB::DeleteTableOutput).new(response)
     end

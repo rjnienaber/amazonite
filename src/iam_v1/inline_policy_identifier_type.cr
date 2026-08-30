@@ -44,6 +44,20 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @policy_name
+        raise Core::ValidationError.new("PolicyName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PolicyName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("PolicyName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @attachment_name
+        raise Core::ValidationError.new("AttachmentName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AttachmentName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("AttachmentName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+    end
+
     def_equals_and_hash(@policy_name, @attachment_type, @attachment_name)
   end
 end

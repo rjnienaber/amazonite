@@ -50,6 +50,14 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@tags, @is_truncated, @marker)
   end
 end

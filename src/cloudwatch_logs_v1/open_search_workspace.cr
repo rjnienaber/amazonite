@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This structure contains information about the OpenSearch Service workspace used for this
   # integration. An OpenSearch Service workspace is the collection of dashboards along with other
@@ -20,6 +22,18 @@ module Amazonite::CloudWatchLogsV1
       @workspace_id : String | Nil = nil,
       @status : OpenSearchResourceStatus | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @workspace_id
+        raise Core::ValidationError.new("workspaceId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("workspaceId length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("workspaceId does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+
+      if value = @status
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@workspace_id, @status)

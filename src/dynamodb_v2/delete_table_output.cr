@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the output of a `DeleteTable` operation.
   class DeleteTableOutput
@@ -10,6 +12,12 @@ module Amazonite::DynamoDBV2
     def initialize(
       @table_description : TableDescription | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @table_description
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@table_description)

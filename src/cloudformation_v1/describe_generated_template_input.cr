@@ -23,6 +23,13 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @generated_template_name
+        raise Core::ValidationError.new("GeneratedTemplateName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GeneratedTemplateName length must be <= 128") if value.size > 128
+      end
+    end
+
     def_equals_and_hash(@generated_template_name)
   end
 end

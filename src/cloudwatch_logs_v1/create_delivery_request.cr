@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class CreateDeliveryRequest
     include JSON::Serializable
@@ -40,6 +42,33 @@ module Amazonite::CloudWatchLogsV1
       @s3_delivery_configuration : S3DeliveryConfiguration | Nil = nil,
       @tags : Hash(String, String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @delivery_source_name
+        raise Core::ValidationError.new("deliverySourceName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("deliverySourceName length must be <= 60") if value.size > 60
+        raise Core::ValidationError.new("deliverySourceName does not match the required pattern") unless value.matches?(Regex.new("^[\\w-]*$"))
+      end
+
+      if value = @record_fields
+        raise Core::ValidationError.new("recordFields must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("recordFields must have at most 128 item(s)") if value.size > 128
+      end
+
+      if value = @field_delimiter
+        raise Core::ValidationError.new("fieldDelimiter length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("fieldDelimiter length must be <= 5") if value.size > 5
+      end
+
+      if value = @s3_delivery_configuration
+        value.validate!
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("tags must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("tags must have at most 50 entry(s)") if value.size > 50
+      end
     end
 
     def_equals_and_hash(@delivery_source_name, @delivery_destination_arn, @record_fields, @field_delimiter, @s3_delivery_configuration, @tags)

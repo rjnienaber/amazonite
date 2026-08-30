@@ -135,6 +135,28 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @total_stack_instances_count
+        raise Core::ValidationError.new("TotalStackInstancesCount value must be >= 0") if value < 0
+      end
+
+      if value = @drifted_stack_instances_count
+        raise Core::ValidationError.new("DriftedStackInstancesCount value must be >= 0") if value < 0
+      end
+
+      if value = @in_sync_stack_instances_count
+        raise Core::ValidationError.new("InSyncStackInstancesCount value must be >= 0") if value < 0
+      end
+
+      if value = @in_progress_stack_instances_count
+        raise Core::ValidationError.new("InProgressStackInstancesCount value must be >= 0") if value < 0
+      end
+
+      if value = @failed_stack_instances_count
+        raise Core::ValidationError.new("FailedStackInstancesCount value must be >= 0") if value < 0
+      end
+    end
+
     def_equals_and_hash(@drift_status, @drift_detection_status, @last_drift_check_timestamp, @total_stack_instances_count, @drifted_stack_instances_count, @in_sync_stack_instances_count, @in_progress_stack_instances_count, @failed_stack_instances_count)
   end
 end

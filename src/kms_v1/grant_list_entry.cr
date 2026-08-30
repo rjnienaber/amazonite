@@ -79,6 +79,58 @@ module Amazonite::KmsV1
     )
     end
 
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @grant_id
+        raise Core::ValidationError.new("GrantId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GrantId length must be <= 128") if value.size > 128
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9:/_-]+$"))
+      end
+
+      if value = @grantee_principal
+        raise Core::ValidationError.new("GranteePrincipal length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GranteePrincipal length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("GranteePrincipal does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@:/-]+$"))
+      end
+
+      if value = @retiring_principal
+        raise Core::ValidationError.new("RetiringPrincipal length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RetiringPrincipal length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("RetiringPrincipal does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@:/-]+$"))
+      end
+
+      if value = @issuing_account
+        raise Core::ValidationError.new("IssuingAccount length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("IssuingAccount length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("IssuingAccount does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@:/-]+$"))
+      end
+
+      if value = @constraints
+        value.validate!
+      end
+
+      if value = @grantee_service_principal
+        raise Core::ValidationError.new("GranteeServicePrincipal length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GranteeServicePrincipal length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("GranteeServicePrincipal does not match the required pattern") unless value.matches?(Regex.new("^([A-Za-z0-9\\-]+)\\.([A-Za-z0-9\\-]+)(\\.[A-Za-z0-9\\-]+)+$"))
+      end
+
+      if value = @retiring_service_principal
+        raise Core::ValidationError.new("RetiringServicePrincipal length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RetiringServicePrincipal length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("RetiringServicePrincipal does not match the required pattern") unless value.matches?(Regex.new("^([A-Za-z0-9\\-]+)\\.([A-Za-z0-9\\-]+)(\\.[A-Za-z0-9\\-]+)+$"))
+      end
+    end
+
     def_equals_and_hash(@key_id, @grant_id, @name, @creation_date, @grantee_principal, @retiring_principal, @issuing_account, @operations, @constraints, @grantee_service_principal, @retiring_service_principal)
   end
 end

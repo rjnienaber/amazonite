@@ -34,6 +34,18 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @execution_id
+        raise Core::ValidationError.new("ExecutionId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("ExecutionId length must be <= 100") if value.size > 100
+      end
+
+      if value = @execution_type
+        raise Core::ValidationError.new("ExecutionType length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("ExecutionType length must be <= 50") if value.size > 50
+      end
+    end
+
     def_equals_and_hash(@execution_time, @execution_id, @execution_type)
   end
 end

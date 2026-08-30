@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListOpsItemRelatedItemsRequest
     include JSON::Serializable
@@ -25,6 +27,21 @@ module Amazonite::SsmV1
       @max_results : Int32 | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @ops_item_id
+        raise Core::ValidationError.new("OpsItemId does not match the required pattern") unless value.matches?(Regex.new("^(oi)-[0-9a-f]{12}$"))
+      end
+
+      if value = @filters
+        value.each(&.validate!)
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 50") if value > 50
+      end
     end
 
     def_equals_and_hash(@ops_item_id, @filters, @max_results, @next_token)

@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   class UpdateGlobalTableSettingsInput
@@ -46,6 +47,34 @@ module Amazonite::DynamoDBV2
       @global_table_global_secondary_index_settings_update : Array(GlobalTableGlobalSecondaryIndexSettingsUpdate) | Nil = nil,
       @replica_settings_update : Array(ReplicaSettingsUpdate) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @global_table_name
+        raise Core::ValidationError.new("GlobalTableName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("GlobalTableName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("GlobalTableName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @global_table_provisioned_write_capacity_units
+        raise Core::ValidationError.new("GlobalTableProvisionedWriteCapacityUnits value must be >= 1") if value < 1
+      end
+
+      if value = @global_table_provisioned_write_capacity_auto_scaling_settings_update
+        value.validate!
+      end
+
+      if value = @global_table_global_secondary_index_settings_update
+        raise Core::ValidationError.new("GlobalTableGlobalSecondaryIndexSettingsUpdate must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("GlobalTableGlobalSecondaryIndexSettingsUpdate must have at most 20 item(s)") if value.size > 20
+        value.each(&.validate!)
+      end
+
+      if value = @replica_settings_update
+        raise Core::ValidationError.new("ReplicaSettingsUpdate must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("ReplicaSettingsUpdate must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@global_table_name, @global_table_billing_mode, @global_table_provisioned_write_capacity_units, @global_table_provisioned_write_capacity_auto_scaling_settings_update, @global_table_global_secondary_index_settings_update, @replica_settings_update)

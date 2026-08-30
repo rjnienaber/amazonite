@@ -27,6 +27,14 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @role_name
+        raise Core::ValidationError.new("RoleName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RoleName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("RoleName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+    end
+
     def_equals_and_hash(@role_name)
   end
 end

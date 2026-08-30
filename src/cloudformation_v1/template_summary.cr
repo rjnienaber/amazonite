@@ -102,6 +102,27 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @generated_template_id
+        raise Core::ValidationError.new("GeneratedTemplateId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GeneratedTemplateId length must be <= 256") if value.size > 256
+      end
+
+      if value = @generated_template_name
+        raise Core::ValidationError.new("GeneratedTemplateName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GeneratedTemplateName length must be <= 128") if value.size > 128
+      end
+
+      if value = @status_reason
+        raise Core::ValidationError.new("StatusReason length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StatusReason length must be <= 256") if value.size > 256
+      end
+
+      if value = @number_of_resources
+        raise Core::ValidationError.new("NumberOfResources value must be >= 0") if value < 0
+      end
+    end
+
     def_equals_and_hash(@generated_template_id, @generated_template_name, @status, @status_reason, @creation_time, @last_updated_time, @number_of_resources)
   end
 end

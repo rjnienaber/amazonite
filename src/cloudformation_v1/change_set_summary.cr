@@ -140,6 +140,34 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @change_set_id
+        raise Core::ValidationError.new("ChangeSetId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChangeSetId does not match the required pattern") unless value.matches?(Regex.new("^arn:[-a-zA-Z0-9:/]*$"))
+      end
+
+      if value = @change_set_name
+        raise Core::ValidationError.new("ChangeSetName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChangeSetName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ChangeSetName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z][-a-zA-Z0-9]*$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @parent_change_set_id
+        raise Core::ValidationError.new("ParentChangeSetId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ParentChangeSetId does not match the required pattern") unless value.matches?(Regex.new("^arn:[-a-zA-Z0-9:/]*$"))
+      end
+
+      if value = @root_change_set_id
+        raise Core::ValidationError.new("RootChangeSetId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RootChangeSetId does not match the required pattern") unless value.matches?(Regex.new("^arn:[-a-zA-Z0-9:/]*$"))
+      end
+    end
+
     def_equals_and_hash(@stack_id, @stack_name, @change_set_id, @change_set_name, @execution_status, @status, @status_reason, @creation_time, @description, @include_nested_stacks, @parent_change_set_id, @root_change_set_id, @import_existing_resources)
   end
 end

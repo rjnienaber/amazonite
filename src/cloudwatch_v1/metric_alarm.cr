@@ -216,6 +216,113 @@ module Amazonite::CloudWatchV1
     )
     end
 
+    def validate! : Nil
+      if value = @alarm_name
+        raise Core::ValidationError.new("AlarmName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmName length must be <= 255") if value.size > 255
+      end
+
+      if value = @alarm_arn
+        raise Core::ValidationError.new("AlarmArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmArn length must be <= 1600") if value.size > 1600
+      end
+
+      if value = @alarm_description
+        raise Core::ValidationError.new("AlarmDescription length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("AlarmDescription length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @ok_actions
+        raise Core::ValidationError.new("OKActions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("OKActions must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @alarm_actions
+        raise Core::ValidationError.new("AlarmActions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AlarmActions must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @insufficient_data_actions
+        raise Core::ValidationError.new("InsufficientDataActions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("InsufficientDataActions must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @state_reason
+        raise Core::ValidationError.new("StateReason length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StateReason length must be <= 1023") if value.size > 1023
+      end
+
+      if value = @state_reason_data
+        raise Core::ValidationError.new("StateReasonData length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StateReasonData length must be <= 4000") if value.size > 4000
+      end
+
+      if value = @metric_name
+        raise Core::ValidationError.new("MetricName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MetricName length must be <= 255") if value.size > 255
+      end
+
+      if value = @namespace
+        raise Core::ValidationError.new("Namespace length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Namespace length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("Namespace does not match the required pattern") unless value.matches?(Regex.new("^[^:]"))
+      end
+
+      if value = @dimensions
+        raise Core::ValidationError.new("Dimensions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Dimensions must have at most 30 item(s)") if value.size > 30
+        value.each(&.validate!)
+      end
+
+      if value = @period
+        raise Core::ValidationError.new("Period value must be >= 1") if value < 1
+      end
+
+      if value = @evaluation_periods
+        raise Core::ValidationError.new("EvaluationPeriods value must be >= 1") if value < 1
+      end
+
+      if value = @datapoints_to_alarm
+        raise Core::ValidationError.new("DatapointsToAlarm value must be >= 1") if value < 1
+      end
+
+      if value = @treat_missing_data
+        raise Core::ValidationError.new("TreatMissingData length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TreatMissingData length must be <= 255") if value.size > 255
+      end
+
+      if value = @evaluate_low_sample_count_percentile
+        raise Core::ValidationError.new("EvaluateLowSampleCountPercentile length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EvaluateLowSampleCountPercentile length must be <= 255") if value.size > 255
+      end
+
+      if value = @metrics
+        value.each(&.validate!)
+      end
+
+      if value = @threshold_metric_id
+        raise Core::ValidationError.new("ThresholdMetricId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ThresholdMetricId length must be <= 255") if value.size > 255
+      end
+
+      if value = @evaluation_window
+        value.validate!
+      end
+
+      if value = @warm_up_configuration
+        value.validate!
+      end
+
+      if value = @evaluation_criteria
+        value.validate!
+      end
+
+      if value = @evaluation_interval
+        raise Core::ValidationError.new("EvaluationInterval value must be >= 10") if value < 10
+        raise Core::ValidationError.new("EvaluationInterval value must be <= 3600") if value > 3600
+      end
+    end
+
     def_equals_and_hash(@alarm_name, @alarm_arn, @alarm_description, @alarm_configuration_updated_timestamp, @actions_enabled, @ok_actions, @alarm_actions, @insufficient_data_actions, @state_value, @state_reason, @state_reason_data, @state_updated_timestamp, @metric_name, @namespace, @statistic, @extended_statistic, @dimensions, @period, @unit, @evaluation_periods, @datapoints_to_alarm, @threshold, @comparison_operator, @treat_missing_data, @evaluate_low_sample_count_percentile, @metrics, @threshold_metric_id, @evaluation_state, @state_transitioned_timestamp, @evaluation_window, @warm_up_configuration, @evaluation_criteria, @evaluation_interval)
   end
 end

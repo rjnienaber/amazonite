@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # A record of a scheduled query execution, including execution status, timestamp, and destination
@@ -33,6 +34,21 @@ module Amazonite::CloudWatchLogsV1
       @error_message : String | Nil = nil,
       @destinations : Array(ScheduledQueryDestination) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @query_id
+        raise Core::ValidationError.new("queryId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("queryId length must be <= 256") if value.size > 256
+      end
+
+      if value = @triggered_timestamp
+        raise Core::ValidationError.new("triggeredTimestamp value must be >= 0") if value < 0
+      end
+
+      if value = @destinations
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@query_id, @execution_status, @triggered_timestamp, @error_message, @destinations)

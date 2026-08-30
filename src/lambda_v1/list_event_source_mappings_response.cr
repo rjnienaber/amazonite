@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class ListEventSourceMappingsResponse
     include JSON::Serializable
@@ -14,6 +16,12 @@ module Amazonite::LambdaV1
       @next_marker : String | Nil = nil,
       @event_source_mappings : Array(EventSourceMappingConfiguration) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @event_source_mappings
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@next_marker, @event_source_mappings)

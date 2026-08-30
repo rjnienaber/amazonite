@@ -30,6 +30,9 @@ module Amazonite::ApiGatewayV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@domain_name_arn, @access_association_source_type, @access_association_source, @tags)
   end
 end

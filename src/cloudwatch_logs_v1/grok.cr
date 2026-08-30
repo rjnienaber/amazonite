@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This processor uses pattern matching to parse and structure unstructured data. This processor
   # can also extract fields from log messages.
@@ -23,6 +25,18 @@ module Amazonite::CloudWatchLogsV1
       @match : String,
       @source : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @source
+        raise Core::ValidationError.new("source length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("source length must be <= 128") if value.size > 128
+      end
+
+      if value = @match
+        raise Core::ValidationError.new("match length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("match length must be <= 512") if value.size > 512
+      end
     end
 
     def_equals_and_hash(@source, @match)

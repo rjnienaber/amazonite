@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # A tag filter that specifies a tag key and optional tag values for filtering log groups by tags.
   class TagFilter
@@ -27,6 +29,19 @@ module Amazonite::CloudWatchLogsV1
       @key : String,
       @values : Array(String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @key
+        raise Core::ValidationError.new("key length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("key length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("key does not match the required pattern") unless value.matches?(Regex.new("^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]+)$"))
+      end
+
+      if value = @values
+        raise Core::ValidationError.new("values must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("values must have at most 5 item(s)") if value.size > 5
+      end
     end
 
     def_equals_and_hash(@key, @values)

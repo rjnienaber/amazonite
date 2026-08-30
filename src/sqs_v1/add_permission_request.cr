@@ -45,6 +45,9 @@ module Amazonite::SqsV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@queue_url, @label, @aws_account_ids, @actions)
   end
 end

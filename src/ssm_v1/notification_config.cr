@@ -34,6 +34,9 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@notification_arn, @notification_events, @notification_type)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # The configuration of the CloudWatch Logs scheduled query that backs a log alarm.
   class ScheduledQueryConfiguration
@@ -47,6 +49,41 @@ module Amazonite::CloudWatchV1
       @query_arn : String | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @query_string
+        raise Core::ValidationError.new("QueryString length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("QueryString length must be <= 10000") if value.size > 10000
+      end
+
+      if value = @log_group_identifiers
+        raise Core::ValidationError.new("LogGroupIdentifiers must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("LogGroupIdentifiers must have at most 50 item(s)") if value.size > 50
+      end
+
+      if value = @query_arn
+        raise Core::ValidationError.new("QueryARN length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("QueryARN length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @scheduled_query_role_arn
+        raise Core::ValidationError.new("ScheduledQueryRoleARN length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ScheduledQueryRoleARN length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @schedule_configuration
+        value.validate!
+      end
+
+      if value = @aggregation_expression
+        raise Core::ValidationError.new("AggregationExpression length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AggregationExpression length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@query_string, @log_group_identifiers, @query_arn, @scheduled_query_role_arn, @schedule_configuration, @aggregation_expression, @tags)

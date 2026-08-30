@@ -14,6 +14,8 @@ module Amazonite::Core
   class Client
     Log = ::Log.for(self)
 
+    protected getter config
+
     def initialize(
       @target_prefix : String,
       @endpoint_prefix : String,

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class DescribeAlarmsOutput
     include JSON::Serializable
@@ -24,6 +26,20 @@ module Amazonite::CloudWatchV1
       @log_alarms : Array(LogAlarm) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @composite_alarms
+        value.each(&.validate!)
+      end
+
+      if value = @metric_alarms
+        value.each(&.validate!)
+      end
+
+      if value = @log_alarms
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@composite_alarms, @metric_alarms, @log_alarms, @next_token)

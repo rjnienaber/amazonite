@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # A filter for listing cloud connectors.
@@ -23,6 +24,13 @@ module Amazonite::SsmV1
       @filter_key : CloudConnectorFilterKey | Nil = nil,
       @filter_values : Array(String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @filter_values
+        raise Core::ValidationError.new("FilterValues must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("FilterValues must have at most 1 item(s)") if value.size > 1
+      end
     end
 
     def_equals_and_hash(@filter_key, @filter_values)

@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # The filters to describe or get information about your managed nodes.
@@ -22,6 +23,19 @@ module Amazonite::SsmV1
       @values : Array(String),
       @operator : InstancePropertyFilterOperator | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @key
+        raise Core::ValidationError.new("Key length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Key length must be <= 100000") if value.size > 100000
+        raise Core::ValidationError.new("Key does not match the required pattern") unless value.matches?(Regex.new("^.{1,100000}$"))
+      end
+
+      if value = @values
+        raise Core::ValidationError.new("Values must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Values must have at most 40 item(s)") if value.size > 40
+      end
     end
 
     def_equals_and_hash(@key, @values, @operator)

@@ -58,6 +58,9 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@stack_name, @logical_resource_id, @physical_resource_id)
   end
 end

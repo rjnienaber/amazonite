@@ -82,6 +82,43 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("KeyId does not match the required pattern") unless value.matches?(Regex.new("^([a-zA-Z0-9:/_-]+)$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @allowed_pattern
+        raise Core::ValidationError.new("AllowedPattern length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("AllowedPattern length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @labels
+        raise Core::ValidationError.new("Labels must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Labels must have at most 10 item(s)") if value.size > 10
+      end
+
+      if value = @policies
+        value.each(&.validate!)
+      end
+
+      if value = @data_type
+        raise Core::ValidationError.new("DataType length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("DataType length must be <= 128") if value.size > 128
+      end
+    end
+
     def_equals_and_hash(@name, @type, @key_id, @last_modified_date, @last_modified_user, @description, @value, @allowed_pattern, @version, @labels, @tier, @policies, @data_type)
   end
 end

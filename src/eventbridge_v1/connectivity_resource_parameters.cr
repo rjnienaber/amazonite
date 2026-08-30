@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # The parameters for EventBridge to use when invoking the resource endpoint.
   class ConnectivityResourceParameters
@@ -10,6 +12,12 @@ module Amazonite::EventBridgeV1
     def initialize(
       @resource_parameters : ConnectivityResourceConfigurationArn,
     )
+    end
+
+    def validate! : Nil
+      if value = @resource_parameters
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@resource_parameters)

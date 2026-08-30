@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents a condition to be compared with an attribute value. This condition can be used with
@@ -199,6 +200,16 @@ module Amazonite::DynamoDBV2
       @comparison_operator : ComparisonOperator | Nil = nil,
       @attribute_value_list : Array(AttributeValue) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @value
+        value.validate!
+      end
+
+      if value = @attribute_value_list
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@value, @exists, @comparison_operator, @attribute_value_list)

@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class ListAggregateLogGroupSummariesRequest
@@ -69,6 +70,34 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
       @limit : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @account_identifiers
+        raise Core::ValidationError.new("accountIdentifiers must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("accountIdentifiers must have at most 20 item(s)") if value.size > 20
+      end
+
+      if value = @log_group_name_pattern
+        raise Core::ValidationError.new("logGroupNamePattern length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("logGroupNamePattern length must be <= 129") if value.size > 129
+        raise Core::ValidationError.new("logGroupNamePattern does not match the required pattern") unless value.matches?(Regex.new("^(\\^?[\\.\\-_\\/#A-Za-z0-9]{3,24})(\\|\\^?[\\.\\-_\\/#A-Za-z0-9]{3,24}){0,4}$"))
+      end
+
+      if value = @data_sources
+        raise Core::ValidationError.new("dataSources must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("dataSources must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("limit value must be <= 50") if value > 50
+      end
     end
 
     def_equals_and_hash(@account_identifiers, @include_linked_accounts, @log_group_class, @log_group_name_pattern, @data_sources, @group_by, @next_token, @limit)

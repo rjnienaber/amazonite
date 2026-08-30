@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class DescribeIndexPoliciesRequest
     include JSON::Serializable
@@ -14,6 +16,17 @@ module Amazonite::CloudWatchLogsV1
       @log_group_identifiers : Array(String),
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @log_group_identifiers
+        raise Core::ValidationError.new("logGroupIdentifiers must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("logGroupIdentifiers must have at most 1 item(s)") if value.size > 1
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@log_group_identifiers, @next_token)

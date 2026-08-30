@@ -83,6 +83,52 @@ module Amazonite::EventBridgeV1
     )
     end
 
+    def validate! : Nil
+      if value = @connection_arn
+        raise Core::ValidationError.new("ConnectionArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ConnectionArn length must be <= 1600") if value.size > 1600
+        raise Core::ValidationError.new("ConnectionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws([a-z]|\\-)*:events:([a-z]|\\d|\\-)*:([0-9]{12})?:connection\\/[\\.\\-_A-Za-z0-9]+\\/[\\-A-Za-z0-9]+$"))
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new(".*"))
+      end
+
+      if value = @invocation_connectivity_parameters
+        value.validate!
+      end
+
+      if value = @state_reason
+        raise Core::ValidationError.new("StateReason length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StateReason length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("StateReason does not match the required pattern") unless value.matches?(Regex.new(".*"))
+      end
+
+      if value = @secret_arn
+        raise Core::ValidationError.new("SecretArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("SecretArn length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("SecretArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws([a-z]|\\-)*:secretsmanager:([a-z]|\\d|\\-)*:([0-9]{12})?:secret:[\\/_+=\\.@\\-A-Za-z0-9]+$"))
+      end
+
+      if value = @kms_key_identifier
+        raise Core::ValidationError.new("KmsKeyIdentifier length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KmsKeyIdentifier length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("KmsKeyIdentifier does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-/:]*$"))
+      end
+
+      if value = @auth_parameters
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@connection_arn, @name, @description, @invocation_connectivity_parameters, @connection_state, @state_reason, @authorization_type, @secret_arn, @kms_key_identifier, @auth_parameters, @creation_time, @last_modified_time, @last_authorized_time)
   end
 end

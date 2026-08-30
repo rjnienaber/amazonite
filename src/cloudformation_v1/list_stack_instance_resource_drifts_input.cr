@@ -104,6 +104,41 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @stack_set_name
+        raise Core::ValidationError.new("StackSetName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z][-a-zA-Z0-9]*(?::[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12})?$"))
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 100") if value > 100
+      end
+
+      if value = @stack_instance_resource_drift_statuses
+        raise Core::ValidationError.new("StackInstanceResourceDriftStatuses must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("StackInstanceResourceDriftStatuses must have at most 4 item(s)") if value.size > 4
+      end
+
+      if value = @stack_instance_account
+        raise Core::ValidationError.new("StackInstanceAccount does not match the required pattern") unless value.matches?(Regex.new("^[0-9]{12}$"))
+      end
+
+      if value = @stack_instance_region
+        raise Core::ValidationError.new("StackInstanceRegion does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-]{1,128}$"))
+      end
+
+      if value = @operation_id
+        raise Core::ValidationError.new("OperationId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OperationId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("OperationId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+    end
+
     def_equals_and_hash(@stack_set_name, @next_token, @max_results, @stack_instance_resource_drift_statuses, @stack_instance_account, @stack_instance_region, @operation_id, @call_as)
   end
 end

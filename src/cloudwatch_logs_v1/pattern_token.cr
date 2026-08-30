@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # A structure that contains information about one pattern token related to an anomaly.
   #
@@ -42,6 +44,16 @@ module Amazonite::CloudWatchLogsV1
       @enumerations : Hash(String, Int64) | Nil = nil,
       @inferred_token_name : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @token_string
+        raise Core::ValidationError.new("tokenString length must be >= 1") if value.size < 1
+      end
+
+      if value = @inferred_token_name
+        raise Core::ValidationError.new("inferredTokenName length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@dynamic_token_position, @is_dynamic, @token_string, @enumerations, @inferred_token_name)

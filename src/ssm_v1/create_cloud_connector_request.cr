@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class CreateCloudConnectorRequest
     include JSON::Serializable
@@ -36,6 +38,42 @@ module Amazonite::SsmV1
       @description : String | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @display_name
+        raise Core::ValidationError.new("DisplayName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DisplayName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("DisplayName does not match the required pattern") unless value.matches?(Regex.new("^([\\p{L}\\p{Z}\\p{N}\\p{P}\\p{M}]*)$"))
+      end
+
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("RoleArn length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("RoleArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[a-z0-9-]*:iam::\\d{12}:role\\/[\\w-\\/.@+=,]{1,1017}$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^([\\p{L}\\p{Z}\\p{N}\\p{P}\\p{M}]*)$"))
+      end
+
+      if value = @configuration
+        value.validate!
+      end
+
+      if value = @config_connector_arn
+        raise Core::ValidationError.new("ConfigConnectorArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ConfigConnectorArn length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("ConfigConnectorArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws(-cn|-us-gov)?:config:([^:]+):\\d{12}:connector/.+$"))
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 1000 item(s)") if value.size > 1000
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@display_name, @role_arn, @description, @configuration, @config_connector_arn, @tags)

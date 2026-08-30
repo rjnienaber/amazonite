@@ -39,6 +39,9 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@export_from_time, @export_to_time, @export_view_type)
   end
 end

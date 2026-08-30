@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Details about a function's deployment package.
   class FunctionCodeLocation
@@ -43,6 +45,27 @@ module Amazonite::LambdaV1
       @source_kms_key_arn : String | Nil = nil,
       @error : FunctionCodeLocationError | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @location
+        raise Core::ValidationError.new("Location length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Location length must be <= 10000") if value.size > 10000
+      end
+
+      if value = @resolved_s3_object
+        value.validate!
+      end
+
+      if value = @source_kms_key_arn
+        raise Core::ValidationError.new("SourceKMSKeyArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SourceKMSKeyArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("SourceKMSKeyArn does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*)|()$"))
+      end
+
+      if value = @error
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@repository_type, @location, @image_uri, @resolved_image_uri, @resolved_s3_object, @source_kms_key_arn, @error)

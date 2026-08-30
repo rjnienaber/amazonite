@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # The details of a capacity provider strategy. To learn more, see
   # [CapacityProviderStrategyItem](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_CapacityProviderStrategyItem.html)
@@ -26,6 +28,23 @@ module Amazonite::EventBridgeV1
       @weight : Int32 | Nil = nil,
       @base : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @capacity_provider
+        raise Core::ValidationError.new("capacityProvider length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("capacityProvider length must be <= 255") if value.size > 255
+      end
+
+      if value = @weight
+        raise Core::ValidationError.new("weight value must be >= 0") if value < 0
+        raise Core::ValidationError.new("weight value must be <= 1000") if value > 1000
+      end
+
+      if value = @base
+        raise Core::ValidationError.new("base value must be >= 0") if value < 0
+        raise Core::ValidationError.new("base value must be <= 100000") if value > 100000
+      end
     end
 
     def_equals_and_hash(@capacity_provider, @weight, @base)

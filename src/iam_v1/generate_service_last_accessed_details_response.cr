@@ -30,6 +30,13 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @job_id
+        raise Core::ValidationError.new("JobId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("JobId length must be <= 36") if value.size > 36
+      end
+    end
+
     def_equals_and_hash(@job_id)
   end
 end

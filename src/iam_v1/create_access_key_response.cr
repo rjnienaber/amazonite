@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [CreateAccessKey](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateAccessKey.html)
@@ -22,6 +24,12 @@ module Amazonite::IamV1
       new(
         access_key: node.xpath_node("*[local-name()='AccessKey']").try { |n| AccessKey.from_xml(n) }.not_nil!,
       )
+    end
+
+    def validate! : Nil
+      if value = @access_key
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@access_key)

@@ -78,6 +78,24 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @user_detail_list
+        value.each(&.validate!)
+      end
+
+      if value = @group_detail_list
+        value.each(&.validate!)
+      end
+
+      if value = @role_detail_list
+        value.each(&.validate!)
+      end
+
+      if value = @policies
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@user_detail_list, @group_detail_list, @role_detail_list, @policies, @is_truncated, @marker)
   end
 end

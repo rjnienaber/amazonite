@@ -29,6 +29,9 @@ module Amazonite::CloudWatchV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@failure_resource, @exception_type, @failure_code, @failure_description)
   end
 end

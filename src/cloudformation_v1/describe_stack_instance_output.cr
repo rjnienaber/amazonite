@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudFormationV1
   class DescribeStackInstanceOutput
     # The stack instance that matches the specified request parameters.
@@ -21,6 +23,12 @@ module Amazonite::CloudFormationV1
       new(
         stack_instance: node.xpath_node("*[local-name()='StackInstance']").try { |n| StackInstance.from_xml(n) },
       )
+    end
+
+    def validate! : Nil
+      if value = @stack_instance
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@stack_instance)

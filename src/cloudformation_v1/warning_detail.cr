@@ -1,4 +1,5 @@
 private alias ACF = Amazonite::CloudFormationV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   # The warnings generated for a specific resource for this generated template.
@@ -51,6 +52,12 @@ module Amazonite::CloudFormationV1
         type: (n = node.xpath_node("*[local-name()='Type']")) ? ACF::WarningType.from_json_object_key?(n.content) : nil,
         properties: node.xpath_nodes("*[local-name()='Properties']/*[local-name()='member']").map { |n| WarningProperty.from_xml(n) },
       )
+    end
+
+    def validate! : Nil
+      if value = @properties
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@type, @properties)

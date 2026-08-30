@@ -42,6 +42,7 @@ module Amazonite::SsmV1
     # EC2 User Guide*.
     def add_tags_to_resource(input : AS::AddTagsToResourceRequest) : Core::ParsedResponse(AS::AddTagsToResourceResult)
       Log.info { "performing 'AddTagsToResource' operation" }
+      input.validate! if config.validate_input?
       response = post("AddTagsToResource", "/", input.to_json)
       Core::ParsedResponse(AS::AddTagsToResourceResult).new(response)
     end
@@ -51,6 +52,7 @@ module Amazonite::SsmV1
     # tools in Amazon Web Services Systems Manager.
     def associate_ops_item_related_item(input : AS::AssociateOpsItemRelatedItemRequest) : Core::ParsedResponse(AS::AssociateOpsItemRelatedItemResponse)
       Log.info { "performing 'AssociateOpsItemRelatedItem' operation" }
+      input.validate! if config.validate_input?
       response = post("AssociateOpsItemRelatedItem", "/", input.to_json)
       Core::ParsedResponse(AS::AssociateOpsItemRelatedItemResponse).new(response)
     end
@@ -59,6 +61,7 @@ module Amazonite::SsmV1
     # command will be terminated and the underlying process stopped.
     def cancel_command(input : AS::CancelCommandRequest) : Core::ParsedResponse(AS::CancelCommandResult)
       Log.info { "performing 'CancelCommand' operation" }
+      input.validate! if config.validate_input?
       response = post("CancelCommand", "/", input.to_json)
       Core::ParsedResponse(AS::CancelCommandResult).new(response)
     end
@@ -68,6 +71,7 @@ module Amazonite::SsmV1
     # completion.
     def cancel_maintenance_window_execution(input : AS::CancelMaintenanceWindowExecutionRequest) : Core::ParsedResponse(AS::CancelMaintenanceWindowExecutionResult)
       Log.info { "performing 'CancelMaintenanceWindowExecution' operation" }
+      input.validate! if config.validate_input?
       response = post("CancelMaintenanceWindowExecution", "/", input.to_json)
       Core::ParsedResponse(AS::CancelMaintenanceWindowExecutionResult).new(response)
     end
@@ -85,6 +89,7 @@ module Amazonite::SsmV1
     # VMs that are configured for Systems Manager are all called *managed nodes*.
     def create_activation(input : AS::CreateActivationRequest) : Core::ParsedResponse(AS::CreateActivationResult)
       Log.info { "performing 'CreateActivation' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateActivation", "/", input.to_json)
       Core::ParsedResponse(AS::CreateActivationResult).new(response)
     end
@@ -101,6 +106,7 @@ module Amazonite::SsmV1
     # service isn't running, then the association might instruct State Manager to start the service.
     def create_association(input : AS::CreateAssociationRequest) : Core::ParsedResponse(AS::CreateAssociationResult)
       Log.info { "performing 'CreateAssociation' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateAssociation", "/", input.to_json)
       Core::ParsedResponse(AS::CreateAssociationResult).new(response)
     end
@@ -116,6 +122,7 @@ module Amazonite::SsmV1
     # system returns the AssociationAlreadyExists exception.
     def create_association_batch(input : AS::CreateAssociationBatchRequest) : Core::ParsedResponse(AS::CreateAssociationBatchResult)
       Log.info { "performing 'CreateAssociationBatch' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateAssociationBatch", "/", input.to_json)
       Core::ParsedResponse(AS::CreateAssociationBatchResult).new(response)
     end
@@ -124,6 +131,7 @@ module Amazonite::SsmV1
     # third-party cloud environment.
     def create_cloud_connector(input : AS::CreateCloudConnectorRequest) : Core::ParsedResponse(AS::CreateCloudConnectorResult)
       Log.info { "performing 'CreateCloudConnector' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateCloudConnector", "/", input.to_json)
       Core::ParsedResponse(AS::CreateCloudConnectorResult).new(response)
     end
@@ -136,6 +144,7 @@ module Amazonite::SsmV1
     # *Amazon Web Services Systems Manager User Guide*.
     def create_document(input : AS::CreateDocumentRequest) : Core::ParsedResponse(AS::CreateDocumentResult)
       Log.info { "performing 'CreateDocument' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateDocument", "/", input.to_json)
       Core::ParsedResponse(AS::CreateDocumentResult).new(response)
     end
@@ -149,6 +158,7 @@ module Amazonite::SsmV1
     # `Cutoff` is one hour, no maintenance window tasks can start after 5 PM.
     def create_maintenance_window(input : AS::CreateMaintenanceWindowRequest) : Core::ParsedResponse(AS::CreateMaintenanceWindowResult)
       Log.info { "performing 'CreateMaintenanceWindow' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateMaintenanceWindow", "/", input.to_json)
       Core::ParsedResponse(AS::CreateMaintenanceWindowResult).new(response)
     end
@@ -165,6 +175,7 @@ module Amazonite::SsmV1
     # in the *Amazon Web Services Systems Manager User Guide*.
     def create_ops_item(input : AS::CreateOpsItemRequest) : Core::ParsedResponse(AS::CreateOpsItemResponse)
       Log.info { "performing 'CreateOpsItem' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateOpsItem", "/", input.to_json)
       Core::ParsedResponse(AS::CreateOpsItemResponse).new(response)
     end
@@ -174,6 +185,7 @@ module Amazonite::SsmV1
     # application type.
     def create_ops_metadata(input : AS::CreateOpsMetadataRequest) : Core::ParsedResponse(AS::CreateOpsMetadataResult)
       Log.info { "performing 'CreateOpsMetadata' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateOpsMetadata", "/", input.to_json)
       Core::ParsedResponse(AS::CreateOpsMetadataResult).new(response)
     end
@@ -184,6 +196,7 @@ module Amazonite::SsmV1
     # system type, see PatchFilter.
     def create_patch_baseline(input : AS::CreatePatchBaselineRequest) : Core::ParsedResponse(AS::CreatePatchBaselineResult)
       Log.info { "performing 'CreatePatchBaseline' operation" }
+      input.validate! if config.validate_input?
       response = post("CreatePatchBaseline", "/", input.to_json)
       Core::ParsedResponse(AS::CreatePatchBaselineResult).new(response)
     end
@@ -216,6 +229,7 @@ module Amazonite::SsmV1
     # Amazon S3 bucket by creating a restrictive bucket policy.
     def create_resource_data_sync(input : AS::CreateResourceDataSyncRequest) : Core::ParsedResponse(AS::CreateResourceDataSyncResult)
       Log.info { "performing 'CreateResourceDataSync' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateResourceDataSync", "/", input.to_json)
       Core::ParsedResponse(AS::CreateResourceDataSyncResult).new(response)
     end
@@ -225,6 +239,7 @@ module Amazonite::SsmV1
     # de-register managed nodes. You must manually de-register managed nodes.
     def delete_activation(input : AS::DeleteActivationRequest) : Core::ParsedResponse(AS::DeleteActivationResult)
       Log.info { "performing 'DeleteActivation' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteActivation", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteActivationResult).new(response)
     end
@@ -238,6 +253,7 @@ module Amazonite::SsmV1
     # must create a new document with the desired configuration and associate it with the node.
     def delete_association(input : AS::DeleteAssociationRequest) : Core::ParsedResponse(AS::DeleteAssociationResult)
       Log.info { "performing 'DeleteAssociation' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteAssociation", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteAssociationResult).new(response)
     end
@@ -245,6 +261,7 @@ module Amazonite::SsmV1
     # Deletes a cloud connector.
     def delete_cloud_connector(input : AS::DeleteCloudConnectorRequest) : Core::ParsedResponse(AS::DeleteCloudConnectorResult)
       Log.info { "performing 'DeleteCloudConnector' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteCloudConnector", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteCloudConnectorResult).new(response)
     end
@@ -256,6 +273,7 @@ module Amazonite::SsmV1
     # managed nodes that are associated with the document.
     def delete_document(input : AS::DeleteDocumentRequest) : Core::ParsedResponse(AS::DeleteDocumentResult)
       Log.info { "performing 'DeleteDocument' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteDocument", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteDocumentResult).new(response)
     end
@@ -264,6 +282,7 @@ module Amazonite::SsmV1
     # custom inventory type is also referred to as deleting a custom inventory schema.
     def delete_inventory(input : AS::DeleteInventoryRequest) : Core::ParsedResponse(AS::DeleteInventoryResult)
       Log.info { "performing 'DeleteInventory' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteInventory", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteInventoryResult).new(response)
     end
@@ -271,6 +290,7 @@ module Amazonite::SsmV1
     # Deletes a maintenance window.
     def delete_maintenance_window(input : AS::DeleteMaintenanceWindowRequest) : Core::ParsedResponse(AS::DeleteMaintenanceWindowResult)
       Log.info { "performing 'DeleteMaintenanceWindow' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteMaintenanceWindow", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteMaintenanceWindowResult).new(response)
     end
@@ -298,6 +318,7 @@ module Amazonite::SsmV1
     # in the *Systems Manager User Guide*.
     def delete_ops_item(input : AS::DeleteOpsItemRequest) : Core::ParsedResponse(AS::DeleteOpsItemResponse)
       Log.info { "performing 'DeleteOpsItem' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteOpsItem", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteOpsItemResponse).new(response)
     end
@@ -305,6 +326,7 @@ module Amazonite::SsmV1
     # Delete OpsMetadata related to an application.
     def delete_ops_metadata(input : AS::DeleteOpsMetadataRequest) : Core::ParsedResponse(AS::DeleteOpsMetadataResult)
       Log.info { "performing 'DeleteOpsMetadata' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteOpsMetadata", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteOpsMetadataResult).new(response)
     end
@@ -313,6 +335,7 @@ module Amazonite::SsmV1
     # create a parameter with the same name.
     def delete_parameter(input : AS::DeleteParameterRequest) : Core::ParsedResponse(AS::DeleteParameterResult)
       Log.info { "performing 'DeleteParameter' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteParameter", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteParameterResult).new(response)
     end
@@ -321,6 +344,7 @@ module Amazonite::SsmV1
     # a parameter with the same name.
     def delete_parameters(input : AS::DeleteParametersRequest) : Core::ParsedResponse(AS::DeleteParametersResult)
       Log.info { "performing 'DeleteParameters' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteParameters", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteParametersResult).new(response)
     end
@@ -328,6 +352,7 @@ module Amazonite::SsmV1
     # Deletes a patch baseline.
     def delete_patch_baseline(input : AS::DeletePatchBaselineRequest) : Core::ParsedResponse(AS::DeletePatchBaselineResult)
       Log.info { "performing 'DeletePatchBaseline' operation" }
+      input.validate! if config.validate_input?
       response = post("DeletePatchBaseline", "/", input.to_json)
       Core::ParsedResponse(AS::DeletePatchBaselineResult).new(response)
     end
@@ -337,6 +362,7 @@ module Amazonite::SsmV1
     # doesn't delete data.
     def delete_resource_data_sync(input : AS::DeleteResourceDataSyncRequest) : Core::ParsedResponse(AS::DeleteResourceDataSyncResult)
       Log.info { "performing 'DeleteResourceDataSync' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteResourceDataSync", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteResourceDataSyncResult).new(response)
     end
@@ -355,6 +381,7 @@ module Amazonite::SsmV1
     # in the *Amazon Web Services Systems Manager User Guide*.
     def delete_resource_policy(input : AS::DeleteResourcePolicyRequest) : Core::ParsedResponse(AS::DeleteResourcePolicyResponse)
       Log.info { "performing 'DeleteResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteResourcePolicyResponse).new(response)
     end
@@ -370,6 +397,7 @@ module Amazonite::SsmV1
     # in the *Amazon Web Services Systems Manager User Guide*.
     def deregister_managed_instance(input : AS::DeregisterManagedInstanceRequest) : Core::ParsedResponse(AS::DeregisterManagedInstanceResult)
       Log.info { "performing 'DeregisterManagedInstance' operation" }
+      input.validate! if config.validate_input?
       response = post("DeregisterManagedInstance", "/", input.to_json)
       Core::ParsedResponse(AS::DeregisterManagedInstanceResult).new(response)
     end
@@ -377,6 +405,7 @@ module Amazonite::SsmV1
     # Removes a patch group from a patch baseline.
     def deregister_patch_baseline_for_patch_group(input : AS::DeregisterPatchBaselineForPatchGroupRequest) : Core::ParsedResponse(AS::DeregisterPatchBaselineForPatchGroupResult)
       Log.info { "performing 'DeregisterPatchBaselineForPatchGroup' operation" }
+      input.validate! if config.validate_input?
       response = post("DeregisterPatchBaselineForPatchGroup", "/", input.to_json)
       Core::ParsedResponse(AS::DeregisterPatchBaselineForPatchGroupResult).new(response)
     end
@@ -384,6 +413,7 @@ module Amazonite::SsmV1
     # Removes a target from a maintenance window.
     def deregister_target_from_maintenance_window(input : AS::DeregisterTargetFromMaintenanceWindowRequest) : Core::ParsedResponse(AS::DeregisterTargetFromMaintenanceWindowResult)
       Log.info { "performing 'DeregisterTargetFromMaintenanceWindow' operation" }
+      input.validate! if config.validate_input?
       response = post("DeregisterTargetFromMaintenanceWindow", "/", input.to_json)
       Core::ParsedResponse(AS::DeregisterTargetFromMaintenanceWindowResult).new(response)
     end
@@ -391,6 +421,7 @@ module Amazonite::SsmV1
     # Removes a task from a maintenance window.
     def deregister_task_from_maintenance_window(input : AS::DeregisterTaskFromMaintenanceWindowRequest) : Core::ParsedResponse(AS::DeregisterTaskFromMaintenanceWindowResult)
       Log.info { "performing 'DeregisterTaskFromMaintenanceWindow' operation" }
+      input.validate! if config.validate_input?
       response = post("DeregisterTaskFromMaintenanceWindow", "/", input.to_json)
       Core::ParsedResponse(AS::DeregisterTaskFromMaintenanceWindowResult).new(response)
     end
@@ -400,6 +431,7 @@ module Amazonite::SsmV1
     # in the activation, and the number of nodes registered by using this activation.
     def describe_activations(input : AS::DescribeActivationsRequest) : Core::ParsedResponse(AS::DescribeActivationsResult)
       Log.info { "performing 'DescribeActivations' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeActivations", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeActivationsResult).new(response)
     end
@@ -409,6 +441,7 @@ module Amazonite::SsmV1
     # the association ID.
     def describe_association(input : AS::DescribeAssociationRequest) : Core::ParsedResponse(AS::DescribeAssociationResult)
       Log.info { "performing 'DescribeAssociation' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAssociation", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeAssociationResult).new(response)
     end
@@ -416,6 +449,7 @@ module Amazonite::SsmV1
     # Views all executions for a specific association ID.
     def describe_association_executions(input : AS::DescribeAssociationExecutionsRequest) : Core::ParsedResponse(AS::DescribeAssociationExecutionsResult)
       Log.info { "performing 'DescribeAssociationExecutions' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAssociationExecutions", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeAssociationExecutionsResult).new(response)
     end
@@ -423,6 +457,7 @@ module Amazonite::SsmV1
     # Views information about a specific execution of a specific association.
     def describe_association_execution_targets(input : AS::DescribeAssociationExecutionTargetsRequest) : Core::ParsedResponse(AS::DescribeAssociationExecutionTargetsResult)
       Log.info { "performing 'DescribeAssociationExecutionTargets' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAssociationExecutionTargets", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeAssociationExecutionTargetsResult).new(response)
     end
@@ -430,6 +465,7 @@ module Amazonite::SsmV1
     # Provides details about all active and terminated Automation executions.
     def describe_automation_executions(input : AS::DescribeAutomationExecutionsRequest) : Core::ParsedResponse(AS::DescribeAutomationExecutionsResult)
       Log.info { "performing 'DescribeAutomationExecutions' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAutomationExecutions", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeAutomationExecutionsResult).new(response)
     end
@@ -437,6 +473,7 @@ module Amazonite::SsmV1
     # Information about all active and terminated step executions in an Automation workflow.
     def describe_automation_step_executions(input : AS::DescribeAutomationStepExecutionsRequest) : Core::ParsedResponse(AS::DescribeAutomationStepExecutionsResult)
       Log.info { "performing 'DescribeAutomationStepExecutions' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAutomationStepExecutions", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeAutomationStepExecutionsResult).new(response)
     end
@@ -447,6 +484,7 @@ module Amazonite::SsmV1
     # Windows Server operating systems.
     def describe_available_patches(input : AS::DescribeAvailablePatchesRequest) : Core::ParsedResponse(AS::DescribeAvailablePatchesResult)
       Log.info { "performing 'DescribeAvailablePatches' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAvailablePatches", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeAvailablePatchesResult).new(response)
     end
@@ -454,6 +492,7 @@ module Amazonite::SsmV1
     # Describes the specified Amazon Web Services Systems Manager document (SSM document).
     def describe_document(input : AS::DescribeDocumentRequest) : Core::ParsedResponse(AS::DescribeDocumentResult)
       Log.info { "performing 'DescribeDocument' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeDocument", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeDocumentResult).new(response)
     end
@@ -463,6 +502,7 @@ module Amazonite::SsmV1
     # privately (by specifying a user's Amazon Web Services account ID) or publicly (*All*).
     def describe_document_permission(input : AS::DescribeDocumentPermissionRequest) : Core::ParsedResponse(AS::DescribeDocumentPermissionResponse)
       Log.info { "performing 'DescribeDocumentPermission' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeDocumentPermission", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeDocumentPermissionResponse).new(response)
     end
@@ -470,6 +510,7 @@ module Amazonite::SsmV1
     # All associations for the managed nodes.
     def describe_effective_instance_associations(input : AS::DescribeEffectiveInstanceAssociationsRequest) : Core::ParsedResponse(AS::DescribeEffectiveInstanceAssociationsResult)
       Log.info { "performing 'DescribeEffectiveInstanceAssociations' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeEffectiveInstanceAssociations", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeEffectiveInstanceAssociationsResult).new(response)
     end
@@ -478,6 +519,7 @@ module Amazonite::SsmV1
     # patch baseline. Applies to patch baselines for Windows only.
     def describe_effective_patches_for_patch_baseline(input : AS::DescribeEffectivePatchesForPatchBaselineRequest) : Core::ParsedResponse(AS::DescribeEffectivePatchesForPatchBaselineResult)
       Log.info { "performing 'DescribeEffectivePatchesForPatchBaseline' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeEffectivePatchesForPatchBaseline", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeEffectivePatchesForPatchBaselineResult).new(response)
     end
@@ -485,6 +527,7 @@ module Amazonite::SsmV1
     # The status of the associations for the managed nodes.
     def describe_instance_associations_status(input : AS::DescribeInstanceAssociationsStatusRequest) : Core::ParsedResponse(AS::DescribeInstanceAssociationsStatusResult)
       Log.info { "performing 'DescribeInstanceAssociationsStatus' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeInstanceAssociationsStatus", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeInstanceAssociationsStatusResult).new(response)
     end
@@ -502,6 +545,7 @@ module Amazonite::SsmV1
     # assigned to an on-premises managed node.
     def describe_instance_information(input : AS::DescribeInstanceInformationRequest) : Core::ParsedResponse(AS::DescribeInstanceInformationResult)
       Log.info { "performing 'DescribeInstanceInformation' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeInstanceInformation", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeInstanceInformationResult).new(response)
     end
@@ -510,6 +554,7 @@ module Amazonite::SsmV1
     # to the patch baseline being used for the node.
     def describe_instance_patches(input : AS::DescribeInstancePatchesRequest) : Core::ParsedResponse(AS::DescribeInstancePatchesResult)
       Log.info { "performing 'DescribeInstancePatches' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeInstancePatches", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeInstancePatchesResult).new(response)
     end
@@ -517,6 +562,7 @@ module Amazonite::SsmV1
     # Retrieves the high-level patch state of one or more managed nodes.
     def describe_instance_patch_states(input : AS::DescribeInstancePatchStatesRequest) : Core::ParsedResponse(AS::DescribeInstancePatchStatesResult)
       Log.info { "performing 'DescribeInstancePatchStates' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeInstancePatchStates", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeInstancePatchStatesResult).new(response)
     end
@@ -524,6 +570,7 @@ module Amazonite::SsmV1
     # Retrieves the high-level patch state for the managed nodes in the specified patch group.
     def describe_instance_patch_states_for_patch_group(input : AS::DescribeInstancePatchStatesForPatchGroupRequest) : Core::ParsedResponse(AS::DescribeInstancePatchStatesForPatchGroupResult)
       Log.info { "performing 'DescribeInstancePatchStatesForPatchGroup' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeInstancePatchStatesForPatchGroup", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeInstancePatchStatesForPatchGroupResult).new(response)
     end
@@ -532,6 +579,7 @@ module Amazonite::SsmV1
     # Manager managed nodes.
     def describe_instance_properties(input : AS::DescribeInstancePropertiesRequest) : Core::ParsedResponse(AS::DescribeInstancePropertiesResult)
       Log.info { "performing 'DescribeInstanceProperties' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeInstanceProperties", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeInstancePropertiesResult).new(response)
     end
@@ -539,6 +587,7 @@ module Amazonite::SsmV1
     # Describes a specific delete inventory operation.
     def describe_inventory_deletions(input : AS::DescribeInventoryDeletionsRequest) : Core::ParsedResponse(AS::DescribeInventoryDeletionsResult)
       Log.info { "performing 'DescribeInventoryDeletions' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeInventoryDeletions", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeInventoryDeletionsResult).new(response)
     end
@@ -548,6 +597,7 @@ module Amazonite::SsmV1
     # with the maintenance window.
     def describe_maintenance_window_executions(input : AS::DescribeMaintenanceWindowExecutionsRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowExecutionsResult)
       Log.info { "performing 'DescribeMaintenanceWindowExecutions' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeMaintenanceWindowExecutions", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeMaintenanceWindowExecutionsResult).new(response)
     end
@@ -556,6 +606,7 @@ module Amazonite::SsmV1
     # maintenance window execution.
     def describe_maintenance_window_execution_task_invocations(input : AS::DescribeMaintenanceWindowExecutionTaskInvocationsRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowExecutionTaskInvocationsResult)
       Log.info { "performing 'DescribeMaintenanceWindowExecutionTaskInvocations' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeMaintenanceWindowExecutionTaskInvocations", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeMaintenanceWindowExecutionTaskInvocationsResult).new(response)
     end
@@ -563,6 +614,7 @@ module Amazonite::SsmV1
     # For a given maintenance window execution, lists the tasks that were run.
     def describe_maintenance_window_execution_tasks(input : AS::DescribeMaintenanceWindowExecutionTasksRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowExecutionTasksResult)
       Log.info { "performing 'DescribeMaintenanceWindowExecutionTasks' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeMaintenanceWindowExecutionTasks", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeMaintenanceWindowExecutionTasksResult).new(response)
     end
@@ -570,6 +622,7 @@ module Amazonite::SsmV1
     # Retrieves the maintenance windows in an Amazon Web Services account.
     def describe_maintenance_windows(input : AS::DescribeMaintenanceWindowsRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowsResult)
       Log.info { "performing 'DescribeMaintenanceWindows' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeMaintenanceWindows", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeMaintenanceWindowsResult).new(response)
     end
@@ -577,6 +630,7 @@ module Amazonite::SsmV1
     # Retrieves information about upcoming executions of a maintenance window.
     def describe_maintenance_window_schedule(input : AS::DescribeMaintenanceWindowScheduleRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowScheduleResult)
       Log.info { "performing 'DescribeMaintenanceWindowSchedule' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeMaintenanceWindowSchedule", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeMaintenanceWindowScheduleResult).new(response)
     end
@@ -585,6 +639,7 @@ module Amazonite::SsmV1
     # associated with.
     def describe_maintenance_windows_for_target(input : AS::DescribeMaintenanceWindowsForTargetRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowsForTargetResult)
       Log.info { "performing 'DescribeMaintenanceWindowsForTarget' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeMaintenanceWindowsForTarget", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeMaintenanceWindowsForTargetResult).new(response)
     end
@@ -592,6 +647,7 @@ module Amazonite::SsmV1
     # Lists the targets registered with the maintenance window.
     def describe_maintenance_window_targets(input : AS::DescribeMaintenanceWindowTargetsRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowTargetsResult)
       Log.info { "performing 'DescribeMaintenanceWindowTargets' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeMaintenanceWindowTargets", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeMaintenanceWindowTargetsResult).new(response)
     end
@@ -604,6 +660,7 @@ module Amazonite::SsmV1
     # your task and can be ignored.
     def describe_maintenance_window_tasks(input : AS::DescribeMaintenanceWindowTasksRequest) : Core::ParsedResponse(AS::DescribeMaintenanceWindowTasksResult)
       Log.info { "performing 'DescribeMaintenanceWindowTasks' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeMaintenanceWindowTasks", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeMaintenanceWindowTasksResult).new(response)
     end
@@ -620,6 +677,7 @@ module Amazonite::SsmV1
     # in the *Amazon Web Services Systems Manager User Guide*.
     def describe_ops_items(input : AS::DescribeOpsItemsRequest) : Core::ParsedResponse(AS::DescribeOpsItemsResponse)
       Log.info { "performing 'DescribeOpsItems' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeOpsItems", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeOpsItemsResponse).new(response)
     end
@@ -645,6 +703,7 @@ module Amazonite::SsmV1
     # retrieves whatever the original key alias was referencing.
     def describe_parameters(input : AS::DescribeParametersRequest) : Core::ParsedResponse(AS::DescribeParametersResult)
       Log.info { "performing 'DescribeParameters' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeParameters", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeParametersResult).new(response)
     end
@@ -652,6 +711,7 @@ module Amazonite::SsmV1
     # Lists the patch baselines in your Amazon Web Services account.
     def describe_patch_baselines(input : AS::DescribePatchBaselinesRequest) : Core::ParsedResponse(AS::DescribePatchBaselinesResult)
       Log.info { "performing 'DescribePatchBaselines' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribePatchBaselines", "/", input.to_json)
       Core::ParsedResponse(AS::DescribePatchBaselinesResult).new(response)
     end
@@ -659,6 +719,7 @@ module Amazonite::SsmV1
     # Lists all patch groups that have been registered with patch baselines.
     def describe_patch_groups(input : AS::DescribePatchGroupsRequest) : Core::ParsedResponse(AS::DescribePatchGroupsResult)
       Log.info { "performing 'DescribePatchGroups' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribePatchGroups", "/", input.to_json)
       Core::ParsedResponse(AS::DescribePatchGroupsResult).new(response)
     end
@@ -666,6 +727,7 @@ module Amazonite::SsmV1
     # Returns high-level aggregated patch compliance state information for a patch group.
     def describe_patch_group_state(input : AS::DescribePatchGroupStateRequest) : Core::ParsedResponse(AS::DescribePatchGroupStateResult)
       Log.info { "performing 'DescribePatchGroupState' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribePatchGroupState", "/", input.to_json)
       Core::ParsedResponse(AS::DescribePatchGroupStateResult).new(response)
     end
@@ -701,6 +763,7 @@ module Amazonite::SsmV1
     # WINDOWS Valid properties: `PRODUCT` | `PRODUCT_FAMILY` | `CLASSIFICATION` | `MSRC_SEVERITY`
     def describe_patch_properties(input : AS::DescribePatchPropertiesRequest) : Core::ParsedResponse(AS::DescribePatchPropertiesResult)
       Log.info { "performing 'DescribePatchProperties' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribePatchProperties", "/", input.to_json)
       Core::ParsedResponse(AS::DescribePatchPropertiesResult).new(response)
     end
@@ -709,6 +772,7 @@ module Amazonite::SsmV1
     # from the past 30 days.
     def describe_sessions(input : AS::DescribeSessionsRequest) : Core::ParsedResponse(AS::DescribeSessionsResponse)
       Log.info { "performing 'DescribeSessions' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeSessions", "/", input.to_json)
       Core::ParsedResponse(AS::DescribeSessionsResponse).new(response)
     end
@@ -718,6 +782,7 @@ module Amazonite::SsmV1
     # Web Services Systems Manager.
     def disassociate_ops_item_related_item(input : AS::DisassociateOpsItemRelatedItemRequest) : Core::ParsedResponse(AS::DisassociateOpsItemRelatedItemResponse)
       Log.info { "performing 'DisassociateOpsItemRelatedItem' operation" }
+      input.validate! if config.validate_input?
       response = post("DisassociateOpsItemRelatedItem", "/", input.to_json)
       Core::ParsedResponse(AS::DisassociateOpsItemRelatedItemResponse).new(response)
     end
@@ -725,6 +790,7 @@ module Amazonite::SsmV1
     # Returns a credentials set to be used with just-in-time node access.
     def get_access_token(input : AS::GetAccessTokenRequest) : Core::ParsedResponse(AS::GetAccessTokenResponse)
       Log.info { "performing 'GetAccessToken' operation" }
+      input.validate! if config.validate_input?
       response = post("GetAccessToken", "/", input.to_json)
       Core::ParsedResponse(AS::GetAccessTokenResponse).new(response)
     end
@@ -732,6 +798,7 @@ module Amazonite::SsmV1
     # Get detailed information about a particular Automation execution.
     def get_automation_execution(input : AS::GetAutomationExecutionRequest) : Core::ParsedResponse(AS::GetAutomationExecutionResult)
       Log.info { "performing 'GetAutomationExecution' operation" }
+      input.validate! if config.validate_input?
       response = post("GetAutomationExecution", "/", input.to_json)
       Core::ParsedResponse(AS::GetAutomationExecutionResult).new(response)
     end
@@ -752,6 +819,7 @@ module Amazonite::SsmV1
     # in the *Amazon Web Services Systems Manager User Guide*.
     def get_calendar_state(input : AS::GetCalendarStateRequest) : Core::ParsedResponse(AS::GetCalendarStateResponse)
       Log.info { "performing 'GetCalendarState' operation" }
+      input.validate! if config.validate_input?
       response = post("GetCalendarState", "/", input.to_json)
       Core::ParsedResponse(AS::GetCalendarStateResponse).new(response)
     end
@@ -759,6 +827,7 @@ module Amazonite::SsmV1
     # Returns detailed information about a cloud connector.
     def get_cloud_connector(input : AS::GetCloudConnectorRequest) : Core::ParsedResponse(AS::GetCloudConnectorResult)
       Log.info { "performing 'GetCloudConnector' operation" }
+      input.validate! if config.validate_input?
       response = post("GetCloudConnector", "/", input.to_json)
       Core::ParsedResponse(AS::GetCloudConnectorResult).new(response)
     end
@@ -774,6 +843,7 @@ module Amazonite::SsmV1
     # command execution status across managed nodes, use ListCommands.
     def get_command_invocation(input : AS::GetCommandInvocationRequest) : Core::ParsedResponse(AS::GetCommandInvocationResult)
       Log.info { "performing 'GetCommandInvocation' operation" }
+      input.validate! if config.validate_input?
       response = post("GetCommandInvocation", "/", input.to_json)
       Core::ParsedResponse(AS::GetCommandInvocationResult).new(response)
     end
@@ -782,6 +852,7 @@ module Amazonite::SsmV1
     # running and ready to receive Session Manager connections.
     def get_connection_status(input : AS::GetConnectionStatusRequest) : Core::ParsedResponse(AS::GetConnectionStatusResponse)
       Log.info { "performing 'GetConnectionStatus' operation" }
+      input.validate! if config.validate_input?
       response = post("GetConnectionStatus", "/", input.to_json)
       Core::ParsedResponse(AS::GetConnectionStatusResponse).new(response)
     end
@@ -794,6 +865,7 @@ module Amazonite::SsmV1
     # returned.
     def get_default_patch_baseline(input : AS::GetDefaultPatchBaselineRequest) : Core::ParsedResponse(AS::GetDefaultPatchBaselineResult)
       Log.info { "performing 'GetDefaultPatchBaseline' operation" }
+      input.validate! if config.validate_input?
       response = post("GetDefaultPatchBaseline", "/", input.to_json)
       Core::ParsedResponse(AS::GetDefaultPatchBaselineResult).new(response)
     end
@@ -809,6 +881,7 @@ module Amazonite::SsmV1
     # `AWS-RunShellScript` document or the `AWS-RunPowerShellScript` document.
     def get_deployable_patch_snapshot_for_instance(input : AS::GetDeployablePatchSnapshotForInstanceRequest) : Core::ParsedResponse(AS::GetDeployablePatchSnapshotForInstanceResult)
       Log.info { "performing 'GetDeployablePatchSnapshotForInstance' operation" }
+      input.validate! if config.validate_input?
       response = post("GetDeployablePatchSnapshotForInstance", "/", input.to_json)
       Core::ParsedResponse(AS::GetDeployablePatchSnapshotForInstanceResult).new(response)
     end
@@ -816,6 +889,7 @@ module Amazonite::SsmV1
     # Gets the contents of the specified Amazon Web Services Systems Manager document (SSM document).
     def get_document(input : AS::GetDocumentRequest) : Core::ParsedResponse(AS::GetDocumentResult)
       Log.info { "performing 'GetDocument' operation" }
+      input.validate! if config.validate_input?
       response = post("GetDocument", "/", input.to_json)
       Core::ParsedResponse(AS::GetDocumentResult).new(response)
     end
@@ -824,6 +898,7 @@ module Amazonite::SsmV1
     # specified Automation runbook would have on the targeted resources.
     def get_execution_preview(input : AS::GetExecutionPreviewRequest) : Core::ParsedResponse(AS::GetExecutionPreviewResponse)
       Log.info { "performing 'GetExecutionPreview' operation" }
+      input.validate! if config.validate_input?
       response = post("GetExecutionPreview", "/", input.to_json)
       Core::ParsedResponse(AS::GetExecutionPreviewResponse).new(response)
     end
@@ -832,6 +907,7 @@ module Amazonite::SsmV1
     # `Terminated`.
     def get_inventory(input : AS::GetInventoryRequest) : Core::ParsedResponse(AS::GetInventoryResult)
       Log.info { "performing 'GetInventory' operation" }
+      input.validate! if config.validate_input?
       response = post("GetInventory", "/", input.to_json)
       Core::ParsedResponse(AS::GetInventoryResult).new(response)
     end
@@ -840,6 +916,7 @@ module Amazonite::SsmV1
     # specific Inventory item type.
     def get_inventory_schema(input : AS::GetInventorySchemaRequest) : Core::ParsedResponse(AS::GetInventorySchemaResult)
       Log.info { "performing 'GetInventorySchema' operation" }
+      input.validate! if config.validate_input?
       response = post("GetInventorySchema", "/", input.to_json)
       Core::ParsedResponse(AS::GetInventorySchemaResult).new(response)
     end
@@ -847,6 +924,7 @@ module Amazonite::SsmV1
     # Retrieves a maintenance window.
     def get_maintenance_window(input : AS::GetMaintenanceWindowRequest) : Core::ParsedResponse(AS::GetMaintenanceWindowResult)
       Log.info { "performing 'GetMaintenanceWindow' operation" }
+      input.validate! if config.validate_input?
       response = post("GetMaintenanceWindow", "/", input.to_json)
       Core::ParsedResponse(AS::GetMaintenanceWindowResult).new(response)
     end
@@ -854,6 +932,7 @@ module Amazonite::SsmV1
     # Retrieves details about a specific a maintenance window execution.
     def get_maintenance_window_execution(input : AS::GetMaintenanceWindowExecutionRequest) : Core::ParsedResponse(AS::GetMaintenanceWindowExecutionResult)
       Log.info { "performing 'GetMaintenanceWindowExecution' operation" }
+      input.validate! if config.validate_input?
       response = post("GetMaintenanceWindowExecution", "/", input.to_json)
       Core::ParsedResponse(AS::GetMaintenanceWindowExecutionResult).new(response)
     end
@@ -861,6 +940,7 @@ module Amazonite::SsmV1
     # Retrieves the details about a specific task run as part of a maintenance window execution.
     def get_maintenance_window_execution_task(input : AS::GetMaintenanceWindowExecutionTaskRequest) : Core::ParsedResponse(AS::GetMaintenanceWindowExecutionTaskResult)
       Log.info { "performing 'GetMaintenanceWindowExecutionTask' operation" }
+      input.validate! if config.validate_input?
       response = post("GetMaintenanceWindowExecutionTask", "/", input.to_json)
       Core::ParsedResponse(AS::GetMaintenanceWindowExecutionTaskResult).new(response)
     end
@@ -868,6 +948,7 @@ module Amazonite::SsmV1
     # Retrieves information about a specific task running on a specific target.
     def get_maintenance_window_execution_task_invocation(input : AS::GetMaintenanceWindowExecutionTaskInvocationRequest) : Core::ParsedResponse(AS::GetMaintenanceWindowExecutionTaskInvocationResult)
       Log.info { "performing 'GetMaintenanceWindowExecutionTaskInvocation' operation" }
+      input.validate! if config.validate_input?
       response = post("GetMaintenanceWindowExecutionTaskInvocation", "/", input.to_json)
       Core::ParsedResponse(AS::GetMaintenanceWindowExecutionTaskInvocationResult).new(response)
     end
@@ -883,6 +964,7 @@ module Amazonite::SsmV1
     # DescribeMaintenanceWindowTasks command.
     def get_maintenance_window_task(input : AS::GetMaintenanceWindowTaskRequest) : Core::ParsedResponse(AS::GetMaintenanceWindowTaskResult)
       Log.info { "performing 'GetMaintenanceWindowTask' operation" }
+      input.validate! if config.validate_input?
       response = post("GetMaintenanceWindowTask", "/", input.to_json)
       Core::ParsedResponse(AS::GetMaintenanceWindowTaskResult).new(response)
     end
@@ -899,6 +981,7 @@ module Amazonite::SsmV1
     # in the *Amazon Web Services Systems Manager User Guide*.
     def get_ops_item(input : AS::GetOpsItemRequest) : Core::ParsedResponse(AS::GetOpsItemResponse)
       Log.info { "performing 'GetOpsItem' operation" }
+      input.validate! if config.validate_input?
       response = post("GetOpsItem", "/", input.to_json)
       Core::ParsedResponse(AS::GetOpsItemResponse).new(response)
     end
@@ -906,6 +989,7 @@ module Amazonite::SsmV1
     # View operational metadata related to an application in Application Manager.
     def get_ops_metadata(input : AS::GetOpsMetadataRequest) : Core::ParsedResponse(AS::GetOpsMetadataResult)
       Log.info { "performing 'GetOpsMetadata' operation" }
+      input.validate! if config.validate_input?
       response = post("GetOpsMetadata", "/", input.to_json)
       Core::ParsedResponse(AS::GetOpsMetadataResult).new(response)
     end
@@ -916,6 +1000,7 @@ module Amazonite::SsmV1
     # configured to report OpsData to Amazon Web Services Systems Manager Explorer.
     def get_ops_summary(input : AS::GetOpsSummaryRequest) : Core::ParsedResponse(AS::GetOpsSummaryResult)
       Log.info { "performing 'GetOpsSummary' operation" }
+      input.validate! if config.validate_input?
       response = post("GetOpsSummary", "/", input.to_json)
       Core::ParsedResponse(AS::GetOpsSummaryResult).new(response)
     end
@@ -943,6 +1028,7 @@ module Amazonite::SsmV1
     # throughput](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-throughput.html).
     def get_parameter(input : AS::GetParameterRequest) : Core::ParsedResponse(AS::GetParameterResult)
       Log.info { "performing 'GetParameter' operation" }
+      input.validate! if config.validate_input?
       response = post("GetParameter", "/", input.to_json)
       Core::ParsedResponse(AS::GetParameterResult).new(response)
     end
@@ -958,6 +1044,7 @@ module Amazonite::SsmV1
     # retrieves whatever the original key alias was referencing.
     def get_parameter_history(input : AS::GetParameterHistoryRequest) : Core::ParsedResponse(AS::GetParameterHistoryResult)
       Log.info { "performing 'GetParameterHistory' operation" }
+      input.validate! if config.validate_input?
       response = post("GetParameterHistory", "/", input.to_json)
       Core::ParsedResponse(AS::GetParameterHistoryResult).new(response)
     end
@@ -985,6 +1072,7 @@ module Amazonite::SsmV1
     # throughput](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-throughput.html).
     def get_parameters(input : AS::GetParametersRequest) : Core::ParsedResponse(AS::GetParametersResult)
       Log.info { "performing 'GetParameters' operation" }
+      input.validate! if config.validate_input?
       response = post("GetParameters", "/", input.to_json)
       Core::ParsedResponse(AS::GetParametersResult).new(response)
     end
@@ -1003,6 +1091,7 @@ module Amazonite::SsmV1
     # characters, the request fails with a `ValidationException` error.
     def get_parameters_by_path(input : AS::GetParametersByPathRequest) : Core::ParsedResponse(AS::GetParametersByPathResult)
       Log.info { "performing 'GetParametersByPath' operation" }
+      input.validate! if config.validate_input?
       response = post("GetParametersByPath", "/", input.to_json)
       Core::ParsedResponse(AS::GetParametersByPathResult).new(response)
     end
@@ -1010,6 +1099,7 @@ module Amazonite::SsmV1
     # Retrieves information about a patch baseline.
     def get_patch_baseline(input : AS::GetPatchBaselineRequest) : Core::ParsedResponse(AS::GetPatchBaselineResult)
       Log.info { "performing 'GetPatchBaseline' operation" }
+      input.validate! if config.validate_input?
       response = post("GetPatchBaseline", "/", input.to_json)
       Core::ParsedResponse(AS::GetPatchBaselineResult).new(response)
     end
@@ -1017,6 +1107,7 @@ module Amazonite::SsmV1
     # Retrieves the patch baseline that should be used for the specified patch group.
     def get_patch_baseline_for_patch_group(input : AS::GetPatchBaselineForPatchGroupRequest) : Core::ParsedResponse(AS::GetPatchBaselineForPatchGroupResult)
       Log.info { "performing 'GetPatchBaselineForPatchGroup' operation" }
+      input.validate! if config.validate_input?
       response = post("GetPatchBaselineForPatchGroup", "/", input.to_json)
       Core::ParsedResponse(AS::GetPatchBaselineForPatchGroupResult).new(response)
     end
@@ -1024,6 +1115,7 @@ module Amazonite::SsmV1
     # Returns an array of the `Policy` object.
     def get_resource_policies(input : AS::GetResourcePoliciesRequest) : Core::ParsedResponse(AS::GetResourcePoliciesResponse)
       Log.info { "performing 'GetResourcePolicies' operation" }
+      input.validate! if config.validate_input?
       response = post("GetResourcePolicies", "/", input.to_json)
       Core::ParsedResponse(AS::GetResourcePoliciesResponse).new(response)
     end
@@ -1044,6 +1136,7 @@ module Amazonite::SsmV1
     # Query the current service setting for the Amazon Web Services account.
     def get_service_setting(input : AS::GetServiceSettingRequest) : Core::ParsedResponse(AS::GetServiceSettingResult)
       Log.info { "performing 'GetServiceSetting' operation" }
+      input.validate! if config.validate_input?
       response = post("GetServiceSetting", "/", input.to_json)
       Core::ParsedResponse(AS::GetServiceSettingResult).new(response)
     end
@@ -1082,6 +1175,7 @@ module Amazonite::SsmV1
     # between characters, the request fails with a `ValidationException` error.
     def label_parameter_version(input : AS::LabelParameterVersionRequest) : Core::ParsedResponse(AS::LabelParameterVersionResult)
       Log.info { "performing 'LabelParameterVersion' operation" }
+      input.validate! if config.validate_input?
       response = post("LabelParameterVersion", "/", input.to_json)
       Core::ParsedResponse(AS::LabelParameterVersionResult).new(response)
     end
@@ -1092,6 +1186,7 @@ module Amazonite::SsmV1
     # Manager.
     def list_associations(input : AS::ListAssociationsRequest) : Core::ParsedResponse(AS::ListAssociationsResult)
       Log.info { "performing 'ListAssociations' operation" }
+      input.validate! if config.validate_input?
       response = post("ListAssociations", "/", input.to_json)
       Core::ParsedResponse(AS::ListAssociationsResult).new(response)
     end
@@ -1099,6 +1194,7 @@ module Amazonite::SsmV1
     # Retrieves all versions of an association for a specific association ID.
     def list_association_versions(input : AS::ListAssociationVersionsRequest) : Core::ParsedResponse(AS::ListAssociationVersionsResult)
       Log.info { "performing 'ListAssociationVersions' operation" }
+      input.validate! if config.validate_input?
       response = post("ListAssociationVersions", "/", input.to_json)
       Core::ParsedResponse(AS::ListAssociationVersionsResult).new(response)
     end
@@ -1107,6 +1203,7 @@ module Amazonite::SsmV1
     # Services Region.
     def list_cloud_connectors(input : AS::ListCloudConnectorsRequest) : Core::ParsedResponse(AS::ListCloudConnectorsResult)
       Log.info { "performing 'ListCloudConnectors' operation" }
+      input.validate! if config.validate_input?
       response = post("ListCloudConnectors", "/", input.to_json)
       Core::ParsedResponse(AS::ListCloudConnectorsResult).new(response)
     end
@@ -1117,6 +1214,7 @@ module Amazonite::SsmV1
     # requested managed node ID. `ListCommandInvocations` provide status about command execution.
     def list_command_invocations(input : AS::ListCommandInvocationsRequest) : Core::ParsedResponse(AS::ListCommandInvocationsResult)
       Log.info { "performing 'ListCommandInvocations' operation" }
+      input.validate! if config.validate_input?
       response = post("ListCommandInvocations", "/", input.to_json)
       Core::ParsedResponse(AS::ListCommandInvocationsResult).new(response)
     end
@@ -1124,6 +1222,7 @@ module Amazonite::SsmV1
     # Lists the commands requested by users of the Amazon Web Services account.
     def list_commands(input : AS::ListCommandsRequest) : Core::ParsedResponse(AS::ListCommandsResult)
       Log.info { "performing 'ListCommands' operation" }
+      input.validate! if config.validate_input?
       response = post("ListCommands", "/", input.to_json)
       Core::ParsedResponse(AS::ListCommandsResult).new(response)
     end
@@ -1133,6 +1232,7 @@ module Amazonite::SsmV1
     # depend on the criteria specified in the filter.
     def list_compliance_items(input : AS::ListComplianceItemsRequest) : Core::ParsedResponse(AS::ListComplianceItemsResult)
       Log.info { "performing 'ListComplianceItems' operation" }
+      input.validate! if config.validate_input?
       response = post("ListComplianceItems", "/", input.to_json)
       Core::ParsedResponse(AS::ListComplianceItemsResult).new(response)
     end
@@ -1142,6 +1242,7 @@ module Amazonite::SsmV1
     # according to the filter criteria that you specify.
     def list_compliance_summaries(input : AS::ListComplianceSummariesRequest) : Core::ParsedResponse(AS::ListComplianceSummariesResult)
       Log.info { "performing 'ListComplianceSummaries' operation" }
+      input.validate! if config.validate_input?
       response = post("ListComplianceSummaries", "/", input.to_json)
       Core::ParsedResponse(AS::ListComplianceSummariesResult).new(response)
     end
@@ -1154,6 +1255,7 @@ module Amazonite::SsmV1
     # Information about approval reviews for a version of a change template in Change Manager.
     def list_document_metadata_history(input : AS::ListDocumentMetadataHistoryRequest) : Core::ParsedResponse(AS::ListDocumentMetadataHistoryResponse)
       Log.info { "performing 'ListDocumentMetadataHistory' operation" }
+      input.validate! if config.validate_input?
       response = post("ListDocumentMetadataHistory", "/", input.to_json)
       Core::ParsedResponse(AS::ListDocumentMetadataHistoryResponse).new(response)
     end
@@ -1162,6 +1264,7 @@ module Amazonite::SsmV1
     # Amazon Web Services Region. You can limit the results of this request by using a filter.
     def list_documents(input : AS::ListDocumentsRequest) : Core::ParsedResponse(AS::ListDocumentsResult)
       Log.info { "performing 'ListDocuments' operation" }
+      input.validate! if config.validate_input?
       response = post("ListDocuments", "/", input.to_json)
       Core::ParsedResponse(AS::ListDocumentsResult).new(response)
     end
@@ -1169,6 +1272,7 @@ module Amazonite::SsmV1
     # List all versions for a document.
     def list_document_versions(input : AS::ListDocumentVersionsRequest) : Core::ParsedResponse(AS::ListDocumentVersionsResult)
       Log.info { "performing 'ListDocumentVersions' operation" }
+      input.validate! if config.validate_input?
       response = post("ListDocumentVersions", "/", input.to_json)
       Core::ParsedResponse(AS::ListDocumentVersionsResult).new(response)
     end
@@ -1176,6 +1280,7 @@ module Amazonite::SsmV1
     # A list of inventory items returned by the request.
     def list_inventory_entries(input : AS::ListInventoryEntriesRequest) : Core::ParsedResponse(AS::ListInventoryEntriesResult)
       Log.info { "performing 'ListInventoryEntries' operation" }
+      input.validate! if config.validate_input?
       response = post("ListInventoryEntries", "/", input.to_json)
       Core::ParsedResponse(AS::ListInventoryEntriesResult).new(response)
     end
@@ -1183,6 +1288,7 @@ module Amazonite::SsmV1
     # Takes in filters and returns a list of managed nodes matching the filter criteria.
     def list_nodes(input : AS::ListNodesRequest) : Core::ParsedResponse(AS::ListNodesResult)
       Log.info { "performing 'ListNodes' operation" }
+      input.validate! if config.validate_input?
       response = post("ListNodes", "/", input.to_json)
       Core::ParsedResponse(AS::ListNodesResult).new(response)
     end
@@ -1191,6 +1297,7 @@ module Amazonite::SsmV1
     # specify. Results are grouped by the input aggregator you specify.
     def list_nodes_summary(input : AS::ListNodesSummaryRequest) : Core::ParsedResponse(AS::ListNodesSummaryResult)
       Log.info { "performing 'ListNodesSummary' operation" }
+      input.validate! if config.validate_input?
       response = post("ListNodesSummary", "/", input.to_json)
       Core::ParsedResponse(AS::ListNodesSummaryResult).new(response)
     end
@@ -1200,6 +1307,7 @@ module Amazonite::SsmV1
     # specifying a filter.
     def list_ops_item_events(input : AS::ListOpsItemEventsRequest) : Core::ParsedResponse(AS::ListOpsItemEventsResponse)
       Log.info { "performing 'ListOpsItemEvents' operation" }
+      input.validate! if config.validate_input?
       response = post("ListOpsItemEvents", "/", input.to_json)
       Core::ParsedResponse(AS::ListOpsItemEventsResponse).new(response)
     end
@@ -1208,6 +1316,7 @@ module Amazonite::SsmV1
     # is a tool in Amazon Web Services Systems Manager.
     def list_ops_item_related_items(input : AS::ListOpsItemRelatedItemsRequest) : Core::ParsedResponse(AS::ListOpsItemRelatedItemsResponse)
       Log.info { "performing 'ListOpsItemRelatedItems' operation" }
+      input.validate! if config.validate_input?
       response = post("ListOpsItemRelatedItems", "/", input.to_json)
       Core::ParsedResponse(AS::ListOpsItemRelatedItemsResponse).new(response)
     end
@@ -1216,6 +1325,7 @@ module Amazonite::SsmV1
     # Manager OpsMetadata objects or blobs.
     def list_ops_metadata(input : AS::ListOpsMetadataRequest) : Core::ParsedResponse(AS::ListOpsMetadataResult)
       Log.info { "performing 'ListOpsMetadata' operation" }
+      input.validate! if config.validate_input?
       response = post("ListOpsMetadata", "/", input.to_json)
       Core::ParsedResponse(AS::ListOpsMetadataResult).new(response)
     end
@@ -1225,6 +1335,7 @@ module Amazonite::SsmV1
     # criteria you specify.
     def list_resource_compliance_summaries(input : AS::ListResourceComplianceSummariesRequest) : Core::ParsedResponse(AS::ListResourceComplianceSummariesResult)
       Log.info { "performing 'ListResourceComplianceSummaries' operation" }
+      input.validate! if config.validate_input?
       response = post("ListResourceComplianceSummaries", "/", input.to_json)
       Core::ParsedResponse(AS::ListResourceComplianceSummariesResult).new(response)
     end
@@ -1240,6 +1351,7 @@ module Amazonite::SsmV1
     # call.
     def list_resource_data_sync(input : AS::ListResourceDataSyncRequest) : Core::ParsedResponse(AS::ListResourceDataSyncResult)
       Log.info { "performing 'ListResourceDataSync' operation" }
+      input.validate! if config.validate_input?
       response = post("ListResourceDataSync", "/", input.to_json)
       Core::ParsedResponse(AS::ListResourceDataSyncResult).new(response)
     end
@@ -1249,6 +1361,7 @@ module Amazonite::SsmV1
     # For information about the ID format for each supported resource type, see AddTagsToResource.
     def list_tags_for_resource(input : AS::ListTagsForResourceRequest) : Core::ParsedResponse(AS::ListTagsForResourceResult)
       Log.info { "performing 'ListTagsForResource' operation" }
+      input.validate! if config.validate_input?
       response = post("ListTagsForResource", "/", input.to_json)
       Core::ParsedResponse(AS::ListTagsForResourceResult).new(response)
     end
@@ -1259,6 +1372,7 @@ module Amazonite::SsmV1
     # account ID.
     def modify_document_permission(input : AS::ModifyDocumentPermissionRequest) : Core::ParsedResponse(AS::ModifyDocumentPermissionResponse)
       Log.info { "performing 'ModifyDocumentPermission' operation" }
+      input.validate! if config.validate_input?
       response = post("ModifyDocumentPermission", "/", input.to_json)
       Core::ParsedResponse(AS::ModifyDocumentPermissionResponse).new(response)
     end
@@ -1311,6 +1425,7 @@ module Amazonite::SsmV1
     # resource. Specify the time by using the following format: `yyyy-MM-dd'T'HH:mm:ss'Z'`
     def put_compliance_items(input : AS::PutComplianceItemsRequest) : Core::ParsedResponse(AS::PutComplianceItemsResult)
       Log.info { "performing 'PutComplianceItems' operation" }
+      input.validate! if config.validate_input?
       response = post("PutComplianceItems", "/", input.to_json)
       Core::ParsedResponse(AS::PutComplianceItemsResult).new(response)
     end
@@ -1319,6 +1434,7 @@ module Amazonite::SsmV1
     # item, if it doesn't already exist, or updates an inventory item, if it does exist.
     def put_inventory(input : AS::PutInventoryRequest) : Core::ParsedResponse(AS::PutInventoryResult)
       Log.info { "performing 'PutInventory' operation" }
+      input.validate! if config.validate_input?
       response = post("PutInventory", "/", input.to_json)
       Core::ParsedResponse(AS::PutInventoryResult).new(response)
     end
@@ -1340,6 +1456,7 @@ module Amazonite::SsmV1
     # throughput](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-throughput.html).
     def put_parameter(input : AS::PutParameterRequest) : Core::ParsedResponse(AS::PutParameterResult)
       Log.info { "performing 'PutParameter' operation" }
+      input.validate! if config.validate_input?
       response = post("PutParameter", "/", input.to_json)
       Core::ParsedResponse(AS::PutParameterResult).new(response)
     end
@@ -1382,6 +1499,7 @@ module Amazonite::SsmV1
     # in the *Amazon Web Services Systems Manager User Guide*
     def put_resource_policy(input : AS::PutResourcePolicyRequest) : Core::ParsedResponse(AS::PutResourcePolicyResponse)
       Log.info { "performing 'PutResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(AS::PutResourcePolicyResponse).new(response)
     end
@@ -1394,6 +1512,7 @@ module Amazonite::SsmV1
     # `pb-0574b43a65ea646ed`.
     def register_default_patch_baseline(input : AS::RegisterDefaultPatchBaselineRequest) : Core::ParsedResponse(AS::RegisterDefaultPatchBaselineResult)
       Log.info { "performing 'RegisterDefaultPatchBaseline' operation" }
+      input.validate! if config.validate_input?
       response = post("RegisterDefaultPatchBaseline", "/", input.to_json)
       Core::ParsedResponse(AS::RegisterDefaultPatchBaselineResult).new(response)
     end
@@ -1401,6 +1520,7 @@ module Amazonite::SsmV1
     # Registers a patch baseline for a patch group.
     def register_patch_baseline_for_patch_group(input : AS::RegisterPatchBaselineForPatchGroupRequest) : Core::ParsedResponse(AS::RegisterPatchBaselineForPatchGroupResult)
       Log.info { "performing 'RegisterPatchBaselineForPatchGroup' operation" }
+      input.validate! if config.validate_input?
       response = post("RegisterPatchBaselineForPatchGroup", "/", input.to_json)
       Core::ParsedResponse(AS::RegisterPatchBaselineForPatchGroupResult).new(response)
     end
@@ -1408,6 +1528,7 @@ module Amazonite::SsmV1
     # Registers a target with a maintenance window.
     def register_target_with_maintenance_window(input : AS::RegisterTargetWithMaintenanceWindowRequest) : Core::ParsedResponse(AS::RegisterTargetWithMaintenanceWindowResult)
       Log.info { "performing 'RegisterTargetWithMaintenanceWindow' operation" }
+      input.validate! if config.validate_input?
       response = post("RegisterTargetWithMaintenanceWindow", "/", input.to_json)
       Core::ParsedResponse(AS::RegisterTargetWithMaintenanceWindowResult).new(response)
     end
@@ -1415,6 +1536,7 @@ module Amazonite::SsmV1
     # Adds a new task to a maintenance window.
     def register_task_with_maintenance_window(input : AS::RegisterTaskWithMaintenanceWindowRequest) : Core::ParsedResponse(AS::RegisterTaskWithMaintenanceWindowResult)
       Log.info { "performing 'RegisterTaskWithMaintenanceWindow' operation" }
+      input.validate! if config.validate_input?
       response = post("RegisterTaskWithMaintenanceWindow", "/", input.to_json)
       Core::ParsedResponse(AS::RegisterTaskWithMaintenanceWindowResult).new(response)
     end
@@ -1422,6 +1544,7 @@ module Amazonite::SsmV1
     # Removes tag keys from the specified resource.
     def remove_tags_from_resource(input : AS::RemoveTagsFromResourceRequest) : Core::ParsedResponse(AS::RemoveTagsFromResourceResult)
       Log.info { "performing 'RemoveTagsFromResource' operation" }
+      input.validate! if config.validate_input?
       response = post("RemoveTagsFromResource", "/", input.to_json)
       Core::ParsedResponse(AS::RemoveTagsFromResourceResult).new(response)
     end
@@ -1443,6 +1566,7 @@ module Amazonite::SsmV1
     # Services service team.
     def reset_service_setting(input : AS::ResetServiceSettingRequest) : Core::ParsedResponse(AS::ResetServiceSettingResult)
       Log.info { "performing 'ResetServiceSetting' operation" }
+      input.validate! if config.validate_input?
       response = post("ResetServiceSetting", "/", input.to_json)
       Core::ParsedResponse(AS::ResetServiceSettingResult).new(response)
     end
@@ -1454,6 +1578,7 @@ module Amazonite::SsmV1
     # intermittent network issues. It isn't intended for any other use.
     def resume_session(input : AS::ResumeSessionRequest) : Core::ParsedResponse(AS::ResumeSessionResponse)
       Log.info { "performing 'ResumeSession' operation" }
+      input.validate! if config.validate_input?
       response = post("ResumeSession", "/", input.to_json)
       Core::ParsedResponse(AS::ResumeSessionResponse).new(response)
     end
@@ -1462,6 +1587,7 @@ module Amazonite::SsmV1
     # execution.
     def send_automation_signal(input : AS::SendAutomationSignalRequest) : Core::ParsedResponse(AS::SendAutomationSignalResult)
       Log.info { "performing 'SendAutomationSignal' operation" }
+      input.validate! if config.validate_input?
       response = post("SendAutomationSignal", "/", input.to_json)
       Core::ParsedResponse(AS::SendAutomationSignalResult).new(response)
     end
@@ -1469,6 +1595,7 @@ module Amazonite::SsmV1
     # Runs commands on one or more managed nodes.
     def send_command(input : AS::SendCommandRequest) : Core::ParsedResponse(AS::SendCommandResult)
       Log.info { "performing 'SendCommand' operation" }
+      input.validate! if config.validate_input?
       response = post("SendCommand", "/", input.to_json)
       Core::ParsedResponse(AS::SendCommandResult).new(response)
     end
@@ -1476,6 +1603,7 @@ module Amazonite::SsmV1
     # Starts the workflow for just-in-time node access sessions.
     def start_access_request(input : AS::StartAccessRequestRequest) : Core::ParsedResponse(AS::StartAccessRequestResponse)
       Log.info { "performing 'StartAccessRequest' operation" }
+      input.validate! if config.validate_input?
       response = post("StartAccessRequest", "/", input.to_json)
       Core::ParsedResponse(AS::StartAccessRequestResponse).new(response)
     end
@@ -1484,6 +1612,7 @@ module Amazonite::SsmV1
     # troubleshooting associations.
     def start_associations_once(input : AS::StartAssociationsOnceRequest) : Core::ParsedResponse(AS::StartAssociationsOnceResult)
       Log.info { "performing 'StartAssociationsOnce' operation" }
+      input.validate! if config.validate_input?
       response = post("StartAssociationsOnce", "/", input.to_json)
       Core::ParsedResponse(AS::StartAssociationsOnceResult).new(response)
     end
@@ -1491,6 +1620,7 @@ module Amazonite::SsmV1
     # Initiates execution of an Automation runbook.
     def start_automation_execution(input : AS::StartAutomationExecutionRequest) : Core::ParsedResponse(AS::StartAutomationExecutionResult)
       Log.info { "performing 'StartAutomationExecution' operation" }
+      input.validate! if config.validate_input?
       response = post("StartAutomationExecution", "/", input.to_json)
       Core::ParsedResponse(AS::StartAutomationExecutionResult).new(response)
     end
@@ -1504,6 +1634,7 @@ module Amazonite::SsmV1
     # request run only after all required approvals for the change request have been received.
     def start_change_request_execution(input : AS::StartChangeRequestExecutionRequest) : Core::ParsedResponse(AS::StartChangeRequestExecutionResult)
       Log.info { "performing 'StartChangeRequestExecution' operation" }
+      input.validate! if config.validate_input?
       response = post("StartChangeRequestExecution", "/", input.to_json)
       Core::ParsedResponse(AS::StartChangeRequestExecutionResult).new(response)
     end
@@ -1512,6 +1643,7 @@ module Amazonite::SsmV1
     # Automation runbook would have on the targeted resources.
     def start_execution_preview(input : AS::StartExecutionPreviewRequest) : Core::ParsedResponse(AS::StartExecutionPreviewResponse)
       Log.info { "performing 'StartExecutionPreview' operation" }
+      input.validate! if config.validate_input?
       response = post("StartExecutionPreview", "/", input.to_json)
       Core::ParsedResponse(AS::StartExecutionPreviewResponse).new(response)
     end
@@ -1530,6 +1662,7 @@ module Amazonite::SsmV1
     # Amazon Web Services Tools for PowerShell on Windows local machines.
     def start_session(input : AS::StartSessionRequest) : Core::ParsedResponse(AS::StartSessionResponse)
       Log.info { "performing 'StartSession' operation" }
+      input.validate! if config.validate_input?
       response = post("StartSession", "/", input.to_json)
       Core::ParsedResponse(AS::StartSessionResponse).new(response)
     end
@@ -1537,6 +1670,7 @@ module Amazonite::SsmV1
     # Stop an Automation that is currently running.
     def stop_automation_execution(input : AS::StopAutomationExecutionRequest) : Core::ParsedResponse(AS::StopAutomationExecutionResult)
       Log.info { "performing 'StopAutomationExecution' operation" }
+      input.validate! if config.validate_input?
       response = post("StopAutomationExecution", "/", input.to_json)
       Core::ParsedResponse(AS::StopAutomationExecutionResult).new(response)
     end
@@ -1545,6 +1679,7 @@ module Amazonite::SsmV1
     # SSM Agent on the managed node. A terminated session can't be resumed.
     def terminate_session(input : AS::TerminateSessionRequest) : Core::ParsedResponse(AS::TerminateSessionResponse)
       Log.info { "performing 'TerminateSession' operation" }
+      input.validate! if config.validate_input?
       response = post("TerminateSession", "/", input.to_json)
       Core::ParsedResponse(AS::TerminateSessionResponse).new(response)
     end
@@ -1556,6 +1691,7 @@ module Amazonite::SsmV1
     # characters, the request fails with a `ValidationException` error.
     def unlabel_parameter_version(input : AS::UnlabelParameterVersionRequest) : Core::ParsedResponse(AS::UnlabelParameterVersionResult)
       Log.info { "performing 'UnlabelParameterVersion' operation" }
+      input.validate! if config.validate_input?
       response = post("UnlabelParameterVersion", "/", input.to_json)
       Core::ParsedResponse(AS::UnlabelParameterVersionResult).new(response)
     end
@@ -1580,6 +1716,7 @@ module Amazonite::SsmV1
     # schedule run.
     def update_association(input : AS::UpdateAssociationRequest) : Core::ParsedResponse(AS::UpdateAssociationResult)
       Log.info { "performing 'UpdateAssociation' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateAssociation", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateAssociationResult).new(response)
     end
@@ -1592,6 +1729,7 @@ module Amazonite::SsmV1
     # created with the `InstanceId` legacy parameter.
     def update_association_status(input : AS::UpdateAssociationStatusRequest) : Core::ParsedResponse(AS::UpdateAssociationStatusResult)
       Log.info { "performing 'UpdateAssociationStatus' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateAssociationStatus", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateAssociationStatusResult).new(response)
     end
@@ -1599,6 +1737,7 @@ module Amazonite::SsmV1
     # Updates an existing cloud connector with new configuration details.
     def update_cloud_connector(input : AS::UpdateCloudConnectorRequest) : Core::ParsedResponse(AS::UpdateCloudConnectorResult)
       Log.info { "performing 'UpdateCloudConnector' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateCloudConnector", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateCloudConnectorResult).new(response)
     end
@@ -1606,6 +1745,7 @@ module Amazonite::SsmV1
     # Updates one or more values for an SSM document.
     def update_document(input : AS::UpdateDocumentRequest) : Core::ParsedResponse(AS::UpdateDocumentResult)
       Log.info { "performing 'UpdateDocument' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateDocument", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateDocumentResult).new(response)
     end
@@ -1616,6 +1756,7 @@ module Amazonite::SsmV1
     # runs the association unless you previously specifed the `apply-only-at-cron-interval` parameter.
     def update_document_default_version(input : AS::UpdateDocumentDefaultVersionRequest) : Core::ParsedResponse(AS::UpdateDocumentDefaultVersionResult)
       Log.info { "performing 'UpdateDocumentDefaultVersion' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateDocumentDefaultVersion", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateDocumentDefaultVersionResult).new(response)
     end
@@ -1629,6 +1770,7 @@ module Amazonite::SsmV1
     # Change Manager.
     def update_document_metadata(input : AS::UpdateDocumentMetadataRequest) : Core::ParsedResponse(AS::UpdateDocumentMetadataResponse)
       Log.info { "performing 'UpdateDocumentMetadata' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateDocumentMetadata", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateDocumentMetadataResponse).new(response)
     end
@@ -1642,6 +1784,7 @@ module Amazonite::SsmV1
     # `Cutoff` is one hour, no maintenance window tasks can start after 5 PM.
     def update_maintenance_window(input : AS::UpdateMaintenanceWindowRequest) : Core::ParsedResponse(AS::UpdateMaintenanceWindowResult)
       Log.info { "performing 'UpdateMaintenanceWindow' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateMaintenanceWindow", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateMaintenanceWindowResult).new(response)
     end
@@ -1664,6 +1807,7 @@ module Amazonite::SsmV1
     # If a parameter is null, then the corresponding field isn't modified.
     def update_maintenance_window_target(input : AS::UpdateMaintenanceWindowTargetRequest) : Core::ParsedResponse(AS::UpdateMaintenanceWindowTargetResult)
       Log.info { "performing 'UpdateMaintenanceWindowTarget' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateMaintenanceWindowTarget", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateMaintenanceWindowTargetResult).new(response)
     end
@@ -1705,6 +1849,7 @@ module Amazonite::SsmV1
     # `NotificationConfig` are removed.
     def update_maintenance_window_task(input : AS::UpdateMaintenanceWindowTaskRequest) : Core::ParsedResponse(AS::UpdateMaintenanceWindowTaskResult)
       Log.info { "performing 'UpdateMaintenanceWindowTask' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateMaintenanceWindowTask", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateMaintenanceWindowTaskResult).new(response)
     end
@@ -1714,6 +1859,7 @@ module Amazonite::SsmV1
     # nodes during the activation process. For more information, see CreateActivation.
     def update_managed_instance_role(input : AS::UpdateManagedInstanceRoleRequest) : Core::ParsedResponse(AS::UpdateManagedInstanceRoleResult)
       Log.info { "performing 'UpdateManagedInstanceRole' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateManagedInstanceRole", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateManagedInstanceRoleResult).new(response)
     end
@@ -1730,6 +1876,7 @@ module Amazonite::SsmV1
     # in the *Amazon Web Services Systems Manager User Guide*.
     def update_ops_item(input : AS::UpdateOpsItemRequest) : Core::ParsedResponse(AS::UpdateOpsItemResponse)
       Log.info { "performing 'UpdateOpsItem' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateOpsItem", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateOpsItemResponse).new(response)
     end
@@ -1738,6 +1885,7 @@ module Amazonite::SsmV1
     # Application Manager.
     def update_ops_metadata(input : AS::UpdateOpsMetadataRequest) : Core::ParsedResponse(AS::UpdateOpsMetadataResult)
       Log.info { "performing 'UpdateOpsMetadata' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateOpsMetadata", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateOpsMetadataResult).new(response)
     end
@@ -1748,6 +1896,7 @@ module Amazonite::SsmV1
     # system type, see PatchFilter.
     def update_patch_baseline(input : AS::UpdatePatchBaselineRequest) : Core::ParsedResponse(AS::UpdatePatchBaselineResult)
       Log.info { "performing 'UpdatePatchBaseline' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdatePatchBaseline", "/", input.to_json)
       Core::ParsedResponse(AS::UpdatePatchBaselineResult).new(response)
     end
@@ -1762,6 +1911,7 @@ module Amazonite::SsmV1
     # `SyncType`.
     def update_resource_data_sync(input : AS::UpdateResourceDataSyncRequest) : Core::ParsedResponse(AS::UpdateResourceDataSyncResult)
       Log.info { "performing 'UpdateResourceDataSync' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateResourceDataSync", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateResourceDataSyncResult).new(response)
     end
@@ -1782,6 +1932,7 @@ module Amazonite::SsmV1
     # Update the service setting for the account.
     def update_service_setting(input : AS::UpdateServiceSettingRequest) : Core::ParsedResponse(AS::UpdateServiceSettingResult)
       Log.info { "performing 'UpdateServiceSetting' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateServiceSetting", "/", input.to_json)
       Core::ParsedResponse(AS::UpdateServiceSettingResult).new(response)
     end
@@ -1789,6 +1940,7 @@ module Amazonite::SsmV1
     # Validates the configuration and connectivity of a cloud connector.
     def validate_cloud_connector(input : AS::ValidateCloudConnectorRequest) : Core::ParsedResponse(AS::ValidateCloudConnectorResult)
       Log.info { "performing 'ValidateCloudConnector' operation" }
+      input.validate! if config.validate_input?
       response = post("ValidateCloudConnector", "/", input.to_json)
       Core::ParsedResponse(AS::ValidateCloudConnectorResult).new(response)
     end

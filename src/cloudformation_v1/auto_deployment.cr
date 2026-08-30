@@ -55,6 +55,9 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@enabled, @retain_stacks_on_account_removal, @depends_on)
   end
 end

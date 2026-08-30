@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The request body of the GetServiceSetting API operation.
   class GetServiceSettingRequest
@@ -30,6 +32,13 @@ module Amazonite::SsmV1
     def initialize(
       @setting_id : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @setting_id
+        raise Core::ValidationError.new("SettingId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SettingId length must be <= 1000") if value.size > 1000
+      end
     end
 
     def_equals_and_hash(@setting_id)

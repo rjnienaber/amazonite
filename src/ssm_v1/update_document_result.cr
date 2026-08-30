@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class UpdateDocumentResult
     include JSON::Serializable
@@ -9,6 +11,12 @@ module Amazonite::SsmV1
     def initialize(
       @document_description : DocumentDescription | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @document_description
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@document_description)

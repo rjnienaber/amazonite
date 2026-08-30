@@ -36,6 +36,19 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @policy_template_arn
+        raise Core::ValidationError.new("PolicyTemplateArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("PolicyTemplateArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @parameters
+        raise Core::ValidationError.new("Parameters must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Parameters must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@policy_template_arn, @parameters)
   end
 end

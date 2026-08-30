@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # The custom parameters to be used when the target is an Batch job.
   class BatchParameters
@@ -30,6 +32,16 @@ module Amazonite::EventBridgeV1
       @array_properties : BatchArrayProperties | Nil = nil,
       @retry_strategy : BatchRetryStrategy | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @array_properties
+        value.validate!
+      end
+
+      if value = @retry_strategy
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@job_definition, @job_name, @array_properties, @retry_strategy)

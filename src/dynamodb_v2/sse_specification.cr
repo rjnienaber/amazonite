@@ -32,6 +32,9 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@enabled, @sse_type, @kms_master_key_id)
   end
 end

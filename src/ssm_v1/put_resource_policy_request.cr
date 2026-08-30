@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class PutResourcePolicyRequest
     include JSON::Serializable
@@ -25,6 +27,17 @@ module Amazonite::SsmV1
       @policy_id : String | Nil = nil,
       @policy_hash : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @resource_arn
+        raise Core::ValidationError.new("ResourceArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("ResourceArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @policy
+        raise Core::ValidationError.new("Policy does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
     end
 
     def_equals_and_hash(@resource_arn, @policy, @policy_id, @policy_hash)

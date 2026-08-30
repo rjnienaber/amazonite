@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # The result of an event entry the partner submitted in this request. If the event was
   # successfully submitted, the entry has the event ID in it. Otherwise, you can use the error code
@@ -22,6 +24,13 @@ module Amazonite::EventBridgeV1
       @error_code : String | Nil = nil,
       @error_message : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @event_id
+        raise Core::ValidationError.new("EventId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("EventId length must be <= 64") if value.size > 64
+      end
     end
 
     def_equals_and_hash(@event_id, @error_code, @error_message)

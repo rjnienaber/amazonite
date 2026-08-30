@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # Represents a target that failed to be added to a rule.
   class PutTargetsResultEntry
@@ -21,6 +23,14 @@ module Amazonite::EventBridgeV1
       @error_code : String | Nil = nil,
       @error_message : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @target_id
+        raise Core::ValidationError.new("TargetId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TargetId length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("TargetId does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_A-Za-z0-9]+$"))
+      end
     end
 
     def_equals_and_hash(@target_id, @error_code, @error_message)

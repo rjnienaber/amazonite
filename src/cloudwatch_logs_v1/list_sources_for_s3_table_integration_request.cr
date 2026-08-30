@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class ListSourcesForS3TableIntegrationRequest
     include JSON::Serializable
@@ -18,6 +20,17 @@ module Amazonite::CloudWatchLogsV1
       @max_results : Int32 | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @max_results
+        raise Core::ValidationError.new("maxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("maxResults value must be <= 100") if value > 100
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@integration_arn, @max_results, @next_token)

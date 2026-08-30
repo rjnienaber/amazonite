@@ -44,6 +44,26 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @role_name
+        raise Core::ValidationError.new("RoleName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RoleName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("RoleName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @policy_name
+        raise Core::ValidationError.new("PolicyName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PolicyName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("PolicyName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @policy_document
+        raise Core::ValidationError.new("PolicyDocument length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PolicyDocument length must be <= 131072") if value.size > 131072
+        raise Core::ValidationError.new("PolicyDocument does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+$"))
+      end
+    end
+
     def_equals_and_hash(@role_name, @policy_name, @policy_document)
   end
 end

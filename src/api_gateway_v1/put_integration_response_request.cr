@@ -1,4 +1,5 @@
 private alias AAG = Amazonite::ApiGatewayV1
+private alias Core = Amazonite::Core
 
 module Amazonite::ApiGatewayV1
   # Represents a put integration response request.
@@ -59,6 +60,12 @@ module Amazonite::ApiGatewayV1
       @response_templates : Hash(String, String) | Nil = nil,
       @content_handling : ContentHandlingStrategy | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @status_code
+        raise Core::ValidationError.new("statusCode does not match the required pattern") unless value.matches?(Regex.new("^[1-5]\\d\\d$"))
+      end
     end
 
     def_equals_and_hash(@rest_api_id, @resource_id, @http_method, @status_code, @selection_pattern, @response_parameters, @response_templates, @content_handling)

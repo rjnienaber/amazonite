@@ -18,6 +18,9 @@ module Amazonite::CloudWatchLogsV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@scheduled_query_arn, @state)
   end
 end

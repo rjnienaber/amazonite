@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # An ordered list of errors for each item in the request which caused the transaction to get
   # cancelled. The values of the list are ordered according to the ordering of the
@@ -23,6 +25,12 @@ module Amazonite::DynamoDBV2
       @code : String | Nil = nil,
       @message : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @item
+        value.each_value(&.validate!)
+      end
     end
 
     def_equals_and_hash(@item, @code, @message)

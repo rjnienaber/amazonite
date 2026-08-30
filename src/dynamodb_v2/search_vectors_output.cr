@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class SearchVectorsOutput
     include JSON::Serializable
@@ -16,6 +18,16 @@ module Amazonite::DynamoDBV2
       @consumed_capacity : VectorCapacity | Nil = nil,
       @search_results : Array(SearchResultItem) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @consumed_capacity
+        value.validate!
+      end
+
+      if value = @search_results
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@consumed_capacity, @search_results)

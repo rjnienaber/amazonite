@@ -27,6 +27,9 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@allowed_by_organizations)
   end
 end

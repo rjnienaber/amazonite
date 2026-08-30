@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Details about the response to a document review request.
   class DocumentMetadataResponseInfo
@@ -10,6 +12,12 @@ module Amazonite::SsmV1
     def initialize(
       @reviewer_response : Array(DocumentReviewerResponseSource) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @reviewer_response
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@reviewer_response)

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class PutLogEventsRequest
     include JSON::Serializable
@@ -33,6 +35,34 @@ module Amazonite::CloudWatchLogsV1
       @sequence_token : String | Nil = nil,
       @entity : Entity | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @log_group_name
+        raise Core::ValidationError.new("logGroupName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("logGroupName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+
+      if value = @log_stream_name
+        raise Core::ValidationError.new("logStreamName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logStreamName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("logStreamName does not match the required pattern") unless value.matches?(Regex.new("^[^:*]*$"))
+      end
+
+      if value = @log_events
+        raise Core::ValidationError.new("logEvents must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("logEvents must have at most 10000 item(s)") if value.size > 10000
+        value.each(&.validate!)
+      end
+
+      if value = @sequence_token
+        raise Core::ValidationError.new("sequenceToken length must be >= 1") if value.size < 1
+      end
+
+      if value = @entity
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@log_group_name, @log_stream_name, @log_events, @sequence_token, @entity)

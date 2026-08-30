@@ -54,6 +54,9 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@title, @kb_id, @classification, @severity, @state, @installed_time, @cve_ids)
   end
 end

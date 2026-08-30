@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class ListGlobalTablesInput
     include JSON::Serializable
@@ -25,6 +27,18 @@ module Amazonite::DynamoDBV2
       @limit : Int32 | Nil = nil,
       @region_name : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @exclusive_start_global_table_name
+        raise Core::ValidationError.new("ExclusiveStartGlobalTableName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("ExclusiveStartGlobalTableName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("ExclusiveStartGlobalTableName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("Limit value must be >= 1") if value < 1
+      end
     end
 
     def_equals_and_hash(@exclusive_start_global_table_name, @limit, @region_name)

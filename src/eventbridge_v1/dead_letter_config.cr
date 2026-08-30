@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # Configuration details of the Amazon SQS queue for EventBridge to use as a dead-letter queue
   # (DLQ).
@@ -15,6 +17,13 @@ module Amazonite::EventBridgeV1
     def initialize(
       @arn : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Arn length must be <= 1600") if value.size > 1600
+      end
     end
 
     def_equals_and_hash(@arn)

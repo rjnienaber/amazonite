@@ -125,6 +125,28 @@ module Amazonite::KmsV1
     )
     end
 
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @message
+        raise Core::ValidationError.new("Message length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Message length must be <= 4096") if value.size > 4096
+      end
+
+      if value = @signature
+        raise Core::ValidationError.new("Signature length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Signature length must be <= 6144") if value.size > 6144
+      end
+
+      if value = @grant_tokens
+        raise Core::ValidationError.new("GrantTokens must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("GrantTokens must have at most 10 item(s)") if value.size > 10
+      end
+    end
+
     def_equals_and_hash(@key_id, @message, @message_type, @signature, @signing_algorithm, @grant_tokens, @dry_run)
   end
 end

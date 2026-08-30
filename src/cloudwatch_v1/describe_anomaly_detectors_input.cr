@@ -55,6 +55,39 @@ module Amazonite::CloudWatchV1
     )
     end
 
+    def validate! : Nil
+      if value = @anomaly_detector_ids
+        raise Core::ValidationError.new("AnomalyDetectorIds must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AnomalyDetectorIds must have at most 50 item(s)") if value.size > 50
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+      end
+
+      if value = @namespace
+        raise Core::ValidationError.new("Namespace length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Namespace length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("Namespace does not match the required pattern") unless value.matches?(Regex.new("^[^:]"))
+      end
+
+      if value = @metric_name
+        raise Core::ValidationError.new("MetricName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MetricName length must be <= 255") if value.size > 255
+      end
+
+      if value = @dimensions
+        raise Core::ValidationError.new("Dimensions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Dimensions must have at most 30 item(s)") if value.size > 30
+        value.each(&.validate!)
+      end
+
+      if value = @anomaly_detector_types
+        raise Core::ValidationError.new("AnomalyDetectorTypes must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AnomalyDetectorTypes must have at most 2 item(s)") if value.size > 2
+      end
+    end
+
     def_equals_and_hash(@anomaly_detector_ids, @next_token, @max_results, @namespace, @metric_name, @dimensions, @anomaly_detector_types)
   end
 end

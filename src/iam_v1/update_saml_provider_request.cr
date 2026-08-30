@@ -68,6 +68,30 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @saml_metadata_document
+        raise Core::ValidationError.new("SAMLMetadataDocument length must be >= 1000") if value.size < 1000
+        raise Core::ValidationError.new("SAMLMetadataDocument length must be <= 10000000") if value.size > 10000000
+      end
+
+      if value = @saml_provider_arn
+        raise Core::ValidationError.new("SAMLProviderArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("SAMLProviderArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @add_private_key
+        raise Core::ValidationError.new("AddPrivateKey length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AddPrivateKey length must be <= 16384") if value.size > 16384
+        raise Core::ValidationError.new("AddPrivateKey does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+$"))
+      end
+
+      if value = @remove_private_key
+        raise Core::ValidationError.new("RemovePrivateKey length must be >= 22") if value.size < 22
+        raise Core::ValidationError.new("RemovePrivateKey length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("RemovePrivateKey does not match the required pattern") unless value.matches?(Regex.new("^[A-Z0-9]+$"))
+      end
+    end
+
     def_equals_and_hash(@saml_metadata_document, @saml_provider_arn, @assertion_encryption_mode, @add_private_key, @remove_private_key)
   end
 end

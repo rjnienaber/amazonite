@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents a request to perform a `PutItem` operation on an item.
   class PutRequest
@@ -13,6 +15,12 @@ module Amazonite::DynamoDBV2
     def initialize(
       @item : Hash(String, AttributeValue),
     )
+    end
+
+    def validate! : Nil
+      if value = @item
+        value.each_value(&.validate!)
+      end
     end
 
     def_equals_and_hash(@item)

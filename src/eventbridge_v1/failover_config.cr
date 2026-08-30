@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # The failover configuration for an endpoint. This includes what triggers failover and what
   # happens when it's triggered.
@@ -16,6 +18,16 @@ module Amazonite::EventBridgeV1
       @primary : Primary,
       @secondary : Secondary,
     )
+    end
+
+    def validate! : Nil
+      if value = @primary
+        value.validate!
+      end
+
+      if value = @secondary
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@primary, @secondary)

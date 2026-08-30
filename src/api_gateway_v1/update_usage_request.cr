@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # The PATCH request to grant a temporary extension to the remaining quota of a usage plan
   # associated with a specified API key.
@@ -23,6 +25,12 @@ module Amazonite::ApiGatewayV1
       @key_id : String,
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @patch_operations
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@usage_plan_id, @key_id, @patch_operations)

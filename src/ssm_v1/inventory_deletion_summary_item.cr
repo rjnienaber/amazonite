@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Either a count, remaining count, or a version number in a delete inventory summary.
   class InventoryDeletionSummaryItem
@@ -20,6 +22,12 @@ module Amazonite::SsmV1
       @count : Int32 | Nil = nil,
       @remaining_count : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @version
+        raise Core::ValidationError.new("Version does not match the required pattern") unless value.matches?(Regex.new("^([0-9]{1,6})(\\.[0-9]{1,6})$"))
+      end
     end
 
     def_equals_and_hash(@version, @count, @remaining_count)

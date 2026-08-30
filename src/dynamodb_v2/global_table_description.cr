@@ -43,6 +43,18 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+      if value = @replication_group
+        value.each(&.validate!)
+      end
+
+      if value = @global_table_name
+        raise Core::ValidationError.new("GlobalTableName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("GlobalTableName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("GlobalTableName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+    end
+
     def_equals_and_hash(@replication_group, @global_table_arn, @creation_date_time, @global_table_status, @global_table_name)
   end
 end

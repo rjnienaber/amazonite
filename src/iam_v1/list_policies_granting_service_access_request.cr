@@ -52,6 +52,24 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @marker
+        raise Core::ValidationError.new("Marker length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Marker length must be <= 320") if value.size > 320
+        raise Core::ValidationError.new("Marker does not match the required pattern") unless value.matches?(Regex.new("^[\\u0020-\\u00FF]+$"))
+      end
+
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("Arn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @service_namespaces
+        raise Core::ValidationError.new("ServiceNamespaces must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("ServiceNamespaces must have at most 200 item(s)") if value.size > 200
+      end
+    end
+
     def_equals_and_hash(@marker, @arn, @service_namespaces)
   end
 end

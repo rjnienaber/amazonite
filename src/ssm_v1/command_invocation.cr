@@ -145,6 +145,57 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @command_id
+        raise Core::ValidationError.new("CommandId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("CommandId length must be <= 36") if value.size > 36
+      end
+
+      if value = @instance_id
+        raise Core::ValidationError.new("InstanceId does not match the required pattern") unless value.matches?(Regex.new("^(^i-(\\w{8}|\\w{17})$)|(^mi-\\w{17}$)$"))
+      end
+
+      if value = @instance_name
+        raise Core::ValidationError.new("InstanceName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("InstanceName length must be <= 255") if value.size > 255
+      end
+
+      if value = @comment
+        raise Core::ValidationError.new("Comment length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Comment length must be <= 100") if value.size > 100
+      end
+
+      if value = @document_name
+        raise Core::ValidationError.new("DocumentName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @status_details
+        raise Core::ValidationError.new("StatusDetails length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StatusDetails length must be <= 100") if value.size > 100
+      end
+
+      if value = @trace_output
+        raise Core::ValidationError.new("TraceOutput length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("TraceOutput length must be <= 2500") if value.size > 2500
+      end
+
+      if value = @command_plugins
+        value.each(&.validate!)
+      end
+
+      if value = @notification_config
+        value.validate!
+      end
+
+      if value = @cloud_watch_output_config
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@command_id, @instance_id, @instance_name, @comment, @document_name, @document_version, @requested_date_time, @status, @status_details, @trace_output, @standard_output_url, @standard_error_url, @command_plugins, @service_role, @notification_config, @cloud_watch_output_config)
   end
 end

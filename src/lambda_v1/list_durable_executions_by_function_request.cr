@@ -55,6 +55,36 @@ module Amazonite::LambdaV1
     )
     end
 
+    def validate! : Nil
+      if value = @function_name
+        raise Core::ValidationError.new("FunctionName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("FunctionName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("FunctionName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:|(((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?))(function:)?([a-zA-Z0-9-_\\.]+)(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @qualifier
+        raise Core::ValidationError.new("Qualifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Qualifier length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Qualifier does not match the required pattern") unless value.matches?(Regex.new("^\\$(LATEST(\\.PUBLISHED)?)|[a-zA-Z0-9-_$]+$"))
+      end
+
+      if value = @durable_execution_name
+        raise Core::ValidationError.new("DurableExecutionName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DurableExecutionName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("DurableExecutionName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-_]+$"))
+      end
+
+      if value = @statuses
+        raise Core::ValidationError.new("Statuses must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Statuses must have at most 10 item(s)") if value.size > 10
+      end
+
+      if value = @max_items
+        raise Core::ValidationError.new("MaxItems value must be >= 0") if value < 0
+        raise Core::ValidationError.new("MaxItems value must be <= 1000") if value > 1000
+      end
+    end
+
     def_equals_and_hash(@function_name, @qualifier, @durable_execution_name, @statuses, @started_after, @started_before, @reverse_order, @marker, @max_items)
   end
 end

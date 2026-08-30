@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Configuration for the capacity provider that manages compute resources for Lambda functions.
   class CapacityProviderConfig
@@ -10,6 +12,12 @@ module Amazonite::LambdaV1
     def initialize(
       @lambda_managed_instances_capacity_provider_config : LambdaManagedInstancesCapacityProviderConfig,
     )
+    end
+
+    def validate! : Nil
+      if value = @lambda_managed_instances_capacity_provider_config
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@lambda_managed_instances_capacity_provider_config)

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeInventoryDeletionsResult
     include JSON::Serializable
@@ -14,6 +16,12 @@ module Amazonite::SsmV1
       @inventory_deletions : Array(InventoryDeletionStatusItem) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @inventory_deletions
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@inventory_deletions, @next_token)

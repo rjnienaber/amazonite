@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class ListTagsForResourceRequest
     include JSON::Serializable
@@ -9,6 +11,13 @@ module Amazonite::EventBridgeV1
     def initialize(
       @resource_arn : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @resource_arn
+        raise Core::ValidationError.new("ResourceARN length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceARN length must be <= 1600") if value.size > 1600
+      end
     end
 
     def_equals_and_hash(@resource_arn)

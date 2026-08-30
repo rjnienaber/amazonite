@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Represents a log event, which is a record of activity that was recorded by the application or
   # resource being monitored.
@@ -17,6 +19,16 @@ module Amazonite::CloudWatchLogsV1
       @timestamp : Int64,
       @message : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @timestamp
+        raise Core::ValidationError.new("timestamp value must be >= 0") if value < 0
+      end
+
+      if value = @message
+        raise Core::ValidationError.new("message length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@timestamp, @message)

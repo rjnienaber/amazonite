@@ -48,6 +48,9 @@ module Amazonite::SqsV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@md5_of_message_body, @md5_of_message_attributes, @md5_of_message_system_attributes, @message_id, @sequence_number)
   end
 end

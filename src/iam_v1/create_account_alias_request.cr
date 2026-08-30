@@ -27,6 +27,14 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @account_alias
+        raise Core::ValidationError.new("AccountAlias length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("AccountAlias length must be <= 63") if value.size > 63
+        raise Core::ValidationError.new("AccountAlias does not match the required pattern") unless value.matches?(Regex.new("^[a-z0-9]([a-z0-9]|-(?!-)){1,61}[a-z0-9]$"))
+      end
+    end
+
     def_equals_and_hash(@account_alias)
   end
 end

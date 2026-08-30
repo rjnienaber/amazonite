@@ -45,6 +45,9 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@stack_set_name, @call_as)
   end
 end

@@ -120,6 +120,21 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @tag_resources
+        value.each(&.validate!)
+      end
+
+      if value = @resource_mapping
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@action, @entity, @physical_resource_id, @resource_identifier, @description, @detection, @detection_reason, @tag_resources, @untag_resources, @resource_mapping)
   end
 end

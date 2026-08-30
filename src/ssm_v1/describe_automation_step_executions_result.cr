@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeAutomationStepExecutionsResult
     include JSON::Serializable
@@ -15,6 +17,12 @@ module Amazonite::SsmV1
       @step_executions : Array(StepExecution) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @step_executions
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@step_executions, @next_token)

@@ -35,6 +35,18 @@ module Amazonite::SecretsManagerV1
     )
     end
 
+    def validate! : Nil
+      if value = @version_id
+        raise Core::ValidationError.new("VersionId length must be >= 32") if value.size < 32
+        raise Core::ValidationError.new("VersionId length must be <= 64") if value.size > 64
+      end
+
+      if value = @version_stages
+        raise Core::ValidationError.new("VersionStages must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("VersionStages must have at most 20 item(s)") if value.size > 20
+      end
+    end
+
     def_equals_and_hash(@version_id, @version_stages, @last_accessed_date, @created_date, @kms_key_ids)
   end
 end

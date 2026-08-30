@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Represents a usage plan used to specify who can assess associated API stages. Optionally, target
   # request rate and quota limits can be set. In some cases clients can exceed the targets that you
@@ -52,6 +54,20 @@ module Amazonite::ApiGatewayV1
       @product_code : String | Nil = nil,
       @tags : Hash(String, String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @api_stages
+        value.each(&.validate!)
+      end
+
+      if value = @throttle
+        value.validate!
+      end
+
+      if value = @quota
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@id, @name, @description, @api_stages, @throttle, @quota, @product_code, @tags)

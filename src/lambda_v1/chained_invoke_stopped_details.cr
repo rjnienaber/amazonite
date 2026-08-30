@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Details about a chained invocation that was stopped.
   class ChainedInvokeStoppedDetails
@@ -10,6 +12,12 @@ module Amazonite::LambdaV1
     def initialize(
       @error : EventError,
     )
+    end
+
+    def validate! : Nil
+      if value = @error
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@error)

@@ -274,6 +274,7 @@ module Amazonite::Codegen::Service
       json.object do
         json.field "type", "list"
         json.field("member") { build_member_ref(json, shape["member"]) }
+        add_length_constraint(json, shape)
       end
     end
 
@@ -282,14 +283,47 @@ module Amazonite::Codegen::Service
         json.field "type", "map"
         json.field("key") { build_member_ref(json, shape["key"]) }
         json.field("value") { build_member_ref(json, shape["value"]) }
+        add_length_constraint(json, shape)
       end
     end
+
+    NUMERIC_TYPES = {"integer", "long", "float", "double"}
 
     private def build_primitive_shape(json : JSON::Builder, type : String, shape : JSON::Any)
       json.object do
         json.field "type", type
+        if type == "string" || type == "blob"
+          add_length_constraint(json, shape)
+        elsif NUMERIC_TYPES.includes?(type)
+          add_range_constraint(json, shape)
+        end
+        add_pattern_constraint(json, shape) if type == "string"
         add_documentation(json, shape)
       end
+    end
+
+    # smithy.api#length bounds a string/blob's character count or a
+    # list/map's item count - either way it becomes the shape's plain
+    # min/max in the old format, which Shape reads generically regardless
+    # of what kind of "size" they end up meaning for the shape's type.
+    private def add_length_constraint(json : JSON::Builder, shape : JSON::Any)
+      add_min_max(json, shape["traits"]?.try(&.["smithy.api#length"]?))
+    end
+
+    private def add_range_constraint(json : JSON::Builder, shape : JSON::Any)
+      add_min_max(json, shape["traits"]?.try(&.["smithy.api#range"]?))
+    end
+
+    private def add_min_max(json : JSON::Builder, bounds : JSON::Any?)
+      return unless bounds
+
+      json.field "min", bounds["min"].raw if bounds["min"]?
+      json.field "max", bounds["max"].raw if bounds["max"]?
+    end
+
+    private def add_pattern_constraint(json : JSON::Builder, shape : JSON::Any)
+      pattern = shape["traits"]?.try(&.["smithy.api#pattern"]?).try(&.as_s)
+      json.field "pattern", pattern if pattern
     end
 
     private def build_member_ref(json : JSON::Builder, member : JSON::Any)

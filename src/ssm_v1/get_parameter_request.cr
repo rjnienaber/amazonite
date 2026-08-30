@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class GetParameterRequest
     include JSON::Serializable
@@ -23,6 +25,13 @@ module Amazonite::SsmV1
       @name : String,
       @with_decryption : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 2048") if value.size > 2048
+      end
     end
 
     def_equals_and_hash(@name, @with_decryption)

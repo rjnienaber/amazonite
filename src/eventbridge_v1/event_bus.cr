@@ -44,6 +44,13 @@ module Amazonite::EventBridgeV1
     )
     end
 
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 512") if value.size > 512
+      end
+    end
+
     def_equals_and_hash(@name, @arn, @description, @policy, @creation_time, @last_modified_time)
   end
 end

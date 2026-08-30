@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Represents a client-facing interface by which the client calls the API to access back-end
   # resources. A Method resource is integrated with an Integration resource. Both consist of a
@@ -83,6 +85,16 @@ module Amazonite::ApiGatewayV1
       @method_integration : Integration | Nil = nil,
       @authorization_scopes : Array(String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @method_responses
+        value.each_value(&.validate!)
+      end
+
+      if value = @method_integration
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@http_method, @authorization_type, @authorizer_id, @api_key_required, @request_validator_id, @operation_name, @request_parameters, @request_models, @method_responses, @method_integration, @authorization_scopes)

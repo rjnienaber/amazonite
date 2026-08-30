@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class ListDashboardsOutput
     include JSON::Serializable
@@ -14,6 +16,12 @@ module Amazonite::CloudWatchV1
       @dashboard_entries : Array(DashboardEntry) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @dashboard_entries
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@dashboard_entries, @next_token)

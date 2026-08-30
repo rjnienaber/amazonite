@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class ListTagsOfResourceOutput
     include JSON::Serializable
@@ -15,6 +17,12 @@ module Amazonite::DynamoDBV2
       @tags : Array(Tag) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @tags
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@tags, @next_token)

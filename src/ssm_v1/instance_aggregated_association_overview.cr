@@ -17,6 +17,9 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@detailed_status, @instance_association_status_aggregated_count)
   end
 end

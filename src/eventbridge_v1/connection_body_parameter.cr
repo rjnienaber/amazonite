@@ -23,6 +23,9 @@ module Amazonite::EventBridgeV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@key, @value, @is_value_secret)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudFormationV1
   class BatchDescribeTypeConfigurationsOutput
     # A list of information concerning any errors generated during the setting of the specified
@@ -41,6 +43,20 @@ module Amazonite::CloudFormationV1
         unprocessed_type_configurations: node.xpath_nodes("*[local-name()='UnprocessedTypeConfigurations']/*[local-name()='member']").map { |n| TypeConfigurationIdentifier.from_xml(n) },
         type_configurations: node.xpath_nodes("*[local-name()='TypeConfigurations']/*[local-name()='member']").map { |n| TypeConfigurationDetails.from_xml(n) },
       )
+    end
+
+    def validate! : Nil
+      if value = @errors
+        value.each(&.validate!)
+      end
+
+      if value = @unprocessed_type_configurations
+        value.each(&.validate!)
+      end
+
+      if value = @type_configurations
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@errors, @unprocessed_type_configurations, @type_configurations)

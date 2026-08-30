@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # The response from the CheckpointDurableExecution operation.
   class CheckpointDurableExecutionResponse
@@ -18,6 +20,18 @@ module Amazonite::LambdaV1
       @new_execution_state : CheckpointUpdatedExecutionState,
       @checkpoint_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @checkpoint_token
+        raise Core::ValidationError.new("CheckpointToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CheckpointToken length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("CheckpointToken does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9+/]+={0,2}$"))
+      end
+
+      if value = @new_execution_state
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@checkpoint_token, @new_execution_state)

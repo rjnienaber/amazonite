@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Configuration for where to deliver scheduled query results. Specifies the destination type and
   # associated settings for result delivery.
@@ -17,6 +19,16 @@ module Amazonite::CloudWatchLogsV1
       @s3_configuration : S3Configuration | Nil = nil,
       @lookup_table_configuration : LookupTableConfiguration | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @s3_configuration
+        value.validate!
+      end
+
+      if value = @lookup_table_configuration
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@s3_configuration, @lookup_table_configuration)

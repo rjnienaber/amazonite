@@ -46,6 +46,23 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @client_context
+        raise Core::ValidationError.new("ClientContext length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ClientContext length must be <= 8000") if value.size > 8000
+      end
+
+      if value = @qualifier
+        raise Core::ValidationError.new("Qualifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Qualifier length must be <= 128") if value.size > 128
+      end
+
+      if value = @payload
+        raise Core::ValidationError.new("Payload length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Payload length must be <= 4096") if value.size > 4096
+      end
+    end
+
     def_equals_and_hash(@client_context, @qualifier, @payload)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # A vector index to be added to or removed from a table.
   class VectorIndexUpdate
@@ -15,6 +17,16 @@ module Amazonite::DynamoDBV2
       @create : CreateVectorIndexAction | Nil = nil,
       @delete : DeleteVectorIndexAction | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @create
+        value.validate!
+      end
+
+      if value = @delete
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@create, @delete)

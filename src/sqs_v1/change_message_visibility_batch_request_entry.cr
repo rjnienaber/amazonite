@@ -27,6 +27,9 @@ module Amazonite::SqsV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@id, @receipt_handle, @visibility_timeout)
   end
 end

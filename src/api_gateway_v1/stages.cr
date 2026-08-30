@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # A list of Stage resources that are associated with the ApiKey resource.
   class Stages
@@ -10,6 +12,12 @@ module Amazonite::ApiGatewayV1
     def initialize(
       @item : Array(Stage) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @item
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@item)

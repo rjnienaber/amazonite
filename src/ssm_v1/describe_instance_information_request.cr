@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeInstanceInformationRequest
     include JSON::Serializable
@@ -32,6 +34,23 @@ module Amazonite::SsmV1
       @max_results : Int32 | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @instance_information_filter_list
+        raise Core::ValidationError.new("InstanceInformationFilterList must have at least 0 item(s)") if value.size < 0
+        value.each(&.validate!)
+      end
+
+      if value = @filters
+        raise Core::ValidationError.new("Filters must have at least 0 item(s)") if value.size < 0
+        value.each(&.validate!)
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 5") if value < 5
+        raise Core::ValidationError.new("MaxResults value must be <= 50") if value > 50
+      end
     end
 
     def_equals_and_hash(@instance_information_filter_list, @filters, @max_results, @next_token)

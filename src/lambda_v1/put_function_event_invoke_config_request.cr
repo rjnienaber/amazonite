@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class PutFunctionEventInvokeConfigRequest
     include JSON::Serializable
@@ -56,6 +58,34 @@ module Amazonite::LambdaV1
       @maximum_event_age_in_seconds : Int32 | Nil = nil,
       @destination_config : DestinationConfig | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @function_name
+        raise Core::ValidationError.new("FunctionName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("FunctionName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("FunctionName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:|(((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?))(function:)?([a-zA-Z0-9-_\\.]+)(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @qualifier
+        raise Core::ValidationError.new("Qualifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Qualifier length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Qualifier does not match the required pattern") unless value.matches?(Regex.new("^\\$(LATEST(\\.PUBLISHED)?)|[a-zA-Z0-9-_$]+$"))
+      end
+
+      if value = @maximum_retry_attempts
+        raise Core::ValidationError.new("MaximumRetryAttempts value must be >= 0") if value < 0
+        raise Core::ValidationError.new("MaximumRetryAttempts value must be <= 2") if value > 2
+      end
+
+      if value = @maximum_event_age_in_seconds
+        raise Core::ValidationError.new("MaximumEventAgeInSeconds value must be >= 60") if value < 60
+        raise Core::ValidationError.new("MaximumEventAgeInSeconds value must be <= 21600") if value > 21600
+      end
+
+      if value = @destination_config
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@function_name, @qualifier, @maximum_retry_attempts, @maximum_event_age_in_seconds, @destination_config)

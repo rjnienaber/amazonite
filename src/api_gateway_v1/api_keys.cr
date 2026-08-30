@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Represents a collection of API keys as represented by an ApiKeys resource.
   class ApiKeys
@@ -21,6 +23,12 @@ module Amazonite::ApiGatewayV1
       @items : Array(ApiKey) | Nil = nil,
       @position : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @items
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@warnings, @items, @position)

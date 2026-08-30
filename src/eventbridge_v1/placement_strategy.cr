@@ -1,4 +1,5 @@
 private alias AEB = Amazonite::EventBridgeV1
+private alias Core = Amazonite::Core
 
 module Amazonite::EventBridgeV1
   # The task placement strategy for a task or service. To learn more, see [Task Placement
@@ -28,6 +29,13 @@ module Amazonite::EventBridgeV1
       @type : PlacementStrategyType | Nil = nil,
       @field : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @field
+        raise Core::ValidationError.new("field length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("field length must be <= 255") if value.size > 255
+      end
     end
 
     def_equals_and_hash(@type, @field)

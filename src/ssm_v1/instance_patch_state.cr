@@ -175,6 +175,41 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @instance_id
+        raise Core::ValidationError.new("InstanceId does not match the required pattern") unless value.matches?(Regex.new("^(^i-(\\w{8}|\\w{17})$)|(^mi-\\w{17}$)$"))
+      end
+
+      if value = @patch_group
+        raise Core::ValidationError.new("PatchGroup length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PatchGroup length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("PatchGroup does not match the required pattern") unless value.matches?(Regex.new("^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"))
+      end
+
+      if value = @baseline_id
+        raise Core::ValidationError.new("BaselineId length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("BaselineId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("BaselineId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-:/]{20,128}$"))
+      end
+
+      if value = @snapshot_id
+        raise Core::ValidationError.new("SnapshotId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("SnapshotId length must be <= 36") if value.size > 36
+        raise Core::ValidationError.new("SnapshotId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @install_override_list
+        raise Core::ValidationError.new("InstallOverrideList length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("InstallOverrideList length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("InstallOverrideList does not match the required pattern") unless value.matches?(Regex.new("^https://.+$|^s3://([^/]+)/(.*?([^/]+))$"))
+      end
+
+      if value = @owner_information
+        raise Core::ValidationError.new("OwnerInformation length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OwnerInformation length must be <= 128") if value.size > 128
+      end
+    end
+
     def_equals_and_hash(@instance_id, @patch_group, @baseline_id, @snapshot_id, @install_override_list, @owner_information, @installed_count, @installed_other_count, @installed_pending_reboot_count, @installed_rejected_count, @missing_count, @failed_count, @unreported_not_applicable_count, @not_applicable_count, @available_security_update_count, @operation_start_time, @operation_end_time, @operation, @last_no_reboot_install_operation_time, @reboot_option, @critical_non_compliant_count, @security_non_compliant_count, @other_non_compliant_count)
   end
 end

@@ -222,6 +222,78 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @delegation_request_id
+        raise Core::ValidationError.new("DelegationRequestId length must be >= 16") if value.size < 16
+        raise Core::ValidationError.new("DelegationRequestId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("DelegationRequestId does not match the required pattern") unless value.matches?(Regex.new("^[\\w-]+$"))
+      end
+
+      if value = @owner_account_id
+        raise Core::ValidationError.new("OwnerAccountId does not match the required pattern") unless value.matches?(Regex.new("^\\d{12}$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1000") if value.size > 1000
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+      end
+
+      if value = @request_message
+        raise Core::ValidationError.new("RequestMessage length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("RequestMessage length must be <= 200") if value.size > 200
+        raise Core::ValidationError.new("RequestMessage does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+      end
+
+      if value = @permissions
+        value.validate!
+      end
+
+      if value = @owner_id
+        raise Core::ValidationError.new("OwnerId length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("OwnerId length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("OwnerId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9:/+=,.@_-]+$"))
+      end
+
+      if value = @approver_id
+        raise Core::ValidationError.new("ApproverId length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("ApproverId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @requestor_id
+        raise Core::ValidationError.new("RequestorId does not match the required pattern") unless value.matches?(Regex.new("^\\d{12}$"))
+      end
+
+      if value = @requestor_name
+        raise Core::ValidationError.new("RequestorName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("RequestorName length must be <= 30") if value.size > 30
+        raise Core::ValidationError.new("RequestorName does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+      end
+
+      if value = @session_duration
+        raise Core::ValidationError.new("SessionDuration value must be >= 300") if value < 300
+        raise Core::ValidationError.new("SessionDuration value must be <= 43200") if value > 43200
+      end
+
+      if value = @redirect_url
+        raise Core::ValidationError.new("RedirectUrl length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RedirectUrl length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("RedirectUrl does not match the required pattern") unless value.matches?(Regex.new("^http(s?)://[a-zA-Z0-9._/-]*(\\?[a-zA-Z0-9._=&-]*)?(#[a-zA-Z0-9._/-]*)?$"))
+      end
+
+      if value = @notes
+        raise Core::ValidationError.new("Notes length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Notes length must be <= 500") if value.size > 500
+        raise Core::ValidationError.new("Notes does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+      end
+
+      if value = @rejection_reason
+        raise Core::ValidationError.new("RejectionReason length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("RejectionReason length must be <= 500") if value.size > 500
+        raise Core::ValidationError.new("RejectionReason does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+      end
+    end
+
     def_equals_and_hash(@delegation_request_id, @owner_account_id, @description, @request_message, @permissions, @permission_policy, @role_permission_restriction_arns, @owner_id, @approver_id, @state, @expiration_time, @requestor_id, @requestor_name, @create_date, @session_duration, @redirect_url, @notes, @rejection_reason, @only_send_by_owner, @updated_time)
   end
 end

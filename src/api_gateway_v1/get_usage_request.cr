@@ -38,6 +38,9 @@ module Amazonite::ApiGatewayV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@usage_plan_id, @key_id, @start_date, @end_date, @position, @limit)
   end
 end

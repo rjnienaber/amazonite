@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class CreateGrantResponse
     include JSON::Serializable
@@ -22,6 +24,18 @@ module Amazonite::KmsV1
       @grant_token : String | Nil = nil,
       @grant_id : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @grant_token
+        raise Core::ValidationError.new("GrantToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GrantToken length must be <= 8192") if value.size > 8192
+      end
+
+      if value = @grant_id
+        raise Core::ValidationError.new("GrantId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GrantId length must be <= 128") if value.size > 128
+      end
     end
 
     def_equals_and_hash(@grant_token, @grant_id)

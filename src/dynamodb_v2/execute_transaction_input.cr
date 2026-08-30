@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   class ExecuteTransactionInput
@@ -25,6 +26,19 @@ module Amazonite::DynamoDBV2
       @client_request_token : String | Nil = nil,
       @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @transact_statements
+        raise Core::ValidationError.new("TransactStatements must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("TransactStatements must have at most 100 item(s)") if value.size > 100
+        value.each(&.validate!)
+      end
+
+      if value = @client_request_token
+        raise Core::ValidationError.new("ClientRequestToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ClientRequestToken length must be <= 36") if value.size > 36
+      end
     end
 
     def_equals_and_hash(@transact_statements, @client_request_token, @return_consumed_capacity)

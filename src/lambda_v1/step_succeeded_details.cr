@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Details about a step that succeeded.
   class StepSucceededDetails
@@ -15,6 +17,16 @@ module Amazonite::LambdaV1
       @result : EventResult,
       @retry_details : RetryDetails,
     )
+    end
+
+    def validate! : Nil
+      if value = @result
+        value.validate!
+      end
+
+      if value = @retry_details
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@result, @retry_details)

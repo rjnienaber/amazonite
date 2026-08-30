@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   class SendAutomationSignalRequest
@@ -36,6 +37,18 @@ module Amazonite::SsmV1
       @signal_type : SignalType,
       @payload : Hash(String, Array(String)) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @automation_execution_id
+        raise Core::ValidationError.new("AutomationExecutionId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("AutomationExecutionId length must be <= 36") if value.size > 36
+      end
+
+      if value = @payload
+        raise Core::ValidationError.new("Payload must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("Payload must have at most 200 entry(s)") if value.size > 200
+      end
     end
 
     def_equals_and_hash(@automation_execution_id, @signal_type, @payload)

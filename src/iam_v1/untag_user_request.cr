@@ -37,6 +37,19 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @tag_keys
+        raise Core::ValidationError.new("TagKeys must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("TagKeys must have at most 50 item(s)") if value.size > 50
+      end
+    end
+
     def_equals_and_hash(@user_name, @tag_keys)
   end
 end

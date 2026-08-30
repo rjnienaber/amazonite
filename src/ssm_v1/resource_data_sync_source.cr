@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Information about the source of the data included in the resource data sync.
   class ResourceDataSyncSource
@@ -39,6 +41,17 @@ module Amazonite::SsmV1
       @include_future_regions : Bool | Nil = nil,
       @enable_all_ops_data_sources : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @source_type
+        raise Core::ValidationError.new("SourceType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SourceType length must be <= 64") if value.size > 64
+      end
+
+      if value = @aws_organizations_source
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@source_type, @aws_organizations_source, @source_regions, @include_future_regions, @enable_all_ops_data_sources)

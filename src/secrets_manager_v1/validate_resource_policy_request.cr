@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SecretsManagerV1
   class ValidateResourcePolicyRequest
     include JSON::Serializable
@@ -17,6 +19,18 @@ module Amazonite::SecretsManagerV1
       @resource_policy : String,
       @secret_id : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @secret_id
+        raise Core::ValidationError.new("SecretId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SecretId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @resource_policy
+        raise Core::ValidationError.new("ResourcePolicy length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourcePolicy length must be <= 20480") if value.size > 20480
+      end
     end
 
     def_equals_and_hash(@secret_id, @resource_policy)

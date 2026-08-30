@@ -32,6 +32,9 @@ module Amazonite::EventBridgeV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@include_detail, @level)
   end
 end

@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # Represents a data source association with an S3 Table Integration, including its status and
@@ -38,6 +39,30 @@ module Amazonite::CloudWatchLogsV1
       @created_time_stamp : Int64 | Nil = nil,
       @parent_source_identifier : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @identifier
+        raise Core::ValidationError.new("identifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("identifier length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @data_source
+        value.validate!
+      end
+
+      if value = @status_reason
+        raise Core::ValidationError.new("statusReason length must be >= 1") if value.size < 1
+      end
+
+      if value = @created_time_stamp
+        raise Core::ValidationError.new("createdTimeStamp value must be >= 0") if value < 0
+      end
+
+      if value = @parent_source_identifier
+        raise Core::ValidationError.new("parentSourceIdentifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("parentSourceIdentifier length must be <= 2048") if value.size > 2048
+      end
     end
 
     def_equals_and_hash(@identifier, @data_source, @status, @status_reason, @created_time_stamp, @parent_source_identifier)

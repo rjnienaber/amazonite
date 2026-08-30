@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class DescribeAlarmsForMetricOutput
     include JSON::Serializable
@@ -9,6 +11,12 @@ module Amazonite::CloudWatchV1
     def initialize(
       @metric_alarms : Array(MetricAlarm) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @metric_alarms
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@metric_alarms)

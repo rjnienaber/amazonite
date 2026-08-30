@@ -69,6 +69,42 @@ module Amazonite::EventBridgeV1
     )
     end
 
+    def validate! : Nil
+      if value = @replay_name
+        raise Core::ValidationError.new("ReplayName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ReplayName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("ReplayName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @replay_arn
+        raise Core::ValidationError.new("ReplayArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ReplayArn length must be <= 1600") if value.size > 1600
+        raise Core::ValidationError.new("ReplayArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws([a-z]|\\-)*:events:([a-z]|\\d|\\-)*:([0-9]{12})?:.+\\/[\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new(".*"))
+      end
+
+      if value = @state_reason
+        raise Core::ValidationError.new("StateReason length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StateReason length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("StateReason does not match the required pattern") unless value.matches?(Regex.new(".*"))
+      end
+
+      if value = @event_source_arn
+        raise Core::ValidationError.new("EventSourceArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EventSourceArn length must be <= 1600") if value.size > 1600
+        raise Core::ValidationError.new("EventSourceArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws([a-z]|\\-)*:events:([a-z]|\\d|\\-)*:([0-9]{12})?:.+\\/.+$"))
+      end
+
+      if value = @destination
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@replay_name, @replay_arn, @description, @state, @state_reason, @event_source_arn, @destination, @event_start_time, @event_end_time, @event_last_replayed_time, @replay_start_time, @replay_end_time)
   end
 end

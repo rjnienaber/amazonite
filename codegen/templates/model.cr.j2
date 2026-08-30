@@ -28,6 +28,12 @@
       )
     end
 
+    def validate! : Nil
+{% for validation in shape.validations %}
+      {{ validation.stmt }}
+{% endfor -%}
+    end
+
     def_equals_and_hash({% for member in shape.members %}@{{ member.snake_case_name }}, {% endfor %})
 {% else -%}
     include JSON::Serializable
@@ -39,6 +45,12 @@
     def initialize{% if shape.has_parameters %}({% for parameter in shape.parameters %}
       @{{ parameter.name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %},{% endfor %}
     ){% endif %}
+    end
+
+    def validate! : Nil
+{% for validation in shape.validations %}
+      {{ validation.stmt }}
+{% endfor -%}
     end
 
     def_equals_and_hash({% for member in shape.members %}@{{ member.snake_case_name }}, {% endfor %})

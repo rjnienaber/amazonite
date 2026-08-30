@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class UpdateLookupTableResponse
     include JSON::Serializable
@@ -15,6 +17,12 @@ module Amazonite::CloudWatchLogsV1
       @lookup_table_arn : String | Nil = nil,
       @last_updated_time : Int64 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @last_updated_time
+        raise Core::ValidationError.new("lastUpdatedTime value must be >= 0") if value < 0
+      end
     end
 
     def_equals_and_hash(@lookup_table_arn, @last_updated_time)

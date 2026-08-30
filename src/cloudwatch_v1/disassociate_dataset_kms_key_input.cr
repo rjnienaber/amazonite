@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class DisassociateDatasetKmsKeyInput
     include JSON::Serializable
@@ -11,6 +13,14 @@ module Amazonite::CloudWatchV1
     def initialize(
       @dataset_identifier : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @dataset_identifier
+        raise Core::ValidationError.new("DatasetIdentifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DatasetIdentifier length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("DatasetIdentifier does not match the required pattern") unless value.matches?(Regex.new("^(default|arn:[a-zA-Z0-9-]+:cloudwatch:[a-zA-Z0-9-]*:\\d{12}:dataset/default)$"))
+      end
     end
 
     def_equals_and_hash(@dataset_identifier)

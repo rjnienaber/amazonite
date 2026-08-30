@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [UploadSigningCertificate](https://docs.aws.amazon.com/IAM/latest/APIReference/API_UploadSigningCertificate.html)
@@ -22,6 +24,12 @@ module Amazonite::IamV1
       new(
         certificate: node.xpath_node("*[local-name()='Certificate']").try { |n| SigningCertificate.from_xml(n) }.not_nil!,
       )
+    end
+
+    def validate! : Nil
+      if value = @certificate
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@certificate)

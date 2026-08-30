@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class PutCompositeAlarmInput
     include JSON::Serializable
@@ -186,6 +188,47 @@ module Amazonite::CloudWatchV1
       @actions_suppressor_wait_period : Int32 | Nil = nil,
       @actions_suppressor_extension_period : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @alarm_actions
+        raise Core::ValidationError.new("AlarmActions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AlarmActions must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @alarm_description
+        raise Core::ValidationError.new("AlarmDescription length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("AlarmDescription length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @alarm_name
+        raise Core::ValidationError.new("AlarmName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmName length must be <= 255") if value.size > 255
+      end
+
+      if value = @alarm_rule
+        raise Core::ValidationError.new("AlarmRule length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmRule length must be <= 10240") if value.size > 10240
+      end
+
+      if value = @insufficient_data_actions
+        raise Core::ValidationError.new("InsufficientDataActions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("InsufficientDataActions must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @ok_actions
+        raise Core::ValidationError.new("OKActions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("OKActions must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+
+      if value = @actions_suppressor
+        raise Core::ValidationError.new("ActionsSuppressor length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ActionsSuppressor length must be <= 1600") if value.size > 1600
+      end
     end
 
     def_equals_and_hash(@actions_enabled, @alarm_actions, @alarm_description, @alarm_name, @alarm_rule, @insufficient_data_actions, @ok_actions, @tags, @actions_suppressor, @actions_suppressor_wait_period, @actions_suppressor_extension_period)

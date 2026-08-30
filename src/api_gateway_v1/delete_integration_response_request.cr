@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Represents a delete integration response request.
   class DeleteIntegrationResponseRequest
@@ -25,6 +27,12 @@ module Amazonite::ApiGatewayV1
       @http_method : String,
       @status_code : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @status_code
+        raise Core::ValidationError.new("statusCode does not match the required pattern") unless value.matches?(Regex.new("^[1-5]\\d\\d$"))
+      end
     end
 
     def_equals_and_hash(@rest_api_id, @resource_id, @http_method, @status_code)

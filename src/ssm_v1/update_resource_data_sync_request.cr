@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class UpdateResourceDataSyncRequest
     include JSON::Serializable
@@ -19,6 +21,22 @@ module Amazonite::SsmV1
       @sync_type : String,
       @sync_source : ResourceDataSyncSource,
     )
+    end
+
+    def validate! : Nil
+      if value = @sync_name
+        raise Core::ValidationError.new("SyncName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SyncName length must be <= 64") if value.size > 64
+      end
+
+      if value = @sync_type
+        raise Core::ValidationError.new("SyncType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SyncType length must be <= 64") if value.size > 64
+      end
+
+      if value = @sync_source
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@sync_name, @sync_type, @sync_source)

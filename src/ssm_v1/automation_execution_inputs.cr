@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Information about the optional inputs that can be specified for an automation execution preview.
   class AutomationExecutionInputs
@@ -40,6 +42,39 @@ module Amazonite::SsmV1
       @target_locations : Array(TargetLocation) | Nil = nil,
       @target_locations_url : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @parameters
+        raise Core::ValidationError.new("Parameters must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("Parameters must have at most 200 entry(s)") if value.size > 200
+      end
+
+      if value = @target_parameter_name
+        raise Core::ValidationError.new("TargetParameterName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TargetParameterName length must be <= 50") if value.size > 50
+      end
+
+      if value = @targets
+        raise Core::ValidationError.new("Targets must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Targets must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+
+      if value = @target_maps
+        raise Core::ValidationError.new("TargetMaps must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("TargetMaps must have at most 300 item(s)") if value.size > 300
+      end
+
+      if value = @target_locations
+        raise Core::ValidationError.new("TargetLocations must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("TargetLocations must have at most 100 item(s)") if value.size > 100
+        value.each(&.validate!)
+      end
+
+      if value = @target_locations_url
+        raise Core::ValidationError.new("TargetLocationsURL does not match the required pattern") unless value.matches?(Regex.new("^https:\\/\\/[-a-zA-Z0-9@:%._\\+~#=]{1,253}\\.s3(\\.[a-z\\d-]{9,16})?\\.amazonaws\\.com\\/.{1,2000}$"))
+      end
     end
 
     def_equals_and_hash(@parameters, @target_parameter_name, @targets, @target_maps, @target_locations, @target_locations_url)

@@ -32,6 +32,9 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@service_control_policy_input_list)
   end
 end

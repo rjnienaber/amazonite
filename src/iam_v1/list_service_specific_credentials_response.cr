@@ -46,6 +46,12 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @service_specific_credentials
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@service_specific_credentials, @marker, @is_truncated)
   end
 end

@@ -26,6 +26,9 @@ module Amazonite::ApiGatewayV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@position, @limit, @resource_owner)
   end
 end

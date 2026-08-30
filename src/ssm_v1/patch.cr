@@ -138,6 +138,13 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @id
+        raise Core::ValidationError.new("Id length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Id length must be <= 100") if value.size > 100
+      end
+    end
+
     def_equals_and_hash(@id, @release_date, @title, @description, @content_url, @vendor, @product_family, @product, @classification, @msrc_severity, @kb_number, @msrc_number, @language, @advisory_ids, @bugzilla_ids, @cve_ids, @name, @epoch, @version, @release, @arch, @severity, @repository)
   end
 end

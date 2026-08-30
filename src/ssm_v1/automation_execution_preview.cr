@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Information about the results of the execution preview.
   class AutomationExecutionPreview
@@ -39,6 +41,19 @@ module Amazonite::SsmV1
       @target_previews : Array(TargetPreview) | Nil = nil,
       @total_accounts : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @regions
+        raise Core::ValidationError.new("Regions must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Regions must have at most 50 item(s)") if value.size > 50
+      end
+
+      if value = @target_previews
+        raise Core::ValidationError.new("TargetPreviews must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("TargetPreviews must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@step_previews, @regions, @target_previews, @total_accounts)

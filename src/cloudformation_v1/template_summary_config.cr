@@ -27,6 +27,9 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@treat_unrecognized_resource_types_as_warnings)
   end
 end

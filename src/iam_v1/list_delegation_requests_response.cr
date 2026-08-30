@@ -46,6 +46,18 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @delegation_requests
+        value.each(&.validate!)
+      end
+
+      if value = @marker
+        raise Core::ValidationError.new("Marker length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Marker length must be <= 320") if value.size > 320
+        raise Core::ValidationError.new("Marker does not match the required pattern") unless value.matches?(Regex.new("^[\\u0020-\\u00FF]+$"))
+      end
+    end
+
     def_equals_and_hash(@delegation_requests, @marker, @is_truncated)
   end
 end

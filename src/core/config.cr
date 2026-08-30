@@ -16,6 +16,11 @@ module Amazonite::Core
   # either a `Number` (seconds) or a `Time::Span`, matching the overloads
   # `HTTP::Client` itself accepts, and default to `nil` (the underlying
   # socket library's defaults) when not given.
+  #
+  # `validate_input` controls whether a generated `Client` calls an
+  # operation's input's `#validate!` before sending the request (default
+  # `true`) - set it to `false` to skip that check, e.g. to save the extra
+  # pass over a large input that's already known-good.
   class Config
     Log = ::Log.for(self)
 
@@ -31,6 +36,7 @@ module Amazonite::Core
     @write_timeout : Time::Span?
 
     getter region, base_url, dns_timeout, connect_timeout, read_timeout, write_timeout
+    getter? validate_input
 
     def initialize(
       access_key_id : String? = nil,
@@ -45,6 +51,7 @@ module Amazonite::Core
       connect_timeout : (Number | Time::Span)? = nil,
       read_timeout : (Number | Time::Span)? = nil,
       write_timeout : (Number | Time::Span)? = nil,
+      @validate_input : Bool = true,
     )
       @dns_timeout = to_time_span(dns_timeout)
       @connect_timeout = to_time_span(connect_timeout)

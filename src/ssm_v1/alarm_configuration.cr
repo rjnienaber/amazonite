@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The details for the CloudWatch alarm you want to apply to an automation or command.
   class AlarmConfiguration
@@ -18,6 +20,14 @@ module Amazonite::SsmV1
       @alarms : Array(Alarm),
       @ignore_poll_alarm_failure : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @alarms
+        raise Core::ValidationError.new("Alarms must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Alarms must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@ignore_poll_alarm_failure, @alarms)

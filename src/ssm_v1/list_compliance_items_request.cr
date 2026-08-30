@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListComplianceItemsRequest
     include JSON::Serializable
@@ -32,6 +34,25 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
       @max_results : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @filters
+        value.each(&.validate!)
+      end
+
+      if value = @resource_ids
+        raise Core::ValidationError.new("ResourceIds must have at least 1 item(s)") if value.size < 1
+      end
+
+      if value = @resource_types
+        raise Core::ValidationError.new("ResourceTypes must have at least 1 item(s)") if value.size < 1
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 50") if value > 50
+      end
     end
 
     def_equals_and_hash(@filters, @resource_ids, @resource_types, @next_token, @max_results)

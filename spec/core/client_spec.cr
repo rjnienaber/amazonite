@@ -9,6 +9,27 @@ class TimeoutInspectingClient < Amazonite::Core::Client
   end
 end
 
+# Stands in for a generated input model - mirrors what model.cr.j2 actually
+# emits (a #validate! that raises Core::ValidationError), so this exercises
+# the same "input.validate! if config.validate_input?" call site every
+# generated operation method has (see client.cr.j2), without depending on
+# any one service's generated types.
+class FakeInput
+  def initialize(@valid : Bool)
+  end
+
+  def validate! : Nil
+    raise Amazonite::Core::ValidationError.new("input is not valid") unless @valid
+  end
+end
+
+class ValidatingClient < Amazonite::Core::Client
+  def greet(input : FakeInput)
+    input.validate! if config.validate_input?
+    post("Greet", "/foo", "")
+  end
+end
+
 class CustomClientExceptionFactory < Amazonite::Core::ResponseExceptionFactory
   def create(exception_type, http, message, code) : Amazonite::Core::ResponseException?
     case exception_type
@@ -128,6 +149,40 @@ describe Amazonite::Core::Client do
     http_client.@connect_timeout.should be_nil
     http_client.@read_timeout.should be_nil
     http_client.@write_timeout.should be_nil
+  end
+
+  it "raises the input's validation error before sending the request by default" do
+    local_config = Amazonite::Core::Config.new(
+      "AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1",
+      base_url: "http://www.example.com")
+
+    client = ValidatingClient.new("HelloWorld_20221002", "helloworld", "1.0", exception_factory, local_config)
+
+    expect_raises(Amazonite::Core::ValidationError, "input is not valid") do
+      client.greet(FakeInput.new(false))
+    end
+  end
+
+  it "sends the request when the input is valid" do
+    local_config = Amazonite::Core::Config.new(
+      "AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1",
+      base_url: "http://www.example.com")
+
+    WebMock.stub(:post, "http://www.example.com/foo")
+
+    client = ValidatingClient.new("HelloWorld_20221002", "helloworld", "1.0", exception_factory, local_config)
+    client.greet(FakeInput.new(true))
+  end
+
+  it "skips input validation when the config disables it" do
+    local_config = Amazonite::Core::Config.new(
+      "AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1",
+      base_url: "http://www.example.com", validate_input: false)
+
+    WebMock.stub(:post, "http://www.example.com/foo")
+
+    client = ValidatingClient.new("HelloWorld_20221002", "helloworld", "1.0", exception_factory, local_config)
+    client.greet(FakeInput.new(false))
   end
 
   it "throws custom exceptions for a method" do

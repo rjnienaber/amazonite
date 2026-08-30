@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the input of a `GetItem` operation.
@@ -90,6 +91,21 @@ module Amazonite::DynamoDBV2
       @projection_expression : String | Nil = nil,
       @expression_attribute_names : Hash(String, String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @key
+        value.each_value(&.validate!)
+      end
+
+      if value = @attributes_to_get
+        raise Core::ValidationError.new("AttributesToGet must have at least 1 item(s)") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@table_name, @key, @attributes_to_get, @consistent_read, @return_consumed_capacity, @projection_expression, @expression_attribute_names)

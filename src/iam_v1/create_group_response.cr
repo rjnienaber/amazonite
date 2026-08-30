@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [CreateGroup](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateGroup.html) request.
@@ -21,6 +23,12 @@ module Amazonite::IamV1
       new(
         group: node.xpath_node("*[local-name()='Group']").try { |n| Group.from_xml(n) }.not_nil!,
       )
+    end
+
+    def validate! : Nil
+      if value = @group
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@group)

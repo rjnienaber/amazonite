@@ -56,6 +56,25 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @role_name
+        raise Core::ValidationError.new("RoleName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RoleName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("RoleName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1000") if value.size > 1000
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"))
+      end
+
+      if value = @max_session_duration
+        raise Core::ValidationError.new("MaxSessionDuration value must be >= 3600") if value < 3600
+        raise Core::ValidationError.new("MaxSessionDuration value must be <= 43200") if value > 43200
+      end
+    end
+
     def_equals_and_hash(@role_name, @description, @max_session_duration)
   end
 end

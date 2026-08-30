@@ -1,4 +1,5 @@
 private alias ASM = Amazonite::SecretsManagerV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SecretsManagerV1
   class ListSecretsRequest
@@ -41,6 +42,24 @@ module Amazonite::SecretsManagerV1
       @sort_order : SortOrderType | Nil = nil,
       @sort_by : SortByType | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 100") if value > 100
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 4096") if value.size > 4096
+      end
+
+      if value = @filters
+        raise Core::ValidationError.new("Filters must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Filters must have at most 10 item(s)") if value.size > 10
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@include_planned_deletion, @max_results, @next_token, @filters, @sort_order, @sort_by)

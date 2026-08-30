@@ -15,6 +15,9 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@approximate_creation_date_time_precision)
   end
 end

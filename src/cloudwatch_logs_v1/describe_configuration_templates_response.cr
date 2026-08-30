@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class DescribeConfigurationTemplatesResponse
     include JSON::Serializable
@@ -14,6 +16,16 @@ module Amazonite::CloudWatchLogsV1
       @configuration_templates : Array(ConfigurationTemplate) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @configuration_templates
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@configuration_templates, @next_token)

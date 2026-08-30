@@ -221,6 +221,9 @@ module Amazonite::SqsV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@queue_url, @attribute_names, @message_system_attribute_names, @message_attribute_names, @max_number_of_messages, @visibility_timeout, @wait_time_seconds, @receive_request_attempt_id)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [CreateVirtualMFADevice](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateVirtualMFADevice.html)
@@ -22,6 +24,12 @@ module Amazonite::IamV1
       new(
         virtual_mfa_device: node.xpath_node("*[local-name()='VirtualMFADevice']").try { |n| VirtualMFADevice.from_xml(n) }.not_nil!,
       )
+    end
+
+    def validate! : Nil
+      if value = @virtual_mfa_device
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@virtual_mfa_device)

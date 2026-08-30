@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudFormationV1
   class BatchDescribeTypeConfigurationsInput
     # The list of identifiers for the desired extension configurations.
@@ -21,6 +23,13 @@ module Amazonite::CloudFormationV1
       new(
         type_configuration_identifiers: node.xpath_nodes("*[local-name()='TypeConfigurationIdentifiers']/*[local-name()='member']").map { |n| TypeConfigurationIdentifier.from_xml(n) },
       )
+    end
+
+    def validate! : Nil
+      if value = @type_configuration_identifiers
+        raise Core::ValidationError.new("TypeConfigurationIdentifiers must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@type_configuration_identifiers)

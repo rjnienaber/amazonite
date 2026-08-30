@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class CreateMaintenanceWindowRequest
     include JSON::Serializable
@@ -100,6 +102,50 @@ module Amazonite::SsmV1
       @client_token : String | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("Name length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 128") if value.size > 128
+      end
+
+      if value = @schedule
+        raise Core::ValidationError.new("Schedule length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Schedule length must be <= 256") if value.size > 256
+      end
+
+      if value = @schedule_offset
+        raise Core::ValidationError.new("ScheduleOffset value must be >= 1") if value < 1
+        raise Core::ValidationError.new("ScheduleOffset value must be <= 6") if value > 6
+      end
+
+      if value = @duration
+        raise Core::ValidationError.new("Duration value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Duration value must be <= 24") if value > 24
+      end
+
+      if value = @cutoff
+        raise Core::ValidationError.new("Cutoff value must be >= 0") if value < 0
+        raise Core::ValidationError.new("Cutoff value must be <= 23") if value > 23
+      end
+
+      if value = @client_token
+        raise Core::ValidationError.new("ClientToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ClientToken length must be <= 64") if value.size > 64
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 1000 item(s)") if value.size > 1000
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@name, @description, @start_date, @end_date, @schedule, @schedule_timezone, @schedule_offset, @duration, @cutoff, @allow_unassociated_targets, @client_token, @tags)

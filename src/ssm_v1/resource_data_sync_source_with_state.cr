@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The data type name for including resource data sync state. There are four sync states:
   #
@@ -66,6 +68,22 @@ module Amazonite::SsmV1
       @state : String | Nil = nil,
       @enable_all_ops_data_sources : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @source_type
+        raise Core::ValidationError.new("SourceType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SourceType length must be <= 64") if value.size > 64
+      end
+
+      if value = @aws_organizations_source
+        value.validate!
+      end
+
+      if value = @state
+        raise Core::ValidationError.new("State length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("State length must be <= 64") if value.size > 64
+      end
     end
 
     def_equals_and_hash(@source_type, @aws_organizations_source, @source_regions, @include_future_regions, @state, @enable_all_ops_data_sources)

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [GetPolicy](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetPolicy.html) request.
@@ -23,6 +25,12 @@ module Amazonite::IamV1
       new(
         policy: node.xpath_node("*[local-name()='Policy']").try { |n| Policy.from_xml(n) },
       )
+    end
+
+    def validate! : Nil
+      if value = @policy
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@policy)

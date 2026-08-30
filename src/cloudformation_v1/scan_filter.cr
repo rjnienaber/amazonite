@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudFormationV1
   # A filter that is used to specify which resource types to scan.
   class ScanFilter
@@ -30,6 +32,13 @@ module Amazonite::CloudFormationV1
       new(
         types: node.xpath_nodes("*[local-name()='Types']/*[local-name()='member']").map { |n| n.content },
       )
+    end
+
+    def validate! : Nil
+      if value = @types
+        raise Core::ValidationError.new("Types must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Types must have at most 100 item(s)") if value.size > 100
+      end
     end
 
     def_equals_and_hash(@types)

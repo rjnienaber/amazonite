@@ -68,6 +68,42 @@ module Amazonite::Codegen::Service
       @resolver.find(shape_name).is_a?(Structure)
     end
 
+    def string_type?
+      @resolver.find(shape_name).type == "string" && !enum_type?
+    end
+
+    def numeric_type?
+      {"integer", "long", "float", "double"}.includes?(@resolver.find(shape_name).type)
+    end
+
+    # `min`/`max`/`pattern` belong to the shape this member points at (e.g.
+    # a "TableName" string shape's length/pattern), not the member ref
+    # itself - Smithy attaches constraint traits to the shape definition,
+    # so every member sharing that shape shares the same constraint.
+    def min
+      @resolver.find(shape_name).min
+    end
+
+    def max
+      @resolver.find(shape_name).max
+    end
+
+    def pattern
+      @resolver.find(shape_name).pattern
+    end
+
+    # A Crystal numeric literal (as source text) for `min`/`max` - `.raw`
+    # is whichever of Int64/Float64 the JSON constraint actually carried,
+    # and `.to_s` on either produces text Crystal parses back as the same
+    # kind of literal.
+    def min_literal : String?
+      min.try(&.raw.to_s)
+    end
+
+    def max_literal : String?
+      max.try(&.raw.to_s)
+    end
+
     def required?
       @required
     end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class GetCommandInvocationRequest
     include JSON::Serializable
@@ -29,6 +31,21 @@ module Amazonite::SsmV1
       @instance_id : String,
       @plugin_name : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @command_id
+        raise Core::ValidationError.new("CommandId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("CommandId length must be <= 36") if value.size > 36
+      end
+
+      if value = @instance_id
+        raise Core::ValidationError.new("InstanceId does not match the required pattern") unless value.matches?(Regex.new("^(^i-(\\w{8}|\\w{17})$)|(^mi-\\w{17}$)$"))
+      end
+
+      if value = @plugin_name
+        raise Core::ValidationError.new("PluginName length must be >= 4") if value.size < 4
+      end
     end
 
     def_equals_and_hash(@command_id, @instance_id, @plugin_name)

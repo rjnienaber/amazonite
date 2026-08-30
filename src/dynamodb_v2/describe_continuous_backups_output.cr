@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class DescribeContinuousBackupsOutput
     include JSON::Serializable
@@ -9,6 +11,12 @@ module Amazonite::DynamoDBV2
     def initialize(
       @continuous_backups_description : ContinuousBackupsDescription | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @continuous_backups_description
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@continuous_backups_description)

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class GenerateRandomRequest
     include JSON::Serializable
@@ -44,6 +46,22 @@ module Amazonite::KmsV1
       @custom_key_store_id : String | Nil = nil,
       @recipient : RecipientInfo | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @number_of_bytes
+        raise Core::ValidationError.new("NumberOfBytes value must be >= 1") if value < 1
+        raise Core::ValidationError.new("NumberOfBytes value must be <= 1024") if value > 1024
+      end
+
+      if value = @custom_key_store_id
+        raise Core::ValidationError.new("CustomKeyStoreId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CustomKeyStoreId length must be <= 64") if value.size > 64
+      end
+
+      if value = @recipient
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@number_of_bytes, @custom_key_store_id, @recipient)

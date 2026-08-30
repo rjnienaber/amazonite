@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the properties of the scaling policy.
   class AutoScalingPolicyDescription
@@ -15,6 +17,18 @@ module Amazonite::DynamoDBV2
       @policy_name : String | Nil = nil,
       @target_tracking_scaling_policy_configuration : AutoScalingTargetTrackingScalingPolicyConfigurationDescription | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @policy_name
+        raise Core::ValidationError.new("PolicyName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PolicyName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("PolicyName does not match the required pattern") unless value.matches?(Regex.new("^\\p{Print}+$"))
+      end
+
+      if value = @target_tracking_scaling_policy_configuration
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@policy_name, @target_tracking_scaling_policy_configuration)

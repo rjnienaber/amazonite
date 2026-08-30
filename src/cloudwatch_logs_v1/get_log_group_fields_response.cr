@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class GetLogGroupFieldsResponse
     include JSON::Serializable
@@ -10,6 +12,12 @@ module Amazonite::CloudWatchLogsV1
     def initialize(
       @log_group_fields : Array(LogGroupField) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @log_group_fields
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@log_group_fields)

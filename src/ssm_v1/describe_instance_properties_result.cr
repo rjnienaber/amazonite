@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeInstancePropertiesResult
     include JSON::Serializable
@@ -15,6 +17,12 @@ module Amazonite::SsmV1
       @instance_properties : Array(InstanceProperty) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @instance_properties
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@instance_properties, @next_token)

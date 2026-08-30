@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Represents a collection of ClientCertificate resources.
   class ClientCertificates
@@ -15,6 +17,12 @@ module Amazonite::ApiGatewayV1
       @items : Array(ClientCertificate) | Nil = nil,
       @position : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @items
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@items, @position)

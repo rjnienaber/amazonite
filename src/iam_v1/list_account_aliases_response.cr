@@ -52,6 +52,9 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@account_aliases, @is_truncated, @marker)
   end
 end

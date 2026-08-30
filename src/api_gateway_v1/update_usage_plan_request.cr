@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # The PATCH request to update a usage plan of a given plan Id.
   class UpdateUsagePlanRequest
@@ -16,6 +18,12 @@ module Amazonite::ApiGatewayV1
       @usage_plan_id : String,
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @patch_operations
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@usage_plan_id, @patch_operations)

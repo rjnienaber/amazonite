@@ -34,6 +34,13 @@ module Amazonite::SnsV1
       )
     end
 
+    def validate! : Nil
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 100") if value > 100
+      end
+    end
+
     def_equals_and_hash(@next_token, @max_results)
   end
 end

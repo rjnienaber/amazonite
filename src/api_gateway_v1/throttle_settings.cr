@@ -18,6 +18,9 @@ module Amazonite::ApiGatewayV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@burst_limit, @rate_limit)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class DescribeResourcePoliciesResponse
     include JSON::Serializable
@@ -13,6 +15,16 @@ module Amazonite::CloudWatchLogsV1
       @resource_policies : Array(ResourcePolicy) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @resource_policies
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@resource_policies, @next_token)

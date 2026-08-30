@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class StartQueryRequest
@@ -80,6 +81,32 @@ module Amazonite::CloudWatchLogsV1
       @log_group_identifiers : Array(String) | Nil = nil,
       @limit : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @log_group_name
+        raise Core::ValidationError.new("logGroupName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("logGroupName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+
+      if value = @start_time
+        raise Core::ValidationError.new("startTime value must be >= 0") if value < 0
+      end
+
+      if value = @end_time
+        raise Core::ValidationError.new("endTime value must be >= 0") if value < 0
+      end
+
+      if value = @query_string
+        raise Core::ValidationError.new("queryString length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("queryString length must be <= 10000") if value.size > 10000
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("limit value must be <= 100000") if value > 100000
+      end
     end
 
     def_equals_and_hash(@query_language, @log_group_name, @log_group_names, @log_group_identifiers, @start_time, @end_time, @query_string, @limit)

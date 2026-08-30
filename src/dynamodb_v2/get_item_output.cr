@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the output of a `GetItem` operation.
   class GetItemOutput
@@ -20,6 +22,16 @@ module Amazonite::DynamoDBV2
       @item : Hash(String, AttributeValue) | Nil = nil,
       @consumed_capacity : ConsumedCapacity | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @item
+        value.each_value(&.validate!)
+      end
+
+      if value = @consumed_capacity
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@item, @consumed_capacity)

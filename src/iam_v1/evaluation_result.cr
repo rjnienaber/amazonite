@@ -166,6 +166,34 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @eval_action_name
+        raise Core::ValidationError.new("EvalActionName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("EvalActionName length must be <= 128") if value.size > 128
+      end
+
+      if value = @eval_resource_name
+        raise Core::ValidationError.new("EvalResourceName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EvalResourceName length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @matched_statements
+        value.each(&.validate!)
+      end
+
+      if value = @organizations_decision_detail
+        value.validate!
+      end
+
+      if value = @permissions_boundary_decision_detail
+        value.validate!
+      end
+
+      if value = @resource_specific_results
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@eval_action_name, @eval_resource_name, @eval_decision, @matched_statements, @missing_context_values, @organizations_decision_detail, @permissions_boundary_decision_detail, @eval_decision_details, @resource_specific_results)
   end
 end

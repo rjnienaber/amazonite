@@ -43,6 +43,12 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @entity_info
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@entity_info, @last_authenticated)
   end
 end

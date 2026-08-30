@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # A validation finding from a cloud connector validation check.
@@ -32,6 +33,12 @@ module Amazonite::SsmV1
       @provider_message : String | Nil = nil,
       @scope : ValidationFindingScope | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @scope
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@type, @code, @message, @provider_message, @scope)

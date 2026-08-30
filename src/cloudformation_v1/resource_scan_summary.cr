@@ -89,6 +89,9 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@resource_scan_id, @status, @status_reason, @start_time, @end_time, @percentage_completed, @scan_type)
   end
 end

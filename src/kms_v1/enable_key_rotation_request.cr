@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class EnableKeyRotationRequest
     include JSON::Serializable
@@ -43,6 +45,18 @@ module Amazonite::KmsV1
       @key_id : String,
       @rotation_period_in_days : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @rotation_period_in_days
+        raise Core::ValidationError.new("RotationPeriodInDays value must be >= 90") if value < 90
+        raise Core::ValidationError.new("RotationPeriodInDays value must be <= 2560") if value > 2560
+      end
     end
 
     def_equals_and_hash(@key_id, @rotation_period_in_days)

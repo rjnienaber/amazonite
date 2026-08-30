@@ -33,6 +33,17 @@ module Amazonite::SnsV1
       )
     end
 
+    def validate! : Nil
+      if value = @resource_arn
+        raise Core::ValidationError.new("ResourceArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceArn length must be <= 1011") if value.size > 1011
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@resource_arn, @tags)
   end
 end

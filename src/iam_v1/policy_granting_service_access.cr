@@ -76,6 +76,25 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @policy_name
+        raise Core::ValidationError.new("PolicyName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PolicyName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("PolicyName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @policy_arn
+        raise Core::ValidationError.new("PolicyArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("PolicyArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @entity_name
+        raise Core::ValidationError.new("EntityName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EntityName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("EntityName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+    end
+
     def_equals_and_hash(@policy_name, @policy_type, @policy_arn, @entity_type, @entity_name)
   end
 end

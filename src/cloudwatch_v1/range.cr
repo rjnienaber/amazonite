@@ -22,6 +22,9 @@ module Amazonite::CloudWatchV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@start_time, @end_time)
   end
 end

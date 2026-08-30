@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeAutomationStepExecutionsRequest
     include JSON::Serializable
@@ -31,6 +33,24 @@ module Amazonite::SsmV1
       @max_results : Int32 | Nil = nil,
       @reverse_order : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @automation_execution_id
+        raise Core::ValidationError.new("AutomationExecutionId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("AutomationExecutionId length must be <= 36") if value.size > 36
+      end
+
+      if value = @filters
+        raise Core::ValidationError.new("Filters must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Filters must have at most 6 item(s)") if value.size > 6
+        value.each(&.validate!)
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 50") if value > 50
+      end
     end
 
     def_equals_and_hash(@automation_execution_id, @filters, @next_token, @max_results, @reverse_order)

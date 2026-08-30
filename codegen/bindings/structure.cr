@@ -7,11 +7,12 @@ module Amazonite::Codegen::Bindings
     @payload_member : String?
     @query_adds : Array(Crinja::Value)
     @xml_reads : Array(Crinja::Value)
+    @validations : Array(Crinja::Value)
     @module_alias : String
     @doc : String?
 
     getter name, members, has_parameters, parameters, needs_core_alias, needs_module_alias, query_adds, xml_reads,
-      doc, has_doc
+      validations, doc, has_doc
 
     def initialize(shape : Amazonite::Codegen::Service::Structure, module_alias : String, is_rest : Bool, is_query : Bool = false)
       @name = shape.name
@@ -30,6 +31,9 @@ module Amazonite::Codegen::Bindings
         @query_adds = [] of Crinja::Value
         @xml_reads = [] of Crinja::Value
       end
+
+      @validations = shape.members.compact_map { |member| validation_stmt(member) }.map { |stmt| Crinja.value({stmt: stmt}) }
+      @needs_core_alias ||= !@validations.empty?
 
       @has_parameters = shape.members.size > 0
       @parameters = [] of Crinja::Value
@@ -142,6 +146,91 @@ module Amazonite::Codegen::Bindings
       else
         raise Exception.new("no zero value known for required non-body member of type '#{member.crystal_type(true)}'")
       end
+    end
+
+    # --- input validation (Structure#validate!) -------------------------
+    #
+    # Builds one `if value = @member ... end` statement per member that
+    # either carries its own min/max/pattern constraint or needs to recurse
+    # into a nested structure/list/map so *its* constraints get checked
+    # too. `if value = @member` is used unconditionally (not just for
+    # optional members) since it's a harmless truthy-check for a required,
+    # non-nilable member - Crystal only treats `nil`/`false` as falsy, so a
+    # required String/Int32/etc. member always enters the block.
+
+    private def validation_stmt(member) : String?
+      lines = if member.structure_type?
+                structure_validation_lines("value")
+              elsif member.list_type?
+                list_validation_lines(member, "value")
+              elsif member.map_type?
+                map_validation_lines(member, "value")
+              elsif scalar_constrained?(member)
+                scalar_validation_lines(member, "value")
+              else
+                [] of String
+              end
+
+      return if lines.empty?
+
+      "if value = @#{member.snake_case_name}\n  #{lines.join("\n  ")}\nend"
+    end
+
+    private def scalar_constrained?(member) : Bool
+      return !!(member.min || member.max || member.pattern) if member.string_type? || member.blob_type?
+
+      member.numeric_type? && !!(member.min || member.max)
+    end
+
+    private def scalar_validation_lines(member, value_var) : Array(String)
+      is_length_constraint = member.string_type? || member.blob_type?
+      measured = is_length_constraint ? "#{value_var}.size" : value_var
+      noun = is_length_constraint ? "length" : "value"
+
+      lines = [] of String
+      if min = member.min_literal
+        lines << %(raise Core::ValidationError.new("#{member.name} #{noun} must be >= #{min}") if #{measured} < #{min})
+      end
+      if max = member.max_literal
+        lines << %(raise Core::ValidationError.new("#{member.name} #{noun} must be <= #{max}") if #{measured} > #{max})
+      end
+      if member.string_type? && (pattern = member.pattern)
+        # `pattern` (an arbitrary AWS-model regex, e.g. one built from
+        # \uXXXX character-class escapes) is only ever embedded via
+        # `.inspect` (a properly escaped Crystal string literal) - dropped
+        # from the raised message entirely, since interpolating it as raw
+        # text would let its own backslash escapes get reinterpreted by
+        # the Crystal lexer when this generated source is parsed.
+        lines << %(raise Core::ValidationError.new("#{member.name} does not match the required pattern") unless #{value_var}.matches?(Regex.new(#{pattern.inspect})))
+      end
+      lines
+    end
+
+    private def structure_validation_lines(value_var) : Array(String)
+      ["#{value_var}.validate!"]
+    end
+
+    private def list_validation_lines(member, value_var) : Array(String)
+      lines = size_validation_lines(member, value_var, "item")
+      lines << "#{value_var}.each(&.validate!)" if member.list_item_member.structure_type?
+      lines
+    end
+
+    private def map_validation_lines(member, value_var) : Array(String)
+      lines = size_validation_lines(member, value_var, "entry")
+      lines << "#{value_var}.each_value(&.validate!)" if member.map_value_member.structure_type?
+      lines
+    end
+
+    private def size_validation_lines(member, value_var, noun) : Array(String)
+      lines = [] of String
+      if min = member.min_literal
+        lines << %(raise Core::ValidationError.new("#{member.name} must have at least #{min} #{noun}(s)") if #{value_var}.size < #{min})
+      end
+      if max = member.max_literal
+        lines << %(raise Core::ValidationError.new("#{member.name} must have at most #{max} #{noun}(s)") if #{value_var}.size > #{max})
+      end
+      lines
     end
 
     # --- awsQuery request encoding (Structure#to_query_params) ---------

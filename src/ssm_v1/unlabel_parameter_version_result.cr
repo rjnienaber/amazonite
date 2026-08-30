@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class UnlabelParameterVersionResult
     include JSON::Serializable
@@ -14,6 +16,18 @@ module Amazonite::SsmV1
       @removed_labels : Array(String) | Nil = nil,
       @invalid_labels : Array(String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @removed_labels
+        raise Core::ValidationError.new("RemovedLabels must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("RemovedLabels must have at most 10 item(s)") if value.size > 10
+      end
+
+      if value = @invalid_labels
+        raise Core::ValidationError.new("InvalidLabels must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("InvalidLabels must have at most 10 item(s)") if value.size > 10
+      end
     end
 
     def_equals_and_hash(@removed_labels, @invalid_labels)

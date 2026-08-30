@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class UpdateManagedInstanceRoleRequest
     include JSON::Serializable
@@ -21,6 +23,19 @@ module Amazonite::SsmV1
       @instance_id : String,
       @iam_role : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @instance_id
+        raise Core::ValidationError.new("InstanceId length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("InstanceId length must be <= 124") if value.size > 124
+        raise Core::ValidationError.new("InstanceId does not match the required pattern") unless value.matches?(Regex.new("^(^mi-[0-9a-f]{17}$)|(^eks_c:[0-9A-Za-z][A-Za-z0-9\\-_]{0,99}_\\w{17}$)$"))
+      end
+
+      if value = @iam_role
+        raise Core::ValidationError.new("IamRole length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("IamRole length must be <= 64") if value.size > 64
+      end
     end
 
     def_equals_and_hash(@instance_id, @iam_role)

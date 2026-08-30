@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class CreateAssociationBatchRequest
     include JSON::Serializable
@@ -24,6 +26,19 @@ module Amazonite::SsmV1
       @entries : Array(CreateAssociationBatchRequestEntry),
       @association_dispatch_assume_role : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @entries
+        raise Core::ValidationError.new("Entries must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+
+      if value = @association_dispatch_assume_role
+        raise Core::ValidationError.new("AssociationDispatchAssumeRole length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AssociationDispatchAssumeRole length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("AssociationDispatchAssumeRole does not match the required pattern") unless value.matches?(Regex.new("^arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+$"))
+      end
     end
 
     def_equals_and_hash(@entries, @association_dispatch_assume_role)

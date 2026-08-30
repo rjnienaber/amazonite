@@ -93,6 +93,41 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @path
+        raise Core::ValidationError.new("Path length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Path length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("Path does not match the required pattern") unless value.matches?(Regex.new("^(\\u002F)|(\\u002F[\\u0021-\\u007E]+\\u002F)$"))
+      end
+
+      if value = @instance_profile_name
+        raise Core::ValidationError.new("InstanceProfileName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("InstanceProfileName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("InstanceProfileName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @instance_profile_id
+        raise Core::ValidationError.new("InstanceProfileId length must be >= 16") if value.size < 16
+        raise Core::ValidationError.new("InstanceProfileId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("InstanceProfileId does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("Arn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @roles
+        value.each(&.validate!)
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@path, @instance_profile_name, @instance_profile_id, @arn, @create_date, @roles, @tags)
   end
 end

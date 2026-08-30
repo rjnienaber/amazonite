@@ -12,6 +12,9 @@ module Amazonite::LambdaV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@status)
   end
 end

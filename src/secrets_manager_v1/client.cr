@@ -32,6 +32,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def batch_get_secret_value(input : ASM::BatchGetSecretValueRequest) : Core::ParsedResponse(ASM::BatchGetSecretValueResponse)
       Log.info { "performing 'BatchGetSecretValue' operation" }
+      input.validate! if config.validate_input?
       response = post("BatchGetSecretValue", "/", input.to_json)
       Core::ParsedResponse(ASM::BatchGetSecretValueResponse).new(response)
     end
@@ -60,6 +61,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def cancel_rotate_secret(input : ASM::CancelRotateSecretRequest) : Core::ParsedResponse(ASM::CancelRotateSecretResponse)
       Log.info { "performing 'CancelRotateSecret' operation" }
+      input.validate! if config.validate_input?
       response = post("CancelRotateSecret", "/", input.to_json)
       Core::ParsedResponse(ASM::CancelRotateSecretResponse).new(response)
     end
@@ -120,6 +122,7 @@ module Amazonite::SecretsManagerV1
     # secrets](https://docs.aws.amazon.com/secretsmanager/latest/userguide/security_cli-exposure-risks.html).
     def create_secret(input : ASM::CreateSecretRequest) : Core::ParsedResponse(ASM::CreateSecretResponse)
       Log.info { "performing 'CreateSecret' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateSecret", "/", input.to_json)
       Core::ParsedResponse(ASM::CreateSecretResponse).new(response)
     end
@@ -139,6 +142,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def delete_resource_policy(input : ASM::DeleteResourcePolicyRequest) : Core::ParsedResponse(ASM::DeleteResourcePolicyResponse)
       Log.info { "performing 'DeleteResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(ASM::DeleteResourcePolicyResponse).new(response)
     end
@@ -184,6 +188,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def delete_secret(input : ASM::DeleteSecretRequest) : Core::ParsedResponse(ASM::DeleteSecretResponse)
       Log.info { "performing 'DeleteSecret' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteSecret", "/", input.to_json)
       Core::ParsedResponse(ASM::DeleteSecretResponse).new(response)
     end
@@ -203,6 +208,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def describe_secret(input : ASM::DescribeSecretRequest) : Core::ParsedResponse(ASM::DescribeSecretResponse)
       Log.info { "performing 'DescribeSecret' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeSecret", "/", input.to_json)
       Core::ParsedResponse(ASM::DescribeSecretResponse).new(response)
     end
@@ -221,6 +227,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def get_random_password(input : ASM::GetRandomPasswordRequest) : Core::ParsedResponse(ASM::GetRandomPasswordResponse)
       Log.info { "performing 'GetRandomPassword' operation" }
+      input.validate! if config.validate_input?
       response = post("GetRandomPassword", "/", input.to_json)
       Core::ParsedResponse(ASM::GetRandomPasswordResponse).new(response)
     end
@@ -242,6 +249,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def get_resource_policy(input : ASM::GetResourcePolicyRequest) : Core::ParsedResponse(ASM::GetResourcePolicyResponse)
       Log.info { "performing 'GetResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("GetResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(ASM::GetResourcePolicyResponse).new(response)
     end
@@ -273,6 +281,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def get_secret_value(input : ASM::GetSecretValueRequest) : Core::ParsedResponse(ASM::GetSecretValueResponse)
       Log.info { "performing 'GetSecretValue' operation" }
+      input.validate! if config.validate_input?
       response = post("GetSecretValue", "/", input.to_json)
       Core::ParsedResponse(ASM::GetSecretValueResponse).new(response)
     end
@@ -304,6 +313,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def list_secrets(input : ASM::ListSecretsRequest) : Core::ParsedResponse(ASM::ListSecretsResponse)
       Log.info { "performing 'ListSecrets' operation" }
+      input.validate! if config.validate_input?
       response = post("ListSecrets", "/", input.to_json)
       Core::ParsedResponse(ASM::ListSecretsResponse).new(response)
     end
@@ -326,6 +336,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def list_secret_version_ids(input : ASM::ListSecretVersionIdsRequest) : Core::ParsedResponse(ASM::ListSecretVersionIdsResponse)
       Log.info { "performing 'ListSecretVersionIds' operation" }
+      input.validate! if config.validate_input?
       response = post("ListSecretVersionIds", "/", input.to_json)
       Core::ParsedResponse(ASM::ListSecretVersionIdsResponse).new(response)
     end
@@ -349,6 +360,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def put_resource_policy(input : ASM::PutResourcePolicyRequest) : Core::ParsedResponse(ASM::PutResourcePolicyResponse)
       Log.info { "performing 'PutResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(ASM::PutResourcePolicyResponse).new(response)
     end
@@ -394,6 +406,7 @@ module Amazonite::SecretsManagerV1
     # secrets](https://docs.aws.amazon.com/secretsmanager/latest/userguide/security_cli-exposure-risks.html).
     def put_secret_value(input : ASM::PutSecretValueRequest) : Core::ParsedResponse(ASM::PutSecretValueResponse)
       Log.info { "performing 'PutSecretValue' operation" }
+      input.validate! if config.validate_input?
       response = post("PutSecretValue", "/", input.to_json)
       Core::ParsedResponse(ASM::PutSecretValueResponse).new(response)
     end
@@ -413,6 +426,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def remove_regions_from_replication(input : ASM::RemoveRegionsFromReplicationRequest) : Core::ParsedResponse(ASM::RemoveRegionsFromReplicationResponse)
       Log.info { "performing 'RemoveRegionsFromReplication' operation" }
+      input.validate! if config.validate_input?
       response = post("RemoveRegionsFromReplication", "/", input.to_json)
       Core::ParsedResponse(ASM::RemoveRegionsFromReplicationResponse).new(response)
     end
@@ -435,6 +449,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def replicate_secret_to_regions(input : ASM::ReplicateSecretToRegionsRequest) : Core::ParsedResponse(ASM::ReplicateSecretToRegionsResponse)
       Log.info { "performing 'ReplicateSecretToRegions' operation" }
+      input.validate! if config.validate_input?
       response = post("ReplicateSecretToRegions", "/", input.to_json)
       Core::ParsedResponse(ASM::ReplicateSecretToRegionsResponse).new(response)
     end
@@ -454,6 +469,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def restore_secret(input : ASM::RestoreSecretRequest) : Core::ParsedResponse(ASM::RestoreSecretResponse)
       Log.info { "performing 'RestoreSecret' operation" }
+      input.validate! if config.validate_input?
       response = post("RestoreSecret", "/", input.to_json)
       Core::ParsedResponse(ASM::RestoreSecretResponse).new(response)
     end
@@ -490,6 +506,7 @@ module Amazonite::SecretsManagerV1
     # rotation](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotating-secrets-required-permissions-function.html).
     def rotate_secret(input : ASM::RotateSecretRequest) : Core::ParsedResponse(ASM::RotateSecretResponse)
       Log.info { "performing 'RotateSecret' operation" }
+      input.validate! if config.validate_input?
       response = post("RotateSecret", "/", input.to_json)
       Core::ParsedResponse(ASM::RotateSecretResponse).new(response)
     end
@@ -512,6 +529,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def stop_replication_to_replica(input : ASM::StopReplicationToReplicaRequest) : Core::ParsedResponse(ASM::StopReplicationToReplicaResponse)
       Log.info { "performing 'StopReplicationToReplica' operation" }
+      input.validate! if config.validate_input?
       response = post("StopReplicationToReplica", "/", input.to_json)
       Core::ParsedResponse(ASM::StopReplicationToReplicaResponse).new(response)
     end
@@ -540,6 +558,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def tag_resource(input : ASM::TagResourceRequest) : Core::Response
       Log.info { "performing 'TagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("TagResource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -565,6 +584,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def untag_resource(input : ASM::UntagResourceRequest) : Core::Response
       Log.info { "performing 'UntagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("UntagResource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -617,6 +637,7 @@ module Amazonite::SecretsManagerV1
     # secrets](https://docs.aws.amazon.com/secretsmanager/latest/userguide/security_cli-exposure-risks.html).
     def update_secret(input : ASM::UpdateSecretRequest) : Core::ParsedResponse(ASM::UpdateSecretResponse)
       Log.info { "performing 'UpdateSecret' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateSecret", "/", input.to_json)
       Core::ParsedResponse(ASM::UpdateSecretResponse).new(response)
     end
@@ -652,6 +673,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def update_secret_version_stage(input : ASM::UpdateSecretVersionStageRequest) : Core::ParsedResponse(ASM::UpdateSecretVersionStageResponse)
       Log.info { "performing 'UpdateSecretVersionStage' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateSecretVersionStage", "/", input.to_json)
       Core::ParsedResponse(ASM::UpdateSecretVersionStageResponse).new(response)
     end
@@ -682,6 +704,7 @@ module Amazonite::SecretsManagerV1
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
     def validate_resource_policy(input : ASM::ValidateResourcePolicyRequest) : Core::ParsedResponse(ASM::ValidateResourcePolicyResponse)
       Log.info { "performing 'ValidateResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("ValidateResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(ASM::ValidateResourcePolicyResponse).new(response)
     end

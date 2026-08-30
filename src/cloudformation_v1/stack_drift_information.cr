@@ -48,6 +48,9 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@stack_drift_status, @last_check_timestamp)
   end
 end

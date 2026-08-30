@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Input information for an event.
   class EventInput
@@ -15,6 +17,13 @@ module Amazonite::LambdaV1
       @payload : String | Nil = nil,
       @truncated : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @payload
+        raise Core::ValidationError.new("Payload length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Payload length must be <= 6291456") if value.size > 6291456
+      end
     end
 
     def_equals_and_hash(@payload, @truncated)

@@ -109,6 +109,55 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+      if value = @import_arn
+        raise Core::ValidationError.new("ImportArn length must be >= 37") if value.size < 37
+        raise Core::ValidationError.new("ImportArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @table_arn
+        raise Core::ValidationError.new("TableArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @table_id
+        raise Core::ValidationError.new("TableId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"))
+      end
+
+      if value = @client_token
+        raise Core::ValidationError.new("ClientToken does not match the required pattern") unless value.matches?(Regex.new("^[^\\$]+$"))
+      end
+
+      if value = @s3_bucket_source
+        value.validate!
+      end
+
+      if value = @error_count
+        raise Core::ValidationError.new("ErrorCount value must be >= 0") if value < 0
+      end
+
+      if value = @cloud_watch_log_group_arn
+        raise Core::ValidationError.new("CloudWatchLogGroupArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CloudWatchLogGroupArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @input_format_options
+        value.validate!
+      end
+
+      if value = @table_creation_parameters
+        value.validate!
+      end
+
+      if value = @processed_item_count
+        raise Core::ValidationError.new("ProcessedItemCount value must be >= 0") if value < 0
+      end
+
+      if value = @imported_item_count
+        raise Core::ValidationError.new("ImportedItemCount value must be >= 0") if value < 0
+      end
+    end
+
     def_equals_and_hash(@import_arn, @import_status, @table_arn, @table_id, @client_token, @s3_bucket_source, @error_count, @cloud_watch_log_group_arn, @input_format, @input_format_options, @input_compression_type, @table_creation_parameters, @start_time, @end_time, @processed_size_bytes, @processed_item_count, @imported_item_count, @failure_code, @failure_message)
   end
 end

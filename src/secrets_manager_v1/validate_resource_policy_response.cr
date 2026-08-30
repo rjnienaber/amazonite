@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SecretsManagerV1
   class ValidateResourcePolicyResponse
     include JSON::Serializable
@@ -14,6 +16,12 @@ module Amazonite::SecretsManagerV1
       @policy_validation_passed : Bool | Nil = nil,
       @validation_errors : Array(ValidationErrorsEntry) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @validation_errors
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@policy_validation_passed, @validation_errors)

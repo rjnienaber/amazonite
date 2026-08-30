@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   class ExecuteStatementInput
@@ -52,6 +53,27 @@ module Amazonite::DynamoDBV2
       @limit : Int32 | Nil = nil,
       @return_values_on_condition_check_failure : ReturnValuesOnConditionCheckFailure | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @statement
+        raise Core::ValidationError.new("Statement length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Statement length must be <= 8192") if value.size > 8192
+      end
+
+      if value = @parameters
+        raise Core::ValidationError.new("Parameters must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 32768") if value.size > 32768
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("Limit value must be >= 1") if value < 1
+      end
     end
 
     def_equals_and_hash(@statement, @parameters, @consistent_read, @next_token, @return_consumed_capacity, @limit, @return_values_on_condition_check_failure)

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Details about a chained invocation that succeeded.
   class ChainedInvokeSucceededDetails
@@ -10,6 +12,12 @@ module Amazonite::LambdaV1
     def initialize(
       @result : EventResult,
     )
+    end
+
+    def validate! : Nil
+      if value = @result
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@result)

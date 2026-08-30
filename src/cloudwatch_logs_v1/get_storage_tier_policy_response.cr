@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class GetStorageTierPolicyResponse
@@ -17,6 +18,12 @@ module Amazonite::CloudWatchLogsV1
       @storage_tier : StorageTier | Nil = nil,
       @last_updated_time : Int64 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @last_updated_time
+        raise Core::ValidationError.new("lastUpdatedTime value must be >= 0") if value < 0
+      end
     end
 
     def_equals_and_hash(@storage_tier, @last_updated_time)

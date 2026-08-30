@@ -91,6 +91,28 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @stack_set_name
+        raise Core::ValidationError.new("StackSetName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z][-a-zA-Z0-9]*(?::[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12})?$"))
+      end
+
+      if value = @stack_ids_url
+        raise Core::ValidationError.new("StackIdsUrl length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackIdsUrl length must be <= 5120") if value.size > 5120
+        raise Core::ValidationError.new("StackIdsUrl does not match the required pattern") unless value.matches?(Regex.new("^(s3://|http(s?)://).+$"))
+      end
+
+      if value = @operation_preferences
+        value.validate!
+      end
+
+      if value = @operation_id
+        raise Core::ValidationError.new("OperationId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OperationId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("OperationId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+    end
+
     def_equals_and_hash(@stack_set_name, @stack_ids, @stack_ids_url, @organizational_unit_ids, @operation_preferences, @operation_id, @call_as)
   end
 end

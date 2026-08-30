@@ -30,6 +30,9 @@ module Amazonite::EventBridgeV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@subnets, @security_groups, @assign_public_ip)
   end
 end

@@ -37,6 +37,9 @@ module Amazonite::ApiGatewayV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@status, @body, @headers, @multi_value_headers, @log, @latency)
   end
 end

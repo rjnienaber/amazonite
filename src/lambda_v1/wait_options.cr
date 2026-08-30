@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Specifies how long to pause the durable execution.
   class WaitOptions
@@ -10,6 +12,12 @@ module Amazonite::LambdaV1
     def initialize(
       @wait_seconds : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @wait_seconds
+        raise Core::ValidationError.new("WaitSeconds value must be >= 0") if value < 0
+      end
     end
 
     def_equals_and_hash(@wait_seconds)

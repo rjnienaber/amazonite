@@ -11,6 +11,9 @@ module Amazonite::CloudWatchLogsV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@log_record)
   end
 end

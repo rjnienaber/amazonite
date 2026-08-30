@@ -64,6 +64,28 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @stack_name
+        raise Core::ValidationError.new("StackName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackName does not match the required pattern") unless value.matches?(Regex.new("^([a-zA-Z][-a-zA-Z0-9]*)|(arn:\\b(aws|aws-us-gov|aws-cn)\\b:[-a-zA-Z0-9:/._+]*)$"))
+      end
+
+      if value = @stack_resource_drift_status_filters
+        raise Core::ValidationError.new("StackResourceDriftStatusFilters must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("StackResourceDriftStatusFilters must have at most 4 item(s)") if value.size > 4
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 100") if value > 100
+      end
+    end
+
     def_equals_and_hash(@stack_name, @stack_resource_drift_status_filters, @next_token, @max_results)
   end
 end

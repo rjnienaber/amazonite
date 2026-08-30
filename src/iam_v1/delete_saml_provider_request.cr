@@ -23,6 +23,13 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @saml_provider_arn
+        raise Core::ValidationError.new("SAMLProviderArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("SAMLProviderArn length must be <= 2048") if value.size > 2048
+      end
+    end
+
     def_equals_and_hash(@saml_provider_arn)
   end
 end

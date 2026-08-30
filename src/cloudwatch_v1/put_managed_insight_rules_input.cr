@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class PutManagedInsightRulesInput
     include JSON::Serializable
@@ -9,6 +11,12 @@ module Amazonite::CloudWatchV1
     def initialize(
       @managed_rules : Array(ManagedRule),
     )
+    end
+
+    def validate! : Nil
+      if value = @managed_rules
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@managed_rules)

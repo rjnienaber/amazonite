@@ -108,6 +108,39 @@ module Amazonite::SecretsManagerV1
     )
     end
 
+    def validate! : Nil
+      if value = @secret_id
+        raise Core::ValidationError.new("SecretId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SecretId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @client_request_token
+        raise Core::ValidationError.new("ClientRequestToken length must be >= 32") if value.size < 32
+        raise Core::ValidationError.new("ClientRequestToken length must be <= 64") if value.size > 64
+      end
+
+      if value = @secret_binary
+        raise Core::ValidationError.new("SecretBinary length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SecretBinary length must be <= 65536") if value.size > 65536
+      end
+
+      if value = @secret_string
+        raise Core::ValidationError.new("SecretString length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SecretString length must be <= 65536") if value.size > 65536
+      end
+
+      if value = @version_stages
+        raise Core::ValidationError.new("VersionStages must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("VersionStages must have at most 20 item(s)") if value.size > 20
+      end
+
+      if value = @rotation_token
+        raise Core::ValidationError.new("RotationToken length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("RotationToken length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("RotationToken does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9\\-]+$"))
+      end
+    end
+
     def_equals_and_hash(@secret_id, @client_request_token, @secret_binary, @secret_string, @version_stages, @rotation_token)
   end
 end

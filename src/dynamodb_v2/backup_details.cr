@@ -55,6 +55,23 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+      if value = @backup_arn
+        raise Core::ValidationError.new("BackupArn length must be >= 37") if value.size < 37
+        raise Core::ValidationError.new("BackupArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @backup_name
+        raise Core::ValidationError.new("BackupName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("BackupName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("BackupName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @backup_size_bytes
+        raise Core::ValidationError.new("BackupSizeBytes value must be >= 0") if value < 0
+      end
+    end
+
     def_equals_and_hash(@backup_arn, @backup_name, @backup_size_bytes, @backup_status, @backup_type, @backup_creation_date_time, @backup_expiry_date_time)
   end
 end

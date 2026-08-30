@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The inventory item schema definition. Users can use this to compose inventory query filters.
   class InventoryItemSchema
@@ -28,6 +30,24 @@ module Amazonite::SsmV1
       @version : String | Nil = nil,
       @display_name : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @type_name
+        raise Core::ValidationError.new("TypeName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TypeName length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("TypeName does not match the required pattern") unless value.matches?(Regex.new("^(AWS|Custom):.*$"))
+      end
+
+      if value = @version
+        raise Core::ValidationError.new("Version does not match the required pattern") unless value.matches?(Regex.new("^([0-9]{1,6})(\\.[0-9]{1,6})$"))
+      end
+
+      if value = @attributes
+        raise Core::ValidationError.new("Attributes must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Attributes must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@type_name, @version, @attributes, @display_name)

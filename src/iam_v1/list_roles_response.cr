@@ -50,6 +50,12 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @roles
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@roles, @is_truncated, @marker)
   end
 end

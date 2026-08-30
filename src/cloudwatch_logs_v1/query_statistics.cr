@@ -58,6 +58,9 @@ module Amazonite::CloudWatchLogsV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@records_matched, @records_scanned, @estimated_records_skipped, @bytes_scanned, @estimated_bytes_skipped, @log_groups_scanned, @result_count)
   end
 end

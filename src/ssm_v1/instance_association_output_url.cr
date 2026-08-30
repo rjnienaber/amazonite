@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The URL of S3 bucket where you want to store the results of this request.
   class InstanceAssociationOutputUrl
@@ -10,6 +12,12 @@ module Amazonite::SsmV1
     def initialize(
       @s3_output_url : S3OutputUrl | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @s3_output_url
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@s3_output_url)

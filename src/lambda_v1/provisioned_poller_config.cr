@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # The [ provisioned
   # mode](https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode)
@@ -32,6 +34,24 @@ module Amazonite::LambdaV1
       @maximum_pollers : Int32 | Nil = nil,
       @poller_group_name : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @minimum_pollers
+        raise Core::ValidationError.new("MinimumPollers value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MinimumPollers value must be <= 200") if value > 200
+      end
+
+      if value = @maximum_pollers
+        raise Core::ValidationError.new("MaximumPollers value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaximumPollers value must be <= 10000") if value > 10000
+      end
+
+      if value = @poller_group_name
+        raise Core::ValidationError.new("PollerGroupName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("PollerGroupName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("PollerGroupName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-_]*$"))
+      end
     end
 
     def_equals_and_hash(@minimum_pollers, @maximum_pollers, @poller_group_name)

@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class CreateLogGroupRequest
@@ -60,6 +61,24 @@ module Amazonite::CloudWatchLogsV1
       @log_group_class : LogGroupClass | Nil = nil,
       @deletion_protection_enabled : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @log_group_name
+        raise Core::ValidationError.new("logGroupName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("logGroupName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+
+      if value = @kms_key_id
+        raise Core::ValidationError.new("kmsKeyId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("kmsKeyId length must be <= 256") if value.size > 256
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("tags must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("tags must have at most 50 entry(s)") if value.size > 50
+      end
     end
 
     def_equals_and_hash(@log_group_name, @kms_key_id, @tags, @log_group_class, @deletion_protection_enabled)

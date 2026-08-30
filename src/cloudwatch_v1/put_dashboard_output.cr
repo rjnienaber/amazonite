@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class PutDashboardOutput
     include JSON::Serializable
@@ -15,6 +17,12 @@ module Amazonite::CloudWatchV1
     def initialize(
       @dashboard_validation_messages : Array(DashboardValidationMessage) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @dashboard_validation_messages
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@dashboard_validation_messages)

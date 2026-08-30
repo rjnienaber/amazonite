@@ -63,6 +63,26 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @sync_name
+        raise Core::ValidationError.new("SyncName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SyncName length must be <= 64") if value.size > 64
+      end
+
+      if value = @sync_type
+        raise Core::ValidationError.new("SyncType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SyncType length must be <= 64") if value.size > 64
+      end
+
+      if value = @sync_source
+        value.validate!
+      end
+
+      if value = @s3_destination
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@sync_name, @sync_type, @sync_source, @s3_destination, @last_sync_time, @last_successful_sync_time, @sync_last_modified_time, @last_status, @sync_created_time, @last_sync_status_message)
   end
 end

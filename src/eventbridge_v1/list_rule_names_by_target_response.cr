@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class ListRuleNamesByTargetResponse
     include JSON::Serializable
@@ -20,6 +22,13 @@ module Amazonite::EventBridgeV1
       @rule_names : Array(String) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 2048") if value.size > 2048
+      end
     end
 
     def_equals_and_hash(@rule_names, @next_token)

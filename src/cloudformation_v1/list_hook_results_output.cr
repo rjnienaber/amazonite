@@ -54,6 +54,23 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @target_id
+        raise Core::ValidationError.new("TargetId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TargetId length must be <= 1600") if value.size > 1600
+        raise Core::ValidationError.new("TargetId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z][-a-zA-Z0-9]*|arn:[-a-zA-Z0-9:/]*|^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"))
+      end
+
+      if value = @hook_results
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1024") if value.size > 1024
+      end
+    end
+
     def_equals_and_hash(@target_type, @target_id, @hook_results, @next_token)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Information about ownership of a managed node.
   class NodeOwnerInfo
@@ -24,6 +26,23 @@ module Amazonite::SsmV1
       @organizational_unit_id : String | Nil = nil,
       @organizational_unit_path : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @account_id
+        raise Core::ValidationError.new("AccountId does not match the required pattern") unless value.matches?(Regex.new("^[0-9]{12}$"))
+      end
+
+      if value = @organizational_unit_id
+        raise Core::ValidationError.new("OrganizationalUnitId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OrganizationalUnitId length must be <= 68") if value.size > 68
+        raise Core::ValidationError.new("OrganizationalUnitId does not match the required pattern") unless value.matches?(Regex.new("^ou-[0-9a-z]{4,32}-[a-z0-9]{8,32}$"))
+      end
+
+      if value = @organizational_unit_path
+        raise Core::ValidationError.new("OrganizationalUnitPath length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OrganizationalUnitPath length must be <= 512") if value.size > 512
+      end
     end
 
     def_equals_and_hash(@account_id, @organizational_unit_id, @organizational_unit_path)

@@ -49,6 +49,9 @@ module Amazonite::SnsV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@id, @message_id, @sequence_number)
   end
 end

@@ -36,6 +36,24 @@ module Amazonite::KmsV1
     )
     end
 
+    def validate! : Nil
+      if value = @alias_name
+        raise Core::ValidationError.new("AliasName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AliasName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("AliasName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9:/_-]+$"))
+      end
+
+      if value = @alias_arn
+        raise Core::ValidationError.new("AliasArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("AliasArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @target_key_id
+        raise Core::ValidationError.new("TargetKeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TargetKeyId length must be <= 2048") if value.size > 2048
+      end
+    end
+
     def_equals_and_hash(@alias_name, @alias_arn, @target_key_id, @creation_date, @last_updated_date)
   end
 end

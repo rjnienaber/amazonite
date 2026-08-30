@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class DescribeExportTasksRequest
@@ -28,6 +29,22 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
       @limit : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @task_id
+        raise Core::ValidationError.new("taskId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("taskId length must be <= 512") if value.size > 512
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("limit value must be <= 50") if value > 50
+      end
     end
 
     def_equals_and_hash(@task_id, @status_code, @next_token, @limit)

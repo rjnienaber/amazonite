@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class GetInventorySchemaResult
     include JSON::Serializable
@@ -15,6 +17,12 @@ module Amazonite::SsmV1
       @schemas : Array(InventoryItemSchema) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @schemas
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@schemas, @next_token)

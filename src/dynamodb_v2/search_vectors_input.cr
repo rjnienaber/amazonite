@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   class SearchVectorsInput
@@ -65,6 +66,33 @@ module Amazonite::DynamoDBV2
       @projection_expression : String | Nil = nil,
       @search_condition_expression : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @index_name
+        raise Core::ValidationError.new("IndexName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("IndexName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("IndexName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @expression_attribute_values
+        value.each_value(&.validate!)
+      end
+
+      if value = @search_vector
+        raise Core::ValidationError.new("SearchVector must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("SearchVector must have at most 4096 item(s)") if value.size > 4096
+        value.each(&.validate!)
+      end
+
+      if value = @top_k
+        raise Core::ValidationError.new("TopK value must be >= 1") if value < 1
+      end
     end
 
     def_equals_and_hash(@table_name, @index_name, @return_consumed_capacity, @expression_attribute_names, @expression_attribute_values, @projection_expression, @search_vector, @search_condition_expression, @top_k)

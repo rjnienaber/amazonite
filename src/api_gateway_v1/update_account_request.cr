@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Requests API Gateway to change information about the current Account resource.
   class UpdateAccountRequest
@@ -11,6 +13,12 @@ module Amazonite::ApiGatewayV1
     def initialize(
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @patch_operations
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@patch_operations)

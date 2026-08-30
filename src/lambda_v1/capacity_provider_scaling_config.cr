@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   # Configuration that defines how the capacity provider scales compute instances based on demand
@@ -25,6 +26,19 @@ module Amazonite::LambdaV1
       @scaling_mode : CapacityProviderScalingMode | Nil = nil,
       @scaling_policies : Array(TargetTrackingScalingPolicy) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @max_v_cpu_count
+        raise Core::ValidationError.new("MaxVCpuCount value must be >= 2") if value < 2
+        raise Core::ValidationError.new("MaxVCpuCount value must be <= 15000") if value > 15000
+      end
+
+      if value = @scaling_policies
+        raise Core::ValidationError.new("ScalingPolicies must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("ScalingPolicies must have at most 10 item(s)") if value.size > 10
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@max_v_cpu_count, @scaling_mode, @scaling_policies)

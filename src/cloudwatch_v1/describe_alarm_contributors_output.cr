@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class DescribeAlarmContributorsOutput
     include JSON::Serializable
@@ -15,6 +17,12 @@ module Amazonite::CloudWatchV1
       @alarm_contributors : Array(AlarmContributor),
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @alarm_contributors
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@alarm_contributors, @next_token)

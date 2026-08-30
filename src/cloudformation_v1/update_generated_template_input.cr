@@ -72,6 +72,33 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @generated_template_name
+        raise Core::ValidationError.new("GeneratedTemplateName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GeneratedTemplateName length must be <= 128") if value.size > 128
+      end
+
+      if value = @new_generated_template_name
+        raise Core::ValidationError.new("NewGeneratedTemplateName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NewGeneratedTemplateName length must be <= 128") if value.size > 128
+      end
+
+      if value = @add_resources
+        raise Core::ValidationError.new("AddResources must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("AddResources must have at most 500 item(s)") if value.size > 500
+        value.each(&.validate!)
+      end
+
+      if value = @remove_resources
+        raise Core::ValidationError.new("RemoveResources must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("RemoveResources must have at most 500 item(s)") if value.size > 500
+      end
+
+      if value = @template_configuration
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@generated_template_name, @new_generated_template_name, @add_resources, @remove_resources, @refresh_all_resources, @template_configuration)
   end
 end

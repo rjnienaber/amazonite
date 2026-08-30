@@ -27,6 +27,9 @@ module Amazonite::StsV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@decoded_message)
   end
 end

@@ -35,6 +35,18 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @entity_arn
+        raise Core::ValidationError.new("EntityArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("EntityArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @locale
+        raise Core::ValidationError.new("Locale length must be >= 2") if value.size < 2
+        raise Core::ValidationError.new("Locale length must be <= 12") if value.size > 12
+      end
+    end
+
     def_equals_and_hash(@entity_arn, @locale)
   end
 end

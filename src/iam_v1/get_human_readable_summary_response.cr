@@ -46,6 +46,18 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @summary_content
+        raise Core::ValidationError.new("SummaryContent length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SummaryContent length must be <= 10000") if value.size > 10000
+      end
+
+      if value = @locale
+        raise Core::ValidationError.new("Locale length must be >= 2") if value.size < 2
+        raise Core::ValidationError.new("Locale length must be <= 12") if value.size > 12
+      end
+    end
+
     def_equals_and_hash(@summary_content, @locale, @summary_state)
   end
 end

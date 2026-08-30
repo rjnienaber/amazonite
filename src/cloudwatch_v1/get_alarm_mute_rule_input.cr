@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class GetAlarmMuteRuleInput
     include JSON::Serializable
@@ -9,6 +11,13 @@ module Amazonite::CloudWatchV1
     def initialize(
       @alarm_mute_rule_name : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @alarm_mute_rule_name
+        raise Core::ValidationError.new("AlarmMuteRuleName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmMuteRuleName length must be <= 255") if value.size > 255
+      end
     end
 
     def_equals_and_hash(@alarm_mute_rule_name)

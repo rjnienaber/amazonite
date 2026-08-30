@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the output of a `BatchGetItem` operation.
   class BatchGetItemOutput
@@ -45,6 +47,18 @@ module Amazonite::DynamoDBV2
       @unprocessed_keys : Hash(String, KeysAndAttributes) | Nil = nil,
       @consumed_capacity : Array(ConsumedCapacity) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @unprocessed_keys
+        raise Core::ValidationError.new("UnprocessedKeys must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("UnprocessedKeys must have at most 100 entry(s)") if value.size > 100
+        value.each_value(&.validate!)
+      end
+
+      if value = @consumed_capacity
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@responses, @unprocessed_keys, @consumed_capacity)

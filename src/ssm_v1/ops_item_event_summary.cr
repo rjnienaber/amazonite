@@ -44,6 +44,12 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @created_by
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@ops_item_id, @event_id, @source, @detail_type, @detail, @created_by, @created_time)
   end
 end

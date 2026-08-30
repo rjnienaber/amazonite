@@ -24,6 +24,9 @@ module Amazonite::ApiGatewayV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@version, @created_date, @description)
   end
 end

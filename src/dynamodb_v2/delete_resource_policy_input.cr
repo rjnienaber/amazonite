@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class DeleteResourcePolicyInput
     include JSON::Serializable
@@ -20,6 +22,18 @@ module Amazonite::DynamoDBV2
       @resource_arn : String,
       @expected_revision_id : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @resource_arn
+        raise Core::ValidationError.new("ResourceArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceArn length must be <= 1283") if value.size > 1283
+      end
+
+      if value = @expected_revision_id
+        raise Core::ValidationError.new("ExpectedRevisionId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ExpectedRevisionId length must be <= 255") if value.size > 255
+      end
     end
 
     def_equals_and_hash(@resource_arn, @expected_revision_id)

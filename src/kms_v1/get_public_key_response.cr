@@ -71,6 +71,18 @@ module Amazonite::KmsV1
     )
     end
 
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @public_key
+        raise Core::ValidationError.new("PublicKey length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PublicKey length must be <= 8192") if value.size > 8192
+      end
+    end
+
     def_equals_and_hash(@key_id, @public_key, @customer_master_key_spec, @key_spec, @key_usage, @encryption_algorithms, @signing_algorithms, @key_agreement_algorithms)
   end
 end

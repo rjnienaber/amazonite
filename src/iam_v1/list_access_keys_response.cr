@@ -51,6 +51,12 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @access_key_metadata
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@access_key_metadata, @is_truncated, @marker)
   end
 end

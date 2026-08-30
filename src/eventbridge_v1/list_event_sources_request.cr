@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class ListEventSourcesRequest
     include JSON::Serializable
@@ -27,6 +29,24 @@ module Amazonite::EventBridgeV1
       @next_token : String | Nil = nil,
       @limit : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @name_prefix
+        raise Core::ValidationError.new("NamePrefix length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NamePrefix length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("NamePrefix does not match the required pattern") unless value.matches?(Regex.new("^[/\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("Limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Limit value must be <= 100") if value > 100
+      end
     end
 
     def_equals_and_hash(@name_prefix, @next_token, @limit)

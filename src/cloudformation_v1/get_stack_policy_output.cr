@@ -29,6 +29,13 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @stack_policy_body
+        raise Core::ValidationError.new("StackPolicyBody length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackPolicyBody length must be <= 16384") if value.size > 16384
+      end
+    end
+
     def_equals_and_hash(@stack_policy_body)
   end
 end

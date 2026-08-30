@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # The results of an operation to update or read environment variables. If the operation succeeds,
   # the response contains the environment variables. If it fails, the response contains details
@@ -17,6 +19,12 @@ module Amazonite::LambdaV1
       @variables : Hash(String, String) | Nil = nil,
       @error : EnvironmentError | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @error
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@variables, @error)

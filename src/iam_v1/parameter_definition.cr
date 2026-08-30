@@ -81,6 +81,28 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 128") if value.size > 128
+      end
+
+      if value = @sub_type
+        raise Core::ValidationError.new("SubType length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SubType length must be <= 256") if value.size > 256
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1000") if value.size > 1000
+      end
+
+      if value = @default_value
+        raise Core::ValidationError.new("DefaultValue length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("DefaultValue length must be <= 1024") if value.size > 1024
+      end
+    end
+
     def_equals_and_hash(@name, @type, @sub_type, @description, @is_required, @default_value, @immutable)
   end
 end

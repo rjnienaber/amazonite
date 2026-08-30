@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Contains details about a failed chained function invocation, including error information and
   # failure reason.
@@ -11,6 +13,12 @@ module Amazonite::LambdaV1
     def initialize(
       @error : EventError,
     )
+    end
+
+    def validate! : Nil
+      if value = @error
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@error)

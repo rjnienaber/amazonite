@@ -1,4 +1,5 @@
 private alias AAG = Amazonite::ApiGatewayV1
+private alias Core = Amazonite::Core
 
 module Amazonite::ApiGatewayV1
   # Creates a customization of a GatewayResponse of a specified response type and status code on the
@@ -34,6 +35,12 @@ module Amazonite::ApiGatewayV1
       @response_parameters : Hash(String, String) | Nil = nil,
       @response_templates : Hash(String, String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @status_code
+        raise Core::ValidationError.new("statusCode does not match the required pattern") unless value.matches?(Regex.new("^[1-5]\\d\\d$"))
+      end
     end
 
     def_equals_and_hash(@rest_api_id, @response_type, @status_code, @response_parameters, @response_templates)

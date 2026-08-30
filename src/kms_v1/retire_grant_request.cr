@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class RetireGrantRequest
     include JSON::Serializable
@@ -40,6 +42,23 @@ module Amazonite::KmsV1
       @grant_id : String | Nil = nil,
       @dry_run : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @grant_token
+        raise Core::ValidationError.new("GrantToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GrantToken length must be <= 8192") if value.size > 8192
+      end
+
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @grant_id
+        raise Core::ValidationError.new("GrantId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GrantId length must be <= 128") if value.size > 128
+      end
     end
 
     def_equals_and_hash(@grant_token, @key_id, @grant_id, @dry_run)

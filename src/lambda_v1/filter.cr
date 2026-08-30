@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # A structure within a `FilterCriteria` object that defines an event filtering pattern.
   class Filter
@@ -11,6 +13,14 @@ module Amazonite::LambdaV1
     def initialize(
       @pattern : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @pattern
+        raise Core::ValidationError.new("Pattern length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Pattern length must be <= 4096") if value.size > 4096
+        raise Core::ValidationError.new("Pattern does not match the required pattern") unless value.matches?(Regex.new("^[\\s\\S]*$"))
+      end
     end
 
     def_equals_and_hash(@pattern)

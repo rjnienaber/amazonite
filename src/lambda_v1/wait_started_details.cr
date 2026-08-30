@@ -20,6 +20,12 @@ module Amazonite::LambdaV1
     )
     end
 
+    def validate! : Nil
+      if value = @duration
+        raise Core::ValidationError.new("Duration value must be >= 0") if value < 0
+      end
+    end
+
     def_equals_and_hash(@duration, @scheduled_end_timestamp)
   end
 end

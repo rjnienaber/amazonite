@@ -44,6 +44,13 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @permissions_boundary_arn
+        raise Core::ValidationError.new("PermissionsBoundaryArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("PermissionsBoundaryArn length must be <= 2048") if value.size > 2048
+      end
+    end
+
     def_equals_and_hash(@permissions_boundary_type, @permissions_boundary_arn)
   end
 end

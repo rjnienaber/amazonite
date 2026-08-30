@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class DescribeFieldIndexesResponse
     include JSON::Serializable
@@ -13,6 +15,16 @@ module Amazonite::CloudWatchLogsV1
       @field_indexes : Array(FieldIndex) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @field_indexes
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@field_indexes, @next_token)

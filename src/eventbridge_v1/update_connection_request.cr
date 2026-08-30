@@ -1,4 +1,5 @@
 private alias AEB = Amazonite::EventBridgeV1
+private alias Core = Amazonite::Core
 
 module Amazonite::EventBridgeV1
   class UpdateConnectionRequest
@@ -49,6 +50,34 @@ module Amazonite::EventBridgeV1
       @invocation_connectivity_parameters : ConnectivityResourceParameters | Nil = nil,
       @kms_key_identifier : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new(".*"))
+      end
+
+      if value = @auth_parameters
+        value.validate!
+      end
+
+      if value = @invocation_connectivity_parameters
+        value.validate!
+      end
+
+      if value = @kms_key_identifier
+        raise Core::ValidationError.new("KmsKeyIdentifier length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KmsKeyIdentifier length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("KmsKeyIdentifier does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-/:]*$"))
+      end
     end
 
     def_equals_and_hash(@name, @description, @authorization_type, @auth_parameters, @invocation_connectivity_parameters, @kms_key_identifier)

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class DescribeBackupInput
     include JSON::Serializable
@@ -9,6 +11,13 @@ module Amazonite::DynamoDBV2
     def initialize(
       @backup_arn : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @backup_arn
+        raise Core::ValidationError.new("BackupArn length must be >= 37") if value.size < 37
+        raise Core::ValidationError.new("BackupArn length must be <= 1024") if value.size > 1024
+      end
     end
 
     def_equals_and_hash(@backup_arn)

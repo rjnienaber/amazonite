@@ -40,6 +40,14 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 22") if value.size < 22
+        raise Core::ValidationError.new("KeyId length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("KeyId does not match the required pattern") unless value.matches?(Regex.new("^[A-Z0-9]+$"))
+      end
+    end
+
     def_equals_and_hash(@key_id, @timestamp)
   end
 end

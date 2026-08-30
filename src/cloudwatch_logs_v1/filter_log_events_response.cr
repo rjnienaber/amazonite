@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class FilterLogEventsResponse
     include JSON::Serializable
@@ -25,6 +27,20 @@ module Amazonite::CloudWatchLogsV1
       @searched_log_streams : Array(SearchedLogStream) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @events
+        value.each(&.validate!)
+      end
+
+      if value = @searched_log_streams
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@events, @searched_log_streams, @next_token)

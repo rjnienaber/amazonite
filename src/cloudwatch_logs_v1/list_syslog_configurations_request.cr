@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class ListSyslogConfigurationsRequest
     include JSON::Serializable
@@ -24,6 +26,27 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
       @max_results : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @log_group_identifier
+        raise Core::ValidationError.new("logGroupIdentifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupIdentifier length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("logGroupIdentifier does not match the required pattern") unless value.matches?(Regex.new("^[\\w#+=/:,.@-]*$"))
+      end
+
+      if value = @vpc_endpoint_id
+        raise Core::ValidationError.new("vpcEndpointId does not match the required pattern") unless value.matches?(Regex.new("^vpce-[0-9a-f]{1,64}$"))
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("maxResults value must be >= 0") if value < 0
+        raise Core::ValidationError.new("maxResults value must be <= 50") if value > 50
+      end
     end
 
     def_equals_and_hash(@log_group_identifier, @vpc_endpoint_id, @next_token, @max_results)

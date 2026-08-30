@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class ListAlarmMuteRulesOutput
     include JSON::Serializable
@@ -15,6 +17,12 @@ module Amazonite::CloudWatchV1
       @alarm_mute_rule_summaries : Array(AlarmMuteRuleSummary) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @alarm_mute_rule_summaries
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@alarm_mute_rule_summaries, @next_token)

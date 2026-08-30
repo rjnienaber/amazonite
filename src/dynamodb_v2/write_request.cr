@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents an operation to perform - either `DeleteItem` or `PutItem`. You can only request one
   # of these operations, not both, in a single `WriteRequest`. If you do need to perform both of
@@ -17,6 +19,16 @@ module Amazonite::DynamoDBV2
       @put_request : PutRequest | Nil = nil,
       @delete_request : DeleteRequest | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @put_request
+        value.validate!
+      end
+
+      if value = @delete_request
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@put_request, @delete_request)

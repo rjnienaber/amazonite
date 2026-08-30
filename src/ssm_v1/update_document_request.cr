@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   class UpdateDocumentRequest
@@ -55,6 +56,42 @@ module Amazonite::SsmV1
       @document_format : DocumentFormat | Nil = nil,
       @target_type : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @content
+        raise Core::ValidationError.new("Content length must be >= 1") if value.size < 1
+      end
+
+      if value = @attachments
+        raise Core::ValidationError.new("Attachments must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Attachments must have at most 20 item(s)") if value.size > 20
+        value.each(&.validate!)
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @display_name
+        raise Core::ValidationError.new("DisplayName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("DisplayName length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("DisplayName does not match the required pattern") unless value.matches?(Regex.new("^[\\w\\.\\-\\:\\/ ]*$"))
+      end
+
+      if value = @version_name
+        raise Core::ValidationError.new("VersionName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{1,128}$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @target_type
+        raise Core::ValidationError.new("TargetType length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("TargetType length must be <= 200") if value.size > 200
+        raise Core::ValidationError.new("TargetType does not match the required pattern") unless value.matches?(Regex.new("^\\/[\\w\\.\\-\\:\\/]*$"))
+      end
     end
 
     def_equals_and_hash(@content, @attachments, @name, @display_name, @version_name, @document_version, @document_format, @target_type)

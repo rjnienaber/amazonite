@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Represents an AWS account that is associated with API Gateway.
   class Account
@@ -26,6 +28,12 @@ module Amazonite::ApiGatewayV1
       @features : Array(String) | Nil = nil,
       @api_key_version : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @throttle_settings
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@cloudwatch_role_arn, @throttle_settings, @features, @api_key_version)

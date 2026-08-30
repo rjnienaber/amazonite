@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The inventory item result attribute.
   class ResultAttribute
@@ -11,6 +13,14 @@ module Amazonite::SsmV1
     def initialize(
       @type_name : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @type_name
+        raise Core::ValidationError.new("TypeName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TypeName length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("TypeName does not match the required pattern") unless value.matches?(Regex.new("^(AWS|Custom):.*$"))
+      end
     end
 
     def_equals_and_hash(@type_name)

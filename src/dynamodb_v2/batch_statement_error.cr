@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # An error associated with a statement in a PartiQL batch that was run.
@@ -23,6 +24,12 @@ module Amazonite::DynamoDBV2
       @message : String | Nil = nil,
       @item : Hash(String, AttributeValue) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @item
+        value.each_value(&.validate!)
+      end
     end
 
     def_equals_and_hash(@code, @message, @item)

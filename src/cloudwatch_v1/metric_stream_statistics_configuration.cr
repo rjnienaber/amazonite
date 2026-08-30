@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # By default, a metric stream always sends the `MAX`, `MIN`, `SUM`, and `SAMPLECOUNT` statistics
   # for each metric that is streamed. This structure contains information for one metric that
@@ -32,6 +34,12 @@ module Amazonite::CloudWatchV1
       @include_metrics : Array(MetricStreamStatisticsMetric),
       @additional_statistics : Array(String),
     )
+    end
+
+    def validate! : Nil
+      if value = @include_metrics
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@include_metrics, @additional_statistics)

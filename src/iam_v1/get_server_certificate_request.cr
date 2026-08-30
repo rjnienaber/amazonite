@@ -27,6 +27,14 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @server_certificate_name
+        raise Core::ValidationError.new("ServerCertificateName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ServerCertificateName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ServerCertificateName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+    end
+
     def_equals_and_hash(@server_certificate_name)
   end
 end

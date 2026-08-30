@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [GetAccountPasswordPolicy](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountPasswordPolicy.html)
@@ -22,6 +24,12 @@ module Amazonite::IamV1
       new(
         password_policy: node.xpath_node("*[local-name()='PasswordPolicy']").try { |n| PasswordPolicy.from_xml(n) }.not_nil!,
       )
+    end
+
+    def validate! : Nil
+      if value = @password_policy
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@password_policy)

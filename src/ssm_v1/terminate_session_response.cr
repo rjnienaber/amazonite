@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class TerminateSessionResponse
     include JSON::Serializable
@@ -9,6 +11,13 @@ module Amazonite::SsmV1
     def initialize(
       @session_id : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @session_id
+        raise Core::ValidationError.new("SessionId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SessionId length must be <= 96") if value.size > 96
+      end
     end
 
     def_equals_and_hash(@session_id)

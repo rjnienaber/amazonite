@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SqsV1
   class ChangeMessageVisibilityBatchRequest
     include JSON::Serializable
@@ -16,6 +18,12 @@ module Amazonite::SqsV1
       @queue_url : String,
       @entries : Array(ChangeMessageVisibilityBatchRequestEntry),
     )
+    end
+
+    def validate! : Nil
+      if value = @entries
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@queue_url, @entries)

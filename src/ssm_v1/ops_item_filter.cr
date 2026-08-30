@@ -24,6 +24,9 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@key, @values, @operator)
   end
 end

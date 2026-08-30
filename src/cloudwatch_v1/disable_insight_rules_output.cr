@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class DisableInsightRulesOutput
     include JSON::Serializable
@@ -9,6 +11,12 @@ module Amazonite::CloudWatchV1
     def initialize(
       @failures : Array(PartialFailure) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @failures
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@failures)

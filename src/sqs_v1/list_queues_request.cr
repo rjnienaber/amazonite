@@ -25,6 +25,9 @@ module Amazonite::SqsV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@queue_name_prefix, @next_token, @max_results)
   end
 end

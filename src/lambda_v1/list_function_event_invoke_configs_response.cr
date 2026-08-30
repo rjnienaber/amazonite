@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class ListFunctionEventInvokeConfigsResponse
     include JSON::Serializable
@@ -14,6 +16,12 @@ module Amazonite::LambdaV1
       @function_event_invoke_configs : Array(FunctionEventInvokeConfig) | Nil = nil,
       @next_marker : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @function_event_invoke_configs
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@function_event_invoke_configs, @next_marker)

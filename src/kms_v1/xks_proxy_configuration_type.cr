@@ -1,4 +1,5 @@
 private alias AK = Amazonite::KmsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::KmsV1
   # Detailed information about the external key store proxy (XKS proxy). Your external key store
@@ -52,6 +53,38 @@ module Amazonite::KmsV1
       @vpc_endpoint_service_name : String | Nil = nil,
       @vpc_endpoint_service_owner : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @access_key_id
+        raise Core::ValidationError.new("AccessKeyId length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("AccessKeyId length must be <= 30") if value.size > 30
+        raise Core::ValidationError.new("AccessKeyId does not match the required pattern") unless value.matches?(Regex.new("^[A-Z2-7]+$"))
+      end
+
+      if value = @uri_endpoint
+        raise Core::ValidationError.new("UriEndpoint length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("UriEndpoint length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("UriEndpoint does not match the required pattern") unless value.matches?(Regex.new("^https://[a-zA-Z0-9.-]+$"))
+      end
+
+      if value = @uri_path
+        raise Core::ValidationError.new("UriPath length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("UriPath length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("UriPath does not match the required pattern") unless value.matches?(Regex.new("^(/[a-zA-Z0-9\\/_-]+/kms/xks/v\\d{1,2})$|^(/kms/xks/v\\d{1,2})$"))
+      end
+
+      if value = @vpc_endpoint_service_name
+        raise Core::ValidationError.new("VpcEndpointServiceName length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("VpcEndpointServiceName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("VpcEndpointServiceName does not match the required pattern") unless value.matches?(Regex.new("^(com|eu)\\.amazonaws\\.vpce\\.([a-z]+-){2,3}\\d+\\.vpce-svc-[0-9a-z]+$"))
+      end
+
+      if value = @vpc_endpoint_service_owner
+        raise Core::ValidationError.new("VpcEndpointServiceOwner length must be >= 12") if value.size < 12
+        raise Core::ValidationError.new("VpcEndpointServiceOwner length must be <= 12") if value.size > 12
+        raise Core::ValidationError.new("VpcEndpointServiceOwner does not match the required pattern") unless value.matches?(Regex.new("^[0-9]{12}$"))
+      end
     end
 
     def_equals_and_hash(@connectivity, @access_key_id, @uri_endpoint, @uri_path, @vpc_endpoint_service_name, @vpc_endpoint_service_owner)

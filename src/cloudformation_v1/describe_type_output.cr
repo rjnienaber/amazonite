@@ -389,6 +389,100 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Arn length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("Arn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[A-Za-z0-9-]{0,64}:cloudformation:[A-Za-z0-9-]{1,64}:([0-9]{12})?:type/.+$"))
+      end
+
+      if value = @type_name
+        raise Core::ValidationError.new("TypeName length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("TypeName length must be <= 204") if value.size > 204
+        raise Core::ValidationError.new("TypeName does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}(::MODULE){0,1}$"))
+      end
+
+      if value = @default_version_id
+        raise Core::ValidationError.new("DefaultVersionId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DefaultVersionId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("DefaultVersionId does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9-]+$"))
+      end
+
+      if value = @type_tests_status_description
+        raise Core::ValidationError.new("TypeTestsStatusDescription length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TypeTestsStatusDescription length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("TypeTestsStatusDescription does not match the required pattern") unless value.matches?(Regex.new("^[\\s\\S]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @schema
+        raise Core::ValidationError.new("Schema length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Schema length must be <= 16777216") if value.size > 16777216
+      end
+
+      if value = @logging_config
+        value.validate!
+      end
+
+      if value = @required_activated_types
+        value.each(&.validate!)
+      end
+
+      if value = @execution_role_arn
+        raise Core::ValidationError.new("ExecutionRoleArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ExecutionRoleArn length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("ExecutionRoleArn does not match the required pattern") unless value.matches?(Regex.new("^arn:.+:iam::[0-9]{12}:role/.+$"))
+      end
+
+      if value = @source_url
+        raise Core::ValidationError.new("SourceUrl length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SourceUrl length must be <= 4096") if value.size > 4096
+      end
+
+      if value = @documentation_url
+        raise Core::ValidationError.new("DocumentationUrl length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("DocumentationUrl length must be <= 4096") if value.size > 4096
+      end
+
+      if value = @configuration_schema
+        raise Core::ValidationError.new("ConfigurationSchema length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ConfigurationSchema length must be <= 60000") if value.size > 60000
+        raise Core::ValidationError.new("ConfigurationSchema does not match the required pattern") unless value.matches?(Regex.new("^[\\s\\S]+$"))
+      end
+
+      if value = @publisher_id
+        raise Core::ValidationError.new("PublisherId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PublisherId length must be <= 40") if value.size > 40
+        raise Core::ValidationError.new("PublisherId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-zA-Z]{12,40}$"))
+      end
+
+      if value = @original_type_name
+        raise Core::ValidationError.new("OriginalTypeName length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("OriginalTypeName length must be <= 204") if value.size > 204
+        raise Core::ValidationError.new("OriginalTypeName does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}(::MODULE){0,1}$"))
+      end
+
+      if value = @original_type_arn
+        raise Core::ValidationError.new("OriginalTypeArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("OriginalTypeArn length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("OriginalTypeArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[A-Za-z0-9-]{0,64}:cloudformation:[A-Za-z0-9-]{1,64}:([0-9]{12})?:type/.+$"))
+      end
+
+      if value = @public_version_number
+        raise Core::ValidationError.new("PublicVersionNumber length must be >= 5") if value.size < 5
+        raise Core::ValidationError.new("PublicVersionNumber does not match the required pattern") unless value.matches?(Regex.new("^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(.*)$"))
+      end
+
+      if value = @latest_public_version
+        raise Core::ValidationError.new("LatestPublicVersion length must be >= 5") if value.size < 5
+        raise Core::ValidationError.new("LatestPublicVersion does not match the required pattern") unless value.matches?(Regex.new("^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(.*)$"))
+      end
+    end
+
     def_equals_and_hash(@arn, @type, @type_name, @default_version_id, @is_default_version, @type_tests_status, @type_tests_status_description, @description, @schema, @provisioning_type, @deprecated_status, @logging_config, @required_activated_types, @execution_role_arn, @visibility, @source_url, @documentation_url, @last_updated, @time_created, @configuration_schema, @publisher_id, @original_type_name, @original_type_arn, @public_version_number, @latest_public_version, @is_activated, @auto_update)
   end
 end

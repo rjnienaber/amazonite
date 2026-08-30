@@ -23,6 +23,14 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @delegation_request_id
+        raise Core::ValidationError.new("DelegationRequestId length must be >= 16") if value.size < 16
+        raise Core::ValidationError.new("DelegationRequestId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("DelegationRequestId does not match the required pattern") unless value.matches?(Regex.new("^[\\w-]+$"))
+      end
+    end
+
     def_equals_and_hash(@delegation_request_id)
   end
 end

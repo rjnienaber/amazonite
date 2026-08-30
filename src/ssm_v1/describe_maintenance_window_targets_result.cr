@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeMaintenanceWindowTargetsResult
     include JSON::Serializable
@@ -15,6 +17,12 @@ module Amazonite::SsmV1
       @targets : Array(MaintenanceWindowTarget) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @targets
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@targets, @next_token)

@@ -32,6 +32,23 @@ module Amazonite::CloudWatchV1
     )
     end
 
+    def validate! : Nil
+      if value = @contributor_id
+        raise Core::ValidationError.new("ContributorId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ContributorId length must be <= 16") if value.size > 16
+      end
+
+      if value = @contributor_attributes
+        raise Core::ValidationError.new("ContributorAttributes must have at least 0 entry(s)") if value.size < 0
+        raise Core::ValidationError.new("ContributorAttributes must have at most 150 entry(s)") if value.size > 150
+      end
+
+      if value = @state_reason
+        raise Core::ValidationError.new("StateReason length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StateReason length must be <= 1023") if value.size > 1023
+      end
+    end
+
     def_equals_and_hash(@contributor_id, @contributor_attributes, @state_reason, @state_transitioned_timestamp)
   end
 end

@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the auto scaling configuration for a global table.
@@ -30,6 +31,18 @@ module Amazonite::DynamoDBV2
       @table_status : TableStatus | Nil = nil,
       @replicas : Array(ReplicaAutoScalingDescription) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("TableName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("TableName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @replicas
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@table_name, @table_status, @replicas)

@@ -143,6 +143,23 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @minimum_password_length
+        raise Core::ValidationError.new("MinimumPasswordLength value must be >= 6") if value < 6
+        raise Core::ValidationError.new("MinimumPasswordLength value must be <= 128") if value > 128
+      end
+
+      if value = @max_password_age
+        raise Core::ValidationError.new("MaxPasswordAge value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxPasswordAge value must be <= 1095") if value > 1095
+      end
+
+      if value = @password_reuse_prevention
+        raise Core::ValidationError.new("PasswordReusePrevention value must be >= 1") if value < 1
+        raise Core::ValidationError.new("PasswordReusePrevention value must be <= 24") if value > 24
+      end
+    end
+
     def_equals_and_hash(@minimum_password_length, @require_symbols, @require_numbers, @require_uppercase_characters, @require_lowercase_characters, @allow_users_to_change_password, @max_password_age, @password_reuse_prevention, @hard_expiry)
   end
 end

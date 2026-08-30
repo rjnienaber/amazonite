@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Represents the status of an export task.
   class ExportTaskExecutionInfo
@@ -17,6 +19,16 @@ module Amazonite::CloudWatchLogsV1
       @creation_time : Int64 | Nil = nil,
       @completion_time : Int64 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @creation_time
+        raise Core::ValidationError.new("creationTime value must be >= 0") if value < 0
+      end
+
+      if value = @completion_time
+        raise Core::ValidationError.new("completionTime value must be >= 0") if value < 0
+      end
     end
 
     def_equals_and_hash(@creation_time, @completion_time)

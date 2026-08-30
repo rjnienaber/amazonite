@@ -1,4 +1,5 @@
 private alias AK = Amazonite::KmsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::KmsV1
   # Describes the configuration of this multi-Region key. This field appears only when the KMS key
@@ -27,6 +28,16 @@ module Amazonite::KmsV1
       @primary_key : MultiRegionKey | Nil = nil,
       @replica_keys : Array(MultiRegionKey) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @primary_key
+        value.validate!
+      end
+
+      if value = @replica_keys
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@multi_region_key_type, @primary_key, @replica_keys)

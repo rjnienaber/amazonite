@@ -119,6 +119,59 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\\s\\S]*\\S[\\s\\S]*$"))
+      end
+
+      if value = @operational_data
+        value.each_value(&.validate!)
+      end
+
+      if value = @notifications
+        value.each(&.validate!)
+      end
+
+      if value = @priority
+        raise Core::ValidationError.new("Priority value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Priority value must be <= 5") if value > 5
+      end
+
+      if value = @related_ops_items
+        value.each(&.validate!)
+      end
+
+      if value = @ops_item_id
+        raise Core::ValidationError.new("OpsItemId does not match the required pattern") unless value.matches?(Regex.new("^(oi)-[0-9a-f]{12}$"))
+      end
+
+      if value = @title
+        raise Core::ValidationError.new("Title length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Title length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("Title does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+
+      if value = @category
+        raise Core::ValidationError.new("Category length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Category length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Category does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+
+      if value = @severity
+        raise Core::ValidationError.new("Severity length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Severity length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Severity does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+
+      if value = @ops_item_arn
+        raise Core::ValidationError.new("OpsItemArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("OpsItemArn length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("OpsItemArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*)?:ssm:[a-z0-9-\\.]{0,63}:[0-9]{12}:opsitem"))
+      end
+    end
+
     def_equals_and_hash(@description, @operational_data, @operational_data_to_delete, @notifications, @priority, @related_ops_items, @status, @ops_item_id, @title, @category, @severity, @actual_start_time, @actual_end_time, @planned_start_time, @planned_end_time, @ops_item_arn)
   end
 end

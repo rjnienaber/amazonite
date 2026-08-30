@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # These are custom parameters to be used when the target is a Amazon Redshift cluster to invoke
   # the Amazon Redshift Data API ExecuteStatement based on EventBridge events.
@@ -46,6 +48,39 @@ module Amazonite::EventBridgeV1
       @with_event : Bool | Nil = nil,
       @sqls : Array(String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @secret_manager_arn
+        raise Core::ValidationError.new("SecretManagerArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SecretManagerArn length must be <= 1600") if value.size > 1600
+        raise Core::ValidationError.new("SecretManagerArn does not match the required pattern") unless value.matches?(Regex.new("^(^arn:aws([a-z]|\\-)*:secretsmanager:[a-z0-9-.]+:.*)|(\\$(\\.[\\w_-]+(\\[(\\d+|\\*)\\])*)*)$"))
+      end
+
+      if value = @database
+        raise Core::ValidationError.new("Database length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Database length must be <= 64") if value.size > 64
+      end
+
+      if value = @db_user
+        raise Core::ValidationError.new("DbUser length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DbUser length must be <= 128") if value.size > 128
+      end
+
+      if value = @sql
+        raise Core::ValidationError.new("Sql length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Sql length must be <= 100000") if value.size > 100000
+      end
+
+      if value = @statement_name
+        raise Core::ValidationError.new("StatementName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StatementName length must be <= 500") if value.size > 500
+      end
+
+      if value = @sqls
+        raise Core::ValidationError.new("Sqls must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Sqls must have at most 40 item(s)") if value.size > 40
+      end
     end
 
     def_equals_and_hash(@secret_manager_arn, @database, @db_user, @sql, @statement_name, @with_event, @sqls)

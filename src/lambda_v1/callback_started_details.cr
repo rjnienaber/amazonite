@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Contains details about a callback operation that has started, including timing information and
   # callback metadata.
@@ -22,6 +24,22 @@ module Amazonite::LambdaV1
       @heartbeat_timeout : Int32 | Nil = nil,
       @timeout : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @callback_id
+        raise Core::ValidationError.new("CallbackId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CallbackId length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("CallbackId does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9+/]+={0,2}$"))
+      end
+
+      if value = @heartbeat_timeout
+        raise Core::ValidationError.new("HeartbeatTimeout value must be >= 0") if value < 0
+      end
+
+      if value = @timeout
+        raise Core::ValidationError.new("Timeout value must be >= 0") if value < 0
+      end
     end
 
     def_equals_and_hash(@callback_id, @heartbeat_timeout, @timeout)

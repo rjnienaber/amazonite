@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class PutDestinationResponse
     include JSON::Serializable
@@ -9,6 +11,12 @@ module Amazonite::CloudWatchLogsV1
     def initialize(
       @destination : Destination | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @destination
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@destination)

@@ -42,6 +42,7 @@ module Amazonite::ForecastV2
     # and `PredictorName`.
     def create_auto_predictor(input : AF::CreateAutoPredictorRequest) : Core::ParsedResponse(AF::CreateAutoPredictorResponse)
       Log.info { "performing 'CreateAutoPredictor' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateAutoPredictor", "/", input.to_json)
       Core::ParsedResponse(AF::CreateAutoPredictorResponse).new(response)
     end

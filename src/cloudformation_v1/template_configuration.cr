@@ -51,6 +51,9 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@deletion_policy, @update_replace_policy)
   end
 end

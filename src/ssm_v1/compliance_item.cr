@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # Information about the compliance as defined by the resource type. For example, for a patch
@@ -66,6 +67,33 @@ module Amazonite::SsmV1
       @execution_summary : ComplianceExecutionSummary | Nil = nil,
       @details : Hash(String, String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @compliance_type
+        raise Core::ValidationError.new("ComplianceType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ComplianceType length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("ComplianceType does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9_\\-]\\w+|Custom:[a-zA-Z0-9_\\-]\\w+$"))
+      end
+
+      if value = @resource_type
+        raise Core::ValidationError.new("ResourceType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceType length must be <= 50") if value.size > 50
+      end
+
+      if value = @resource_id
+        raise Core::ValidationError.new("ResourceId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceId length must be <= 100") if value.size > 100
+      end
+
+      if value = @title
+        raise Core::ValidationError.new("Title length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Title length must be <= 500") if value.size > 500
+      end
+
+      if value = @execution_summary
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@compliance_type, @resource_type, @resource_id, @id, @title, @status, @severity, @execution_summary, @details)

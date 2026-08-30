@@ -45,6 +45,9 @@ module Amazonite::ApiGatewayV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@op, @path, @value, @from)
   end
 end

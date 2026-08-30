@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The request body of the UpdateServiceSetting API operation.
   class UpdateServiceSettingRequest
@@ -63,6 +65,18 @@ module Amazonite::SsmV1
       @setting_id : String,
       @setting_value : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @setting_id
+        raise Core::ValidationError.new("SettingId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SettingId length must be <= 1000") if value.size > 1000
+      end
+
+      if value = @setting_value
+        raise Core::ValidationError.new("SettingValue length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SettingValue length must be <= 4096") if value.size > 4096
+      end
     end
 
     def_equals_and_hash(@setting_id, @setting_value)

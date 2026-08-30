@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribePatchBaselinesResult
     include JSON::Serializable
@@ -15,6 +17,12 @@ module Amazonite::SsmV1
       @baseline_identities : Array(PatchBaselineIdentity) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @baseline_identities
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@baseline_identities, @next_token)

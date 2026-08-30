@@ -68,6 +68,23 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @selector
+        raise Core::ValidationError.new("Selector length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Selector length must be <= 128") if value.size > 128
+      end
+
+      if value = @data_type
+        raise Core::ValidationError.new("DataType length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("DataType length must be <= 128") if value.size > 128
+      end
+    end
+
     def_equals_and_hash(@name, @type, @value, @version, @selector, @source_result, @last_modified_date, @arn, @data_type)
   end
 end

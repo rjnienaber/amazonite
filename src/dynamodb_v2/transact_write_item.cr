@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # A list of requests that can perform update, put, delete, or check operations on multiple items
   # in one or more tables atomically.
@@ -26,6 +28,24 @@ module Amazonite::DynamoDBV2
       @delete : Delete | Nil = nil,
       @update : Update | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @condition_check
+        value.validate!
+      end
+
+      if value = @put
+        value.validate!
+      end
+
+      if value = @delete
+        value.validate!
+      end
+
+      if value = @update
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@condition_check, @put, @delete, @update)

@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class DescribeQueriesRequest
@@ -31,6 +32,23 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
       @query_language : QueryLanguage | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @log_group_name
+        raise Core::ValidationError.new("logGroupName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("logGroupName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("maxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("maxResults value must be <= 1000") if value > 1000
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@log_group_name, @status, @max_results, @next_token, @query_language)

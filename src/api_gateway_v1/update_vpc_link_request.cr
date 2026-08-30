@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Updates an existing VpcLink of a specified identifier.
   class UpdateVpcLinkRequest
@@ -16,6 +18,12 @@ module Amazonite::ApiGatewayV1
       @vpc_link_id : String,
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @patch_operations
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@vpc_link_id, @patch_operations)

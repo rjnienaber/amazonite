@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Information about an Automation failure.
   class FailureDetails
@@ -22,6 +24,13 @@ module Amazonite::SsmV1
       @failure_type : String | Nil = nil,
       @details : Hash(String, Array(String)) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @details
+        raise Core::ValidationError.new("Details must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("Details must have at most 200 entry(s)") if value.size > 200
+      end
     end
 
     def_equals_and_hash(@failure_stage, @failure_type, @details)

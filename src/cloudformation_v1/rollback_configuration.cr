@@ -73,6 +73,19 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @rollback_triggers
+        raise Core::ValidationError.new("RollbackTriggers must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("RollbackTriggers must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @monitoring_time_in_minutes
+        raise Core::ValidationError.new("MonitoringTimeInMinutes value must be >= 0") if value < 0
+        raise Core::ValidationError.new("MonitoringTimeInMinutes value must be <= 180") if value > 180
+      end
+    end
+
     def_equals_and_hash(@rollback_triggers, @monitoring_time_in_minutes)
   end
 end

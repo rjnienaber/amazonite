@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class PutLogEventsResponse
     include JSON::Serializable
@@ -29,6 +31,20 @@ module Amazonite::CloudWatchLogsV1
       @rejected_log_events_info : RejectedLogEventsInfo | Nil = nil,
       @rejected_entity_info : RejectedEntityInfo | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @next_sequence_token
+        raise Core::ValidationError.new("nextSequenceToken length must be >= 1") if value.size < 1
+      end
+
+      if value = @rejected_log_events_info
+        value.validate!
+      end
+
+      if value = @rejected_entity_info
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@next_sequence_token, @rejected_log_events_info, @rejected_entity_info)

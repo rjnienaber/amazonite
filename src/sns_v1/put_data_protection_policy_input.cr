@@ -38,6 +38,9 @@ module Amazonite::SnsV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@resource_arn, @data_protection_policy)
   end
 end

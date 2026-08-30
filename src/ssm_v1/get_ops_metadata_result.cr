@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class GetOpsMetadataResult
     include JSON::Serializable
@@ -19,6 +21,20 @@ module Amazonite::SsmV1
       @metadata : Hash(String, MetadataValue) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @resource_id
+        raise Core::ValidationError.new("ResourceId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceId length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("ResourceId does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+
+      if value = @metadata
+        raise Core::ValidationError.new("Metadata must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("Metadata must have at most 5 entry(s)") if value.size > 5
+        value.each_value(&.validate!)
+      end
     end
 
     def_equals_and_hash(@resource_id, @metadata, @next_token)

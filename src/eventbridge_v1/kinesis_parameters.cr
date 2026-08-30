@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # This object enables you to specify a JSON path to extract from the event and use as the
   # partition key for the Amazon Kinesis data stream, so that you can control the shard to which the
@@ -16,6 +18,13 @@ module Amazonite::EventBridgeV1
     def initialize(
       @partition_key_path : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @partition_key_path
+        raise Core::ValidationError.new("PartitionKeyPath length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("PartitionKeyPath length must be <= 256") if value.size > 256
+      end
     end
 
     def_equals_and_hash(@partition_key_path)

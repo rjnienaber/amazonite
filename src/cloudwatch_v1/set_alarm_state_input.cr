@@ -1,4 +1,5 @@
 private alias ACW = Amazonite::CloudWatchV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchV1
   class SetAlarmStateInput
@@ -30,6 +31,23 @@ module Amazonite::CloudWatchV1
       @state_reason : String,
       @state_reason_data : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @alarm_name
+        raise Core::ValidationError.new("AlarmName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmName length must be <= 255") if value.size > 255
+      end
+
+      if value = @state_reason
+        raise Core::ValidationError.new("StateReason length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StateReason length must be <= 1023") if value.size > 1023
+      end
+
+      if value = @state_reason_data
+        raise Core::ValidationError.new("StateReasonData length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StateReasonData length must be <= 4000") if value.size > 4000
+      end
     end
 
     def_equals_and_hash(@alarm_name, @state_value, @state_reason, @state_reason_data)

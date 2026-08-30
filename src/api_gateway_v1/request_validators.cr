@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # A collection of RequestValidator resources of a given RestApi.
   class RequestValidators
@@ -15,6 +17,12 @@ module Amazonite::ApiGatewayV1
       @items : Array(RequestValidator) | Nil = nil,
       @position : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @items
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@items, @position)

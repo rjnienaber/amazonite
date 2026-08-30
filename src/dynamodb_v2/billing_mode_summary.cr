@@ -33,6 +33,9 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@billing_mode, @last_update_to_pay_per_request_date_time)
   end
 end

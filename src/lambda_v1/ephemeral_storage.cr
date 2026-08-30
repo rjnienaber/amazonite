@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # The size of the function's `/tmp` directory in MB. The default value is 512, but can be any
   # whole number between 512 and 10,240 MB. For more information, see [Configuring ephemeral storage
@@ -12,6 +14,13 @@ module Amazonite::LambdaV1
     def initialize(
       @size : Int32,
     )
+    end
+
+    def validate! : Nil
+      if value = @size
+        raise Core::ValidationError.new("Size value must be >= 512") if value < 512
+        raise Core::ValidationError.new("Size value must be <= 32768") if value > 32768
+      end
     end
 
     def_equals_and_hash(@size)

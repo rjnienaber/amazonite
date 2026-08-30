@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class CreateCodeSigningConfigRequest
     include JSON::Serializable
@@ -24,6 +26,21 @@ module Amazonite::LambdaV1
       @code_signing_policies : CodeSigningPolicies | Nil = nil,
       @tags : Hash(String, String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 256") if value.size > 256
+      end
+
+      if value = @allowed_publishers
+        value.validate!
+      end
+
+      if value = @code_signing_policies
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@description, @allowed_publishers, @code_signing_policies, @tags)

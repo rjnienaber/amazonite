@@ -38,6 +38,9 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@total_steps, @success_steps, @failed_steps, @cancelled_steps, @timed_out_steps)
   end
 end

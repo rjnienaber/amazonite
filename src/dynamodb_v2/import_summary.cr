@@ -52,6 +52,27 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+      if value = @import_arn
+        raise Core::ValidationError.new("ImportArn length must be >= 37") if value.size < 37
+        raise Core::ValidationError.new("ImportArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @table_arn
+        raise Core::ValidationError.new("TableArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @s3_bucket_source
+        value.validate!
+      end
+
+      if value = @cloud_watch_log_group_arn
+        raise Core::ValidationError.new("CloudWatchLogGroupArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CloudWatchLogGroupArn length must be <= 1024") if value.size > 1024
+      end
+    end
+
     def_equals_and_hash(@import_arn, @import_status, @table_arn, @s3_bucket_source, @cloud_watch_log_group_arn, @input_format, @start_time, @end_time)
   end
 end

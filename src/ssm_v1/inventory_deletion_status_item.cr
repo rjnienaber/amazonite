@@ -48,6 +48,22 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @deletion_id
+        raise Core::ValidationError.new("DeletionId does not match the required pattern") unless value.matches?(Regex.new("^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"))
+      end
+
+      if value = @type_name
+        raise Core::ValidationError.new("TypeName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TypeName length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("TypeName does not match the required pattern") unless value.matches?(Regex.new("^(AWS|Custom):.*$"))
+      end
+
+      if value = @deletion_summary
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@deletion_id, @type_name, @deletion_start_time, @last_status, @last_status_message, @deletion_summary, @last_status_update_time)
   end
 end

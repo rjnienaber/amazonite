@@ -94,6 +94,16 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+      if value = @m
+        value.each_value(&.validate!)
+      end
+
+      if value = @l
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@s, @n, @b, @ss, @ns, @bs, @m, @l, @null, @bool)
   end
 end

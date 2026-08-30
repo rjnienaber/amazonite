@@ -194,6 +194,12 @@ module Amazonite::SnsV1
       )
     end
 
+    def validate! : Nil
+      if value = @tags
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@name, @attributes, @tags, @data_protection_policy)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Represents an export task.
   class ExportTask
@@ -52,6 +54,45 @@ module Amazonite::CloudWatchLogsV1
       @status : ExportTaskStatus | Nil = nil,
       @execution_info : ExportTaskExecutionInfo | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @task_id
+        raise Core::ValidationError.new("taskId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("taskId length must be <= 512") if value.size > 512
+      end
+
+      if value = @task_name
+        raise Core::ValidationError.new("taskName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("taskName length must be <= 512") if value.size > 512
+      end
+
+      if value = @log_group_name
+        raise Core::ValidationError.new("logGroupName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("logGroupName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+
+      if value = @from
+        raise Core::ValidationError.new("from value must be >= 0") if value < 0
+      end
+
+      if value = @to
+        raise Core::ValidationError.new("to value must be >= 0") if value < 0
+      end
+
+      if value = @destination
+        raise Core::ValidationError.new("destination length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("destination length must be <= 512") if value.size > 512
+      end
+
+      if value = @status
+        value.validate!
+      end
+
+      if value = @execution_info
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@task_id, @task_name, @log_group_name, @from, @to, @destination, @destination_prefix, @status, @execution_info)

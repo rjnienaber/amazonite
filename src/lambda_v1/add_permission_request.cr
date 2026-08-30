@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   class AddPermissionRequest
@@ -92,6 +93,62 @@ module Amazonite::LambdaV1
       @revision_id : String | Nil = nil,
       @principal_org_id : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @function_name
+        raise Core::ValidationError.new("FunctionName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("FunctionName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("FunctionName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:|(((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?))(function:)?([a-zA-Z0-9-_\\.]+)(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @statement_id
+        raise Core::ValidationError.new("StatementId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StatementId length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("StatementId does not match the required pattern") unless value.matches?(Regex.new("^([a-zA-Z0-9-_]+)$"))
+      end
+
+      if value = @action
+        raise Core::ValidationError.new("Action length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Action length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("Action does not match the required pattern") unless value.matches?(Regex.new("^(lambda:[*]|lambda:[a-zA-Z]+|[*])$"))
+      end
+
+      if value = @principal
+        raise Core::ValidationError.new("Principal length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Principal length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("Principal does not match the required pattern") unless value.matches?(Regex.new("^[^\\s]+$"))
+      end
+
+      if value = @source_arn
+        raise Core::ValidationError.new("SourceArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SourceArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("SourceArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)$"))
+      end
+
+      if value = @source_account
+        raise Core::ValidationError.new("SourceAccount length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SourceAccount length must be <= 12") if value.size > 12
+        raise Core::ValidationError.new("SourceAccount does not match the required pattern") unless value.matches?(Regex.new("^\\d{12}$"))
+      end
+
+      if value = @event_source_token
+        raise Core::ValidationError.new("EventSourceToken length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("EventSourceToken length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("EventSourceToken does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9._\\-]+$"))
+      end
+
+      if value = @qualifier
+        raise Core::ValidationError.new("Qualifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Qualifier length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Qualifier does not match the required pattern") unless value.matches?(Regex.new("^\\$(LATEST(\\.PUBLISHED)?)|[a-zA-Z0-9-_$]+$"))
+      end
+
+      if value = @principal_org_id
+        raise Core::ValidationError.new("PrincipalOrgID length must be >= 12") if value.size < 12
+        raise Core::ValidationError.new("PrincipalOrgID length must be <= 34") if value.size > 34
+        raise Core::ValidationError.new("PrincipalOrgID does not match the required pattern") unless value.matches?(Regex.new("^o-[a-z0-9]{10,32}$"))
+      end
     end
 
     def_equals_and_hash(@function_name, @statement_id, @action, @principal, @source_arn, @function_url_auth_type, @invoked_via_function_url, @source_account, @event_source_token, @qualifier, @revision_id, @principal_org_id)

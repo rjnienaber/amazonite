@@ -37,6 +37,7 @@ module Amazonite::DynamoDBV2
     # in the *Amazon DynamoDB Developer Guide*.
     def put_item(input : ADDB::PutItemInput) : Core::ParsedResponse(ADDB::PutItemOutput)
       Log.info { "performing 'PutItem' operation" }
+      input.validate! if config.validate_input?
       response = post("PutItem", "/", input.to_json)
       Core::ParsedResponse(ADDB::PutItemOutput).new(response)
     end
@@ -51,6 +52,7 @@ module Amazonite::DynamoDBV2
     # value.
     def get_item(input : ADDB::GetItemInput) : Core::ParsedResponse(ADDB::GetItemOutput)
       Log.info { "performing 'GetItem' operation" }
+      input.validate! if config.validate_input?
       response = post("GetItem", "/", input.to_json)
       Core::ParsedResponse(ADDB::GetItemOutput).new(response)
     end
@@ -64,6 +66,7 @@ module Amazonite::DynamoDBV2
     # `ReturnValues` parameter.
     def update_item(input : ADDB::UpdateItemInput) : Core::ParsedResponse(ADDB::UpdateItemOutput)
       Log.info { "performing 'UpdateItem' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateItem", "/", input.to_json)
       Core::ParsedResponse(ADDB::UpdateItemOutput).new(response)
     end
@@ -81,6 +84,7 @@ module Amazonite::DynamoDBV2
     # conditions are met, DynamoDB performs the delete. Otherwise, the item is not deleted.
     def delete_item(input : ADDB::DeleteItemInput) : Core::ParsedResponse(ADDB::DeleteItemOutput)
       Log.info { "performing 'DeleteItem' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteItem", "/", input.to_json)
       Core::ParsedResponse(ADDB::DeleteItemOutput).new(response)
     end

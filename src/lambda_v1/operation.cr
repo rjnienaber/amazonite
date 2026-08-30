@@ -81,6 +81,56 @@ module Amazonite::LambdaV1
     )
     end
 
+    def validate! : Nil
+      if value = @id
+        raise Core::ValidationError.new("Id length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Id length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Id does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-_]+$"))
+      end
+
+      if value = @parent_id
+        raise Core::ValidationError.new("ParentId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ParentId length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("ParentId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-_]+$"))
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[\\x20-\\x7E]+$"))
+      end
+
+      if value = @sub_type
+        raise Core::ValidationError.new("SubType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SubType length must be <= 32") if value.size > 32
+        raise Core::ValidationError.new("SubType does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-_]+$"))
+      end
+
+      if value = @execution_details
+        value.validate!
+      end
+
+      if value = @context_details
+        value.validate!
+      end
+
+      if value = @step_details
+        value.validate!
+      end
+
+      if value = @wait_details
+        value.validate!
+      end
+
+      if value = @callback_details
+        value.validate!
+      end
+
+      if value = @chained_invoke_details
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@id, @parent_id, @name, @type, @sub_type, @start_timestamp, @end_timestamp, @status, @execution_details, @context_details, @step_details, @wait_details, @callback_details, @chained_invoke_details)
   end
 end

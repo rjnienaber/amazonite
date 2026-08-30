@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Configuration options for a step operation.
   class StepOptions
@@ -10,6 +12,12 @@ module Amazonite::LambdaV1
     def initialize(
       @next_attempt_delay_seconds : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @next_attempt_delay_seconds
+        raise Core::ValidationError.new("NextAttemptDelaySeconds value must be >= 0") if value < 0
+      end
     end
 
     def_equals_and_hash(@next_attempt_delay_seconds)

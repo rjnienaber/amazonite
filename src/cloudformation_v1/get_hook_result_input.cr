@@ -28,6 +28,14 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @hook_result_id
+        raise Core::ValidationError.new("HookResultId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("HookResultId length must be <= 36") if value.size > 36
+        raise Core::ValidationError.new("HookResultId does not match the required pattern") unless value.matches?(Regex.new("^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"))
+      end
+    end
+
     def_equals_and_hash(@hook_result_id)
   end
 end

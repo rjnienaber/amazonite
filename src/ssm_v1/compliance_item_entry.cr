@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # Information about a compliance item.
@@ -36,6 +37,13 @@ module Amazonite::SsmV1
       @title : String | Nil = nil,
       @details : Hash(String, String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @title
+        raise Core::ValidationError.new("Title length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Title length must be <= 500") if value.size > 500
+      end
     end
 
     def_equals_and_hash(@id, @title, @severity, @status, @details)

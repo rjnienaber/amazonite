@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This object includes the stream returned by your
   # [StartLiveTail](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartLiveTail.html)
@@ -18,6 +20,16 @@ module Amazonite::CloudWatchLogsV1
       @session_start : LiveTailSessionStart | Nil = nil,
       @session_update : LiveTailSessionUpdate | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @session_start
+        value.validate!
+      end
+
+      if value = @session_update
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@session_start, @session_update)

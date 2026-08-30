@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # This structure specifies the network configuration for an ECS task.
   class NetworkConfiguration
@@ -12,6 +14,12 @@ module Amazonite::EventBridgeV1
     def initialize(
       @awsvpc_configuration : AwsVpcConfiguration | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @awsvpc_configuration
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@awsvpc_configuration)

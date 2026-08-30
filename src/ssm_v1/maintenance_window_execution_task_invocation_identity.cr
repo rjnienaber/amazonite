@@ -74,6 +74,41 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @window_execution_id
+        raise Core::ValidationError.new("WindowExecutionId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("WindowExecutionId length must be <= 36") if value.size > 36
+        raise Core::ValidationError.new("WindowExecutionId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @task_execution_id
+        raise Core::ValidationError.new("TaskExecutionId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("TaskExecutionId length must be <= 36") if value.size > 36
+        raise Core::ValidationError.new("TaskExecutionId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @invocation_id
+        raise Core::ValidationError.new("InvocationId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("InvocationId length must be <= 36") if value.size > 36
+        raise Core::ValidationError.new("InvocationId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @status_details
+        raise Core::ValidationError.new("StatusDetails length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StatusDetails length must be <= 250") if value.size > 250
+      end
+
+      if value = @owner_information
+        raise Core::ValidationError.new("OwnerInformation length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OwnerInformation length must be <= 128") if value.size > 128
+      end
+
+      if value = @window_target_id
+        raise Core::ValidationError.new("WindowTargetId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("WindowTargetId length must be <= 36") if value.size > 36
+      end
+    end
+
     def_equals_and_hash(@window_execution_id, @task_execution_id, @invocation_id, @execution_id, @task_type, @parameters, @status, @status_details, @start_time, @end_time, @owner_information, @window_target_id)
   end
 end

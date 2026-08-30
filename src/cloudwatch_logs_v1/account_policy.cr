@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # A structure that contains information about one CloudWatch Logs account policy.
@@ -44,6 +45,18 @@ module Amazonite::CloudWatchLogsV1
       @selection_criteria : String | Nil = nil,
       @account_id : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @last_updated_time
+        raise Core::ValidationError.new("lastUpdatedTime value must be >= 0") if value < 0
+      end
+
+      if value = @account_id
+        raise Core::ValidationError.new("accountId length must be >= 12") if value.size < 12
+        raise Core::ValidationError.new("accountId length must be <= 12") if value.size > 12
+        raise Core::ValidationError.new("accountId does not match the required pattern") unless value.matches?(Regex.new("^\\d{12}$"))
+      end
     end
 
     def_equals_and_hash(@policy_name, @policy_document, @last_updated_time, @policy_type, @scope, @selection_criteria, @account_id)

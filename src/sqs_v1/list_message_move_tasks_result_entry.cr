@@ -61,6 +61,9 @@ module Amazonite::SqsV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@task_handle, @status, @source_arn, @destination_arn, @max_number_of_messages_per_second, @approximate_number_of_messages_moved, @approximate_number_of_messages_to_move, @failure_reason, @started_timestamp)
   end
 end

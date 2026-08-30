@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class UpdateAnomalyRequest
@@ -49,6 +50,27 @@ module Amazonite::CloudWatchLogsV1
       @suppression_period : SuppressionPeriod | Nil = nil,
       @baseline : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @anomaly_id
+        raise Core::ValidationError.new("anomalyId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("anomalyId length must be <= 36") if value.size > 36
+      end
+
+      if value = @pattern_id
+        raise Core::ValidationError.new("patternId length must be >= 32") if value.size < 32
+        raise Core::ValidationError.new("patternId length must be <= 32") if value.size > 32
+      end
+
+      if value = @anomaly_detector_arn
+        raise Core::ValidationError.new("anomalyDetectorArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("anomalyDetectorArn does not match the required pattern") unless value.matches?(Regex.new("^[\\w#+=/:,.@-]*$"))
+      end
+
+      if value = @suppression_period
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@anomaly_id, @pattern_id, @anomaly_detector_arn, @suppression_type, @suppression_period, @baseline)

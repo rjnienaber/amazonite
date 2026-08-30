@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class ListRuleNamesByTargetRequest
     include JSON::Serializable
@@ -30,6 +32,29 @@ module Amazonite::EventBridgeV1
       @next_token : String | Nil = nil,
       @limit : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @target_arn
+        raise Core::ValidationError.new("TargetArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TargetArn length must be <= 1600") if value.size > 1600
+      end
+
+      if value = @event_bus_name
+        raise Core::ValidationError.new("EventBusName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EventBusName length must be <= 1600") if value.size > 1600
+        raise Core::ValidationError.new("EventBusName does not match the required pattern") unless value.matches?(Regex.new("^(arn:aws[\\w-]*:events:[a-z]+-[a-z]+-[\\w-]+:[0-9]{12}:event-bus\\/)?[/\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("Limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Limit value must be <= 100") if value > 100
+      end
     end
 
     def_equals_and_hash(@target_arn, @event_bus_name, @next_token, @limit)

@@ -23,6 +23,9 @@ module Amazonite::SnsV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@is_in_sandbox)
   end
 end

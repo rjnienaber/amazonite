@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class GetDeployablePatchSnapshotForInstanceRequest
     include JSON::Serializable
@@ -27,6 +29,22 @@ module Amazonite::SsmV1
       @baseline_override : BaselineOverride | Nil = nil,
       @use_s3_dual_stack_endpoint : Bool | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @instance_id
+        raise Core::ValidationError.new("InstanceId does not match the required pattern") unless value.matches?(Regex.new("^(^i-(\\w{8}|\\w{17})$)|(^mi-\\w{17}$)$"))
+      end
+
+      if value = @snapshot_id
+        raise Core::ValidationError.new("SnapshotId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("SnapshotId length must be <= 36") if value.size > 36
+        raise Core::ValidationError.new("SnapshotId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @baseline_override
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@instance_id, @snapshot_id, @baseline_override, @use_s3_dual_stack_endpoint)

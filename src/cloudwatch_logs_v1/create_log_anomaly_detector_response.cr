@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class CreateLogAnomalyDetectorResponse
     include JSON::Serializable
@@ -9,6 +11,13 @@ module Amazonite::CloudWatchLogsV1
     def initialize(
       @anomaly_detector_arn : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @anomaly_detector_arn
+        raise Core::ValidationError.new("anomalyDetectorArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("anomalyDetectorArn does not match the required pattern") unless value.matches?(Regex.new("^[\\w#+=/:,.@-]*$"))
+      end
     end
 
     def_equals_and_hash(@anomaly_detector_arn)

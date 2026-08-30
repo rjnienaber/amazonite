@@ -167,6 +167,34 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @region
+        raise Core::ValidationError.new("Region does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-]{1,128}$"))
+      end
+
+      if value = @account
+        raise Core::ValidationError.new("Account does not match the required pattern") unless value.matches?(Regex.new("^[0-9]{12}$"))
+      end
+
+      if value = @parameter_overrides
+        value.each(&.validate!)
+      end
+
+      if value = @stack_instance_status
+        value.validate!
+      end
+
+      if value = @organizational_unit_id
+        raise Core::ValidationError.new("OrganizationalUnitId does not match the required pattern") unless value.matches?(Regex.new("^(ou-[a-z0-9]{4,32}-[a-z0-9]{8,32}|r-[a-z0-9]{4,32})$"))
+      end
+
+      if value = @last_operation_id
+        raise Core::ValidationError.new("LastOperationId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("LastOperationId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("LastOperationId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+    end
+
     def_equals_and_hash(@stack_set_id, @region, @account, @stack_id, @parameter_overrides, @status, @stack_instance_status, @status_reason, @organizational_unit_id, @drift_status, @last_drift_check_timestamp, @last_operation_id)
   end
 end

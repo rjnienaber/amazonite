@@ -60,6 +60,24 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("TableName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("TableName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @index_name
+        raise Core::ValidationError.new("IndexName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("IndexName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("IndexName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @failure_exception
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@table_name, @index_name, @contributor_insights_rule_list, @contributor_insights_status, @last_update_date_time, @failure_exception, @contributor_insights_mode)
   end
 end

@@ -69,6 +69,32 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @serial_number
+        raise Core::ValidationError.new("SerialNumber length must be >= 9") if value.size < 9
+        raise Core::ValidationError.new("SerialNumber length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("SerialNumber does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=/:,.@-]+$"))
+      end
+
+      if value = @authentication_code_1
+        raise Core::ValidationError.new("AuthenticationCode1 length must be >= 6") if value.size < 6
+        raise Core::ValidationError.new("AuthenticationCode1 length must be <= 6") if value.size > 6
+        raise Core::ValidationError.new("AuthenticationCode1 does not match the required pattern") unless value.matches?(Regex.new("^[\\d]+$"))
+      end
+
+      if value = @authentication_code_2
+        raise Core::ValidationError.new("AuthenticationCode2 length must be >= 6") if value.size < 6
+        raise Core::ValidationError.new("AuthenticationCode2 length must be <= 6") if value.size > 6
+        raise Core::ValidationError.new("AuthenticationCode2 does not match the required pattern") unless value.matches?(Regex.new("^[\\d]+$"))
+      end
+    end
+
     def_equals_and_hash(@user_name, @serial_number, @authentication_code_1, @authentication_code_2)
   end
 end

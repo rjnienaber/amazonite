@@ -52,6 +52,12 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @virtual_mfa_devices
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@virtual_mfa_devices, @is_truncated, @marker)
   end
 end

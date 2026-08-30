@@ -60,6 +60,16 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @stack_instance_account
+        raise Core::ValidationError.new("StackInstanceAccount does not match the required pattern") unless value.matches?(Regex.new("^[0-9]{12}$"))
+      end
+
+      if value = @stack_instance_region
+        raise Core::ValidationError.new("StackInstanceRegion does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-]{1,128}$"))
+      end
+    end
+
     def_equals_and_hash(@stack_set_name, @stack_instance_account, @stack_instance_region, @call_as)
   end
 end

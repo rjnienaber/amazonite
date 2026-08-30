@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Represents a matched event.
   class MetricFilterMatchRecord
@@ -20,6 +22,12 @@ module Amazonite::CloudWatchLogsV1
       @event_message : String | Nil = nil,
       @extracted_values : Hash(String, String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @event_message
+        raise Core::ValidationError.new("eventMessage length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@event_number, @event_message, @extracted_values)

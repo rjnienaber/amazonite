@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # This processor takes a list of objects that contain key fields, and converts them into a map of
@@ -48,6 +49,28 @@ module Amazonite::CloudWatchLogsV1
       @flatten : Bool | Nil = nil,
       @flattened_element : FlattenedElement | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @source
+        raise Core::ValidationError.new("source length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("source length must be <= 128") if value.size > 128
+      end
+
+      if value = @key
+        raise Core::ValidationError.new("key length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("key length must be <= 128") if value.size > 128
+      end
+
+      if value = @value_key
+        raise Core::ValidationError.new("valueKey length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("valueKey length must be <= 128") if value.size > 128
+      end
+
+      if value = @target
+        raise Core::ValidationError.new("target length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("target length must be <= 128") if value.size > 128
+      end
     end
 
     def_equals_and_hash(@source, @key, @value_key, @target, @flatten, @flattened_element)

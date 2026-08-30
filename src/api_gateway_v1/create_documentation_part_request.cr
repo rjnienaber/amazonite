@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Creates a new documentation part of a given API.
   class CreateDocumentationPartRequest
@@ -21,6 +23,12 @@ module Amazonite::ApiGatewayV1
       @location : DocumentationPartLocation,
       @properties : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @location
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@rest_api_id, @location, @properties)

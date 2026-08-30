@@ -52,6 +52,12 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @template_body
+        raise Core::ValidationError.new("TemplateBody length must be >= 1") if value.size < 1
+      end
+    end
+
     def_equals_and_hash(@status, @template_body)
   end
 end

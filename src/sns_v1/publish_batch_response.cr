@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SnsV1
   class PublishBatchResponse
     # A list of successful `PublishBatch` responses.
@@ -30,6 +32,16 @@ module Amazonite::SnsV1
         successful: node.xpath_nodes("*[local-name()='Successful']/*[local-name()='member']").map { |n| PublishBatchResultEntry.from_xml(n) },
         failed: node.xpath_nodes("*[local-name()='Failed']/*[local-name()='member']").map { |n| BatchResultErrorEntry.from_xml(n) },
       )
+    end
+
+    def validate! : Nil
+      if value = @successful
+        value.each(&.validate!)
+      end
+
+      if value = @failed
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@successful, @failed)

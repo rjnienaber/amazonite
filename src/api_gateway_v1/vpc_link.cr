@@ -48,6 +48,9 @@ module Amazonite::ApiGatewayV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@id, @name, @description, @target_arns, @status, @status_message, @tags)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Specifies an item and related attribute values to retrieve in a `TransactGetItem` object.
   class Get
@@ -30,6 +32,17 @@ module Amazonite::DynamoDBV2
       @projection_expression : String | Nil = nil,
       @expression_attribute_names : Hash(String, String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @key
+        value.each_value(&.validate!)
+      end
+
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableName length must be <= 1024") if value.size > 1024
+      end
     end
 
     def_equals_and_hash(@key, @table_name, @projection_expression, @expression_attribute_names)

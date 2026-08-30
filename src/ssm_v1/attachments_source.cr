@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # Identifying information about a document attachment, including the file name and a key-value
@@ -44,6 +45,17 @@ module Amazonite::SsmV1
       @values : Array(String) | Nil = nil,
       @name : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @values
+        raise Core::ValidationError.new("Values must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Values must have at most 1 item(s)") if value.size > 1
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
     end
 
     def_equals_and_hash(@key, @values, @name)

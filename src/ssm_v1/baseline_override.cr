@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # Defines the basic information about a patch baseline override.
@@ -74,6 +75,32 @@ module Amazonite::SsmV1
       @sources : Array(PatchSource) | Nil = nil,
       @available_security_updates_compliance_status : PatchComplianceStatus | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @global_filters
+        value.validate!
+      end
+
+      if value = @approval_rules
+        value.validate!
+      end
+
+      if value = @approved_patches
+        raise Core::ValidationError.new("ApprovedPatches must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("ApprovedPatches must have at most 50 item(s)") if value.size > 50
+      end
+
+      if value = @rejected_patches
+        raise Core::ValidationError.new("RejectedPatches must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("RejectedPatches must have at most 50 item(s)") if value.size > 50
+      end
+
+      if value = @sources
+        raise Core::ValidationError.new("Sources must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Sources must have at most 20 item(s)") if value.size > 20
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@operating_system, @global_filters, @approval_rules, @approved_patches, @approved_patches_compliance_level, @rejected_patches, @rejected_patches_action, @approved_patches_enable_non_security, @sources, @available_security_updates_compliance_status)

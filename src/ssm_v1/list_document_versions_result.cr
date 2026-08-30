@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListDocumentVersionsResult
     include JSON::Serializable
@@ -15,6 +17,13 @@ module Amazonite::SsmV1
       @document_versions : Array(DocumentVersionInfo) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @document_versions
+        raise Core::ValidationError.new("DocumentVersions must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@document_versions, @next_token)

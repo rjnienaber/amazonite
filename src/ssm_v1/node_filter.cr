@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # The filters for the operation.
@@ -23,6 +24,13 @@ module Amazonite::SsmV1
       @values : Array(String),
       @type : NodeFilterOperatorType | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @values
+        raise Core::ValidationError.new("Values must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Values must have at most 5 item(s)") if value.size > 5
+      end
     end
 
     def_equals_and_hash(@key, @values, @type)

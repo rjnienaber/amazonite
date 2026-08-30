@@ -1,4 +1,5 @@
 private alias ACW = Amazonite::CloudWatchV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchV1
   class ListMetricsInput
@@ -56,6 +57,30 @@ module Amazonite::CloudWatchV1
       @include_linked_accounts : Bool | Nil = nil,
       @owning_account : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @namespace
+        raise Core::ValidationError.new("Namespace length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Namespace length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("Namespace does not match the required pattern") unless value.matches?(Regex.new("^[^:]"))
+      end
+
+      if value = @metric_name
+        raise Core::ValidationError.new("MetricName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MetricName length must be <= 255") if value.size > 255
+      end
+
+      if value = @dimensions
+        raise Core::ValidationError.new("Dimensions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Dimensions must have at most 10 item(s)") if value.size > 10
+        value.each(&.validate!)
+      end
+
+      if value = @owning_account
+        raise Core::ValidationError.new("OwningAccount length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OwningAccount length must be <= 255") if value.size > 255
+      end
     end
 
     def_equals_and_hash(@namespace, @metric_name, @dimensions, @next_token, @recently_active, @include_linked_accounts, @owning_account)

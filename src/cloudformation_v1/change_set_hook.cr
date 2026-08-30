@@ -93,6 +93,29 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @type_name
+        raise Core::ValidationError.new("TypeName length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("TypeName length must be <= 196") if value.size > 196
+      end
+
+      if value = @type_version_id
+        raise Core::ValidationError.new("TypeVersionId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TypeVersionId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("TypeVersionId does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9-]+$"))
+      end
+
+      if value = @type_configuration_version_id
+        raise Core::ValidationError.new("TypeConfigurationVersionId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TypeConfigurationVersionId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("TypeConfigurationVersionId does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9-]+$"))
+      end
+
+      if value = @target_details
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@invocation_point, @failure_mode, @type_name, @type_version_id, @type_configuration_version_id, @target_details)
   end
 end

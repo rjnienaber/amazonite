@@ -38,6 +38,7 @@ module Amazonite::SqsV1
     # in the *Amazon SQS Developer Guide*.
     def add_permission(input : AS::AddPermissionRequest) : Core::Response
       Log.info { "performing 'AddPermission' operation" }
+      input.validate! if config.validate_input?
       response = post("AddPermission", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -55,6 +56,7 @@ module Amazonite::SqsV1
     # - Only one active message movement task is supported per queue at any given time.
     def cancel_message_move_task(input : AS::CancelMessageMoveTaskRequest) : Core::ParsedResponse(AS::CancelMessageMoveTaskResult)
       Log.info { "performing 'CancelMessageMoveTask' operation" }
+      input.validate! if config.validate_input?
       response = post("CancelMessageMoveTask", "/", input.to_json)
       Core::ParsedResponse(AS::CancelMessageMoveTaskResult).new(response)
     end
@@ -112,6 +114,7 @@ module Amazonite::SqsV1
     # time the message is received.
     def change_message_visibility(input : AS::ChangeMessageVisibilityRequest) : Core::Response
       Log.info { "performing 'ChangeMessageVisibility' operation" }
+      input.validate! if config.validate_input?
       response = post("ChangeMessageVisibility", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -125,6 +128,7 @@ module Amazonite::SqsV1
     # you should check for batch errors even when the call returns an HTTP status code of `200`.
     def change_message_visibility_batch(input : AS::ChangeMessageVisibilityBatchRequest) : Core::ParsedResponse(AS::ChangeMessageVisibilityBatchResult)
       Log.info { "performing 'ChangeMessageVisibilityBatch' operation" }
+      input.validate! if config.validate_input?
       response = post("ChangeMessageVisibilityBatch", "/", input.to_json)
       Core::ParsedResponse(AS::ChangeMessageVisibilityBatchResult).new(response)
     end
@@ -178,6 +182,7 @@ module Amazonite::SqsV1
     # in the *Amazon SQS Developer Guide*.
     def create_queue(input : AS::CreateQueueRequest) : Core::ParsedResponse(AS::CreateQueueResult)
       Log.info { "performing 'CreateQueue' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateQueue", "/", input.to_json)
       Core::ParsedResponse(AS::CreateQueueResult).new(response)
     end
@@ -202,6 +207,7 @@ module Amazonite::SqsV1
     # idempotent, so that receiving a message more than once does not cause issues.
     def delete_message(input : AS::DeleteMessageRequest) : Core::Response
       Log.info { "performing 'DeleteMessage' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteMessage", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -214,6 +220,7 @@ module Amazonite::SqsV1
     # you should check for batch errors even when the call returns an HTTP status code of `200`.
     def delete_message_batch(input : AS::DeleteMessageBatchRequest) : Core::ParsedResponse(AS::DeleteMessageBatchResult)
       Log.info { "performing 'DeleteMessageBatch' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteMessageBatch", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteMessageBatchResult).new(response)
     end
@@ -238,6 +245,7 @@ module Amazonite::SqsV1
     # The delete operation uses the HTTP `GET` verb.
     def delete_queue(input : AS::DeleteQueueRequest) : Core::Response
       Log.info { "performing 'DeleteQueue' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteQueue", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -249,6 +257,7 @@ module Amazonite::SqsV1
     # you can check whether `QueueName` ends with the `.fifo` suffix.
     def get_queue_attributes(input : AS::GetQueueAttributesRequest) : Core::ParsedResponse(AS::GetQueueAttributesResult)
       Log.info { "performing 'GetQueueAttributes' operation" }
+      input.validate! if config.validate_input?
       response = post("GetQueueAttributes", "/", input.to_json)
       Core::ParsedResponse(AS::GetQueueAttributesResult).new(response)
     end
@@ -264,6 +273,7 @@ module Amazonite::SqsV1
     # in the *Amazon SQS Developer Guide*.
     def get_queue_url(input : AS::GetQueueUrlRequest) : Core::ParsedResponse(AS::GetQueueUrlResult)
       Log.info { "performing 'GetQueueUrl' operation" }
+      input.validate! if config.validate_input?
       response = post("GetQueueUrl", "/", input.to_json)
       Core::ParsedResponse(AS::GetQueueUrlResult).new(response)
     end
@@ -283,6 +293,7 @@ module Amazonite::SqsV1
     # in the *Amazon SQS Developer Guide*.
     def list_dead_letter_source_queues(input : AS::ListDeadLetterSourceQueuesRequest) : Core::ParsedResponse(AS::ListDeadLetterSourceQueuesResult)
       Log.info { "performing 'ListDeadLetterSourceQueues' operation" }
+      input.validate! if config.validate_input?
       response = post("ListDeadLetterSourceQueues", "/", input.to_json)
       Core::ParsedResponse(AS::ListDeadLetterSourceQueuesResult).new(response)
     end
@@ -298,6 +309,7 @@ module Amazonite::SqsV1
     # - Only one active message movement task is supported per queue at any given time.
     def list_message_move_tasks(input : AS::ListMessageMoveTasksRequest) : Core::ParsedResponse(AS::ListMessageMoveTasksResult)
       Log.info { "performing 'ListMessageMoveTasks' operation" }
+      input.validate! if config.validate_input?
       response = post("ListMessageMoveTasks", "/", input.to_json)
       Core::ParsedResponse(AS::ListMessageMoveTasksResult).new(response)
     end
@@ -319,6 +331,7 @@ module Amazonite::SqsV1
     # in the *Amazon SQS Developer Guide*.
     def list_queues(input : AS::ListQueuesRequest) : Core::ParsedResponse(AS::ListQueuesResult)
       Log.info { "performing 'ListQueues' operation" }
+      input.validate! if config.validate_input?
       response = post("ListQueues", "/", input.to_json)
       Core::ParsedResponse(AS::ListQueuesResult).new(response)
     end
@@ -334,6 +347,7 @@ module Amazonite::SqsV1
     # in the *Amazon SQS Developer Guide*.
     def list_queue_tags(input : AS::ListQueueTagsRequest) : Core::ParsedResponse(AS::ListQueueTagsResult)
       Log.info { "performing 'ListQueueTags' operation" }
+      input.validate! if config.validate_input?
       response = post("ListQueueTags", "/", input.to_json)
       Core::ParsedResponse(AS::ListQueueTagsResult).new(response)
     end
@@ -353,6 +367,7 @@ module Amazonite::SqsV1
     # being purged.
     def purge_queue(input : AS::PurgeQueueRequest) : Core::Response
       Log.info { "performing 'PurgeQueue' operation" }
+      input.validate! if config.validate_input?
       response = post("PurgeQueue", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -398,6 +413,7 @@ module Amazonite::SqsV1
     # recommend that you structure your code so that it can handle new attributes gracefully.
     def receive_message(input : AS::ReceiveMessageRequest) : Core::ParsedResponse(AS::ReceiveMessageResult)
       Log.info { "performing 'ReceiveMessage' operation" }
+      input.validate! if config.validate_input?
       response = post("ReceiveMessage", "/", input.to_json)
       Core::ParsedResponse(AS::ReceiveMessageResult).new(response)
     end
@@ -415,6 +431,7 @@ module Amazonite::SqsV1
     # `AddPermission`, `RemovePermission`, and `SetQueueAttributes` actions in your IAM policy.
     def remove_permission(input : AS::RemovePermissionRequest) : Core::Response
       Log.info { "performing 'RemovePermission' operation" }
+      input.validate! if config.validate_input?
       response = post("RemovePermission", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -432,6 +449,7 @@ module Amazonite::SqsV1
     # characters to avoid this exception.
     def send_message(input : AS::SendMessageRequest) : Core::ParsedResponse(AS::SendMessageResult)
       Log.info { "performing 'SendMessage' operation" }
+      input.validate! if config.validate_input?
       response = post("SendMessage", "/", input.to_json)
       Core::ParsedResponse(AS::SendMessageResult).new(response)
     end
@@ -462,6 +480,7 @@ module Amazonite::SqsV1
     # value for the queue.
     def send_message_batch(input : AS::SendMessageBatchRequest) : Core::ParsedResponse(AS::SendMessageBatchResult)
       Log.info { "performing 'SendMessageBatch' operation" }
+      input.validate! if config.validate_input?
       response = post("SendMessageBatch", "/", input.to_json)
       Core::ParsedResponse(AS::SendMessageBatchResult).new(response)
     end
@@ -485,6 +504,7 @@ module Amazonite::SqsV1
     # `AddPermission`, `RemovePermission`, and `SetQueueAttributes` actions in your IAM policy.
     def set_queue_attributes(input : AS::SetQueueAttributesRequest) : Core::Response
       Log.info { "performing 'SetQueueAttributes' operation" }
+      input.validate! if config.validate_input?
       response = post("SetQueueAttributes", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -505,6 +525,7 @@ module Amazonite::SqsV1
     # - Only one active message movement task is supported per queue at any given time.
     def start_message_move_task(input : AS::StartMessageMoveTaskRequest) : Core::ParsedResponse(AS::StartMessageMoveTaskResult)
       Log.info { "performing 'StartMessageMoveTask' operation" }
+      input.validate! if config.validate_input?
       response = post("StartMessageMoveTask", "/", input.to_json)
       Core::ParsedResponse(AS::StartMessageMoveTaskResult).new(response)
     end
@@ -534,6 +555,7 @@ module Amazonite::SqsV1
     # in the *Amazon SQS Developer Guide*.
     def tag_queue(input : AS::TagQueueRequest) : Core::Response
       Log.info { "performing 'TagQueue' operation" }
+      input.validate! if config.validate_input?
       response = post("TagQueue", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -549,6 +571,7 @@ module Amazonite::SqsV1
     # in the *Amazon SQS Developer Guide*.
     def untag_queue(input : AS::UntagQueueRequest) : Core::Response
       Log.info { "performing 'UntagQueue' operation" }
+      input.validate! if config.validate_input?
       response = post("UntagQueue", "/", input.to_json)
       Core::Response.new(response)
     end

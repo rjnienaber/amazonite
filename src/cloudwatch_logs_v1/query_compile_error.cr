@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Reserved.
   class QueryCompileError
@@ -15,6 +17,12 @@ module Amazonite::CloudWatchLogsV1
       @location : QueryCompileErrorLocation | Nil = nil,
       @message : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @location
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@location, @message)

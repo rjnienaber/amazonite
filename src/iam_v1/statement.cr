@@ -59,6 +59,16 @@ module Amazonite::IamV1
       )
     end
 
+    def validate! : Nil
+      if value = @start_position
+        value.validate!
+      end
+
+      if value = @end_position
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@source_policy_id, @source_policy_type, @start_position, @end_position)
   end
 end

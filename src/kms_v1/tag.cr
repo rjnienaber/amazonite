@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   # A key-value pair. A tag consists of a tag key and a tag value. Tag keys and tag values are both
   # required, but tag values can be empty (null) strings.
@@ -23,6 +25,18 @@ module Amazonite::KmsV1
       @tag_key : String,
       @tag_value : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @tag_key
+        raise Core::ValidationError.new("TagKey length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TagKey length must be <= 128") if value.size > 128
+      end
+
+      if value = @tag_value
+        raise Core::ValidationError.new("TagValue length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("TagValue length must be <= 256") if value.size > 256
+      end
     end
 
     def_equals_and_hash(@tag_key, @tag_value)

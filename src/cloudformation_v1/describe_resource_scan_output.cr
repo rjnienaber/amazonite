@@ -123,6 +123,14 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @scan_filters
+        raise Core::ValidationError.new("ScanFilters must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("ScanFilters must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@resource_scan_id, @status, @status_reason, @start_time, @end_time, @percentage_completed, @resource_types, @resources_scanned, @resources_read, @scan_filters)
   end
 end

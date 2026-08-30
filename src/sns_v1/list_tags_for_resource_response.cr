@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SnsV1
   class ListTagsForResourceResponse
     # The tags associated with the specified topic.
@@ -21,6 +23,12 @@ module Amazonite::SnsV1
       new(
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
       )
+    end
+
+    def validate! : Nil
+      if value = @tags
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@tags)

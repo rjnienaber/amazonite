@@ -147,6 +147,55 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @hook_result_id
+        raise Core::ValidationError.new("HookResultId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("HookResultId length must be <= 36") if value.size > 36
+        raise Core::ValidationError.new("HookResultId does not match the required pattern") unless value.matches?(Regex.new("^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"))
+      end
+
+      if value = @type_name
+        raise Core::ValidationError.new("TypeName length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("TypeName length must be <= 196") if value.size > 196
+      end
+
+      if value = @original_type_name
+        raise Core::ValidationError.new("OriginalTypeName length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("OriginalTypeName length must be <= 196") if value.size > 196
+      end
+
+      if value = @type_version_id
+        raise Core::ValidationError.new("TypeVersionId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TypeVersionId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("TypeVersionId does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9-]+$"))
+      end
+
+      if value = @type_configuration_version_id
+        raise Core::ValidationError.new("TypeConfigurationVersionId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TypeConfigurationVersionId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("TypeConfigurationVersionId does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9-]+$"))
+      end
+
+      if value = @type_arn
+        raise Core::ValidationError.new("TypeArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("TypeArn length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("TypeArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[A-Za-z0-9-]{0,64}:cloudformation:[A-Za-z0-9-]{1,64}:([0-9]{12})?:type/hook/[A-Za-z0-9-]+/?$"))
+      end
+
+      if value = @hook_status_reason
+        raise Core::ValidationError.new("HookStatusReason length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("HookStatusReason length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @target
+        value.validate!
+      end
+
+      if value = @annotations
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@hook_result_id, @invocation_point, @failure_mode, @type_name, @original_type_name, @type_version_id, @type_configuration_version_id, @type_arn, @status, @hook_status_reason, @invoked_at, @target, @annotations)
   end
 end

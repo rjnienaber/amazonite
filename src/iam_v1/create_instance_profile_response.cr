@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [CreateInstanceProfile](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateInstanceProfile.html)
@@ -22,6 +24,12 @@ module Amazonite::IamV1
       new(
         instance_profile: node.xpath_node("*[local-name()='InstanceProfile']").try { |n| InstanceProfile.from_xml(n) }.not_nil!,
       )
+    end
+
+    def validate! : Nil
+      if value = @instance_profile
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@instance_profile)

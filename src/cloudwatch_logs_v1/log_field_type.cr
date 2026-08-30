@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Defines the data type structure for a log field, including the type, element information, and
   # nested fields for complex types.
@@ -21,6 +23,16 @@ module Amazonite::CloudWatchLogsV1
       @element : LogFieldType | Nil = nil,
       @fields : Array(LogFieldsListItem) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @element
+        value.validate!
+      end
+
+      if value = @fields
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@type, @element, @fields)

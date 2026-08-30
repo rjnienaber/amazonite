@@ -35,6 +35,12 @@ module Amazonite::SnsV1
       )
     end
 
+    def validate! : Nil
+      if value = @phone_numbers
+        value.each(&.validate!)
+      end
+    end
+
     def_equals_and_hash(@phone_numbers, @next_token)
   end
 end

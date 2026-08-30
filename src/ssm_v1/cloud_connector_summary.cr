@@ -39,6 +39,32 @@ module Amazonite::SsmV1
     )
     end
 
+    def validate! : Nil
+      if value = @cloud_connector_id
+        raise Core::ValidationError.new("CloudConnectorId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("CloudConnectorId length must be <= 36") if value.size > 36
+        raise Core::ValidationError.new("CloudConnectorId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"))
+      end
+
+      if value = @display_name
+        raise Core::ValidationError.new("DisplayName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DisplayName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("DisplayName does not match the required pattern") unless value.matches?(Regex.new("^([\\p{L}\\p{Z}\\p{N}\\p{P}\\p{M}]*)$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^([\\p{L}\\p{Z}\\p{N}\\p{P}\\p{M}]*)$"))
+      end
+
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("RoleArn length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("RoleArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[a-z0-9-]*:iam::\\d{12}:role\\/[\\w-\\/.@+=,]{1,1017}$"))
+      end
+    end
+
     def_equals_and_hash(@cloud_connector_id, @display_name, @description, @role_arn, @created_at, @updated_at)
   end
 end

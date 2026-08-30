@@ -84,6 +84,41 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+      if value = @table_arn
+        raise Core::ValidationError.new("TableArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @client_token
+        raise Core::ValidationError.new("ClientToken does not match the required pattern") unless value.matches?(Regex.new("^[^\\$]+$"))
+      end
+
+      if value = @s3_bucket
+        raise Core::ValidationError.new("S3Bucket length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("S3Bucket length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("S3Bucket does not match the required pattern") unless value.matches?(Regex.new("^[a-z0-9A-Z]+[\\.\\-\\w]*[a-z0-9A-Z]+$"))
+      end
+
+      if value = @s3_bucket_owner
+        raise Core::ValidationError.new("S3BucketOwner does not match the required pattern") unless value.matches?(Regex.new("^[0-9]{12}$"))
+      end
+
+      if value = @s3_prefix
+        raise Core::ValidationError.new("S3Prefix length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("S3Prefix length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @s3_sse_kms_key_id
+        raise Core::ValidationError.new("S3SseKmsKeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("S3SseKmsKeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @incremental_export_specification
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@table_arn, @export_time, @client_token, @s3_bucket, @s3_bucket_owner, @s3_prefix, @s3_sse_algorithm, @s3_sse_kms_key_id, @export_format, @export_type, @incremental_export_specification)
   end
 end

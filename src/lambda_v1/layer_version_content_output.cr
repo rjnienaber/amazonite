@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Details about a version of an [Lambda
   # layer](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html).
@@ -36,6 +38,29 @@ module Amazonite::LambdaV1
       @signing_job_arn : String | Nil = nil,
       @resolved_s3_object : ResolvedS3Object | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @location
+        raise Core::ValidationError.new("Location length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Location length must be <= 10000") if value.size > 10000
+      end
+
+      if value = @signing_profile_version_arn
+        raise Core::ValidationError.new("SigningProfileVersionArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SigningProfileVersionArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("SigningProfileVersionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)$"))
+      end
+
+      if value = @signing_job_arn
+        raise Core::ValidationError.new("SigningJobArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SigningJobArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("SigningJobArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)$"))
+      end
+
+      if value = @resolved_s3_object
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@location, @code_sha_256, @code_size, @signing_profile_version_arn, @signing_job_arn, @resolved_s3_object)

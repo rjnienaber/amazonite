@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ValidateCloudConnectorResult
     include JSON::Serializable
@@ -14,6 +16,12 @@ module Amazonite::SsmV1
       @validation_findings : Array(ValidationFinding) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @validation_findings
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@validation_findings, @next_token)

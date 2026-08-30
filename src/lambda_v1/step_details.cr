@@ -31,6 +31,21 @@ module Amazonite::LambdaV1
     )
     end
 
+    def validate! : Nil
+      if value = @attempt
+        raise Core::ValidationError.new("Attempt value must be >= 0") if value < 0
+      end
+
+      if value = @result
+        raise Core::ValidationError.new("Result length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Result length must be <= 6291456") if value.size > 6291456
+      end
+
+      if value = @error
+        value.validate!
+      end
+    end
+
     def_equals_and_hash(@attempt, @next_attempt_timestamp, @result, @error)
   end
 end

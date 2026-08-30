@@ -1,4 +1,5 @@
 private alias ACW = Amazonite::CloudWatchV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchV1
   # This structure defines the metric to be returned, along with the statistics, period, and units.
@@ -47,6 +48,16 @@ module Amazonite::CloudWatchV1
       @stat : String,
       @unit : StandardUnit | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @metric
+        value.validate!
+      end
+
+      if value = @period
+        raise Core::ValidationError.new("Period value must be >= 1") if value < 1
+      end
     end
 
     def_equals_and_hash(@metric, @period, @stat, @unit)

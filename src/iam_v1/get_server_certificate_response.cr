@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [GetServerCertificate](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetServerCertificate.html)
@@ -22,6 +24,12 @@ module Amazonite::IamV1
       new(
         server_certificate: node.xpath_node("*[local-name()='ServerCertificate']").try { |n| ServerCertificate.from_xml(n) }.not_nil!,
       )
+    end
+
+    def validate! : Nil
+      if value = @server_certificate
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@server_certificate)

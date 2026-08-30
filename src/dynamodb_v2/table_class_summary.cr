@@ -21,6 +21,9 @@ module Amazonite::DynamoDBV2
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@table_class, @last_update_date_time)
   end
 end

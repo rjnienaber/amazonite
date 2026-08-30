@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Information about item collections, if any, that were affected by the operation.
   # `ItemCollectionMetrics` is only returned if the request asked for it. If the table does not have
@@ -25,6 +27,12 @@ module Amazonite::DynamoDBV2
       @item_collection_key : Hash(String, AttributeValue) | Nil = nil,
       @size_estimate_range_gb : Array(Float64) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @item_collection_key
+        value.each_value(&.validate!)
+      end
     end
 
     def_equals_and_hash(@item_collection_key, @size_estimate_range_gb)

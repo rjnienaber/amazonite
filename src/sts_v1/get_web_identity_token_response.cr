@@ -41,6 +41,9 @@ module Amazonite::StsV1
       )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@web_identity_token, @expiration)
   end
 end

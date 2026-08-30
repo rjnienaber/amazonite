@@ -60,6 +60,39 @@ module Amazonite::KmsV1
     )
     end
 
+    def validate! : Nil
+      if value = @private_key_ciphertext_blob
+        raise Core::ValidationError.new("PrivateKeyCiphertextBlob length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PrivateKeyCiphertextBlob length must be <= 6144") if value.size > 6144
+      end
+
+      if value = @private_key_plaintext
+        raise Core::ValidationError.new("PrivateKeyPlaintext length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PrivateKeyPlaintext length must be <= 4096") if value.size > 4096
+      end
+
+      if value = @public_key
+        raise Core::ValidationError.new("PublicKey length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PublicKey length must be <= 8192") if value.size > 8192
+      end
+
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @ciphertext_for_recipient
+        raise Core::ValidationError.new("CiphertextForRecipient length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CiphertextForRecipient length must be <= 6144") if value.size > 6144
+      end
+
+      if value = @key_material_id
+        raise Core::ValidationError.new("KeyMaterialId length must be >= 64") if value.size < 64
+        raise Core::ValidationError.new("KeyMaterialId length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("KeyMaterialId does not match the required pattern") unless value.matches?(Regex.new("^[a-f0-9]+$"))
+      end
+    end
+
     def_equals_and_hash(@private_key_ciphertext_blob, @private_key_plaintext, @public_key, @key_id, @key_pair_spec, @ciphertext_for_recipient, @key_material_id)
   end
 end

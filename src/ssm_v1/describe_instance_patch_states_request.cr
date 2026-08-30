@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeInstancePatchStatesRequest
     include JSON::Serializable
@@ -19,6 +21,18 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
       @max_results : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @instance_ids
+        raise Core::ValidationError.new("InstanceIds must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("InstanceIds must have at most 50 item(s)") if value.size > 50
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 10") if value < 10
+        raise Core::ValidationError.new("MaxResults value must be <= 100") if value > 100
+      end
     end
 
     def_equals_and_hash(@instance_ids, @next_token, @max_results)

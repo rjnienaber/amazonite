@@ -27,6 +27,9 @@ module Amazonite::LambdaV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@error_message, @error_type, @error_data, @stack_trace)
   end
 end

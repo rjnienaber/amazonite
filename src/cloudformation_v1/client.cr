@@ -15,6 +15,7 @@ module Amazonite::CloudFormationV1
     # for your organization.
     def activate_organizations_access(input : ACF::ActivateOrganizationsAccessInput) : Core::ParsedResponse(ACF::ActivateOrganizationsAccessOutput)
       Log.info { "performing 'ActivateOrganizationsAccess' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ActivateOrganizationsAccess")
@@ -48,6 +49,7 @@ module Amazonite::CloudFormationV1
     # Guide](https://docs.aws.amazon.com/cloudformation-cli/latest/hooks-userguide/what-is-cloudformation-hooks.html).
     def activate_type(input : ACF::ActivateTypeInput) : Core::ParsedResponse(ACF::ActivateTypeOutput)
       Log.info { "performing 'ActivateType' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ActivateType")
@@ -68,6 +70,7 @@ module Amazonite::CloudFormationV1
     # in the *CloudFormation User Guide*.
     def batch_describe_type_configurations(input : ACF::BatchDescribeTypeConfigurationsInput) : Core::ParsedResponse(ACF::BatchDescribeTypeConfigurationsOutput)
       Log.info { "performing 'BatchDescribeTypeConfigurations' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "BatchDescribeTypeConfigurations")
@@ -86,6 +89,7 @@ module Amazonite::CloudFormationV1
     # You can cancel only stacks that are in the `UPDATE_IN_PROGRESS` state.
     def cancel_update_stack(input : ACF::CancelUpdateStackInput) : Core::Response
       Log.info { "performing 'CancelUpdateStack' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CancelUpdateStack")
@@ -114,6 +118,7 @@ module Amazonite::CloudFormationV1
     # failed](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html#troubleshooting-errors-update-rollback-failed).
     def continue_update_rollback(input : ACF::ContinueUpdateRollbackInput) : Core::ParsedResponse(ACF::ContinueUpdateRollbackOutput)
       Log.info { "performing 'ContinueUpdateRollback' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ContinueUpdateRollback")
@@ -149,6 +154,7 @@ module Amazonite::CloudFormationV1
     # To create a change set for the entire stack hierarchy, set `IncludeNestedStacks` to `True`.
     def create_change_set(input : ACF::CreateChangeSetInput) : Core::ParsedResponse(ACF::CreateChangeSetOutput)
       Log.info { "performing 'CreateChangeSet' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateChangeSet")
@@ -166,6 +172,7 @@ module Amazonite::CloudFormationV1
     # action.
     def create_generated_template(input : ACF::CreateGeneratedTemplateInput) : Core::ParsedResponse(ACF::CreateGeneratedTemplateOutput)
       Log.info { "performing 'CreateGeneratedTemplate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateGeneratedTemplate")
@@ -187,6 +194,7 @@ module Amazonite::CloudFormationV1
     # *CloudFormation User Guide*.
     def create_stack(input : ACF::CreateStackInput) : Core::ParsedResponse(ACF::CreateStackOutput)
       Log.info { "performing 'CreateStack' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateStack")
@@ -216,6 +224,7 @@ module Amazonite::CloudFormationV1
     # contains all desired child OUs.
     def create_stack_instances(input : ACF::CreateStackInstancesInput) : Core::ParsedResponse(ACF::CreateStackInstancesOutput)
       Log.info { "performing 'CreateStackInstances' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateStackInstances")
@@ -232,6 +241,7 @@ module Amazonite::CloudFormationV1
     # affected.
     def create_stack_refactor(input : ACF::CreateStackRefactorInput) : Core::ParsedResponse(ACF::CreateStackRefactorOutput)
       Log.info { "performing 'CreateStackRefactor' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateStackRefactor")
@@ -247,6 +257,7 @@ module Amazonite::CloudFormationV1
     # Creates a StackSet.
     def create_stack_set(input : ACF::CreateStackSetInput) : Core::ParsedResponse(ACF::CreateStackSetOutput)
       Log.info { "performing 'CreateStackSet' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateStackSet")
@@ -264,6 +275,7 @@ module Amazonite::CloudFormationV1
     # organization.
     def deactivate_organizations_access(input : ACF::DeactivateOrganizationsAccessInput) : Core::ParsedResponse(ACF::DeactivateOrganizationsAccessOutput)
       Log.info { "performing 'DeactivateOrganizationsAccess' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeactivateOrganizationsAccess")
@@ -292,6 +304,7 @@ module Amazonite::CloudFormationV1
     # [ListTypes](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListTypes.html).
     def deactivate_type(input : ACF::DeactivateTypeInput) : Core::ParsedResponse(ACF::DeactivateTypeOutput)
       Log.info { "performing 'DeactivateType' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeactivateType")
@@ -314,6 +327,7 @@ module Amazonite::CloudFormationV1
     # delete all change sets for nested stacks with the status of `REVIEW_IN_PROGRESS`.
     def delete_change_set(input : ACF::DeleteChangeSetInput) : Core::ParsedResponse(ACF::DeleteChangeSetOutput)
       Log.info { "performing 'DeleteChangeSet' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteChangeSet")
@@ -329,6 +343,7 @@ module Amazonite::CloudFormationV1
     # Deleted a generated template.
     def delete_generated_template(input : ACF::DeleteGeneratedTemplateInput) : Core::Response
       Log.info { "performing 'DeleteGeneratedTemplate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteGeneratedTemplate")
@@ -348,6 +363,7 @@ module Amazonite::CloudFormationV1
     # in the *CloudFormation User Guide*.
     def delete_stack(input : ACF::DeleteStackInput) : Core::Response
       Log.info { "performing 'DeleteStack' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteStack")
@@ -373,6 +389,7 @@ module Amazonite::CloudFormationV1
     # contains all desired child OUs.
     def delete_stack_instances(input : ACF::DeleteStackInstancesInput) : Core::ParsedResponse(ACF::DeleteStackInstancesOutput)
       Log.info { "performing 'DeleteStackInstances' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteStackInstances")
@@ -389,6 +406,7 @@ module Amazonite::CloudFormationV1
     # deleted. For more information about how to complete this, see DeleteStackInstances.
     def delete_stack_set(input : ACF::DeleteStackSetInput) : Core::ParsedResponse(ACF::DeleteStackSetOutput)
       Log.info { "performing 'DeleteStackSet' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteStackSet")
@@ -421,6 +439,7 @@ module Amazonite::CloudFormationV1
     # in the *CloudFormation User Guide*.
     def deregister_type(input : ACF::DeregisterTypeInput) : Core::ParsedResponse(ACF::DeregisterTypeOutput)
       Log.info { "performing 'DeregisterType' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeregisterType")
@@ -440,6 +459,7 @@ module Amazonite::CloudFormationV1
     # in the *CloudFormation User Guide*.
     def describe_account_limits(input : ACF::DescribeAccountLimitsInput) : Core::ParsedResponse(ACF::DescribeAccountLimitsOutput)
       Log.info { "performing 'DescribeAccountLimits' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeAccountLimits")
@@ -458,6 +478,7 @@ module Amazonite::CloudFormationV1
     # in the *CloudFormation User Guide*.
     def describe_change_set(input : ACF::DescribeChangeSetInput) : Core::ParsedResponse(ACF::DescribeChangeSetOutput)
       Log.info { "performing 'DescribeChangeSet' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeChangeSet")
@@ -474,6 +495,7 @@ module Amazonite::CloudFormationV1
     # makes when you run the change set.
     def describe_change_set_hooks(input : ACF::DescribeChangeSetHooksInput) : Core::ParsedResponse(ACF::DescribeChangeSetHooksOutput)
       Log.info { "performing 'DescribeChangeSetHooks' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeChangeSetHooks")
@@ -507,6 +529,7 @@ module Amazonite::CloudFormationV1
     # One of `ChangeSetName`, `OperationId` or `StackName` must be specified as input.
     def describe_events(input : ACF::DescribeEventsInput) : Core::ParsedResponse(ACF::DescribeEventsOutput)
       Log.info { "performing 'DescribeEvents' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeEvents")
@@ -524,6 +547,7 @@ module Amazonite::CloudFormationV1
     # generated template started with an `UpdateGeneratedTemplate` API action.
     def describe_generated_template(input : ACF::DescribeGeneratedTemplateInput) : Core::ParsedResponse(ACF::DescribeGeneratedTemplateOutput)
       Log.info { "performing 'DescribeGeneratedTemplate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeGeneratedTemplate")
@@ -541,6 +565,7 @@ module Amazonite::CloudFormationV1
     # This API can also be called without the `CallAs` parameter by the management account.
     def describe_organizations_access(input : ACF::DescribeOrganizationsAccessInput) : Core::ParsedResponse(ACF::DescribeOrganizationsAccessOutput)
       Log.info { "performing 'DescribeOrganizationsAccess' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeOrganizationsAccess")
@@ -568,6 +593,7 @@ module Amazonite::CloudFormationV1
     # the *CloudFormation Command Line Interface (CLI) User Guide*
     def describe_publisher(input : ACF::DescribePublisherInput) : Core::ParsedResponse(ACF::DescribePublisherOutput)
       Log.info { "performing 'DescribePublisher' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribePublisher")
@@ -583,6 +609,7 @@ module Amazonite::CloudFormationV1
     # Describes details of a resource scan.
     def describe_resource_scan(input : ACF::DescribeResourceScanInput) : Core::ParsedResponse(ACF::DescribeResourceScanOutput)
       Log.info { "performing 'DescribeResourceScan' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeResourceScan")
@@ -609,6 +636,7 @@ module Amazonite::CloudFormationV1
     # DescribeStackResourceDrifts to return drift information about the stack and its resources.
     def describe_stack_drift_detection_status(input : ACF::DescribeStackDriftDetectionStatusInput) : Core::ParsedResponse(ACF::DescribeStackDriftDetectionStatusOutput)
       Log.info { "performing 'DescribeStackDriftDetectionStatus' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeStackDriftDetectionStatus")
@@ -630,6 +658,7 @@ module Amazonite::CloudFormationV1
     # unique stack identifier (stack ID).
     def describe_stack_events(input : ACF::DescribeStackEventsInput) : Core::ParsedResponse(ACF::DescribeStackEventsOutput)
       Log.info { "performing 'DescribeStackEvents' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeStackEvents")
@@ -649,6 +678,7 @@ module Amazonite::CloudFormationV1
     # ListStackInstances.
     def describe_stack_instance(input : ACF::DescribeStackInstanceInput) : Core::ParsedResponse(ACF::DescribeStackInstanceOutput)
       Log.info { "performing 'DescribeStackInstance' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeStackInstance")
@@ -664,6 +694,7 @@ module Amazonite::CloudFormationV1
     # Describes the stack refactor status.
     def describe_stack_refactor(input : ACF::DescribeStackRefactorInput) : Core::ParsedResponse(ACF::DescribeStackRefactorOutput)
       Log.info { "performing 'DescribeStackRefactor' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeStackRefactor")
@@ -682,6 +713,7 @@ module Amazonite::CloudFormationV1
     # the stack has been deleted.
     def describe_stack_resource(input : ACF::DescribeStackResourceInput) : Core::ParsedResponse(ACF::DescribeStackResourceOutput)
       Log.info { "performing 'DescribeStackResource' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeStackResource")
@@ -708,6 +740,7 @@ module Amazonite::CloudFormationV1
     # detect drift on all supported resources for a given stack.
     def describe_stack_resource_drifts(input : ACF::DescribeStackResourceDriftsInput) : Core::ParsedResponse(ACF::DescribeStackResourceDriftsOutput)
       Log.info { "performing 'DescribeStackResourceDrifts' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeStackResourceDrifts")
@@ -740,6 +773,7 @@ module Amazonite::CloudFormationV1
     # same request.
     def describe_stack_resources(input : ACF::DescribeStackResourcesInput) : Core::ParsedResponse(ACF::DescribeStackResourcesOutput)
       Log.info { "performing 'DescribeStackResources' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeStackResources")
@@ -761,6 +795,7 @@ module Amazonite::CloudFormationV1
     # If the stack doesn't exist, a `ValidationError` is returned.
     def describe_stacks(input : ACF::DescribeStacksInput) : Core::ParsedResponse(ACF::DescribeStacksOutput)
       Log.info { "performing 'DescribeStacks' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeStacks")
@@ -779,6 +814,7 @@ module Amazonite::CloudFormationV1
     # data.
     def describe_stack_set(input : ACF::DescribeStackSetInput) : Core::ParsedResponse(ACF::DescribeStackSetOutput)
       Log.info { "performing 'DescribeStackSet' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeStackSet")
@@ -797,6 +833,7 @@ module Amazonite::CloudFormationV1
     # data.
     def describe_stack_set_operation(input : ACF::DescribeStackSetOperationInput) : Core::ParsedResponse(ACF::DescribeStackSetOperationOutput)
       Log.info { "performing 'DescribeStackSetOperation' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeStackSetOperation")
@@ -820,6 +857,7 @@ module Amazonite::CloudFormationV1
     # in the *CloudFormation User Guide*.
     def describe_type(input : ACF::DescribeTypeInput) : Core::ParsedResponse(ACF::DescribeTypeOutput)
       Log.info { "performing 'DescribeType' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeType")
@@ -842,6 +880,7 @@ module Amazonite::CloudFormationV1
     # about an extension.
     def describe_type_registration(input : ACF::DescribeTypeRegistrationInput) : Core::ParsedResponse(ACF::DescribeTypeRegistrationOutput)
       Log.info { "performing 'DescribeTypeRegistration' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DescribeTypeRegistration")
@@ -879,6 +918,7 @@ module Amazonite::CloudFormationV1
     # belonging to that stack. Perform `DetectStackDrift` directly on the nested stack itself.
     def detect_stack_drift(input : ACF::DetectStackDriftInput) : Core::ParsedResponse(ACF::DetectStackDriftOutput)
       Log.info { "performing 'DetectStackDrift' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DetectStackDrift")
@@ -907,6 +947,7 @@ module Amazonite::CloudFormationV1
     # detection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-supported-resources.html).
     def detect_stack_resource_drift(input : ACF::DetectStackResourceDriftInput) : Core::ParsedResponse(ACF::DetectStackResourceDriftOutput)
       Log.info { "performing 'DetectStackResourceDrift' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DetectStackResourceDrift")
@@ -947,6 +988,7 @@ module Amazonite::CloudFormationV1
     # To stop a drift detection StackSet operation, use StopStackSetOperation.
     def detect_stack_set_drift(input : ACF::DetectStackSetDriftInput) : Core::ParsedResponse(ACF::DetectStackSetDriftOutput)
       Log.info { "performing 'DetectStackSetDrift' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DetectStackSetDrift")
@@ -964,6 +1006,7 @@ module Amazonite::CloudFormationV1
     # the template.
     def estimate_template_cost(input : ACF::EstimateTemplateCostInput) : Core::ParsedResponse(ACF::EstimateTemplateCostOutput)
       Log.info { "performing 'EstimateTemplateCost' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "EstimateTemplateCost")
@@ -990,6 +1033,7 @@ module Amazonite::CloudFormationV1
     # to `True`.
     def execute_change_set(input : ACF::ExecuteChangeSetInput) : Core::ParsedResponse(ACF::ExecuteChangeSetOutput)
       Log.info { "performing 'ExecuteChangeSet' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ExecuteChangeSet")
@@ -1005,6 +1049,7 @@ module Amazonite::CloudFormationV1
     # Executes the stack refactor operation.
     def execute_stack_refactor(input : ACF::ExecuteStackRefactorInput) : Core::Response
       Log.info { "performing 'ExecuteStackRefactor' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ExecuteStackRefactor")
@@ -1020,6 +1065,7 @@ module Amazonite::CloudFormationV1
     # the template has not yet been in a `Complete` status then an empty template will be returned.
     def get_generated_template(input : ACF::GetGeneratedTemplateInput) : Core::ParsedResponse(ACF::GetGeneratedTemplateOutput)
       Log.info { "performing 'GetGeneratedTemplate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetGeneratedTemplate")
@@ -1041,6 +1087,7 @@ module Amazonite::CloudFormationV1
     # in the *CloudFormation Hooks User Guide*.
     def get_hook_result(input : ACF::GetHookResultInput) : Core::ParsedResponse(ACF::GetHookResultOutput)
       Log.info { "performing 'GetHookResult' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetHookResult")
@@ -1057,6 +1104,7 @@ module Amazonite::CloudFormationV1
     # is returned.
     def get_stack_policy(input : ACF::GetStackPolicyInput) : Core::ParsedResponse(ACF::GetStackPolicyOutput)
       Log.info { "performing 'GetStackPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetStackPolicy")
@@ -1078,6 +1126,7 @@ module Amazonite::CloudFormationV1
     # If the template doesn't exist, a `ValidationError` is returned.
     def get_template(input : ACF::GetTemplateInput) : Core::ParsedResponse(ACF::GetTemplateOutput)
       Log.info { "performing 'GetTemplate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetTemplate")
@@ -1102,6 +1151,7 @@ module Amazonite::CloudFormationV1
     # returned.
     def get_template_summary(input : ACF::GetTemplateSummaryInput) : Core::ParsedResponse(ACF::GetTemplateSummaryOutput)
       Log.info { "performing 'GetTemplateSummary' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetTemplateSummary")
@@ -1119,6 +1169,7 @@ module Amazonite::CloudFormationV1
     # administrator account and Region, by specifying the stack ID of the stack you intend to import.
     def import_stacks_to_stack_set(input : ACF::ImportStacksToStackSetInput) : Core::ParsedResponse(ACF::ImportStacksToStackSetOutput)
       Log.info { "performing 'ImportStacksToStackSet' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ImportStacksToStackSet")
@@ -1135,6 +1186,7 @@ module Amazonite::CloudFormationV1
     # lists change sets that are in the `CREATE_IN_PROGRESS` or `CREATE_PENDING` state.
     def list_change_sets(input : ACF::ListChangeSetsInput) : Core::ParsedResponse(ACF::ListChangeSetsOutput)
       Log.info { "performing 'ListChangeSets' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListChangeSets")
@@ -1157,6 +1209,7 @@ module Amazonite::CloudFormationV1
     # stack](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-exports.html).
     def list_exports(input : ACF::ListExportsInput) : Core::ParsedResponse(ACF::ListExportsOutput)
       Log.info { "performing 'ListExports' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListExports")
@@ -1172,6 +1225,7 @@ module Amazonite::CloudFormationV1
     # Lists your generated templates in this Region.
     def list_generated_templates(input : ACF::ListGeneratedTemplatesInput) : Core::ParsedResponse(ACF::ListGeneratedTemplatesOutput)
       Log.info { "performing 'ListGeneratedTemplates' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListGeneratedTemplates")
@@ -1200,6 +1254,7 @@ module Amazonite::CloudFormationV1
     # - `TargetId` and `TargetType`: Returns summaries for a specific Hook invocation target.
     def list_hook_results(input : ACF::ListHookResultsInput) : Core::ParsedResponse(ACF::ListHookResultsOutput)
       Log.info { "performing 'ListHookResults' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListHookResults")
@@ -1221,6 +1276,7 @@ module Amazonite::CloudFormationV1
     # function.
     def list_imports(input : ACF::ListImportsInput) : Core::ParsedResponse(ACF::ListImportsOutput)
       Log.info { "performing 'ListImports' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListImports")
@@ -1237,6 +1293,7 @@ module Amazonite::CloudFormationV1
     # whether each returned resource is already managed by CloudFormation.
     def list_resource_scan_related_resources(input : ACF::ListResourceScanRelatedResourcesInput) : Core::ParsedResponse(ACF::ListResourceScanRelatedResourcesOutput)
       Log.info { "performing 'ListResourceScanRelatedResources' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListResourceScanRelatedResources")
@@ -1255,6 +1312,7 @@ module Amazonite::CloudFormationV1
     # CloudFormation.
     def list_resource_scan_resources(input : ACF::ListResourceScanResourcesInput) : Core::ParsedResponse(ACF::ListResourceScanResourcesOutput)
       Log.info { "performing 'ListResourceScanResources' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListResourceScanResources")
@@ -1271,6 +1329,7 @@ module Amazonite::CloudFormationV1
     # scans.
     def list_resource_scans(input : ACF::ListResourceScansInput) : Core::ParsedResponse(ACF::ListResourceScansOutput)
       Log.info { "performing 'ListResourceScans' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListResourceScans")
@@ -1289,6 +1348,7 @@ module Amazonite::CloudFormationV1
     # operation. If an operation is in progress, it may only return partial results.
     def list_stack_instance_resource_drifts(input : ACF::ListStackInstanceResourceDriftsInput) : Core::ParsedResponse(ACF::ListStackInstanceResourceDriftsOutput)
       Log.info { "performing 'ListStackInstanceResourceDrifts' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListStackInstanceResourceDrifts")
@@ -1306,6 +1366,7 @@ module Amazonite::CloudFormationV1
     # Services account name or Region, or that have a specific status.
     def list_stack_instances(input : ACF::ListStackInstancesInput) : Core::ParsedResponse(ACF::ListStackInstancesOutput)
       Log.info { "performing 'ListStackInstances' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListStackInstances")
@@ -1322,6 +1383,7 @@ module Amazonite::CloudFormationV1
     # action.
     def list_stack_refactor_actions(input : ACF::ListStackRefactorActionsInput) : Core::ParsedResponse(ACF::ListStackRefactorActionsOutput)
       Log.info { "performing 'ListStackRefactorActions' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListStackRefactorActions")
@@ -1337,6 +1399,7 @@ module Amazonite::CloudFormationV1
     # Lists all account stack refactor operations and their statuses.
     def list_stack_refactors(input : ACF::ListStackRefactorsInput) : Core::ParsedResponse(ACF::ListStackRefactorsOutput)
       Log.info { "performing 'ListStackRefactors' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListStackRefactors")
@@ -1355,6 +1418,7 @@ module Amazonite::CloudFormationV1
     # stack has been deleted.
     def list_stack_resources(input : ACF::ListStackResourcesInput) : Core::ParsedResponse(ACF::ListStackResourcesOutput)
       Log.info { "performing 'ListStackResources' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListStackResources")
@@ -1373,6 +1437,7 @@ module Amazonite::CloudFormationV1
     # stacks is returned (including existing stacks and stacks that have been deleted).
     def list_stacks(input : ACF::ListStacksInput) : Core::ParsedResponse(ACF::ListStacksOutput)
       Log.info { "performing 'ListStacks' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListStacks")
@@ -1388,6 +1453,7 @@ module Amazonite::CloudFormationV1
     # Returns summary information about deployment targets for a StackSet.
     def list_stack_set_auto_deployment_targets(input : ACF::ListStackSetAutoDeploymentTargetsInput) : Core::ParsedResponse(ACF::ListStackSetAutoDeploymentTargetsOutput)
       Log.info { "performing 'ListStackSetAutoDeploymentTargets' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListStackSetAutoDeploymentTargets")
@@ -1406,6 +1472,7 @@ module Amazonite::CloudFormationV1
     # eventually return the most up-to-date data.
     def list_stack_set_operation_results(input : ACF::ListStackSetOperationResultsInput) : Core::ParsedResponse(ACF::ListStackSetOperationResultsOutput)
       Log.info { "performing 'ListStackSetOperationResults' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListStackSetOperationResults")
@@ -1424,6 +1491,7 @@ module Amazonite::CloudFormationV1
     # eventually return the most up-to-date data.
     def list_stack_set_operations(input : ACF::ListStackSetOperationsInput) : Core::ParsedResponse(ACF::ListStackSetOperationsOutput)
       Log.info { "performing 'ListStackSetOperations' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListStackSetOperations")
@@ -1454,6 +1522,7 @@ module Amazonite::CloudFormationV1
     # permissions in the management account.
     def list_stack_sets(input : ACF::ListStackSetsInput) : Core::ParsedResponse(ACF::ListStackSetsOutput)
       Log.info { "performing 'ListStackSets' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListStackSets")
@@ -1469,6 +1538,7 @@ module Amazonite::CloudFormationV1
     # Returns a list of registration tokens for the specified extension(s).
     def list_type_registrations(input : ACF::ListTypeRegistrationsInput) : Core::ParsedResponse(ACF::ListTypeRegistrationsOutput)
       Log.info { "performing 'ListTypeRegistrations' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListTypeRegistrations")
@@ -1486,6 +1556,7 @@ module Amazonite::CloudFormationV1
     # publishers.
     def list_types(input : ACF::ListTypesInput) : Core::ParsedResponse(ACF::ListTypesOutput)
       Log.info { "performing 'ListTypes' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListTypes")
@@ -1501,6 +1572,7 @@ module Amazonite::CloudFormationV1
     # Returns summary information about the versions of an extension.
     def list_type_versions(input : ACF::ListTypeVersionsInput) : Core::ParsedResponse(ACF::ListTypeVersionsOutput)
       Log.info { "performing 'ListTypeVersions' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListTypeVersions")
@@ -1525,6 +1597,7 @@ module Amazonite::CloudFormationV1
     # [RegisterPublisher](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_RegisterPublisher.html).
     def publish_type(input : ACF::PublishTypeInput) : Core::ParsedResponse(ACF::PublishTypeOutput)
       Log.info { "performing 'PublishType' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "PublishType")
@@ -1544,6 +1617,7 @@ module Amazonite::CloudFormationV1
     # Don't use this API in your code.
     def record_handler_progress(input : ACF::RecordHandlerProgressInput) : Core::ParsedResponse(ACF::RecordHandlerProgressOutput)
       Log.info { "performing 'RecordHandlerProgress' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "RecordHandlerProgress")
@@ -1566,6 +1640,7 @@ module Amazonite::CloudFormationV1
     # in the *CloudFormation Command Line Interface (CLI) User Guide*.
     def register_publisher(input : ACF::RegisterPublisherInput) : Core::ParsedResponse(ACF::RegisterPublisherOutput)
       Log.info { "performing 'RegisterPublisher' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "RegisterPublisher")
@@ -1608,6 +1683,7 @@ module Amazonite::CloudFormationV1
     # in the *CloudFormation User Guide*.
     def register_type(input : ACF::RegisterTypeInput) : Core::ParsedResponse(ACF::RegisterTypeOutput)
       Log.info { "performing 'RegisterType' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "RegisterType")
@@ -1640,6 +1716,7 @@ module Amazonite::CloudFormationV1
     # - `IMPORT_ROLLBACK_COMPLETE`
     def rollback_stack(input : ACF::RollbackStackInput) : Core::ParsedResponse(ACF::RollbackStackOutput)
       Log.info { "performing 'RollbackStack' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "RollbackStack")
@@ -1655,6 +1732,7 @@ module Amazonite::CloudFormationV1
     # Sets a stack policy for a specified stack.
     def set_stack_policy(input : ACF::SetStackPolicyInput) : Core::Response
       Log.info { "performing 'SetStackPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SetStackPolicy")
@@ -1690,6 +1768,7 @@ module Amazonite::CloudFormationV1
     # Guide](https://docs.aws.amazon.com/cloudformation-cli/latest/hooks-userguide/what-is-cloudformation-hooks.html).
     def set_type_configuration(input : ACF::SetTypeConfigurationInput) : Core::ParsedResponse(ACF::SetTypeConfigurationOutput)
       Log.info { "performing 'SetTypeConfiguration' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SetTypeConfiguration")
@@ -1706,6 +1785,7 @@ module Amazonite::CloudFormationV1
     # CloudFormation operations.
     def set_type_default_version(input : ACF::SetTypeDefaultVersionInput) : Core::ParsedResponse(ACF::SetTypeDefaultVersionOutput)
       Log.info { "performing 'SetTypeDefaultVersion' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SetTypeDefaultVersion")
@@ -1725,6 +1805,7 @@ module Amazonite::CloudFormationV1
     # useful in cases where you want to send signals from anywhere other than an Amazon EC2 instance.
     def signal_resource(input : ACF::SignalResourceInput) : Core::Response
       Log.info { "performing 'SignalResource' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SignalResource")
@@ -1739,6 +1820,7 @@ module Amazonite::CloudFormationV1
     # using the `ListResourceScans` API action.
     def start_resource_scan(input : ACF::StartResourceScanInput) : Core::ParsedResponse(ACF::StartResourceScanOutput)
       Log.info { "performing 'StartResourceScan' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "StartResourceScan")
@@ -1756,6 +1838,7 @@ module Amazonite::CloudFormationV1
     # complete.
     def stop_stack_set_operation(input : ACF::StopStackSetOperationInput) : Core::ParsedResponse(ACF::StopStackSetOperationOutput)
       Log.info { "performing 'StopStackSetOperation' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "StopStackSetOperation")
@@ -1797,6 +1880,7 @@ module Amazonite::CloudFormationV1
     # in the *CloudFormation Command Line Interface (CLI) User Guide*.
     def test_type(input : ACF::TestTypeInput) : Core::ParsedResponse(ACF::TestTypeOutput)
       Log.info { "performing 'TestType' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "TestType")
@@ -1815,6 +1899,7 @@ module Amazonite::CloudFormationV1
     # API action.
     def update_generated_template(input : ACF::UpdateGeneratedTemplateInput) : Core::ParsedResponse(ACF::UpdateGeneratedTemplateOutput)
       Log.info { "performing 'UpdateGeneratedTemplate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateGeneratedTemplate")
@@ -1838,6 +1923,7 @@ module Amazonite::CloudFormationV1
     # *CloudFormation User Guide*.
     def update_stack(input : ACF::UpdateStackInput) : Core::ParsedResponse(ACF::UpdateStackOutput)
       Log.info { "performing 'UpdateStack' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateStack")
@@ -1883,6 +1969,7 @@ module Amazonite::CloudFormationV1
     # contains all desired child OUs.
     def update_stack_instances(input : ACF::UpdateStackInstancesInput) : Core::ParsedResponse(ACF::UpdateStackInstancesOutput)
       Log.info { "performing 'UpdateStackInstances' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateStackInstances")
@@ -1913,6 +2000,7 @@ module Amazonite::CloudFormationV1
     # contains all desired child OUs.
     def update_stack_set(input : ACF::UpdateStackSetInput) : Core::ParsedResponse(ACF::UpdateStackSetOutput)
       Log.info { "performing 'UpdateStackSet' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateStackSet")
@@ -1937,6 +2025,7 @@ module Amazonite::CloudFormationV1
     # stack.
     def update_termination_protection(input : ACF::UpdateTerminationProtectionInput) : Core::ParsedResponse(ACF::UpdateTerminationProtectionOutput)
       Log.info { "performing 'UpdateTerminationProtection' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateTerminationProtection")
@@ -1954,6 +2043,7 @@ module Amazonite::CloudFormationV1
     # CloudFormation returns a template validation error.
     def validate_template(input : ACF::ValidateTemplateInput) : Core::ParsedResponse(ACF::ValidateTemplateOutput)
       Log.info { "performing 'ValidateTemplate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ValidateTemplate")

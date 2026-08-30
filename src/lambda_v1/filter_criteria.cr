@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # An object that contains the filters for an event source.
   class FilterCriteria
@@ -10,6 +12,12 @@ module Amazonite::LambdaV1
     def initialize(
       @filters : Array(Filter) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @filters
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@filters)

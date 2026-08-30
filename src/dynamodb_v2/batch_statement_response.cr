@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # A PartiQL batch statement response..
   class BatchStatementResponse
@@ -20,6 +22,22 @@ module Amazonite::DynamoDBV2
       @table_name : String | Nil = nil,
       @item : Hash(String, AttributeValue) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @error
+        value.validate!
+      end
+
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("TableName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("TableName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @item
+        value.each_value(&.validate!)
+      end
     end
 
     def_equals_and_hash(@error, @table_name, @item)

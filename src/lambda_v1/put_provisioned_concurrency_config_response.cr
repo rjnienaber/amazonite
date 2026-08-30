@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   class PutProvisionedConcurrencyConfigResponse
@@ -39,6 +40,26 @@ module Amazonite::LambdaV1
       @status_reason : String | Nil = nil,
       @last_modified : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @requested_provisioned_concurrent_executions
+        raise Core::ValidationError.new("RequestedProvisionedConcurrentExecutions value must be >= 1") if value < 1
+      end
+
+      if value = @allocated_provisioned_concurrent_executions
+        raise Core::ValidationError.new("AllocatedProvisionedConcurrentExecutions value must be >= 0") if value < 0
+      end
+
+      if value = @available_provisioned_concurrent_executions
+        raise Core::ValidationError.new("AvailableProvisionedConcurrentExecutions value must be >= 0") if value < 0
+      end
+
+      if value = @last_modified
+        raise Core::ValidationError.new("LastModified length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("LastModified length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("LastModified does not match the required pattern") unless value.matches?(Regex.new("^.*$"))
+      end
     end
 
     def_equals_and_hash(@requested_provisioned_concurrent_executions, @allocated_provisioned_concurrent_executions, @available_provisioned_concurrent_executions, @status, @status_reason, @last_modified)

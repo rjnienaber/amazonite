@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ComprehendV2
   # Specifies one of the label or labels that categorize the document being analyzed.
   class DocumentLabel
@@ -21,6 +23,12 @@ module Amazonite::ComprehendV2
       @score : Float32 | Nil = nil,
       @page : Int32 | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@name, @score, @page)

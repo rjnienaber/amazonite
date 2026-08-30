@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Represents an API resource.
   class Resource
@@ -30,6 +32,12 @@ module Amazonite::ApiGatewayV1
       @path : String | Nil = nil,
       @resource_methods : Hash(String, Method) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @resource_methods
+        value.each_value(&.validate!)
+      end
     end
 
     def_equals_and_hash(@id, @parent_id, @path_part, @path, @resource_methods)

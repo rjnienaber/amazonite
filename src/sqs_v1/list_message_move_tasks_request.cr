@@ -17,6 +17,9 @@ module Amazonite::SqsV1
     )
     end
 
+    def validate! : Nil
+    end
+
     def_equals_and_hash(@source_arn, @max_results)
   end
 end

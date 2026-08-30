@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Details about a [durable
   # execution](https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html) that succeeded.
@@ -11,6 +13,12 @@ module Amazonite::LambdaV1
     def initialize(
       @result : EventResult,
     )
+    end
+
+    def validate! : Nil
+      if value = @result
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@result)

@@ -35,6 +35,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def cancel_key_deletion(input : AK::CancelKeyDeletionRequest) : Core::ParsedResponse(AK::CancelKeyDeletionResponse)
       Log.info { "performing 'CancelKeyDeletion' operation" }
+      input.validate! if config.validate_input?
       response = post("CancelKeyDeletion", "/", input.to_json)
       Core::ParsedResponse(AK::CancelKeyDeletionResponse).new(response)
     end
@@ -129,6 +130,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def connect_custom_key_store(input : AK::ConnectCustomKeyStoreRequest) : Core::ParsedResponse(AK::ConnectCustomKeyStoreResponse)
       Log.info { "performing 'ConnectCustomKeyStore' operation" }
+      input.validate! if config.validate_input?
       response = post("ConnectCustomKeyStore", "/", input.to_json)
       Core::ParsedResponse(AK::ConnectCustomKeyStoreResponse).new(response)
     end
@@ -192,6 +194,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def create_alias(input : AK::CreateAliasRequest) : Core::Response
       Log.info { "performing 'CreateAlias' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateAlias", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -279,6 +282,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def create_custom_key_store(input : AK::CreateCustomKeyStoreRequest) : Core::ParsedResponse(AK::CreateCustomKeyStoreResponse)
       Log.info { "performing 'CreateCustomKeyStore' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateCustomKeyStore", "/", input.to_json)
       Core::ParsedResponse(AK::CreateCustomKeyStoreResponse).new(response)
     end
@@ -345,6 +349,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def create_grant(input : AK::CreateGrantRequest) : Core::ParsedResponse(AK::CreateGrantResponse)
       Log.info { "performing 'CreateGrant' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateGrant", "/", input.to_json)
       Core::ParsedResponse(AK::CreateGrantResponse).new(response)
     end
@@ -519,6 +524,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def create_key(input : AK::CreateKeyRequest) : Core::ParsedResponse(AK::CreateKeyResponse)
       Log.info { "performing 'CreateKey' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateKey", "/", input.to_json)
       Core::ParsedResponse(AK::CreateKeyResponse).new(response)
     end
@@ -614,6 +620,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def decrypt(input : AK::DecryptRequest) : Core::ParsedResponse(AK::DecryptResponse)
       Log.info { "performing 'Decrypt' operation" }
+      input.validate! if config.validate_input?
       response = post("Decrypt", "/", input.to_json)
       Core::ParsedResponse(AK::DecryptResponse).new(response)
     end
@@ -662,6 +669,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def delete_alias(input : AK::DeleteAliasRequest) : Core::Response
       Log.info { "performing 'DeleteAlias' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteAlias", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -726,6 +734,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def delete_custom_key_store(input : AK::DeleteCustomKeyStoreRequest) : Core::ParsedResponse(AK::DeleteCustomKeyStoreResponse)
       Log.info { "performing 'DeleteCustomKeyStore' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteCustomKeyStore", "/", input.to_json)
       Core::ParsedResponse(AK::DeleteCustomKeyStoreResponse).new(response)
     end
@@ -772,6 +781,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def delete_imported_key_material(input : AK::DeleteImportedKeyMaterialRequest) : Core::ParsedResponse(AK::DeleteImportedKeyMaterialResponse)
       Log.info { "performing 'DeleteImportedKeyMaterial' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteImportedKeyMaterial", "/", input.to_json)
       Core::ParsedResponse(AK::DeleteImportedKeyMaterialResponse).new(response)
     end
@@ -854,6 +864,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def derive_shared_secret(input : AK::DeriveSharedSecretRequest) : Core::ParsedResponse(AK::DeriveSharedSecretResponse)
       Log.info { "performing 'DeriveSharedSecret' operation" }
+      input.validate! if config.validate_input?
       response = post("DeriveSharedSecret", "/", input.to_json)
       Core::ParsedResponse(AK::DeriveSharedSecretResponse).new(response)
     end
@@ -915,6 +926,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def describe_custom_key_stores(input : AK::DescribeCustomKeyStoresRequest) : Core::ParsedResponse(AK::DescribeCustomKeyStoresResponse)
       Log.info { "performing 'DescribeCustomKeyStores' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeCustomKeyStores", "/", input.to_json)
       Core::ParsedResponse(AK::DescribeCustomKeyStoresResponse).new(response)
     end
@@ -988,6 +1000,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def describe_key(input : AK::DescribeKeyRequest) : Core::ParsedResponse(AK::DescribeKeyResponse)
       Log.info { "performing 'DescribeKey' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeKey", "/", input.to_json)
       Core::ParsedResponse(AK::DescribeKeyResponse).new(response)
     end
@@ -1015,6 +1028,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def disable_key(input : AK::DisableKeyRequest) : Core::Response
       Log.info { "performing 'DisableKey' operation" }
+      input.validate! if config.validate_input?
       response = post("DisableKey", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -1073,6 +1087,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def disable_key_rotation(input : AK::DisableKeyRotationRequest) : Core::Response
       Log.info { "performing 'DisableKeyRotation' operation" }
+      input.validate! if config.validate_input?
       response = post("DisableKeyRotation", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -1125,6 +1140,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def disconnect_custom_key_store(input : AK::DisconnectCustomKeyStoreRequest) : Core::ParsedResponse(AK::DisconnectCustomKeyStoreResponse)
       Log.info { "performing 'DisconnectCustomKeyStore' operation" }
+      input.validate! if config.validate_input?
       response = post("DisconnectCustomKeyStore", "/", input.to_json)
       Core::ParsedResponse(AK::DisconnectCustomKeyStoreResponse).new(response)
     end
@@ -1151,6 +1167,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def enable_key(input : AK::EnableKeyRequest) : Core::Response
       Log.info { "performing 'EnableKey' operation" }
+      input.validate! if config.validate_input?
       response = post("EnableKey", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -1229,6 +1246,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def enable_key_rotation(input : AK::EnableKeyRotationRequest) : Core::Response
       Log.info { "performing 'EnableKeyRotation' operation" }
+      input.validate! if config.validate_input?
       response = post("EnableKeyRotation", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -1313,6 +1331,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def encrypt(input : AK::EncryptRequest) : Core::ParsedResponse(AK::EncryptResponse)
       Log.info { "performing 'Encrypt' operation" }
+      input.validate! if config.validate_input?
       response = post("Encrypt", "/", input.to_json)
       Core::ParsedResponse(AK::EncryptResponse).new(response)
     end
@@ -1416,6 +1435,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def generate_data_key(input : AK::GenerateDataKeyRequest) : Core::ParsedResponse(AK::GenerateDataKeyResponse)
       Log.info { "performing 'GenerateDataKey' operation" }
+      input.validate! if config.validate_input?
       response = post("GenerateDataKey", "/", input.to_json)
       Core::ParsedResponse(AK::GenerateDataKeyResponse).new(response)
     end
@@ -1504,6 +1524,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def generate_data_key_pair(input : AK::GenerateDataKeyPairRequest) : Core::ParsedResponse(AK::GenerateDataKeyPairResponse)
       Log.info { "performing 'GenerateDataKeyPair' operation" }
+      input.validate! if config.validate_input?
       response = post("GenerateDataKeyPair", "/", input.to_json)
       Core::ParsedResponse(AK::GenerateDataKeyPairResponse).new(response)
     end
@@ -1568,6 +1589,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def generate_data_key_pair_without_plaintext(input : AK::GenerateDataKeyPairWithoutPlaintextRequest) : Core::ParsedResponse(AK::GenerateDataKeyPairWithoutPlaintextResponse)
       Log.info { "performing 'GenerateDataKeyPairWithoutPlaintext' operation" }
+      input.validate! if config.validate_input?
       response = post("GenerateDataKeyPairWithoutPlaintext", "/", input.to_json)
       Core::ParsedResponse(AK::GenerateDataKeyPairWithoutPlaintextResponse).new(response)
     end
@@ -1643,6 +1665,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def generate_data_key_without_plaintext(input : AK::GenerateDataKeyWithoutPlaintextRequest) : Core::ParsedResponse(AK::GenerateDataKeyWithoutPlaintextResponse)
       Log.info { "performing 'GenerateDataKeyWithoutPlaintext' operation" }
+      input.validate! if config.validate_input?
       response = post("GenerateDataKeyWithoutPlaintext", "/", input.to_json)
       Core::ParsedResponse(AK::GenerateDataKeyWithoutPlaintextResponse).new(response)
     end
@@ -1684,6 +1707,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def generate_mac(input : AK::GenerateMacRequest) : Core::ParsedResponse(AK::GenerateMacResponse)
       Log.info { "performing 'GenerateMac' operation" }
+      input.validate! if config.validate_input?
       response = post("GenerateMac", "/", input.to_json)
       Core::ParsedResponse(AK::GenerateMacResponse).new(response)
     end
@@ -1725,6 +1749,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def generate_random(input : AK::GenerateRandomRequest) : Core::ParsedResponse(AK::GenerateRandomResponse)
       Log.info { "performing 'GenerateRandom' operation" }
+      input.validate! if config.validate_input?
       response = post("GenerateRandom", "/", input.to_json)
       Core::ParsedResponse(AK::GenerateRandomResponse).new(response)
     end
@@ -1784,6 +1809,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def get_key_last_usage(input : AK::GetKeyLastUsageRequest) : Core::ParsedResponse(AK::GetKeyLastUsageResponse)
       Log.info { "performing 'GetKeyLastUsage' operation" }
+      input.validate! if config.validate_input?
       response = post("GetKeyLastUsage", "/", input.to_json)
       Core::ParsedResponse(AK::GetKeyLastUsageResponse).new(response)
     end
@@ -1805,6 +1831,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def get_key_policy(input : AK::GetKeyPolicyRequest) : Core::ParsedResponse(AK::GetKeyPolicyResponse)
       Log.info { "performing 'GetKeyPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("GetKeyPolicy", "/", input.to_json)
       Core::ParsedResponse(AK::GetKeyPolicyResponse).new(response)
     end
@@ -1879,6 +1906,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def get_key_rotation_status(input : AK::GetKeyRotationStatusRequest) : Core::ParsedResponse(AK::GetKeyRotationStatusResponse)
       Log.info { "performing 'GetKeyRotationStatus' operation" }
+      input.validate! if config.validate_input?
       response = post("GetKeyRotationStatus", "/", input.to_json)
       Core::ParsedResponse(AK::GetKeyRotationStatusResponse).new(response)
     end
@@ -1952,6 +1980,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def get_parameters_for_import(input : AK::GetParametersForImportRequest) : Core::ParsedResponse(AK::GetParametersForImportResponse)
       Log.info { "performing 'GetParametersForImport' operation" }
+      input.validate! if config.validate_input?
       response = post("GetParametersForImport", "/", input.to_json)
       Core::ParsedResponse(AK::GetParametersForImportResponse).new(response)
     end
@@ -2018,6 +2047,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def get_public_key(input : AK::GetPublicKeyRequest) : Core::ParsedResponse(AK::GetPublicKeyResponse)
       Log.info { "performing 'GetPublicKey' operation" }
+      input.validate! if config.validate_input?
       response = post("GetPublicKey", "/", input.to_json)
       Core::ParsedResponse(AK::GetPublicKeyResponse).new(response)
     end
@@ -2147,6 +2177,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def import_key_material(input : AK::ImportKeyMaterialRequest) : Core::ParsedResponse(AK::ImportKeyMaterialResponse)
       Log.info { "performing 'ImportKeyMaterial' operation" }
+      input.validate! if config.validate_input?
       response = post("ImportKeyMaterial", "/", input.to_json)
       Core::ParsedResponse(AK::ImportKeyMaterialResponse).new(response)
     end
@@ -2192,6 +2223,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def list_aliases(input : AK::ListAliasesRequest) : Core::ParsedResponse(AK::ListAliasesResponse)
       Log.info { "performing 'ListAliases' operation" }
+      input.validate! if config.validate_input?
       response = post("ListAliases", "/", input.to_json)
       Core::ParsedResponse(AK::ListAliasesResponse).new(response)
     end
@@ -2242,6 +2274,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def list_grants(input : AK::ListGrantsRequest) : Core::ParsedResponse(AK::ListGrantsResponse)
       Log.info { "performing 'ListGrants' operation" }
+      input.validate! if config.validate_input?
       response = post("ListGrants", "/", input.to_json)
       Core::ParsedResponse(AK::ListGrantsResponse).new(response)
     end
@@ -2268,6 +2301,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def list_key_policies(input : AK::ListKeyPoliciesRequest) : Core::ParsedResponse(AK::ListKeyPoliciesResponse)
       Log.info { "performing 'ListKeyPolicies' operation" }
+      input.validate! if config.validate_input?
       response = post("ListKeyPolicies", "/", input.to_json)
       Core::ParsedResponse(AK::ListKeyPoliciesResponse).new(response)
     end
@@ -2309,6 +2343,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def list_key_rotations(input : AK::ListKeyRotationsRequest) : Core::ParsedResponse(AK::ListKeyRotationsResponse)
       Log.info { "performing 'ListKeyRotations' operation" }
+      input.validate! if config.validate_input?
       response = post("ListKeyRotations", "/", input.to_json)
       Core::ParsedResponse(AK::ListKeyRotationsResponse).new(response)
     end
@@ -2337,6 +2372,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def list_keys(input : AK::ListKeysRequest) : Core::ParsedResponse(AK::ListKeysResponse)
       Log.info { "performing 'ListKeys' operation" }
+      input.validate! if config.validate_input?
       response = post("ListKeys", "/", input.to_json)
       Core::ParsedResponse(AK::ListKeysResponse).new(response)
     end
@@ -2370,6 +2406,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def list_resource_tags(input : AK::ListResourceTagsRequest) : Core::ParsedResponse(AK::ListResourceTagsResponse)
       Log.info { "performing 'ListResourceTags' operation" }
+      input.validate! if config.validate_input?
       response = post("ListResourceTags", "/", input.to_json)
       Core::ParsedResponse(AK::ListResourceTagsResponse).new(response)
     end
@@ -2422,6 +2459,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def list_retirable_grants(input : AK::ListRetirableGrantsRequest) : Core::ParsedResponse(AK::ListGrantsResponse)
       Log.info { "performing 'ListRetirableGrants' operation" }
+      input.validate! if config.validate_input?
       response = post("ListRetirableGrants", "/", input.to_json)
       Core::ParsedResponse(AK::ListGrantsResponse).new(response)
     end
@@ -2452,6 +2490,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def put_key_policy(input : AK::PutKeyPolicyRequest) : Core::Response
       Log.info { "performing 'PutKeyPolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutKeyPolicy", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -2555,6 +2594,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def re_encrypt(input : AK::ReEncryptRequest) : Core::ParsedResponse(AK::ReEncryptResponse)
       Log.info { "performing 'ReEncrypt' operation" }
+      input.validate! if config.validate_input?
       response = post("ReEncrypt", "/", input.to_json)
       Core::ParsedResponse(AK::ReEncryptResponse).new(response)
     end
@@ -2638,6 +2678,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def replicate_key(input : AK::ReplicateKeyRequest) : Core::ParsedResponse(AK::ReplicateKeyResponse)
       Log.info { "performing 'ReplicateKey' operation" }
+      input.validate! if config.validate_input?
       response = post("ReplicateKey", "/", input.to_json)
       Core::ParsedResponse(AK::ReplicateKeyResponse).new(response)
     end
@@ -2682,6 +2723,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def retire_grant(input : AK::RetireGrantRequest) : Core::Response
       Log.info { "performing 'RetireGrant' operation" }
+      input.validate! if config.validate_input?
       response = post("RetireGrant", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -2725,6 +2767,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def revoke_grant(input : AK::RevokeGrantRequest) : Core::Response
       Log.info { "performing 'RevokeGrant' operation" }
+      input.validate! if config.validate_input?
       response = post("RevokeGrant", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -2800,6 +2843,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def rotate_key_on_demand(input : AK::RotateKeyOnDemandRequest) : Core::ParsedResponse(AK::RotateKeyOnDemandResponse)
       Log.info { "performing 'RotateKeyOnDemand' operation" }
+      input.validate! if config.validate_input?
       response = post("RotateKeyOnDemand", "/", input.to_json)
       Core::ParsedResponse(AK::RotateKeyOnDemandResponse).new(response)
     end
@@ -2867,6 +2911,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def schedule_key_deletion(input : AK::ScheduleKeyDeletionRequest) : Core::ParsedResponse(AK::ScheduleKeyDeletionResponse)
       Log.info { "performing 'ScheduleKeyDeletion' operation" }
+      input.validate! if config.validate_input?
       response = post("ScheduleKeyDeletion", "/", input.to_json)
       Core::ParsedResponse(AK::ScheduleKeyDeletionResponse).new(response)
     end
@@ -2927,6 +2972,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def sign(input : AK::SignRequest) : Core::ParsedResponse(AK::SignResponse)
       Log.info { "performing 'Sign' operation" }
+      input.validate! if config.validate_input?
       response = post("Sign", "/", input.to_json)
       Core::ParsedResponse(AK::SignResponse).new(response)
     end
@@ -2987,6 +3033,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def tag_resource(input : AK::TagResourceRequest) : Core::Response
       Log.info { "performing 'TagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("TagResource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -3035,6 +3082,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def untag_resource(input : AK::UntagResourceRequest) : Core::Response
       Log.info { "performing 'UntagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("UntagResource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -3098,6 +3146,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def update_alias(input : AK::UpdateAliasRequest) : Core::Response
       Log.info { "performing 'UpdateAlias' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateAlias", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -3187,6 +3236,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def update_custom_key_store(input : AK::UpdateCustomKeyStoreRequest) : Core::ParsedResponse(AK::UpdateCustomKeyStoreResponse)
       Log.info { "performing 'UpdateCustomKeyStore' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateCustomKeyStore", "/", input.to_json)
       Core::ParsedResponse(AK::UpdateCustomKeyStoreResponse).new(response)
     end
@@ -3215,6 +3265,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def update_key_description(input : AK::UpdateKeyDescriptionRequest) : Core::Response
       Log.info { "performing 'UpdateKeyDescription' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateKeyDescription", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -3296,6 +3347,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def update_primary_region(input : AK::UpdatePrimaryRegionRequest) : Core::Response
       Log.info { "performing 'UpdatePrimaryRegion' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdatePrimaryRegion", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -3349,6 +3401,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def verify(input : AK::VerifyRequest) : Core::ParsedResponse(AK::VerifyResponse)
       Log.info { "performing 'Verify' operation" }
+      input.validate! if config.validate_input?
       response = post("Verify", "/", input.to_json)
       Core::ParsedResponse(AK::VerifyResponse).new(response)
     end
@@ -3385,6 +3438,7 @@ module Amazonite::KmsV1
     # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
     def verify_mac(input : AK::VerifyMacRequest) : Core::ParsedResponse(AK::VerifyMacResponse)
       Log.info { "performing 'VerifyMac' operation" }
+      input.validate! if config.validate_input?
       response = post("VerifyMac", "/", input.to_json)
       Core::ParsedResponse(AK::VerifyMacResponse).new(response)
     end

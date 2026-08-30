@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListNodesSummaryResult
     include JSON::Serializable
@@ -16,6 +18,13 @@ module Amazonite::SsmV1
       @summary : Array(Hash(String, String)) | Nil = nil,
       @next_token : String | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @summary
+        raise Core::ValidationError.new("Summary must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Summary must have at most 50 item(s)") if value.size > 50
+      end
     end
 
     def_equals_and_hash(@summary, @next_token)

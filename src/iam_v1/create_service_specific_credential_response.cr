@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   class CreateServiceSpecificCredentialResponse
     # A structure that contains information about the newly created service-specific credential.
@@ -25,6 +27,12 @@ module Amazonite::IamV1
       new(
         service_specific_credential: node.xpath_node("*[local-name()='ServiceSpecificCredential']").try { |n| ServiceSpecificCredential.from_xml(n) },
       )
+    end
+
+    def validate! : Nil
+      if value = @service_specific_credential
+        value.validate!
+      end
     end
 
     def_equals_and_hash(@service_specific_credential)

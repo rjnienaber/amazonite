@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class ListTagsForResourceOutput
     include JSON::Serializable
@@ -9,6 +11,12 @@ module Amazonite::CloudWatchV1
     def initialize(
       @tags : Array(Tag) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @tags
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@tags)

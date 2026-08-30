@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Details about a durable execution that started.
   class ExecutionStartedDetails
@@ -15,6 +17,16 @@ module Amazonite::LambdaV1
       @input : EventInput,
       @execution_timeout : Int32,
     )
+    end
+
+    def validate! : Nil
+      if value = @input
+        value.validate!
+      end
+
+      if value = @execution_timeout
+        raise Core::ValidationError.new("ExecutionTimeout value must be >= 0") if value < 0
+      end
     end
 
     def_equals_and_hash(@input, @execution_timeout)

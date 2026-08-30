@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # This data type is deprecated. Instead, use DocumentKeyValuesFilter.
@@ -17,6 +18,12 @@ module Amazonite::SsmV1
       @key : DocumentFilterKey,
       @value : String,
     )
+    end
+
+    def validate! : Nil
+      if value = @value
+        raise Core::ValidationError.new("value length must be >= 1") if value.size < 1
+      end
     end
 
     def_equals_and_hash(@key, @value)

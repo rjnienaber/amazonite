@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # This structure contains a metric namespace and optionally, a list of metric names, to either
   # include in a metric stream or exclude from a metric stream.
@@ -30,6 +32,14 @@ module Amazonite::CloudWatchV1
       @namespace : String | Nil = nil,
       @metric_names : Array(String) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @namespace
+        raise Core::ValidationError.new("Namespace length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Namespace length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("Namespace does not match the required pattern") unless value.matches?(Regex.new("^[^:]"))
+      end
     end
 
     def_equals_and_hash(@namespace, @metric_names)

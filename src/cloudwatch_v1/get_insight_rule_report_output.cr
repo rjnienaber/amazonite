@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class GetInsightRuleReportOutput
     include JSON::Serializable
@@ -37,6 +39,16 @@ module Amazonite::CloudWatchV1
       @contributors : Array(InsightRuleContributor) | Nil = nil,
       @metric_datapoints : Array(InsightRuleMetricDatapoint) | Nil = nil,
     )
+    end
+
+    def validate! : Nil
+      if value = @contributors
+        value.each(&.validate!)
+      end
+
+      if value = @metric_datapoints
+        value.each(&.validate!)
+      end
     end
 
     def_equals_and_hash(@key_labels, @aggregation_statistic, @aggregate_value, @approximate_unique_count, @contributors, @metric_datapoints)

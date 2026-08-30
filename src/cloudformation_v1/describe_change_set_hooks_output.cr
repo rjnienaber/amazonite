@@ -80,6 +80,28 @@ module Amazonite::CloudFormationV1
       )
     end
 
+    def validate! : Nil
+      if value = @change_set_id
+        raise Core::ValidationError.new("ChangeSetId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChangeSetId does not match the required pattern") unless value.matches?(Regex.new("^arn:[-a-zA-Z0-9:/]*$"))
+      end
+
+      if value = @change_set_name
+        raise Core::ValidationError.new("ChangeSetName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChangeSetName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ChangeSetName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z][-a-zA-Z0-9]*$"))
+      end
+
+      if value = @hooks
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1024") if value.size > 1024
+      end
+    end
+
     def_equals_and_hash(@change_set_id, @change_set_name, @hooks, @status, @next_token, @stack_id, @stack_name)
   end
 end
