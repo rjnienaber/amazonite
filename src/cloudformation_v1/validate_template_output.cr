@@ -68,5 +68,18 @@ module Amazonite::CloudFormationV1
         declared_transforms: node.xpath_nodes("*[local-name()='DeclaredTransforms']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def validate! : Nil
+      if value = @parameters
+        value.each(&.validate!)
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@parameters, @description, @capabilities, @capabilities_reason, @declared_transforms)
   end
 end

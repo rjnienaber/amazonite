@@ -40,5 +40,19 @@ module Amazonite::IamV1
         access_key_last_used: node.xpath_node("*[local-name()='AccessKeyLastUsed']").try { |n| AccessKeyLastUsed.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @access_key_last_used
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@user_name, @access_key_last_used)
   end
 end

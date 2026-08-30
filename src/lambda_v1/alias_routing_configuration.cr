@@ -13,5 +13,10 @@ module Amazonite::LambdaV1
       @additional_version_weights : Hash(String, Float64) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@additional_version_weights)
   end
 end

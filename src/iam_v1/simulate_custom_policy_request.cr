@@ -273,5 +273,51 @@ module Amazonite::IamV1
         marker: Core::XMLValue.string(node.xpath_node("*[local-name()='Marker']")),
       )
     end
+
+    def validate! : Nil
+      if value = @ordered_organization_policy_input_list
+        raise Core::ValidationError.new("OrderedOrganizationPolicyInputList must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("OrderedOrganizationPolicyInputList must have at most 7 item(s)") if value.size > 7
+        value.each(&.validate!)
+      end
+
+      if value = @resource_policy
+        raise Core::ValidationError.new("ResourcePolicy length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourcePolicy length must be <= 131072") if value.size > 131072
+        raise Core::ValidationError.new("ResourcePolicy does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+
+      if value = @resource_owner
+        raise Core::ValidationError.new("ResourceOwner length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceOwner length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @caller_arn
+        raise Core::ValidationError.new("CallerArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CallerArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @context_entries
+        value.each(&.validate!)
+      end
+
+      if value = @resource_handling_option
+        raise Core::ValidationError.new("ResourceHandlingOption length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceHandlingOption length must be <= 64") if value.size > 64
+      end
+
+      if value = @max_items
+        raise Core::ValidationError.new("MaxItems value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxItems value must be <= 1000") if value > 1000
+      end
+
+      if value = @marker
+        raise Core::ValidationError.new("Marker length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Marker length must be <= 320") if value.size > 320
+        raise Core::ValidationError.new("Marker does not match the required pattern") unless value.matches?(Regex.new("^[ -ÿ]+$"))
+      end
+    end
+
+    def_equals_and_hash(@policy_input_list, @permissions_boundary_policy_input_list, @ordered_organization_policy_input_list, @action_names, @resource_arns, @resource_policy, @resource_owner, @caller_arn, @context_entries, @resource_handling_option, @max_items, @marker)
   end
 end

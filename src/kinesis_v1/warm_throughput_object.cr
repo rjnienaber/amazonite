@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   # Represents the warm throughput configuration on the stream. This is only present for On-Demand
   # Kinesis Data Streams in accounts that have `MinimumThroughputBillingCommitment` enabled.
@@ -19,5 +21,17 @@ module Amazonite::KinesisV1
       @current_mi_bps : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @target_mi_bps
+        raise Core::ValidationError.new("TargetMiBps value must be >= 0") if value < 0
+      end
+
+      if value = @current_mi_bps
+        raise Core::ValidationError.new("CurrentMiBps value must be >= 0") if value < 0
+      end
+    end
+
+    def_equals_and_hash(@target_mi_bps, @current_mi_bps)
   end
 end

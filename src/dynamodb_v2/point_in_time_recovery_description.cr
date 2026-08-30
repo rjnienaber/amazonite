@@ -36,5 +36,14 @@ module Amazonite::DynamoDBV2
       @latest_restorable_date_time : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @recovery_period_in_days
+        raise Core::ValidationError.new("RecoveryPeriodInDays value must be >= 1") if value < 1
+        raise Core::ValidationError.new("RecoveryPeriodInDays value must be <= 35") if value > 35
+      end
+    end
+
+    def_equals_and_hash(@point_in_time_recovery_status, @recovery_period_in_days, @earliest_restorable_date_time, @latest_restorable_date_time)
   end
 end

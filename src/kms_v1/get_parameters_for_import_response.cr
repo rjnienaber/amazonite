@@ -32,5 +32,24 @@ module Amazonite::KmsV1
       @parameters_valid_to : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @import_token
+        raise Core::ValidationError.new("ImportToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ImportToken length must be <= 6144") if value.size > 6144
+      end
+
+      if value = @public_key
+        raise Core::ValidationError.new("PublicKey length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PublicKey length must be <= 4096") if value.size > 4096
+      end
+    end
+
+    def_equals_and_hash(@key_id, @import_token, @public_key, @parameters_valid_to)
   end
 end

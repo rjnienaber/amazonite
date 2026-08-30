@@ -17,5 +17,10 @@ module Amazonite::LambdaV1
       @function_count : Int64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@total_code_size, @function_count)
   end
 end

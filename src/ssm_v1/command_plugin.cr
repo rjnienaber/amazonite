@@ -135,5 +135,38 @@ module Amazonite::SsmV1
       @output_s3_key_prefix : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 4") if value.size < 4
+      end
+
+      if value = @status_details
+        raise Core::ValidationError.new("StatusDetails length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StatusDetails length must be <= 100") if value.size > 100
+      end
+
+      if value = @output
+        raise Core::ValidationError.new("Output length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Output length must be <= 2500") if value.size > 2500
+      end
+
+      if value = @output_s3_region
+        raise Core::ValidationError.new("OutputS3Region length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("OutputS3Region length must be <= 20") if value.size > 20
+      end
+
+      if value = @output_s3_bucket_name
+        raise Core::ValidationError.new("OutputS3BucketName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("OutputS3BucketName length must be <= 63") if value.size > 63
+      end
+
+      if value = @output_s3_key_prefix
+        raise Core::ValidationError.new("OutputS3KeyPrefix length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("OutputS3KeyPrefix length must be <= 500") if value.size > 500
+      end
+    end
+
+    def_equals_and_hash(@name, @status, @status_details, @response_code, @response_start_date_time, @response_finish_date_time, @output, @standard_output_url, @standard_error_url, @output_s3_region, @output_s3_bucket_name, @output_s3_key_prefix)
   end
 end

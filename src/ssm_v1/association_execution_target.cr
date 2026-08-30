@@ -53,5 +53,35 @@ module Amazonite::SsmV1
       @output_source : OutputSource | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @association_id
+        raise Core::ValidationError.new("AssociationId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @association_version
+        raise Core::ValidationError.new("AssociationVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST)|([1-9][0-9]*)$"))
+      end
+
+      if value = @execution_id
+        raise Core::ValidationError.new("ExecutionId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @resource_id
+        raise Core::ValidationError.new("ResourceId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceId length must be <= 100") if value.size > 100
+      end
+
+      if value = @resource_type
+        raise Core::ValidationError.new("ResourceType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceType length must be <= 50") if value.size > 50
+      end
+
+      if value = @output_source
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@association_id, @association_version, @execution_id, @resource_id, @resource_type, @status, @detailed_status, @last_execution_date, @output_source)
   end
 end

@@ -22,6 +22,7 @@ module Amazonite::KinesisV1
     # AddTagsToStream has a limit of five transactions per second per account.
     def add_tags_to_stream(input : AK::AddTagsToStreamInput) : Core::Response
       Log.info { "performing 'AddTagsToStream' operation" }
+      input.validate! if config.validate_input?
       response = post("AddTagsToStream", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -84,6 +85,7 @@ module Amazonite::KinesisV1
     # tags until the stream is in `ACTIVE` state.
     def create_stream(input : AK::CreateStreamInput) : Core::Response
       Log.info { "performing 'CreateStream' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateStream", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -100,6 +102,7 @@ module Amazonite::KinesisV1
     # is inaccessible.
     def decrease_stream_retention_period(input : AK::DecreaseStreamRetentionPeriodInput) : Core::Response
       Log.info { "performing 'DecreaseStreamRetentionPeriod' operation" }
+      input.validate! if config.validate_input?
       response = post("DecreaseStreamRetentionPeriod", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -113,6 +116,7 @@ module Amazonite::KinesisV1
     # `^(arn):aws.*:kinesis:.*:\d{12}:.*stream\/[a-zA-Z0-9_.-]+\/consumer\/[a-zA-Z0-9_.-]+:[0-9]+`
     def delete_resource_policy(input : AK::DeleteResourcePolicyInput) : Core::Response
       Log.info { "performing 'DeleteResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteResourcePolicy", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -140,6 +144,7 @@ module Amazonite::KinesisV1
     # DeleteStream has a limit of five transactions per second per account.
     def delete_stream(input : AK::DeleteStreamInput) : Core::Response
       Log.info { "performing 'DeleteStream' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteStream", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -154,6 +159,7 @@ module Amazonite::KinesisV1
     # This operation has a limit of five transactions per second per stream.
     def deregister_stream_consumer(input : AK::DeregisterStreamConsumerInput) : Core::Response
       Log.info { "performing 'DeregisterStreamConsumer' operation" }
+      input.validate! if config.validate_input?
       response = post("DeregisterStreamConsumer", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -166,6 +172,7 @@ module Amazonite::KinesisV1
     # account. TPS over 5 will initiate the `LimitExceededException`.
     def describe_account_settings(input : AK::DescribeAccountSettingsInput) : Core::ParsedResponse(AK::DescribeAccountSettingsOutput)
       Log.info { "performing 'DescribeAccountSettings' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAccountSettings", "/", input.to_json)
       Core::ParsedResponse(AK::DescribeAccountSettingsOutput).new(response)
     end
@@ -177,6 +184,7 @@ module Amazonite::KinesisV1
     # This operation has a limit of one transaction per second per account.
     def describe_limits(input : AK::DescribeLimitsInput) : Core::ParsedResponse(AK::DescribeLimitsOutput)
       Log.info { "performing 'DescribeLimits' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeLimits", "/", input.to_json)
       Core::ParsedResponse(AK::DescribeLimitsOutput).new(response)
     end
@@ -208,6 +216,7 @@ module Amazonite::KinesisV1
     # This operation has a limit of 10 transactions per second per account.
     def describe_stream(input : AK::DescribeStreamInput) : Core::ParsedResponse(AK::DescribeStreamOutput)
       Log.info { "performing 'DescribeStream' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeStream", "/", input.to_json)
       Core::ParsedResponse(AK::DescribeStreamOutput).new(response)
     end
@@ -225,6 +234,7 @@ module Amazonite::KinesisV1
     # the consumer.
     def describe_stream_consumer(input : AK::DescribeStreamConsumerInput) : Core::ParsedResponse(AK::DescribeStreamConsumerOutput)
       Log.info { "performing 'DescribeStreamConsumer' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeStreamConsumer", "/", input.to_json)
       Core::ParsedResponse(AK::DescribeStreamConsumerOutput).new(response)
     end
@@ -241,6 +251,7 @@ module Amazonite::KinesisV1
     # DescribeStreamSummary has a limit of 20 transactions per second per account.
     def describe_stream_summary(input : AK::DescribeStreamSummaryInput) : Core::ParsedResponse(AK::DescribeStreamSummaryOutput)
       Log.info { "performing 'DescribeStreamSummary' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeStreamSummary", "/", input.to_json)
       Core::ParsedResponse(AK::DescribeStreamSummaryOutput).new(response)
     end
@@ -251,6 +262,7 @@ module Amazonite::KinesisV1
     # both. It is recommended that you use the `StreamARN` input parameter when you invoke this API.
     def disable_enhanced_monitoring(input : AK::DisableEnhancedMonitoringInput) : Core::ParsedResponse(AK::EnhancedMonitoringOutput)
       Log.info { "performing 'DisableEnhancedMonitoring' operation" }
+      input.validate! if config.validate_input?
       response = post("DisableEnhancedMonitoring", "/", input.to_json)
       Core::ParsedResponse(AK::EnhancedMonitoringOutput).new(response)
     end
@@ -261,6 +273,7 @@ module Amazonite::KinesisV1
     # both. It is recommended that you use the `StreamARN` input parameter when you invoke this API.
     def enable_enhanced_monitoring(input : AK::EnableEnhancedMonitoringInput) : Core::ParsedResponse(AK::EnhancedMonitoringOutput)
       Log.info { "performing 'EnableEnhancedMonitoring' operation" }
+      input.validate! if config.validate_input?
       response = post("EnableEnhancedMonitoring", "/", input.to_json)
       Core::ParsedResponse(AK::EnhancedMonitoringOutput).new(response)
     end
@@ -326,6 +339,7 @@ module Amazonite::KinesisV1
     # This operation has a limit of five transactions per second per shard.
     def get_records(input : AK::GetRecordsInput) : Core::ParsedResponse(AK::GetRecordsOutput)
       Log.info { "performing 'GetRecords' operation" }
+      input.validate! if config.validate_input?
       response = post("GetRecords", "/", input.to_json)
       Core::ParsedResponse(AK::GetRecordsOutput).new(response)
     end
@@ -339,6 +353,7 @@ module Amazonite::KinesisV1
     # `^(arn):aws.*:kinesis:.*:\d{12}:.*stream\/[a-zA-Z0-9_.-]+\/consumer\/[a-zA-Z0-9_.-]+:[0-9]+`
     def get_resource_policy(input : AK::GetResourcePolicyInput) : Core::ParsedResponse(AK::GetResourcePolicyOutput)
       Log.info { "performing 'GetResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("GetResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(AK::GetResourcePolicyOutput).new(response)
     end
@@ -382,6 +397,7 @@ module Amazonite::KinesisV1
     # GetShardIterator has a limit of five transactions per second per account per open shard.
     def get_shard_iterator(input : AK::GetShardIteratorInput) : Core::ParsedResponse(AK::GetShardIteratorOutput)
       Log.info { "performing 'GetShardIterator' operation" }
+      input.validate! if config.validate_input?
       response = post("GetShardIterator", "/", input.to_json)
       Core::ParsedResponse(AK::GetShardIteratorOutput).new(response)
     end
@@ -401,6 +417,7 @@ module Amazonite::KinesisV1
     # applications.
     def increase_stream_retention_period(input : AK::IncreaseStreamRetentionPeriodInput) : Core::Response
       Log.info { "performing 'IncreaseStreamRetentionPeriod' operation" }
+      input.validate! if config.validate_input?
       response = post("IncreaseStreamRetentionPeriod", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -422,6 +439,7 @@ module Amazonite::KinesisV1
     # IAM](https://docs.aws.amazon.com/streams/latest/dev/controlling-access.html).
     def list_shards(input : AK::ListShardsInput) : Core::ParsedResponse(AK::ListShardsOutput)
       Log.info { "performing 'ListShards' operation" }
+      input.validate! if config.validate_input?
       response = post("ListShards", "/", input.to_json)
       Core::ParsedResponse(AK::ListShardsOutput).new(response)
     end
@@ -432,6 +450,7 @@ module Amazonite::KinesisV1
     # This operation has a limit of 5 transactions per second per stream.
     def list_stream_consumers(input : AK::ListStreamConsumersInput) : Core::ParsedResponse(AK::ListStreamConsumersOutput)
       Log.info { "performing 'ListStreamConsumers' operation" }
+      input.validate! if config.validate_input?
       response = post("ListStreamConsumers", "/", input.to_json)
       Core::ParsedResponse(AK::ListStreamConsumersOutput).new(response)
     end
@@ -452,6 +471,7 @@ module Amazonite::KinesisV1
     # ListStreams has a limit of five transactions per second per account.
     def list_streams(input : AK::ListStreamsInput) : Core::ParsedResponse(AK::ListStreamsOutput)
       Log.info { "performing 'ListStreams' operation" }
+      input.validate! if config.validate_input?
       response = post("ListStreams", "/", input.to_json)
       Core::ParsedResponse(AK::ListStreamsOutput).new(response)
     end
@@ -464,6 +484,7 @@ module Amazonite::KinesisV1
     # resources](https://docs.aws.amazon.com/streams/latest/dev/tagging.html).
     def list_tags_for_resource(input : AK::ListTagsForResourceInput) : Core::ParsedResponse(AK::ListTagsForResourceOutput)
       Log.info { "performing 'ListTagsForResource' operation" }
+      input.validate! if config.validate_input?
       response = post("ListTagsForResource", "/", input.to_json)
       Core::ParsedResponse(AK::ListTagsForResourceOutput).new(response)
     end
@@ -475,6 +496,7 @@ module Amazonite::KinesisV1
     # both. It is recommended that you use the `StreamARN` input parameter when you invoke this API.
     def list_tags_for_stream(input : AK::ListTagsForStreamInput) : Core::ParsedResponse(AK::ListTagsForStreamOutput)
       Log.info { "performing 'ListTagsForStream' operation" }
+      input.validate! if config.validate_input?
       response = post("ListTagsForStream", "/", input.to_json)
       Core::ParsedResponse(AK::ListTagsForStreamOutput).new(response)
     end
@@ -518,6 +540,7 @@ module Amazonite::KinesisV1
     # `MergeShards` has a limit of five transactions per second per account.
     def merge_shards(input : AK::MergeShardsInput) : Core::Response
       Log.info { "performing 'MergeShards' operation" }
+      input.validate! if config.validate_input?
       response = post("MergeShards", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -569,6 +592,7 @@ module Amazonite::KinesisV1
     # this retention period.
     def put_record(input : AK::PutRecordInput) : Core::ParsedResponse(AK::PutRecordOutput)
       Log.info { "performing 'PutRecord' operation" }
+      input.validate! if config.validate_input?
       response = post("PutRecord", "/", input.to_json)
       Core::ParsedResponse(AK::PutRecordOutput).new(response)
     end
@@ -639,6 +663,7 @@ module Amazonite::KinesisV1
     # this retention period.
     def put_records(input : AK::PutRecordsInput) : Core::ParsedResponse(AK::PutRecordsOutput)
       Log.info { "performing 'PutRecords' operation" }
+      input.validate! if config.validate_input?
       response = post("PutRecords", "/", input.to_json)
       Core::ParsedResponse(AK::PutRecordsOutput).new(response)
     end
@@ -662,6 +687,7 @@ module Amazonite::KinesisV1
     # IAM](https://docs.aws.amazon.com/streams/latest/dev/controlling-access.html).
     def put_resource_policy(input : AK::PutResourcePolicyInput) : Core::Response
       Log.info { "performing 'PutResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutResourcePolicy", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -692,6 +718,7 @@ module Amazonite::KinesisV1
     # `CREATING` status results in a `LimitExceededException`.
     def register_stream_consumer(input : AK::RegisterStreamConsumerInput) : Core::ParsedResponse(AK::RegisterStreamConsumerOutput)
       Log.info { "performing 'RegisterStreamConsumer' operation" }
+      input.validate! if config.validate_input?
       response = post("RegisterStreamConsumer", "/", input.to_json)
       Core::ParsedResponse(AK::RegisterStreamConsumerOutput).new(response)
     end
@@ -707,6 +734,7 @@ module Amazonite::KinesisV1
     # RemoveTagsFromStream has a limit of five transactions per second per account.
     def remove_tags_from_stream(input : AK::RemoveTagsFromStreamInput) : Core::Response
       Log.info { "performing 'RemoveTagsFromStream' operation" }
+      input.validate! if config.validate_input?
       response = post("RemoveTagsFromStream", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -759,6 +787,7 @@ module Amazonite::KinesisV1
     # `SplitShard` has a limit of five transactions per second per account.
     def split_shard(input : AK::SplitShardInput) : Core::Response
       Log.info { "performing 'SplitShard' operation" }
+      input.validate! if config.validate_input?
       response = post("SplitShard", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -784,6 +813,7 @@ module Amazonite::KinesisV1
     # is applied by inspecting the API response from `PutRecord` or `PutRecords`.
     def start_stream_encryption(input : AK::StartStreamEncryptionInput) : Core::Response
       Log.info { "performing 'StartStreamEncryption' operation" }
+      input.validate! if config.validate_input?
       response = post("StartStreamEncryption", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -810,6 +840,7 @@ module Amazonite::KinesisV1
     # `PutRecords`.
     def stop_stream_encryption(input : AK::StopStreamEncryptionInput) : Core::Response
       Log.info { "performing 'StopStreamEncryption' operation" }
+      input.validate! if config.validate_input?
       response = post("StopStreamEncryption", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -819,6 +850,7 @@ module Amazonite::KinesisV1
     # resources. You can assign up to 50 tags to a Kinesis resource.
     def tag_resource(input : AK::TagResourceInput) : Core::Response
       Log.info { "performing 'TagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("TagResource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -827,6 +859,7 @@ module Amazonite::KinesisV1
     # recovered after this operation completes successfully.
     def untag_resource(input : AK::UntagResourceInput) : Core::Response
       Log.info { "performing 'UntagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("UntagResource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -845,6 +878,7 @@ module Amazonite::KinesisV1
     # account. TPS over 5 will initiate the `LimitExceededException`.
     def update_account_settings(input : AK::UpdateAccountSettingsInput) : Core::ParsedResponse(AK::UpdateAccountSettingsOutput)
       Log.info { "performing 'UpdateAccountSettings' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateAccountSettings", "/", input.to_json)
       Core::ParsedResponse(AK::UpdateAccountSettingsOutput).new(response)
     end
@@ -853,6 +887,7 @@ module Amazonite::KinesisV1
     # from a stream. You can ingest and digest single records up to 10240 KiB.
     def update_max_record_size(input : AK::UpdateMaxRecordSizeInput) : Core::Response
       Log.info { "performing 'UpdateMaxRecordSize' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateMaxRecordSize", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -901,6 +936,7 @@ module Amazonite::KinesisV1
     # form](https://console.aws.amazon.com/support/v1#/case/create?issueType=service-limit-increase&limitType=service-code-kinesis).
     def update_shard_count(input : AK::UpdateShardCountInput) : Core::ParsedResponse(AK::UpdateShardCountOutput)
       Log.info { "performing 'UpdateShardCount' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateShardCount", "/", input.to_json)
       Core::ParsedResponse(AK::UpdateShardCountOutput).new(response)
     end
@@ -915,6 +951,7 @@ module Amazonite::KinesisV1
     # second that your stream can support in writes.
     def update_stream_mode(input : AK::UpdateStreamModeInput) : Core::Response
       Log.info { "performing 'UpdateStreamMode' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateStreamMode", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -954,6 +991,7 @@ module Amazonite::KinesisV1
     # form](https://console.aws.amazon.com/support/v1#/case/create?issueType=service-limit-increase&limitType=service-code-kinesis).
     def update_stream_warm_throughput(input : AK::UpdateStreamWarmThroughputInput) : Core::ParsedResponse(AK::UpdateStreamWarmThroughputOutput)
       Log.info { "performing 'UpdateStreamWarmThroughput' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateStreamWarmThroughput", "/", input.to_json)
       Core::ParsedResponse(AK::UpdateStreamWarmThroughputOutput).new(response)
     end

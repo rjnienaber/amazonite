@@ -40,5 +40,10 @@ module Amazonite::ApiGatewayV1
       @tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@client_certificate_id, @description, @pem_encoded_certificate, @created_date, @expiration_date, @tags)
   end
 end

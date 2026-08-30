@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   # Represents the output for GetRecords.
   class GetRecordsOutput
@@ -30,5 +32,26 @@ module Amazonite::KinesisV1
       @child_shards : Array(ChildShard) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @records
+        value.each(&.validate!)
+      end
+
+      if value = @next_shard_iterator
+        raise Core::ValidationError.new("NextShardIterator length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextShardIterator length must be <= 512") if value.size > 512
+      end
+
+      if value = @millis_behind_latest
+        raise Core::ValidationError.new("MillisBehindLatest value must be >= 0") if value < 0
+      end
+
+      if value = @child_shards
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@records, @next_shard_iterator, @millis_behind_latest, @child_shards)
   end
 end

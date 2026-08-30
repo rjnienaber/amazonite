@@ -149,5 +149,10 @@ module Amazonite::CloudWatchLogsV1
       @selection_criteria : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@policy_name, @policy_document, @policy_type, @scope, @selection_criteria)
   end
 end

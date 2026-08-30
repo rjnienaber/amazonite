@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListCommandInvocationsResult
     include JSON::Serializable
@@ -16,5 +18,13 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @command_invocations
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@command_invocations, @next_token)
   end
 end

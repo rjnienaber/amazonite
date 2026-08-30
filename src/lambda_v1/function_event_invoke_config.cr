@@ -47,5 +47,29 @@ module Amazonite::LambdaV1
       @destination_config : DestinationConfig | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @function_arn
+        raise Core::ValidationError.new("FunctionArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("FunctionArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("FunctionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @maximum_retry_attempts
+        raise Core::ValidationError.new("MaximumRetryAttempts value must be >= 0") if value < 0
+        raise Core::ValidationError.new("MaximumRetryAttempts value must be <= 2") if value > 2
+      end
+
+      if value = @maximum_event_age_in_seconds
+        raise Core::ValidationError.new("MaximumEventAgeInSeconds value must be >= 60") if value < 60
+        raise Core::ValidationError.new("MaximumEventAgeInSeconds value must be <= 21600") if value > 21600
+      end
+
+      if value = @destination_config
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@last_modified, @function_arn, @maximum_retry_attempts, @maximum_event_age_in_seconds, @destination_config)
   end
 end

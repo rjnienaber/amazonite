@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents attributes that are copied (projected) from the table into an index. These are in
@@ -36,5 +37,14 @@ module Amazonite::DynamoDBV2
       @non_key_attributes : Array(String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @non_key_attributes
+        raise Core::ValidationError.new("NonKeyAttributes must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("NonKeyAttributes must have at most 20 item(s)") if value.size > 20
+      end
+    end
+
+    def_equals_and_hash(@projection_type, @non_key_attributes)
   end
 end

@@ -22,5 +22,10 @@ module Amazonite::SnsV1
         is_in_sandbox: Core::XMLValue.bool(node.xpath_node("*[local-name()='IsInSandbox']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@is_in_sandbox)
   end
 end

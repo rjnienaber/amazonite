@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # This structure is used in both `GetMetricData` and `PutMetricAlarm`. The supported use of this
   # structure is different for those two operations.
@@ -110,5 +112,32 @@ module Amazonite::CloudWatchV1
       @account_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @id
+        raise Core::ValidationError.new("Id length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Id length must be <= 255") if value.size > 255
+      end
+
+      if value = @metric_stat
+        value.validate!
+      end
+
+      if value = @expression
+        raise Core::ValidationError.new("Expression length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Expression length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @period
+        raise Core::ValidationError.new("Period value must be >= 1") if value < 1
+      end
+
+      if value = @account_id
+        raise Core::ValidationError.new("AccountId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AccountId length must be <= 255") if value.size > 255
+      end
+    end
+
+    def_equals_and_hash(@id, @metric_stat, @expression, @label, @return_data, @period, @account_id)
   end
 end

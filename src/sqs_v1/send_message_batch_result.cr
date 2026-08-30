@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SqsV1
   # For each message in the batch, the response contains a ` SendMessageBatchResultEntry ` tag if
   # the message succeeds or a ` BatchResultErrorEntry ` tag if the message fails.
@@ -18,5 +20,17 @@ module Amazonite::SqsV1
       @failed : Array(BatchResultErrorEntry),
     )
     end
+
+    def validate! : Nil
+      if value = @successful
+        value.each(&.validate!)
+      end
+
+      if value = @failed
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@successful, @failed)
   end
 end

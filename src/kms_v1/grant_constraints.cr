@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   # Use this structure to allow [cryptographic
   # operations](https://docs.aws.amazon.com/kms/latest/developerguide/kms-cryptography.html#cryptographic-operations)
@@ -67,5 +69,15 @@ module Amazonite::KmsV1
       @source_arn : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @source_arn
+        raise Core::ValidationError.new("SourceArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("SourceArn length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("SourceArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[a-z0-9-]*:[a-z0-9-]+:[a-z0-9-]*:[0-9]{12}:.+$"))
+      end
+    end
+
+    def_equals_and_hash(@encryption_context_subset, @encryption_context_equals, @source_arn)
   end
 end

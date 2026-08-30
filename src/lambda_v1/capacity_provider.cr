@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   # A capacity provider manages compute resources for Lambda functions.
@@ -57,5 +58,51 @@ module Amazonite::LambdaV1
       @telemetry_config : CapacityProviderTelemetryConfig | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @capacity_provider_arn
+        raise Core::ValidationError.new("CapacityProviderArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CapacityProviderArn length must be <= 140") if value.size > 140
+        raise Core::ValidationError.new("CapacityProviderArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[a-zA-Z-]*:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:capacity-provider:[a-zA-Z0-9-_]+$"))
+      end
+
+      if value = @vpc_config
+        value.validate!
+      end
+
+      if value = @permissions_config
+        value.validate!
+      end
+
+      if value = @instance_requirements
+        value.validate!
+      end
+
+      if value = @capacity_provider_scaling_config
+        value.validate!
+      end
+
+      if value = @kms_key_arn
+        raise Core::ValidationError.new("KmsKeyArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KmsKeyArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("KmsKeyArn does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*)|()$"))
+      end
+
+      if value = @last_modified
+        raise Core::ValidationError.new("LastModified length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("LastModified length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("LastModified does not match the required pattern") unless value.matches?(Regex.new("^.*$"))
+      end
+
+      if value = @propagate_tags
+        value.validate!
+      end
+
+      if value = @telemetry_config
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@capacity_provider_arn, @state, @vpc_config, @permissions_config, @instance_requirements, @capacity_provider_scaling_config, @kms_key_arn, @last_modified, @propagate_tags, @telemetry_config)
   end
 end

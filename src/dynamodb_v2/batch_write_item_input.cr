@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the input of a `BatchWriteItem` operation.
@@ -45,5 +46,14 @@ module Amazonite::DynamoDBV2
       @return_item_collection_metrics : ReturnItemCollectionMetrics | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @request_items
+        raise Core::ValidationError.new("RequestItems must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("RequestItems must have at most 25 entry(s)") if value.size > 25
+      end
+    end
+
+    def_equals_and_hash(@request_items, @return_consumed_capacity, @return_item_collection_metrics)
   end
 end

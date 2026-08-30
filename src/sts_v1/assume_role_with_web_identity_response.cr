@@ -117,5 +117,32 @@ module Amazonite::StsV1
         source_identity: Core::XMLValue.string(node.xpath_node("*[local-name()='SourceIdentity']")),
       )
     end
+
+    def validate! : Nil
+      if value = @credentials
+        value.validate!
+      end
+
+      if value = @subject_from_web_identity_token
+        raise Core::ValidationError.new("SubjectFromWebIdentityToken length must be >= 6") if value.size < 6
+        raise Core::ValidationError.new("SubjectFromWebIdentityToken length must be <= 255") if value.size > 255
+      end
+
+      if value = @assumed_role_user
+        value.validate!
+      end
+
+      if value = @packed_policy_size
+        raise Core::ValidationError.new("PackedPolicySize value must be >= 0") if value < 0
+      end
+
+      if value = @source_identity
+        raise Core::ValidationError.new("SourceIdentity length must be >= 2") if value.size < 2
+        raise Core::ValidationError.new("SourceIdentity length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("SourceIdentity does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]*$"))
+      end
+    end
+
+    def_equals_and_hash(@credentials, @subject_from_web_identity_token, @assumed_role_user, @packed_policy_size, @provider, @audience, @source_identity)
   end
 end

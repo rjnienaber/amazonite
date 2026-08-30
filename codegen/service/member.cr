@@ -68,6 +68,71 @@ module Amazonite::Codegen::Service
       @resolver.find(shape_name).is_a?(Structure)
     end
 
+    def string_type?
+      @resolver.find(shape_name).type == "string" && !enum_type?
+    end
+
+    def numeric_type?
+      {"integer", "long", "float", "double"}.includes?(@resolver.find(shape_name).type)
+    end
+
+    # `min`/`max`/`pattern` belong to the shape this member points at (e.g.
+    # a "TableName" string shape's length/pattern), not the member ref
+    # itself - Smithy attaches constraint traits to the shape definition,
+    # so every member sharing that shape shares the same constraint.
+    def min
+      @resolver.find(shape_name).min
+    end
+
+    def max
+      @resolver.find(shape_name).max
+    end
+
+    # Smithy patterns are written for languages (Java, in aws-sdk-js's own
+    # source) that decode a `\uXXXX` escape into a real character before
+    # their regex engine ever sees the pattern text - PCRE2 (what Crystal's
+    # `Regex` uses) has no such escape of its own, so those 4 hex digits
+    # are decoded into an actual Unicode character here first. A small
+    # number of AWS patterns use `\uXXXX` escapes that don't survive this
+    # (a lone UTF-16 surrogate half like `\uD800`, which has no valid
+    # Unicode scalar value to decode to, or a malformed extra-digit escape
+    # like `က0`) - rather than risk `Regex.new` blowing up at request
+    # time in every generated service, the decoded pattern is compiled
+    # right here at codegen time, and the member is treated as having no
+    # pattern constraint at all if it doesn't compile.
+    UNICODE_ESCAPE = /\\u([0-9A-Fa-f]{4})/
+
+    def pattern : String?
+      raw = @resolver.find(shape_name).pattern
+      return unless raw
+
+      decoded = decode_unicode_escapes(raw)
+      Regex.new(decoded)
+      decoded
+    rescue
+      nil
+    end
+
+    private def decode_unicode_escapes(pattern : String) : String
+      pattern.gsub(UNICODE_ESCAPE) do |match, captures|
+        codepoint = captures[1].to_i(16)
+        surrogate_half = 0xD800 <= codepoint <= 0xDFFF
+        surrogate_half ? match : codepoint.chr.to_s
+      end
+    end
+
+    # A Crystal numeric literal (as source text) for `min`/`max` - `.raw`
+    # is whichever of Int64/Float64 the JSON constraint actually carried,
+    # and `.to_s` on either produces text Crystal parses back as the same
+    # kind of literal.
+    def min_literal : String?
+      min.try(&.raw.to_s)
+    end
+
+    def max_literal : String?
+      max.try(&.raw.to_s)
+    end
+
     def required?
       @required
     end

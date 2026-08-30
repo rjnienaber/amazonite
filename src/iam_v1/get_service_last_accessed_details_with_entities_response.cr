@@ -84,5 +84,17 @@ module Amazonite::IamV1
         error: node.xpath_node("*[local-name()='Error']").try { |n| ErrorDetails.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @entity_details_list
+        value.each(&.validate!)
+      end
+
+      if value = @error
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@job_status, @job_creation_date, @job_completion_date, @entity_details_list, @is_truncated, @marker, @error)
   end
 end

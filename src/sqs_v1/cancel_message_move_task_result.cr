@@ -10,5 +10,10 @@ module Amazonite::SqsV1
       @approximate_number_of_messages_moved : Int64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@approximate_number_of_messages_moved)
   end
 end

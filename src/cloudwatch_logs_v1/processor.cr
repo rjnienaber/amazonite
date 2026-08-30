@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This structure contains the information about one processor in a log transformer.
   class Processor
@@ -175,5 +177,101 @@ module Amazonite::CloudWatchLogsV1
       @upper_case_string : UpperCaseString | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @add_keys
+        value.validate!
+      end
+
+      if value = @copy_value
+        value.validate!
+      end
+
+      if value = @csv
+        value.validate!
+      end
+
+      if value = @date_time_converter
+        value.validate!
+      end
+
+      if value = @delete_keys
+        value.validate!
+      end
+
+      if value = @grok
+        value.validate!
+      end
+
+      if value = @list_to_map
+        value.validate!
+      end
+
+      if value = @lower_case_string
+        value.validate!
+      end
+
+      if value = @move_keys
+        value.validate!
+      end
+
+      if value = @parse_cloudfront
+        value.validate!
+      end
+
+      if value = @parsejson
+        value.validate!
+      end
+
+      if value = @parse_key_value
+        value.validate!
+      end
+
+      if value = @parse_route_53
+        value.validate!
+      end
+
+      if value = @parse_to_ocsf
+        value.validate!
+      end
+
+      if value = @parse_postgres
+        value.validate!
+      end
+
+      if value = @parsevpc
+        value.validate!
+      end
+
+      if value = @parsewaf
+        value.validate!
+      end
+
+      if value = @rename_keys
+        value.validate!
+      end
+
+      if value = @split_string
+        value.validate!
+      end
+
+      if value = @substitute_string
+        value.validate!
+      end
+
+      if value = @trim_string
+        value.validate!
+      end
+
+      if value = @type_converter
+        value.validate!
+      end
+
+      if value = @upper_case_string
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@add_keys, @copy_value, @csv, @date_time_converter, @delete_keys, @grok, @list_to_map, @lower_case_string, @move_keys, @parse_cloudfront, @parsejson, @parse_key_value, @parse_route_53, @parse_to_ocsf, @parse_postgres, @parsevpc, @parsewaf, @rename_keys, @split_string, @substitute_string, @trim_string, @type_converter, @upper_case_string)
   end
 end

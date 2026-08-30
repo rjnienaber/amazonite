@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the provisioned throughput settings for the specified global secondary index. You
   # must use `ProvisionedThroughput` or `OnDemandThroughput` based on your table’s capacity mode.
@@ -31,5 +33,17 @@ module Amazonite::DynamoDBV2
       @write_capacity_units : Int64,
     )
     end
+
+    def validate! : Nil
+      if value = @read_capacity_units
+        raise Core::ValidationError.new("ReadCapacityUnits value must be >= 1") if value < 1
+      end
+
+      if value = @write_capacity_units
+        raise Core::ValidationError.new("WriteCapacityUnits value must be >= 1") if value < 1
+      end
+    end
+
+    def_equals_and_hash(@read_capacity_units, @write_capacity_units)
   end
 end

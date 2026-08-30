@@ -26,6 +26,7 @@ module Amazonite::DynamoDBV2
     # *Amazon DynamoDB Developer Guide*.
     def untag_resource(input : ADDB::UntagResourceInput) : Core::Response
       Log.info { "performing 'UntagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("UntagResource", "/", input.to_json)
       Core::Response.new(response)
     end

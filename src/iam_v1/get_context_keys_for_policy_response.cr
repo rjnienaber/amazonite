@@ -27,5 +27,10 @@ module Amazonite::IamV1
         context_key_names: node.xpath_nodes("*[local-name()='ContextKeyNames']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@context_key_names)
   end
 end

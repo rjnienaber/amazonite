@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the properties of a replica global secondary index.
   class ReplicaGlobalSecondaryIndexDescription
@@ -27,5 +29,27 @@ module Amazonite::DynamoDBV2
       @warm_throughput : GlobalSecondaryIndexWarmThroughputDescription | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @index_name
+        raise Core::ValidationError.new("IndexName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("IndexName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("IndexName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @provisioned_throughput_override
+        value.validate!
+      end
+
+      if value = @on_demand_throughput_override
+        value.validate!
+      end
+
+      if value = @warm_throughput
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@index_name, @provisioned_throughput_override, @on_demand_throughput_override, @warm_throughput)
   end
 end

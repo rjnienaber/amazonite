@@ -27,5 +27,10 @@ module Amazonite::CloudFormationV1
         resource_scan_id: Core::XMLValue.string(node.xpath_node("*[local-name()='ResourceScanId']")),
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@resource_scan_id)
   end
 end

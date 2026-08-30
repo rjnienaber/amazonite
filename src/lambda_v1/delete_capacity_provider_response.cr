@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class DeleteCapacityProviderResponse
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::LambdaV1
       @capacity_provider : CapacityProvider,
     )
     end
+
+    def validate! : Nil
+      if value = @capacity_provider
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@capacity_provider)
   end
 end

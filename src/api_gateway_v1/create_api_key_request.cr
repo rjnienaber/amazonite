@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Request to create an ApiKey resource.
   class CreateApiKeyRequest
@@ -49,5 +51,13 @@ module Amazonite::ApiGatewayV1
       @tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @stage_keys
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@name, @description, @enabled, @generate_distinct_id, @value, @stage_keys, @customer_id, @tags)
   end
 end

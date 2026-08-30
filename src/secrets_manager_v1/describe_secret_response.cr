@@ -170,5 +170,71 @@ module Amazonite::SecretsManagerV1
       @replication_status : Array(ReplicationStatusType) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @arn
+        raise Core::ValidationError.new("ARN length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("ARN length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 256") if value.size > 256
+      end
+
+      if value = @type
+        raise Core::ValidationError.new("Type length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Type length must be <= 256") if value.size > 256
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @kms_key_id
+        raise Core::ValidationError.new("KmsKeyId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KmsKeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @rotation_lambda_arn
+        raise Core::ValidationError.new("RotationLambdaARN length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("RotationLambdaARN length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @rotation_rules
+        value.validate!
+      end
+
+      if value = @external_secret_rotation_metadata
+        value.each(&.validate!)
+      end
+
+      if value = @external_secret_rotation_role_arn
+        raise Core::ValidationError.new("ExternalSecretRotationRoleArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("ExternalSecretRotationRoleArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+
+      if value = @owning_service
+        raise Core::ValidationError.new("OwningService length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OwningService length must be <= 128") if value.size > 128
+      end
+
+      if value = @primary_region
+        raise Core::ValidationError.new("PrimaryRegion length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PrimaryRegion length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("PrimaryRegion does not match the required pattern") unless value.matches?(Regex.new("^([a-z]+-)+\\d+$"))
+      end
+
+      if value = @replication_status
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@arn, @name, @type, @description, @kms_key_id, @rotation_enabled, @rotation_lambda_arn, @rotation_rules, @external_secret_rotation_metadata, @external_secret_rotation_role_arn, @last_rotated_date, @last_changed_date, @last_accessed_date, @deleted_date, @next_rotation_date, @tags, @version_ids_to_stages, @owning_service, @created_date, @primary_region, @replication_status)
   end
 end

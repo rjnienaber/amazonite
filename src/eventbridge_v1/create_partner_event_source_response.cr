@@ -10,5 +10,10 @@ module Amazonite::EventBridgeV1
       @event_source_arn : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@event_source_arn)
   end
 end

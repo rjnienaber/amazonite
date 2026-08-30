@@ -54,5 +54,27 @@ module Amazonite::IamV1
         custom_suffix: Core::XMLValue.string(node.xpath_node("*[local-name()='CustomSuffix']")),
       )
     end
+
+    def validate! : Nil
+      if value = @aws_service_name
+        raise Core::ValidationError.new("AWSServiceName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AWSServiceName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("AWSServiceName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1000") if value.size > 1000
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
+      end
+
+      if value = @custom_suffix
+        raise Core::ValidationError.new("CustomSuffix length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CustomSuffix length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("CustomSuffix does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+    end
+
+    def_equals_and_hash(@aws_service_name, @description, @custom_suffix)
   end
 end

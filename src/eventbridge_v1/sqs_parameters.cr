@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # This structure includes the custom parameter to be used when the target is an SQS FIFO queue.
   class SqsParameters
@@ -11,5 +13,14 @@ module Amazonite::EventBridgeV1
       @message_group_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @message_group_id
+        raise Core::ValidationError.new("MessageGroupId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("MessageGroupId length must be <= 100") if value.size > 100
+      end
+    end
+
+    def_equals_and_hash(@message_group_id)
   end
 end

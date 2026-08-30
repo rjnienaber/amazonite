@@ -33,5 +33,15 @@ module Amazonite::EventBridgeV1
       @state : EventSourceState | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @account
+        raise Core::ValidationError.new("Account length must be >= 12") if value.size < 12
+        raise Core::ValidationError.new("Account length must be <= 12") if value.size > 12
+        raise Core::ValidationError.new("Account does not match the required pattern") unless value.matches?(Regex.new("^\\d{12}$"))
+      end
+    end
+
+    def_equals_and_hash(@account, @creation_time, @expiration_time, @state)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # A type of SDK that API Gateway can generate.
   class SdkType
@@ -26,5 +28,13 @@ module Amazonite::ApiGatewayV1
       @configuration_properties : Array(SdkConfigurationProperty) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @configuration_properties
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@id, @friendly_name, @description, @configuration_properties)
   end
 end

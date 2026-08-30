@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListOpsItemEventsResponse
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::SsmV1
       @summaries : Array(OpsItemEventSummary) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @summaries
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@next_token, @summaries)
   end
 end

@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the input of an `UpdateTable` operation.
@@ -164,5 +165,57 @@ module Amazonite::DynamoDBV2
       @vector_index_updates : Array(VectorIndexUpdate) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @attribute_definitions
+        value.each(&.validate!)
+      end
+
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @provisioned_throughput
+        value.validate!
+      end
+
+      if value = @global_secondary_index_updates
+        value.each(&.validate!)
+      end
+
+      if value = @stream_specification
+        value.validate!
+      end
+
+      if value = @sse_specification
+        value.validate!
+      end
+
+      if value = @replica_updates
+        raise Core::ValidationError.new("ReplicaUpdates must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+
+      if value = @global_table_witness_updates
+        raise Core::ValidationError.new("GlobalTableWitnessUpdates must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("GlobalTableWitnessUpdates must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+
+      if value = @on_demand_throughput
+        value.validate!
+      end
+
+      if value = @warm_throughput
+        value.validate!
+      end
+
+      if value = @vector_index_updates
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@attribute_definitions, @table_name, @billing_mode, @provisioned_throughput, @global_secondary_index_updates, @stream_specification, @sse_specification, @replica_updates, @table_class, @deletion_protection_enabled, @multi_region_consistency, @global_table_witness_updates, @on_demand_throughput, @warm_throughput, @global_table_settings_replication_mode, @vector_index_updates)
   end
 end

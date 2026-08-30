@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Details about the connection between a Lambda function and an [Amazon EFS file
   # system](https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html) or an
@@ -20,5 +22,21 @@ module Amazonite::LambdaV1
       @local_mount_path : String,
     )
     end
+
+    def validate! : Nil
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Arn length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("Arn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[a-zA-Z-]*:elasticfilesystem:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:access-point/fsap-[a-f0-9]{17}$|^arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}/access-point/fsap-[0-9a-f]{17,40}$"))
+      end
+
+      if value = @local_mount_path
+        raise Core::ValidationError.new("LocalMountPath length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("LocalMountPath length must be <= 160") if value.size > 160
+        raise Core::ValidationError.new("LocalMountPath does not match the required pattern") unless value.matches?(Regex.new("^/mnt/[a-zA-Z0-9-_.]+$"))
+      end
+    end
+
+    def_equals_and_hash(@arn, @local_mount_path)
   end
 end

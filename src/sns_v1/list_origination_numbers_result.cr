@@ -34,5 +34,13 @@ module Amazonite::SnsV1
         phone_numbers: node.xpath_nodes("*[local-name()='PhoneNumbers']/*[local-name()='member']").map { |n| PhoneNumberInformation.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @phone_numbers
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@next_token, @phone_numbers)
   end
 end

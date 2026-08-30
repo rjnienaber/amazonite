@@ -122,5 +122,22 @@ module Amazonite::CloudFormationV1
         managed_execution: node.xpath_node("*[local-name()='ManagedExecution']").try { |n| ManagedExecution.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @auto_deployment
+        value.validate!
+      end
+
+      if value = @managed_execution
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@stack_set_name, @stack_set_id, @description, @status, @auto_deployment, @permission_model, @drift_status, @last_drift_check_timestamp, @managed_execution)
   end
 end

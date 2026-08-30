@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class GetMetricDataOutput
     include JSON::Serializable
@@ -26,5 +28,17 @@ module Amazonite::CloudWatchV1
       @messages : Array(MessageData) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @metric_data_results
+        value.each(&.validate!)
+      end
+
+      if value = @messages
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@metric_data_results, @next_token, @messages)
   end
 end

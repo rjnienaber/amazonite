@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # An attribute of an attachment, such as the attachment name.
   class AttachmentInformation
@@ -11,5 +13,13 @@ module Amazonite::SsmV1
       @name : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+    end
+
+    def_equals_and_hash(@name)
   end
 end

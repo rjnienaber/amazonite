@@ -21,5 +21,10 @@ module Amazonite::ApiGatewayV1
       @body : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@content_type, @content_disposition, @body)
   end
 end

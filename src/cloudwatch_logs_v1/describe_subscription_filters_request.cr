@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class DescribeSubscriptionFiltersRequest
     include JSON::Serializable
@@ -26,5 +28,30 @@ module Amazonite::CloudWatchLogsV1
       @limit : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @log_group_name
+        raise Core::ValidationError.new("logGroupName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("logGroupName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+
+      if value = @filter_name_prefix
+        raise Core::ValidationError.new("filterNamePrefix length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("filterNamePrefix length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("filterNamePrefix does not match the required pattern") unless value.matches?(Regex.new("^[^:*]*$"))
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("limit value must be <= 50") if value > 50
+      end
+    end
+
+    def_equals_and_hash(@log_group_name, @filter_name_prefix, @next_token, @limit)
   end
 end

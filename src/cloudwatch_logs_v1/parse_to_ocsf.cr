@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # This processor converts logs into [Open Cybersecurity Schema Framework (OCSF)](https://ocsf.io)
@@ -35,5 +36,20 @@ module Amazonite::CloudWatchLogsV1
       @mapping_version : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @source
+        raise Core::ValidationError.new("source length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("source length must be <= 128") if value.size > 128
+      end
+
+      if value = @mapping_version
+        raise Core::ValidationError.new("mappingVersion length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("mappingVersion length must be <= 10") if value.size > 10
+        raise Core::ValidationError.new("mappingVersion does not match the required pattern") unless value.matches?(Regex.new("^\\d+\\.\\d+(\\.\\d+)?$"))
+      end
+    end
+
+    def_equals_and_hash(@source, @event_source, @ocsf_version, @mapping_version)
   end
 end

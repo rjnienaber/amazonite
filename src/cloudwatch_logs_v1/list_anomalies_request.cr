@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class ListAnomaliesRequest
@@ -29,5 +30,23 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @anomaly_detector_arn
+        raise Core::ValidationError.new("anomalyDetectorArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("anomalyDetectorArn does not match the required pattern") unless value.matches?(Regex.new("^[\\w#+=/:,.@-]*$"))
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("limit value must be <= 50") if value > 50
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
+    end
+
+    def_equals_and_hash(@anomaly_detector_arn, @suppression_state, @limit, @next_token)
   end
 end

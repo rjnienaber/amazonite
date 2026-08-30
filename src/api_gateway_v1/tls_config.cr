@@ -20,5 +20,10 @@ module Amazonite::ApiGatewayV1
       @insecure_skip_verification : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@insecure_skip_verification)
   end
 end

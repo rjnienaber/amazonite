@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the input of a `Scan` operation.
@@ -254,5 +255,50 @@ module Amazonite::DynamoDBV2
       @consistent_read : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @index_name
+        raise Core::ValidationError.new("IndexName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("IndexName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("IndexName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @attributes_to_get
+        raise Core::ValidationError.new("AttributesToGet must have at least 1 item(s)") if value.size < 1
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("Limit value must be >= 1") if value < 1
+      end
+
+      if value = @scan_filter
+        value.each_value(&.validate!)
+      end
+
+      if value = @exclusive_start_key
+        value.each_value(&.validate!)
+      end
+
+      if value = @total_segments
+        raise Core::ValidationError.new("TotalSegments value must be >= 1") if value < 1
+        raise Core::ValidationError.new("TotalSegments value must be <= 1000000") if value > 1000000
+      end
+
+      if value = @segment
+        raise Core::ValidationError.new("Segment value must be >= 0") if value < 0
+        raise Core::ValidationError.new("Segment value must be <= 999999") if value > 999999
+      end
+
+      if value = @expression_attribute_values
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@table_name, @index_name, @attributes_to_get, @limit, @select, @scan_filter, @conditional_operator, @exclusive_start_key, @return_consumed_capacity, @total_segments, @segment, @projection_expression, @filter_expression, @expression_attribute_names, @expression_attribute_values, @consistent_read)
   end
 end

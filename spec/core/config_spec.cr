@@ -209,6 +209,49 @@ describe Config do
     end
   end
 
+  describe "timeouts" do
+    it "defaults to nil for every timeout" do
+      config = Config.new(key, secret, region)
+      config.dns_timeout.should be_nil
+      config.connect_timeout.should be_nil
+      config.read_timeout.should be_nil
+      config.write_timeout.should be_nil
+    end
+
+    it "accepts Time::Span values" do
+      config = Config.new(
+        key, secret, region,
+        dns_timeout: 1.5.seconds, connect_timeout: 2.seconds,
+        read_timeout: 3.seconds, write_timeout: 4.seconds,
+      )
+      config.dns_timeout.should eq(1.5.seconds)
+      config.connect_timeout.should eq(2.seconds)
+      config.read_timeout.should eq(3.seconds)
+      config.write_timeout.should eq(4.seconds)
+    end
+
+    it "accepts Number values and converts them to seconds" do
+      config = Config.new(
+        key, secret, region,
+        dns_timeout: 1, connect_timeout: 2, read_timeout: 3, write_timeout: 4,
+      )
+      config.dns_timeout.should eq(1.seconds)
+      config.connect_timeout.should eq(2.seconds)
+      config.read_timeout.should eq(3.seconds)
+      config.write_timeout.should eq(4.seconds)
+    end
+  end
+
+  describe "#validate_input?" do
+    it "defaults to true" do
+      Config.new(key, secret, region).validate_input?.should be_true
+    end
+
+    it "can be disabled from the constructor" do
+      Config.new(key, secret, region, validate_input: false).validate_input?.should be_false
+    end
+  end
+
   describe "#user_agent" do
     it "uses default user agent" do
       config = MockConfig.new(key, secret, region)

@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # A PartiQL batch statement request.
@@ -33,5 +34,19 @@ module Amazonite::DynamoDBV2
       @return_values_on_condition_check_failure : ReturnValuesOnConditionCheckFailure | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @statement
+        raise Core::ValidationError.new("Statement length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Statement length must be <= 8192") if value.size > 8192
+      end
+
+      if value = @parameters
+        raise Core::ValidationError.new("Parameters must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@statement, @parameters, @consistent_read, @return_values_on_condition_check_failure)
   end
 end

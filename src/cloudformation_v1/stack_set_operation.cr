@@ -192,5 +192,42 @@ module Amazonite::CloudFormationV1
         status_details: node.xpath_node("*[local-name()='StatusDetails']").try { |n| StackSetOperationStatusDetails.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @operation_id
+        raise Core::ValidationError.new("OperationId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OperationId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("OperationId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+
+      if value = @operation_preferences
+        value.validate!
+      end
+
+      if value = @administration_role_arn
+        raise Core::ValidationError.new("AdministrationRoleARN length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("AdministrationRoleARN length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @execution_role_name
+        raise Core::ValidationError.new("ExecutionRoleName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ExecutionRoleName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("ExecutionRoleName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z_0-9+=,.@-]+$"))
+      end
+
+      if value = @deployment_targets
+        value.validate!
+      end
+
+      if value = @stack_set_drift_detection_details
+        value.validate!
+      end
+
+      if value = @status_details
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@operation_id, @stack_set_id, @action, @status, @operation_preferences, @retain_stacks, @administration_role_arn, @execution_role_name, @creation_timestamp, @end_timestamp, @deployment_targets, @stack_set_drift_detection_details, @status_reason, @status_details)
   end
 end

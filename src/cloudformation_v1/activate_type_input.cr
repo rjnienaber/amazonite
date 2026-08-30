@@ -136,5 +136,48 @@ module Amazonite::CloudFormationV1
         major_version: Core::XMLValue.i64(node.xpath_node("*[local-name()='MajorVersion']")),
       )
     end
+
+    def validate! : Nil
+      if value = @public_type_arn
+        raise Core::ValidationError.new("PublicTypeArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("PublicTypeArn length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("PublicTypeArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[A-Za-z0-9-]{0,64}:cloudformation:[A-Za-z0-9-]{1,64}::type/.+/[0-9a-zA-Z]{12,40}/.+$"))
+      end
+
+      if value = @publisher_id
+        raise Core::ValidationError.new("PublisherId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PublisherId length must be <= 40") if value.size > 40
+        raise Core::ValidationError.new("PublisherId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-zA-Z]{12,40}$"))
+      end
+
+      if value = @type_name
+        raise Core::ValidationError.new("TypeName length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("TypeName length must be <= 204") if value.size > 204
+        raise Core::ValidationError.new("TypeName does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}(::MODULE){0,1}$"))
+      end
+
+      if value = @type_name_alias
+        raise Core::ValidationError.new("TypeNameAlias length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("TypeNameAlias length must be <= 204") if value.size > 204
+        raise Core::ValidationError.new("TypeNameAlias does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}(::MODULE){0,1}$"))
+      end
+
+      if value = @logging_config
+        value.validate!
+      end
+
+      if value = @execution_role_arn
+        raise Core::ValidationError.new("ExecutionRoleArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ExecutionRoleArn length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("ExecutionRoleArn does not match the required pattern") unless value.matches?(Regex.new("^arn:.+:iam::[0-9]{12}:role/.+$"))
+      end
+
+      if value = @major_version
+        raise Core::ValidationError.new("MajorVersion value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MajorVersion value must be <= 100000") if value > 100000
+      end
+    end
+
+    def_equals_and_hash(@type, @public_type_arn, @publisher_id, @type_name, @type_name_alias, @auto_update, @logging_config, @execution_role_arn, @version_bump, @major_version)
   end
 end

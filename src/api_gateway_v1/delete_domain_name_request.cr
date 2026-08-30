@@ -16,5 +16,10 @@ module Amazonite::ApiGatewayV1
       @domain_name_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@domain_name, @domain_name_id)
   end
 end

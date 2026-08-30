@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This structure contains complete information about one CloudWatch Logs integration. This
   # structure is returned by a
@@ -86,5 +88,41 @@ module Amazonite::CloudWatchLogsV1
       @lifecycle_policy : OpenSearchLifecyclePolicy | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @data_source
+        value.validate!
+      end
+
+      if value = @application
+        value.validate!
+      end
+
+      if value = @collection
+        value.validate!
+      end
+
+      if value = @workspace
+        value.validate!
+      end
+
+      if value = @encryption_policy
+        value.validate!
+      end
+
+      if value = @network_policy
+        value.validate!
+      end
+
+      if value = @access_policy
+        value.validate!
+      end
+
+      if value = @lifecycle_policy
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@data_source, @application, @collection, @workspace, @encryption_policy, @network_policy, @access_policy, @lifecycle_policy)
   end
 end

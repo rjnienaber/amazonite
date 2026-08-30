@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class StartSessionRequest
     include JSON::Serializable
@@ -35,5 +37,24 @@ module Amazonite::SsmV1
       @parameters : Hash(String, Array(String)) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @target
+        raise Core::ValidationError.new("Target length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Target length must be <= 400") if value.size > 400
+      end
+
+      if value = @document_name
+        raise Core::ValidationError.new("DocumentName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.:/]{3,128}$"))
+      end
+
+      if value = @reason
+        raise Core::ValidationError.new("Reason length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Reason length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("Reason does not match the required pattern") unless value.matches?(Regex.new("^.{1,256}$"))
+      end
+    end
+
+    def_equals_and_hash(@target, @document_name, @reason, @parameters)
   end
 end

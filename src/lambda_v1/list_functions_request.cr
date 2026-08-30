@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   class ListFunctionsRequest
@@ -32,5 +33,20 @@ module Amazonite::LambdaV1
       @max_items : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @master_region
+        raise Core::ValidationError.new("MasterRegion length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MasterRegion length must be <= 50") if value.size > 50
+        raise Core::ValidationError.new("MasterRegion does not match the required pattern") unless value.matches?(Regex.new("^ALL|(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}$"))
+      end
+
+      if value = @max_items
+        raise Core::ValidationError.new("MaxItems value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxItems value must be <= 10000") if value > 10000
+      end
+    end
+
+    def_equals_and_hash(@master_region, @function_version, @marker, @max_items)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This object defines one key that will be renamed with the [
   # renameKey](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-renameKey)
@@ -24,5 +26,19 @@ module Amazonite::CloudWatchLogsV1
       @overwrite_if_exists : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key
+        raise Core::ValidationError.new("key length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("key length must be <= 128") if value.size > 128
+      end
+
+      if value = @rename_to
+        raise Core::ValidationError.new("renameTo length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("renameTo length must be <= 128") if value.size > 128
+      end
+    end
+
+    def_equals_and_hash(@key, @rename_to, @overwrite_if_exists)
   end
 end

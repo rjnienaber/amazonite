@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class PutEventsRequest
     include JSON::Serializable
@@ -19,5 +21,21 @@ module Amazonite::EventBridgeV1
       @endpoint_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @entries
+        raise Core::ValidationError.new("Entries must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Entries must have at most 10 item(s)") if value.size > 10
+        value.each(&.validate!)
+      end
+
+      if value = @endpoint_id
+        raise Core::ValidationError.new("EndpointId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EndpointId length must be <= 50") if value.size > 50
+        raise Core::ValidationError.new("EndpointId does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9\\-]+[\\.][A-Za-z0-9\\-]+$"))
+      end
+    end
+
+    def_equals_and_hash(@entries, @endpoint_id)
   end
 end

@@ -19,5 +19,10 @@ module Amazonite::DynamoDBV2
       @region_name : String,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@region_name)
   end
 end

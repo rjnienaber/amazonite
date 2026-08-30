@@ -10,5 +10,10 @@ module Amazonite::CloudWatchV1
       @dashboard_name : String,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@dashboard_name)
   end
 end

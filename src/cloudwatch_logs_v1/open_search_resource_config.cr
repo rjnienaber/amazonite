@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This structure contains configuration details about an integration between CloudWatch Logs and
   # OpenSearch Service.
@@ -46,5 +48,14 @@ module Amazonite::CloudWatchLogsV1
       @application_arn : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @retention_days
+        raise Core::ValidationError.new("retentionDays value must be >= 1") if value < 1
+        raise Core::ValidationError.new("retentionDays value must be <= 30") if value > 30
+      end
+    end
+
+    def_equals_and_hash(@kms_key_arn, @data_source_role_arn, @dashboard_viewer_principals, @application_arn, @retention_days)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class PutEventsResponse
     include JSON::Serializable
@@ -20,5 +22,13 @@ module Amazonite::EventBridgeV1
       @entries : Array(PutEventsResultEntry) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @entries
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@failed_entry_count, @entries)
   end
 end

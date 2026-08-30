@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # Information about the target S3 bucket for the resource data sync.
@@ -39,5 +40,34 @@ module Amazonite::SsmV1
       @destination_data_sharing : ResourceDataSyncDestinationDataSharing | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @bucket_name
+        raise Core::ValidationError.new("BucketName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("BucketName length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @prefix
+        raise Core::ValidationError.new("Prefix length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Prefix length must be <= 256") if value.size > 256
+      end
+
+      if value = @region
+        raise Core::ValidationError.new("Region length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Region length must be <= 64") if value.size > 64
+      end
+
+      if value = @awskms_key_arn
+        raise Core::ValidationError.new("AWSKMSKeyARN length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AWSKMSKeyARN length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("AWSKMSKeyARN does not match the required pattern") unless value.matches?(Regex.new("^arn:"))
+      end
+
+      if value = @destination_data_sharing
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@bucket_name, @prefix, @sync_format, @region, @awskms_key_arn, @destination_data_sharing)
   end
 end

@@ -32,5 +32,10 @@ module Amazonite::IamV1
         allowed_by_permissions_boundary: Core::XMLValue.bool(node.xpath_node("*[local-name()='AllowedByPermissionsBoundary']")),
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@allowed_by_permissions_boundary)
   end
 end

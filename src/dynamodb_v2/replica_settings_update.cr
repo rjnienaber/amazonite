@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the settings for a global table in a Region that will be modified.
@@ -36,5 +37,23 @@ module Amazonite::DynamoDBV2
       @replica_table_class : TableClass | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @replica_provisioned_read_capacity_units
+        raise Core::ValidationError.new("ReplicaProvisionedReadCapacityUnits value must be >= 1") if value < 1
+      end
+
+      if value = @replica_provisioned_read_capacity_auto_scaling_settings_update
+        value.validate!
+      end
+
+      if value = @replica_global_secondary_index_settings_update
+        raise Core::ValidationError.new("ReplicaGlobalSecondaryIndexSettingsUpdate must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("ReplicaGlobalSecondaryIndexSettingsUpdate must have at most 20 item(s)") if value.size > 20
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@region_name, @replica_provisioned_read_capacity_units, @replica_provisioned_read_capacity_auto_scaling_settings_update, @replica_global_secondary_index_settings_update, @replica_table_class)
   end
 end

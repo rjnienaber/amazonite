@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Represents an update integration request.
   class UpdateIntegrationRequest
@@ -27,5 +29,13 @@ module Amazonite::ApiGatewayV1
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @patch_operations
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@rest_api_id, @resource_id, @http_method, @patch_operations)
   end
 end

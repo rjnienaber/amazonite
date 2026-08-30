@@ -23,5 +23,10 @@ module Amazonite::CloudWatchV1
       @approximate_value : Float64,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@timestamp, @approximate_value)
   end
 end

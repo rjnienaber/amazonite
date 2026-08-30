@@ -56,5 +56,26 @@ module Amazonite::CloudFormationV1
         type_version_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='TypeVersionArn']")),
       )
     end
+
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @type_arn
+        raise Core::ValidationError.new("TypeArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("TypeArn length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("TypeArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[A-Za-z0-9-]{0,64}:cloudformation:[A-Za-z0-9-]{1,64}:([0-9]{12})?:type/.+$"))
+      end
+
+      if value = @type_version_arn
+        raise Core::ValidationError.new("TypeVersionArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("TypeVersionArn length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("TypeVersionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[A-Za-z0-9-]{0,64}:cloudformation:[A-Za-z0-9-]{1,64}:([0-9]{12})?:type/.+$"))
+      end
+    end
+
+    def_equals_and_hash(@progress_status, @description, @type_arn, @type_version_arn)
   end
 end

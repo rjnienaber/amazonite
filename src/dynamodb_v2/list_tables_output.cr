@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the output of a `ListTables` operation.
   class ListTablesOutput
@@ -26,5 +28,15 @@ module Amazonite::DynamoDBV2
       @last_evaluated_table_name : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @last_evaluated_table_name
+        raise Core::ValidationError.new("LastEvaluatedTableName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("LastEvaluatedTableName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("LastEvaluatedTableName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+    end
+
+    def_equals_and_hash(@table_names, @last_evaluated_table_name)
   end
 end

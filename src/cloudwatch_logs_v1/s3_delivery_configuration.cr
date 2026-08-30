@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This structure contains delivery configurations that apply only when the delivery destination
   # resource is an S3 bucket.
@@ -22,5 +24,14 @@ module Amazonite::CloudWatchLogsV1
       @enable_hive_compatible_path : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @suffix_path
+        raise Core::ValidationError.new("suffixPath length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("suffixPath length must be <= 256") if value.size > 256
+      end
+    end
+
+    def_equals_and_hash(@suffix_path, @enable_hive_compatible_path)
   end
 end

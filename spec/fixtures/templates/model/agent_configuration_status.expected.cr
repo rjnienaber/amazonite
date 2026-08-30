@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApplicationDiscoveryServiceV2
   # Information about agents that were instructed to start collecting data. Information includes the
   # agent ID, a description of the operation, and whether the agent configuration was updated.
@@ -24,5 +26,21 @@ module Amazonite::ApplicationDiscoveryServiceV2
       @description : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @agent_id
+        raise Core::ValidationError.new("agentId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("agentId length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("agentId does not match the required pattern") unless value.matches?(Regex.new("^[\\s\\S]*$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("description length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("description does not match the required pattern") unless value.matches?(Regex.new("^[\\s\\S]*$"))
+      end
+    end
+
+    def_equals_and_hash(@agent_id, @operation_succeeded, @description)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SecretsManagerV1
   class ListSecretsResponse
     include JSON::Serializable
@@ -18,5 +20,18 @@ module Amazonite::SecretsManagerV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @secret_list
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 4096") if value.size > 4096
+      end
+    end
+
+    def_equals_and_hash(@secret_list, @next_token)
   end
 end

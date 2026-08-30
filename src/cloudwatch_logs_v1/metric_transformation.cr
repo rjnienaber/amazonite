@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # Indicates how to transform ingested log events to metric data in a CloudWatch metric.
@@ -55,5 +56,26 @@ module Amazonite::CloudWatchLogsV1
       @unit : StandardUnit | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @metric_name
+        raise Core::ValidationError.new("metricName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("metricName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("metricName does not match the required pattern") unless value.matches?(Regex.new("^[^:*$]*$"))
+      end
+
+      if value = @metric_namespace
+        raise Core::ValidationError.new("metricNamespace length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("metricNamespace length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("metricNamespace does not match the required pattern") unless value.matches?(Regex.new("^[^:*$]*$"))
+      end
+
+      if value = @metric_value
+        raise Core::ValidationError.new("metricValue length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("metricValue length must be <= 100") if value.size > 100
+      end
+    end
+
+    def_equals_and_hash(@metric_name, @metric_namespace, @metric_value, @default_value, @dimensions, @unit)
   end
 end

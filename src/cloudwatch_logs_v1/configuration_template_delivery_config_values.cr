@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This structure contains the default values that are used for each configuration parameter when
   # you use
@@ -31,5 +33,23 @@ module Amazonite::CloudWatchLogsV1
       @s3_delivery_configuration : S3DeliveryConfiguration | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @record_fields
+        raise Core::ValidationError.new("recordFields must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("recordFields must have at most 128 item(s)") if value.size > 128
+      end
+
+      if value = @field_delimiter
+        raise Core::ValidationError.new("fieldDelimiter length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("fieldDelimiter length must be <= 5") if value.size > 5
+      end
+
+      if value = @s3_delivery_configuration
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@record_fields, @field_delimiter, @s3_delivery_configuration)
   end
 end

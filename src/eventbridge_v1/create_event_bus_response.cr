@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class CreateEventBusResponse
     include JSON::Serializable
@@ -37,5 +39,28 @@ module Amazonite::EventBridgeV1
       @log_config : LogConfig | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 512") if value.size > 512
+      end
+
+      if value = @kms_key_identifier
+        raise Core::ValidationError.new("KmsKeyIdentifier length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KmsKeyIdentifier length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("KmsKeyIdentifier does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-/:]*$"))
+      end
+
+      if value = @dead_letter_config
+        value.validate!
+      end
+
+      if value = @log_config
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@event_bus_arn, @description, @kms_key_identifier, @dead_letter_config, @log_config)
   end
 end

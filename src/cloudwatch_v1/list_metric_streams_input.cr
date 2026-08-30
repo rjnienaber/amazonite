@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class ListMetricStreamsInput
     include JSON::Serializable
@@ -16,5 +18,14 @@ module Amazonite::CloudWatchV1
       @max_results : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 500") if value > 500
+      end
+    end
+
+    def_equals_and_hash(@next_token, @max_results)
   end
 end

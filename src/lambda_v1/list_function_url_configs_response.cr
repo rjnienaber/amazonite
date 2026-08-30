@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class ListFunctionUrlConfigsResponse
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::LambdaV1
       @next_marker : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @function_url_configs
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@function_url_configs, @next_marker)
   end
 end

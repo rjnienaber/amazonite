@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This structure contains information about the OpenSearch Service data source used for this
   # integration. This data source was created as part of the integration setup. An OpenSearch
@@ -23,5 +25,19 @@ module Amazonite::CloudWatchLogsV1
       @status : OpenSearchResourceStatus | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @data_source_name
+        raise Core::ValidationError.new("dataSourceName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("dataSourceName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("dataSourceName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+
+      if value = @status
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@data_source_name, @status)
   end
 end

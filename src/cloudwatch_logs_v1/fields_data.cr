@@ -15,5 +15,10 @@ module Amazonite::CloudWatchLogsV1
       @data : Bytes | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@data)
   end
 end

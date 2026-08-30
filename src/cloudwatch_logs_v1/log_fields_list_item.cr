@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Represents a log field with its name and data type information for a specific data source.
   class LogFieldsListItem
@@ -16,5 +18,18 @@ module Amazonite::CloudWatchLogsV1
       @log_field_type : LogFieldType | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @log_field_name
+        raise Core::ValidationError.new("logFieldName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logFieldName length must be <= 256") if value.size > 256
+      end
+
+      if value = @log_field_type
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@log_field_name, @log_field_type)
   end
 end

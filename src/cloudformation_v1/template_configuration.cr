@@ -50,5 +50,10 @@ module Amazonite::CloudFormationV1
         update_replace_policy: (n = node.xpath_node("*[local-name()='UpdateReplacePolicy']")) ? ACF::GeneratedTemplateUpdateReplacePolicy.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@deletion_policy, @update_replace_policy)
   end
 end

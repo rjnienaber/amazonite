@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudFormationV1
   class DescribeStackSetOperationOutput
     # The specified StackSet operation.
@@ -22,5 +24,13 @@ module Amazonite::CloudFormationV1
         stack_set_operation: node.xpath_node("*[local-name()='StackSetOperation']").try { |n| StackSetOperation.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @stack_set_operation
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@stack_set_operation)
   end
 end

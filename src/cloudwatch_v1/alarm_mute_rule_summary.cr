@@ -37,5 +37,14 @@ module Amazonite::CloudWatchV1
       @last_updated_timestamp : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @alarm_mute_rule_arn
+        raise Core::ValidationError.new("AlarmMuteRuleArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmMuteRuleArn length must be <= 1600") if value.size > 1600
+      end
+    end
+
+    def_equals_and_hash(@alarm_mute_rule_arn, @expire_date, @status, @mute_type, @last_updated_timestamp)
   end
 end

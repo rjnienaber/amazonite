@@ -29,5 +29,19 @@ module Amazonite::KmsV1
       @ciphertext_for_recipient : Bytes | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @plaintext
+        raise Core::ValidationError.new("Plaintext length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Plaintext length must be <= 4096") if value.size > 4096
+      end
+
+      if value = @ciphertext_for_recipient
+        raise Core::ValidationError.new("CiphertextForRecipient length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CiphertextForRecipient length must be <= 6144") if value.size > 6144
+      end
+    end
+
+    def_equals_and_hash(@plaintext, @ciphertext_for_recipient)
   end
 end

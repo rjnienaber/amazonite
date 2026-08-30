@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class ListLayerVersionsResponse
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::LambdaV1
       @layer_versions : Array(LayerVersionsListItem) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @layer_versions
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@next_marker, @layer_versions)
   end
 end

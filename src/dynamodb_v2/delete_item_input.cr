@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the input of a `DeleteItem` operation.
@@ -156,5 +157,26 @@ module Amazonite::DynamoDBV2
       @return_values_on_condition_check_failure : ReturnValuesOnConditionCheckFailure | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @key
+        value.each_value(&.validate!)
+      end
+
+      if value = @expected
+        value.each_value(&.validate!)
+      end
+
+      if value = @expression_attribute_values
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@table_name, @key, @expected, @conditional_operator, @return_values, @return_consumed_capacity, @return_item_collection_metrics, @condition_expression, @expression_attribute_names, @expression_attribute_values, @return_values_on_condition_check_failure)
   end
 end

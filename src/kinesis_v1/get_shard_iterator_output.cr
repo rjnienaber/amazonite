@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   # Represents the output for `GetShardIterator`.
   class GetShardIteratorOutput
@@ -12,5 +14,14 @@ module Amazonite::KinesisV1
       @shard_iterator : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @shard_iterator
+        raise Core::ValidationError.new("ShardIterator length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ShardIterator length must be <= 512") if value.size > 512
+      end
+    end
+
+    def_equals_and_hash(@shard_iterator)
   end
 end

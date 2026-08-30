@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Information about the patches to use to update the managed nodes, including target operating
   # systems and source repository. Applies to Linux managed nodes only.
@@ -49,5 +51,23 @@ module Amazonite::SsmV1
       @configuration : String,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,50}$"))
+      end
+
+      if value = @products
+        raise Core::ValidationError.new("Products must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Products must have at most 20 item(s)") if value.size > 20
+      end
+
+      if value = @configuration
+        raise Core::ValidationError.new("Configuration length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Configuration length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@name, @products, @configuration)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class SendCommandResult
     include JSON::Serializable
@@ -11,5 +13,13 @@ module Amazonite::SsmV1
       @command : Command | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @command
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@command)
   end
 end

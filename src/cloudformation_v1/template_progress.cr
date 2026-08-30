@@ -52,5 +52,25 @@ module Amazonite::CloudFormationV1
         resources_pending: Core::XMLValue.i32(node.xpath_node("*[local-name()='ResourcesPending']")),
       )
     end
+
+    def validate! : Nil
+      if value = @resources_succeeded
+        raise Core::ValidationError.new("ResourcesSucceeded value must be >= 0") if value < 0
+      end
+
+      if value = @resources_failed
+        raise Core::ValidationError.new("ResourcesFailed value must be >= 0") if value < 0
+      end
+
+      if value = @resources_processing
+        raise Core::ValidationError.new("ResourcesProcessing value must be >= 0") if value < 0
+      end
+
+      if value = @resources_pending
+        raise Core::ValidationError.new("ResourcesPending value must be >= 0") if value < 0
+      end
+    end
+
+    def_equals_and_hash(@resources_succeeded, @resources_failed, @resources_processing, @resources_pending)
   end
 end

@@ -26,5 +26,10 @@ module Amazonite::ApiGatewayV1
       @name : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@id, @type, @value, @name)
   end
 end

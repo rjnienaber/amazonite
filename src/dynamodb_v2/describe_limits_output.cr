@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the output of a `DescribeLimits` operation.
   class DescribeLimitsOutput
@@ -32,5 +34,25 @@ module Amazonite::DynamoDBV2
       @table_max_write_capacity_units : Int64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @account_max_read_capacity_units
+        raise Core::ValidationError.new("AccountMaxReadCapacityUnits value must be >= 1") if value < 1
+      end
+
+      if value = @account_max_write_capacity_units
+        raise Core::ValidationError.new("AccountMaxWriteCapacityUnits value must be >= 1") if value < 1
+      end
+
+      if value = @table_max_read_capacity_units
+        raise Core::ValidationError.new("TableMaxReadCapacityUnits value must be >= 1") if value < 1
+      end
+
+      if value = @table_max_write_capacity_units
+        raise Core::ValidationError.new("TableMaxWriteCapacityUnits value must be >= 1") if value < 1
+      end
+    end
+
+    def_equals_and_hash(@account_max_read_capacity_units, @account_max_write_capacity_units, @table_max_read_capacity_units, @table_max_write_capacity_units)
   end
 end

@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # This structure contains information about the status of an OpenSearch Service resource.
@@ -18,5 +19,13 @@ module Amazonite::CloudWatchLogsV1
       @status_message : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @status_message
+        raise Core::ValidationError.new("statusMessage length must be >= 1") if value.size < 1
+      end
+    end
+
+    def_equals_and_hash(@status, @status_message)
   end
 end

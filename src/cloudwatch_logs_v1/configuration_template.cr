@@ -91,5 +91,47 @@ module Amazonite::CloudWatchLogsV1
       @s3_tables_integration : S3TablesIntegration | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @service
+        raise Core::ValidationError.new("service length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("service length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("service does not match the required pattern") unless value.matches?(Regex.new("^[\\w_-]*$"))
+      end
+
+      if value = @log_type
+        raise Core::ValidationError.new("logType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logType length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("logType does not match the required pattern") unless value.matches?(Regex.new("^[\\w]*$"))
+      end
+
+      if value = @resource_type
+        raise Core::ValidationError.new("resourceType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("resourceType length must be <= 255") if value.size > 255
+      end
+
+      if value = @default_delivery_config_values
+        value.validate!
+      end
+
+      if value = @allowed_fields
+        value.each(&.validate!)
+      end
+
+      if value = @allowed_suffix_path_fields
+        raise Core::ValidationError.new("allowedSuffixPathFields must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("allowedSuffixPathFields must have at most 128 item(s)") if value.size > 128
+      end
+
+      if value = @delivery_source_configuration
+        value.each(&.validate!)
+      end
+
+      if value = @s3_tables_integration
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@service, @log_type, @resource_type, @delivery_destination_type, @default_delivery_config_values, @allowed_fields, @allowed_output_formats, @allowed_action_for_allow_vended_logs_delivery_for_resource, @allowed_field_delimiters, @allowed_suffix_path_fields, @delivery_source_configuration, @s3_tables_integration)
   end
 end

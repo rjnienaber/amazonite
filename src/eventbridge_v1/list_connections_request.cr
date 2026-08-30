@@ -1,4 +1,5 @@
 private alias AEB = Amazonite::EventBridgeV1
+private alias Core = Amazonite::Core
 
 module Amazonite::EventBridgeV1
   class ListConnectionsRequest
@@ -33,5 +34,25 @@ module Amazonite::EventBridgeV1
       @limit : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name_prefix
+        raise Core::ValidationError.new("NamePrefix length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NamePrefix length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("NamePrefix does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("Limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Limit value must be <= 100") if value > 100
+      end
+    end
+
+    def_equals_and_hash(@name_prefix, @connection_state, @next_token, @limit)
   end
 end

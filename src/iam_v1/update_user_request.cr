@@ -55,5 +55,27 @@ module Amazonite::IamV1
         new_user_name: Core::XMLValue.string(node.xpath_node("*[local-name()='NewUserName']")),
       )
     end
+
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @new_path
+        raise Core::ValidationError.new("NewPath length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NewPath length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("NewPath does not match the required pattern") unless value.matches?(Regex.new("^(/)|(/[!-~]+/)$"))
+      end
+
+      if value = @new_user_name
+        raise Core::ValidationError.new("NewUserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NewUserName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("NewUserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+    end
+
+    def_equals_and_hash(@user_name, @new_path, @new_user_name)
   end
 end

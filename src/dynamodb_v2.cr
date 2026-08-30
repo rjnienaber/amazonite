@@ -5,6 +5,6 @@ require "./core/*"
 require "./dynamodb_v2/*"
 
 module Amazonite::DynamoDBV2
-  VERSION     = "db9aecc"
+  VERSION     = "66407b31"
   API_VERSION = "2012-08-10"
 end

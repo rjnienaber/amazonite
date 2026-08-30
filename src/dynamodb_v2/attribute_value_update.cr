@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # For the `UpdateItem` operation, represents the attributes to be modified, the action to perform
@@ -88,5 +89,13 @@ module Amazonite::DynamoDBV2
       @action : AttributeAction | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @value
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@value, @action)
   end
 end

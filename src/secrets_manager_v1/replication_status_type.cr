@@ -36,5 +36,25 @@ module Amazonite::SecretsManagerV1
       @last_accessed_date : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @region
+        raise Core::ValidationError.new("Region length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Region length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Region does not match the required pattern") unless value.matches?(Regex.new("^([a-z]+-)+\\d+$"))
+      end
+
+      if value = @kms_key_id
+        raise Core::ValidationError.new("KmsKeyId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KmsKeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @status_message
+        raise Core::ValidationError.new("StatusMessage length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StatusMessage length must be <= 4096") if value.size > 4096
+      end
+    end
+
+    def_equals_and_hash(@region, @kms_key_id, @status, @status_message, @last_accessed_date)
   end
 end

@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # An object that defines the value of the key and its type in the OperationalData map.
@@ -18,5 +19,13 @@ module Amazonite::SsmV1
       @type : OpsItemDataType | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @value
+        raise Core::ValidationError.new("Value does not match the required pattern") unless value.matches?(Regex.new("^[\\s\\S]*\\S[\\s\\S]*$"))
+      end
+    end
+
+    def_equals_and_hash(@value, @type)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # The response from the GetLogObject operation.
   class GetLogObjectResponse
@@ -12,5 +14,13 @@ module Amazonite::CloudWatchLogsV1
       @field_stream : GetLogObjectResponseStream | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @field_stream
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@field_stream)
   end
 end

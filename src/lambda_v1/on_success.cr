@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # A destination for events that were processed successfully.
   #
@@ -25,5 +27,15 @@ module Amazonite::LambdaV1
       @destination : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @destination
+        raise Core::ValidationError.new("Destination length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Destination length must be <= 350") if value.size > 350
+        raise Core::ValidationError.new("Destination does not match the required pattern") unless value.matches?(Regex.new("^$|kafka://([^.]([a-zA-Z0-9\\-_.]{0,248}))|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)$"))
+      end
+    end
+
+    def_equals_and_hash(@destination)
   end
 end

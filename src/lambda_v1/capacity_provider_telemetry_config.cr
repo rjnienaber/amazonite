@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Configuration that specifies the telemetry collection for the capacity provider.
   class CapacityProviderTelemetryConfig
@@ -11,5 +13,13 @@ module Amazonite::LambdaV1
       @logging_config : CapacityProviderLoggingConfig | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @logging_config
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@logging_config)
   end
 end

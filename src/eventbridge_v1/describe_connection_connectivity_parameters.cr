@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # If the connection uses a private OAuth endpoint, the parameters for EventBridge to use when
   # authenticating against the endpoint.
@@ -16,5 +18,13 @@ module Amazonite::EventBridgeV1
       @resource_parameters : DescribeConnectionResourceParameters,
     )
     end
+
+    def validate! : Nil
+      if value = @resource_parameters
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@resource_parameters)
   end
 end

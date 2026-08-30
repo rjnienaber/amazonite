@@ -44,5 +44,21 @@ module Amazonite::IamV1
         group_id: Core::XMLValue.string(node.xpath_node("*[local-name()='GroupId']")),
       )
     end
+
+    def validate! : Nil
+      if value = @group_name
+        raise Core::ValidationError.new("GroupName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GroupName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("GroupName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @group_id
+        raise Core::ValidationError.new("GroupId length must be >= 16") if value.size < 16
+        raise Core::ValidationError.new("GroupId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("GroupId does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+    end
+
+    def_equals_and_hash(@group_name, @group_id)
   end
 end

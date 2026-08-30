@@ -45,5 +45,14 @@ module Amazonite::CloudFormationV1
         scan_type_filter: (n = node.xpath_node("*[local-name()='ScanTypeFilter']")) ? ACF::ScanType.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@next_token, @max_results, @scan_type_filter)
   end
 end

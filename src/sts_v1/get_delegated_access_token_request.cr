@@ -23,5 +23,10 @@ module Amazonite::StsV1
         trade_in_token: Core::XMLValue.string(node.xpath_node("*[local-name()='TradeInToken']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@trade_in_token)
   end
 end

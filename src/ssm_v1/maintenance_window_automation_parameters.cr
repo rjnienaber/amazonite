@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The parameters for an `AUTOMATION` task type.
   class MaintenanceWindowAutomationParameters
@@ -33,5 +35,18 @@ module Amazonite::SsmV1
       @parameters : Hash(String, Array(String)) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @parameters
+        raise Core::ValidationError.new("Parameters must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("Parameters must have at most 200 entry(s)") if value.size > 200
+      end
+    end
+
+    def_equals_and_hash(@document_version, @parameters)
   end
 end

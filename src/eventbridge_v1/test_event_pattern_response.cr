@@ -10,5 +10,10 @@ module Amazonite::EventBridgeV1
       @result : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@result)
   end
 end

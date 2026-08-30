@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class PutResourcePolicyRequest
     include JSON::Serializable
@@ -47,5 +49,18 @@ module Amazonite::CloudWatchLogsV1
       @expected_revision_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @policy_document
+        raise Core::ValidationError.new("policyDocument length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("policyDocument length must be <= 51200") if value.size > 51200
+      end
+
+      if value = @expected_revision_id
+        raise Core::ValidationError.new("expectedRevisionId length must be >= 1") if value.size < 1
+      end
+    end
+
+    def_equals_and_hash(@policy_name, @policy_document, @resource_arn, @expected_revision_id)
   end
 end

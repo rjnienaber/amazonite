@@ -49,5 +49,30 @@ module Amazonite::KmsV1
       @key_material_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @plaintext
+        raise Core::ValidationError.new("Plaintext length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Plaintext length must be <= 4096") if value.size > 4096
+      end
+
+      if value = @ciphertext_for_recipient
+        raise Core::ValidationError.new("CiphertextForRecipient length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CiphertextForRecipient length must be <= 6144") if value.size > 6144
+      end
+
+      if value = @key_material_id
+        raise Core::ValidationError.new("KeyMaterialId length must be >= 64") if value.size < 64
+        raise Core::ValidationError.new("KeyMaterialId length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("KeyMaterialId does not match the required pattern") unless value.matches?(Regex.new("^[a-f0-9]+$"))
+      end
+    end
+
+    def_equals_and_hash(@key_id, @plaintext, @encryption_algorithm, @ciphertext_for_recipient, @key_material_id)
   end
 end

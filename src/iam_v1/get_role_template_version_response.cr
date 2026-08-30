@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   class GetRoleTemplateVersionResponse
     # A structure that contains details about the requested role template version.
@@ -20,5 +22,13 @@ module Amazonite::IamV1
         role_template_version: node.xpath_node("*[local-name()='RoleTemplateVersion']").try { |n| RoleTemplateVersion.from_xml(n) }.not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @role_template_version
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@role_template_version)
   end
 end

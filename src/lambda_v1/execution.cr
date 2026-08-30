@@ -49,5 +49,33 @@ module Amazonite::LambdaV1
       @kms_key_arn : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @durable_execution_arn
+        raise Core::ValidationError.new("DurableExecutionArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DurableExecutionArn length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("DurableExecutionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:([a-zA-Z0-9-]+):lambda:([a-zA-Z0-9-]+):(\\d{12}):function:([a-zA-Z0-9_-]+):(\\$LATEST(?:\\.PUBLISHED)?|[0-9]+)/durable-execution/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$"))
+      end
+
+      if value = @durable_execution_name
+        raise Core::ValidationError.new("DurableExecutionName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DurableExecutionName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("DurableExecutionName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-_]+$"))
+      end
+
+      if value = @function_arn
+        raise Core::ValidationError.new("FunctionArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("FunctionArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("FunctionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @kms_key_arn
+        raise Core::ValidationError.new("KMSKeyArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KMSKeyArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("KMSKeyArn does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*)|()$"))
+      end
+    end
+
+    def_equals_and_hash(@durable_execution_arn, @durable_execution_name, @function_arn, @status, @start_timestamp, @end_timestamp, @kms_key_arn)
   end
 end

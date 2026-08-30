@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Configuration values that override the container image Dockerfile settings. For more
   # information, see [Container image
@@ -24,5 +26,24 @@ module Amazonite::LambdaV1
       @working_directory : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @entry_point
+        raise Core::ValidationError.new("EntryPoint must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("EntryPoint must have at most 1500 item(s)") if value.size > 1500
+      end
+
+      if value = @command
+        raise Core::ValidationError.new("Command must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Command must have at most 1500 item(s)") if value.size > 1500
+      end
+
+      if value = @working_directory
+        raise Core::ValidationError.new("WorkingDirectory length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("WorkingDirectory length must be <= 1000") if value.size > 1000
+      end
+    end
+
+    def_equals_and_hash(@entry_point, @command, @working_directory)
   end
 end

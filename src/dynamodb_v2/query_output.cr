@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the output of a `Query` operation.
   class QueryOutput
@@ -57,5 +59,17 @@ module Amazonite::DynamoDBV2
       @consumed_capacity : ConsumedCapacity | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @last_evaluated_key
+        value.each_value(&.validate!)
+      end
+
+      if value = @consumed_capacity
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@items, @count, @scanned_count, @last_evaluated_key, @consumed_capacity)
   end
 end

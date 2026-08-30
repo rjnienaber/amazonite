@@ -35,5 +35,13 @@ module Amazonite::SnsV1
         next_token: Core::XMLValue.string(node.xpath_node("*[local-name()='NextToken']")),
       )
     end
+
+    def validate! : Nil
+      if value = @topics
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@topics, @next_token)
   end
 end

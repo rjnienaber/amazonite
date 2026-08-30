@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Limits that are related to concurrency and storage. All file and storage sizes are in bytes.
   class AccountLimit
@@ -33,5 +35,13 @@ module Amazonite::LambdaV1
       @unreserved_concurrent_executions : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @unreserved_concurrent_executions
+        raise Core::ValidationError.new("UnreservedConcurrentExecutions value must be >= 0") if value < 0
+      end
+    end
+
+    def_equals_and_hash(@total_code_size, @code_size_unzipped, @code_size_zipped, @concurrent_executions, @unreserved_concurrent_executions)
   end
 end

@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   # Specific access configuration settings that tell Lambda how to authenticate with your schema
@@ -26,5 +27,15 @@ module Amazonite::LambdaV1
       @uri : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @uri
+        raise Core::ValidationError.new("URI length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("URI length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("URI does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)$"))
+      end
+    end
+
+    def_equals_and_hash(@type, @uri)
   end
 end

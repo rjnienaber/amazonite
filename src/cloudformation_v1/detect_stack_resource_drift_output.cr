@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudFormationV1
   class DetectStackResourceDriftOutput
     # Information about whether the resource's actual configuration has drifted from its expected
@@ -22,5 +24,13 @@ module Amazonite::CloudFormationV1
         stack_resource_drift: node.xpath_node("*[local-name()='StackResourceDrift']").try { |n| StackResourceDrift.from_xml(n) }.not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @stack_resource_drift
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@stack_resource_drift)
   end
 end

@@ -24,5 +24,10 @@ module Amazonite::SsmV1
       @approval_date : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@deployment_status, @compliance_level, @approval_date)
   end
 end

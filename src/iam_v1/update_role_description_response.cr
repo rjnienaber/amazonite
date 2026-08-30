@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   class UpdateRoleDescriptionResponse
     # A structure that contains details about the modified role.
@@ -22,5 +24,13 @@ module Amazonite::IamV1
         role: node.xpath_node("*[local-name()='Role']").try { |n| Role.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @role
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@role)
   end
 end

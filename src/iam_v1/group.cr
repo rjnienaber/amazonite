@@ -67,5 +67,32 @@ module Amazonite::IamV1
         create_date: Core::XMLValue.time(node.xpath_node("*[local-name()='CreateDate']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @path
+        raise Core::ValidationError.new("Path length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Path length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("Path does not match the required pattern") unless value.matches?(Regex.new("^(/)|(/[!-~]+/)$"))
+      end
+
+      if value = @group_name
+        raise Core::ValidationError.new("GroupName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GroupName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("GroupName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @group_id
+        raise Core::ValidationError.new("GroupId length must be >= 16") if value.size < 16
+        raise Core::ValidationError.new("GroupId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("GroupId does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("Arn length must be <= 2048") if value.size > 2048
+      end
+    end
+
+    def_equals_and_hash(@path, @group_name, @group_id, @arn, @create_date)
   end
 end

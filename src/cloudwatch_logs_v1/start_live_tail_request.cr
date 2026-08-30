@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class StartLiveTailRequest
     include JSON::Serializable
@@ -48,5 +50,29 @@ module Amazonite::CloudWatchLogsV1
       @log_event_filter_pattern : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @log_group_identifiers
+        raise Core::ValidationError.new("logGroupIdentifiers must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("logGroupIdentifiers must have at most 10 item(s)") if value.size > 10
+      end
+
+      if value = @log_stream_names
+        raise Core::ValidationError.new("logStreamNames must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("logStreamNames must have at most 100 item(s)") if value.size > 100
+      end
+
+      if value = @log_stream_name_prefixes
+        raise Core::ValidationError.new("logStreamNamePrefixes must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("logStreamNamePrefixes must have at most 100 item(s)") if value.size > 100
+      end
+
+      if value = @log_event_filter_pattern
+        raise Core::ValidationError.new("logEventFilterPattern length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("logEventFilterPattern length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@log_group_identifiers, @log_stream_names, @log_stream_name_prefixes, @log_event_filter_pattern)
   end
 end

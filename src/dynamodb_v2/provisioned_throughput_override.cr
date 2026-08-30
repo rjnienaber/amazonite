@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Replica-specific provisioned throughput settings. If not specified, uses the source table's
   # provisioned throughput settings.
@@ -13,5 +15,13 @@ module Amazonite::DynamoDBV2
       @read_capacity_units : Int64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @read_capacity_units
+        raise Core::ValidationError.new("ReadCapacityUnits value must be >= 1") if value < 1
+      end
+    end
+
+    def_equals_and_hash(@read_capacity_units)
   end
 end

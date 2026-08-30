@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the input of an `UpdateTimeToLive` operation.
   class UpdateTimeToLiveInput
@@ -17,5 +19,18 @@ module Amazonite::DynamoDBV2
       @time_to_live_specification : TimeToLiveSpecification,
     )
     end
+
+    def validate! : Nil
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @time_to_live_specification
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@table_name, @time_to_live_specification)
   end
 end

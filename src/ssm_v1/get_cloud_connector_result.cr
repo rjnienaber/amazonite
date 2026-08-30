@@ -47,5 +47,42 @@ module Amazonite::SsmV1
       @updated_at : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @cloud_connector_arn
+        raise Core::ValidationError.new("CloudConnectorArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("CloudConnectorArn length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("CloudConnectorArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws(-cn|-us-gov)?:ssm:([^:]+):\\d{12}:cloud-connector/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"))
+      end
+
+      if value = @display_name
+        raise Core::ValidationError.new("DisplayName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DisplayName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("DisplayName does not match the required pattern") unless value.matches?(Regex.new("^([\\p{L}\\p{Z}\\p{N}\\p{P}\\p{M}]*)$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^([\\p{L}\\p{Z}\\p{N}\\p{P}\\p{M}]*)$"))
+      end
+
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("RoleArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @configuration
+        value.validate!
+      end
+
+      if value = @config_connector_arn
+        raise Core::ValidationError.new("ConfigConnectorArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ConfigConnectorArn length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("ConfigConnectorArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws(-cn|-us-gov)?:config:([^:]+):\\d{12}:connector/.+$"))
+      end
+    end
+
+    def_equals_and_hash(@cloud_connector_arn, @display_name, @description, @role_arn, @configuration, @config_connector_arn, @created_at, @updated_at)
   end
 end

@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # Describes a filter for a specific list of managed nodes. You can filter node information by
@@ -19,5 +20,14 @@ module Amazonite::SsmV1
       @value_set : Array(String),
     )
     end
+
+    def validate! : Nil
+      if value = @value_set
+        raise Core::ValidationError.new("valueSet must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("valueSet must have at most 40 item(s)") if value.size > 40
+      end
+    end
+
+    def_equals_and_hash(@key, @value_set)
   end
 end

@@ -42,5 +42,13 @@ module Amazonite::IamV1
         last_authenticated: Core::XMLValue.time(node.xpath_node("*[local-name()='LastAuthenticated']")),
       )
     end
+
+    def validate! : Nil
+      if value = @entity_info
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@entity_info, @last_authenticated)
   end
 end

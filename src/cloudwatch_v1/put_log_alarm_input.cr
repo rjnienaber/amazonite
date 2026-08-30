@@ -1,4 +1,5 @@
 private alias ACW = Amazonite::CloudWatchV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchV1
   class PutLogAlarmInput
@@ -166,5 +167,59 @@ module Amazonite::CloudWatchV1
       @warm_up_configuration : WarmUpConfiguration | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @alarm_name
+        raise Core::ValidationError.new("AlarmName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmName length must be <= 255") if value.size > 255
+      end
+
+      if value = @alarm_description
+        raise Core::ValidationError.new("AlarmDescription length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("AlarmDescription length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @scheduled_query_configuration
+        value.validate!
+      end
+
+      if value = @ok_actions
+        raise Core::ValidationError.new("OKActions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("OKActions must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @alarm_actions
+        raise Core::ValidationError.new("AlarmActions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AlarmActions must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @insufficient_data_actions
+        raise Core::ValidationError.new("InsufficientDataActions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("InsufficientDataActions must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @query_results_to_evaluate
+        raise Core::ValidationError.new("QueryResultsToEvaluate value must be >= 1") if value < 1
+      end
+
+      if value = @query_results_to_alarm
+        raise Core::ValidationError.new("QueryResultsToAlarm value must be >= 1") if value < 1
+      end
+
+      if value = @treat_missing_data
+        raise Core::ValidationError.new("TreatMissingData length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TreatMissingData length must be <= 255") if value.size > 255
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+
+      if value = @warm_up_configuration
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@alarm_name, @alarm_description, @scheduled_query_configuration, @action_log_line_count, @action_log_line_role_arn, @actions_enabled, @ok_actions, @alarm_actions, @insufficient_data_actions, @query_results_to_evaluate, @query_results_to_alarm, @threshold, @comparison_operator, @treat_missing_data, @tags, @warm_up_configuration)
   end
 end

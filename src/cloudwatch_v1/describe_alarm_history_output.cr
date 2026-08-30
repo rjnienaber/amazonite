@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class DescribeAlarmHistoryOutput
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::CloudWatchV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @alarm_history_items
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@alarm_history_items, @next_token)
   end
 end

@@ -48,5 +48,31 @@ module Amazonite::CloudWatchV1
       @expire_date : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 255") if value.size > 255
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @rule
+        value.validate!
+      end
+
+      if value = @mute_targets
+        value.validate!
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@name, @description, @rule, @mute_targets, @tags, @start_date, @expire_date)
   end
 end

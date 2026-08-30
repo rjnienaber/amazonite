@@ -10,5 +10,10 @@ module Amazonite::CloudWatchLogsV1
       @lookup_table_arn : String,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@lookup_table_arn)
   end
 end

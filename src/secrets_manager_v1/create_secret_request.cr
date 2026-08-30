@@ -150,5 +150,53 @@ module Amazonite::SecretsManagerV1
       @type : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 512") if value.size > 512
+      end
+
+      if value = @client_request_token
+        raise Core::ValidationError.new("ClientRequestToken length must be >= 32") if value.size < 32
+        raise Core::ValidationError.new("ClientRequestToken length must be <= 64") if value.size > 64
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @kms_key_id
+        raise Core::ValidationError.new("KmsKeyId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KmsKeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @secret_binary
+        raise Core::ValidationError.new("SecretBinary length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SecretBinary length must be <= 65536") if value.size > 65536
+      end
+
+      if value = @secret_string
+        raise Core::ValidationError.new("SecretString length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SecretString length must be <= 65536") if value.size > 65536
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+
+      if value = @add_replica_regions
+        raise Core::ValidationError.new("AddReplicaRegions must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+
+      if value = @type
+        raise Core::ValidationError.new("Type length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Type length must be <= 256") if value.size > 256
+      end
+    end
+
+    def_equals_and_hash(@name, @client_request_token, @description, @kms_key_id, @secret_binary, @secret_string, @tags, @add_replica_regions, @force_overwrite_replica_secret, @type)
   end
 end

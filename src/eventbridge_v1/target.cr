@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # Targets are the resources to be invoked when a rule is triggered. For a complete list of
   # services and resources that can be set as a target, see
@@ -134,5 +136,83 @@ module Amazonite::EventBridgeV1
       @app_sync_parameters : AppSyncParameters | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @id
+        raise Core::ValidationError.new("Id length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Id length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Id does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Arn length must be <= 1600") if value.size > 1600
+      end
+
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RoleArn length must be <= 1600") if value.size > 1600
+      end
+
+      if value = @input
+        raise Core::ValidationError.new("Input length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Input length must be <= 8192") if value.size > 8192
+      end
+
+      if value = @input_path
+        raise Core::ValidationError.new("InputPath length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("InputPath length must be <= 256") if value.size > 256
+      end
+
+      if value = @input_transformer
+        value.validate!
+      end
+
+      if value = @kinesis_parameters
+        value.validate!
+      end
+
+      if value = @run_command_parameters
+        value.validate!
+      end
+
+      if value = @ecs_parameters
+        value.validate!
+      end
+
+      if value = @batch_parameters
+        value.validate!
+      end
+
+      if value = @sqs_parameters
+        value.validate!
+      end
+
+      if value = @http_parameters
+        value.validate!
+      end
+
+      if value = @redshift_data_parameters
+        value.validate!
+      end
+
+      if value = @sage_maker_pipeline_parameters
+        value.validate!
+      end
+
+      if value = @dead_letter_config
+        value.validate!
+      end
+
+      if value = @retry_policy
+        value.validate!
+      end
+
+      if value = @app_sync_parameters
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@id, @arn, @role_arn, @input, @input_path, @input_transformer, @kinesis_parameters, @run_command_parameters, @ecs_parameters, @batch_parameters, @sqs_parameters, @http_parameters, @redshift_data_parameters, @sage_maker_pipeline_parameters, @dead_letter_config, @retry_policy, @app_sync_parameters)
   end
 end

@@ -57,5 +57,20 @@ module Amazonite::IamV1
         marker: Core::XMLValue.string(node.xpath_node("*[local-name()='Marker']")),
       )
     end
+
+    def validate! : Nil
+      if value = @max_items
+        raise Core::ValidationError.new("MaxItems value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxItems value must be <= 1000") if value > 1000
+      end
+
+      if value = @marker
+        raise Core::ValidationError.new("Marker length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Marker length must be <= 320") if value.size > 320
+        raise Core::ValidationError.new("Marker does not match the required pattern") unless value.matches?(Regex.new("^[ -ÿ]+$"))
+      end
+    end
+
+    def_equals_and_hash(@filter, @max_items, @marker)
   end
 end

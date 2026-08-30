@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # The collection of VPC links under the caller's account in a region.
   class VpcLinks
@@ -16,5 +18,13 @@ module Amazonite::ApiGatewayV1
       @position : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @items
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@items, @position)
   end
 end

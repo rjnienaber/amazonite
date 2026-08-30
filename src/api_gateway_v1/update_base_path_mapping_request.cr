@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # A request to change information about the BasePathMapping resource.
   class UpdateBasePathMappingRequest
@@ -29,5 +31,13 @@ module Amazonite::ApiGatewayV1
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @patch_operations
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@domain_name, @domain_name_id, @base_path, @patch_operations)
   end
 end

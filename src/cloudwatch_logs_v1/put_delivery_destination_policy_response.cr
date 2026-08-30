@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class PutDeliveryDestinationPolicyResponse
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::CloudWatchLogsV1
       @policy : Policy | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @policy
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@policy)
   end
 end

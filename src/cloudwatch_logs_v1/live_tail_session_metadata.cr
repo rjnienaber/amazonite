@@ -19,5 +19,10 @@ module Amazonite::CloudWatchLogsV1
       @sampled : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@sampled)
   end
 end

@@ -1,4 +1,5 @@
 private alias AAG = Amazonite::ApiGatewayV1
+private alias Core = Amazonite::Core
 
 module Amazonite::ApiGatewayV1
   # Requests API Gateway to create a Deployment resource.
@@ -58,5 +59,13 @@ module Amazonite::ApiGatewayV1
       @tracing_enabled : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @canary_settings
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@rest_api_id, @stage_name, @stage_description, @description, @cache_cluster_enabled, @cache_cluster_size, @variables, @canary_settings, @tracing_enabled)
   end
 end

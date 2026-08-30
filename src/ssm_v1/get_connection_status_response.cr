@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   class GetConnectionStatusResponse
@@ -17,5 +18,14 @@ module Amazonite::SsmV1
       @status : ConnectionStatus | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @target
+        raise Core::ValidationError.new("Target length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Target length must be <= 400") if value.size > 400
+      end
+    end
+
+    def_equals_and_hash(@target, @status)
   end
 end

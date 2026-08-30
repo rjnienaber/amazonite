@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class GetQueryResultsResponse
@@ -55,5 +56,23 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @statistics
+        value.validate!
+      end
+
+      if value = @encryption_key
+        raise Core::ValidationError.new("encryptionKey length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("encryptionKey length must be <= 256") if value.size > 256
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("nextToken length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@query_language, @results, @statistics, @status, @encryption_key, @next_token)
   end
 end

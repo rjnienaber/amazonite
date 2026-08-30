@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class PutQueryDefinitionRequest
@@ -64,5 +65,36 @@ module Amazonite::CloudWatchLogsV1
       @parameters : Array(QueryParameter) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("name length must be <= 255") if value.size > 255
+      end
+
+      if value = @query_definition_id
+        raise Core::ValidationError.new("queryDefinitionId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("queryDefinitionId length must be <= 256") if value.size > 256
+      end
+
+      if value = @query_string
+        raise Core::ValidationError.new("queryString length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("queryString length must be <= 10000") if value.size > 10000
+      end
+
+      if value = @client_token
+        raise Core::ValidationError.new("clientToken length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("clientToken length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("clientToken does not match the required pattern") unless value.matches?(Regex.new("^\\S{36,128}$"))
+      end
+
+      if value = @parameters
+        raise Core::ValidationError.new("parameters must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("parameters must have at most 20 item(s)") if value.size > 20
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@query_language, @name, @query_definition_id, @log_group_names, @query_string, @client_token, @parameters)
   end
 end

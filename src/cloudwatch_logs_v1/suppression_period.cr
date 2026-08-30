@@ -19,5 +19,10 @@ module Amazonite::CloudWatchLogsV1
       @suppression_unit : SuppressionUnit | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@value, @suppression_unit)
   end
 end

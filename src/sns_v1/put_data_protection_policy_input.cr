@@ -37,5 +37,10 @@ module Amazonite::SnsV1
         data_protection_policy: Core::XMLValue.string(node.xpath_node("*[local-name()='DataProtectionPolicy']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@resource_arn, @data_protection_policy)
   end
 end

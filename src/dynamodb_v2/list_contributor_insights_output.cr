@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class ListContributorInsightsOutput
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::DynamoDBV2
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @contributor_insights_summaries
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@contributor_insights_summaries, @next_token)
   end
 end

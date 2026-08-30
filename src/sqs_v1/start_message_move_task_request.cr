@@ -28,5 +28,10 @@ module Amazonite::SqsV1
       @max_number_of_messages_per_second : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@source_arn, @destination_arn, @max_number_of_messages_per_second)
   end
 end

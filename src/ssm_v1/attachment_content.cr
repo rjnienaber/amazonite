@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # A structure that includes attributes that describe a document attachment.
@@ -33,5 +34,18 @@ module Amazonite::SsmV1
       @url : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @hash
+        raise Core::ValidationError.new("Hash length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Hash length must be <= 256") if value.size > 256
+      end
+    end
+
+    def_equals_and_hash(@name, @size, @hash, @hash_type, @url)
   end
 end

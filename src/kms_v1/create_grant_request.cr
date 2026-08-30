@@ -175,5 +175,53 @@ module Amazonite::KmsV1
       @retiring_service_principal : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @grantee_principal
+        raise Core::ValidationError.new("GranteePrincipal length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GranteePrincipal length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("GranteePrincipal does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@:/-]+$"))
+      end
+
+      if value = @retiring_principal
+        raise Core::ValidationError.new("RetiringPrincipal length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RetiringPrincipal length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("RetiringPrincipal does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@:/-]+$"))
+      end
+
+      if value = @constraints
+        value.validate!
+      end
+
+      if value = @grant_tokens
+        raise Core::ValidationError.new("GrantTokens must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("GrantTokens must have at most 10 item(s)") if value.size > 10
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9:/_-]+$"))
+      end
+
+      if value = @grantee_service_principal
+        raise Core::ValidationError.new("GranteeServicePrincipal length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GranteeServicePrincipal length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("GranteeServicePrincipal does not match the required pattern") unless value.matches?(Regex.new("^([A-Za-z0-9\\-]+)\\.([A-Za-z0-9\\-]+)(\\.[A-Za-z0-9\\-]+)+$"))
+      end
+
+      if value = @retiring_service_principal
+        raise Core::ValidationError.new("RetiringServicePrincipal length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RetiringServicePrincipal length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("RetiringServicePrincipal does not match the required pattern") unless value.matches?(Regex.new("^([A-Za-z0-9\\-]+)\\.([A-Za-z0-9\\-]+)(\\.[A-Za-z0-9\\-]+)+$"))
+      end
+    end
+
+    def_equals_and_hash(@key_id, @grantee_principal, @retiring_principal, @operations, @constraints, @grant_tokens, @name, @dry_run, @grantee_service_principal, @retiring_service_principal)
   end
 end

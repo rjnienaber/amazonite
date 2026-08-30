@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   # Represents the input for `ListStreams`.
   class ListStreamsInput
@@ -21,5 +23,25 @@ module Amazonite::KinesisV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @limit
+        raise Core::ValidationError.new("Limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Limit value must be <= 10000") if value > 10000
+      end
+
+      if value = @exclusive_start_stream_name
+        raise Core::ValidationError.new("ExclusiveStartStreamName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ExclusiveStartStreamName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ExclusiveStartStreamName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1048576") if value.size > 1048576
+      end
+    end
+
+    def_equals_and_hash(@limit, @exclusive_start_stream_name, @next_token)
   end
 end

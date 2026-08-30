@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class CreateImportTaskRequest
     include JSON::Serializable
@@ -23,5 +25,17 @@ module Amazonite::CloudWatchLogsV1
       @import_filter : ImportFilter | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @import_role_arn
+        raise Core::ValidationError.new("importRoleArn length must be >= 1") if value.size < 1
+      end
+
+      if value = @import_filter
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@import_source_arn, @import_role_arn, @import_filter)
   end
 end

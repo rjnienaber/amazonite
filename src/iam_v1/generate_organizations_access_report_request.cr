@@ -38,5 +38,19 @@ module Amazonite::IamV1
         organizations_policy_id: Core::XMLValue.string(node.xpath_node("*[local-name()='OrganizationsPolicyId']")),
       )
     end
+
+    def validate! : Nil
+      if value = @entity_path
+        raise Core::ValidationError.new("EntityPath length must be >= 19") if value.size < 19
+        raise Core::ValidationError.new("EntityPath length must be <= 427") if value.size > 427
+        raise Core::ValidationError.new("EntityPath does not match the required pattern") unless value.matches?(Regex.new("^o-[0-9a-z]{10,32}\\/r-[0-9a-z]{4,32}[0-9a-z-\\/]*$"))
+      end
+
+      if value = @organizations_policy_id
+        raise Core::ValidationError.new("OrganizationsPolicyId does not match the required pattern") unless value.matches?(Regex.new("^p-[0-9a-zA-Z_]{8,128}$"))
+      end
+    end
+
+    def_equals_and_hash(@entity_path, @organizations_policy_id)
   end
 end

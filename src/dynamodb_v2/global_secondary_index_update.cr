@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents one of the following:
   #
@@ -38,5 +40,21 @@ module Amazonite::DynamoDBV2
       @delete : DeleteGlobalSecondaryIndexAction | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @update
+        value.validate!
+      end
+
+      if value = @create
+        value.validate!
+      end
+
+      if value = @delete
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@update, @create, @delete)
   end
 end

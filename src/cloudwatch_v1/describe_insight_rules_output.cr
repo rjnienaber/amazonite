@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class DescribeInsightRulesOutput
     include JSON::Serializable
@@ -16,5 +18,13 @@ module Amazonite::CloudWatchV1
       @insight_rules : Array(InsightRule) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @insight_rules
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@next_token, @insight_rules)
   end
 end

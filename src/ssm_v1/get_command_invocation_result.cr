@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   class GetCommandInvocationResult
@@ -153,5 +154,66 @@ module Amazonite::SsmV1
       @cloud_watch_output_config : CloudWatchOutputConfig | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @command_id
+        raise Core::ValidationError.new("CommandId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("CommandId length must be <= 36") if value.size > 36
+      end
+
+      if value = @instance_id
+        raise Core::ValidationError.new("InstanceId does not match the required pattern") unless value.matches?(Regex.new("^(^i-(\\w{8}|\\w{17})$)|(^mi-\\w{17}$)$"))
+      end
+
+      if value = @comment
+        raise Core::ValidationError.new("Comment length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Comment length must be <= 100") if value.size > 100
+      end
+
+      if value = @document_name
+        raise Core::ValidationError.new("DocumentName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @plugin_name
+        raise Core::ValidationError.new("PluginName length must be >= 4") if value.size < 4
+      end
+
+      if value = @execution_start_date_time
+        raise Core::ValidationError.new("ExecutionStartDateTime does not match the required pattern") unless value.matches?(Regex.new("^([\\-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d(?!:))?)?(\\17[0-5]\\d([\\.,]\\d)?)?([zZ]|([\\-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$"))
+      end
+
+      if value = @execution_elapsed_time
+        raise Core::ValidationError.new("ExecutionElapsedTime does not match the required pattern") unless value.matches?(Regex.new("^([\\-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d(?!:))?)?(\\17[0-5]\\d([\\.,]\\d)?)?([zZ]|([\\-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$"))
+      end
+
+      if value = @execution_end_date_time
+        raise Core::ValidationError.new("ExecutionEndDateTime does not match the required pattern") unless value.matches?(Regex.new("^([\\-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d(?!:))?)?(\\17[0-5]\\d([\\.,]\\d)?)?([zZ]|([\\-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$"))
+      end
+
+      if value = @status_details
+        raise Core::ValidationError.new("StatusDetails length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StatusDetails length must be <= 100") if value.size > 100
+      end
+
+      if value = @standard_output_content
+        raise Core::ValidationError.new("StandardOutputContent length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StandardOutputContent length must be <= 24000") if value.size > 24000
+      end
+
+      if value = @standard_error_content
+        raise Core::ValidationError.new("StandardErrorContent length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StandardErrorContent length must be <= 8000") if value.size > 8000
+      end
+
+      if value = @cloud_watch_output_config
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@command_id, @instance_id, @comment, @document_name, @document_version, @plugin_name, @response_code, @execution_start_date_time, @execution_elapsed_time, @execution_end_date_time, @status, @status_details, @standard_output_content, @standard_output_url, @standard_error_content, @standard_error_url, @cloud_watch_output_config)
   end
 end

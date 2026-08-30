@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class UpdateTableReplicaAutoScalingInput
     include JSON::Serializable
@@ -26,5 +28,28 @@ module Amazonite::DynamoDBV2
       @replica_updates : Array(ReplicaAutoScalingUpdate) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @global_secondary_index_updates
+        raise Core::ValidationError.new("GlobalSecondaryIndexUpdates must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @provisioned_write_capacity_auto_scaling_update
+        value.validate!
+      end
+
+      if value = @replica_updates
+        raise Core::ValidationError.new("ReplicaUpdates must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@global_secondary_index_updates, @table_name, @provisioned_write_capacity_auto_scaling_update, @replica_updates)
   end
 end

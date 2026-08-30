@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class PutInsightRuleInput
     include JSON::Serializable
@@ -55,5 +57,31 @@ module Amazonite::CloudWatchV1
       @apply_on_transformed_logs : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @rule_name
+        raise Core::ValidationError.new("RuleName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RuleName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("RuleName does not match the required pattern") unless value.matches?(Regex.new("^[\\x20-\\x7E]+$"))
+      end
+
+      if value = @rule_state
+        raise Core::ValidationError.new("RuleState length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RuleState length must be <= 32") if value.size > 32
+        raise Core::ValidationError.new("RuleState does not match the required pattern") unless value.matches?(Regex.new("^[\\x20-\\x7E]+$"))
+      end
+
+      if value = @rule_definition
+        raise Core::ValidationError.new("RuleDefinition length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RuleDefinition length must be <= 8192") if value.size > 8192
+        raise Core::ValidationError.new("RuleDefinition does not match the required pattern") unless value.matches?(Regex.new("^[\\x00-\\x7F]+$"))
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@rule_name, @rule_state, @rule_definition, @tags, @apply_on_transformed_logs)
   end
 end

@@ -31,5 +31,13 @@ module Amazonite::SnsV1
         publish_batch_request_entries: node.xpath_nodes("*[local-name()='PublishBatchRequestEntries']/*[local-name()='member']").map { |n| PublishBatchRequestEntry.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @publish_batch_request_entries
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@topic_arn, @publish_batch_request_entries)
   end
 end

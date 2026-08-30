@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SecretsManagerV1
   class GetRandomPasswordRequest
     include JSON::Serializable
@@ -54,5 +56,19 @@ module Amazonite::SecretsManagerV1
       @require_each_included_type : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @password_length
+        raise Core::ValidationError.new("PasswordLength value must be >= 1") if value < 1
+        raise Core::ValidationError.new("PasswordLength value must be <= 4096") if value > 4096
+      end
+
+      if value = @exclude_characters
+        raise Core::ValidationError.new("ExcludeCharacters length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("ExcludeCharacters length must be <= 4096") if value.size > 4096
+      end
+    end
+
+    def_equals_and_hash(@password_length, @exclude_characters, @exclude_numbers, @exclude_punctuation, @exclude_uppercase, @exclude_lowercase, @include_space, @require_each_included_type)
   end
 end

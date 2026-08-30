@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The parameters for task execution.
   class MaintenanceWindowTaskInvocationParameters
@@ -26,5 +28,25 @@ module Amazonite::SsmV1
       @lambda : MaintenanceWindowLambdaParameters | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @run_command
+        value.validate!
+      end
+
+      if value = @automation
+        value.validate!
+      end
+
+      if value = @step_functions
+        value.validate!
+      end
+
+      if value = @lambda
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@run_command, @automation, @step_functions, @lambda)
   end
 end

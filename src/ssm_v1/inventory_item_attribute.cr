@@ -18,5 +18,10 @@ module Amazonite::SsmV1
       @data_type : InventoryAttributeDataType,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@name, @data_type)
   end
 end

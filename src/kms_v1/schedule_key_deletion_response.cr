@@ -40,5 +40,19 @@ module Amazonite::KmsV1
       @pending_window_in_days : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @pending_window_in_days
+        raise Core::ValidationError.new("PendingWindowInDays value must be >= 1") if value < 1
+        raise Core::ValidationError.new("PendingWindowInDays value must be <= 365") if value > 365
+      end
+    end
+
+    def_equals_and_hash(@key_id, @deletion_date, @key_state, @pending_window_in_days)
   end
 end

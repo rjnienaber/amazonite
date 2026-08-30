@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListDocumentsRequest
     include JSON::Serializable
@@ -33,5 +35,25 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @document_filter_list
+        raise Core::ValidationError.new("DocumentFilterList must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+
+      if value = @filters
+        raise Core::ValidationError.new("Filters must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Filters must have at most 6 item(s)") if value.size > 6
+        value.each(&.validate!)
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 50") if value > 50
+      end
+    end
+
+    def_equals_and_hash(@document_filter_list, @filters, @max_results, @next_token)
   end
 end

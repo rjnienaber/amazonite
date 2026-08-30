@@ -84,5 +84,19 @@ module Amazonite::IamV1
         create_date: Core::XMLValue.time(node.xpath_node("*[local-name()='CreateDate']")),
       )
     end
+
+    def validate! : Nil
+      if value = @document
+        raise Core::ValidationError.new("Document length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Document length must be <= 131072") if value.size > 131072
+        raise Core::ValidationError.new("Document does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+
+      if value = @version_id
+        raise Core::ValidationError.new("VersionId does not match the required pattern") unless value.matches?(Regex.new("^v[1-9][0-9]*(\\.[A-Za-z0-9-]*)?$"))
+      end
+    end
+
+    def_equals_and_hash(@document, @version_id, @is_default_version, @create_date)
   end
 end

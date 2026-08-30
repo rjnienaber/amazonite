@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # An element in the search schema of a vector index.
@@ -24,5 +25,14 @@ module Amazonite::DynamoDBV2
       @search_schema_element_type : SearchSchemaElementType,
     )
     end
+
+    def validate! : Nil
+      if value = @attribute_name
+        raise Core::ValidationError.new("AttributeName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("AttributeName length must be <= 65535") if value.size > 65535
+      end
+    end
+
+    def_equals_and_hash(@attribute_name, @search_schema_element_type)
   end
 end

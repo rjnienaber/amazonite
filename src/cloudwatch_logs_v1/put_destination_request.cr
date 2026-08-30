@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class PutDestinationRequest
     include JSON::Serializable
@@ -29,5 +31,28 @@ module Amazonite::CloudWatchLogsV1
       @tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @destination_name
+        raise Core::ValidationError.new("destinationName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("destinationName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("destinationName does not match the required pattern") unless value.matches?(Regex.new("^[^:*]*$"))
+      end
+
+      if value = @target_arn
+        raise Core::ValidationError.new("targetArn length must be >= 1") if value.size < 1
+      end
+
+      if value = @role_arn
+        raise Core::ValidationError.new("roleArn length must be >= 1") if value.size < 1
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("tags must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("tags must have at most 50 entry(s)") if value.size > 50
+      end
+    end
+
+    def_equals_and_hash(@destination_name, @target_arn, @role_arn, @tags)
   end
 end

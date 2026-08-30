@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # The collection of SdkType instances.
   class SdkTypes
@@ -11,5 +13,13 @@ module Amazonite::ApiGatewayV1
       @items : Array(SdkType) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @items
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@items)
   end
 end

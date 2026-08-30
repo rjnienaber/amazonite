@@ -53,5 +53,24 @@ module Amazonite::CloudFormationV1
         template_configuration: node.xpath_node("*[local-name()='TemplateConfiguration']").try { |n| TemplateConfiguration.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @resources
+        raise Core::ValidationError.new("Resources must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Resources must have at most 500 item(s)") if value.size > 500
+        value.each(&.validate!)
+      end
+
+      if value = @generated_template_name
+        raise Core::ValidationError.new("GeneratedTemplateName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GeneratedTemplateName length must be <= 128") if value.size > 128
+      end
+
+      if value = @template_configuration
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@resources, @generated_template_name, @stack_name, @template_configuration)
   end
 end

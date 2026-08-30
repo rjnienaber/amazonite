@@ -1,4 +1,5 @@
 private alias AK = Amazonite::KmsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::KmsV1
   class UpdateCustomKeyStoreRequest
@@ -142,5 +143,58 @@ module Amazonite::KmsV1
       @xks_proxy_connectivity : XksProxyConnectivityType | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @custom_key_store_id
+        raise Core::ValidationError.new("CustomKeyStoreId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CustomKeyStoreId length must be <= 64") if value.size > 64
+      end
+
+      if value = @new_custom_key_store_name
+        raise Core::ValidationError.new("NewCustomKeyStoreName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NewCustomKeyStoreName length must be <= 256") if value.size > 256
+      end
+
+      if value = @key_store_password
+        raise Core::ValidationError.new("KeyStorePassword length must be >= 7") if value.size < 7
+        raise Core::ValidationError.new("KeyStorePassword length must be <= 32") if value.size > 32
+      end
+
+      if value = @cloud_hsm_cluster_id
+        raise Core::ValidationError.new("CloudHsmClusterId length must be >= 19") if value.size < 19
+        raise Core::ValidationError.new("CloudHsmClusterId length must be <= 24") if value.size > 24
+        raise Core::ValidationError.new("CloudHsmClusterId does not match the required pattern") unless value.matches?(Regex.new("^cluster-[2-7a-zA-Z]{11,16}$"))
+      end
+
+      if value = @xks_proxy_uri_endpoint
+        raise Core::ValidationError.new("XksProxyUriEndpoint length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("XksProxyUriEndpoint length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("XksProxyUriEndpoint does not match the required pattern") unless value.matches?(Regex.new("^https://[a-zA-Z0-9.-]+$"))
+      end
+
+      if value = @xks_proxy_uri_path
+        raise Core::ValidationError.new("XksProxyUriPath length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("XksProxyUriPath length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("XksProxyUriPath does not match the required pattern") unless value.matches?(Regex.new("^(/[a-zA-Z0-9\\/_-]+/kms/xks/v\\d{1,2})$|^(/kms/xks/v\\d{1,2})$"))
+      end
+
+      if value = @xks_proxy_vpc_endpoint_service_name
+        raise Core::ValidationError.new("XksProxyVpcEndpointServiceName length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("XksProxyVpcEndpointServiceName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("XksProxyVpcEndpointServiceName does not match the required pattern") unless value.matches?(Regex.new("^(com|eu)\\.amazonaws\\.vpce\\.([a-z]+-){2,3}\\d+\\.vpce-svc-[0-9a-z]+$"))
+      end
+
+      if value = @xks_proxy_vpc_endpoint_service_owner
+        raise Core::ValidationError.new("XksProxyVpcEndpointServiceOwner length must be >= 12") if value.size < 12
+        raise Core::ValidationError.new("XksProxyVpcEndpointServiceOwner length must be <= 12") if value.size > 12
+        raise Core::ValidationError.new("XksProxyVpcEndpointServiceOwner does not match the required pattern") unless value.matches?(Regex.new("^[0-9]{12}$"))
+      end
+
+      if value = @xks_proxy_authentication_credential
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@custom_key_store_id, @new_custom_key_store_name, @key_store_password, @cloud_hsm_cluster_id, @xks_proxy_uri_endpoint, @xks_proxy_uri_path, @xks_proxy_vpc_endpoint_service_name, @xks_proxy_vpc_endpoint_service_owner, @xks_proxy_authentication_credential, @xks_proxy_connectivity)
   end
 end

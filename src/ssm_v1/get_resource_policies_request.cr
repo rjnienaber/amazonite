@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class GetResourcePoliciesRequest
     include JSON::Serializable
@@ -21,5 +23,19 @@ module Amazonite::SsmV1
       @max_results : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @resource_arn
+        raise Core::ValidationError.new("ResourceArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("ResourceArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 50") if value > 50
+      end
+    end
+
+    def_equals_and_hash(@resource_arn, @next_token, @max_results)
   end
 end

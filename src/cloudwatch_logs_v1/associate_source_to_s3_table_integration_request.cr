@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class AssociateSourceToS3TableIntegrationRequest
     include JSON::Serializable
@@ -16,5 +18,13 @@ module Amazonite::CloudWatchLogsV1
       @data_source : DataSource,
     )
     end
+
+    def validate! : Nil
+      if value = @data_source
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@integration_arn, @data_source)
   end
 end

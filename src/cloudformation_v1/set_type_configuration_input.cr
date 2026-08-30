@@ -80,5 +80,33 @@ module Amazonite::CloudFormationV1
         type: (n = node.xpath_node("*[local-name()='Type']")) ? ACF::ThirdPartyType.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+      if value = @type_arn
+        raise Core::ValidationError.new("TypeArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("TypeArn length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("TypeArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[A-Za-z0-9-]{0,64}:cloudformation:[A-Za-z0-9-]{1,64}:([0-9]{12})?:type/.+$"))
+      end
+
+      if value = @configuration
+        raise Core::ValidationError.new("Configuration length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Configuration length must be <= 204800") if value.size > 204800
+        raise Core::ValidationError.new("Configuration does not match the required pattern") unless value.matches?(Regex.new("^[\\s\\S]+$"))
+      end
+
+      if value = @configuration_alias
+        raise Core::ValidationError.new("ConfigurationAlias length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ConfigurationAlias length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("ConfigurationAlias does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9]{1,256}$"))
+      end
+
+      if value = @type_name
+        raise Core::ValidationError.new("TypeName length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("TypeName length must be <= 204") if value.size > 204
+        raise Core::ValidationError.new("TypeName does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}(::MODULE){0,1}$"))
+      end
+    end
+
+    def_equals_and_hash(@type_arn, @configuration, @configuration_alias, @type_name, @type)
   end
 end

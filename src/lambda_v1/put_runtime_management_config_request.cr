@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   class PutRuntimeManagementConfigRequest
@@ -58,5 +59,27 @@ module Amazonite::LambdaV1
       @runtime_version_arn : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @function_name
+        raise Core::ValidationError.new("FunctionName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("FunctionName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("FunctionName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:|(((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?))(function:)?([a-zA-Z0-9-_\\.]+)(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @qualifier
+        raise Core::ValidationError.new("Qualifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Qualifier length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Qualifier does not match the required pattern") unless value.matches?(Regex.new("^\\$(LATEST(\\.PUBLISHED)?)|[a-zA-Z0-9-_$]+$"))
+      end
+
+      if value = @runtime_version_arn
+        raise Core::ValidationError.new("RuntimeVersionArn length must be >= 26") if value.size < 26
+        raise Core::ValidationError.new("RuntimeVersionArn length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("RuntimeVersionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*):lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}::runtime:.+$"))
+      end
+    end
+
+    def_equals_and_hash(@function_name, @qualifier, @update_runtime_on, @runtime_version_arn)
   end
 end

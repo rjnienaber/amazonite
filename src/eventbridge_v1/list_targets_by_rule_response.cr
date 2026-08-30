@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class ListTargetsByRuleResponse
     include JSON::Serializable
@@ -21,5 +23,20 @@ module Amazonite::EventBridgeV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @targets
+        raise Core::ValidationError.new("Targets must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Targets must have at most 100 item(s)") if value.size > 100
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 2048") if value.size > 2048
+      end
+    end
+
+    def_equals_and_hash(@targets, @next_token)
   end
 end

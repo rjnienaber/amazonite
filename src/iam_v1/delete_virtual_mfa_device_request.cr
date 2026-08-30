@@ -27,5 +27,15 @@ module Amazonite::IamV1
         serial_number: Core::XMLValue.string(node.xpath_node("*[local-name()='SerialNumber']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @serial_number
+        raise Core::ValidationError.new("SerialNumber length must be >= 9") if value.size < 9
+        raise Core::ValidationError.new("SerialNumber length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("SerialNumber does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=/:,.@-]+$"))
+      end
+    end
+
+    def_equals_and_hash(@serial_number)
   end
 end

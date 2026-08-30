@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The result body of the ResetServiceSetting API operation.
   class ResetServiceSettingResult
@@ -11,5 +13,13 @@ module Amazonite::SsmV1
       @service_setting : ServiceSetting | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @service_setting
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@service_setting)
   end
 end

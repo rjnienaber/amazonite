@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class CancelReplayRequest
     include JSON::Serializable
@@ -10,5 +12,15 @@ module Amazonite::EventBridgeV1
       @replay_name : String,
     )
     end
+
+    def validate! : Nil
+      if value = @replay_name
+        raise Core::ValidationError.new("ReplayName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ReplayName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("ReplayName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_A-Za-z0-9]+$"))
+      end
+    end
+
+    def_equals_and_hash(@replay_name)
   end
 end

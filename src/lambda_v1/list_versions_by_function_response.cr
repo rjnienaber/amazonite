@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class ListVersionsByFunctionResponse
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::LambdaV1
       @versions : Array(FunctionConfiguration) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @versions
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@next_marker, @versions)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # A single result from a `SearchVectors` operation.
   class SearchResultItem
@@ -18,5 +20,13 @@ module Amazonite::DynamoDBV2
       @score : Float64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @item
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@item, @score)
   end
 end

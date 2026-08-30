@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Details about a context that succeeded.
   class ContextSucceededDetails
@@ -11,5 +13,13 @@ module Amazonite::LambdaV1
       @result : EventResult,
     )
     end
+
+    def validate! : Nil
+      if value = @result
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@result)
   end
 end

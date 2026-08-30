@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Contains details about a callback operation that timed out, including timeout duration and any
   # partial results.
@@ -12,5 +14,13 @@ module Amazonite::LambdaV1
       @error : EventError,
     )
     end
+
+    def validate! : Nil
+      if value = @error
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@error)
   end
 end

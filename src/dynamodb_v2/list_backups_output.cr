@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class ListBackupsOutput
     include JSON::Serializable
@@ -24,5 +26,18 @@ module Amazonite::DynamoDBV2
       @last_evaluated_backup_arn : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @backup_summaries
+        value.each(&.validate!)
+      end
+
+      if value = @last_evaluated_backup_arn
+        raise Core::ValidationError.new("LastEvaluatedBackupArn length must be >= 37") if value.size < 37
+        raise Core::ValidationError.new("LastEvaluatedBackupArn length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@backup_summaries, @last_evaluated_backup_arn)
   end
 end

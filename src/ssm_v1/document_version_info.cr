@@ -63,5 +63,27 @@ module Amazonite::SsmV1
       @review_status : ReviewStatus | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @display_name
+        raise Core::ValidationError.new("DisplayName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("DisplayName length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("DisplayName does not match the required pattern") unless value.matches?(Regex.new("^[\\w\\.\\-\\:\\/ ]*$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @version_name
+        raise Core::ValidationError.new("VersionName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{1,128}$"))
+      end
+    end
+
+    def_equals_and_hash(@name, @display_name, @document_version, @version_name, @created_date, @is_default_version, @document_format, @status, @status_information, @review_status)
   end
 end

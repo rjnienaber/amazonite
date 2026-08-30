@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # Contains the API key authorization parameters to use to update the connection.
   class UpdateConnectionApiKeyAuthRequestParameters
@@ -16,5 +18,21 @@ module Amazonite::EventBridgeV1
       @api_key_value : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @api_key_name
+        raise Core::ValidationError.new("ApiKeyName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ApiKeyName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("ApiKeyName does not match the required pattern") unless value.matches?(Regex.new("^[ \\t]*[^\\x00-\\x1F:\\x7F]+([ \\t]+[^\\x00-\\x1F:\\x7F]+)*[ \\t]*$"))
+      end
+
+      if value = @api_key_value
+        raise Core::ValidationError.new("ApiKeyValue length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ApiKeyValue length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("ApiKeyValue does not match the required pattern") unless value.matches?(Regex.new("^[ \\t]*[^\\x00-\\x1F:\\x7F]+([ \\t]+[^\\x00-\\x1F:\\x7F]+)*[ \\t]*$"))
+      end
+    end
+
+    def_equals_and_hash(@api_key_name, @api_key_value)
   end
 end

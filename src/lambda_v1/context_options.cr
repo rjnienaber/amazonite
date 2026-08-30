@@ -12,5 +12,10 @@ module Amazonite::LambdaV1
       @replay_children : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@replay_children)
   end
 end

@@ -36,5 +36,13 @@ module Amazonite::CloudFormationV1
         regions: node.xpath_nodes("*[local-name()='Regions']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def validate! : Nil
+      if value = @organizational_unit_id
+        raise Core::ValidationError.new("OrganizationalUnitId does not match the required pattern") unless value.matches?(Regex.new("^(ou-[a-z0-9]{4,32}-[a-z0-9]{8,32}|r-[a-z0-9]{4,32})$"))
+      end
+    end
+
+    def_equals_and_hash(@organizational_unit_id, @regions)
   end
 end

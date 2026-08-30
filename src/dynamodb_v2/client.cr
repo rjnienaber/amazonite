@@ -25,6 +25,7 @@ module Amazonite::DynamoDBV2
     # field of the `BatchStatementResponse` for each statement.
     def batch_execute_statement(input : ADDB::BatchExecuteStatementInput) : Core::ParsedResponse(ADDB::BatchExecuteStatementOutput)
       Log.info { "performing 'BatchExecuteStatement' operation" }
+      input.validate! if config.validate_input?
       response = post("BatchExecuteStatement", "/", input.to_json)
       Core::ParsedResponse(ADDB::BatchExecuteStatementOutput).new(response)
     end
@@ -82,6 +83,7 @@ module Amazonite::DynamoDBV2
     # times.
     def batch_get_item(input : ADDB::BatchGetItemInput) : Core::ParsedResponse(ADDB::BatchGetItemOutput)
       Log.info { "performing 'BatchGetItem' operation" }
+      input.validate! if config.validate_input?
       response = post("BatchGetItem", "/", input.to_json)
       Core::ParsedResponse(ADDB::BatchGetItemOutput).new(response)
     end
@@ -163,6 +165,7 @@ module Amazonite::DynamoDBV2
     # is 2048 bytes and for a sort key, the limit is 1024 bytes.
     def batch_write_item(input : ADDB::BatchWriteItemInput) : Core::ParsedResponse(ADDB::BatchWriteItemOutput)
       Log.info { "performing 'BatchWriteItem' operation" }
+      input.validate! if config.validate_input?
       response = post("BatchWriteItem", "/", input.to_json)
       Core::ParsedResponse(ADDB::BatchWriteItemOutput).new(response)
     end
@@ -197,6 +200,7 @@ module Amazonite::DynamoDBV2
     # - Provisioned read and write capacity
     def create_backup(input : ADDB::CreateBackupInput) : Core::ParsedResponse(ADDB::CreateBackupOutput)
       Log.info { "performing 'CreateBackup' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateBackup", "/", input.to_json)
       Core::ParsedResponse(ADDB::CreateBackupOutput).new(response)
     end
@@ -249,6 +253,7 @@ module Amazonite::DynamoDBV2
     # capacity units to matching secondary indexes across your global table.
     def create_global_table(input : ADDB::CreateGlobalTableInput) : Core::ParsedResponse(ADDB::CreateGlobalTableOutput)
       Log.info { "performing 'CreateGlobalTable' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateGlobalTable", "/", input.to_json)
       Core::ParsedResponse(ADDB::CreateGlobalTableOutput).new(response)
     end
@@ -270,6 +275,7 @@ module Amazonite::DynamoDBV2
     # You can use the `DescribeTable` action to check the table status.
     def create_table(input : ADDB::CreateTableInput) : Core::ParsedResponse(ADDB::CreateTableOutput)
       Log.info { "performing 'CreateTable' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateTable", "/", input.to_json)
       Core::ParsedResponse(ADDB::CreateTableOutput).new(response)
     end
@@ -279,6 +285,7 @@ module Amazonite::DynamoDBV2
     # You can call `DeleteBackup` at a maximum rate of 10 times per second.
     def delete_backup(input : ADDB::DeleteBackupInput) : Core::ParsedResponse(ADDB::DeleteBackupOutput)
       Log.info { "performing 'DeleteBackup' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteBackup", "/", input.to_json)
       Core::ParsedResponse(ADDB::DeleteBackupOutput).new(response)
     end
@@ -296,6 +303,7 @@ module Amazonite::DynamoDBV2
     # conditions are met, DynamoDB performs the delete. Otherwise, the item is not deleted.
     def delete_item(input : ADDB::DeleteItemInput) : Core::ParsedResponse(ADDB::DeleteItemOutput)
       Log.info { "performing 'DeleteItem' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteItem", "/", input.to_json)
       Core::ParsedResponse(ADDB::DeleteItemOutput).new(response)
     end
@@ -316,6 +324,7 @@ module Amazonite::DynamoDBV2
     # Wait for a few seconds, and then try the `GetResourcePolicy` request again.
     def delete_resource_policy(input : ADDB::DeleteResourcePolicyInput) : Core::ParsedResponse(ADDB::DeleteResourcePolicyOutput)
       Log.info { "performing 'DeleteResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(ADDB::DeleteResourcePolicyOutput).new(response)
     end
@@ -340,6 +349,7 @@ module Amazonite::DynamoDBV2
     # Use the `DescribeTable` action to check the status of the table.
     def delete_table(input : ADDB::DeleteTableInput) : Core::ParsedResponse(ADDB::DeleteTableOutput)
       Log.info { "performing 'DeleteTable' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteTable", "/", input.to_json)
       Core::ParsedResponse(ADDB::DeleteTableOutput).new(response)
     end
@@ -349,6 +359,7 @@ module Amazonite::DynamoDBV2
     # You can call `DescribeBackup` at a maximum rate of 10 times per second.
     def describe_backup(input : ADDB::DescribeBackupInput) : Core::ParsedResponse(ADDB::DescribeBackupOutput)
       Log.info { "performing 'DescribeBackup' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeBackup", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeBackupOutput).new(response)
     end
@@ -367,6 +378,7 @@ module Amazonite::DynamoDBV2
     # You can call `DescribeContinuousBackups` at a maximum rate of 10 times per second.
     def describe_continuous_backups(input : ADDB::DescribeContinuousBackupsInput) : Core::ParsedResponse(ADDB::DescribeContinuousBackupsOutput)
       Log.info { "performing 'DescribeContinuousBackups' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeContinuousBackups", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeContinuousBackupsOutput).new(response)
     end
@@ -374,6 +386,7 @@ module Amazonite::DynamoDBV2
     # Returns information about contributor insights for a given table or global secondary index.
     def describe_contributor_insights(input : ADDB::DescribeContributorInsightsInput) : Core::ParsedResponse(ADDB::DescribeContributorInsightsOutput)
       Log.info { "performing 'DescribeContributorInsights' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeContributorInsights", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeContributorInsightsOutput).new(response)
     end
@@ -383,6 +396,7 @@ module Amazonite::DynamoDBV2
     # privacy](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/inter-network-traffic-privacy.html#inter-network-traffic-DescribeEndpoints).
     def describe_endpoints(input : ADDB::DescribeEndpointsRequest) : Core::ParsedResponse(ADDB::DescribeEndpointsResponse)
       Log.info { "performing 'DescribeEndpoints' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeEndpoints", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeEndpointsResponse).new(response)
     end
@@ -390,6 +404,7 @@ module Amazonite::DynamoDBV2
     # Describes an existing table export.
     def describe_export(input : ADDB::DescribeExportInput) : Core::ParsedResponse(ADDB::DescribeExportOutput)
       Log.info { "performing 'DescribeExport' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeExport", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeExportOutput).new(response)
     end
@@ -409,6 +424,7 @@ module Amazonite::DynamoDBV2
     # tables](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html).
     def describe_global_table(input : ADDB::DescribeGlobalTableInput) : Core::ParsedResponse(ADDB::DescribeGlobalTableOutput)
       Log.info { "performing 'DescribeGlobalTable' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeGlobalTable", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeGlobalTableOutput).new(response)
     end
@@ -428,6 +444,7 @@ module Amazonite::DynamoDBV2
     # tables](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html).
     def describe_global_table_settings(input : ADDB::DescribeGlobalTableSettingsInput) : Core::ParsedResponse(ADDB::DescribeGlobalTableSettingsOutput)
       Log.info { "performing 'DescribeGlobalTableSettings' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeGlobalTableSettings", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeGlobalTableSettingsOutput).new(response)
     end
@@ -435,6 +452,7 @@ module Amazonite::DynamoDBV2
     # Represents the properties of the import.
     def describe_import(input : ADDB::DescribeImportInput) : Core::ParsedResponse(ADDB::DescribeImportOutput)
       Log.info { "performing 'DescribeImport' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeImport", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeImportOutput).new(response)
     end
@@ -442,6 +460,7 @@ module Amazonite::DynamoDBV2
     # Returns information about the status of Kinesis streaming.
     def describe_kinesis_streaming_destination(input : ADDB::DescribeKinesisStreamingDestinationInput) : Core::ParsedResponse(ADDB::DescribeKinesisStreamingDestinationOutput)
       Log.info { "performing 'DescribeKinesisStreamingDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeKinesisStreamingDestination", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeKinesisStreamingDestinationOutput).new(response)
     end
@@ -500,6 +519,7 @@ module Amazonite::DynamoDBV2
     # The `DescribeLimits` Request element has no content.
     def describe_limits(input : ADDB::DescribeLimitsInput) : Core::ParsedResponse(ADDB::DescribeLimitsOutput)
       Log.info { "performing 'DescribeLimits' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeLimits", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeLimitsOutput).new(response)
     end
@@ -513,6 +533,7 @@ module Amazonite::DynamoDBV2
     # for a few seconds, and then try the `DescribeTable` request again.
     def describe_table(input : ADDB::DescribeTableInput) : Core::ParsedResponse(ADDB::DescribeTableOutput)
       Log.info { "performing 'DescribeTable' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeTable", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeTableOutput).new(response)
     end
@@ -520,6 +541,7 @@ module Amazonite::DynamoDBV2
     # Describes auto scaling settings across replicas of the global table at once.
     def describe_table_replica_auto_scaling(input : ADDB::DescribeTableReplicaAutoScalingInput) : Core::ParsedResponse(ADDB::DescribeTableReplicaAutoScalingOutput)
       Log.info { "performing 'DescribeTableReplicaAutoScaling' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeTableReplicaAutoScaling", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeTableReplicaAutoScalingOutput).new(response)
     end
@@ -527,6 +549,7 @@ module Amazonite::DynamoDBV2
     # Gives a description of the Time to Live (TTL) status on the specified table.
     def describe_time_to_live(input : ADDB::DescribeTimeToLiveInput) : Core::ParsedResponse(ADDB::DescribeTimeToLiveOutput)
       Log.info { "performing 'DescribeTimeToLive' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeTimeToLive", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeTimeToLiveOutput).new(response)
     end
@@ -535,6 +558,7 @@ module Amazonite::DynamoDBV2
     # deleting either of the resources.
     def disable_kinesis_streaming_destination(input : ADDB::KinesisStreamingDestinationInput) : Core::ParsedResponse(ADDB::KinesisStreamingDestinationOutput)
       Log.info { "performing 'DisableKinesisStreamingDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("DisableKinesisStreamingDestination", "/", input.to_json)
       Core::ParsedResponse(ADDB::KinesisStreamingDestinationOutput).new(response)
     end
@@ -544,6 +568,7 @@ module Amazonite::DynamoDBV2
     # DescribeKinesisStreamingDestination to check if streaming to the Kinesis data stream is ACTIVE.
     def enable_kinesis_streaming_destination(input : ADDB::KinesisStreamingDestinationInput) : Core::ParsedResponse(ADDB::KinesisStreamingDestinationOutput)
       Log.info { "performing 'EnableKinesisStreamingDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("EnableKinesisStreamingDestination", "/", input.to_json)
       Core::ParsedResponse(ADDB::KinesisStreamingDestinationOutput).new(response)
     end
@@ -563,6 +588,7 @@ module Amazonite::DynamoDBV2
     # `NextToken`.
     def execute_statement(input : ADDB::ExecuteStatementInput) : Core::ParsedResponse(ADDB::ExecuteStatementOutput)
       Log.info { "performing 'ExecuteStatement' operation" }
+      input.validate! if config.validate_input?
       response = post("ExecuteStatement", "/", input.to_json)
       Core::ParsedResponse(ADDB::ExecuteStatementOutput).new(response)
     end
@@ -577,6 +603,7 @@ module Amazonite::DynamoDBV2
     # API.
     def execute_transaction(input : ADDB::ExecuteTransactionInput) : Core::ParsedResponse(ADDB::ExecuteTransactionOutput)
       Log.info { "performing 'ExecuteTransaction' operation" }
+      input.validate! if config.validate_input?
       response = post("ExecuteTransaction", "/", input.to_json)
       Core::ParsedResponse(ADDB::ExecuteTransactionOutput).new(response)
     end
@@ -585,6 +612,7 @@ module Amazonite::DynamoDBV2
     # can export data from any time within the point in time recovery window.
     def export_table_to_point_in_time(input : ADDB::ExportTableToPointInTimeInput) : Core::ParsedResponse(ADDB::ExportTableToPointInTimeOutput)
       Log.info { "performing 'ExportTableToPointInTime' operation" }
+      input.validate! if config.validate_input?
       response = post("ExportTableToPointInTime", "/", input.to_json)
       Core::ParsedResponse(ADDB::ExportTableToPointInTimeOutput).new(response)
     end
@@ -599,6 +627,7 @@ module Amazonite::DynamoDBV2
     # value.
     def get_item(input : ADDB::GetItemInput) : Core::ParsedResponse(ADDB::GetItemOutput)
       Log.info { "performing 'GetItem' operation" }
+      input.validate! if config.validate_input?
       response = post("GetItem", "/", input.to_json)
       Core::ParsedResponse(ADDB::GetItemOutput).new(response)
     end
@@ -632,6 +661,7 @@ module Amazonite::DynamoDBV2
     # request will always be applied to all requests for that table.
     def get_resource_policy(input : ADDB::GetResourcePolicyInput) : Core::ParsedResponse(ADDB::GetResourcePolicyOutput)
       Log.info { "performing 'GetResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("GetResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(ADDB::GetResourcePolicyOutput).new(response)
     end
@@ -639,6 +669,7 @@ module Amazonite::DynamoDBV2
     # Imports table data from an S3 bucket.
     def import_table(input : ADDB::ImportTableInput) : Core::ParsedResponse(ADDB::ImportTableOutput)
       Log.info { "performing 'ImportTable' operation" }
+      input.validate! if config.validate_input?
       response = post("ImportTable", "/", input.to_json)
       Core::ParsedResponse(ADDB::ImportTableOutput).new(response)
     end
@@ -658,6 +689,7 @@ module Amazonite::DynamoDBV2
     # API.](https://docs.aws.amazon.com/aws-backup/latest/devguide/API_ListBackupJobs.html)
     def list_backups(input : ADDB::ListBackupsInput) : Core::ParsedResponse(ADDB::ListBackupsOutput)
       Log.info { "performing 'ListBackups' operation" }
+      input.validate! if config.validate_input?
       response = post("ListBackups", "/", input.to_json)
       Core::ParsedResponse(ADDB::ListBackupsOutput).new(response)
     end
@@ -665,6 +697,7 @@ module Amazonite::DynamoDBV2
     # Returns a list of ContributorInsightsSummary for a table and all its global secondary indexes.
     def list_contributor_insights(input : ADDB::ListContributorInsightsInput) : Core::ParsedResponse(ADDB::ListContributorInsightsOutput)
       Log.info { "performing 'ListContributorInsights' operation" }
+      input.validate! if config.validate_input?
       response = post("ListContributorInsights", "/", input.to_json)
       Core::ParsedResponse(ADDB::ListContributorInsightsOutput).new(response)
     end
@@ -672,6 +705,7 @@ module Amazonite::DynamoDBV2
     # Lists completed exports within the past 90 days, in reverse alphanumeric order of `ExportArn`.
     def list_exports(input : ADDB::ListExportsInput) : Core::ParsedResponse(ADDB::ListExportsOutput)
       Log.info { "performing 'ListExports' operation" }
+      input.validate! if config.validate_input?
       response = post("ListExports", "/", input.to_json)
       Core::ParsedResponse(ADDB::ListExportsOutput).new(response)
     end
@@ -691,6 +725,7 @@ module Amazonite::DynamoDBV2
     # tables](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html).
     def list_global_tables(input : ADDB::ListGlobalTablesInput) : Core::ParsedResponse(ADDB::ListGlobalTablesOutput)
       Log.info { "performing 'ListGlobalTables' operation" }
+      input.validate! if config.validate_input?
       response = post("ListGlobalTables", "/", input.to_json)
       Core::ParsedResponse(ADDB::ListGlobalTablesOutput).new(response)
     end
@@ -698,6 +733,7 @@ module Amazonite::DynamoDBV2
     # Lists completed imports within the past 90 days.
     def list_imports(input : ADDB::ListImportsInput) : Core::ParsedResponse(ADDB::ListImportsOutput)
       Log.info { "performing 'ListImports' operation" }
+      input.validate! if config.validate_input?
       response = post("ListImports", "/", input.to_json)
       Core::ParsedResponse(ADDB::ListImportsOutput).new(response)
     end
@@ -706,6 +742,7 @@ module Amazonite::DynamoDBV2
     # from `ListTables` is paginated, with each page returning a maximum of 100 table names.
     def list_tables(input : ADDB::ListTablesInput) : Core::ParsedResponse(ADDB::ListTablesOutput)
       Log.info { "performing 'ListTables' operation" }
+      input.validate! if config.validate_input?
       response = post("ListTables", "/", input.to_json)
       Core::ParsedResponse(ADDB::ListTablesOutput).new(response)
     end
@@ -718,6 +755,7 @@ module Amazonite::DynamoDBV2
     # *Amazon DynamoDB Developer Guide*.
     def list_tags_of_resource(input : ADDB::ListTagsOfResourceInput) : Core::ParsedResponse(ADDB::ListTagsOfResourceOutput)
       Log.info { "performing 'ListTagsOfResource' operation" }
+      input.validate! if config.validate_input?
       response = post("ListTagsOfResource", "/", input.to_json)
       Core::ParsedResponse(ADDB::ListTagsOfResourceOutput).new(response)
     end
@@ -750,6 +788,7 @@ module Amazonite::DynamoDBV2
     # in the *Amazon DynamoDB Developer Guide*.
     def put_item(input : ADDB::PutItemInput) : Core::ParsedResponse(ADDB::PutItemOutput)
       Log.info { "performing 'PutItem' operation" }
+      input.validate! if config.validate_input?
       response = post("PutItem", "/", input.to_json)
       Core::ParsedResponse(ADDB::PutItemOutput).new(response)
     end
@@ -771,6 +810,7 @@ module Amazonite::DynamoDBV2
     # at that moment. Wait for a few seconds, and then try the `GetResourcePolicy` request again.
     def put_resource_policy(input : ADDB::PutResourcePolicyInput) : Core::ParsedResponse(ADDB::PutResourcePolicyOutput)
       Log.info { "performing 'PutResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       response = post("PutResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(ADDB::PutResourcePolicyOutput).new(response)
     end
@@ -821,6 +861,7 @@ module Amazonite::DynamoDBV2
     # reads only, so do not specify `ConsistentRead` when querying a global secondary index.
     def query(input : ADDB::QueryInput) : Core::ParsedResponse(ADDB::QueryOutput)
       Log.info { "performing 'Query' operation" }
+      input.validate! if config.validate_input?
       response = post("Query", "/", input.to_json)
       Core::ParsedResponse(ADDB::QueryOutput).new(response)
     end
@@ -845,6 +886,7 @@ module Amazonite::DynamoDBV2
     # - Time to Live (TTL) settings
     def restore_table_from_backup(input : ADDB::RestoreTableFromBackupInput) : Core::ParsedResponse(ADDB::RestoreTableFromBackupOutput)
       Log.info { "performing 'RestoreTableFromBackup' operation" }
+      input.validate! if config.validate_input?
       response = post("RestoreTableFromBackup", "/", input.to_json)
       Core::ParsedResponse(ADDB::RestoreTableFromBackupOutput).new(response)
     end
@@ -887,6 +929,7 @@ module Amazonite::DynamoDBV2
     # - Point in time recovery settings
     def restore_table_to_point_in_time(input : ADDB::RestoreTableToPointInTimeInput) : Core::ParsedResponse(ADDB::RestoreTableToPointInTimeOutput)
       Log.info { "performing 'RestoreTableToPointInTime' operation" }
+      input.validate! if config.validate_input?
       response = post("RestoreTableToPointInTime", "/", input.to_json)
       Core::ParsedResponse(ADDB::RestoreTableToPointInTimeOutput).new(response)
     end
@@ -931,6 +974,7 @@ module Amazonite::DynamoDBV2
     # scan see a consistent snapshot of the table when the scan operation was requested.
     def scan(input : ADDB::ScanInput) : Core::ParsedResponse(ADDB::ScanOutput)
       Log.info { "performing 'Scan' operation" }
+      input.validate! if config.validate_input?
       response = post("Scan", "/", input.to_json)
       Core::ParsedResponse(ADDB::ScanOutput).new(response)
     end
@@ -951,6 +995,7 @@ module Amazonite::DynamoDBV2
     # similarity.
     def search_vectors(input : ADDB::SearchVectorsInput) : Core::ParsedResponse(ADDB::SearchVectorsOutput)
       Log.info { "performing 'SearchVectors' operation" }
+      input.validate! if config.validate_input?
       response = post("SearchVectors", "/", input.to_json)
       Core::ParsedResponse(ADDB::SearchVectorsOutput).new(response)
     end
@@ -973,6 +1018,7 @@ module Amazonite::DynamoDBV2
     # *Amazon DynamoDB Developer Guide*.
     def tag_resource(input : ADDB::TagResourceInput) : Core::Response
       Log.info { "performing 'TagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("TagResource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -995,6 +1041,7 @@ module Amazonite::DynamoDBV2
     # - The aggregate size of the items in the transaction exceeded 4 MB.
     def transact_get_items(input : ADDB::TransactGetItemsInput) : Core::ParsedResponse(ADDB::TransactGetItemsOutput)
       Log.info { "performing 'TransactGetItems' operation" }
+      input.validate! if config.validate_input?
       response = post("TransactGetItems", "/", input.to_json)
       Core::ParsedResponse(ADDB::TransactGetItemsOutput).new(response)
     end
@@ -1047,6 +1094,7 @@ module Amazonite::DynamoDBV2
     # - There is a user error, such as an invalid data format.
     def transact_write_items(input : ADDB::TransactWriteItemsInput) : Core::ParsedResponse(ADDB::TransactWriteItemsOutput)
       Log.info { "performing 'TransactWriteItems' operation" }
+      input.validate! if config.validate_input?
       response = post("TransactWriteItems", "/", input.to_json)
       Core::ParsedResponse(ADDB::TransactWriteItemsOutput).new(response)
     end
@@ -1068,6 +1116,7 @@ module Amazonite::DynamoDBV2
     # *Amazon DynamoDB Developer Guide*.
     def untag_resource(input : ADDB::UntagResourceInput) : Core::Response
       Log.info { "performing 'UntagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("UntagResource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -1085,6 +1134,7 @@ module Amazonite::DynamoDBV2
     # value between 1 and 35 days.
     def update_continuous_backups(input : ADDB::UpdateContinuousBackupsInput) : Core::ParsedResponse(ADDB::UpdateContinuousBackupsOutput)
       Log.info { "performing 'UpdateContinuousBackups' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateContinuousBackups", "/", input.to_json)
       Core::ParsedResponse(ADDB::UpdateContinuousBackupsOutput).new(response)
     end
@@ -1097,6 +1147,7 @@ module Amazonite::DynamoDBV2
     # enable CloudWatch Contributor Insights for DynamoDB for this table.
     def update_contributor_insights(input : ADDB::UpdateContributorInsightsInput) : Core::ParsedResponse(ADDB::UpdateContributorInsightsOutput)
       Log.info { "performing 'UpdateContributorInsights' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateContributorInsights", "/", input.to_json)
       Core::ParsedResponse(ADDB::UpdateContributorInsightsOutput).new(response)
     end
@@ -1137,6 +1188,7 @@ module Amazonite::DynamoDBV2
     # - The global secondary indexes must have the same provisioned and maximum write capacity units.
     def update_global_table(input : ADDB::UpdateGlobalTableInput) : Core::ParsedResponse(ADDB::UpdateGlobalTableOutput)
       Log.info { "performing 'UpdateGlobalTable' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateGlobalTable", "/", input.to_json)
       Core::ParsedResponse(ADDB::UpdateGlobalTableOutput).new(response)
     end
@@ -1156,6 +1208,7 @@ module Amazonite::DynamoDBV2
     # tables](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html).
     def update_global_table_settings(input : ADDB::UpdateGlobalTableSettingsInput) : Core::ParsedResponse(ADDB::UpdateGlobalTableSettingsOutput)
       Log.info { "performing 'UpdateGlobalTableSettings' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateGlobalTableSettings", "/", input.to_json)
       Core::ParsedResponse(ADDB::UpdateGlobalTableSettingsOutput).new(response)
     end
@@ -1169,6 +1222,7 @@ module Amazonite::DynamoDBV2
     # `ReturnValues` parameter.
     def update_item(input : ADDB::UpdateItemInput) : Core::ParsedResponse(ADDB::UpdateItemOutput)
       Log.info { "performing 'UpdateItem' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateItem", "/", input.to_json)
       Core::ParsedResponse(ADDB::UpdateItemOutput).new(response)
     end
@@ -1176,6 +1230,7 @@ module Amazonite::DynamoDBV2
     # The command to update the Kinesis stream destination.
     def update_kinesis_streaming_destination(input : ADDB::UpdateKinesisStreamingDestinationInput) : Core::ParsedResponse(ADDB::UpdateKinesisStreamingDestinationOutput)
       Log.info { "performing 'UpdateKinesisStreamingDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateKinesisStreamingDestination", "/", input.to_json)
       Core::ParsedResponse(ADDB::UpdateKinesisStreamingDestinationOutput).new(response)
     end
@@ -1197,6 +1252,7 @@ module Amazonite::DynamoDBV2
     # When the table returns to the `ACTIVE` state, the `UpdateTable` operation is complete.
     def update_table(input : ADDB::UpdateTableInput) : Core::ParsedResponse(ADDB::UpdateTableOutput)
       Log.info { "performing 'UpdateTable' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateTable", "/", input.to_json)
       Core::ParsedResponse(ADDB::UpdateTableOutput).new(response)
     end
@@ -1204,6 +1260,7 @@ module Amazonite::DynamoDBV2
     # Updates auto scaling settings on your global tables at once.
     def update_table_replica_auto_scaling(input : ADDB::UpdateTableReplicaAutoScalingInput) : Core::ParsedResponse(ADDB::UpdateTableReplicaAutoScalingOutput)
       Log.info { "performing 'UpdateTableReplicaAutoScaling' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateTableReplicaAutoScaling", "/", input.to_json)
       Core::ParsedResponse(ADDB::UpdateTableReplicaAutoScalingOutput).new(response)
     end
@@ -1234,6 +1291,7 @@ module Amazonite::DynamoDBV2
     # DynamoDB Developer Guide.
     def update_time_to_live(input : ADDB::UpdateTimeToLiveInput) : Core::ParsedResponse(ADDB::UpdateTimeToLiveOutput)
       Log.info { "performing 'UpdateTimeToLive' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateTimeToLive", "/", input.to_json)
       Core::ParsedResponse(ADDB::UpdateTimeToLiveOutput).new(response)
     end

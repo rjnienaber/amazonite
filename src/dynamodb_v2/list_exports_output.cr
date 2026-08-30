@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class ListExportsOutput
     include JSON::Serializable
@@ -16,5 +18,13 @@ module Amazonite::DynamoDBV2
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @export_summaries
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@export_summaries, @next_token)
   end
 end

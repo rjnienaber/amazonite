@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The result of the query.
   class OpsEntity
@@ -16,5 +18,13 @@ module Amazonite::SsmV1
       @data : Hash(String, OpsEntityItem) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @data
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@id, @data)
   end
 end

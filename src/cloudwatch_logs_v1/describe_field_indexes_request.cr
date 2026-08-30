@@ -45,5 +45,23 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @log_group_identifiers
+        raise Core::ValidationError.new("logGroupIdentifiers must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("logGroupIdentifiers must have at most 100 item(s)") if value.size > 100
+      end
+
+      if value = @index_categories
+        raise Core::ValidationError.new("indexCategories must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("indexCategories must have at most 4 item(s)") if value.size > 4
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
+    end
+
+    def_equals_and_hash(@log_group_identifiers, @index_categories, @next_token)
   end
 end

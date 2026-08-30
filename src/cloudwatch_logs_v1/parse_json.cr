@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This processor parses log events that are in JSON format. It can extract JSON key-value pairs
   # and place them under a destination that you specify.
@@ -27,5 +29,19 @@ module Amazonite::CloudWatchLogsV1
       @destination : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @source
+        raise Core::ValidationError.new("source length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("source length must be <= 128") if value.size > 128
+      end
+
+      if value = @destination
+        raise Core::ValidationError.new("destination length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("destination length must be <= 128") if value.size > 128
+      end
+    end
+
+    def_equals_and_hash(@source, @destination)
   end
 end

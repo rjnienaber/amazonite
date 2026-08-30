@@ -1,4 +1,5 @@
 private alias AEB = Amazonite::EventBridgeV1
+private alias Core = Amazonite::Core
 
 module Amazonite::EventBridgeV1
   class DescribeRuleResponse
@@ -63,5 +64,56 @@ module Amazonite::EventBridgeV1
       @created_by : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Arn length must be <= 1600") if value.size > 1600
+      end
+
+      if value = @event_pattern
+        raise Core::ValidationError.new("EventPattern length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("EventPattern length must be <= 4096") if value.size > 4096
+      end
+
+      if value = @schedule_expression
+        raise Core::ValidationError.new("ScheduleExpression length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("ScheduleExpression length must be <= 256") if value.size > 256
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 512") if value.size > 512
+      end
+
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RoleArn length must be <= 1600") if value.size > 1600
+      end
+
+      if value = @managed_by
+        raise Core::ValidationError.new("ManagedBy length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ManagedBy length must be <= 128") if value.size > 128
+      end
+
+      if value = @event_bus_name
+        raise Core::ValidationError.new("EventBusName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EventBusName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("EventBusName does not match the required pattern") unless value.matches?(Regex.new("^[/\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @created_by
+        raise Core::ValidationError.new("CreatedBy length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CreatedBy length must be <= 128") if value.size > 128
+      end
+    end
+
+    def_equals_and_hash(@name, @arn, @event_pattern, @schedule_expression, @state, @description, @role_arn, @managed_by, @event_bus_name, @created_by)
   end
 end

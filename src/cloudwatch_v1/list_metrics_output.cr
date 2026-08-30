@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class ListMetricsOutput
     include JSON::Serializable
@@ -24,5 +26,13 @@ module Amazonite::CloudWatchV1
       @owning_accounts : Array(String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @metrics
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@metrics, @next_token, @owning_accounts)
   end
 end

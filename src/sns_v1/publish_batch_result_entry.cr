@@ -48,5 +48,10 @@ module Amazonite::SnsV1
         sequence_number: Core::XMLValue.string(node.xpath_node("*[local-name()='SequenceNumber']")),
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@id, @message_id, @sequence_number)
   end
 end

@@ -111,5 +111,40 @@ module Amazonite::CloudWatchV1
       @unit : StandardUnit | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @namespace
+        raise Core::ValidationError.new("Namespace length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Namespace length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("Namespace does not match the required pattern") unless value.matches?(Regex.new("^[^:]"))
+      end
+
+      if value = @metric_name
+        raise Core::ValidationError.new("MetricName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MetricName length must be <= 255") if value.size > 255
+      end
+
+      if value = @dimensions
+        raise Core::ValidationError.new("Dimensions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Dimensions must have at most 30 item(s)") if value.size > 30
+        value.each(&.validate!)
+      end
+
+      if value = @period
+        raise Core::ValidationError.new("Period value must be >= 1") if value < 1
+      end
+
+      if value = @statistics
+        raise Core::ValidationError.new("Statistics must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Statistics must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @extended_statistics
+        raise Core::ValidationError.new("ExtendedStatistics must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("ExtendedStatistics must have at most 10 item(s)") if value.size > 10
+      end
+    end
+
+    def_equals_and_hash(@namespace, @metric_name, @dimensions, @start_time, @end_time, @period, @statistics, @extended_statistics, @unit)
   end
 end

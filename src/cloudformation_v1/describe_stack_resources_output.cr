@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudFormationV1
   # The output for a DescribeStackResources action.
   class DescribeStackResourcesOutput
@@ -23,5 +25,13 @@ module Amazonite::CloudFormationV1
         stack_resources: node.xpath_nodes("*[local-name()='StackResources']/*[local-name()='member']").map { |n| StackResource.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @stack_resources
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@stack_resources)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # One or more filters. Use a filter to return a more specific list of documents.
   #
@@ -80,5 +82,14 @@ module Amazonite::SsmV1
       @values : Array(String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key
+        raise Core::ValidationError.new("Key length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Key length must be <= 128") if value.size > 128
+      end
+    end
+
+    def_equals_and_hash(@key, @values)
   end
 end

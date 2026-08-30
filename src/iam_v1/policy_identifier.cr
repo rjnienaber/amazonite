@@ -55,5 +55,18 @@ module Amazonite::IamV1
         inline_policy_identifier: node.xpath_node("*[local-name()='InlinePolicyIdentifier']").try { |n| InlinePolicyIdentifierType.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @policy_arn
+        raise Core::ValidationError.new("PolicyArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("PolicyArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @inline_policy_identifier
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@policy_type, @policy_arn, @inline_policy_identifier)
   end
 end

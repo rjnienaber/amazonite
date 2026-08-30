@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # The parameters for the table created as part of the import operation.
@@ -50,5 +51,44 @@ module Amazonite::DynamoDBV2
       @vector_indexes : Array(VectorIndex) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("TableName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("TableName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @attribute_definitions
+        value.each(&.validate!)
+      end
+
+      if value = @key_schema
+        raise Core::ValidationError.new("KeySchema must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+
+      if value = @provisioned_throughput
+        value.validate!
+      end
+
+      if value = @on_demand_throughput
+        value.validate!
+      end
+
+      if value = @sse_specification
+        value.validate!
+      end
+
+      if value = @global_secondary_indexes
+        value.each(&.validate!)
+      end
+
+      if value = @vector_indexes
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@table_name, @attribute_definitions, @key_schema, @billing_mode, @provisioned_throughput, @on_demand_throughput, @sse_specification, @global_secondary_indexes, @vector_indexes)
   end
 end

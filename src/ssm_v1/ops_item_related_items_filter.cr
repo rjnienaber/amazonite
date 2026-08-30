@@ -24,5 +24,10 @@ module Amazonite::SsmV1
       @operator : OpsItemRelatedItemsFilterOperator,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@key, @values, @operator)
   end
 end

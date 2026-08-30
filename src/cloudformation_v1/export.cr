@@ -49,5 +49,10 @@ module Amazonite::CloudFormationV1
         value: Core::XMLValue.string(node.xpath_node("*[local-name()='Value']")),
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@exporting_stack_id, @name, @value)
   end
 end

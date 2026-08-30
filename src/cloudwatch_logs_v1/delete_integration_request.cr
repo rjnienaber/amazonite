@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class DeleteIntegrationRequest
     include JSON::Serializable
@@ -19,5 +21,15 @@ module Amazonite::CloudWatchLogsV1
       @force : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @integration_name
+        raise Core::ValidationError.new("integrationName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("integrationName length must be <= 50") if value.size > 50
+        raise Core::ValidationError.new("integrationName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+    end
+
+    def_equals_and_hash(@integration_name, @force)
   end
 end

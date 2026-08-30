@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # Indicates the CloudWatch math expression that provides the time series the anomaly detector uses
   # as input. The designated math expression must return a single time series.
@@ -17,5 +19,13 @@ module Amazonite::CloudWatchV1
       @metric_data_queries : Array(MetricDataQuery) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @metric_data_queries
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@metric_data_queries)
   end
 end

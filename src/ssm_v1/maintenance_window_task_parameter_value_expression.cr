@@ -11,5 +11,10 @@ module Amazonite::SsmV1
       @values : Array(String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@values)
   end
 end

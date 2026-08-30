@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class DeleteBackupOutput
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::DynamoDBV2
       @backup_description : BackupDescription | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @backup_description
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@backup_description)
   end
 end

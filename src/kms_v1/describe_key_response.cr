@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class DescribeKeyResponse
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::KmsV1
       @key_metadata : KeyMetadata | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key_metadata
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@key_metadata)
   end
 end

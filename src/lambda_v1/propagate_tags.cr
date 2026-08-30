@@ -20,5 +20,10 @@ module Amazonite::LambdaV1
       @explicit_tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@mode, @explicit_tags)
   end
 end

@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class GetScheduledQueryResponse
@@ -107,5 +108,66 @@ module Amazonite::CloudWatchLogsV1
       @last_updated_time : Int64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("name length must be <= 300") if value.size > 300
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @query_string
+        raise Core::ValidationError.new("queryString length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("queryString length must be <= 10000") if value.size > 10000
+      end
+
+      if value = @log_group_identifiers
+        raise Core::ValidationError.new("logGroupIdentifiers must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("logGroupIdentifiers must have at most 50 item(s)") if value.size > 50
+      end
+
+      if value = @schedule_expression
+        raise Core::ValidationError.new("scheduleExpression length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("scheduleExpression length must be <= 256") if value.size > 256
+      end
+
+      if value = @timezone
+        raise Core::ValidationError.new("timezone length must be >= 1") if value.size < 1
+      end
+
+      if value = @destination_configuration
+        value.validate!
+      end
+
+      if value = @last_triggered_time
+        raise Core::ValidationError.new("lastTriggeredTime value must be >= 0") if value < 0
+      end
+
+      if value = @schedule_start_time
+        raise Core::ValidationError.new("scheduleStartTime value must be >= 0") if value < 0
+      end
+
+      if value = @schedule_end_time
+        raise Core::ValidationError.new("scheduleEndTime value must be >= 0") if value < 0
+      end
+
+      if value = @execution_role_arn
+        raise Core::ValidationError.new("executionRoleArn length must be >= 1") if value.size < 1
+      end
+
+      if value = @creation_time
+        raise Core::ValidationError.new("creationTime value must be >= 0") if value < 0
+      end
+
+      if value = @last_updated_time
+        raise Core::ValidationError.new("lastUpdatedTime value must be >= 0") if value < 0
+      end
+    end
+
+    def_equals_and_hash(@scheduled_query_arn, @name, @description, @query_language, @query_string, @log_group_identifiers, @schedule_expression, @timezone, @start_time_offset, @end_time_offset, @destination_configuration, @state, @schedule_type, @last_triggered_time, @last_execution_status, @schedule_start_time, @schedule_end_time, @execution_role_arn, @creation_time, @last_updated_time)
   end
 end

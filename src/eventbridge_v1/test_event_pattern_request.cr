@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class TestEventPatternRequest
     include JSON::Serializable
@@ -34,5 +36,14 @@ module Amazonite::EventBridgeV1
       @event : String,
     )
     end
+
+    def validate! : Nil
+      if value = @event_pattern
+        raise Core::ValidationError.new("EventPattern length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("EventPattern length must be <= 4096") if value.size > 4096
+      end
+    end
+
+    def_equals_and_hash(@event_pattern, @event)
   end
 end

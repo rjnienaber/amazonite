@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class GetLogAnomalyDetectorResponse
@@ -60,5 +61,36 @@ module Amazonite::CloudWatchLogsV1
       @anomaly_visibility_time : Int64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @detector_name
+        raise Core::ValidationError.new("detectorName length must be >= 1") if value.size < 1
+      end
+
+      if value = @filter_pattern
+        raise Core::ValidationError.new("filterPattern length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("filterPattern length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @kms_key_id
+        raise Core::ValidationError.new("kmsKeyId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("kmsKeyId length must be <= 256") if value.size > 256
+      end
+
+      if value = @creation_time_stamp
+        raise Core::ValidationError.new("creationTimeStamp value must be >= 0") if value < 0
+      end
+
+      if value = @last_modified_time_stamp
+        raise Core::ValidationError.new("lastModifiedTimeStamp value must be >= 0") if value < 0
+      end
+
+      if value = @anomaly_visibility_time
+        raise Core::ValidationError.new("anomalyVisibilityTime value must be >= 7") if value < 7
+        raise Core::ValidationError.new("anomalyVisibilityTime value must be <= 90") if value > 90
+      end
+    end
+
+    def_equals_and_hash(@detector_name, @log_group_arn_list, @evaluation_frequency, @filter_pattern, @anomaly_detector_status, @kms_key_id, @creation_time_stamp, @last_modified_time_stamp, @anomaly_visibility_time)
   end
 end

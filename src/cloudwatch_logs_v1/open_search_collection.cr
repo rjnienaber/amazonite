@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This structure contains information about the OpenSearch Service collection used for this
   # integration. An OpenSearch Service collection is a logical grouping of one or more indexes that
@@ -25,5 +27,19 @@ module Amazonite::CloudWatchLogsV1
       @status : OpenSearchResourceStatus | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @collection_endpoint
+        raise Core::ValidationError.new("collectionEndpoint length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("collectionEndpoint length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("collectionEndpoint does not match the required pattern") unless value.matches?(Regex.new("^https://[\\.\\-_/#:A-Za-z0-9]+\\.com$"))
+      end
+
+      if value = @status
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@collection_endpoint, @collection_arn, @status)
   end
 end

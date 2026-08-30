@@ -22,6 +22,7 @@ module Amazonite::LambdaV1
     # trigger in the service where you originally configured it.
     def delete_function(input : AL::DeleteFunctionRequest) : Core::ParsedResponse(AL::DeleteFunctionResponse)
       Log.info { "performing 'DeleteFunction' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -42,6 +43,7 @@ module Amazonite::LambdaV1
     # To configure options for asynchronous invocation, use PutFunctionEventInvokeConfig.
     def delete_function_event_invoke_config(input : AL::DeleteFunctionEventInvokeConfigRequest) : Core::Response
       Log.info { "performing 'DeleteFunctionEventInvokeConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2019-09-25/functions/#{URI.encode_path_segment(input.function_name)}/event-invoke-config"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -59,6 +61,7 @@ module Amazonite::LambdaV1
     # Lambda resource.
     def delete_resource_policy(input : AL::DeleteResourcePolicyRequest) : Core::Response
       Log.info { "performing 'DeleteResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       path = "/2026-07-09/resource-policy/#{URI.encode_path_segment(input.resource_arn)}"
       query = URI::Params.build do |form|
         if value = input.revision_id
@@ -76,6 +79,7 @@ module Amazonite::LambdaV1
     # Services Region.
     def get_account_settings(input : AL::GetAccountSettingsRequest) : Core::ParsedResponse(AL::GetAccountSettingsResponse)
       Log.info { "performing 'GetAccountSettings' operation" }
+      input.validate! if config.validate_input?
       path = "/2016-08-19/account-settings"
       headers = HTTP::Headers.new
       response = rest_request("GetAccountSettings", "GET", path, headers, nil)
@@ -87,6 +91,7 @@ module Amazonite::LambdaV1
     # To configure options for asynchronous invocation, use PutFunctionEventInvokeConfig.
     def get_function_event_invoke_config(input : AL::GetFunctionEventInvokeConfigRequest) : Core::ParsedResponse(AL::FunctionEventInvokeConfig)
       Log.info { "performing 'GetFunctionEventInvokeConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2019-09-25/functions/#{URI.encode_path_segment(input.function_name)}/event-invoke-config"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -104,6 +109,7 @@ module Amazonite::LambdaV1
     # attached to a Lambda resource.
     def get_resource_policy(input : AL::GetResourcePolicyRequest) : Core::ParsedResponse(AL::GetResourcePolicyResponse)
       Log.info { "performing 'GetResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       path = "/2026-07-09/resource-policy/#{URI.encode_path_segment(input.resource_arn)}"
       headers = HTTP::Headers.new
       response = rest_request("GetResourcePolicy", "GET", path, headers, nil)
@@ -115,6 +121,7 @@ module Amazonite::LambdaV1
     # To configure options for asynchronous invocation, use PutFunctionEventInvokeConfig.
     def list_function_event_invoke_configs(input : AL::ListFunctionEventInvokeConfigsRequest) : Core::ParsedResponse(AL::ListFunctionEventInvokeConfigsResponse)
       Log.info { "performing 'ListFunctionEventInvokeConfigs' operation" }
+      input.validate! if config.validate_input?
       path = "/2019-09-25/functions/#{URI.encode_path_segment(input.function_name)}/event-invoke-config/list"
       query = URI::Params.build do |form|
         if value = input.marker
@@ -135,6 +142,7 @@ module Amazonite::LambdaV1
     # tags with GetFunction.
     def list_tags(input : AL::ListTagsRequest) : Core::ParsedResponse(AL::ListTagsResponse)
       Log.info { "performing 'ListTags' operation" }
+      input.validate! if config.validate_input?
       path = "/2017-03-31/tags/#{URI.encode_path_segment(input.resource)}"
       headers = HTTP::Headers.new
       response = rest_request("ListTags", "GET", path, headers, nil)
@@ -162,6 +170,7 @@ module Amazonite::LambdaV1
     # invocations, use another destination type.
     def put_function_event_invoke_config(input : AL::PutFunctionEventInvokeConfigRequest) : Core::ParsedResponse(AL::FunctionEventInvokeConfig)
       Log.info { "performing 'PutFunctionEventInvokeConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2019-09-25/functions/#{URI.encode_path_segment(input.function_name)}/event-invoke-config"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -187,6 +196,7 @@ module Amazonite::LambdaV1
     # permissions using the AddPermission operation, the new policy overwrites those permissions.
     def put_resource_policy(input : AL::PutResourcePolicyRequest) : Core::ParsedResponse(AL::PutResourcePolicyResponse)
       Log.info { "performing 'PutResourcePolicy' operation" }
+      input.validate! if config.validate_input?
       path = "/2026-07-09/resource-policy/#{URI.encode_path_segment(input.resource_arn)}"
       headers = HTTP::Headers.new
       response = rest_request("PutResourcePolicy", "PUT", path, headers, input.to_json)
@@ -197,6 +207,7 @@ module Amazonite::LambdaV1
     # external system cannot complete a callback operation successfully.
     def send_durable_execution_callback_failure(input : AL::SendDurableExecutionCallbackFailureRequest) : Core::ParsedResponse(AL::SendDurableExecutionCallbackFailureResponse)
       Log.info { "performing 'SendDurableExecutionCallbackFailure' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-12-01/durable-execution-callbacks/#{URI.encode_path_segment(input.callback_id)}/fail"
       headers = HTTP::Headers.new
       response = rest_request("SendDurableExecutionCallbackFailure", "POST", path, headers, input.error.try(&.to_json))
@@ -207,6 +218,7 @@ module Amazonite::LambdaV1
     # to extend the callback timeout period while the external operation is still in progress.
     def send_durable_execution_callback_heartbeat(input : AL::SendDurableExecutionCallbackHeartbeatRequest) : Core::ParsedResponse(AL::SendDurableExecutionCallbackHeartbeatResponse)
       Log.info { "performing 'SendDurableExecutionCallbackHeartbeat' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-12-01/durable-execution-callbacks/#{URI.encode_path_segment(input.callback_id)}/heartbeat"
       headers = HTTP::Headers.new
       response = rest_request("SendDurableExecutionCallbackHeartbeat", "POST", path, headers, nil)
@@ -217,6 +229,7 @@ module Amazonite::LambdaV1
     # API when an external system has successfully completed a callback operation.
     def send_durable_execution_callback_success(input : AL::SendDurableExecutionCallbackSuccessRequest) : Core::ParsedResponse(AL::SendDurableExecutionCallbackSuccessResponse)
       Log.info { "performing 'SendDurableExecutionCallbackSuccess' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-12-01/durable-execution-callbacks/#{URI.encode_path_segment(input.callback_id)}/succeed"
       headers = HTTP::Headers.new
       response = rest_request("SendDurableExecutionCallbackSuccess", "POST", path, headers, input.result)
@@ -227,6 +240,7 @@ module Amazonite::LambdaV1
     # source mapping, or code signing configuration.
     def tag_resource(input : AL::TagResourceRequest) : Core::Response
       Log.info { "performing 'TagResource' operation" }
+      input.validate! if config.validate_input?
       path = "/2017-03-31/tags/#{URI.encode_path_segment(input.resource)}"
       headers = HTTP::Headers.new
       response = rest_request("TagResource", "POST", path, headers, input.to_json)
@@ -237,6 +251,7 @@ module Amazonite::LambdaV1
     # source mapping, or code signing configuration.
     def untag_resource(input : AL::UntagResourceRequest) : Core::Response
       Log.info { "performing 'UntagResource' operation" }
+      input.validate! if config.validate_input?
       path = "/2017-03-31/tags/#{URI.encode_path_segment(input.resource)}"
       query = URI::Params.build do |form|
         (input.tag_keys || [] of String).each do |value|
@@ -254,6 +269,7 @@ module Amazonite::LambdaV1
     # To configure options for asynchronous invocation, use PutFunctionEventInvokeConfig.
     def update_function_event_invoke_config(input : AL::UpdateFunctionEventInvokeConfigRequest) : Core::ParsedResponse(AL::FunctionEventInvokeConfig)
       Log.info { "performing 'UpdateFunctionEventInvokeConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2019-09-25/functions/#{URI.encode_path_segment(input.function_name)}/event-invoke-config"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -269,6 +285,7 @@ module Amazonite::LambdaV1
     # Returns a list of function versions that are configured to use a specific capacity provider.
     def list_function_versions_by_capacity_provider(input : AL::ListFunctionVersionsByCapacityProviderRequest) : Core::ParsedResponse(AL::ListFunctionVersionsByCapacityProviderResponse)
       Log.info { "performing 'ListFunctionVersionsByCapacityProvider' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-11-30/capacity-providers/#{URI.encode_path_segment(input.capacity_provider_name)}/function-versions"
       query = URI::Params.build do |form|
         if value = input.marker
@@ -287,6 +304,7 @@ module Amazonite::LambdaV1
     # Creates a capacity provider that manages compute resources for Lambda functions
     def create_capacity_provider(input : AL::CreateCapacityProviderRequest) : Core::ParsedResponse(AL::CreateCapacityProviderResponse)
       Log.info { "performing 'CreateCapacityProvider' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-11-30/capacity-providers"
       headers = HTTP::Headers.new
       response = rest_request("CreateCapacityProvider", "POST", path, headers, input.to_json)
@@ -297,6 +315,7 @@ module Amazonite::LambdaV1
     # and associated resources.
     def get_capacity_provider(input : AL::GetCapacityProviderRequest) : Core::ParsedResponse(AL::GetCapacityProviderResponse)
       Log.info { "performing 'GetCapacityProvider' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-11-30/capacity-providers/#{URI.encode_path_segment(input.capacity_provider_name)}"
       headers = HTTP::Headers.new
       response = rest_request("GetCapacityProvider", "GET", path, headers, nil)
@@ -306,6 +325,7 @@ module Amazonite::LambdaV1
     # Updates the configuration of an existing capacity provider.
     def update_capacity_provider(input : AL::UpdateCapacityProviderRequest) : Core::ParsedResponse(AL::UpdateCapacityProviderResponse)
       Log.info { "performing 'UpdateCapacityProvider' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-11-30/capacity-providers/#{URI.encode_path_segment(input.capacity_provider_name)}"
       headers = HTTP::Headers.new
       response = rest_request("UpdateCapacityProvider", "PUT", path, headers, input.to_json)
@@ -316,6 +336,7 @@ module Amazonite::LambdaV1
     # by Lambda functions.
     def delete_capacity_provider(input : AL::DeleteCapacityProviderRequest) : Core::ParsedResponse(AL::DeleteCapacityProviderResponse)
       Log.info { "performing 'DeleteCapacityProvider' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-11-30/capacity-providers/#{URI.encode_path_segment(input.capacity_provider_name)}"
       headers = HTTP::Headers.new
       response = rest_request("DeleteCapacityProvider", "DELETE", path, headers, nil)
@@ -325,6 +346,7 @@ module Amazonite::LambdaV1
     # Returns a list of capacity providers in your account.
     def list_capacity_providers(input : AL::ListCapacityProvidersRequest) : Core::ParsedResponse(AL::ListCapacityProvidersResponse)
       Log.info { "performing 'ListCapacityProviders' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-11-30/capacity-providers"
       query = URI::Params.build do |form|
         if value = input.state.try(&.to_json_object_key)
@@ -347,6 +369,7 @@ module Amazonite::LambdaV1
     # function is using it.
     def delete_code_signing_config(input : AL::DeleteCodeSigningConfigRequest) : Core::Response
       Log.info { "performing 'DeleteCodeSigningConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2020-04-22/code-signing-configs/#{URI.encode_path_segment(input.code_signing_config_arn)}"
       headers = HTTP::Headers.new
       response = rest_request("DeleteCodeSigningConfig", "DELETE", path, headers, nil)
@@ -356,6 +379,7 @@ module Amazonite::LambdaV1
     # Returns information about the specified code signing configuration.
     def get_code_signing_config(input : AL::GetCodeSigningConfigRequest) : Core::ParsedResponse(AL::GetCodeSigningConfigResponse)
       Log.info { "performing 'GetCodeSigningConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2020-04-22/code-signing-configs/#{URI.encode_path_segment(input.code_signing_config_arn)}"
       headers = HTTP::Headers.new
       response = rest_request("GetCodeSigningConfig", "GET", path, headers, nil)
@@ -366,6 +390,7 @@ module Amazonite::LambdaV1
     # prior to deleting a code signing configuration, to verify that no functions are using it.
     def list_functions_by_code_signing_config(input : AL::ListFunctionsByCodeSigningConfigRequest) : Core::ParsedResponse(AL::ListFunctionsByCodeSigningConfigResponse)
       Log.info { "performing 'ListFunctionsByCodeSigningConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2020-04-22/code-signing-configs/#{URI.encode_path_segment(input.code_signing_config_arn)}/functions"
       query = URI::Params.build do |form|
         if value = input.marker
@@ -385,6 +410,7 @@ module Amazonite::LambdaV1
     # next time a user tries to deploy a code package to the function.
     def update_code_signing_config(input : AL::UpdateCodeSigningConfigRequest) : Core::ParsedResponse(AL::UpdateCodeSigningConfigResponse)
       Log.info { "performing 'UpdateCodeSigningConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2020-04-22/code-signing-configs/#{URI.encode_path_segment(input.code_signing_config_arn)}"
       headers = HTTP::Headers.new
       response = rest_request("UpdateCodeSigningConfig", "PUT", path, headers, input.to_json)
@@ -397,6 +423,7 @@ module Amazonite::LambdaV1
     # (action to be taken if deployment validation checks fail).
     def create_code_signing_config(input : AL::CreateCodeSigningConfigRequest) : Core::ParsedResponse(AL::CreateCodeSigningConfigResponse)
       Log.info { "performing 'CreateCodeSigningConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2020-04-22/code-signing-configs"
       headers = HTTP::Headers.new
       response = rest_request("CreateCodeSigningConfig", "POST", path, headers, input.to_json)
@@ -409,6 +436,7 @@ module Amazonite::LambdaV1
     # return fewer configurations per call.
     def list_code_signing_configs(input : AL::ListCodeSigningConfigsRequest) : Core::ParsedResponse(AL::ListCodeSigningConfigsResponse)
       Log.info { "performing 'ListCodeSigningConfigs' operation" }
+      input.validate! if config.validate_input?
       path = "/2020-04-22/code-signing-configs"
       query = URI::Params.build do |form|
         if value = input.marker
@@ -435,6 +463,7 @@ module Amazonite::LambdaV1
     # duplicate or out-of-order state updates.
     def checkpoint_durable_execution(input : AL::CheckpointDurableExecutionRequest) : Core::ParsedResponse(AL::CheckpointDurableExecutionResponse)
       Log.info { "performing 'CheckpointDurableExecution' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-12-01/durable-executions/#{URI.encode_path_segment(input.durable_execution_arn)}/checkpoint"
       headers = HTTP::Headers.new
       response = rest_request("CheckpointDurableExecution", "POST", path, headers, input.to_json)
@@ -451,6 +480,7 @@ module Amazonite::LambdaV1
     # as step results and callback payloads.
     def get_durable_execution_history(input : AL::GetDurableExecutionHistoryRequest) : Core::ParsedResponse(AL::GetDurableExecutionHistoryResponse)
       Log.info { "performing 'GetDurableExecutionHistory' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-12-01/durable-executions/#{URI.encode_path_segment(input.durable_execution_arn)}/history"
       query = URI::Params.build do |form|
         if value = input.include_execution_data.try(&.to_s)
@@ -483,6 +513,7 @@ module Amazonite::LambdaV1
     # replayed.
     def get_durable_execution_state(input : AL::GetDurableExecutionStateRequest) : Core::ParsedResponse(AL::GetDurableExecutionStateResponse)
       Log.info { "performing 'GetDurableExecutionState' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-12-01/durable-executions/#{URI.encode_path_segment(input.durable_execution_arn)}/state"
       query = URI::Params.build do |form|
         if value = input.checkpoint_token
@@ -506,6 +537,7 @@ module Amazonite::LambdaV1
     # transitions to STOPPED status and cannot be resumed. Any in-progress operations are terminated.
     def stop_durable_execution(input : AL::StopDurableExecutionRequest) : Core::ParsedResponse(AL::StopDurableExecutionResponse)
       Log.info { "performing 'StopDurableExecution' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-12-01/durable-executions/#{URI.encode_path_segment(input.durable_execution_arn)}/stop"
       headers = HTTP::Headers.new
       response = rest_request("StopDurableExecution", "POST", path, headers, input.error.try(&.to_json))
@@ -518,6 +550,7 @@ module Amazonite::LambdaV1
     # time and usage statistics.
     def get_durable_execution(input : AL::GetDurableExecutionRequest) : Core::ParsedResponse(AL::GetDurableExecutionResponse)
       Log.info { "performing 'GetDurableExecution' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-12-01/durable-executions/#{URI.encode_path_segment(input.durable_execution_arn)}"
       query = URI::Params.build do |form|
         if value = input.include_execution_data.try(&.to_s)
@@ -597,6 +630,7 @@ module Amazonite::LambdaV1
     # DocumentDB](https://docs.aws.amazon.com/lambda/latest/dg/with-documentdb.html#docdb-configuration)
     def create_event_source_mapping(input : AL::CreateEventSourceMappingRequest) : Core::ParsedResponse(AL::EventSourceMappingConfiguration)
       Log.info { "performing 'CreateEventSourceMapping' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/event-source-mappings"
       headers = HTTP::Headers.new
       response = rest_request("CreateEventSourceMapping", "POST", path, headers, input.to_json)
@@ -607,6 +641,7 @@ module Amazonite::LambdaV1
     # output of ListEventSourceMappings.
     def get_event_source_mapping(input : AL::GetEventSourceMappingRequest) : Core::ParsedResponse(AL::EventSourceMappingConfiguration)
       Log.info { "performing 'GetEventSourceMapping' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/event-source-mappings/#{URI.encode_path_segment(input.uuid)}"
       headers = HTTP::Headers.new
       response = rest_request("GetEventSourceMapping", "GET", path, headers, nil)
@@ -680,6 +715,7 @@ module Amazonite::LambdaV1
     # DocumentDB](https://docs.aws.amazon.com/lambda/latest/dg/with-documentdb.html#docdb-configuration)
     def update_event_source_mapping(input : AL::UpdateEventSourceMappingRequest) : Core::ParsedResponse(AL::EventSourceMappingConfiguration)
       Log.info { "performing 'UpdateEventSourceMapping' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/event-source-mappings/#{URI.encode_path_segment(input.uuid)}"
       headers = HTTP::Headers.new
       response = rest_request("UpdateEventSourceMapping", "PUT", path, headers, input.to_json)
@@ -694,6 +730,7 @@ module Amazonite::LambdaV1
     # completely deleted for several seconds.
     def delete_event_source_mapping(input : AL::DeleteEventSourceMappingRequest) : Core::ParsedResponse(AL::EventSourceMappingConfiguration)
       Log.info { "performing 'DeleteEventSourceMapping' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/event-source-mappings/#{URI.encode_path_segment(input.uuid)}"
       headers = HTTP::Headers.new
       response = rest_request("DeleteEventSourceMapping", "DELETE", path, headers, nil)
@@ -704,6 +741,7 @@ module Amazonite::LambdaV1
     # a single event source.
     def list_event_source_mappings(input : AL::ListEventSourceMappingsRequest) : Core::ParsedResponse(AL::ListEventSourceMappingsResponse)
       Log.info { "performing 'ListEventSourceMappings' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/event-source-mappings"
       query = URI::Params.build do |form|
         if value = input.event_source_arn
@@ -728,6 +766,7 @@ module Amazonite::LambdaV1
     # Removes a concurrent execution limit from a function.
     def delete_function_concurrency(input : AL::DeleteFunctionConcurrencyRequest) : Core::Response
       Log.info { "performing 'DeleteFunctionConcurrency' operation" }
+      input.validate! if config.validate_input?
       path = "/2017-10-31/functions/#{URI.encode_path_segment(input.function_name)}/concurrency"
       headers = HTTP::Headers.new
       response = rest_request("DeleteFunctionConcurrency", "DELETE", path, headers, nil)
@@ -738,6 +777,7 @@ module Amazonite::LambdaV1
     # concurrency limit for a function, use PutFunctionConcurrency.
     def get_function_concurrency(input : AL::GetFunctionConcurrencyRequest) : Core::ParsedResponse(AL::GetFunctionConcurrencyResponse)
       Log.info { "performing 'GetFunctionConcurrency' operation" }
+      input.validate! if config.validate_input?
       path = "/2019-09-30/functions/#{URI.encode_path_segment(input.function_name)}/concurrency"
       headers = HTTP::Headers.new
       response = rest_request("GetFunctionConcurrency", "GET", path, headers, nil)
@@ -747,6 +787,7 @@ module Amazonite::LambdaV1
     # Retrieves a list of provisioned concurrency configurations for a function.
     def list_provisioned_concurrency_configs(input : AL::ListProvisionedConcurrencyConfigsRequest) : Core::ParsedResponse(AL::ListProvisionedConcurrencyConfigsResponse)
       Log.info { "performing 'ListProvisionedConcurrencyConfigs' operation" }
+      input.validate! if config.validate_input?
       path = "/2019-09-30/functions/#{URI.encode_path_segment(input.function_name)}/provisioned-concurrency?List=ALL"
       query = URI::Params.build do |form|
         if value = input.marker
@@ -777,6 +818,7 @@ module Amazonite::LambdaV1
     # scaling](https://docs.aws.amazon.com/lambda/latest/dg/invocation-scaling.html).
     def put_function_concurrency(input : AL::PutFunctionConcurrencyRequest) : Core::ParsedResponse(AL::Concurrency)
       Log.info { "performing 'PutFunctionConcurrency' operation" }
+      input.validate! if config.validate_input?
       path = "/2017-10-31/functions/#{URI.encode_path_segment(input.function_name)}/concurrency"
       headers = HTTP::Headers.new
       response = rest_request("PutFunctionConcurrency", "PUT", path, headers, input.to_json)
@@ -809,6 +851,7 @@ module Amazonite::LambdaV1
     # the function.
     def update_function_code(input : AL::UpdateFunctionCodeRequest) : Core::ParsedResponse(AL::FunctionConfiguration)
       Log.info { "performing 'UpdateFunctionCode' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/code"
       headers = HTTP::Headers.new
       response = rest_request("UpdateFunctionCode", "PUT", path, headers, input.to_json)
@@ -833,6 +876,7 @@ module Amazonite::LambdaV1
     # Amazon Web Services account or Amazon Web Services service, use AddPermission.
     def update_function_configuration(input : AL::UpdateFunctionConfigurationRequest) : Core::ParsedResponse(AL::FunctionConfiguration)
       Log.info { "performing 'UpdateFunctionConfiguration' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/configuration"
       headers = HTTP::Headers.new
       response = rest_request("UpdateFunctionConfiguration", "PUT", path, headers, input.to_json)
@@ -843,6 +887,7 @@ module Amazonite::LambdaV1
     # dedicated HTTP(S) endpoint that you can use to invoke your function.
     def create_function_url_config(input : AL::CreateFunctionUrlConfigRequest) : Core::ParsedResponse(AL::CreateFunctionUrlConfigResponse)
       Log.info { "performing 'CreateFunctionUrlConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2021-10-31/functions/#{URI.encode_path_segment(input.function_name)}/url"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -858,6 +903,7 @@ module Amazonite::LambdaV1
     # Removes the code signing configuration from the function.
     def delete_function_code_signing_config(input : AL::DeleteFunctionCodeSigningConfigRequest) : Core::Response
       Log.info { "performing 'DeleteFunctionCodeSigningConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2020-06-30/functions/#{URI.encode_path_segment(input.function_name)}/code-signing-config"
       headers = HTTP::Headers.new
       response = rest_request("DeleteFunctionCodeSigningConfig", "DELETE", path, headers, nil)
@@ -868,6 +914,7 @@ module Amazonite::LambdaV1
     # new function URL results in a different URL address.
     def delete_function_url_config(input : AL::DeleteFunctionUrlConfigRequest) : Core::Response
       Log.info { "performing 'DeleteFunctionUrlConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2021-10-31/functions/#{URI.encode_path_segment(input.function_name)}/url"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -885,6 +932,7 @@ module Amazonite::LambdaV1
     # that are specific to that version are returned.
     def get_function(input : AL::GetFunctionRequest) : Core::ParsedResponse(AL::GetFunctionResponse)
       Log.info { "performing 'GetFunction' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -900,6 +948,7 @@ module Amazonite::LambdaV1
     # Returns the code signing configuration for the specified function.
     def get_function_code_signing_config(input : AL::GetFunctionCodeSigningConfigRequest) : Core::ParsedResponse(AL::GetFunctionCodeSigningConfigResponse)
       Log.info { "performing 'GetFunctionCodeSigningConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2020-06-30/functions/#{URI.encode_path_segment(input.function_name)}/code-signing-config"
       headers = HTTP::Headers.new
       response = rest_request("GetFunctionCodeSigningConfig", "GET", path, headers, nil)
@@ -913,6 +962,7 @@ module Amazonite::LambdaV1
     # To get all of a function's details, including function-level settings, use GetFunction.
     def get_function_configuration(input : AL::GetFunctionConfigurationRequest) : Core::ParsedResponse(AL::FunctionConfiguration)
       Log.info { "performing 'GetFunctionConfiguration' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/configuration"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -930,6 +980,7 @@ module Amazonite::LambdaV1
     # configuration.
     def get_function_recursion_config(input : AL::GetFunctionRecursionConfigRequest) : Core::ParsedResponse(AL::GetFunctionRecursionConfigResponse)
       Log.info { "performing 'GetFunctionRecursionConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2024-08-31/functions/#{URI.encode_path_segment(input.function_name)}/recursion-config"
       headers = HTTP::Headers.new
       response = rest_request("GetFunctionRecursionConfig", "GET", path, headers, nil)
@@ -939,6 +990,7 @@ module Amazonite::LambdaV1
     # Retrieves the scaling configuration for a Lambda Managed Instances function.
     def get_function_scaling_config(input : AL::GetFunctionScalingConfigRequest) : Core::ParsedResponse(AL::GetFunctionScalingConfigResponse)
       Log.info { "performing 'GetFunctionScalingConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-11-30/functions/#{URI.encode_path_segment(input.function_name)}/function-scaling-config"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -954,6 +1006,7 @@ module Amazonite::LambdaV1
     # Returns details about a Lambda function URL.
     def get_function_url_config(input : AL::GetFunctionUrlConfigRequest) : Core::ParsedResponse(AL::GetFunctionUrlConfigResponse)
       Log.info { "performing 'GetFunctionUrlConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2021-10-31/functions/#{URI.encode_path_segment(input.function_name)}/url"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -971,6 +1024,7 @@ module Amazonite::LambdaV1
     # function, version, or alias.
     def get_policy(input : AL::GetPolicyRequest) : Core::ParsedResponse(AL::GetPolicyResponse)
       Log.info { "performing 'GetPolicy' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/policy"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -990,6 +1044,7 @@ module Amazonite::LambdaV1
     # updates](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html).
     def get_runtime_management_config(input : AL::GetRuntimeManagementConfigRequest) : Core::ParsedResponse(AL::GetRuntimeManagementConfigResponse)
       Log.info { "performing 'GetRuntimeManagementConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2021-07-20/functions/#{URI.encode_path_segment(input.function_name)}/runtime-management-config"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -1050,6 +1105,7 @@ module Amazonite::LambdaV1
     # accounts](https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html#permissions-resource-xaccountinvoke).
     def invoke(input : AL::InvocationRequest) : Core::ParsedResponse(AL::InvocationResponse)
       Log.info { "performing 'Invoke' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/invocations"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -1095,6 +1151,7 @@ module Amazonite::LambdaV1
     # tracing. Trace ID is not propagated to the function, even if X-Ray active tracing is turned on.
     def invoke_async(input : AL::InvokeAsyncRequest) : Core::ParsedResponse(AL::InvokeAsyncResponse)
       Log.info { "performing 'InvokeAsync' operation" }
+      input.validate! if config.validate_input?
       path = "/2014-11-13/functions/#{URI.encode_path_segment(input.function_name)}/invoke-async"
       headers = HTTP::Headers.new
       response = rest_request("InvokeAsync", "POST", path, headers, input.invoke_args)
@@ -1110,6 +1167,7 @@ module Amazonite::LambdaV1
     # This API supports pagination for large result sets.
     def list_durable_executions_by_function(input : AL::ListDurableExecutionsByFunctionRequest) : Core::ParsedResponse(AL::ListDurableExecutionsByFunctionResponse)
       Log.info { "performing 'ListDurableExecutionsByFunction' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-12-01/functions/#{URI.encode_path_segment(input.function_name)}/durable-executions"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -1146,6 +1204,7 @@ module Amazonite::LambdaV1
     # Returns a list of Lambda function URLs for the specified function.
     def list_function_url_configs(input : AL::ListFunctionUrlConfigsRequest) : Core::ParsedResponse(AL::ListFunctionUrlConfigsResponse)
       Log.info { "performing 'ListFunctionUrlConfigs' operation" }
+      input.validate! if config.validate_input?
       path = "/2021-10-31/functions/#{URI.encode_path_segment(input.function_name)}/urls"
       query = URI::Params.build do |form|
         if value = input.marker
@@ -1165,6 +1224,7 @@ module Amazonite::LambdaV1
     # configuration take effect the next time a user tries to deploy a code package to the function.
     def put_function_code_signing_config(input : AL::PutFunctionCodeSigningConfigRequest) : Core::ParsedResponse(AL::PutFunctionCodeSigningConfigResponse)
       Log.info { "performing 'PutFunctionCodeSigningConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2020-06-30/functions/#{URI.encode_path_segment(input.function_name)}/code-signing-config"
       headers = HTTP::Headers.new
       response = rest_request("PutFunctionCodeSigningConfig", "PUT", path, headers, input.to_json)
@@ -1186,6 +1246,7 @@ module Amazonite::LambdaV1
     # `Terminate`, it stops your function being invoked and notifies you.
     def put_function_recursion_config(input : AL::PutFunctionRecursionConfigRequest) : Core::ParsedResponse(AL::PutFunctionRecursionConfigResponse)
       Log.info { "performing 'PutFunctionRecursionConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2024-08-31/functions/#{URI.encode_path_segment(input.function_name)}/recursion-config"
       headers = HTTP::Headers.new
       response = rest_request("PutFunctionRecursionConfig", "PUT", path, headers, input.to_json)
@@ -1197,6 +1258,7 @@ module Amazonite::LambdaV1
     # provisioned for the function, allowing you to control scaling behavior and resource allocation.
     def put_function_scaling_config(input : AL::PutFunctionScalingConfigRequest) : Core::ParsedResponse(AL::PutFunctionScalingConfigResponse)
       Log.info { "performing 'PutFunctionScalingConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2025-11-30/functions/#{URI.encode_path_segment(input.function_name)}/function-scaling-config"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -1213,6 +1275,7 @@ module Amazonite::LambdaV1
     # [Runtime updates](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html).
     def put_runtime_management_config(input : AL::PutRuntimeManagementConfigRequest) : Core::ParsedResponse(AL::PutRuntimeManagementConfigResponse)
       Log.info { "performing 'PutRuntimeManagementConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2021-07-20/functions/#{URI.encode_path_segment(input.function_name)}/runtime-management-config"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -1228,6 +1291,7 @@ module Amazonite::LambdaV1
     # Updates the configuration for a Lambda function URL.
     def update_function_url_config(input : AL::UpdateFunctionUrlConfigRequest) : Core::ParsedResponse(AL::UpdateFunctionUrlConfigResponse)
       Log.info { "performing 'UpdateFunctionUrlConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2021-10-31/functions/#{URI.encode_path_segment(input.function_name)}/url"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -1297,6 +1361,7 @@ module Amazonite::LambdaV1
     # functions](https://docs.aws.amazon.com/lambda/latest/dg/lambda-invocation.html).
     def create_function(input : AL::CreateFunctionRequest) : Core::ParsedResponse(AL::FunctionConfiguration)
       Log.info { "performing 'CreateFunction' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions"
       headers = HTTP::Headers.new
       response = rest_request("CreateFunction", "POST", path, headers, input.to_json)
@@ -1315,6 +1380,7 @@ module Amazonite::LambdaV1
     # version, use GetFunction.
     def list_functions(input : AL::ListFunctionsRequest) : Core::ParsedResponse(AL::ListFunctionsResponse)
       Log.info { "performing 'ListFunctions' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions"
       query = URI::Params.build do |form|
         if value = input.master_region
@@ -1345,6 +1411,7 @@ module Amazonite::LambdaV1
     # that it receives.
     def create_alias(input : AL::CreateAliasRequest) : Core::ParsedResponse(AL::AliasConfiguration)
       Log.info { "performing 'CreateAlias' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/aliases"
       headers = HTTP::Headers.new
       response = rest_request("CreateAlias", "POST", path, headers, input.to_json)
@@ -1355,6 +1422,7 @@ module Amazonite::LambdaV1
     # [alias](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html).
     def get_alias(input : AL::GetAliasRequest) : Core::ParsedResponse(AL::AliasConfiguration)
       Log.info { "performing 'GetAlias' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/aliases/#{URI.encode_path_segment(input.name)}"
       headers = HTTP::Headers.new
       response = rest_request("GetAlias", "GET", path, headers, nil)
@@ -1365,6 +1433,7 @@ module Amazonite::LambdaV1
     # [alias](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html).
     def update_alias(input : AL::UpdateAliasRequest) : Core::ParsedResponse(AL::AliasConfiguration)
       Log.info { "performing 'UpdateAlias' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/aliases/#{URI.encode_path_segment(input.name)}"
       headers = HTTP::Headers.new
       response = rest_request("UpdateAlias", "PUT", path, headers, input.to_json)
@@ -1375,6 +1444,7 @@ module Amazonite::LambdaV1
     # [alias](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html).
     def delete_alias(input : AL::DeleteAliasRequest) : Core::Response
       Log.info { "performing 'DeleteAlias' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/aliases/#{URI.encode_path_segment(input.name)}"
       headers = HTTP::Headers.new
       response = rest_request("DeleteAlias", "DELETE", path, headers, nil)
@@ -1386,6 +1456,7 @@ module Amazonite::LambdaV1
     # function.
     def list_aliases(input : AL::ListAliasesRequest) : Core::ParsedResponse(AL::ListAliasesResponse)
       Log.info { "performing 'ListAliases' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/aliases"
       query = URI::Params.build do |form|
         if value = input.function_version
@@ -1409,6 +1480,7 @@ module Amazonite::LambdaV1
     # version-specific configuration of each. Lambda returns up to 50 versions per call.
     def list_versions_by_function(input : AL::ListVersionsByFunctionRequest) : Core::ParsedResponse(AL::ListVersionsByFunctionResponse)
       Log.info { "performing 'ListVersionsByFunction' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/versions"
       query = URI::Params.build do |form|
         if value = input.marker
@@ -1435,6 +1507,7 @@ module Amazonite::LambdaV1
     # Clients can invoke versions directly or with an alias. To create an alias, use CreateAlias.
     def publish_version(input : AL::PublishVersionRequest) : Core::ParsedResponse(AL::FunctionConfiguration)
       Log.info { "performing 'PublishVersion' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/versions"
       headers = HTTP::Headers.new
       response = rest_request("PublishVersion", "POST", path, headers, input.to_json)
@@ -1449,6 +1522,7 @@ module Amazonite::LambdaV1
     # architecture](https://docs.aws.amazon.com/lambda/latest/dg/foundation-arch.html).
     def list_layers(input : AL::ListLayersRequest) : Core::ParsedResponse(AL::ListLayersResponse)
       Log.info { "performing 'ListLayers' operation" }
+      input.validate! if config.validate_input?
       path = "/2018-10-31/layers"
       query = URI::Params.build do |form|
         if value = input.compatible_architecture.try(&.to_json_object_key)
@@ -1479,6 +1553,7 @@ module Amazonite::LambdaV1
     # when you added it.
     def add_layer_version_permission(input : AL::AddLayerVersionPermissionRequest) : Core::ParsedResponse(AL::AddLayerVersionPermissionResponse)
       Log.info { "performing 'AddLayerVersionPermission' operation" }
+      input.validate! if config.validate_input?
       path = "/2018-10-31/layers/#{URI.encode_path_segment(input.layer_name)}/versions/#{URI.encode_path_segment(input.version_number)}/policy"
       query = URI::Params.build do |form|
         if value = input.revision_id
@@ -1497,6 +1572,7 @@ module Amazonite::LambdaV1
     # version remains in Lambda until no functions refer to it.
     def delete_layer_version(input : AL::DeleteLayerVersionRequest) : Core::Response
       Log.info { "performing 'DeleteLayerVersion' operation" }
+      input.validate! if config.validate_input?
       path = "/2018-10-31/layers/#{URI.encode_path_segment(input.layer_name)}/versions/#{URI.encode_path_segment(input.version_number)}"
       headers = HTTP::Headers.new
       response = rest_request("DeleteLayerVersion", "DELETE", path, headers, nil)
@@ -1508,6 +1584,7 @@ module Amazonite::LambdaV1
     # download the layer archive that's valid for 10 minutes.
     def get_layer_version(input : AL::GetLayerVersionRequest) : Core::ParsedResponse(AL::GetLayerVersionResponse)
       Log.info { "performing 'GetLayerVersion' operation" }
+      input.validate! if config.validate_input?
       path = "/2018-10-31/layers/#{URI.encode_path_segment(input.layer_name)}/versions/#{URI.encode_path_segment(input.version_number)}"
       headers = HTTP::Headers.new
       response = rest_request("GetLayerVersion", "GET", path, headers, nil)
@@ -1519,6 +1596,7 @@ module Amazonite::LambdaV1
     # download the layer archive that's valid for 10 minutes.
     def get_layer_version_by_arn(input : AL::GetLayerVersionByArnRequest) : Core::ParsedResponse(AL::GetLayerVersionResponse)
       Log.info { "performing 'GetLayerVersionByArn' operation" }
+      input.validate! if config.validate_input?
       path = "/2018-10-31/layers?find=LayerVersion"
       query = URI::Params.build do |form|
         if value = input.arn
@@ -1536,6 +1614,7 @@ module Amazonite::LambdaV1
     # information, see AddLayerVersionPermission.
     def get_layer_version_policy(input : AL::GetLayerVersionPolicyRequest) : Core::ParsedResponse(AL::GetLayerVersionPolicyResponse)
       Log.info { "performing 'GetLayerVersionPolicy' operation" }
+      input.validate! if config.validate_input?
       path = "/2018-10-31/layers/#{URI.encode_path_segment(input.layer_name)}/versions/#{URI.encode_path_segment(input.version_number)}/policy"
       headers = HTTP::Headers.new
       response = rest_request("GetLayerVersionPolicy", "GET", path, headers, nil)
@@ -1550,6 +1629,7 @@ module Amazonite::LambdaV1
     # Add layers to your function with CreateFunction or UpdateFunctionConfiguration.
     def publish_layer_version(input : AL::PublishLayerVersionRequest) : Core::ParsedResponse(AL::PublishLayerVersionResponse)
       Log.info { "performing 'PublishLayerVersion' operation" }
+      input.validate! if config.validate_input?
       path = "/2018-10-31/layers/#{URI.encode_path_segment(input.layer_name)}/versions"
       headers = HTTP::Headers.new
       response = rest_request("PublishLayerVersion", "POST", path, headers, input.to_json)
@@ -1561,6 +1641,7 @@ module Amazonite::LambdaV1
     # information, see AddLayerVersionPermission.
     def remove_layer_version_permission(input : AL::RemoveLayerVersionPermissionRequest) : Core::Response
       Log.info { "performing 'RemoveLayerVersionPermission' operation" }
+      input.validate! if config.validate_input?
       path = "/2018-10-31/layers/#{URI.encode_path_segment(input.layer_name)}/versions/#{URI.encode_path_segment(input.version_number)}/policy/#{URI.encode_path_segment(input.statement_id)}"
       query = URI::Params.build do |form|
         if value = input.revision_id
@@ -1581,6 +1662,7 @@ module Amazonite::LambdaV1
     # architecture to include only layer versions that are compatible with that architecture.
     def list_layer_versions(input : AL::ListLayerVersionsRequest) : Core::ParsedResponse(AL::ListLayerVersionsResponse)
       Log.info { "performing 'ListLayerVersions' operation" }
+      input.validate! if config.validate_input?
       path = "/2018-10-31/layers/#{URI.encode_path_segment(input.layer_name)}/versions"
       query = URI::Params.build do |form|
         if value = input.compatible_architecture.try(&.to_json_object_key)
@@ -1622,6 +1704,7 @@ module Amazonite::LambdaV1
     # Lambda](https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html).
     def add_permission(input : AL::AddPermissionRequest) : Core::ParsedResponse(AL::AddPermissionResponse)
       Log.info { "performing 'AddPermission' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/policy"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -1638,6 +1721,7 @@ module Amazonite::LambdaV1
     # Services account. You can get the ID of the statement from the output of GetPolicy.
     def remove_permission(input : AL::RemovePermissionRequest) : Core::Response
       Log.info { "performing 'RemovePermission' operation" }
+      input.validate! if config.validate_input?
       path = "/2015-03-31/functions/#{URI.encode_path_segment(input.function_name)}/policy/#{URI.encode_path_segment(input.statement_id)}"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -1656,6 +1740,7 @@ module Amazonite::LambdaV1
     # Adds a provisioned concurrency configuration to a function's alias or version.
     def put_provisioned_concurrency_config(input : AL::PutProvisionedConcurrencyConfigRequest) : Core::ParsedResponse(AL::PutProvisionedConcurrencyConfigResponse)
       Log.info { "performing 'PutProvisionedConcurrencyConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2019-09-30/functions/#{URI.encode_path_segment(input.function_name)}/provisioned-concurrency"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -1671,6 +1756,7 @@ module Amazonite::LambdaV1
     # Retrieves the provisioned concurrency configuration for a function's alias or version.
     def get_provisioned_concurrency_config(input : AL::GetProvisionedConcurrencyConfigRequest) : Core::ParsedResponse(AL::GetProvisionedConcurrencyConfigResponse)
       Log.info { "performing 'GetProvisionedConcurrencyConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2019-09-30/functions/#{URI.encode_path_segment(input.function_name)}/provisioned-concurrency"
       query = URI::Params.build do |form|
         if value = input.qualifier
@@ -1686,6 +1772,7 @@ module Amazonite::LambdaV1
     # Deletes the provisioned concurrency configuration for a function.
     def delete_provisioned_concurrency_config(input : AL::DeleteProvisionedConcurrencyConfigRequest) : Core::Response
       Log.info { "performing 'DeleteProvisionedConcurrencyConfig' operation" }
+      input.validate! if config.validate_input?
       path = "/2019-09-30/functions/#{URI.encode_path_segment(input.function_name)}/provisioned-concurrency"
       query = URI::Params.build do |form|
         if value = input.qualifier

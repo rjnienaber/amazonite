@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents one of the following:
   #
@@ -25,5 +27,17 @@ module Amazonite::DynamoDBV2
       @delete : DeleteGlobalTableWitnessGroupMemberAction | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @create
+        value.validate!
+      end
+
+      if value = @delete
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@create, @delete)
   end
 end

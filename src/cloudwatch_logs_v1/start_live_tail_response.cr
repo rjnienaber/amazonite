@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class StartLiveTailResponse
     include JSON::Serializable
@@ -11,5 +13,13 @@ module Amazonite::CloudWatchLogsV1
       @response_stream : StartLiveTailResponseStream | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @response_stream
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@response_stream)
   end
 end

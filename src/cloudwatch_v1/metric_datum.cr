@@ -82,5 +82,28 @@ module Amazonite::CloudWatchV1
       @storage_resolution : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @metric_name
+        raise Core::ValidationError.new("MetricName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MetricName length must be <= 255") if value.size > 255
+      end
+
+      if value = @dimensions
+        raise Core::ValidationError.new("Dimensions must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Dimensions must have at most 30 item(s)") if value.size > 30
+        value.each(&.validate!)
+      end
+
+      if value = @statistic_values
+        value.validate!
+      end
+
+      if value = @storage_resolution
+        raise Core::ValidationError.new("StorageResolution value must be >= 1") if value < 1
+      end
+    end
+
+    def_equals_and_hash(@metric_name, @dimensions, @timestamp, @value, @statistic_values, @values, @counts, @unit, @storage_resolution)
   end
 end

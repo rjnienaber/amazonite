@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class ListAliasesResponse
     include JSON::Serializable
@@ -23,5 +25,19 @@ module Amazonite::KmsV1
       @truncated : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @aliases
+        value.each(&.validate!)
+      end
+
+      if value = @next_marker
+        raise Core::ValidationError.new("NextMarker length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextMarker length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("NextMarker does not match the required pattern") unless value.matches?(Regex.new("^[ -ÿ]*$"))
+      end
+    end
+
+    def_equals_and_hash(@aliases, @next_marker, @truncated)
   end
 end

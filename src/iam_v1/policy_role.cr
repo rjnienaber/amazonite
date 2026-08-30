@@ -44,5 +44,21 @@ module Amazonite::IamV1
         role_id: Core::XMLValue.string(node.xpath_node("*[local-name()='RoleId']")),
       )
     end
+
+    def validate! : Nil
+      if value = @role_name
+        raise Core::ValidationError.new("RoleName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RoleName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("RoleName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @role_id
+        raise Core::ValidationError.new("RoleId length must be >= 16") if value.size < 16
+        raise Core::ValidationError.new("RoleId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("RoleId does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+    end
+
+    def_equals_and_hash(@role_name, @role_id)
   end
 end

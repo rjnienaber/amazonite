@@ -1,4 +1,5 @@
 private alias AAG = Amazonite::ApiGatewayV1
+private alias Core = Amazonite::Core
 
 module Amazonite::ApiGatewayV1
   # A request to create a new domain name.
@@ -106,5 +107,17 @@ module Amazonite::ApiGatewayV1
       @routing_mode : RoutingMode | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @endpoint_configuration
+        value.validate!
+      end
+
+      if value = @mutual_tls_authentication
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@domain_name, @certificate_name, @certificate_body, @certificate_private_key, @certificate_chain, @certificate_arn, @regional_certificate_name, @regional_certificate_arn, @endpoint_configuration, @tags, @security_policy, @endpoint_access_mode, @mutual_tls_authentication, @ownership_verification_certificate_arn, @policy, @routing_mode)
   end
 end

@@ -14,5 +14,10 @@ module Amazonite::LambdaV1
       @scheduled_end_timestamp : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@scheduled_end_timestamp)
   end
 end

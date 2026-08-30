@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeInstancePropertiesRequest
     include JSON::Serializable
@@ -26,5 +28,26 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @instance_property_filter_list
+        raise Core::ValidationError.new("InstancePropertyFilterList must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("InstancePropertyFilterList must have at most 40 item(s)") if value.size > 40
+        value.each(&.validate!)
+      end
+
+      if value = @filters_with_operator
+        raise Core::ValidationError.new("FiltersWithOperator must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("FiltersWithOperator must have at most 40 item(s)") if value.size > 40
+        value.each(&.validate!)
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 5") if value < 5
+        raise Core::ValidationError.new("MaxResults value must be <= 1000") if value > 1000
+      end
+    end
+
+    def_equals_and_hash(@instance_property_filter_list, @filters_with_operator, @max_results, @next_token)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class ListManagedInsightRulesInput
     include JSON::Serializable
@@ -22,5 +24,19 @@ module Amazonite::CloudWatchV1
       @max_results : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @resource_arn
+        raise Core::ValidationError.new("ResourceARN length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceARN length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 500") if value > 500
+      end
+    end
+
+    def_equals_and_hash(@resource_arn, @next_token, @max_results)
   end
 end

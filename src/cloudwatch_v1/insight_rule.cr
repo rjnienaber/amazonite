@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # This structure contains the definition for a Contributor Insights rule. For more information
   # about this rule, see[ Using Constributor Insights to analyze high-cardinality
@@ -46,5 +48,27 @@ module Amazonite::CloudWatchV1
       @apply_on_transformed_logs : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[\\x20-\\x7E]+$"))
+      end
+
+      if value = @state
+        raise Core::ValidationError.new("State length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("State length must be <= 32") if value.size > 32
+        raise Core::ValidationError.new("State does not match the required pattern") unless value.matches?(Regex.new("^[\\x20-\\x7E]+$"))
+      end
+
+      if value = @definition
+        raise Core::ValidationError.new("Definition length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Definition length must be <= 8192") if value.size > 8192
+        raise Core::ValidationError.new("Definition does not match the required pattern") unless value.matches?(Regex.new("^[\\x00-\\x7F]+$"))
+      end
+    end
+
+    def_equals_and_hash(@name, @state, @schema, @definition, @managed_rule, @apply_on_transformed_logs)
   end
 end

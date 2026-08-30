@@ -10,5 +10,10 @@ module Amazonite::SsmV1
       @message : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@message)
   end
 end

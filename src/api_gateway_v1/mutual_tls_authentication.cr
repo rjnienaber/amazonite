@@ -31,5 +31,10 @@ module Amazonite::ApiGatewayV1
       @truststore_warnings : Array(String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@truststore_uri, @truststore_version, @truststore_warnings)
   end
 end

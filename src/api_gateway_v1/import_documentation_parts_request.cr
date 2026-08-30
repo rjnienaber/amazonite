@@ -32,5 +32,10 @@ module Amazonite::ApiGatewayV1
       @fail_on_warnings : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@rest_api_id, @mode, @fail_on_warnings, @body)
   end
 end

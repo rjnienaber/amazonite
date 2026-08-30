@@ -38,5 +38,21 @@ module Amazonite::IamV1
         new_password: Core::XMLValue.string(node.xpath_node("*[local-name()='NewPassword']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @old_password
+        raise Core::ValidationError.new("OldPassword length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OldPassword length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("OldPassword does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+
+      if value = @new_password
+        raise Core::ValidationError.new("NewPassword length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NewPassword length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("NewPassword does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+    end
+
+    def_equals_and_hash(@old_password, @new_password)
   end
 end

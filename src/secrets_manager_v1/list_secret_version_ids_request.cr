@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SecretsManagerV1
   class ListSecretVersionIdsRequest
     include JSON::Serializable
@@ -35,5 +37,24 @@ module Amazonite::SecretsManagerV1
       @include_deprecated : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @secret_id
+        raise Core::ValidationError.new("SecretId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SecretId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 100") if value > 100
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 4096") if value.size > 4096
+      end
+    end
+
+    def_equals_and_hash(@secret_id, @max_results, @next_token, @include_deprecated)
   end
 end

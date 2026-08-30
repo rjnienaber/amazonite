@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class ListScheduledQueriesResponse
     include JSON::Serializable
@@ -14,5 +16,17 @@ module Amazonite::CloudWatchLogsV1
       @scheduled_queries : Array(ScheduledQuerySummary) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
+
+      if value = @scheduled_queries
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@next_token, @scheduled_queries)
   end
 end

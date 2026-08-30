@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [ListSAMLProviders](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListSAMLProviders.html)
@@ -25,5 +27,13 @@ module Amazonite::IamV1
         saml_provider_list: node.xpath_nodes("*[local-name()='SAMLProviderList']/*[local-name()='member']").map { |n| SAMLProviderListEntry.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @saml_provider_list
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@saml_provider_list)
   end
 end

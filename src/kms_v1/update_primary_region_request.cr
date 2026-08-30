@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class UpdatePrimaryRegionRequest
     include JSON::Serializable
@@ -29,5 +31,20 @@ module Amazonite::KmsV1
       @primary_region : String,
     )
     end
+
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @primary_region
+        raise Core::ValidationError.new("PrimaryRegion length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PrimaryRegion length must be <= 32") if value.size > 32
+        raise Core::ValidationError.new("PrimaryRegion does not match the required pattern") unless value.matches?(Regex.new("^([a-z]+-){2,3}\\d+$"))
+      end
+    end
+
+    def_equals_and_hash(@key_id, @primary_region)
   end
 end

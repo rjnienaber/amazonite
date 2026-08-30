@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # A detailed status of the parent step.
   class ParentStepDetails
@@ -31,5 +33,13 @@ module Amazonite::SsmV1
       @iterator_value : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @action
+        raise Core::ValidationError.new("Action does not match the required pattern") unless value.matches?(Regex.new("^aws:[a-zA-Z]{3,25}$"))
+      end
+    end
+
+    def_equals_and_hash(@step_execution_id, @step_name, @action, @iteration, @iterator_value)
   end
 end

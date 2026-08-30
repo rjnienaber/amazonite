@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the output of a `DeleteItem` operation.
   class DeleteItemOutput
@@ -48,5 +50,21 @@ module Amazonite::DynamoDBV2
       @item_collection_metrics : ItemCollectionMetrics | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @attributes
+        value.each_value(&.validate!)
+      end
+
+      if value = @consumed_capacity
+        value.validate!
+      end
+
+      if value = @item_collection_metrics
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@attributes, @consumed_capacity, @item_collection_metrics)
   end
 end

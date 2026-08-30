@@ -26,6 +26,7 @@ module Amazonite::DynamoDBV2
     # You can use the `DescribeTable` action to check the table status.
     def create_table(input : ADDB::CreateTableInput) : Core::ParsedResponse(ADDB::CreateTableOutput)
       Log.info { "performing 'CreateTable' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateTable", "/", input.to_json)
       Core::ParsedResponse(ADDB::CreateTableOutput).new(response)
     end

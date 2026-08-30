@@ -36,5 +36,14 @@ module Amazonite::KinesisV1
       @shard_level_metrics : Array(MetricsName) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @shard_level_metrics
+        raise Core::ValidationError.new("ShardLevelMetrics must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("ShardLevelMetrics must have at most 7 item(s)") if value.size > 7
+      end
+    end
+
+    def_equals_and_hash(@shard_level_metrics)
   end
 end

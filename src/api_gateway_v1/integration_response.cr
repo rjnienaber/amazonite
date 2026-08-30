@@ -1,4 +1,5 @@
 private alias AAG = Amazonite::ApiGatewayV1
+private alias Core = Amazonite::Core
 
 module Amazonite::ApiGatewayV1
   # Represents an integration response. The status code must map to an existing MethodResponse, and
@@ -52,5 +53,13 @@ module Amazonite::ApiGatewayV1
       @content_handling : ContentHandlingStrategy | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @status_code
+        raise Core::ValidationError.new("statusCode does not match the required pattern") unless value.matches?(Regex.new("^[1-5]\\d\\d$"))
+      end
+    end
+
+    def_equals_and_hash(@status_code, @selection_pattern, @response_parameters, @response_templates, @content_handling)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Response to a `GetFunctionConfiguration` request.
   class ImageConfigResponse
@@ -16,5 +18,17 @@ module Amazonite::LambdaV1
       @error : ImageConfigError | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @image_config
+        value.validate!
+      end
+
+      if value = @error
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@image_config, @error)
   end
 end

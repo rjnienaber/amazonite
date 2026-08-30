@@ -64,5 +64,19 @@ module Amazonite::CloudFormationV1
         call_as: (n = node.xpath_node("*[local-name()='CallAs']")) ? ACF::CallAs.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 100") if value > 100
+      end
+    end
+
+    def_equals_and_hash(@stack_set_name, @next_token, @max_results, @call_as)
   end
 end

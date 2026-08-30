@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Details about a [Code signing
   # configuration](https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html).
@@ -38,5 +40,38 @@ module Amazonite::LambdaV1
       @description : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @code_signing_config_id
+        raise Core::ValidationError.new("CodeSigningConfigId does not match the required pattern") unless value.matches?(Regex.new("^csc-[a-zA-Z0-9-_\\.]{17}$"))
+      end
+
+      if value = @code_signing_config_arn
+        raise Core::ValidationError.new("CodeSigningConfigArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("CodeSigningConfigArn length must be <= 200") if value.size > 200
+        raise Core::ValidationError.new("CodeSigningConfigArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:code-signing-config:csc-[a-z0-9]{17}$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 256") if value.size > 256
+      end
+
+      if value = @allowed_publishers
+        value.validate!
+      end
+
+      if value = @code_signing_policies
+        value.validate!
+      end
+
+      if value = @last_modified
+        raise Core::ValidationError.new("LastModified length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("LastModified length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("LastModified does not match the required pattern") unless value.matches?(Regex.new("^.*$"))
+      end
+    end
+
+    def_equals_and_hash(@code_signing_config_id, @code_signing_config_arn, @description, @allowed_publishers, @code_signing_policies, @last_modified)
   end
 end

@@ -67,6 +67,7 @@ module Amazonite::CloudWatchV1
     # *Amazon CloudWatch User Guide*.
     def associate_dataset_kms_key(input : ACW::AssociateDatasetKmsKeyInput) : Core::ParsedResponse(ACW::AssociateDatasetKmsKeyOutput)
       Log.info { "performing 'AssociateDatasetKmsKey' operation" }
+      input.validate! if config.validate_input?
       response = post("AssociateDatasetKmsKey", "/", input.to_json)
       Core::ParsedResponse(ACW::AssociateDatasetKmsKeyOutput).new(response)
     end
@@ -86,6 +87,7 @@ module Amazonite::CloudWatchV1
     # mute rule resource.
     def delete_alarm_mute_rule(input : ACW::DeleteAlarmMuteRuleInput) : Core::Response
       Log.info { "performing 'DeleteAlarmMuteRule' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteAlarmMuteRule", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -114,6 +116,7 @@ module Amazonite::CloudWatchV1
     # evaluation path.
     def delete_alarms(input : ACW::DeleteAlarmsInput) : Core::Response
       Log.info { "performing 'DeleteAlarms' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteAlarms", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -124,6 +127,7 @@ module Amazonite::CloudWatchV1
     # in the *CloudWatch User Guide*.
     def delete_anomaly_detector(input : ACW::DeleteAnomalyDetectorInput) : Core::ParsedResponse(ACW::DeleteAnomalyDetectorOutput)
       Log.info { "performing 'DeleteAnomalyDetector' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteAnomalyDetector", "/", input.to_json)
       Core::ParsedResponse(ACW::DeleteAnomalyDetectorOutput).new(response)
     end
@@ -133,6 +137,7 @@ module Amazonite::CloudWatchV1
     # possible.
     def delete_dashboards(input : ACW::DeleteDashboardsInput) : Core::ParsedResponse(ACW::DeleteDashboardsOutput)
       Log.info { "performing 'DeleteDashboards' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteDashboards", "/", input.to_json)
       Core::ParsedResponse(ACW::DeleteDashboardsOutput).new(response)
     end
@@ -143,6 +148,7 @@ module Amazonite::CloudWatchV1
     # the first time the rule was created might not be available.
     def delete_insight_rules(input : ACW::DeleteInsightRulesInput) : Core::ParsedResponse(ACW::DeleteInsightRulesOutput)
       Log.info { "performing 'DeleteInsightRules' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteInsightRules", "/", input.to_json)
       Core::ParsedResponse(ACW::DeleteInsightRulesOutput).new(response)
     end
@@ -150,6 +156,7 @@ module Amazonite::CloudWatchV1
     # Permanently deletes the metric stream that you specify.
     def delete_metric_stream(input : ACW::DeleteMetricStreamInput) : Core::ParsedResponse(ACW::DeleteMetricStreamOutput)
       Log.info { "performing 'DeleteMetricStream' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteMetricStream", "/", input.to_json)
       Core::ParsedResponse(ACW::DeleteMetricStreamOutput).new(response)
     end
@@ -158,6 +165,7 @@ module Amazonite::CloudWatchV1
     # operation returns details about the individual time series that contribute to the alarm's state.
     def describe_alarm_contributors(input : ACW::DescribeAlarmContributorsInput) : Core::ParsedResponse(ACW::DescribeAlarmContributorsOutput)
       Log.info { "performing 'DescribeAlarmContributors' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAlarmContributors", "/", input.to_json)
       Core::ParsedResponse(ACW::DescribeAlarmContributorsOutput).new(response)
     end
@@ -174,6 +182,7 @@ module Amazonite::CloudWatchV1
     # narrower scope.
     def describe_alarm_history(input : ACW::DescribeAlarmHistoryInput) : Core::ParsedResponse(ACW::DescribeAlarmHistoryOutput)
       Log.info { "performing 'DescribeAlarmHistory' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAlarmHistory", "/", input.to_json)
       Core::ParsedResponse(ACW::DescribeAlarmHistoryOutput).new(response)
     end
@@ -186,6 +195,7 @@ module Amazonite::CloudWatchV1
     # about composite alarms if your `cloudwatch:DescribeAlarms` permission has a narrower scope.
     def describe_alarms(input : ACW::DescribeAlarmsInput) : Core::ParsedResponse(ACW::DescribeAlarmsOutput)
       Log.info { "performing 'DescribeAlarms' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAlarms", "/", input.to_json)
       Core::ParsedResponse(ACW::DescribeAlarmsOutput).new(response)
     end
@@ -198,6 +208,7 @@ module Amazonite::CloudWatchV1
     # that use the specified metric.
     def describe_alarms_for_metric(input : ACW::DescribeAlarmsForMetricInput) : Core::ParsedResponse(ACW::DescribeAlarmsForMetricOutput)
       Log.info { "performing 'DescribeAlarmsForMetric' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAlarmsForMetric", "/", input.to_json)
       Core::ParsedResponse(ACW::DescribeAlarmsForMetricOutput).new(response)
     end
@@ -209,6 +220,7 @@ module Amazonite::CloudWatchV1
     # array. This will return all metric math anomaly detectors in your account.
     def describe_anomaly_detectors(input : ACW::DescribeAnomalyDetectorsInput) : Core::ParsedResponse(ACW::DescribeAnomalyDetectorsOutput)
       Log.info { "performing 'DescribeAnomalyDetectors' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeAnomalyDetectors", "/", input.to_json)
       Core::ParsedResponse(ACW::DescribeAnomalyDetectorsOutput).new(response)
     end
@@ -220,6 +232,7 @@ module Amazonite::CloudWatchV1
     # Data](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContributorInsights.html).
     def describe_insight_rules(input : ACW::DescribeInsightRulesInput) : Core::ParsedResponse(ACW::DescribeInsightRulesOutput)
       Log.info { "performing 'DescribeInsightRules' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeInsightRules", "/", input.to_json)
       Core::ParsedResponse(ACW::DescribeInsightRulesOutput).new(response)
     end
@@ -228,6 +241,7 @@ module Amazonite::CloudWatchV1
     # actions do not execute when the alarm state changes.
     def disable_alarm_actions(input : ACW::DisableAlarmActionsInput) : Core::Response
       Log.info { "performing 'DisableAlarmActions' operation" }
+      input.validate! if config.validate_input?
       response = post("DisableAlarmActions", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -236,6 +250,7 @@ module Amazonite::CloudWatchV1
     # log groups and do not incur costs.
     def disable_insight_rules(input : ACW::DisableInsightRulesInput) : Core::ParsedResponse(ACW::DisableInsightRulesOutput)
       Log.info { "performing 'DisableInsightRules' operation" }
+      input.validate! if config.validate_input?
       response = post("DisableInsightRules", "/", input.to_json)
       Core::ParsedResponse(ACW::DisableInsightRulesOutput).new(response)
     end
@@ -272,6 +287,7 @@ module Amazonite::CloudWatchV1
     # *Amazon CloudWatch User Guide*.
     def disassociate_dataset_kms_key(input : ACW::DisassociateDatasetKmsKeyInput) : Core::ParsedResponse(ACW::DisassociateDatasetKmsKeyOutput)
       Log.info { "performing 'DisassociateDatasetKmsKey' operation" }
+      input.validate! if config.validate_input?
       response = post("DisassociateDatasetKmsKey", "/", input.to_json)
       Core::ParsedResponse(ACW::DisassociateDatasetKmsKeyOutput).new(response)
     end
@@ -279,6 +295,7 @@ module Amazonite::CloudWatchV1
     # Enables the actions for the specified alarms.
     def enable_alarm_actions(input : ACW::EnableAlarmActionsInput) : Core::Response
       Log.info { "performing 'EnableAlarmActions' operation" }
+      input.validate! if config.validate_input?
       response = post("EnableAlarmActions", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -287,6 +304,7 @@ module Amazonite::CloudWatchV1
     # analyzing log data.
     def enable_insight_rules(input : ACW::EnableInsightRulesInput) : Core::ParsedResponse(ACW::EnableInsightRulesOutput)
       Log.info { "performing 'EnableInsightRules' operation" }
+      input.validate! if config.validate_input?
       response = post("EnableInsightRules", "/", input.to_json)
       Core::ParsedResponse(ACW::EnableInsightRulesOutput).new(response)
     end
@@ -310,6 +328,7 @@ module Amazonite::CloudWatchV1
     # the alarm mute rule resource.
     def get_alarm_mute_rule(input : ACW::GetAlarmMuteRuleInput) : Core::ParsedResponse(ACW::GetAlarmMuteRuleOutput)
       Log.info { "performing 'GetAlarmMuteRule' operation" }
+      input.validate! if config.validate_input?
       response = post("GetAlarmMuteRule", "/", input.to_json)
       Core::ParsedResponse(ACW::GetAlarmMuteRuleOutput).new(response)
     end
@@ -321,6 +340,7 @@ module Amazonite::CloudWatchV1
     # copy.
     def get_dashboard(input : ACW::GetDashboardInput) : Core::ParsedResponse(ACW::GetDashboardOutput)
       Log.info { "performing 'GetDashboard' operation" }
+      input.validate! if config.validate_input?
       response = post("GetDashboard", "/", input.to_json)
       Core::ParsedResponse(ACW::GetDashboardOutput).new(response)
     end
@@ -341,6 +361,7 @@ module Amazonite::CloudWatchV1
     # [DisassociateDatasetKmsKey](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_DisassociateDatasetKmsKey.html).
     def get_dataset(input : ACW::GetDatasetInput) : Core::ParsedResponse(ACW::GetDatasetOutput)
       Log.info { "performing 'GetDataset' operation" }
+      input.validate! if config.validate_input?
       response = post("GetDataset", "/", input.to_json)
       Core::ParsedResponse(ACW::GetDatasetOutput).new(response)
     end
@@ -376,6 +397,7 @@ module Amazonite::CloudWatchV1
     # that data point.
     def get_insight_rule_report(input : ACW::GetInsightRuleReportInput) : Core::ParsedResponse(ACW::GetInsightRuleReportOutput)
       Log.info { "performing 'GetInsightRuleReport' operation" }
+      input.validate! if config.validate_input?
       response = post("GetInsightRuleReport", "/", input.to_json)
       Core::ParsedResponse(ACW::GetInsightRuleReportOutput).new(response)
     end
@@ -436,6 +458,7 @@ module Amazonite::CloudWatchV1
     # input for a metric math expression that expects an array of time series.
     def get_metric_data(input : ACW::GetMetricDataInput) : Core::ParsedResponse(ACW::GetMetricDataOutput)
       Log.info { "performing 'GetMetricData' operation" }
+      input.validate! if config.validate_input?
       response = post("GetMetricData", "/", input.to_json)
       Core::ParsedResponse(ACW::GetMetricDataOutput).new(response)
     end
@@ -489,6 +512,7 @@ module Amazonite::CloudWatchV1
     # in the *Amazon CloudWatch User Guide*.
     def get_metric_statistics(input : ACW::GetMetricStatisticsInput) : Core::ParsedResponse(ACW::GetMetricStatisticsOutput)
       Log.info { "performing 'GetMetricStatistics' operation" }
+      input.validate! if config.validate_input?
       response = post("GetMetricStatistics", "/", input.to_json)
       Core::ParsedResponse(ACW::GetMetricStatisticsOutput).new(response)
     end
@@ -496,6 +520,7 @@ module Amazonite::CloudWatchV1
     # Returns information about the metric stream that you specify.
     def get_metric_stream(input : ACW::GetMetricStreamInput) : Core::ParsedResponse(ACW::GetMetricStreamOutput)
       Log.info { "performing 'GetMetricStream' operation" }
+      input.validate! if config.validate_input?
       response = post("GetMetricStream", "/", input.to_json)
       Core::ParsedResponse(ACW::GetMetricStreamOutput).new(response)
     end
@@ -516,6 +541,7 @@ module Amazonite::CloudWatchV1
     # - Up to 100 KB uncompressed payload.
     def get_metric_widget_image(input : ACW::GetMetricWidgetImageInput) : Core::ParsedResponse(ACW::GetMetricWidgetImageOutput)
       Log.info { "performing 'GetMetricWidgetImage' operation" }
+      input.validate! if config.validate_input?
       response = post("GetMetricWidgetImage", "/", input.to_json)
       Core::ParsedResponse(ACW::GetMetricWidgetImageOutput).new(response)
     end
@@ -527,6 +553,7 @@ module Amazonite::CloudWatchV1
     # metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/UsingResourceTagsForTelemetry.html).
     def get_o_tel_enrichment(input : ACW::GetOTelEnrichmentInput) : Core::ParsedResponse(ACW::GetOTelEnrichmentOutput)
       Log.info { "performing 'GetOTelEnrichment' operation" }
+      input.validate! if config.validate_input?
       response = post("GetOTelEnrichment", "/", input.to_json)
       Core::ParsedResponse(ACW::GetOTelEnrichmentOutput).new(response)
     end
@@ -544,6 +571,7 @@ module Amazonite::CloudWatchV1
     # To list mute rules, you need the `cloudwatch:ListAlarmMuteRules` permission.
     def list_alarm_mute_rules(input : ACW::ListAlarmMuteRulesInput) : Core::ParsedResponse(ACW::ListAlarmMuteRulesOutput)
       Log.info { "performing 'ListAlarmMuteRules' operation" }
+      input.validate! if config.validate_input?
       response = post("ListAlarmMuteRules", "/", input.to_json)
       Core::ParsedResponse(ACW::ListAlarmMuteRulesOutput).new(response)
     end
@@ -557,6 +585,7 @@ module Amazonite::CloudWatchV1
     # first call, to receive the next 1000 results.
     def list_dashboards(input : ACW::ListDashboardsInput) : Core::ParsedResponse(ACW::ListDashboardsOutput)
       Log.info { "performing 'ListDashboards' operation" }
+      input.validate! if config.validate_input?
       response = post("ListDashboards", "/", input.to_json)
       Core::ParsedResponse(ACW::ListDashboardsOutput).new(response)
     end
@@ -564,6 +593,7 @@ module Amazonite::CloudWatchV1
     # Returns a list that contains the number of managed Contributor Insights rules in your account.
     def list_managed_insight_rules(input : ACW::ListManagedInsightRulesInput) : Core::ParsedResponse(ACW::ListManagedInsightRulesOutput)
       Log.info { "performing 'ListManagedInsightRules' operation" }
+      input.validate! if config.validate_input?
       response = post("ListManagedInsightRules", "/", input.to_json)
       Core::ParsedResponse(ACW::ListManagedInsightRulesOutput).new(response)
     end
@@ -595,6 +625,7 @@ module Amazonite::CloudWatchV1
     # [GetMetricStatistics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html).
     def list_metrics(input : ACW::ListMetricsInput) : Core::ParsedResponse(ACW::ListMetricsOutput)
       Log.info { "performing 'ListMetrics' operation" }
+      input.validate! if config.validate_input?
       response = post("ListMetrics", "/", input.to_json)
       Core::ParsedResponse(ACW::ListMetricsOutput).new(response)
     end
@@ -602,6 +633,7 @@ module Amazonite::CloudWatchV1
     # Returns a list of metric streams in this account.
     def list_metric_streams(input : ACW::ListMetricStreamsInput) : Core::ParsedResponse(ACW::ListMetricStreamsOutput)
       Log.info { "performing 'ListMetricStreams' operation" }
+      input.validate! if config.validate_input?
       response = post("ListMetricStreams", "/", input.to_json)
       Core::ParsedResponse(ACW::ListMetricStreamsOutput).new(response)
     end
@@ -610,6 +642,7 @@ module Amazonite::CloudWatchV1
     # streams and Contributor Insights rules support tagging.
     def list_tags_for_resource(input : ACW::ListTagsForResourceInput) : Core::ParsedResponse(ACW::ListTagsForResourceOutput)
       Log.info { "performing 'ListTagsForResource' operation" }
+      input.validate! if config.validate_input?
       response = post("ListTagsForResource", "/", input.to_json)
       Core::ParsedResponse(ACW::ListTagsForResourceOutput).new(response)
     end
@@ -645,6 +678,7 @@ module Amazonite::CloudWatchV1
     # specific tag key-value pair, such as `Team=TeamA`.
     def put_alarm_mute_rule(input : ACW::PutAlarmMuteRuleInput) : Core::Response
       Log.info { "performing 'PutAlarmMuteRule' operation" }
+      input.validate! if config.validate_input?
       response = post("PutAlarmMuteRule", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -660,6 +694,7 @@ module Amazonite::CloudWatchV1
     # Detection](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Anomaly_Detection.html).
     def put_anomaly_detector(input : ACW::PutAnomalyDetectorInput) : Core::ParsedResponse(ACW::PutAnomalyDetectorOutput)
       Log.info { "performing 'PutAnomalyDetector' operation" }
+      input.validate! if config.validate_input?
       response = post("PutAnomalyDetector", "/", input.to_json)
       Core::ParsedResponse(ACW::PutAnomalyDetectorOutput).new(response)
     end
@@ -716,6 +751,7 @@ module Amazonite::CloudWatchV1
     # that has Systems Manager OpsItem actions.
     def put_composite_alarm(input : ACW::PutCompositeAlarmInput) : Core::Response
       Log.info { "performing 'PutCompositeAlarm' operation" }
+      input.validate! if config.validate_input?
       response = post("PutCompositeAlarm", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -737,6 +773,7 @@ module Amazonite::CloudWatchV1
     # `DashboardBody` script or the CloudFormation template used to create the dashboard.
     def put_dashboard(input : ACW::PutDashboardInput) : Core::ParsedResponse(ACW::PutDashboardOutput)
       Log.info { "performing 'PutDashboard' operation" }
+      input.validate! if config.validate_input?
       response = post("PutDashboard", "/", input.to_json)
       Core::ParsedResponse(ACW::PutDashboardOutput).new(response)
     end
@@ -750,6 +787,7 @@ module Amazonite::CloudWatchV1
     # the first time the rule was created might not be available.
     def put_insight_rule(input : ACW::PutInsightRuleInput) : Core::ParsedResponse(ACW::PutInsightRuleOutput)
       Log.info { "performing 'PutInsightRule' operation" }
+      input.validate! if config.validate_input?
       response = post("PutInsightRule", "/", input.to_json)
       Core::ParsedResponse(ACW::PutInsightRuleOutput).new(response)
     end
@@ -779,6 +817,7 @@ module Amazonite::CloudWatchV1
     # in alarm notifications.
     def put_log_alarm(input : ACW::PutLogAlarmInput) : Core::Response
       Log.info { "performing 'PutLogAlarm' operation" }
+      input.validate! if config.validate_input?
       response = post("PutLogAlarm", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -792,6 +831,7 @@ module Amazonite::CloudWatchV1
     # rules.
     def put_managed_insight_rules(input : ACW::PutManagedInsightRulesInput) : Core::ParsedResponse(ACW::PutManagedInsightRulesOutput)
       Log.info { "performing 'PutManagedInsightRules' operation" }
+      input.validate! if config.validate_input?
       response = post("PutManagedInsightRules", "/", input.to_json)
       Core::ParsedResponse(ACW::PutManagedInsightRulesOutput).new(response)
     end
@@ -848,6 +888,7 @@ module Amazonite::CloudWatchV1
     # console](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Cross-Account-Cross-Region.html#enable-cross-account-cross-Region).
     def put_metric_alarm(input : ACW::PutMetricAlarmInput) : Core::Response
       Log.info { "performing 'PutMetricAlarm' operation" }
+      input.validate! if config.validate_input?
       response = post("PutMetricAlarm", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -907,6 +948,7 @@ module Amazonite::CloudWatchV1
     # - The `Min` and `Max` are equal, and `Sum` is equal to `Min` multiplied by `SampleCount`.
     def put_metric_data(input : ACW::PutMetricDataInput) : Core::Response
       Log.info { "performing 'PutMetricData' operation" }
+      input.validate! if config.validate_input?
       response = post("PutMetricData", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -946,6 +988,7 @@ module Amazonite::CloudWatchV1
     # observability](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html).
     def put_metric_stream(input : ACW::PutMetricStreamInput) : Core::ParsedResponse(ACW::PutMetricStreamOutput)
       Log.info { "performing 'PutMetricStream' operation" }
+      input.validate! if config.validate_input?
       response = post("PutMetricStream", "/", input.to_json)
       Core::ParsedResponse(ACW::PutMetricStreamOutput).new(response)
     end
@@ -969,6 +1012,7 @@ module Amazonite::CloudWatchV1
     # action.
     def set_alarm_state(input : ACW::SetAlarmStateInput) : Core::Response
       Log.info { "performing 'SetAlarmState' operation" }
+      input.validate! if config.validate_input?
       response = post("SetAlarmState", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -976,6 +1020,7 @@ module Amazonite::CloudWatchV1
     # Starts the streaming of metrics for one or more of your metric streams.
     def start_metric_streams(input : ACW::StartMetricStreamsInput) : Core::ParsedResponse(ACW::StartMetricStreamsOutput)
       Log.info { "performing 'StartMetricStreams' operation" }
+      input.validate! if config.validate_input?
       response = post("StartMetricStreams", "/", input.to_json)
       Core::ParsedResponse(ACW::StartMetricStreamsOutput).new(response)
     end
@@ -992,6 +1037,7 @@ module Amazonite::CloudWatchV1
     # telemetry](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/EnableResourceTagsOnTelemetry.html).
     def start_o_tel_enrichment(input : ACW::StartOTelEnrichmentInput) : Core::ParsedResponse(ACW::StartOTelEnrichmentOutput)
       Log.info { "performing 'StartOTelEnrichment' operation" }
+      input.validate! if config.validate_input?
       response = post("StartOTelEnrichment", "/", input.to_json)
       Core::ParsedResponse(ACW::StartOTelEnrichmentOutput).new(response)
     end
@@ -999,6 +1045,7 @@ module Amazonite::CloudWatchV1
     # Stops the streaming of metrics for one or more of your metric streams.
     def stop_metric_streams(input : ACW::StopMetricStreamsInput) : Core::ParsedResponse(ACW::StopMetricStreamsOutput)
       Log.info { "performing 'StopMetricStreams' operation" }
+      input.validate! if config.validate_input?
       response = post("StopMetricStreams", "/", input.to_json)
       Core::ParsedResponse(ACW::StopMetricStreamsOutput).new(response)
     end
@@ -1010,6 +1057,7 @@ module Amazonite::CloudWatchV1
     # resource tag labels, and cannot be queried using PromQL.
     def stop_o_tel_enrichment(input : ACW::StopOTelEnrichmentInput) : Core::ParsedResponse(ACW::StopOTelEnrichmentOutput)
       Log.info { "performing 'StopOTelEnrichment' operation" }
+      input.validate! if config.validate_input?
       response = post("StopOTelEnrichment", "/", input.to_json)
       Core::ParsedResponse(ACW::StopOTelEnrichmentOutput).new(response)
     end
@@ -1033,6 +1081,7 @@ module Amazonite::CloudWatchV1
     # You can associate as many as 50 tags with a CloudWatch resource.
     def tag_resource(input : ACW::TagResourceInput) : Core::ParsedResponse(ACW::TagResourceOutput)
       Log.info { "performing 'TagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("TagResource", "/", input.to_json)
       Core::ParsedResponse(ACW::TagResourceOutput).new(response)
     end
@@ -1041,6 +1090,7 @@ module Amazonite::CloudWatchV1
     # streams and Contributor Insights rules support tagging.
     def untag_resource(input : ACW::UntagResourceInput) : Core::ParsedResponse(ACW::UntagResourceOutput)
       Log.info { "performing 'UntagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("UntagResource", "/", input.to_json)
       Core::ParsedResponse(ACW::UntagResourceOutput).new(response)
     end

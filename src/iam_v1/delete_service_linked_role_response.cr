@@ -23,5 +23,14 @@ module Amazonite::IamV1
         deletion_task_id: Core::XMLValue.string(node.xpath_node("*[local-name()='DeletionTaskId']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @deletion_task_id
+        raise Core::ValidationError.new("DeletionTaskId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DeletionTaskId length must be <= 1000") if value.size > 1000
+      end
+    end
+
+    def_equals_and_hash(@deletion_task_id)
   end
 end

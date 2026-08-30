@@ -43,5 +43,18 @@ module Amazonite::CloudFormationV1
         template_url: Core::XMLValue.string(node.xpath_node("*[local-name()='TemplateURL']")),
       )
     end
+
+    def validate! : Nil
+      if value = @template_body
+        raise Core::ValidationError.new("TemplateBody length must be >= 1") if value.size < 1
+      end
+
+      if value = @template_url
+        raise Core::ValidationError.new("TemplateURL length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TemplateURL length must be <= 5120") if value.size > 5120
+      end
+    end
+
+    def_equals_and_hash(@template_body, @template_url)
   end
 end

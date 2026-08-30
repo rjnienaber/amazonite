@@ -160,5 +160,47 @@ module Amazonite::IamV1
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @policy_name
+        raise Core::ValidationError.new("PolicyName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PolicyName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("PolicyName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @policy_id
+        raise Core::ValidationError.new("PolicyId length must be >= 16") if value.size < 16
+        raise Core::ValidationError.new("PolicyId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("PolicyId does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("Arn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @path
+        raise Core::ValidationError.new("Path length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Path length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("Path does not match the required pattern") unless value.matches?(Regex.new("^((/[A-Za-z0-9\\.,\\+@=_-]+)*)/$"))
+      end
+
+      if value = @default_version_id
+        raise Core::ValidationError.new("DefaultVersionId does not match the required pattern") unless value.matches?(Regex.new("^v[1-9][0-9]*(\\.[A-Za-z0-9-]*)?$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1000") if value.size > 1000
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@policy_name, @policy_id, @arn, @path, @default_version_id, @attachment_count, @permissions_boundary_usage_count, @is_attachable, @description, @create_date, @update_date, @tags)
   end
 end

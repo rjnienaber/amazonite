@@ -26,5 +26,10 @@ module Amazonite::IamV1
         allowed_by_organizations: Core::XMLValue.bool(node.xpath_node("*[local-name()='AllowedByOrganizations']")),
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@allowed_by_organizations)
   end
 end

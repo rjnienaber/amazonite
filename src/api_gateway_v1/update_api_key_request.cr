@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # A request to change information about an ApiKey resource.
   class UpdateApiKeyRequest
@@ -17,5 +19,13 @@ module Amazonite::ApiGatewayV1
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @patch_operations
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@api_key, @patch_operations)
   end
 end

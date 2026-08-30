@@ -50,5 +50,10 @@ module Amazonite::CloudFormationV1
         detailed_status: (n = node.xpath_node("*[local-name()='DetailedStatus']")) ? ACF::StackInstanceDetailedStatus.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@detailed_status)
   end
 end

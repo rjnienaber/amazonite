@@ -24,5 +24,10 @@ module Amazonite::ApiGatewayV1
       @use_stage_cache : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@percent_traffic, @stage_variable_overrides, @use_stage_cache)
   end
 end

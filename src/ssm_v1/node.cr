@@ -33,5 +33,26 @@ module Amazonite::SsmV1
       @node_type : NodeType | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @id
+        raise Core::ValidationError.new("Id does not match the required pattern") unless value.matches?(Regex.new("^(^i-(\\w{8}|\\w{17})$)|(^mi-\\w{17}$)$"))
+      end
+
+      if value = @owner
+        value.validate!
+      end
+
+      if value = @region
+        raise Core::ValidationError.new("Region length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Region length must be <= 64") if value.size > 64
+      end
+
+      if value = @node_type
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@capture_time, @id, @owner, @region, @node_type)
   end
 end

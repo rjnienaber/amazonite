@@ -1,4 +1,5 @@
 private alias AEB = Amazonite::EventBridgeV1
+private alias Core = Amazonite::Core
 
 module Amazonite::EventBridgeV1
   # The OAuth request parameters to use for the connection.
@@ -29,5 +30,23 @@ module Amazonite::EventBridgeV1
       @o_auth_http_parameters : ConnectionHttpParameters | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @client_parameters
+        value.validate!
+      end
+
+      if value = @authorization_endpoint
+        raise Core::ValidationError.new("AuthorizationEndpoint length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AuthorizationEndpoint length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("AuthorizationEndpoint does not match the required pattern") unless value.matches?(Regex.new("^((%[0-9A-Fa-f]{2}|[-()_.!~*';/?:@\\x26=+$,A-Za-z0-9])+)([).!';/?:,])?$"))
+      end
+
+      if value = @o_auth_http_parameters
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@client_parameters, @authorization_endpoint, @http_method, @o_auth_http_parameters)
   end
 end

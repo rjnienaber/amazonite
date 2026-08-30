@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents a request to perform a check that an item exists or to check the condition of
@@ -52,5 +53,22 @@ module Amazonite::DynamoDBV2
       @return_values_on_condition_check_failure : ReturnValuesOnConditionCheckFailure | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key
+        value.each_value(&.validate!)
+      end
+
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @expression_attribute_values
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@key, @table_name, @condition_expression, @expression_attribute_names, @expression_attribute_values, @return_values_on_condition_check_failure)
   end
 end

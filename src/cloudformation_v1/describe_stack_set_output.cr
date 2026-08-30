@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudFormationV1
   class DescribeStackSetOutput
     # The specified StackSet.
@@ -22,5 +24,13 @@ module Amazonite::CloudFormationV1
         stack_set: node.xpath_node("*[local-name()='StackSet']").try { |n| StackSet.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @stack_set
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@stack_set)
   end
 end

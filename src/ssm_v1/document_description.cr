@@ -171,5 +171,92 @@ module Amazonite::SsmV1
       @category_enum : Array(String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @hash
+        raise Core::ValidationError.new("Hash length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Hash length must be <= 256") if value.size > 256
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.:/]{3,128}$"))
+      end
+
+      if value = @display_name
+        raise Core::ValidationError.new("DisplayName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("DisplayName length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("DisplayName does not match the required pattern") unless value.matches?(Regex.new("^[\\w\\.\\-\\:\\/ ]*$"))
+      end
+
+      if value = @version_name
+        raise Core::ValidationError.new("VersionName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{1,128}$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @parameters
+        value.each(&.validate!)
+      end
+
+      if value = @schema_version
+        raise Core::ValidationError.new("SchemaVersion does not match the required pattern") unless value.matches?(Regex.new("^([0-9]+)\\.([0-9]+)$"))
+      end
+
+      if value = @latest_version
+        raise Core::ValidationError.new("LatestVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @default_version
+        raise Core::ValidationError.new("DefaultVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @target_type
+        raise Core::ValidationError.new("TargetType length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("TargetType length must be <= 200") if value.size > 200
+        raise Core::ValidationError.new("TargetType does not match the required pattern") unless value.matches?(Regex.new("^\\/[\\w\\.\\-\\:\\/]*$"))
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 1000 item(s)") if value.size > 1000
+        value.each(&.validate!)
+      end
+
+      if value = @attachments_information
+        value.each(&.validate!)
+      end
+
+      if value = @requires
+        raise Core::ValidationError.new("Requires must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+
+      if value = @review_information
+        raise Core::ValidationError.new("ReviewInformation must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+
+      if value = @approved_version
+        raise Core::ValidationError.new("ApprovedVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @pending_review_version
+        raise Core::ValidationError.new("PendingReviewVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @category
+        raise Core::ValidationError.new("Category must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Category must have at most 3 item(s)") if value.size > 3
+      end
+
+      if value = @category_enum
+        raise Core::ValidationError.new("CategoryEnum must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("CategoryEnum must have at most 3 item(s)") if value.size > 3
+      end
+    end
+
+    def_equals_and_hash(@sha_1, @hash, @hash_type, @name, @display_name, @version_name, @owner, @created_date, @status, @status_information, @document_version, @description, @parameters, @platform_types, @document_type, @schema_version, @latest_version, @default_version, @document_format, @target_type, @tags, @attachments_information, @requires, @author, @review_information, @approved_version, @pending_review_version, @review_status, @category, @category_enum)
   end
 end

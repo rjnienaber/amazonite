@@ -40,5 +40,13 @@ module Amazonite::CloudFormationV1
         stages_available: node.xpath_nodes("*[local-name()='StagesAvailable']/*[local-name()='member']").compact_map { |n| ACF::TemplateStage.from_json_object_key?(n.content) },
       )
     end
+
+    def validate! : Nil
+      if value = @template_body
+        raise Core::ValidationError.new("TemplateBody length must be >= 1") if value.size < 1
+      end
+    end
+
+    def_equals_and_hash(@template_body, @stages_available)
   end
 end

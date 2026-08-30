@@ -98,5 +98,21 @@ module Amazonite::IamV1
         total_authenticated_entities: Core::XMLValue.i32(node.xpath_node("*[local-name()='TotalAuthenticatedEntities']")),
       )
     end
+
+    def validate! : Nil
+      if value = @service_namespace
+        raise Core::ValidationError.new("ServiceNamespace length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ServiceNamespace length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("ServiceNamespace does not match the required pattern") unless value.matches?(Regex.new("^[\\w-]*$"))
+      end
+
+      if value = @entity_path
+        raise Core::ValidationError.new("EntityPath length must be >= 19") if value.size < 19
+        raise Core::ValidationError.new("EntityPath length must be <= 427") if value.size > 427
+        raise Core::ValidationError.new("EntityPath does not match the required pattern") unless value.matches?(Regex.new("^o-[0-9a-z]{10,32}\\/r-[0-9a-z]{4,32}[0-9a-z-\\/]*$"))
+      end
+    end
+
+    def_equals_and_hash(@service_name, @service_namespace, @region, @entity_path, @last_authenticated_time, @total_authenticated_entities)
   end
 end

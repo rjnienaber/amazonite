@@ -114,5 +114,28 @@ module Amazonite::CloudWatchLogsV1
       @bearer_token_authentication_enabled : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @log_group_name
+        raise Core::ValidationError.new("logGroupName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("logGroupName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+
+      if value = @creation_time
+        raise Core::ValidationError.new("creationTime value must be >= 0") if value < 0
+      end
+
+      if value = @stored_bytes
+        raise Core::ValidationError.new("storedBytes value must be >= 0") if value < 0
+      end
+
+      if value = @kms_key_id
+        raise Core::ValidationError.new("kmsKeyId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("kmsKeyId length must be <= 256") if value.size > 256
+      end
+    end
+
+    def_equals_and_hash(@log_group_name, @creation_time, @retention_in_days, @metric_filter_count, @arn, @stored_bytes, @kms_key_id, @data_protection_status, @inherited_properties, @log_group_class, @log_group_arn, @deletion_protection_enabled, @bearer_token_authentication_enabled)
   end
 end

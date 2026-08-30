@@ -219,5 +219,54 @@ module Amazonite::KmsV1
       @current_key_material_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("Arn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 8192") if value.size > 8192
+      end
+
+      if value = @custom_key_store_id
+        raise Core::ValidationError.new("CustomKeyStoreId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CustomKeyStoreId length must be <= 64") if value.size > 64
+      end
+
+      if value = @cloud_hsm_cluster_id
+        raise Core::ValidationError.new("CloudHsmClusterId length must be >= 19") if value.size < 19
+        raise Core::ValidationError.new("CloudHsmClusterId length must be <= 24") if value.size > 24
+        raise Core::ValidationError.new("CloudHsmClusterId does not match the required pattern") unless value.matches?(Regex.new("^cluster-[2-7a-zA-Z]{11,16}$"))
+      end
+
+      if value = @multi_region_configuration
+        value.validate!
+      end
+
+      if value = @pending_deletion_window_in_days
+        raise Core::ValidationError.new("PendingDeletionWindowInDays value must be >= 1") if value < 1
+        raise Core::ValidationError.new("PendingDeletionWindowInDays value must be <= 365") if value > 365
+      end
+
+      if value = @xks_key_configuration
+        value.validate!
+      end
+
+      if value = @current_key_material_id
+        raise Core::ValidationError.new("CurrentKeyMaterialId length must be >= 64") if value.size < 64
+        raise Core::ValidationError.new("CurrentKeyMaterialId length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("CurrentKeyMaterialId does not match the required pattern") unless value.matches?(Regex.new("^[a-f0-9]+$"))
+      end
+    end
+
+    def_equals_and_hash(@aws_account_id, @key_id, @arn, @creation_date, @enabled, @description, @key_usage, @key_state, @deletion_date, @valid_to, @origin, @custom_key_store_id, @cloud_hsm_cluster_id, @expiration_model, @key_manager, @customer_master_key_spec, @key_spec, @encryption_algorithms, @signing_algorithms, @key_agreement_algorithms, @multi_region, @multi_region_configuration, @pending_deletion_window_in_days, @mac_algorithms, @xks_key_configuration, @current_key_material_id)
   end
 end

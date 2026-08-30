@@ -45,5 +45,19 @@ module Amazonite::CloudFormationV1
         resource_identifier: node.xpath_nodes("*[local-name()='ResourceIdentifier']/*[local-name()='entry']").each_with_object({} of String => String) { |entry, hash| hash[entry.xpath_node("*[local-name()='key']").not_nil!.content] = entry.xpath_node("*[local-name()='value']").not_nil!.content },
       )
     end
+
+    def validate! : Nil
+      if value = @resource_type
+        raise Core::ValidationError.new("ResourceType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceType length must be <= 256") if value.size > 256
+      end
+
+      if value = @resource_identifier
+        raise Core::ValidationError.new("ResourceIdentifier must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("ResourceIdentifier must have at most 256 entry(s)") if value.size > 256
+      end
+    end
+
+    def_equals_and_hash(@resource_type, @logical_resource_id, @resource_identifier)
   end
 end

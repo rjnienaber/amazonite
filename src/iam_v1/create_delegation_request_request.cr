@@ -121,5 +121,52 @@ module Amazonite::IamV1
         only_send_by_owner: Core::XMLValue.bool(node.xpath_node("*[local-name()='OnlySendByOwner']")),
       )
     end
+
+    def validate! : Nil
+      if value = @owner_account_id
+        raise Core::ValidationError.new("OwnerAccountId does not match the required pattern") unless value.matches?(Regex.new("^\\d{12}$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1000") if value.size > 1000
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
+      end
+
+      if value = @permissions
+        value.validate!
+      end
+
+      if value = @request_message
+        raise Core::ValidationError.new("RequestMessage length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("RequestMessage length must be <= 200") if value.size > 200
+        raise Core::ValidationError.new("RequestMessage does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
+      end
+
+      if value = @requestor_workflow_id
+        raise Core::ValidationError.new("RequestorWorkflowId length must be >= 5") if value.size < 5
+        raise Core::ValidationError.new("RequestorWorkflowId length must be <= 400") if value.size > 400
+        raise Core::ValidationError.new("RequestorWorkflowId does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]+$"))
+      end
+
+      if value = @redirect_url
+        raise Core::ValidationError.new("RedirectUrl length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RedirectUrl length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("RedirectUrl does not match the required pattern") unless value.matches?(Regex.new("^http(s?)://[a-zA-Z0-9._/-]*(\\?[a-zA-Z0-9._=&-]*)?(#[a-zA-Z0-9._/-]*)?$"))
+      end
+
+      if value = @notification_channel
+        raise Core::ValidationError.new("NotificationChannel length must be >= 2") if value.size < 2
+        raise Core::ValidationError.new("NotificationChannel length must be <= 400") if value.size > 400
+        raise Core::ValidationError.new("NotificationChannel does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9:_.-]+$"))
+      end
+
+      if value = @session_duration
+        raise Core::ValidationError.new("SessionDuration value must be >= 300") if value < 300
+        raise Core::ValidationError.new("SessionDuration value must be <= 43200") if value > 43200
+      end
+    end
+
+    def_equals_and_hash(@owner_account_id, @description, @permissions, @request_message, @requestor_workflow_id, @redirect_url, @notification_channel, @session_duration, @only_send_by_owner)
   end
 end

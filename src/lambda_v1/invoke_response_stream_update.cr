@@ -13,5 +13,10 @@ module Amazonite::LambdaV1
       @payload : Bytes | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@payload)
   end
 end

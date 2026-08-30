@@ -16,5 +16,10 @@ module Amazonite::SsmV1
       @instance_association_status_aggregated_count : Hash(String, Int32) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@detailed_status, @instance_association_status_aggregated_count)
   end
 end

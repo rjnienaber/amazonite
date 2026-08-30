@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SecretsManagerV1
   # A custom type that specifies a `Region` and the `KmsKeyId` for a replica secret.
   class ReplicaRegionType
@@ -18,5 +20,20 @@ module Amazonite::SecretsManagerV1
       @kms_key_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @region
+        raise Core::ValidationError.new("Region length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Region length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Region does not match the required pattern") unless value.matches?(Regex.new("^([a-z]+-)+\\d+$"))
+      end
+
+      if value = @kms_key_id
+        raise Core::ValidationError.new("KmsKeyId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KmsKeyId length must be <= 2048") if value.size > 2048
+      end
+    end
+
+    def_equals_and_hash(@region, @kms_key_id)
   end
 end

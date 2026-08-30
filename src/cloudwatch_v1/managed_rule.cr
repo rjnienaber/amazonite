@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # Contains the information that's required to enable a managed Contributor Insights rule for an
   # Amazon Web Services resource.
@@ -30,5 +32,24 @@ module Amazonite::CloudWatchV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @template_name
+        raise Core::ValidationError.new("TemplateName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TemplateName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("TemplateName does not match the required pattern") unless value.matches?(Regex.new("^[0-9A-Za-z][\\-\\.\\_0-9A-Za-z]{0,126}[0-9A-Za-z]$"))
+      end
+
+      if value = @resource_arn
+        raise Core::ValidationError.new("ResourceARN length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceARN length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@template_name, @resource_arn, @tags)
   end
 end

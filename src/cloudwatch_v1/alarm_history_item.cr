@@ -50,5 +50,34 @@ module Amazonite::CloudWatchV1
       @alarm_contributor_attributes : Hash(String, String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @alarm_name
+        raise Core::ValidationError.new("AlarmName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmName length must be <= 255") if value.size > 255
+      end
+
+      if value = @alarm_contributor_id
+        raise Core::ValidationError.new("AlarmContributorId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmContributorId length must be <= 16") if value.size > 16
+      end
+
+      if value = @history_summary
+        raise Core::ValidationError.new("HistorySummary length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("HistorySummary length must be <= 255") if value.size > 255
+      end
+
+      if value = @history_data
+        raise Core::ValidationError.new("HistoryData length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("HistoryData length must be <= 4095") if value.size > 4095
+      end
+
+      if value = @alarm_contributor_attributes
+        raise Core::ValidationError.new("AlarmContributorAttributes must have at least 0 entry(s)") if value.size < 0
+        raise Core::ValidationError.new("AlarmContributorAttributes must have at most 150 entry(s)") if value.size > 150
+      end
+    end
+
+    def_equals_and_hash(@alarm_name, @alarm_contributor_id, @alarm_type, @timestamp, @history_item_type, @history_summary, @history_data, @alarm_contributor_attributes)
   end
 end

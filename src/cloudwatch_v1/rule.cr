@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # Defines the schedule configuration for an alarm mute rule.
   #
@@ -16,5 +18,13 @@ module Amazonite::CloudWatchV1
       @schedule : Schedule,
     )
     end
+
+    def validate! : Nil
+      if value = @schedule
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@schedule)
   end
 end

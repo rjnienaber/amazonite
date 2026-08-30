@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Contains operations that have been updated since the last checkpoint, such as completed
   # asynchronous work like timers or callbacks.
@@ -18,5 +20,13 @@ module Amazonite::LambdaV1
       @next_marker : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @operations
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@operations, @next_marker)
   end
 end

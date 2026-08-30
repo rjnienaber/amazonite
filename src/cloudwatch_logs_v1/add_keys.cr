@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This processor adds new key-value pairs to the log event.
   #
@@ -16,5 +18,15 @@ module Amazonite::CloudWatchLogsV1
       @entries : Array(AddKeyEntry),
     )
     end
+
+    def validate! : Nil
+      if value = @entries
+        raise Core::ValidationError.new("entries must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("entries must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@entries)
   end
 end

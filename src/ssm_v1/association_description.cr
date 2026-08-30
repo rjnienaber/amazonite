@@ -203,5 +203,110 @@ module Amazonite::SsmV1
       @association_dispatch_assume_role : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.:/]{3,128}$"))
+      end
+
+      if value = @instance_id
+        raise Core::ValidationError.new("InstanceId does not match the required pattern") unless value.matches?(Regex.new("^(^i-(\\w{8}|\\w{17})$)|(^mi-\\w{17}$)$"))
+      end
+
+      if value = @association_version
+        raise Core::ValidationError.new("AssociationVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST)|([1-9][0-9]*)$"))
+      end
+
+      if value = @status
+        value.validate!
+      end
+
+      if value = @overview
+        value.validate!
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @automation_target_parameter_name
+        raise Core::ValidationError.new("AutomationTargetParameterName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AutomationTargetParameterName length must be <= 50") if value.size > 50
+      end
+
+      if value = @association_id
+        raise Core::ValidationError.new("AssociationId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @targets
+        raise Core::ValidationError.new("Targets must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Targets must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @schedule_expression
+        raise Core::ValidationError.new("ScheduleExpression length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ScheduleExpression length must be <= 256") if value.size > 256
+      end
+
+      if value = @output_location
+        value.validate!
+      end
+
+      if value = @association_name
+        raise Core::ValidationError.new("AssociationName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @max_errors
+        raise Core::ValidationError.new("MaxErrors length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MaxErrors length must be <= 7") if value.size > 7
+        raise Core::ValidationError.new("MaxErrors does not match the required pattern") unless value.matches?(Regex.new("^([1-9][0-9]*|[0]|[1-9][0-9]%|[0-9]%|100%)$"))
+      end
+
+      if value = @max_concurrency
+        raise Core::ValidationError.new("MaxConcurrency length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MaxConcurrency length must be <= 7") if value.size > 7
+        raise Core::ValidationError.new("MaxConcurrency does not match the required pattern") unless value.matches?(Regex.new("^([1-9][0-9]*|[1-9][0-9]%|[1-9]%|100%)$"))
+      end
+
+      if value = @target_locations
+        raise Core::ValidationError.new("TargetLocations must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("TargetLocations must have at most 100 item(s)") if value.size > 100
+        value.each(&.validate!)
+      end
+
+      if value = @schedule_offset
+        raise Core::ValidationError.new("ScheduleOffset value must be >= 1") if value < 1
+        raise Core::ValidationError.new("ScheduleOffset value must be <= 6") if value > 6
+      end
+
+      if value = @duration
+        raise Core::ValidationError.new("Duration value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Duration value must be <= 24") if value > 24
+      end
+
+      if value = @target_maps
+        raise Core::ValidationError.new("TargetMaps must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("TargetMaps must have at most 300 item(s)") if value.size > 300
+      end
+
+      if value = @alarm_configuration
+        value.validate!
+      end
+
+      if value = @triggered_alarms
+        raise Core::ValidationError.new("TriggeredAlarms must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("TriggeredAlarms must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+
+      if value = @association_dispatch_assume_role
+        raise Core::ValidationError.new("AssociationDispatchAssumeRole length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AssociationDispatchAssumeRole length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("AssociationDispatchAssumeRole does not match the required pattern") unless value.matches?(Regex.new("^arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+$"))
+      end
+    end
+
+    def_equals_and_hash(@name, @instance_id, @association_version, @date, @last_update_association_date, @status, @overview, @document_version, @automation_target_parameter_name, @parameters, @association_id, @targets, @schedule_expression, @output_location, @last_execution_date, @last_successful_execution_date, @association_name, @max_errors, @max_concurrency, @compliance_severity, @sync_compliance, @apply_only_at_cron_interval, @calendar_names, @target_locations, @schedule_offset, @duration, @target_maps, @alarm_configuration, @triggered_alarms, @association_dispatch_assume_role)
   end
 end

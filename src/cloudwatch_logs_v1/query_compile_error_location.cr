@@ -16,5 +16,10 @@ module Amazonite::CloudWatchLogsV1
       @end_char_offset : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@start_char_offset, @end_char_offset)
   end
 end

@@ -52,5 +52,15 @@ module Amazonite::CloudFormationV1
         call_as: (n = node.xpath_node("*[local-name()='CallAs']")) ? ACF::CallAs.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+      if value = @operation_id
+        raise Core::ValidationError.new("OperationId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OperationId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("OperationId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+    end
+
+    def_equals_and_hash(@stack_set_name, @operation_id, @call_as)
   end
 end

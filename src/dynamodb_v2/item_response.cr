@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Details for the requested item.
   class ItemResponse
@@ -11,5 +13,13 @@ module Amazonite::DynamoDBV2
       @item : Hash(String, AttributeValue) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @item
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@item)
   end
 end

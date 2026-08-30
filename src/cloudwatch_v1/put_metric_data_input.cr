@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class PutMetricDataInput
     include JSON::Serializable
@@ -68,5 +70,23 @@ module Amazonite::CloudWatchV1
       @strict_entity_validation : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @namespace
+        raise Core::ValidationError.new("Namespace length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Namespace length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("Namespace does not match the required pattern") unless value.matches?(Regex.new("^[^:]"))
+      end
+
+      if value = @metric_data
+        value.each(&.validate!)
+      end
+
+      if value = @entity_metric_data
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@namespace, @metric_data, @entity_metric_data, @strict_entity_validation)
   end
 end

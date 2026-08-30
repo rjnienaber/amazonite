@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   class ListLayersRequest
@@ -34,5 +35,14 @@ module Amazonite::LambdaV1
       @max_items : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @max_items
+        raise Core::ValidationError.new("MaxItems value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxItems value must be <= 50") if value > 50
+      end
+    end
+
+    def_equals_and_hash(@compatible_architecture, @compatible_runtime, @marker, @max_items)
   end
 end

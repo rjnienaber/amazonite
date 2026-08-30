@@ -79,5 +79,50 @@ module Amazonite::DynamoDBV2
       @vector_index_override : Array(VectorIndex) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @source_table_arn
+        raise Core::ValidationError.new("SourceTableArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SourceTableArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @source_table_name
+        raise Core::ValidationError.new("SourceTableName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("SourceTableName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("SourceTableName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @target_table_name
+        raise Core::ValidationError.new("TargetTableName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("TargetTableName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("TargetTableName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @global_secondary_index_override
+        value.each(&.validate!)
+      end
+
+      if value = @local_secondary_index_override
+        value.each(&.validate!)
+      end
+
+      if value = @provisioned_throughput_override
+        value.validate!
+      end
+
+      if value = @on_demand_throughput_override
+        value.validate!
+      end
+
+      if value = @sse_specification_override
+        value.validate!
+      end
+
+      if value = @vector_index_override
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@source_table_arn, @source_table_name, @target_table_name, @use_latest_restorable_time, @restore_date_time, @billing_mode_override, @global_secondary_index_override, @local_secondary_index_override, @provisioned_throughput_override, @on_demand_throughput_override, @sse_specification_override, @vector_index_override)
   end
 end

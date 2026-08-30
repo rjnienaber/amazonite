@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SqsV1
   class SendMessageRequest
     include JSON::Serializable
@@ -151,5 +153,17 @@ module Amazonite::SqsV1
       @message_group_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @message_attributes
+        value.each_value(&.validate!)
+      end
+
+      if value = @message_system_attributes
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@queue_url, @message_body, @delay_seconds, @message_attributes, @message_system_attributes, @message_deduplication_id, @message_group_id)
   end
 end

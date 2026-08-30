@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class PutRuleResponse
     include JSON::Serializable
@@ -10,5 +12,14 @@ module Amazonite::EventBridgeV1
       @rule_arn : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @rule_arn
+        raise Core::ValidationError.new("RuleArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RuleArn length must be <= 1600") if value.size > 1600
+      end
+    end
+
+    def_equals_and_hash(@rule_arn)
   end
 end

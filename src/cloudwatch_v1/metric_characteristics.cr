@@ -15,5 +15,10 @@ module Amazonite::CloudWatchV1
       @periodic_spikes : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@periodic_spikes)
   end
 end

@@ -36,5 +36,10 @@ module Amazonite::CloudFormationV1
         active: Core::XMLValue.bool(node.xpath_node("*[local-name()='Active']")),
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@active)
   end
 end

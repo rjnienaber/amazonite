@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # The evaluation window that an alarm uses to select the range of metric data that it evaluates
   # each time it runs. This is a union type. Set exactly one of its members, `SlidingWindow` or
@@ -25,5 +27,17 @@ module Amazonite::CloudWatchV1
       @sliding_window : SlidingWindow | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @wall_clock_window
+        value.validate!
+      end
+
+      if value = @sliding_window
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@wall_clock_window, @sliding_window)
   end
 end

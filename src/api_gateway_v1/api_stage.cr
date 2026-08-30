@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # API stage name of the associated API stage in a usage plan.
   class ApiStage
@@ -21,5 +23,13 @@ module Amazonite::ApiGatewayV1
       @throttle : Hash(String, ThrottleSettings) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @throttle
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@api_id, @stage, @throttle)
   end
 end

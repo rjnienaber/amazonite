@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # Tthe authorization parameters to use for the connection.
   class ConnectionAuthResponseParameters
@@ -37,5 +39,29 @@ module Amazonite::EventBridgeV1
       @connectivity_parameters : DescribeConnectionConnectivityParameters | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @basic_auth_parameters
+        value.validate!
+      end
+
+      if value = @o_auth_parameters
+        value.validate!
+      end
+
+      if value = @api_key_auth_parameters
+        value.validate!
+      end
+
+      if value = @invocation_http_parameters
+        value.validate!
+      end
+
+      if value = @connectivity_parameters
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@basic_auth_parameters, @o_auth_parameters, @api_key_auth_parameters, @invocation_http_parameters, @connectivity_parameters)
   end
 end

@@ -122,5 +122,23 @@ module Amazonite::CloudFormationV1
         operation_preferences: node.xpath_node("*[local-name()='OperationPreferences']").try { |n| StackSetOperationPreferences.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @operation_id
+        raise Core::ValidationError.new("OperationId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OperationId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("OperationId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+
+      if value = @status_details
+        value.validate!
+      end
+
+      if value = @operation_preferences
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@operation_id, @action, @status, @creation_timestamp, @end_timestamp, @status_reason, @status_details, @operation_preferences)
   end
 end

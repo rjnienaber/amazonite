@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   class GetFunctionUrlConfigResponse
@@ -56,5 +57,36 @@ module Amazonite::LambdaV1
       @invoke_mode : InvokeMode | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @function_url
+        raise Core::ValidationError.new("FunctionUrl length must be >= 40") if value.size < 40
+        raise Core::ValidationError.new("FunctionUrl length must be <= 100") if value.size > 100
+      end
+
+      if value = @function_arn
+        raise Core::ValidationError.new("FunctionArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("FunctionArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("FunctionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @cors
+        value.validate!
+      end
+
+      if value = @creation_time
+        raise Core::ValidationError.new("CreationTime length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("CreationTime length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("CreationTime does not match the required pattern") unless value.matches?(Regex.new("^.*$"))
+      end
+
+      if value = @last_modified_time
+        raise Core::ValidationError.new("LastModifiedTime length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("LastModifiedTime length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("LastModifiedTime does not match the required pattern") unless value.matches?(Regex.new("^.*$"))
+      end
+    end
+
+    def_equals_and_hash(@function_url, @function_arn, @auth_type, @cors, @creation_time, @last_modified_time, @invoke_mode)
   end
 end

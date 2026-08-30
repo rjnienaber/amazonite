@@ -43,5 +43,23 @@ module Amazonite::KinesisV1
       @encryption_type : EncryptionType | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @sequence_number
+        raise Core::ValidationError.new("SequenceNumber does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,128})$"))
+      end
+
+      if value = @data
+        raise Core::ValidationError.new("Data length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Data length must be <= 10485760") if value.size > 10485760
+      end
+
+      if value = @partition_key
+        raise Core::ValidationError.new("PartitionKey length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PartitionKey length must be <= 256") if value.size > 256
+      end
+    end
+
+    def_equals_and_hash(@sequence_number, @approximate_arrival_timestamp, @data, @partition_key, @encryption_type)
   end
 end

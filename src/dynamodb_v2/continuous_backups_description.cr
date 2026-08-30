@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the continuous backups and point in time recovery settings on the table.
@@ -18,5 +19,13 @@ module Amazonite::DynamoDBV2
       @point_in_time_recovery_description : PointInTimeRecoveryDescription | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @point_in_time_recovery_description
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@continuous_backups_status, @point_in_time_recovery_description)
   end
 end

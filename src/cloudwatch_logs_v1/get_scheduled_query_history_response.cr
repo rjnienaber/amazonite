@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class GetScheduledQueryHistoryResponse
     include JSON::Serializable
@@ -24,5 +26,22 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("name length must be <= 300") if value.size > 300
+      end
+
+      if value = @trigger_history
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
+    end
+
+    def_equals_and_hash(@name, @scheduled_query_arn, @trigger_history, @next_token)
   end
 end

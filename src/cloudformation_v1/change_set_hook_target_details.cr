@@ -1,4 +1,5 @@
 private alias ACF = Amazonite::CloudFormationV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudFormationV1
   # Specifies target details for an activated Hook.
@@ -34,5 +35,13 @@ module Amazonite::CloudFormationV1
         resource_target_details: node.xpath_node("*[local-name()='ResourceTargetDetails']").try { |n| ChangeSetHookResourceTargetDetails.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @resource_target_details
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@target_type, @resource_target_details)
   end
 end

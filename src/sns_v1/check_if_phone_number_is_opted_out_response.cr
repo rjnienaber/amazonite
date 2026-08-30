@@ -29,5 +29,10 @@ module Amazonite::SnsV1
         is_opted_out: Core::XMLValue.bool(node.xpath_node("*[local-name()='isOptedOut']")),
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@is_opted_out)
   end
 end

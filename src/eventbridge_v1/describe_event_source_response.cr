@@ -41,5 +41,10 @@ module Amazonite::EventBridgeV1
       @state : EventSourceState | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@arn, @created_by, @creation_time, @expiration_time, @name, @state)
   end
 end

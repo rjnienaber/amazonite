@@ -57,5 +57,31 @@ module Amazonite::SsmV1
       @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @association_id
+        raise Core::ValidationError.new("AssociationId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @association_version
+        raise Core::ValidationError.new("AssociationVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST)|([1-9][0-9]*)$"))
+      end
+
+      if value = @execution_id
+        raise Core::ValidationError.new("ExecutionId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @alarm_configuration
+        value.validate!
+      end
+
+      if value = @triggered_alarms
+        raise Core::ValidationError.new("TriggeredAlarms must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("TriggeredAlarms must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@association_id, @association_version, @execution_id, @status, @detailed_status, @created_time, @last_execution_date, @resource_count_by_status, @alarm_configuration, @triggered_alarms)
   end
 end

@@ -169,5 +169,46 @@ module Amazonite::StsV1
         duration_seconds: Core::XMLValue.i32(node.xpath_node("*[local-name()='DurationSeconds']")),
       )
     end
+
+    def validate! : Nil
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("RoleArn length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("RoleArn does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~\u0085\u00A0-퟿\uE000-�က0-ჿFF]+$"))
+      end
+
+      if value = @role_session_name
+        raise Core::ValidationError.new("RoleSessionName length must be >= 2") if value.size < 2
+        raise Core::ValidationError.new("RoleSessionName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("RoleSessionName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]*$"))
+      end
+
+      if value = @web_identity_token
+        raise Core::ValidationError.new("WebIdentityToken length must be >= 4") if value.size < 4
+        raise Core::ValidationError.new("WebIdentityToken length must be <= 20000") if value.size > 20000
+      end
+
+      if value = @provider_id
+        raise Core::ValidationError.new("ProviderId length must be >= 4") if value.size < 4
+        raise Core::ValidationError.new("ProviderId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @policy_arns
+        value.each(&.validate!)
+      end
+
+      if value = @policy
+        raise Core::ValidationError.new("Policy length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Policy length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("Policy does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+
+      if value = @duration_seconds
+        raise Core::ValidationError.new("DurationSeconds value must be >= 900") if value < 900
+        raise Core::ValidationError.new("DurationSeconds value must be <= 43200") if value > 43200
+      end
+    end
+
+    def_equals_and_hash(@role_arn, @role_session_name, @web_identity_token, @provider_id, @policy_arns, @policy, @duration_seconds)
   end
 end

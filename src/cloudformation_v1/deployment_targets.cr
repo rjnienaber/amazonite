@@ -91,5 +91,15 @@ module Amazonite::CloudFormationV1
         account_filter_type: (n = node.xpath_node("*[local-name()='AccountFilterType']")) ? ACF::AccountFilterType.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+      if value = @accounts_url
+        raise Core::ValidationError.new("AccountsUrl length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AccountsUrl length must be <= 5120") if value.size > 5120
+        raise Core::ValidationError.new("AccountsUrl does not match the required pattern") unless value.matches?(Regex.new("^(s3://|http(s?)://).+$"))
+      end
+    end
+
+    def_equals_and_hash(@accounts, @accounts_url, @organizational_unit_ids, @account_filter_type)
   end
 end

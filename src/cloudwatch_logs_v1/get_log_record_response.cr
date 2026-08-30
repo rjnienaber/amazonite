@@ -10,5 +10,10 @@ module Amazonite::CloudWatchLogsV1
       @log_record : Hash(String, String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@log_record)
   end
 end

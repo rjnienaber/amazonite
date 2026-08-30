@@ -53,5 +53,10 @@ module Amazonite::SsmV1
       @cve_ids : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@title, @kb_id, @classification, @severity, @state, @installed_time, @cve_ids)
   end
 end

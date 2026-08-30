@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the properties of a replica.
@@ -66,5 +67,37 @@ module Amazonite::DynamoDBV2
       @replica_table_class_summary : TableClassSummary | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @replica_billing_mode_summary
+        value.validate!
+      end
+
+      if value = @replica_provisioned_read_capacity_units
+        raise Core::ValidationError.new("ReplicaProvisionedReadCapacityUnits value must be >= 0") if value < 0
+      end
+
+      if value = @replica_provisioned_read_capacity_auto_scaling_settings
+        value.validate!
+      end
+
+      if value = @replica_provisioned_write_capacity_units
+        raise Core::ValidationError.new("ReplicaProvisionedWriteCapacityUnits value must be >= 0") if value < 0
+      end
+
+      if value = @replica_provisioned_write_capacity_auto_scaling_settings
+        value.validate!
+      end
+
+      if value = @replica_global_secondary_index_settings
+        value.each(&.validate!)
+      end
+
+      if value = @replica_table_class_summary
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@region_name, @replica_status, @replica_billing_mode_summary, @replica_provisioned_read_capacity_units, @replica_provisioned_read_capacity_auto_scaling_settings, @replica_provisioned_write_capacity_units, @replica_provisioned_write_capacity_auto_scaling_settings, @replica_global_secondary_index_settings, @replica_table_class_summary)
   end
 end

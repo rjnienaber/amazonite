@@ -27,5 +27,19 @@ module Amazonite::KmsV1
       @key_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @mac
+        raise Core::ValidationError.new("Mac length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Mac length must be <= 6144") if value.size > 6144
+      end
+
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+    end
+
+    def_equals_and_hash(@mac, @mac_algorithm, @key_id)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # A configuration object that specifies the destination of an event after Lambda processes it. For
   # more information, see [Adding a
@@ -19,5 +21,17 @@ module Amazonite::LambdaV1
       @on_failure : OnFailure | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @on_success
+        value.validate!
+      end
+
+      if value = @on_failure
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@on_success, @on_failure)
   end
 end

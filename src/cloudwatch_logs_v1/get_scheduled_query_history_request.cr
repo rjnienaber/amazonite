@@ -38,5 +38,31 @@ module Amazonite::CloudWatchLogsV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @identifier
+        raise Core::ValidationError.new("identifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("identifier length must be <= 300") if value.size > 300
+      end
+
+      if value = @start_time
+        raise Core::ValidationError.new("startTime value must be >= 0") if value < 0
+      end
+
+      if value = @end_time
+        raise Core::ValidationError.new("endTime value must be >= 0") if value < 0
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("maxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("maxResults value must be <= 1000") if value > 1000
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
+    end
+
+    def_equals_and_hash(@identifier, @start_time, @end_time, @execution_statuses, @max_results, @next_token)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   # Information about the [external key
   # ](https://docs.aws.amazon.com/kms/latest/developerguide/keystore-external.html#concept-external-key)that
@@ -24,5 +26,15 @@ module Amazonite::KmsV1
       @id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @id
+        raise Core::ValidationError.new("Id length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Id length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Id does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-_.]+$"))
+      end
+    end
+
+    def_equals_and_hash(@id)
   end
 end

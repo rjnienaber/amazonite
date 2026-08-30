@@ -16,5 +16,10 @@ module Amazonite::ApiGatewayV1
       @tag_keys : Array(String),
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@resource_arn, @tag_keys)
   end
 end

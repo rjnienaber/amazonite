@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This object contains the log events and metadata for a Live Tail session.
   class LiveTailSessionUpdate
@@ -21,5 +23,17 @@ module Amazonite::CloudWatchLogsV1
       @session_results : Array(LiveTailSessionLogEvent) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @session_metadata
+        value.validate!
+      end
+
+      if value = @session_results
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@session_metadata, @session_results)
   end
 end

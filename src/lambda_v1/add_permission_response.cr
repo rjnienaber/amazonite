@@ -10,5 +10,10 @@ module Amazonite::LambdaV1
       @statement : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@statement)
   end
 end

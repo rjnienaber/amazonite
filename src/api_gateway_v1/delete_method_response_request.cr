@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # A request to delete an existing MethodResponse resource.
   class DeleteMethodResponseRequest
@@ -26,5 +28,13 @@ module Amazonite::ApiGatewayV1
       @status_code : String,
     )
     end
+
+    def validate! : Nil
+      if value = @status_code
+        raise Core::ValidationError.new("statusCode does not match the required pattern") unless value.matches?(Regex.new("^[1-5]\\d\\d$"))
+      end
+    end
+
+    def_equals_and_hash(@rest_api_id, @resource_id, @http_method, @status_code)
   end
 end

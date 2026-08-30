@@ -61,5 +61,26 @@ module Amazonite::IamV1
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @path
+        raise Core::ValidationError.new("Path length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Path length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("Path does not match the required pattern") unless value.matches?(Regex.new("^(/)|(/[!-~]+/)$"))
+      end
+
+      if value = @virtual_mfa_device_name
+        raise Core::ValidationError.new("VirtualMFADeviceName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("VirtualMFADeviceName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@path, @virtual_mfa_device_name, @tags)
   end
 end

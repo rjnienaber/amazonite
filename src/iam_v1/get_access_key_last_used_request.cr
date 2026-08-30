@@ -25,5 +25,15 @@ module Amazonite::IamV1
         access_key_id: Core::XMLValue.string(node.xpath_node("*[local-name()='AccessKeyId']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @access_key_id
+        raise Core::ValidationError.new("AccessKeyId length must be >= 16") if value.size < 16
+        raise Core::ValidationError.new("AccessKeyId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("AccessKeyId does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+    end
+
+    def_equals_and_hash(@access_key_id)
   end
 end

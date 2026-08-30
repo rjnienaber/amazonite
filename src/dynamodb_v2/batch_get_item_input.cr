@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the input of a `BatchGetItem` operation.
@@ -79,5 +80,15 @@ module Amazonite::DynamoDBV2
       @return_consumed_capacity : ReturnConsumedCapacity | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @request_items
+        raise Core::ValidationError.new("RequestItems must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("RequestItems must have at most 100 entry(s)") if value.size > 100
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@request_items, @return_consumed_capacity)
   end
 end

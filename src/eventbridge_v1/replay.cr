@@ -57,5 +57,27 @@ module Amazonite::EventBridgeV1
       @replay_end_time : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @replay_name
+        raise Core::ValidationError.new("ReplayName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ReplayName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("ReplayName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @event_source_arn
+        raise Core::ValidationError.new("EventSourceArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EventSourceArn length must be <= 1600") if value.size > 1600
+        raise Core::ValidationError.new("EventSourceArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws([a-z]|\\-)*:events:([a-z]|\\d|\\-)*:([0-9]{12})?:.+\\/.+$"))
+      end
+
+      if value = @state_reason
+        raise Core::ValidationError.new("StateReason length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StateReason length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("StateReason does not match the required pattern") unless value.matches?(Regex.new(".*"))
+      end
+    end
+
+    def_equals_and_hash(@replay_name, @event_source_arn, @state, @state_reason, @event_start_time, @event_end_time, @event_last_replayed_time, @replay_start_time, @replay_end_time)
   end
 end

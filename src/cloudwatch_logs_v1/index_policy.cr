@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # This structure contains information about one field index policy in this account.
@@ -35,5 +36,24 @@ module Amazonite::CloudWatchLogsV1
       @source : IndexSource | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @log_group_identifier
+        raise Core::ValidationError.new("logGroupIdentifier length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupIdentifier length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("logGroupIdentifier does not match the required pattern") unless value.matches?(Regex.new("^[\\w#+=/:,.@-]*$"))
+      end
+
+      if value = @last_update_time
+        raise Core::ValidationError.new("lastUpdateTime value must be >= 0") if value < 0
+      end
+
+      if value = @policy_document
+        raise Core::ValidationError.new("policyDocument length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("policyDocument length must be <= 51200") if value.size > 51200
+      end
+    end
+
+    def_equals_and_hash(@log_group_identifier, @last_update_time, @policy_document, @policy_name, @source)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class UntagResourceInput
     include JSON::Serializable
@@ -29,5 +31,14 @@ module Amazonite::CloudWatchV1
       @tag_keys : Array(String),
     )
     end
+
+    def validate! : Nil
+      if value = @resource_arn
+        raise Core::ValidationError.new("ResourceARN length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceARN length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@resource_arn, @tag_keys)
   end
 end

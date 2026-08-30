@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # List of signing profiles that can sign a code package.
   class AllowedPublishers
@@ -12,5 +14,14 @@ module Amazonite::LambdaV1
       @signing_profile_version_arns : Array(String),
     )
     end
+
+    def validate! : Nil
+      if value = @signing_profile_version_arns
+        raise Core::ValidationError.new("SigningProfileVersionArns must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("SigningProfileVersionArns must have at most 20 item(s)") if value.size > 20
+      end
+    end
+
+    def_equals_and_hash(@signing_profile_version_arns)
   end
 end

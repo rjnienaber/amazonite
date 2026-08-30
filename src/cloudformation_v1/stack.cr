@@ -297,5 +297,63 @@ module Amazonite::CloudFormationV1
         last_operations: node.xpath_nodes("*[local-name()='LastOperations']/*[local-name()='member']").map { |n| OperationEntry.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @change_set_id
+        raise Core::ValidationError.new("ChangeSetId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChangeSetId does not match the required pattern") unless value.matches?(Regex.new("^arn:[-a-zA-Z0-9:/]*$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @parameters
+        value.each(&.validate!)
+      end
+
+      if value = @rollback_configuration
+        value.validate!
+      end
+
+      if value = @deployment_config
+        value.validate!
+      end
+
+      if value = @notification_ar_ns
+        raise Core::ValidationError.new("NotificationARNs must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("NotificationARNs must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @timeout_in_minutes
+        raise Core::ValidationError.new("TimeoutInMinutes value must be >= 1") if value < 1
+      end
+
+      if value = @outputs
+        value.each(&.validate!)
+      end
+
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleARN length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("RoleARN length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+
+      if value = @drift_information
+        value.validate!
+      end
+
+      if value = @last_operations
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@stack_id, @stack_name, @change_set_id, @description, @parameters, @creation_time, @deletion_time, @last_updated_time, @rollback_configuration, @stack_status, @stack_status_reason, @disable_rollback, @deployment_config, @notification_ar_ns, @timeout_in_minutes, @capabilities, @outputs, @role_arn, @tags, @enable_termination_protection, @parent_id, @root_id, @drift_information, @retain_except_on_create, @deletion_mode, @detailed_status, @last_operations)
   end
 end

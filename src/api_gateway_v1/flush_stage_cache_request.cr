@@ -16,5 +16,10 @@ module Amazonite::ApiGatewayV1
       @stage_name : String,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@rest_api_id, @stage_name)
   end
 end

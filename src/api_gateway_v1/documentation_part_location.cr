@@ -1,4 +1,5 @@
 private alias AAG = Amazonite::ApiGatewayV1
+private alias Core = Amazonite::Core
 
 module Amazonite::ApiGatewayV1
   # Specifies the target API entity to which the documentation applies.
@@ -53,5 +54,13 @@ module Amazonite::ApiGatewayV1
       @name : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @status_code
+        raise Core::ValidationError.new("statusCode does not match the required pattern") unless value.matches?(Regex.new("^([1-5]\\d\\d|\\*|\\s*)$"))
+      end
+    end
+
+    def_equals_and_hash(@type, @path, @method, @status_code, @name)
   end
 end

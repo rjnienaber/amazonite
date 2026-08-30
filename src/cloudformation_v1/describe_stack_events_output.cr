@@ -35,5 +35,18 @@ module Amazonite::CloudFormationV1
         next_token: Core::XMLValue.string(node.xpath_node("*[local-name()='NextToken']")),
       )
     end
+
+    def validate! : Nil
+      if value = @stack_events
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@stack_events, @next_token)
   end
 end

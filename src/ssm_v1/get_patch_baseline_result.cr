@@ -96,5 +96,50 @@ module Amazonite::SsmV1
       @available_security_updates_compliance_status : PatchComplianceStatus | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @baseline_id
+        raise Core::ValidationError.new("BaselineId length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("BaselineId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("BaselineId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-:/]{20,128}$"))
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("Name length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @global_filters
+        value.validate!
+      end
+
+      if value = @approval_rules
+        value.validate!
+      end
+
+      if value = @approved_patches
+        raise Core::ValidationError.new("ApprovedPatches must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("ApprovedPatches must have at most 50 item(s)") if value.size > 50
+      end
+
+      if value = @rejected_patches
+        raise Core::ValidationError.new("RejectedPatches must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("RejectedPatches must have at most 50 item(s)") if value.size > 50
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @sources
+        raise Core::ValidationError.new("Sources must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Sources must have at most 20 item(s)") if value.size > 20
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@baseline_id, @name, @operating_system, @global_filters, @approval_rules, @approved_patches, @approved_patches_compliance_level, @approved_patches_enable_non_security, @rejected_patches, @rejected_patches_action, @patch_groups, @created_date, @modified_date, @description, @sources, @available_security_updates_compliance_status)
   end
 end

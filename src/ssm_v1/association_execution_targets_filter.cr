@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # Filters for the association execution.
@@ -18,5 +19,13 @@ module Amazonite::SsmV1
       @value : String,
     )
     end
+
+    def validate! : Nil
+      if value = @value
+        raise Core::ValidationError.new("Value length must be >= 1") if value.size < 1
+      end
+    end
+
+    def_equals_and_hash(@key, @value)
   end
 end

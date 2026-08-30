@@ -18,5 +18,10 @@ module Amazonite::DynamoDBV2
       @witness_status : WitnessStatus | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@region_name, @witness_status)
   end
 end

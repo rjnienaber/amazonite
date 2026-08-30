@@ -51,5 +51,10 @@ module Amazonite::SnsV1
         action_name: node.xpath_nodes("*[local-name()='ActionName']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@topic_arn, @label, @aws_account_id, @action_name)
   end
 end

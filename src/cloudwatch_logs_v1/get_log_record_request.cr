@@ -21,5 +21,10 @@ module Amazonite::CloudWatchLogsV1
       @unmask : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@log_record_pointer, @unmask)
   end
 end

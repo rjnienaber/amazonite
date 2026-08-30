@@ -46,5 +46,21 @@ module Amazonite::IamV1
         ssh_public_key_body: Core::XMLValue.string(node.xpath_node("*[local-name()='SSHPublicKeyBody']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @ssh_public_key_body
+        raise Core::ValidationError.new("SSHPublicKeyBody length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SSHPublicKeyBody length must be <= 16384") if value.size > 16384
+        raise Core::ValidationError.new("SSHPublicKeyBody does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+    end
+
+    def_equals_and_hash(@user_name, @ssh_public_key_body)
   end
 end

@@ -100,5 +100,44 @@ module Amazonite::LambdaV1
       @source_kms_key_arn : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @function_name
+        raise Core::ValidationError.new("FunctionName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("FunctionName length must be <= 140") if value.size > 140
+        raise Core::ValidationError.new("FunctionName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:)?((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_]+)(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @s3_bucket
+        raise Core::ValidationError.new("S3Bucket length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("S3Bucket length must be <= 63") if value.size > 63
+        raise Core::ValidationError.new("S3Bucket does not match the required pattern") unless value.matches?(Regex.new("^[0-9A-Za-z\\.\\-_]*(?<!\\.)$"))
+      end
+
+      if value = @s3_key
+        raise Core::ValidationError.new("S3Key length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("S3Key length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("S3Key does not match the required pattern") unless value.matches?(Regex.new("^.*$"))
+      end
+
+      if value = @s3_object_version
+        raise Core::ValidationError.new("S3ObjectVersion length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("S3ObjectVersion length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("S3ObjectVersion does not match the required pattern") unless value.matches?(Regex.new("^.*$"))
+      end
+
+      if value = @architectures
+        raise Core::ValidationError.new("Architectures must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Architectures must have at most 1 item(s)") if value.size > 1
+      end
+
+      if value = @source_kms_key_arn
+        raise Core::ValidationError.new("SourceKMSKeyArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SourceKMSKeyArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("SourceKMSKeyArn does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*)|()$"))
+      end
+    end
+
+    def_equals_and_hash(@function_name, @zip_file, @s3_bucket, @s3_key, @s3_object_version, @s3_object_storage_mode, @image_uri, @architectures, @publish, @publish_to, @dry_run, @revision_id, @source_kms_key_arn)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class PutPermissionRequest
     include JSON::Serializable
@@ -57,5 +59,37 @@ module Amazonite::EventBridgeV1
       @policy : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @event_bus_name
+        raise Core::ValidationError.new("EventBusName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EventBusName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("EventBusName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @action
+        raise Core::ValidationError.new("Action length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Action length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Action does not match the required pattern") unless value.matches?(Regex.new("^events:[a-zA-Z]+$"))
+      end
+
+      if value = @principal
+        raise Core::ValidationError.new("Principal length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Principal length must be <= 12") if value.size > 12
+        raise Core::ValidationError.new("Principal does not match the required pattern") unless value.matches?(Regex.new("^(\\d{12}|\\*)$"))
+      end
+
+      if value = @statement_id
+        raise Core::ValidationError.new("StatementId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StatementId length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("StatementId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-_]+$"))
+      end
+
+      if value = @condition
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@event_bus_name, @action, @principal, @statement_id, @condition, @policy)
   end
 end

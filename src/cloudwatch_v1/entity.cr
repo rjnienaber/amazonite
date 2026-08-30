@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # An entity associated with metrics, to allow for finding related telemetry. An entity is
   # typically a resource or service within your system. For example, metrics from an Amazon EC2
@@ -34,5 +36,19 @@ module Amazonite::CloudWatchV1
       @attributes : Hash(String, String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key_attributes
+        raise Core::ValidationError.new("KeyAttributes must have at least 2 entry(s)") if value.size < 2
+        raise Core::ValidationError.new("KeyAttributes must have at most 4 entry(s)") if value.size > 4
+      end
+
+      if value = @attributes
+        raise Core::ValidationError.new("Attributes must have at least 0 entry(s)") if value.size < 0
+        raise Core::ValidationError.new("Attributes must have at most 10 entry(s)") if value.size > 10
+      end
+    end
+
+    def_equals_and_hash(@key_attributes, @attributes)
   end
 end

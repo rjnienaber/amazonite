@@ -206,5 +206,51 @@ module Amazonite::CloudFormationV1
         regions: node.xpath_nodes("*[local-name()='Regions']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @template_body
+        raise Core::ValidationError.new("TemplateBody length must be >= 1") if value.size < 1
+      end
+
+      if value = @parameters
+        value.each(&.validate!)
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+
+      if value = @administration_role_arn
+        raise Core::ValidationError.new("AdministrationRoleARN length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("AdministrationRoleARN length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @execution_role_name
+        raise Core::ValidationError.new("ExecutionRoleName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ExecutionRoleName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("ExecutionRoleName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z_0-9+=,.@-]+$"))
+      end
+
+      if value = @stack_set_drift_detection_details
+        value.validate!
+      end
+
+      if value = @auto_deployment
+        value.validate!
+      end
+
+      if value = @managed_execution
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@stack_set_name, @stack_set_id, @description, @status, @template_body, @parameters, @capabilities, @tags, @stack_set_arn, @administration_role_arn, @execution_role_name, @stack_set_drift_detection_details, @auto_deployment, @permission_model, @organizational_unit_ids, @managed_execution, @regions)
   end
 end

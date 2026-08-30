@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Represents a collection resource that contains zero or more references to your existing
   # deployments, and links that guide you on how to interact with your collection. The collection
@@ -18,5 +20,13 @@ module Amazonite::ApiGatewayV1
       @position : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @items
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@items, @position)
   end
 end

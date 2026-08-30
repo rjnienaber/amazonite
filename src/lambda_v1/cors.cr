@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # The [cross-origin resource sharing
   # (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) settings for your Lambda
@@ -47,5 +49,34 @@ module Amazonite::LambdaV1
       @max_age : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @allow_headers
+        raise Core::ValidationError.new("AllowHeaders must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AllowHeaders must have at most 100 item(s)") if value.size > 100
+      end
+
+      if value = @allow_methods
+        raise Core::ValidationError.new("AllowMethods must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AllowMethods must have at most 6 item(s)") if value.size > 6
+      end
+
+      if value = @allow_origins
+        raise Core::ValidationError.new("AllowOrigins must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AllowOrigins must have at most 100 item(s)") if value.size > 100
+      end
+
+      if value = @expose_headers
+        raise Core::ValidationError.new("ExposeHeaders must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("ExposeHeaders must have at most 100 item(s)") if value.size > 100
+      end
+
+      if value = @max_age
+        raise Core::ValidationError.new("MaxAge value must be >= 0") if value < 0
+        raise Core::ValidationError.new("MaxAge value must be <= 86400") if value > 86400
+      end
+    end
+
+    def_equals_and_hash(@allow_credentials, @allow_headers, @allow_methods, @allow_origins, @expose_headers, @max_age)
   end
 end

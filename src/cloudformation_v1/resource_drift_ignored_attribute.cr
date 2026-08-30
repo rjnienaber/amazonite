@@ -44,5 +44,10 @@ module Amazonite::CloudFormationV1
         reason: (n = node.xpath_node("*[local-name()='Reason']")) ? ACF::DriftIgnoredReason.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@path, @reason)
   end
 end

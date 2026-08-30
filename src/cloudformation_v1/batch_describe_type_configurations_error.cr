@@ -44,5 +44,23 @@ module Amazonite::CloudFormationV1
         type_configuration_identifier: node.xpath_node("*[local-name()='TypeConfigurationIdentifier']").try { |n| TypeConfigurationIdentifier.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @error_code
+        raise Core::ValidationError.new("ErrorCode length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("ErrorCode length must be <= 3") if value.size > 3
+      end
+
+      if value = @error_message
+        raise Core::ValidationError.new("ErrorMessage length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ErrorMessage length must be <= 255") if value.size > 255
+      end
+
+      if value = @type_configuration_identifier
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@error_code, @error_message, @type_configuration_identifier)
   end
 end

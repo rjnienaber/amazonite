@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class ListExportsInput
     include JSON::Serializable
@@ -21,5 +23,19 @@ module Amazonite::DynamoDBV2
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @table_arn
+        raise Core::ValidationError.new("TableArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 25") if value > 25
+      end
+    end
+
+    def_equals_and_hash(@table_arn, @max_results, @next_token)
   end
 end

@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   # To secure and define access to your event source, you can specify the authentication protocol,
@@ -52,5 +53,15 @@ module Amazonite::LambdaV1
       @uri : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @uri
+        raise Core::ValidationError.new("URI length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("URI length must be <= 200") if value.size > 200
+        raise Core::ValidationError.new("URI does not match the required pattern") unless value.matches?(Regex.new("^[ a-zA-Z0-9-\\/*:_+=.@-]*$"))
+      end
+    end
+
+    def_equals_and_hash(@type, @uri)
   end
 end

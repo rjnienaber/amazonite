@@ -23,5 +23,10 @@ module Amazonite::ApiGatewayV1
       @period : QuotaPeriodType | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@limit, @offset, @period)
   end
 end

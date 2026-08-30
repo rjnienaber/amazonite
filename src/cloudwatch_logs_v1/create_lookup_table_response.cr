@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class CreateLookupTableResponse
     include JSON::Serializable
@@ -16,5 +18,13 @@ module Amazonite::CloudWatchLogsV1
       @created_at : Int64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @created_at
+        raise Core::ValidationError.new("createdAt value must be >= 0") if value < 0
+      end
+    end
+
+    def_equals_and_hash(@lookup_table_arn, @created_at)
   end
 end

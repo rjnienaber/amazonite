@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   # Specific configuration settings for a Kafka schema registry.
@@ -41,5 +42,23 @@ module Amazonite::LambdaV1
       @schema_validation_configs : Array(KafkaSchemaValidationConfig) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @schema_registry_uri
+        raise Core::ValidationError.new("SchemaRegistryURI length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SchemaRegistryURI length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("SchemaRegistryURI does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-\\/*:_+=.@-]*$"))
+      end
+
+      if value = @access_configs
+        value.each(&.validate!)
+      end
+
+      if value = @schema_validation_configs
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@schema_registry_uri, @event_record_format, @access_configs, @schema_validation_configs)
   end
 end

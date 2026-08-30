@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class GetInventorySchemaRequest
     include JSON::Serializable
@@ -33,5 +35,19 @@ module Amazonite::SsmV1
       @sub_type : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @type_name
+        raise Core::ValidationError.new("TypeName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("TypeName length must be <= 100") if value.size > 100
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 50") if value < 50
+        raise Core::ValidationError.new("MaxResults value must be <= 200") if value > 200
+      end
+    end
+
+    def_equals_and_hash(@type_name, @next_token, @max_results, @aggregator, @sub_type)
   end
 end

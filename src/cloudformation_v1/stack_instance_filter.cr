@@ -35,5 +35,15 @@ module Amazonite::CloudFormationV1
         values: Core::XMLValue.string(node.xpath_node("*[local-name()='Values']")),
       )
     end
+
+    def validate! : Nil
+      if value = @values
+        raise Core::ValidationError.new("Values length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Values length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Values does not match the required pattern") unless value.matches?(Regex.new("^\\S{1,128}$"))
+      end
+    end
+
+    def_equals_and_hash(@name, @values)
   end
 end

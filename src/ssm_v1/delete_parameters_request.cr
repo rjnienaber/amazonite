@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DeleteParametersRequest
     include JSON::Serializable
@@ -13,5 +15,14 @@ module Amazonite::SsmV1
       @names : Array(String),
     )
     end
+
+    def validate! : Nil
+      if value = @names
+        raise Core::ValidationError.new("Names must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Names must have at most 10 item(s)") if value.size > 10
+      end
+    end
+
+    def_equals_and_hash(@names)
   end
 end

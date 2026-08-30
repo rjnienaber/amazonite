@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudFormationV1
   # Specifies the current source of the resource and the destination of where it will be moved to.
   class ResourceMapping
@@ -28,5 +30,17 @@ module Amazonite::CloudFormationV1
         destination: node.xpath_node("*[local-name()='Destination']").try { |n| ResourceLocation.from_xml(n) }.not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @source
+        value.validate!
+      end
+
+      if value = @destination
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@source, @destination)
   end
 end

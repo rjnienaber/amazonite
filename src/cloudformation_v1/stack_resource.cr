@@ -116,5 +116,27 @@ module Amazonite::CloudFormationV1
         module_info: node.xpath_node("*[local-name()='ModuleInfo']").try { |n| ModuleInfo.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @resource_type
+        raise Core::ValidationError.new("ResourceType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceType length must be <= 256") if value.size > 256
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @drift_information
+        value.validate!
+      end
+
+      if value = @module_info
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@stack_name, @stack_id, @logical_resource_id, @physical_resource_id, @resource_type, @timestamp, @resource_status, @resource_status_reason, @description, @drift_information, @module_info)
   end
 end

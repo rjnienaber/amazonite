@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the output of a `BatchWriteItem` operation.
   class BatchWriteItemOutput
@@ -71,5 +73,18 @@ module Amazonite::DynamoDBV2
       @consumed_capacity : Array(ConsumedCapacity) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @unprocessed_items
+        raise Core::ValidationError.new("UnprocessedItems must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("UnprocessedItems must have at most 25 entry(s)") if value.size > 25
+      end
+
+      if value = @consumed_capacity
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@unprocessed_items, @item_collection_metrics, @consumed_capacity)
   end
 end

@@ -138,5 +138,27 @@ module Amazonite::CloudFormationV1
         concurrency_mode: (n = node.xpath_node("*[local-name()='ConcurrencyMode']")) ? ACF::ConcurrencyMode.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+      if value = @failure_tolerance_count
+        raise Core::ValidationError.new("FailureToleranceCount value must be >= 0") if value < 0
+      end
+
+      if value = @failure_tolerance_percentage
+        raise Core::ValidationError.new("FailureTolerancePercentage value must be >= 0") if value < 0
+        raise Core::ValidationError.new("FailureTolerancePercentage value must be <= 100") if value > 100
+      end
+
+      if value = @max_concurrent_count
+        raise Core::ValidationError.new("MaxConcurrentCount value must be >= 1") if value < 1
+      end
+
+      if value = @max_concurrent_percentage
+        raise Core::ValidationError.new("MaxConcurrentPercentage value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxConcurrentPercentage value must be <= 100") if value > 100
+      end
+    end
+
+    def_equals_and_hash(@region_concurrency_type, @region_order, @failure_tolerance_count, @failure_tolerance_percentage, @max_concurrent_count, @max_concurrent_percentage, @concurrency_mode)
   end
 end

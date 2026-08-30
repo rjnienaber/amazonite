@@ -12,5 +12,10 @@ module Amazonite::LambdaV1
       @function_state : State | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@function_state)
   end
 end

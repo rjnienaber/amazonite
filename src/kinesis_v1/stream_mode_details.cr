@@ -17,5 +17,10 @@ module Amazonite::KinesisV1
       @stream_mode : StreamMode,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@stream_mode)
   end
 end

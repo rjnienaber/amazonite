@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class UpdateAssociationStatusResult
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::SsmV1
       @association_description : AssociationDescription | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @association_description
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@association_description)
   end
 end

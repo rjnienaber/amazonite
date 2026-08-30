@@ -1,4 +1,5 @@
 private alias AEB = Amazonite::EventBridgeV1
+private alias Core = Amazonite::Core
 
 module Amazonite::EventBridgeV1
   # The custom parameters to be used when the target is an Amazon ECS task.
@@ -111,5 +112,49 @@ module Amazonite::EventBridgeV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @task_definition_arn
+        raise Core::ValidationError.new("TaskDefinitionArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TaskDefinitionArn length must be <= 1600") if value.size > 1600
+      end
+
+      if value = @task_count
+        raise Core::ValidationError.new("TaskCount value must be >= 1") if value < 1
+      end
+
+      if value = @network_configuration
+        value.validate!
+      end
+
+      if value = @capacity_provider_strategy
+        raise Core::ValidationError.new("CapacityProviderStrategy must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("CapacityProviderStrategy must have at most 6 item(s)") if value.size > 6
+        value.each(&.validate!)
+      end
+
+      if value = @placement_constraints
+        raise Core::ValidationError.new("PlacementConstraints must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("PlacementConstraints must have at most 10 item(s)") if value.size > 10
+        value.each(&.validate!)
+      end
+
+      if value = @placement_strategy
+        raise Core::ValidationError.new("PlacementStrategy must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("PlacementStrategy must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @reference_id
+        raise Core::ValidationError.new("ReferenceId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("ReferenceId length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@task_definition_arn, @task_count, @launch_type, @network_configuration, @platform_version, @group, @capacity_provider_strategy, @enable_ecs_managed_tags, @enable_execute_command, @placement_constraints, @placement_strategy, @propagate_tags, @reference_id, @tags)
   end
 end

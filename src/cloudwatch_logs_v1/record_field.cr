@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # A structure that represents a valid record field header and whether it is mandatory.
   class RecordField
@@ -25,5 +27,14 @@ module Amazonite::CloudWatchLogsV1
       @mandatory : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("name length must be <= 64") if value.size > 64
+      end
+    end
+
+    def_equals_and_hash(@name, @mandatory)
   end
 end

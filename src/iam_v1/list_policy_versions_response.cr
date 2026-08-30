@@ -54,5 +54,13 @@ module Amazonite::IamV1
         marker: Core::XMLValue.string(node.xpath_node("*[local-name()='Marker']")),
       )
     end
+
+    def validate! : Nil
+      if value = @versions
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@versions, @is_truncated, @marker)
   end
 end

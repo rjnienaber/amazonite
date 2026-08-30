@@ -30,5 +30,10 @@ module Amazonite::SnsV1
         label: Core::XMLValue.string(node.xpath_node("*[local-name()='Label']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@topic_arn, @label)
   end
 end

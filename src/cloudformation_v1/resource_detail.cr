@@ -90,5 +90,23 @@ module Amazonite::CloudFormationV1
         warnings: node.xpath_nodes("*[local-name()='Warnings']/*[local-name()='member']").map { |n| WarningDetail.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @resource_type
+        raise Core::ValidationError.new("ResourceType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceType length must be <= 256") if value.size > 256
+      end
+
+      if value = @resource_identifier
+        raise Core::ValidationError.new("ResourceIdentifier must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("ResourceIdentifier must have at most 256 entry(s)") if value.size > 256
+      end
+
+      if value = @warnings
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@resource_type, @logical_resource_id, @resource_identifier, @resource_status, @resource_status_reason, @warnings)
   end
 end

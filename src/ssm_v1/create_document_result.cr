@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class CreateDocumentResult
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::SsmV1
       @document_description : DocumentDescription | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @document_description
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@document_description)
   end
 end

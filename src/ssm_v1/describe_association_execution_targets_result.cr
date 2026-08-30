@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeAssociationExecutionTargetsResult
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @association_execution_targets
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@association_execution_targets, @next_token)
   end
 end

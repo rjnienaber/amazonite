@@ -28,5 +28,19 @@ module Amazonite::DynamoDBV2
       @source_table_arn : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @source_backup_arn
+        raise Core::ValidationError.new("SourceBackupArn length must be >= 37") if value.size < 37
+        raise Core::ValidationError.new("SourceBackupArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @source_table_arn
+        raise Core::ValidationError.new("SourceTableArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SourceTableArn length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@source_backup_arn, @source_table_arn, @restore_date_time, @restore_in_progress)
   end
 end

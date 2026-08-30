@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   class AddTagsToResourceRequest
@@ -51,5 +52,15 @@ module Amazonite::SsmV1
       @tags : Array(Tag),
     )
     end
+
+    def validate! : Nil
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 1000 item(s)") if value.size > 1000
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@resource_type, @resource_id, @tags)
   end
 end

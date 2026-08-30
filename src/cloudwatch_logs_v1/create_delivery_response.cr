@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class CreateDeliveryResponse
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::CloudWatchLogsV1
       @delivery : Delivery | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @delivery
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@delivery)
   end
 end

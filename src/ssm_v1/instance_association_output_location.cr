@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # An S3 bucket where you want to store the results of this request.
   #
@@ -16,5 +18,13 @@ module Amazonite::SsmV1
       @s3_location : S3OutputLocation | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @s3_location
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@s3_location)
   end
 end

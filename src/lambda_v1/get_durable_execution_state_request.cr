@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class GetDurableExecutionStateRequest
     include JSON::Serializable
@@ -30,5 +32,26 @@ module Amazonite::LambdaV1
       @max_items : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @durable_execution_arn
+        raise Core::ValidationError.new("DurableExecutionArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DurableExecutionArn length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("DurableExecutionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:([a-zA-Z0-9-]+):lambda:([a-zA-Z0-9-]+):(\\d{12}):function:([a-zA-Z0-9_-]+):(\\$LATEST(?:\\.PUBLISHED)?|[0-9]+)/durable-execution/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$"))
+      end
+
+      if value = @checkpoint_token
+        raise Core::ValidationError.new("CheckpointToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CheckpointToken length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("CheckpointToken does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9+/]+={0,2}$"))
+      end
+
+      if value = @max_items
+        raise Core::ValidationError.new("MaxItems value must be >= 0") if value < 0
+        raise Core::ValidationError.new("MaxItems value must be <= 1000") if value > 1000
+      end
+    end
+
+    def_equals_and_hash(@durable_execution_arn, @checkpoint_token, @marker, @max_items)
   end
 end

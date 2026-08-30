@@ -80,5 +80,32 @@ module Amazonite::IamV1
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @path
+        raise Core::ValidationError.new("Path length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Path length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("Path does not match the required pattern") unless value.matches?(Regex.new("^(/)|(/[!-~]+/)$"))
+      end
+
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @permissions_boundary
+        raise Core::ValidationError.new("PermissionsBoundary length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("PermissionsBoundary length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@path, @user_name, @permissions_boundary, @tags)
   end
 end

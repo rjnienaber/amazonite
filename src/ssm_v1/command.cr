@@ -198,5 +198,93 @@ module Amazonite::SsmV1
       @triggered_alarms : Array(AlarmStateInformation) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @command_id
+        raise Core::ValidationError.new("CommandId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("CommandId length must be <= 36") if value.size > 36
+      end
+
+      if value = @document_name
+        raise Core::ValidationError.new("DocumentName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @comment
+        raise Core::ValidationError.new("Comment length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Comment length must be <= 100") if value.size > 100
+      end
+
+      if value = @instance_ids
+        raise Core::ValidationError.new("InstanceIds must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("InstanceIds must have at most 50 item(s)") if value.size > 50
+      end
+
+      if value = @targets
+        raise Core::ValidationError.new("Targets must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Targets must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @status_details
+        raise Core::ValidationError.new("StatusDetails length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StatusDetails length must be <= 100") if value.size > 100
+      end
+
+      if value = @output_s3_region
+        raise Core::ValidationError.new("OutputS3Region length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("OutputS3Region length must be <= 20") if value.size > 20
+      end
+
+      if value = @output_s3_bucket_name
+        raise Core::ValidationError.new("OutputS3BucketName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("OutputS3BucketName length must be <= 63") if value.size > 63
+      end
+
+      if value = @output_s3_key_prefix
+        raise Core::ValidationError.new("OutputS3KeyPrefix length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("OutputS3KeyPrefix length must be <= 500") if value.size > 500
+      end
+
+      if value = @max_concurrency
+        raise Core::ValidationError.new("MaxConcurrency length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MaxConcurrency length must be <= 7") if value.size > 7
+        raise Core::ValidationError.new("MaxConcurrency does not match the required pattern") unless value.matches?(Regex.new("^([1-9][0-9]*|[1-9][0-9]%|[1-9]%|100%)$"))
+      end
+
+      if value = @max_errors
+        raise Core::ValidationError.new("MaxErrors length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MaxErrors length must be <= 7") if value.size > 7
+        raise Core::ValidationError.new("MaxErrors does not match the required pattern") unless value.matches?(Regex.new("^([1-9][0-9]*|[0]|[1-9][0-9]%|[0-9]%|100%)$"))
+      end
+
+      if value = @notification_config
+        value.validate!
+      end
+
+      if value = @cloud_watch_output_config
+        value.validate!
+      end
+
+      if value = @timeout_seconds
+        raise Core::ValidationError.new("TimeoutSeconds value must be >= 30") if value < 30
+        raise Core::ValidationError.new("TimeoutSeconds value must be <= 2592000") if value > 2592000
+      end
+
+      if value = @alarm_configuration
+        value.validate!
+      end
+
+      if value = @triggered_alarms
+        raise Core::ValidationError.new("TriggeredAlarms must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("TriggeredAlarms must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@command_id, @document_name, @document_version, @comment, @expires_after, @parameters, @instance_ids, @targets, @requested_date_time, @status, @status_details, @output_s3_region, @output_s3_bucket_name, @output_s3_key_prefix, @max_concurrency, @max_errors, @target_count, @completed_count, @error_count, @delivery_timed_out_count, @service_role, @notification_config, @cloud_watch_output_config, @timeout_seconds, @alarm_configuration, @triggered_alarms)
   end
 end

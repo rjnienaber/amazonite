@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # Describes a filter for Session Manager information.
@@ -45,5 +46,14 @@ module Amazonite::SsmV1
       @value : String,
     )
     end
+
+    def validate! : Nil
+      if value = @value
+        raise Core::ValidationError.new("value length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("value length must be <= 400") if value.size > 400
+      end
+    end
+
+    def_equals_and_hash(@key, @value)
   end
 end

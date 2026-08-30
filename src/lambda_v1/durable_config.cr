@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Configuration settings for [durable
   # functions](https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html), including
@@ -28,5 +30,25 @@ module Amazonite::LambdaV1
       @execution_timeout : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @kms_key_arn
+        raise Core::ValidationError.new("KMSKeyArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KMSKeyArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("KMSKeyArn does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*)|()$"))
+      end
+
+      if value = @retention_period_in_days
+        raise Core::ValidationError.new("RetentionPeriodInDays value must be >= 1") if value < 1
+        raise Core::ValidationError.new("RetentionPeriodInDays value must be <= 90") if value > 90
+      end
+
+      if value = @execution_timeout
+        raise Core::ValidationError.new("ExecutionTimeout value must be >= 1") if value < 1
+        raise Core::ValidationError.new("ExecutionTimeout value must be <= 31622400") if value > 31622400
+      end
+    end
+
+    def_equals_and_hash(@kms_key_arn, @retention_period_in_days, @execution_timeout)
   end
 end

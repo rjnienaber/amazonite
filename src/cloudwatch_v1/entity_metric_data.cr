@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # A set of metrics that are associated with an entity, such as a specific service or resource.
   # Contains the entity and the list of metric data associated with it.
@@ -17,5 +19,17 @@ module Amazonite::CloudWatchV1
       @metric_data : Array(MetricDatum) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @entity
+        value.validate!
+      end
+
+      if value = @metric_data
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@entity, @metric_data)
   end
 end

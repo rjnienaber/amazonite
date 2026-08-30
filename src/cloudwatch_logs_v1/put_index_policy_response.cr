@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class PutIndexPolicyResponse
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::CloudWatchLogsV1
       @index_policy : IndexPolicy | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @index_policy
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@index_policy)
   end
 end

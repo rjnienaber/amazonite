@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   class UpdateKinesisStreamingDestinationOutput
@@ -27,5 +28,24 @@ module Amazonite::DynamoDBV2
       @update_kinesis_streaming_configuration : UpdateKinesisStreamingConfiguration | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("TableName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("TableName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @stream_arn
+        raise Core::ValidationError.new("StreamArn length must be >= 37") if value.size < 37
+        raise Core::ValidationError.new("StreamArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @update_kinesis_streaming_configuration
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@table_name, @stream_arn, @destination_status, @update_kinesis_streaming_configuration)
   end
 end

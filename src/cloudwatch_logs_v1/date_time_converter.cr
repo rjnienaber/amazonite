@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This processor converts a datetime string into a format that you specify.
   #
@@ -47,5 +49,41 @@ module Amazonite::CloudWatchLogsV1
       @locale : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @source
+        raise Core::ValidationError.new("source length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("source length must be <= 128") if value.size > 128
+      end
+
+      if value = @target
+        raise Core::ValidationError.new("target length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("target length must be <= 128") if value.size > 128
+      end
+
+      if value = @target_format
+        raise Core::ValidationError.new("targetFormat length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("targetFormat length must be <= 64") if value.size > 64
+      end
+
+      if value = @match_patterns
+        raise Core::ValidationError.new("matchPatterns must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("matchPatterns must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @source_timezone
+        raise Core::ValidationError.new("sourceTimezone length must be >= 1") if value.size < 1
+      end
+
+      if value = @target_timezone
+        raise Core::ValidationError.new("targetTimezone length must be >= 1") if value.size < 1
+      end
+
+      if value = @locale
+        raise Core::ValidationError.new("locale length must be >= 1") if value.size < 1
+      end
+    end
+
+    def_equals_and_hash(@source, @target, @target_format, @match_patterns, @source_timezone, @target_timezone, @locale)
   end
 end

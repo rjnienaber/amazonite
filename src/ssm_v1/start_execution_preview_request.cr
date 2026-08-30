@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class StartExecutionPreviewRequest
     include JSON::Serializable
@@ -21,5 +23,21 @@ module Amazonite::SsmV1
       @execution_inputs : ExecutionInputs | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @document_name
+        raise Core::ValidationError.new("DocumentName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @execution_inputs
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@document_name, @document_version, @execution_inputs)
   end
 end

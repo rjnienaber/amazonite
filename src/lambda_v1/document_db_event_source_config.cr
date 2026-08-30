@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   # Specific configuration settings for a DocumentDB event source.
@@ -26,5 +27,21 @@ module Amazonite::LambdaV1
       @full_document : FullDocument | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @database_name
+        raise Core::ValidationError.new("DatabaseName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DatabaseName length must be <= 63") if value.size > 63
+        raise Core::ValidationError.new("DatabaseName does not match the required pattern") unless value.matches?(Regex.new("^[^ /\\.$\\x22]*$"))
+      end
+
+      if value = @collection_name
+        raise Core::ValidationError.new("CollectionName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CollectionName length must be <= 57") if value.size > 57
+        raise Core::ValidationError.new("CollectionName does not match the required pattern") unless value.matches?(Regex.new("^(^(?!(system\\x2e)))(^[_a-zA-Z0-9])([^$]*)$"))
+      end
+    end
+
+    def_equals_and_hash(@database_name, @collection_name, @full_document)
   end
 end

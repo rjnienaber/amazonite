@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListDocumentsResult
     include JSON::Serializable
@@ -16,5 +18,13 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @document_identifiers
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@document_identifiers, @next_token)
   end
 end

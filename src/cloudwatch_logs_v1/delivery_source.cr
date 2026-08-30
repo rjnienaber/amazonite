@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # This structure contains information about one *delivery source* in your account. A delivery
@@ -89,5 +90,32 @@ module Amazonite::CloudWatchLogsV1
       @status_reason : DeliverySourceStatusReason | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("name length must be <= 60") if value.size > 60
+        raise Core::ValidationError.new("name does not match the required pattern") unless value.matches?(Regex.new("^[\\w-]*$"))
+      end
+
+      if value = @service
+        raise Core::ValidationError.new("service length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("service length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("service does not match the required pattern") unless value.matches?(Regex.new("^[\\w_-]*$"))
+      end
+
+      if value = @log_type
+        raise Core::ValidationError.new("logType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logType length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("logType does not match the required pattern") unless value.matches?(Regex.new("^[\\w]*$"))
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("tags must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("tags must have at most 50 entry(s)") if value.size > 50
+      end
+    end
+
+    def_equals_and_hash(@name, @arn, @resource_arns, @service, @log_type, @tags, @delivery_source_configuration, @status, @status_reason)
   end
 end

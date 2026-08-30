@@ -69,5 +69,33 @@ module Amazonite::IamV1
         upload_date: Core::XMLValue.time(node.xpath_node("*[local-name()='UploadDate']")),
       )
     end
+
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @ssh_public_key_id
+        raise Core::ValidationError.new("SSHPublicKeyId length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("SSHPublicKeyId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("SSHPublicKeyId does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+
+      if value = @fingerprint
+        raise Core::ValidationError.new("Fingerprint length must be >= 48") if value.size < 48
+        raise Core::ValidationError.new("Fingerprint length must be <= 48") if value.size > 48
+        raise Core::ValidationError.new("Fingerprint does not match the required pattern") unless value.matches?(Regex.new("^[:\\w]+$"))
+      end
+
+      if value = @ssh_public_key_body
+        raise Core::ValidationError.new("SSHPublicKeyBody length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SSHPublicKeyBody length must be <= 16384") if value.size > 16384
+        raise Core::ValidationError.new("SSHPublicKeyBody does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+    end
+
+    def_equals_and_hash(@user_name, @ssh_public_key_id, @fingerprint, @ssh_public_key_body, @status, @upload_date)
   end
 end

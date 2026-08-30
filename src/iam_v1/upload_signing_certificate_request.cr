@@ -46,5 +46,21 @@ module Amazonite::IamV1
         certificate_body: Core::XMLValue.string(node.xpath_node("*[local-name()='CertificateBody']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @certificate_body
+        raise Core::ValidationError.new("CertificateBody length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CertificateBody length must be <= 16384") if value.size > 16384
+        raise Core::ValidationError.new("CertificateBody does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+    end
+
+    def_equals_and_hash(@user_name, @certificate_body)
   end
 end

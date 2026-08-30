@@ -142,5 +142,47 @@ module Amazonite::SsmV1
       @parent_step_details : ParentStepDetails | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @action
+        raise Core::ValidationError.new("Action does not match the required pattern") unless value.matches?(Regex.new("^aws:[a-zA-Z]{3,25}$"))
+      end
+
+      if value = @outputs
+        raise Core::ValidationError.new("Outputs must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("Outputs must have at most 200 entry(s)") if value.size > 200
+      end
+
+      if value = @failure_details
+        value.validate!
+      end
+
+      if value = @overridden_parameters
+        raise Core::ValidationError.new("OverriddenParameters must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("OverriddenParameters must have at most 200 entry(s)") if value.size > 200
+      end
+
+      if value = @targets
+        raise Core::ValidationError.new("Targets must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Targets must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @target_location
+        value.validate!
+      end
+
+      if value = @triggered_alarms
+        raise Core::ValidationError.new("TriggeredAlarms must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("TriggeredAlarms must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+
+      if value = @parent_step_details
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@step_name, @action, @timeout_seconds, @on_failure, @max_attempts, @execution_start_time, @execution_end_time, @step_status, @response_code, @inputs, @outputs, @response, @failure_message, @warning_message, @failure_details, @step_execution_id, @overridden_parameters, @is_end, @next_step, @is_critical, @valid_next_steps, @targets, @target_location, @triggered_alarms, @parent_step_details)
   end
 end

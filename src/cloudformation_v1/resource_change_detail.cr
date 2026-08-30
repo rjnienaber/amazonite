@@ -92,5 +92,13 @@ module Amazonite::CloudFormationV1
         causing_entity: Core::XMLValue.string(node.xpath_node("*[local-name()='CausingEntity']")),
       )
     end
+
+    def validate! : Nil
+      if value = @target
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@target, @evaluation, @change_source, @causing_entity)
   end
 end

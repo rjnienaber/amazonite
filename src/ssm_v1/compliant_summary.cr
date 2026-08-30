@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # A summary of resources that are compliant. The summary is organized according to the resource
   # count for each compliance type.
@@ -17,5 +19,13 @@ module Amazonite::SsmV1
       @severity_summary : SeveritySummary | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @severity_summary
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@compliant_count, @severity_summary)
   end
 end

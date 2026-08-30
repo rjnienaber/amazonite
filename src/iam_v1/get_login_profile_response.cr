@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [GetLoginProfile](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetLoginProfile.html)
@@ -23,5 +25,13 @@ module Amazonite::IamV1
         login_profile: node.xpath_node("*[local-name()='LoginProfile']").try { |n| LoginProfile.from_xml(n) }.not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @login_profile
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@login_profile)
   end
 end

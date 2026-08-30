@@ -51,5 +51,24 @@ module Amazonite::DynamoDBV2
       @backup_type : BackupTypeFilter | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("Limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Limit value must be <= 100") if value > 100
+      end
+
+      if value = @exclusive_start_backup_arn
+        raise Core::ValidationError.new("ExclusiveStartBackupArn length must be >= 37") if value.size < 37
+        raise Core::ValidationError.new("ExclusiveStartBackupArn length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@table_name, @limit, @time_range_lower_bound, @time_range_upper_bound, @exclusive_start_backup_arn, @backup_type)
   end
 end

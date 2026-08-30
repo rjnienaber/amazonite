@@ -230,5 +230,133 @@ module Amazonite::LambdaV1
       @provisioned_poller_config : ProvisionedPollerConfig | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @uuid
+        raise Core::ValidationError.new("UUID length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("UUID length must be <= 36") if value.size > 36
+      end
+
+      if value = @batch_size
+        raise Core::ValidationError.new("BatchSize value must be >= 1") if value < 1
+        raise Core::ValidationError.new("BatchSize value must be <= 10000") if value > 10000
+      end
+
+      if value = @maximum_batching_window_in_seconds
+        raise Core::ValidationError.new("MaximumBatchingWindowInSeconds value must be >= 0") if value < 0
+        raise Core::ValidationError.new("MaximumBatchingWindowInSeconds value must be <= 300") if value > 300
+      end
+
+      if value = @parallelization_factor
+        raise Core::ValidationError.new("ParallelizationFactor value must be >= 1") if value < 1
+        raise Core::ValidationError.new("ParallelizationFactor value must be <= 10") if value > 10
+      end
+
+      if value = @event_source_arn
+        raise Core::ValidationError.new("EventSourceArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("EventSourceArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("EventSourceArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)$"))
+      end
+
+      if value = @filter_criteria
+        value.validate!
+      end
+
+      if value = @filter_criteria_error
+        value.validate!
+      end
+
+      if value = @kms_key_arn
+        raise Core::ValidationError.new("KMSKeyArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KMSKeyArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("KMSKeyArn does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*)|()$"))
+      end
+
+      if value = @metrics_config
+        value.validate!
+      end
+
+      if value = @logging_config
+        value.validate!
+      end
+
+      if value = @scaling_config
+        value.validate!
+      end
+
+      if value = @function_arn
+        raise Core::ValidationError.new("FunctionArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("FunctionArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("FunctionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @destination_config
+        value.validate!
+      end
+
+      if value = @topics
+        raise Core::ValidationError.new("Topics must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Topics must have at most 1 item(s)") if value.size > 1
+      end
+
+      if value = @queues
+        raise Core::ValidationError.new("Queues must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Queues must have at most 1 item(s)") if value.size > 1
+      end
+
+      if value = @source_access_configurations
+        raise Core::ValidationError.new("SourceAccessConfigurations must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("SourceAccessConfigurations must have at most 23 item(s)") if value.size > 23
+        value.each(&.validate!)
+      end
+
+      if value = @self_managed_event_source
+        value.validate!
+      end
+
+      if value = @maximum_record_age_in_seconds
+        raise Core::ValidationError.new("MaximumRecordAgeInSeconds value must be >= -1") if value < -1
+        raise Core::ValidationError.new("MaximumRecordAgeInSeconds value must be <= 604800") if value > 604800
+      end
+
+      if value = @maximum_retry_attempts
+        raise Core::ValidationError.new("MaximumRetryAttempts value must be >= -1") if value < -1
+        raise Core::ValidationError.new("MaximumRetryAttempts value must be <= 10000") if value > 10000
+      end
+
+      if value = @tumbling_window_in_seconds
+        raise Core::ValidationError.new("TumblingWindowInSeconds value must be >= 0") if value < 0
+        raise Core::ValidationError.new("TumblingWindowInSeconds value must be <= 900") if value > 900
+      end
+
+      if value = @function_response_types
+        raise Core::ValidationError.new("FunctionResponseTypes must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("FunctionResponseTypes must have at most 1 item(s)") if value.size > 1
+      end
+
+      if value = @amazon_managed_kafka_event_source_config
+        value.validate!
+      end
+
+      if value = @self_managed_kafka_event_source_config
+        value.validate!
+      end
+
+      if value = @document_db_event_source_config
+        value.validate!
+      end
+
+      if value = @event_source_mapping_arn
+        raise Core::ValidationError.new("EventSourceMappingArn length must be >= 85") if value.size < 85
+        raise Core::ValidationError.new("EventSourceMappingArn length must be <= 120") if value.size > 120
+        raise Core::ValidationError.new("EventSourceMappingArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:event-source-mapping:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @provisioned_poller_config
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@uuid, @starting_position, @starting_position_timestamp, @batch_size, @maximum_batching_window_in_seconds, @parallelization_factor, @event_source_arn, @filter_criteria, @filter_criteria_error, @kms_key_arn, @metrics_config, @logging_config, @scaling_config, @function_arn, @last_modified, @last_processing_result, @state, @state_transition_reason, @destination_config, @topics, @queues, @source_access_configurations, @self_managed_event_source, @maximum_record_age_in_seconds, @bisect_batch_on_function_error, @maximum_retry_attempts, @tumbling_window_in_seconds, @function_response_types, @amazon_managed_kafka_event_source_config, @self_managed_kafka_event_source_config, @document_db_event_source_config, @event_source_mapping_arn, @provisioned_poller_config)
   end
 end

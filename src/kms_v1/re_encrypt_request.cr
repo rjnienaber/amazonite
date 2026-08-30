@@ -165,5 +165,29 @@ module Amazonite::KmsV1
       @dry_run_modifiers : Array(DryRunModifierType) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @ciphertext_blob
+        raise Core::ValidationError.new("CiphertextBlob length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CiphertextBlob length must be <= 6144") if value.size > 6144
+      end
+
+      if value = @source_key_id
+        raise Core::ValidationError.new("SourceKeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SourceKeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @destination_key_id
+        raise Core::ValidationError.new("DestinationKeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("DestinationKeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @grant_tokens
+        raise Core::ValidationError.new("GrantTokens must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("GrantTokens must have at most 10 item(s)") if value.size > 10
+      end
+    end
+
+    def_equals_and_hash(@ciphertext_blob, @source_encryption_context, @source_key_id, @destination_key_id, @destination_encryption_context, @source_encryption_algorithm, @destination_encryption_algorithm, @grant_tokens, @dry_run, @dry_run_modifiers)
   end
 end

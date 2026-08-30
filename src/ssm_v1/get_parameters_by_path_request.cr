@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class GetParametersByPathRequest
     include JSON::Serializable
@@ -50,5 +52,23 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @path
+        raise Core::ValidationError.new("Path length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Path length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @parameter_filters
+        value.each(&.validate!)
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 10") if value > 10
+      end
+    end
+
+    def_equals_and_hash(@path, @recursive, @parameter_filters, @with_decryption, @max_results, @next_token)
   end
 end

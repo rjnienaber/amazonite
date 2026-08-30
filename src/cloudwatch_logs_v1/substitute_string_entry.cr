@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This object defines one log field key that will be replaced using the [
   # substituteString](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-substituteString)
@@ -27,5 +29,24 @@ module Amazonite::CloudWatchLogsV1
       @to : String,
     )
     end
+
+    def validate! : Nil
+      if value = @source
+        raise Core::ValidationError.new("source length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("source length must be <= 128") if value.size > 128
+      end
+
+      if value = @from
+        raise Core::ValidationError.new("from length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("from length must be <= 128") if value.size > 128
+      end
+
+      if value = @to
+        raise Core::ValidationError.new("to length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("to length must be <= 128") if value.size > 128
+      end
+    end
+
+    def_equals_and_hash(@source, @from, @to)
   end
 end

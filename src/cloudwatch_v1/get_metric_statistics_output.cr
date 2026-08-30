@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class GetMetricStatisticsOutput
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::CloudWatchV1
       @datapoints : Array(Datapoint) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @datapoints
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@label, @datapoints)
   end
 end

@@ -41,5 +41,27 @@ module Amazonite::LambdaV1
       @zip_file : Bytes | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @s3_bucket
+        raise Core::ValidationError.new("S3Bucket length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("S3Bucket length must be <= 63") if value.size > 63
+        raise Core::ValidationError.new("S3Bucket does not match the required pattern") unless value.matches?(Regex.new("^[0-9A-Za-z\\.\\-_]*(?<!\\.)$"))
+      end
+
+      if value = @s3_key
+        raise Core::ValidationError.new("S3Key length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("S3Key length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("S3Key does not match the required pattern") unless value.matches?(Regex.new("^.*$"))
+      end
+
+      if value = @s3_object_version
+        raise Core::ValidationError.new("S3ObjectVersion length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("S3ObjectVersion length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("S3ObjectVersion does not match the required pattern") unless value.matches?(Regex.new("^.*$"))
+      end
+    end
+
+    def_equals_and_hash(@s3_bucket, @s3_key, @s3_object_version, @s3_object_storage_mode, @zip_file)
   end
 end

@@ -15,5 +15,10 @@ module Amazonite::ApiGatewayV1
       @domain_name_arn : String,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@domain_name_access_association_arn, @domain_name_arn)
   end
 end

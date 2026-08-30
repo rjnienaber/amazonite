@@ -42,5 +42,18 @@ module Amazonite::IamV1
         role_usage_list: node.xpath_nodes("*[local-name()='RoleUsageList']/*[local-name()='member']").map { |n| RoleUsageType.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @reason
+        raise Core::ValidationError.new("Reason length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Reason length must be <= 1000") if value.size > 1000
+      end
+
+      if value = @role_usage_list
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@reason, @role_usage_list)
   end
 end

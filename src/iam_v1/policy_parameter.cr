@@ -44,5 +44,15 @@ module Amazonite::IamV1
         type: (n = node.xpath_node("*[local-name()='Type']")) ? AI::PolicyParameterTypeEnum.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 5") if value.size < 5
+        raise Core::ValidationError.new("Name length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[ -~]+$"))
+      end
+    end
+
+    def_equals_and_hash(@name, @values, @type)
   end
 end

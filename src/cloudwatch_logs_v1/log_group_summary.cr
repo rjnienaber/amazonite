@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # This structure contains information about one log group in your account.
@@ -25,5 +26,15 @@ module Amazonite::CloudWatchLogsV1
       @log_group_class : LogGroupClass | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @log_group_name
+        raise Core::ValidationError.new("logGroupName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logGroupName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("logGroupName does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_/#A-Za-z0-9]+$"))
+      end
+    end
+
+    def_equals_and_hash(@log_group_name, @log_group_arn, @log_group_class)
   end
 end

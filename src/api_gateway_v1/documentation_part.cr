@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # A documentation part for a targeted API entity.
   class DocumentationPart
@@ -29,5 +31,13 @@ module Amazonite::ApiGatewayV1
       @properties : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @location
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@id, @location, @properties)
   end
 end

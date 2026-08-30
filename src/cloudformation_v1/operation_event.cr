@@ -260,5 +260,30 @@ module Amazonite::CloudFormationV1
         validation_path: Core::XMLValue.string(node.xpath_node("*[local-name()='ValidationPath']")),
       )
     end
+
+    def validate! : Nil
+      if value = @resource_type
+        raise Core::ValidationError.new("ResourceType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceType length must be <= 256") if value.size > 256
+      end
+
+      if value = @client_request_token
+        raise Core::ValidationError.new("ClientRequestToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ClientRequestToken length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ClientRequestToken does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+
+      if value = @hook_type
+        raise Core::ValidationError.new("HookType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("HookType length must be <= 255") if value.size > 255
+      end
+
+      if value = @hook_status_reason
+        raise Core::ValidationError.new("HookStatusReason length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("HookStatusReason length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@event_id, @stack_id, @operation_id, @operation_type, @operation_status, @event_type, @logical_resource_id, @physical_resource_id, @resource_type, @timestamp, @start_time, @end_time, @resource_status, @resource_status_reason, @resource_properties, @client_request_token, @hook_type, @hook_status, @hook_status_reason, @hook_invocation_point, @hook_failure_mode, @detailed_status, @validation_failure_mode, @validation_name, @validation_status, @validation_status_reason, @validation_path)
   end
 end

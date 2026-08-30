@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Represents a method response of a given HTTP status code returned to the client. The method
   # response is passed from the back end through the associated integration response that can be
@@ -34,5 +36,13 @@ module Amazonite::ApiGatewayV1
       @response_models : Hash(String, String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @status_code
+        raise Core::ValidationError.new("statusCode does not match the required pattern") unless value.matches?(Regex.new("^[1-5]\\d\\d$"))
+      end
+    end
+
+    def_equals_and_hash(@status_code, @response_parameters, @response_models)
   end
 end

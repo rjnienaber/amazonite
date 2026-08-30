@@ -1,4 +1,5 @@
 private alias AI = Amazonite::IamV1
+private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GetServiceLinkedRoleDeletionStatusResponse
@@ -31,5 +32,13 @@ module Amazonite::IamV1
         reason: node.xpath_node("*[local-name()='Reason']").try { |n| DeletionTaskFailureReasonType.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @reason
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@status, @reason)
   end
 end

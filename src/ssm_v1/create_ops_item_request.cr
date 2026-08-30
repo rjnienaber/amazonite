@@ -148,5 +148,66 @@ module Amazonite::SsmV1
       @account_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\\s\\S]*\\S[\\s\\S]*$"))
+      end
+
+      if value = @operational_data
+        value.each_value(&.validate!)
+      end
+
+      if value = @notifications
+        value.each(&.validate!)
+      end
+
+      if value = @priority
+        raise Core::ValidationError.new("Priority value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Priority value must be <= 5") if value > 5
+      end
+
+      if value = @related_ops_items
+        value.each(&.validate!)
+      end
+
+      if value = @source
+        raise Core::ValidationError.new("Source length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Source length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Source does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+
+      if value = @title
+        raise Core::ValidationError.new("Title length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Title length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("Title does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 1000 item(s)") if value.size > 1000
+        value.each(&.validate!)
+      end
+
+      if value = @category
+        raise Core::ValidationError.new("Category length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Category length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Category does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+
+      if value = @severity
+        raise Core::ValidationError.new("Severity length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Severity length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Severity does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+
+      if value = @account_id
+        raise Core::ValidationError.new("AccountId does not match the required pattern") unless value.matches?(Regex.new("^[0-9]{12}$"))
+      end
+    end
+
+    def_equals_and_hash(@description, @ops_item_type, @operational_data, @notifications, @priority, @related_ops_items, @source, @title, @tags, @category, @severity, @actual_start_time, @actual_end_time, @planned_start_time, @planned_end_time, @account_id)
   end
 end

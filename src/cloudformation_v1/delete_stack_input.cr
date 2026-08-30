@@ -99,5 +99,24 @@ module Amazonite::CloudFormationV1
         deployment_config: node.xpath_node("*[local-name()='DeploymentConfig']").try { |n| DeploymentConfig.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleARN length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("RoleARN length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @client_request_token
+        raise Core::ValidationError.new("ClientRequestToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ClientRequestToken length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ClientRequestToken does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+
+      if value = @deployment_config
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@stack_name, @retain_resources, @role_arn, @client_request_token, @deletion_mode, @deployment_config)
   end
 end

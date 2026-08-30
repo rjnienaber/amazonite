@@ -53,5 +53,21 @@ module Amazonite::IamV1
         certifications: node.xpath_nodes("*[local-name()='Certifications']/*[local-name()='entry']").each_with_object({} of String => String) { |entry, hash| hash[entry.xpath_node("*[local-name()='key']").not_nil!.content] = entry.xpath_node("*[local-name()='value']").not_nil!.content },
       )
     end
+
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @serial_number
+        raise Core::ValidationError.new("SerialNumber length must be >= 9") if value.size < 9
+        raise Core::ValidationError.new("SerialNumber length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("SerialNumber does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=/:,.@-]+$"))
+      end
+    end
+
+    def_equals_and_hash(@user_name, @serial_number, @enable_date, @certifications)
   end
 end

@@ -212,5 +212,10 @@ module Amazonite::SqsV1
       @tags : Hash(String, String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@queue_name, @attributes, @tags)
   end
 end

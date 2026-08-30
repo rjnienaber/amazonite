@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Information about the inputs for an execution preview.
   class ExecutionInputs
@@ -11,5 +13,13 @@ module Amazonite::SsmV1
       @automation : AutomationExecutionInputs | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @automation
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@automation)
   end
 end

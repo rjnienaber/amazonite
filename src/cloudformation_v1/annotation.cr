@@ -78,5 +78,29 @@ module Amazonite::CloudFormationV1
         severity_level: (n = node.xpath_node("*[local-name()='SeverityLevel']")) ? ACF::AnnotationSeverityLevel.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+      if value = @annotation_name
+        raise Core::ValidationError.new("AnnotationName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AnnotationName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @status_message
+        raise Core::ValidationError.new("StatusMessage length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StatusMessage length must be <= 16384") if value.size > 16384
+      end
+
+      if value = @remediation_message
+        raise Core::ValidationError.new("RemediationMessage length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RemediationMessage length must be <= 16384") if value.size > 16384
+      end
+
+      if value = @remediation_link
+        raise Core::ValidationError.new("RemediationLink length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RemediationLink length must be <= 5120") if value.size > 5120
+      end
+    end
+
+    def_equals_and_hash(@annotation_name, @status, @status_message, @remediation_message, @remediation_link, @severity_level)
   end
 end

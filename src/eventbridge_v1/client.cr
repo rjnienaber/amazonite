@@ -14,6 +14,7 @@ module Amazonite::EventBridgeV1
     # bus will start receiving events from the event source.
     def activate_event_source(input : AEB::ActivateEventSourceRequest) : Core::Response
       Log.info { "performing 'ActivateEventSource' operation" }
+      input.validate! if config.validate_input?
       response = post("ActivateEventSource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -21,6 +22,7 @@ module Amazonite::EventBridgeV1
     # Cancels the specified replay.
     def cancel_replay(input : AEB::CancelReplayRequest) : Core::ParsedResponse(AEB::CancelReplayResponse)
       Log.info { "performing 'CancelReplay' operation" }
+      input.validate! if config.validate_input?
       response = post("CancelReplay", "/", input.to_json)
       Core::ParsedResponse(AEB::CancelReplayResponse).new(response)
     end
@@ -35,6 +37,7 @@ module Amazonite::EventBridgeV1
     # in the *EventBridge User Guide*.
     def create_api_destination(input : AEB::CreateApiDestinationRequest) : Core::ParsedResponse(AEB::CreateApiDestinationResponse)
       Log.info { "performing 'CreateApiDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateApiDestination", "/", input.to_json)
       Core::ParsedResponse(AEB::CreateApiDestinationResponse).new(response)
     end
@@ -54,6 +57,7 @@ module Amazonite::EventBridgeV1
     # the *Amazon EventBridge User Guide*.
     def create_archive(input : AEB::CreateArchiveRequest) : Core::ParsedResponse(AEB::CreateArchiveResponse)
       Log.info { "performing 'CreateArchive' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateArchive", "/", input.to_json)
       Core::ParsedResponse(AEB::CreateArchiveResponse).new(response)
     end
@@ -66,6 +70,7 @@ module Amazonite::EventBridgeV1
     # the *Amazon EventBridge User Guide*.
     def create_connection(input : AEB::CreateConnectionRequest) : Core::ParsedResponse(AEB::CreateConnectionResponse)
       Log.info { "performing 'CreateConnection' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateConnection", "/", input.to_json)
       Core::ParsedResponse(AEB::CreateConnectionResponse).new(response)
     end
@@ -77,6 +82,7 @@ module Amazonite::EventBridgeV1
     # routed back to the primary Region when the health check reports a "healthy" state.
     def create_endpoint(input : AEB::CreateEndpointRequest) : Core::ParsedResponse(AEB::CreateEndpointResponse)
       Log.info { "performing 'CreateEndpoint' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateEndpoint", "/", input.to_json)
       Core::ParsedResponse(AEB::CreateEndpointResponse).new(response)
     end
@@ -86,6 +92,7 @@ module Amazonite::EventBridgeV1
     # which can be matched to a partner event source.
     def create_event_bus(input : AEB::CreateEventBusRequest) : Core::ParsedResponse(AEB::CreateEventBusResponse)
       Log.info { "performing 'CreateEventBus' operation" }
+      input.validate! if config.validate_input?
       response = post("CreateEventBus", "/", input.to_json)
       Core::ParsedResponse(AEB::CreateEventBusResponse).new(response)
     end
@@ -125,6 +132,7 @@ module Amazonite::EventBridgeV1
     # decide whether to create an event bus to receive these events.
     def create_partner_event_source(input : AEB::CreatePartnerEventSourceRequest) : Core::ParsedResponse(AEB::CreatePartnerEventSourceResponse)
       Log.info { "performing 'CreatePartnerEventSource' operation" }
+      input.validate! if config.validate_input?
       response = post("CreatePartnerEventSource", "/", input.to_json)
       Core::ParsedResponse(AEB::CreatePartnerEventSourceResponse).new(response)
     end
@@ -139,6 +147,7 @@ module Amazonite::EventBridgeV1
     # [ActivateEventSource](https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_ActivateEventSource.html).
     def deactivate_event_source(input : AEB::DeactivateEventSourceRequest) : Core::Response
       Log.info { "performing 'DeactivateEventSource' operation" }
+      input.validate! if config.validate_input?
       response = post("DeactivateEventSource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -147,6 +156,7 @@ module Amazonite::EventBridgeV1
     # the connection so you can reuse it without having to create a new connection.
     def deauthorize_connection(input : AEB::DeauthorizeConnectionRequest) : Core::ParsedResponse(AEB::DeauthorizeConnectionResponse)
       Log.info { "performing 'DeauthorizeConnection' operation" }
+      input.validate! if config.validate_input?
       response = post("DeauthorizeConnection", "/", input.to_json)
       Core::ParsedResponse(AEB::DeauthorizeConnectionResponse).new(response)
     end
@@ -154,6 +164,7 @@ module Amazonite::EventBridgeV1
     # Deletes the specified API destination.
     def delete_api_destination(input : AEB::DeleteApiDestinationRequest) : Core::ParsedResponse(AEB::DeleteApiDestinationResponse)
       Log.info { "performing 'DeleteApiDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteApiDestination", "/", input.to_json)
       Core::ParsedResponse(AEB::DeleteApiDestinationResponse).new(response)
     end
@@ -161,6 +172,7 @@ module Amazonite::EventBridgeV1
     # Deletes the specified archive.
     def delete_archive(input : AEB::DeleteArchiveRequest) : Core::ParsedResponse(AEB::DeleteArchiveResponse)
       Log.info { "performing 'DeleteArchive' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteArchive", "/", input.to_json)
       Core::ParsedResponse(AEB::DeleteArchiveResponse).new(response)
     end
@@ -168,6 +180,7 @@ module Amazonite::EventBridgeV1
     # Deletes a connection.
     def delete_connection(input : AEB::DeleteConnectionRequest) : Core::ParsedResponse(AEB::DeleteConnectionResponse)
       Log.info { "performing 'DeleteConnection' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteConnection", "/", input.to_json)
       Core::ParsedResponse(AEB::DeleteConnectionResponse).new(response)
     end
@@ -178,6 +191,7 @@ module Amazonite::EventBridgeV1
     # in the * *Amazon EventBridge User Guide* *.
     def delete_endpoint(input : AEB::DeleteEndpointRequest) : Core::ParsedResponse(AEB::DeleteEndpointResponse)
       Log.info { "performing 'DeleteEndpoint' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteEndpoint", "/", input.to_json)
       Core::ParsedResponse(AEB::DeleteEndpointResponse).new(response)
     end
@@ -186,6 +200,7 @@ module Amazonite::EventBridgeV1
     # event bus need to be deleted. You can't delete your account's default event bus.
     def delete_event_bus(input : AEB::DeleteEventBusRequest) : Core::Response
       Log.info { "performing 'DeleteEventBus' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteEventBus", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -197,6 +212,7 @@ module Amazonite::EventBridgeV1
     # Web Services customer account becomes DELETED.
     def delete_partner_event_source(input : AEB::DeletePartnerEventSourceRequest) : Core::Response
       Log.info { "performing 'DeletePartnerEventSource' operation" }
+      input.validate! if config.validate_input?
       response = post("DeletePartnerEventSource", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -218,6 +234,7 @@ module Amazonite::EventBridgeV1
     # should do so only if you are sure the other service is not still using that rule.
     def delete_rule(input : AEB::DeleteRuleRequest) : Core::Response
       Log.info { "performing 'DeleteRule' operation" }
+      input.validate! if config.validate_input?
       response = post("DeleteRule", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -225,6 +242,7 @@ module Amazonite::EventBridgeV1
     # Retrieves details about an API destination.
     def describe_api_destination(input : AEB::DescribeApiDestinationRequest) : Core::ParsedResponse(AEB::DescribeApiDestinationResponse)
       Log.info { "performing 'DescribeApiDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeApiDestination", "/", input.to_json)
       Core::ParsedResponse(AEB::DescribeApiDestinationResponse).new(response)
     end
@@ -232,6 +250,7 @@ module Amazonite::EventBridgeV1
     # Retrieves details about an archive.
     def describe_archive(input : AEB::DescribeArchiveRequest) : Core::ParsedResponse(AEB::DescribeArchiveResponse)
       Log.info { "performing 'DescribeArchive' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeArchive", "/", input.to_json)
       Core::ParsedResponse(AEB::DescribeArchiveResponse).new(response)
     end
@@ -239,6 +258,7 @@ module Amazonite::EventBridgeV1
     # Retrieves details about a connection.
     def describe_connection(input : AEB::DescribeConnectionRequest) : Core::ParsedResponse(AEB::DescribeConnectionResponse)
       Log.info { "performing 'DescribeConnection' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeConnection", "/", input.to_json)
       Core::ParsedResponse(AEB::DescribeConnectionResponse).new(response)
     end
@@ -249,6 +269,7 @@ module Amazonite::EventBridgeV1
     # in the * *Amazon EventBridge User Guide* *.
     def describe_endpoint(input : AEB::DescribeEndpointRequest) : Core::ParsedResponse(AEB::DescribeEndpointResponse)
       Log.info { "performing 'DescribeEndpoint' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeEndpoint", "/", input.to_json)
       Core::ParsedResponse(AEB::DescribeEndpointResponse).new(response)
     end
@@ -265,6 +286,7 @@ module Amazonite::EventBridgeV1
     # [CreateEventBus](https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html).
     def describe_event_bus(input : AEB::DescribeEventBusRequest) : Core::ParsedResponse(AEB::DescribeEventBusResponse)
       Log.info { "performing 'DescribeEventBus' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeEventBus", "/", input.to_json)
       Core::ParsedResponse(AEB::DescribeEventBusResponse).new(response)
     end
@@ -272,6 +294,7 @@ module Amazonite::EventBridgeV1
     # This operation lists details about a partner event source that is shared with your account.
     def describe_event_source(input : AEB::DescribeEventSourceRequest) : Core::ParsedResponse(AEB::DescribeEventSourceResponse)
       Log.info { "performing 'DescribeEventSource' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeEventSource", "/", input.to_json)
       Core::ParsedResponse(AEB::DescribeEventSourceResponse).new(response)
     end
@@ -283,6 +306,7 @@ module Amazonite::EventBridgeV1
     # to see details about a partner event source that is shared with them.
     def describe_partner_event_source(input : AEB::DescribePartnerEventSourceRequest) : Core::ParsedResponse(AEB::DescribePartnerEventSourceResponse)
       Log.info { "performing 'DescribePartnerEventSource' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribePartnerEventSource", "/", input.to_json)
       Core::ParsedResponse(AEB::DescribePartnerEventSourceResponse).new(response)
     end
@@ -297,6 +321,7 @@ module Amazonite::EventBridgeV1
     # last event replayed.
     def describe_replay(input : AEB::DescribeReplayRequest) : Core::ParsedResponse(AEB::DescribeReplayResponse)
       Log.info { "performing 'DescribeReplay' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeReplay", "/", input.to_json)
       Core::ParsedResponse(AEB::DescribeReplayResponse).new(response)
     end
@@ -307,6 +332,7 @@ module Amazonite::EventBridgeV1
     # [ListTargetsByRule](https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_ListTargetsByRule.html).
     def describe_rule(input : AEB::DescribeRuleRequest) : Core::ParsedResponse(AEB::DescribeRuleResponse)
       Log.info { "performing 'DescribeRule' operation" }
+      input.validate! if config.validate_input?
       response = post("DescribeRule", "/", input.to_json)
       Core::ParsedResponse(AEB::DescribeRuleResponse).new(response)
     end
@@ -318,6 +344,7 @@ module Amazonite::EventBridgeV1
     # short period of time for changes to take effect.
     def disable_rule(input : AEB::DisableRuleRequest) : Core::Response
       Log.info { "performing 'DisableRule' operation" }
+      input.validate! if config.validate_input?
       response = post("DisableRule", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -328,6 +355,7 @@ module Amazonite::EventBridgeV1
     # rule. Allow a short period of time for changes to take effect.
     def enable_rule(input : AEB::EnableRuleRequest) : Core::Response
       Log.info { "performing 'EnableRule' operation" }
+      input.validate! if config.validate_input?
       response = post("EnableRule", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -335,6 +363,7 @@ module Amazonite::EventBridgeV1
     # Retrieves a list of API destination in the account in the current Region.
     def list_api_destinations(input : AEB::ListApiDestinationsRequest) : Core::ParsedResponse(AEB::ListApiDestinationsResponse)
       Log.info { "performing 'ListApiDestinations' operation" }
+      input.validate! if config.validate_input?
       response = post("ListApiDestinations", "/", input.to_json)
       Core::ParsedResponse(AEB::ListApiDestinationsResponse).new(response)
     end
@@ -343,6 +372,7 @@ module Amazonite::EventBridgeV1
     # to the archive names. Filter parameters are exclusive.
     def list_archives(input : AEB::ListArchivesRequest) : Core::ParsedResponse(AEB::ListArchivesResponse)
       Log.info { "performing 'ListArchives' operation" }
+      input.validate! if config.validate_input?
       response = post("ListArchives", "/", input.to_json)
       Core::ParsedResponse(AEB::ListArchivesResponse).new(response)
     end
@@ -350,6 +380,7 @@ module Amazonite::EventBridgeV1
     # Retrieves a list of connections from the account.
     def list_connections(input : AEB::ListConnectionsRequest) : Core::ParsedResponse(AEB::ListConnectionsResponse)
       Log.info { "performing 'ListConnections' operation" }
+      input.validate! if config.validate_input?
       response = post("ListConnections", "/", input.to_json)
       Core::ParsedResponse(AEB::ListConnectionsResponse).new(response)
     end
@@ -360,6 +391,7 @@ module Amazonite::EventBridgeV1
     # in the * *Amazon EventBridge User Guide* *.
     def list_endpoints(input : AEB::ListEndpointsRequest) : Core::ParsedResponse(AEB::ListEndpointsResponse)
       Log.info { "performing 'ListEndpoints' operation" }
+      input.validate! if config.validate_input?
       response = post("ListEndpoints", "/", input.to_json)
       Core::ParsedResponse(AEB::ListEndpointsResponse).new(response)
     end
@@ -368,6 +400,7 @@ module Amazonite::EventBridgeV1
     # and partner event buses.
     def list_event_buses(input : AEB::ListEventBusesRequest) : Core::ParsedResponse(AEB::ListEventBusesResponse)
       Log.info { "performing 'ListEventBuses' operation" }
+      input.validate! if config.validate_input?
       response = post("ListEventBuses", "/", input.to_json)
       Core::ParsedResponse(AEB::ListEventBusesResponse).new(response)
     end
@@ -377,6 +410,7 @@ module Amazonite::EventBridgeV1
     # [CreateEventBus](https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html).
     def list_event_sources(input : AEB::ListEventSourcesRequest) : Core::ParsedResponse(AEB::ListEventSourcesResponse)
       Log.info { "performing 'ListEventSources' operation" }
+      input.validate! if config.validate_input?
       response = post("ListEventSources", "/", input.to_json)
       Core::ParsedResponse(AEB::ListEventSourcesResponse).new(response)
     end
@@ -386,6 +420,7 @@ module Amazonite::EventBridgeV1
     # Web Services customers.
     def list_partner_event_source_accounts(input : AEB::ListPartnerEventSourceAccountsRequest) : Core::ParsedResponse(AEB::ListPartnerEventSourceAccountsResponse)
       Log.info { "performing 'ListPartnerEventSourceAccounts' operation" }
+      input.validate! if config.validate_input?
       response = post("ListPartnerEventSourceAccounts", "/", input.to_json)
       Core::ParsedResponse(AEB::ListPartnerEventSourceAccountsResponse).new(response)
     end
@@ -394,6 +429,7 @@ module Amazonite::EventBridgeV1
     # created. This operation is not used by Amazon Web Services customers.
     def list_partner_event_sources(input : AEB::ListPartnerEventSourcesRequest) : Core::ParsedResponse(AEB::ListPartnerEventSourcesResponse)
       Log.info { "performing 'ListPartnerEventSources' operation" }
+      input.validate! if config.validate_input?
       response = post("ListPartnerEventSources", "/", input.to_json)
       Core::ParsedResponse(AEB::ListPartnerEventSourcesResponse).new(response)
     end
@@ -402,6 +438,7 @@ module Amazonite::EventBridgeV1
     # the replay names. Filter parameters are exclusive.
     def list_replays(input : AEB::ListReplaysRequest) : Core::ParsedResponse(AEB::ListReplaysResponse)
       Log.info { "performing 'ListReplays' operation" }
+      input.validate! if config.validate_input?
       response = post("ListReplays", "/", input.to_json)
       Core::ParsedResponse(AEB::ListReplaysResponse).new(response)
     end
@@ -412,6 +449,7 @@ module Amazonite::EventBridgeV1
     # The maximum number of results per page for requests is 100.
     def list_rule_names_by_target(input : AEB::ListRuleNamesByTargetRequest) : Core::ParsedResponse(AEB::ListRuleNamesByTargetResponse)
       Log.info { "performing 'ListRuleNamesByTarget' operation" }
+      input.validate! if config.validate_input?
       response = post("ListRuleNamesByTarget", "/", input.to_json)
       Core::ParsedResponse(AEB::ListRuleNamesByTargetResponse).new(response)
     end
@@ -425,6 +463,7 @@ module Amazonite::EventBridgeV1
     # [ListTargetsByRule](https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_ListTargetsByRule.html).
     def list_rules(input : AEB::ListRulesRequest) : Core::ParsedResponse(AEB::ListRulesResponse)
       Log.info { "performing 'ListRules' operation" }
+      input.validate! if config.validate_input?
       response = post("ListRules", "/", input.to_json)
       Core::ParsedResponse(AEB::ListRulesResponse).new(response)
     end
@@ -433,6 +472,7 @@ module Amazonite::EventBridgeV1
     # can be tagged.
     def list_tags_for_resource(input : AEB::ListTagsForResourceRequest) : Core::ParsedResponse(AEB::ListTagsForResourceResponse)
       Log.info { "performing 'ListTagsForResource' operation" }
+      input.validate! if config.validate_input?
       response = post("ListTagsForResource", "/", input.to_json)
       Core::ParsedResponse(AEB::ListTagsForResourceResponse).new(response)
     end
@@ -442,6 +482,7 @@ module Amazonite::EventBridgeV1
     # The maximum number of results per page for requests is 100.
     def list_targets_by_rule(input : AEB::ListTargetsByRuleRequest) : Core::ParsedResponse(AEB::ListTargetsByRuleResponse)
       Log.info { "performing 'ListTargetsByRule' operation" }
+      input.validate! if config.validate_input?
       response = post("ListTargetsByRule", "/", input.to_json)
       Core::ParsedResponse(AEB::ListTargetsByRuleResponse).new(response)
     end
@@ -461,6 +502,7 @@ module Amazonite::EventBridgeV1
     # PutEvents will only process nested JSON up to 1000 levels deep.
     def put_events(input : AEB::PutEventsRequest) : Core::ParsedResponse(AEB::PutEventsResponse)
       Log.info { "performing 'PutEvents' operation" }
+      input.validate! if config.validate_input?
       response = post("PutEvents", "/", input.to_json)
       Core::ParsedResponse(AEB::PutEventsResponse).new(response)
     end
@@ -473,6 +515,7 @@ module Amazonite::EventBridgeV1
     # the *EventBridge User Guide*.
     def put_partner_events(input : AEB::PutPartnerEventsRequest) : Core::ParsedResponse(AEB::PutPartnerEventsResponse)
       Log.info { "performing 'PutPartnerEvents' operation" }
+      input.validate! if config.validate_input?
       response = post("PutPartnerEvents", "/", input.to_json)
       Core::ParsedResponse(AEB::PutPartnerEventsResponse).new(response)
     end
@@ -499,6 +542,7 @@ module Amazonite::EventBridgeV1
     # The permission policy on the event bus cannot exceed 10 KB in size.
     def put_permission(input : AEB::PutPermissionRequest) : Core::Response
       Log.info { "performing 'PutPermission' operation" }
+      input.validate! if config.validate_input?
       response = post("PutPermission", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -563,6 +607,7 @@ module Amazonite::EventBridgeV1
     # in the *EventBridge User Guide*.
     def put_rule(input : AEB::PutRuleRequest) : Core::ParsedResponse(AEB::PutRuleResponse)
       Log.info { "performing 'PutRule' operation" }
+      input.validate! if config.validate_input?
       response = post("PutRule", "/", input.to_json)
       Core::ParsedResponse(AEB::PutRuleResponse).new(response)
     end
@@ -662,6 +707,7 @@ module Amazonite::EventBridgeV1
     # of the failed target and the error code.
     def put_targets(input : AEB::PutTargetsRequest) : Core::ParsedResponse(AEB::PutTargetsResponse)
       Log.info { "performing 'PutTargets' operation" }
+      input.validate! if config.validate_input?
       response = post("PutTargets", "/", input.to_json)
       Core::ParsedResponse(AEB::PutTargetsResponse).new(response)
     end
@@ -673,6 +719,7 @@ module Amazonite::EventBridgeV1
     # [DescribeEventBus](https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DescribeEventBus.html).
     def remove_permission(input : AEB::RemovePermissionRequest) : Core::Response
       Log.info { "performing 'RemovePermission' operation" }
+      input.validate! if config.validate_input?
       response = post("RemovePermission", "/", input.to_json)
       Core::Response.new(response)
     end
@@ -693,6 +740,7 @@ module Amazonite::EventBridgeV1
     # The maximum number of entries per request is 10.
     def remove_targets(input : AEB::RemoveTargetsRequest) : Core::ParsedResponse(AEB::RemoveTargetsResponse)
       Log.info { "performing 'RemoveTargets' operation" }
+      input.validate! if config.validate_input?
       response = post("RemoveTargets", "/", input.to_json)
       Core::ParsedResponse(AEB::RemoveTargetsResponse).new(response)
     end
@@ -707,6 +755,7 @@ module Amazonite::EventBridgeV1
     # last event replayed.
     def start_replay(input : AEB::StartReplayRequest) : Core::ParsedResponse(AEB::StartReplayResponse)
       Log.info { "performing 'StartReplay' operation" }
+      input.validate! if config.validate_input?
       response = post("StartReplay", "/", input.to_json)
       Core::ParsedResponse(AEB::StartReplayResponse).new(response)
     end
@@ -727,6 +776,7 @@ module Amazonite::EventBridgeV1
     # You can associate as many as 50 tags with a resource.
     def tag_resource(input : AEB::TagResourceRequest) : Core::ParsedResponse(AEB::TagResourceResponse)
       Log.info { "performing 'TagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("TagResource", "/", input.to_json)
       Core::ParsedResponse(AEB::TagResourceResponse).new(response)
     end
@@ -739,6 +789,7 @@ module Amazonite::EventBridgeV1
     # event you want to match.
     def test_event_pattern(input : AEB::TestEventPatternRequest) : Core::ParsedResponse(AEB::TestEventPatternResponse)
       Log.info { "performing 'TestEventPattern' operation" }
+      input.validate! if config.validate_input?
       response = post("TestEventPattern", "/", input.to_json)
       Core::ParsedResponse(AEB::TestEventPatternResponse).new(response)
     end
@@ -747,6 +798,7 @@ module Amazonite::EventBridgeV1
     # and event buses can be tagged.
     def untag_resource(input : AEB::UntagResourceRequest) : Core::ParsedResponse(AEB::UntagResourceResponse)
       Log.info { "performing 'UntagResource' operation" }
+      input.validate! if config.validate_input?
       response = post("UntagResource", "/", input.to_json)
       Core::ParsedResponse(AEB::UntagResourceResponse).new(response)
     end
@@ -754,6 +806,7 @@ module Amazonite::EventBridgeV1
     # Updates an API destination.
     def update_api_destination(input : AEB::UpdateApiDestinationRequest) : Core::ParsedResponse(AEB::UpdateApiDestinationResponse)
       Log.info { "performing 'UpdateApiDestination' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateApiDestination", "/", input.to_json)
       Core::ParsedResponse(AEB::UpdateApiDestinationResponse).new(response)
     end
@@ -761,6 +814,7 @@ module Amazonite::EventBridgeV1
     # Updates the specified archive.
     def update_archive(input : AEB::UpdateArchiveRequest) : Core::ParsedResponse(AEB::UpdateArchiveResponse)
       Log.info { "performing 'UpdateArchive' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateArchive", "/", input.to_json)
       Core::ParsedResponse(AEB::UpdateArchiveResponse).new(response)
     end
@@ -768,6 +822,7 @@ module Amazonite::EventBridgeV1
     # Updates settings for a connection.
     def update_connection(input : AEB::UpdateConnectionRequest) : Core::ParsedResponse(AEB::UpdateConnectionResponse)
       Log.info { "performing 'UpdateConnection' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateConnection", "/", input.to_json)
       Core::ParsedResponse(AEB::UpdateConnectionResponse).new(response)
     end
@@ -778,6 +833,7 @@ module Amazonite::EventBridgeV1
     # in the * *Amazon EventBridge User Guide* *.
     def update_endpoint(input : AEB::UpdateEndpointRequest) : Core::ParsedResponse(AEB::UpdateEndpointResponse)
       Log.info { "performing 'UpdateEndpoint' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateEndpoint", "/", input.to_json)
       Core::ParsedResponse(AEB::UpdateEndpointResponse).new(response)
     end
@@ -785,6 +841,7 @@ module Amazonite::EventBridgeV1
     # Updates the specified event bus.
     def update_event_bus(input : AEB::UpdateEventBusRequest) : Core::ParsedResponse(AEB::UpdateEventBusResponse)
       Log.info { "performing 'UpdateEventBus' operation" }
+      input.validate! if config.validate_input?
       response = post("UpdateEventBus", "/", input.to_json)
       Core::ParsedResponse(AEB::UpdateEventBusResponse).new(response)
     end

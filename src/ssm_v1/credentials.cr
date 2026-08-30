@@ -29,5 +29,13 @@ module Amazonite::SsmV1
       @expiration_time : Time,
     )
     end
+
+    def validate! : Nil
+      if value = @access_key_id
+        raise Core::ValidationError.new("AccessKeyId does not match the required pattern") unless value.matches?(Regex.new("^\\w{16,128}$"))
+      end
+    end
+
+    def_equals_and_hash(@access_key_id, @secret_access_key, @session_token, @expiration_time)
   end
 end

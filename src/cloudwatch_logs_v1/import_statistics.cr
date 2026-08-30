@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Statistics about the import progress
   class ImportStatistics
@@ -11,5 +13,13 @@ module Amazonite::CloudWatchLogsV1
       @bytes_imported : Int64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @bytes_imported
+        raise Core::ValidationError.new("bytesImported value must be >= 0") if value < 0
+      end
+    end
+
+    def_equals_and_hash(@bytes_imported)
   end
 end

@@ -376,5 +376,66 @@ module Amazonite::CloudFormationV1
         managed_execution: node.xpath_node("*[local-name()='ManagedExecution']").try { |n| ManagedExecution.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @template_body
+        raise Core::ValidationError.new("TemplateBody length must be >= 1") if value.size < 1
+      end
+
+      if value = @template_url
+        raise Core::ValidationError.new("TemplateURL length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TemplateURL length must be <= 5120") if value.size > 5120
+      end
+
+      if value = @parameters
+        value.each(&.validate!)
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+
+      if value = @operation_preferences
+        value.validate!
+      end
+
+      if value = @administration_role_arn
+        raise Core::ValidationError.new("AdministrationRoleARN length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("AdministrationRoleARN length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @execution_role_name
+        raise Core::ValidationError.new("ExecutionRoleName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ExecutionRoleName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("ExecutionRoleName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z_0-9+=,.@-]+$"))
+      end
+
+      if value = @deployment_targets
+        value.validate!
+      end
+
+      if value = @auto_deployment
+        value.validate!
+      end
+
+      if value = @operation_id
+        raise Core::ValidationError.new("OperationId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("OperationId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("OperationId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+
+      if value = @managed_execution
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@stack_set_name, @description, @template_body, @template_url, @use_previous_template, @parameters, @capabilities, @tags, @operation_preferences, @administration_role_arn, @execution_role_name, @deployment_targets, @permission_model, @auto_deployment, @operation_id, @accounts, @regions, @call_as, @managed_execution)
   end
 end

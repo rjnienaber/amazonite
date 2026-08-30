@@ -45,5 +45,23 @@ module Amazonite::StsV1
         assumed_principal: Core::XMLValue.string(node.xpath_node("*[local-name()='AssumedPrincipal']")),
       )
     end
+
+    def validate! : Nil
+      if value = @credentials
+        value.validate!
+      end
+
+      if value = @packed_policy_size
+        raise Core::ValidationError.new("PackedPolicySize value must be >= 0") if value < 0
+      end
+
+      if value = @assumed_principal
+        raise Core::ValidationError.new("AssumedPrincipal length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("AssumedPrincipal length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("AssumedPrincipal does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~\u0085\u00A0-퟿\uE000-�က0-ჿFF]+$"))
+      end
+    end
+
+    def_equals_and_hash(@credentials, @packed_policy_size, @assumed_principal)
   end
 end

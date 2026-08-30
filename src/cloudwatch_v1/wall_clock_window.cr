@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # An evaluation window that aligns the evaluated range to fixed clock boundaries that match the
   # alarm's period, such as the top of the hour, midnight, or the start of the calendar week,
@@ -27,5 +29,14 @@ module Amazonite::CloudWatchV1
       @timezone : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @timezone
+        raise Core::ValidationError.new("Timezone length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Timezone length must be <= 50") if value.size > 50
+      end
+    end
+
+    def_equals_and_hash(@timezone)
   end
 end

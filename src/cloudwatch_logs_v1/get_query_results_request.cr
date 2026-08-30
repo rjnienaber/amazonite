@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class GetQueryResultsRequest
     include JSON::Serializable
@@ -22,5 +24,24 @@ module Amazonite::CloudWatchLogsV1
       @max_items : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @query_id
+        raise Core::ValidationError.new("queryId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("queryId length must be <= 256") if value.size > 256
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("nextToken length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @max_items
+        raise Core::ValidationError.new("maxItems value must be >= 0") if value < 0
+        raise Core::ValidationError.new("maxItems value must be <= 10000") if value > 10000
+      end
+    end
+
+    def_equals_and_hash(@query_id, @next_token, @max_items)
   end
 end

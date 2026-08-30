@@ -91,5 +91,48 @@ module Amazonite::SsmV1
       @author : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.:/]{3,128}$"))
+      end
+
+      if value = @display_name
+        raise Core::ValidationError.new("DisplayName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("DisplayName length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("DisplayName does not match the required pattern") unless value.matches?(Regex.new("^[\\w\\.\\-\\:\\/ ]*$"))
+      end
+
+      if value = @version_name
+        raise Core::ValidationError.new("VersionName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{1,128}$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @schema_version
+        raise Core::ValidationError.new("SchemaVersion does not match the required pattern") unless value.matches?(Regex.new("^([0-9]+)\\.([0-9]+)$"))
+      end
+
+      if value = @target_type
+        raise Core::ValidationError.new("TargetType length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("TargetType length must be <= 200") if value.size > 200
+        raise Core::ValidationError.new("TargetType does not match the required pattern") unless value.matches?(Regex.new("^\\/[\\w\\.\\-\\:\\/]*$"))
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 1000 item(s)") if value.size > 1000
+        value.each(&.validate!)
+      end
+
+      if value = @requires
+        raise Core::ValidationError.new("Requires must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@name, @created_date, @display_name, @owner, @version_name, @platform_types, @document_version, @document_type, @schema_version, @document_format, @target_type, @tags, @requires, @review_status, @author)
   end
 end

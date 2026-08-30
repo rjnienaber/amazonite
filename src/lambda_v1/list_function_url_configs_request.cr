@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class ListFunctionUrlConfigsRequest
     include JSON::Serializable
@@ -34,5 +36,20 @@ module Amazonite::LambdaV1
       @max_items : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @function_name
+        raise Core::ValidationError.new("FunctionName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("FunctionName length must be <= 140") if value.size > 140
+        raise Core::ValidationError.new("FunctionName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:)?((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_]{1,64})(:((?!\\d+$)[0-9a-zA-Z-_]+))?$"))
+      end
+
+      if value = @max_items
+        raise Core::ValidationError.new("MaxItems value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxItems value must be <= 50") if value > 50
+      end
+    end
+
+    def_equals_and_hash(@function_name, @marker, @max_items)
   end
 end

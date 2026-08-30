@@ -16,5 +16,10 @@ module Amazonite::SsmV1
       @truncated : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@parameter_values, @truncated)
   end
 end

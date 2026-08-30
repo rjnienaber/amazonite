@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Details about a durable execution context.
   class ContextDetails
@@ -22,5 +24,18 @@ module Amazonite::LambdaV1
       @error : ErrorObject | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @result
+        raise Core::ValidationError.new("Result length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Result length must be <= 6291456") if value.size > 6291456
+      end
+
+      if value = @error
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@replay_children, @result, @error)
   end
 end

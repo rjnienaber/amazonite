@@ -31,5 +31,23 @@ module Amazonite::KinesisV1
       @explicit_hash_key : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @data
+        raise Core::ValidationError.new("Data length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Data length must be <= 10485760") if value.size > 10485760
+      end
+
+      if value = @explicit_hash_key
+        raise Core::ValidationError.new("ExplicitHashKey does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,38})$"))
+      end
+
+      if value = @partition_key
+        raise Core::ValidationError.new("PartitionKey length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PartitionKey length must be <= 256") if value.size > 256
+      end
+    end
+
+    def_equals_and_hash(@data, @explicit_hash_key, @partition_key)
   end
 end

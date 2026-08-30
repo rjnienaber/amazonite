@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class BatchExecuteStatementOutput
     include JSON::Serializable
@@ -17,5 +19,17 @@ module Amazonite::DynamoDBV2
       @consumed_capacity : Array(ConsumedCapacity) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @responses
+        value.each(&.validate!)
+      end
+
+      if value = @consumed_capacity
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@responses, @consumed_capacity)
   end
 end

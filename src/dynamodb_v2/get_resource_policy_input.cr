@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class GetResourcePolicyInput
     include JSON::Serializable
@@ -11,5 +13,14 @@ module Amazonite::DynamoDBV2
       @resource_arn : String,
     )
     end
+
+    def validate! : Nil
+      if value = @resource_arn
+        raise Core::ValidationError.new("ResourceArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceArn length must be <= 1283") if value.size > 1283
+      end
+    end
+
+    def_equals_and_hash(@resource_arn)
   end
 end

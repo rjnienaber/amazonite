@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the selection criteria for a `Query` or `Scan` operation:
@@ -157,5 +158,13 @@ module Amazonite::DynamoDBV2
       @attribute_value_list : Array(AttributeValue) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @attribute_value_list
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@attribute_value_list, @comparison_operator)
   end
 end

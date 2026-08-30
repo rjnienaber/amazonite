@@ -53,5 +53,25 @@ module Amazonite::IamV1
         max_items: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxItems']")),
       )
     end
+
+    def validate! : Nil
+      if value = @open_id_connect_provider_arn
+        raise Core::ValidationError.new("OpenIDConnectProviderArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("OpenIDConnectProviderArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @marker
+        raise Core::ValidationError.new("Marker length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Marker length must be <= 320") if value.size > 320
+        raise Core::ValidationError.new("Marker does not match the required pattern") unless value.matches?(Regex.new("^[ -ÿ]+$"))
+      end
+
+      if value = @max_items
+        raise Core::ValidationError.new("MaxItems value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxItems value must be <= 1000") if value > 1000
+      end
+    end
+
+    def_equals_and_hash(@open_id_connect_provider_arn, @marker, @max_items)
   end
 end

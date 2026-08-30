@@ -23,5 +23,10 @@ module Amazonite::ApiGatewayV1
       @stage : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@base_path, @rest_api_id, @stage)
   end
 end

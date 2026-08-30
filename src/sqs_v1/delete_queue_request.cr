@@ -12,5 +12,10 @@ module Amazonite::SqsV1
       @queue_url : String,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@queue_url)
   end
 end

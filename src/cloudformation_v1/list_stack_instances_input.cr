@@ -91,5 +91,33 @@ module Amazonite::CloudFormationV1
         call_as: (n = node.xpath_node("*[local-name()='CallAs']")) ? ACF::CallAs.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @max_results
+        raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxResults value must be <= 100") if value > 100
+      end
+
+      if value = @filters
+        raise Core::ValidationError.new("Filters must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Filters must have at most 3 item(s)") if value.size > 3
+        value.each(&.validate!)
+      end
+
+      if value = @stack_instance_account
+        raise Core::ValidationError.new("StackInstanceAccount does not match the required pattern") unless value.matches?(Regex.new("^[0-9]{12}$"))
+      end
+
+      if value = @stack_instance_region
+        raise Core::ValidationError.new("StackInstanceRegion does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9-]{1,128}$"))
+      end
+    end
+
+    def_equals_and_hash(@stack_set_name, @next_token, @max_results, @filters, @stack_instance_account, @stack_instance_region, @call_as)
   end
 end

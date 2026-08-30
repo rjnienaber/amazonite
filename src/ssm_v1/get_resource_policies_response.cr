@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class GetResourcePoliciesResponse
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::SsmV1
       @policies : Array(GetResourcePoliciesResponseEntry) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @policies
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@next_token, @policies)
   end
 end

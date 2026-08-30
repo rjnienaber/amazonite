@@ -29,5 +29,10 @@ module Amazonite::ApiGatewayV1
       @api_summary : Hash(String, Hash(String, MethodSnapshot)) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@id, @description, @created_date, @api_summary)
   end
 end

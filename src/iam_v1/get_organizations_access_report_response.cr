@@ -102,5 +102,23 @@ module Amazonite::IamV1
         error_details: node.xpath_node("*[local-name()='ErrorDetails']").try { |n| ErrorDetails.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @access_details
+        value.each(&.validate!)
+      end
+
+      if value = @marker
+        raise Core::ValidationError.new("Marker length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Marker length must be <= 320") if value.size > 320
+        raise Core::ValidationError.new("Marker does not match the required pattern") unless value.matches?(Regex.new("^[ -ÿ]+$"))
+      end
+
+      if value = @error_details
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@job_status, @job_creation_date, @job_completion_date, @number_of_services_accessible, @number_of_services_not_accessed, @access_details, @is_truncated, @marker, @error_details)
   end
 end

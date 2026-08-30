@@ -37,5 +37,20 @@ module Amazonite::IamV1
         tag_keys: node.xpath_nodes("*[local-name()='TagKeys']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def validate! : Nil
+      if value = @serial_number
+        raise Core::ValidationError.new("SerialNumber length must be >= 9") if value.size < 9
+        raise Core::ValidationError.new("SerialNumber length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("SerialNumber does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=/:,.@-]+$"))
+      end
+
+      if value = @tag_keys
+        raise Core::ValidationError.new("TagKeys must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("TagKeys must have at most 50 item(s)") if value.size > 50
+      end
+    end
+
+    def_equals_and_hash(@serial_number, @tag_keys)
   end
 end

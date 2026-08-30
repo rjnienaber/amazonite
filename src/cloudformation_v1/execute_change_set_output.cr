@@ -13,5 +13,10 @@ module Amazonite::CloudFormationV1
       new(
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash()
   end
 end

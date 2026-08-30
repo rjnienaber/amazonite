@@ -26,5 +26,14 @@ module Amazonite::IamV1
         policy_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='PolicyArn']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @policy_arn
+        raise Core::ValidationError.new("PolicyArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("PolicyArn length must be <= 2048") if value.size > 2048
+      end
+    end
+
+    def_equals_and_hash(@policy_arn)
   end
 end

@@ -18,5 +18,10 @@ module Amazonite::DynamoDBV2
       @vector_write_request_bytes : Float64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@vector_search_request_bytes, @vector_write_request_bytes)
   end
 end

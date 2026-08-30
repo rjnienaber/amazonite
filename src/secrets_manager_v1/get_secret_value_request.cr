@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SecretsManagerV1
   class GetSecretValueRequest
     include JSON::Serializable
@@ -36,5 +38,24 @@ module Amazonite::SecretsManagerV1
       @version_stage : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @secret_id
+        raise Core::ValidationError.new("SecretId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SecretId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @version_id
+        raise Core::ValidationError.new("VersionId length must be >= 32") if value.size < 32
+        raise Core::ValidationError.new("VersionId length must be <= 64") if value.size > 64
+      end
+
+      if value = @version_stage
+        raise Core::ValidationError.new("VersionStage length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("VersionStage length must be <= 256") if value.size > 256
+      end
+    end
+
+    def_equals_and_hash(@secret_id, @version_id, @version_stage)
   end
 end

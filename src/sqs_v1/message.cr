@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SqsV1
   # An Amazon SQS message.
   class Message
@@ -68,5 +70,13 @@ module Amazonite::SqsV1
       @message_attributes : Hash(String, MessageAttributeValue) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @message_attributes
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@message_id, @receipt_handle, @md5_of_body, @body, @attributes, @md5_of_message_attributes, @message_attributes)
   end
 end

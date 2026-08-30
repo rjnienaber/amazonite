@@ -28,5 +28,24 @@ module Amazonite::LambdaV1
       @excluded_instance_types : Array(String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @architectures
+        raise Core::ValidationError.new("Architectures must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Architectures must have at most 1 item(s)") if value.size > 1
+      end
+
+      if value = @allowed_instance_types
+        raise Core::ValidationError.new("AllowedInstanceTypes must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AllowedInstanceTypes must have at most 400 item(s)") if value.size > 400
+      end
+
+      if value = @excluded_instance_types
+        raise Core::ValidationError.new("ExcludedInstanceTypes must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("ExcludedInstanceTypes must have at most 400 item(s)") if value.size > 400
+      end
+    end
+
+    def_equals_and_hash(@architectures, @allowed_instance_types, @excluded_instance_types)
   end
 end

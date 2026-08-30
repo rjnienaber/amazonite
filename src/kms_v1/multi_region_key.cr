@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   # Describes the primary or replica key in a multi-Region key.
   class MultiRegionKey
@@ -16,5 +18,20 @@ module Amazonite::KmsV1
       @region : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("Arn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @region
+        raise Core::ValidationError.new("Region length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Region length must be <= 32") if value.size > 32
+        raise Core::ValidationError.new("Region does not match the required pattern") unless value.matches?(Regex.new("^([a-z]+-){2,3}\\d+$"))
+      end
+    end
+
+    def_equals_and_hash(@arn, @region)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   class RegisterStreamConsumerOutput
     include JSON::Serializable
@@ -11,5 +13,13 @@ module Amazonite::KinesisV1
       @consumer : Consumer,
     )
     end
+
+    def validate! : Nil
+      if value = @consumer
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@consumer)
   end
 end

@@ -94,5 +94,25 @@ module Amazonite::CloudFormationV1
         client_request_token: Core::XMLValue.string(node.xpath_node("*[local-name()='ClientRequestToken']")),
       )
     end
+
+    def validate! : Nil
+      if value = @stack_name
+        raise Core::ValidationError.new("StackName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackName does not match the required pattern") unless value.matches?(Regex.new("^([a-zA-Z][-a-zA-Z0-9]*)|(arn:\\b(aws|aws-us-gov|aws-cn)\\b:[-a-zA-Z0-9:/._+]*)$"))
+      end
+
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleARN length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("RoleARN length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @client_request_token
+        raise Core::ValidationError.new("ClientRequestToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ClientRequestToken length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ClientRequestToken does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+    end
+
+    def_equals_and_hash(@stack_name, @role_arn, @resources_to_skip, @client_request_token)
   end
 end

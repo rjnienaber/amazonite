@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # This object defines one log field that will be split with the [
   # splitString](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-splitString)
@@ -18,5 +20,19 @@ module Amazonite::CloudWatchLogsV1
       @delimiter : String,
     )
     end
+
+    def validate! : Nil
+      if value = @source
+        raise Core::ValidationError.new("source length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("source length must be <= 128") if value.size > 128
+      end
+
+      if value = @delimiter
+        raise Core::ValidationError.new("delimiter length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("delimiter length must be <= 128") if value.size > 128
+      end
+    end
+
+    def_equals_and_hash(@source, @delimiter)
   end
 end

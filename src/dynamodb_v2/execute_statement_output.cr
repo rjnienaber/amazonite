@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class ExecuteStatementOutput
     include JSON::Serializable
@@ -32,5 +34,22 @@ module Amazonite::DynamoDBV2
       @last_evaluated_key : Hash(String, AttributeValue) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 32768") if value.size > 32768
+      end
+
+      if value = @consumed_capacity
+        value.validate!
+      end
+
+      if value = @last_evaluated_key
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@items, @next_token, @consumed_capacity, @last_evaluated_key)
   end
 end

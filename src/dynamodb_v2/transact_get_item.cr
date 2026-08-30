@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Specifies an item to be retrieved as part of the transaction.
   class TransactGetItem
@@ -12,5 +14,13 @@ module Amazonite::DynamoDBV2
       @get : Get,
     )
     end
+
+    def validate! : Nil
+      if value = @get
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@get)
   end
 end

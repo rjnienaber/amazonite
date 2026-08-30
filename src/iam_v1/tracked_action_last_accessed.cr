@@ -65,5 +65,14 @@ module Amazonite::IamV1
         last_accessed_region: Core::XMLValue.string(node.xpath_node("*[local-name()='LastAccessedRegion']")),
       )
     end
+
+    def validate! : Nil
+      if value = @last_accessed_entity
+        raise Core::ValidationError.new("LastAccessedEntity length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("LastAccessedEntity length must be <= 2048") if value.size > 2048
+      end
+    end
+
+    def_equals_and_hash(@action_name, @last_accessed_entity, @last_accessed_time, @last_accessed_region)
   end
 end

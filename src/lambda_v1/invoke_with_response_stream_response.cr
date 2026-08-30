@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class InvokeWithResponseStreamResponse
     include JSON::Serializable
@@ -28,5 +30,19 @@ module Amazonite::LambdaV1
       @response_stream_content_type : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @executed_version
+        raise Core::ValidationError.new("ExecutedVersion length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ExecutedVersion length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("ExecutedVersion does not match the required pattern") unless value.matches?(Regex.new("^(\\$LATEST|[0-9]+)$"))
+      end
+
+      if value = @event_stream
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@status_code, @executed_version, @event_stream, @response_stream_content_type)
   end
 end

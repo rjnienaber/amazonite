@@ -47,5 +47,10 @@ module Amazonite::ApiGatewayV1
       @location_status : LocationStatusType | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@rest_api_id, @type, @name_query, @path, @position, @limit, @location_status)
   end
 end

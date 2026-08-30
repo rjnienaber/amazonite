@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # The `CSV` processor parses comma-separated values (CSV) from the log events into columns.
   #
@@ -41,5 +43,34 @@ module Amazonite::CloudWatchLogsV1
       @destination : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @quote_character
+        raise Core::ValidationError.new("quoteCharacter length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("quoteCharacter length must be <= 1") if value.size > 1
+      end
+
+      if value = @delimiter
+        raise Core::ValidationError.new("delimiter length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("delimiter length must be <= 2") if value.size > 2
+      end
+
+      if value = @columns
+        raise Core::ValidationError.new("columns must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("columns must have at most 100 item(s)") if value.size > 100
+      end
+
+      if value = @source
+        raise Core::ValidationError.new("source length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("source length must be <= 128") if value.size > 128
+      end
+
+      if value = @destination
+        raise Core::ValidationError.new("destination length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("destination length must be <= 128") if value.size > 128
+      end
+    end
+
+    def_equals_and_hash(@quote_character, @delimiter, @columns, @source, @destination)
   end
 end

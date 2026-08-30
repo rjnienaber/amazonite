@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class DescribeImportOutput
     include JSON::Serializable
@@ -12,5 +14,13 @@ module Amazonite::DynamoDBV2
       @import_table_description : ImportTableDescription,
     )
     end
+
+    def validate! : Nil
+      if value = @import_table_description
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@import_table_description)
   end
 end

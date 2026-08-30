@@ -46,5 +46,10 @@ module Amazonite::SsmV1
       @tag_keys : Array(String),
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@resource_type, @resource_id, @tag_keys)
   end
 end

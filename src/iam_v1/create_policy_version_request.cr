@@ -70,5 +70,20 @@ module Amazonite::IamV1
         set_as_default: Core::XMLValue.bool(node.xpath_node("*[local-name()='SetAsDefault']")),
       )
     end
+
+    def validate! : Nil
+      if value = @policy_arn
+        raise Core::ValidationError.new("PolicyArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("PolicyArn length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @policy_document
+        raise Core::ValidationError.new("PolicyDocument length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PolicyDocument length must be <= 131072") if value.size > 131072
+        raise Core::ValidationError.new("PolicyDocument does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+    end
+
+    def_equals_and_hash(@policy_arn, @policy_document, @set_as_default)
   end
 end

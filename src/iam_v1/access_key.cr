@@ -66,5 +66,21 @@ module Amazonite::IamV1
         create_date: Core::XMLValue.time(node.xpath_node("*[local-name()='CreateDate']")),
       )
     end
+
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @access_key_id
+        raise Core::ValidationError.new("AccessKeyId length must be >= 16") if value.size < 16
+        raise Core::ValidationError.new("AccessKeyId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("AccessKeyId does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+    end
+
+    def_equals_and_hash(@user_name, @access_key_id, @status, @secret_access_key, @create_date)
   end
 end

@@ -57,5 +57,10 @@ module Amazonite::CloudFormationV1
         logical_id_hierarchy: Core::XMLValue.string(node.xpath_node("*[local-name()='LogicalIdHierarchy']")),
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@type_hierarchy, @logical_id_hierarchy)
   end
 end

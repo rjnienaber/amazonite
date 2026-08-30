@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [ListOpenIDConnectProviders](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListOpenIDConnectProviders.html)
@@ -25,5 +27,13 @@ module Amazonite::IamV1
         open_id_connect_provider_list: node.xpath_nodes("*[local-name()='OpenIDConnectProviderList']/*[local-name()='member']").map { |n| OpenIDConnectProviderListEntry.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @open_id_connect_provider_list
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@open_id_connect_provider_list)
   end
 end

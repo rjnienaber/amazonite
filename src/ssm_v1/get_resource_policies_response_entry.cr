@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # A resource policy helps you to define the IAM entity (for example, an Amazon Web Services
   # account) that can manage your Systems Manager resources. Currently, `OpsItemGroup` is the only
@@ -30,5 +32,13 @@ module Amazonite::SsmV1
       @policy : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @policy
+        raise Core::ValidationError.new("Policy does not match the required pattern") unless value.matches?(Regex.new("^(?!\\s*$).+$"))
+      end
+    end
+
+    def_equals_and_hash(@policy_id, @policy_hash, @policy)
   end
 end

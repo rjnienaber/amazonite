@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # Represents the results of an event submitted to an event bus.
   #
@@ -73,5 +75,14 @@ module Amazonite::EventBridgeV1
       @error_message : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @event_id
+        raise Core::ValidationError.new("EventId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("EventId length must be <= 64") if value.size > 64
+      end
+    end
+
+    def_equals_and_hash(@event_id, @error_code, @error_message)
   end
 end

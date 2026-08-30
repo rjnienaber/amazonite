@@ -48,5 +48,21 @@ module Amazonite::IamV1
         status: ((n = node.xpath_node("*[local-name()='Status']")) ? AI::StatusType.from_json_object_key?(n.content) : nil).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @certificate_id
+        raise Core::ValidationError.new("CertificateId length must be >= 24") if value.size < 24
+        raise Core::ValidationError.new("CertificateId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("CertificateId does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+    end
+
+    def_equals_and_hash(@user_name, @certificate_id, @status)
   end
 end

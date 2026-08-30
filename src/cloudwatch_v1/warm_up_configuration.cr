@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   # The configuration settings that define the warm-up behavior for an alarm. Use these settings to
   # delay alarm evaluation after you create or update the alarm, which reduces alarm noise while a
@@ -30,5 +32,14 @@ module Amazonite::CloudWatchV1
       @only_start_evaluating_after_warm_up_period_ends : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @warm_up_period_duration_in_minutes
+        raise Core::ValidationError.new("WarmUpPeriodDurationInMinutes value must be >= 1") if value < 1
+        raise Core::ValidationError.new("WarmUpPeriodDurationInMinutes value must be <= 2880") if value > 2880
+      end
+    end
+
+    def_equals_and_hash(@warm_up_period_duration_in_minutes, @only_start_evaluating_after_warm_up_period_ends)
   end
 end

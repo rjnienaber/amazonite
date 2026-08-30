@@ -31,5 +31,19 @@ module Amazonite::CloudFormationV1
         logical_resource_ids: node.xpath_nodes("*[local-name()='LogicalResourceIds']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def validate! : Nil
+      if value = @stack_name
+        raise Core::ValidationError.new("StackName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackName does not match the required pattern") unless value.matches?(Regex.new("^([a-zA-Z][-a-zA-Z0-9]*)|(arn:\\b(aws|aws-us-gov|aws-cn)\\b:[-a-zA-Z0-9:/._+]*)$"))
+      end
+
+      if value = @logical_resource_ids
+        raise Core::ValidationError.new("LogicalResourceIds must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("LogicalResourceIds must have at most 200 item(s)") if value.size > 200
+      end
+    end
+
+    def_equals_and_hash(@stack_name, @logical_resource_ids)
   end
 end

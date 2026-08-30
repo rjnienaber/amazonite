@@ -34,5 +34,10 @@ module Amazonite::CloudWatchLogsV1
       @error_message : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@destination_type, @destination_identifier, @status, @processed_identifier, @error_message)
   end
 end

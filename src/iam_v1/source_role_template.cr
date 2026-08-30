@@ -30,5 +30,14 @@ module Amazonite::IamV1
         template_minor_version: Core::XMLValue.i32(node.xpath_node("*[local-name()='TemplateMinorVersion']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @template_arn
+        raise Core::ValidationError.new("TemplateArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("TemplateArn length must be <= 2048") if value.size > 2048
+      end
+    end
+
+    def_equals_and_hash(@template_arn, @template_minor_version)
   end
 end

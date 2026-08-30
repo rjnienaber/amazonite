@@ -46,5 +46,10 @@ module Amazonite::SnsV1
         sender_fault: Core::XMLValue.bool(node.xpath_node("*[local-name()='SenderFault']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@id, @code, @message, @sender_fault)
   end
 end

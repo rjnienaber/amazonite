@@ -280,5 +280,67 @@ module Amazonite::CloudFormationV1
         deployment_config: node.xpath_node("*[local-name()='DeploymentConfig']").try { |n| DeploymentConfig.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @change_set_name
+        raise Core::ValidationError.new("ChangeSetName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChangeSetName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ChangeSetName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z][-a-zA-Z0-9]*$"))
+      end
+
+      if value = @change_set_id
+        raise Core::ValidationError.new("ChangeSetId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChangeSetId does not match the required pattern") unless value.matches?(Regex.new("^arn:[-a-zA-Z0-9:/]*$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @parameters
+        value.each(&.validate!)
+      end
+
+      if value = @notification_ar_ns
+        raise Core::ValidationError.new("NotificationARNs must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("NotificationARNs must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @rollback_configuration
+        value.validate!
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+
+      if value = @changes
+        value.each(&.validate!)
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @parent_change_set_id
+        raise Core::ValidationError.new("ParentChangeSetId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ParentChangeSetId does not match the required pattern") unless value.matches?(Regex.new("^arn:[-a-zA-Z0-9:/]*$"))
+      end
+
+      if value = @root_change_set_id
+        raise Core::ValidationError.new("RootChangeSetId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RootChangeSetId does not match the required pattern") unless value.matches?(Regex.new("^arn:[-a-zA-Z0-9:/]*$"))
+      end
+
+      if value = @deployment_config
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@change_set_name, @change_set_id, @stack_id, @stack_name, @description, @parameters, @creation_time, @execution_status, @status, @status_reason, @stack_drift_status, @notification_ar_ns, @rollback_configuration, @capabilities, @tags, @changes, @next_token, @include_nested_stacks, @parent_change_set_id, @root_change_set_id, @on_stack_failure, @import_existing_resources, @deployment_mode, @deployment_config)
   end
 end

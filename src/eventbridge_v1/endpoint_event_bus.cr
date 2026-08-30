@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # The event buses the endpoint is associated with.
   class EndpointEventBus
@@ -11,5 +13,15 @@ module Amazonite::EventBridgeV1
       @event_bus_arn : String,
     )
     end
+
+    def validate! : Nil
+      if value = @event_bus_arn
+        raise Core::ValidationError.new("EventBusArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EventBusArn length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("EventBusArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws[a-z-]*:events:[a-z]+-[a-z-]+-\\d+:\\d{12}:event-bus/[\\w.-]+$"))
+      end
+    end
+
+    def_equals_and_hash(@event_bus_arn)
   end
 end

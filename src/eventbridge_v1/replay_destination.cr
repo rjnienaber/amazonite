@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # A `ReplayDestination` object that contains details about a replay.
   class ReplayDestination
@@ -17,5 +19,14 @@ module Amazonite::EventBridgeV1
       @filter_arns : Array(String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Arn length must be <= 1600") if value.size > 1600
+      end
+    end
+
+    def_equals_and_hash(@arn, @filter_arns)
   end
 end

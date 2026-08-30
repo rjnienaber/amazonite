@@ -45,5 +45,10 @@ module Amazonite::SqsV1
       @binary_list_values : Array(Bytes) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@string_value, @binary_value, @string_list_values, @binary_list_values, @data_type)
   end
 end

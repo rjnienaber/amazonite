@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Contains trace headers for the Lambda durable execution.
   class TraceHeader
@@ -11,5 +13,14 @@ module Amazonite::LambdaV1
       @x_amzn_trace_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @x_amzn_trace_id
+        raise Core::ValidationError.new("XAmznTraceId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("XAmznTraceId length must be <= 8192") if value.size > 8192
+      end
+    end
+
+    def_equals_and_hash(@x_amzn_trace_id)
   end
 end

@@ -93,5 +93,39 @@ module Amazonite::CloudWatchV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @alarm_names
+        raise Core::ValidationError.new("AlarmNames must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AlarmNames must have at most 100 item(s)") if value.size > 100
+      end
+
+      if value = @alarm_name_prefix
+        raise Core::ValidationError.new("AlarmNamePrefix length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmNamePrefix length must be <= 255") if value.size > 255
+      end
+
+      if value = @children_of_alarm_name
+        raise Core::ValidationError.new("ChildrenOfAlarmName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChildrenOfAlarmName length must be <= 255") if value.size > 255
+      end
+
+      if value = @parents_of_alarm_name
+        raise Core::ValidationError.new("ParentsOfAlarmName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ParentsOfAlarmName length must be <= 255") if value.size > 255
+      end
+
+      if value = @action_prefix
+        raise Core::ValidationError.new("ActionPrefix length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ActionPrefix length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @max_records
+        raise Core::ValidationError.new("MaxRecords value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxRecords value must be <= 100") if value > 100
+      end
+    end
+
+    def_equals_and_hash(@alarm_names, @alarm_name_prefix, @alarm_types, @children_of_alarm_name, @parents_of_alarm_name, @state_value, @action_prefix, @max_records, @next_token)
   end
 end

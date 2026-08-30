@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the auto scaling settings for a global table or global secondary index.
   class AutoScalingSettingsDescription
@@ -32,5 +34,21 @@ module Amazonite::DynamoDBV2
       @scaling_policies : Array(AutoScalingPolicyDescription) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @minimum_units
+        raise Core::ValidationError.new("MinimumUnits value must be >= 1") if value < 1
+      end
+
+      if value = @maximum_units
+        raise Core::ValidationError.new("MaximumUnits value must be >= 1") if value < 1
+      end
+
+      if value = @scaling_policies
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@minimum_units, @maximum_units, @auto_scaling_disabled, @auto_scaling_role_arn, @scaling_policies)
   end
 end

@@ -37,5 +37,20 @@ module Amazonite::StsV1
         context_assertion: Core::XMLValue.string(node.xpath_node("*[local-name()='ContextAssertion']")),
       )
     end
+
+    def validate! : Nil
+      if value = @provider_arn
+        raise Core::ValidationError.new("ProviderArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("ProviderArn length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("ProviderArn does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~\u0085\u00A0-퟿\uE000-�က0-ჿFF]+$"))
+      end
+
+      if value = @context_assertion
+        raise Core::ValidationError.new("ContextAssertion length must be >= 4") if value.size < 4
+        raise Core::ValidationError.new("ContextAssertion length must be <= 2048") if value.size > 2048
+      end
+    end
+
+    def_equals_and_hash(@provider_arn, @context_assertion)
   end
 end

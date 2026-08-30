@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class ListAliasesResponse
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::LambdaV1
       @aliases : Array(AliasConfiguration) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @aliases
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@next_marker, @aliases)
   end
 end

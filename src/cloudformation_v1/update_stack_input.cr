@@ -363,5 +363,72 @@ module Amazonite::CloudFormationV1
         disable_validation: Core::XMLValue.bool(node.xpath_node("*[local-name()='DisableValidation']")),
       )
     end
+
+    def validate! : Nil
+      if value = @template_body
+        raise Core::ValidationError.new("TemplateBody length must be >= 1") if value.size < 1
+      end
+
+      if value = @template_url
+        raise Core::ValidationError.new("TemplateURL length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TemplateURL length must be <= 5120") if value.size > 5120
+      end
+
+      if value = @stack_policy_during_update_body
+        raise Core::ValidationError.new("StackPolicyDuringUpdateBody length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackPolicyDuringUpdateBody length must be <= 16384") if value.size > 16384
+      end
+
+      if value = @stack_policy_during_update_url
+        raise Core::ValidationError.new("StackPolicyDuringUpdateURL length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackPolicyDuringUpdateURL length must be <= 5120") if value.size > 5120
+      end
+
+      if value = @parameters
+        value.each(&.validate!)
+      end
+
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleARN length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("RoleARN length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @rollback_configuration
+        value.validate!
+      end
+
+      if value = @stack_policy_body
+        raise Core::ValidationError.new("StackPolicyBody length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackPolicyBody length must be <= 16384") if value.size > 16384
+      end
+
+      if value = @stack_policy_url
+        raise Core::ValidationError.new("StackPolicyURL length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackPolicyURL length must be <= 5120") if value.size > 5120
+      end
+
+      if value = @notification_ar_ns
+        raise Core::ValidationError.new("NotificationARNs must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("NotificationARNs must have at most 5 item(s)") if value.size > 5
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+
+      if value = @client_request_token
+        raise Core::ValidationError.new("ClientRequestToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ClientRequestToken length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ClientRequestToken does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+
+      if value = @deployment_config
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@stack_name, @template_body, @template_url, @use_previous_template, @stack_policy_during_update_body, @stack_policy_during_update_url, @parameters, @capabilities, @resource_types, @role_arn, @rollback_configuration, @stack_policy_body, @stack_policy_url, @notification_ar_ns, @tags, @disable_rollback, @client_request_token, @retain_except_on_create, @deployment_config, @disable_validation)
   end
 end

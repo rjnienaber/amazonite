@@ -17,5 +17,10 @@ module Amazonite::CloudWatchV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@dashboard_name_prefix, @next_token)
   end
 end

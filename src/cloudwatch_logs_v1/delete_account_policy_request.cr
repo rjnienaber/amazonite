@@ -17,5 +17,10 @@ module Amazonite::CloudWatchLogsV1
       @policy_type : PolicyType,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@policy_name, @policy_type)
   end
 end

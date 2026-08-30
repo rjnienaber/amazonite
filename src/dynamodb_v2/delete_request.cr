@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents a request to perform a `DeleteItem` operation on an item.
   class DeleteRequest
@@ -13,5 +15,13 @@ module Amazonite::DynamoDBV2
       @key : Hash(String, AttributeValue),
     )
     end
+
+    def validate! : Nil
+      if value = @key
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@key)
   end
 end

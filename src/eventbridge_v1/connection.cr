@@ -51,5 +51,27 @@ module Amazonite::EventBridgeV1
       @last_authorized_time : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @connection_arn
+        raise Core::ValidationError.new("ConnectionArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ConnectionArn length must be <= 1600") if value.size > 1600
+        raise Core::ValidationError.new("ConnectionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws([a-z]|\\-)*:events:([a-z]|\\d|\\-)*:([0-9]{12})?:connection\\/[\\.\\-_A-Za-z0-9]+\\/[\\-A-Za-z0-9]+$"))
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @state_reason
+        raise Core::ValidationError.new("StateReason length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("StateReason length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("StateReason does not match the required pattern") unless value.matches?(Regex.new(".*"))
+      end
+    end
+
+    def_equals_and_hash(@connection_arn, @name, @connection_state, @state_reason, @authorization_type, @creation_time, @last_modified_time, @last_authorized_time)
   end
 end

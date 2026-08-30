@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SqsV1
   # A list of received messages.
   class ReceiveMessageResult
@@ -11,5 +13,13 @@ module Amazonite::SqsV1
       @messages : Array(Message) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @messages
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@messages)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class ReplicateKeyResponse
     include JSON::Serializable
@@ -24,5 +26,23 @@ module Amazonite::KmsV1
       @replica_tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @replica_key_metadata
+        value.validate!
+      end
+
+      if value = @replica_policy
+        raise Core::ValidationError.new("ReplicaPolicy length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ReplicaPolicy length must be <= 131072") if value.size > 131072
+        raise Core::ValidationError.new("ReplicaPolicy does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+
+      if value = @replica_tags
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@replica_key_metadata, @replica_policy, @replica_tags)
   end
 end

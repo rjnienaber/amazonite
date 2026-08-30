@@ -47,5 +47,21 @@ module Amazonite::DynamoDBV2
       @write_capacity_units : Int64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @number_of_decreases_today
+        raise Core::ValidationError.new("NumberOfDecreasesToday value must be >= 1") if value < 1
+      end
+
+      if value = @read_capacity_units
+        raise Core::ValidationError.new("ReadCapacityUnits value must be >= 0") if value < 0
+      end
+
+      if value = @write_capacity_units
+        raise Core::ValidationError.new("WriteCapacityUnits value must be >= 0") if value < 0
+      end
+    end
+
+    def_equals_and_hash(@last_increase_date_time, @last_decrease_date_time, @number_of_decreases_today, @read_capacity_units, @write_capacity_units)
   end
 end

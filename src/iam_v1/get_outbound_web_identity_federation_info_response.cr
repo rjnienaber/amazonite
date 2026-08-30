@@ -38,5 +38,10 @@ module Amazonite::IamV1
         jwt_vending_enabled: Core::XMLValue.bool(node.xpath_node("*[local-name()='JwtVendingEnabled']")),
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@issuer_identifier, @jwt_vending_enabled)
   end
 end

@@ -49,5 +49,10 @@ module Amazonite::CloudWatchV1
       @extended_statistics : Hash(String, Float64) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@timestamp, @sample_count, @average, @sum, @minimum, @maximum, @unit, @extended_statistics)
   end
 end

@@ -11,5 +11,10 @@ module Amazonite::ApiGatewayV1
       @vpc_link_id : String,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@vpc_link_id)
   end
 end

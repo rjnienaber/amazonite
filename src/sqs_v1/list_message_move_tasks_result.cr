@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SqsV1
   class ListMessageMoveTasksResult
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::SqsV1
       @results : Array(ListMessageMoveTasksResultEntry) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @results
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@results)
   end
 end

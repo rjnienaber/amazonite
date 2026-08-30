@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Error information for an event.
   class EventError
@@ -16,5 +18,13 @@ module Amazonite::LambdaV1
       @truncated : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @payload
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@payload, @truncated)
   end
 end

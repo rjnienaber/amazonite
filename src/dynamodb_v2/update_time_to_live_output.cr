@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class UpdateTimeToLiveOutput
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::DynamoDBV2
       @time_to_live_specification : TimeToLiveSpecification | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @time_to_live_specification
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@time_to_live_specification)
   end
 end

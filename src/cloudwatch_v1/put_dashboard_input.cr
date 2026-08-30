@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class PutDashboardInput
     include JSON::Serializable
@@ -38,5 +40,13 @@ module Amazonite::CloudWatchV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @tags
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@dashboard_name, @dashboard_body, @tags)
   end
 end

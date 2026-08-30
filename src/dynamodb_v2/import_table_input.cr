@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   class ImportTableInput
@@ -47,5 +48,25 @@ module Amazonite::DynamoDBV2
       @input_compression_type : InputCompressionType | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @client_token
+        raise Core::ValidationError.new("ClientToken does not match the required pattern") unless value.matches?(Regex.new("^[^\\$]+$"))
+      end
+
+      if value = @s3_bucket_source
+        value.validate!
+      end
+
+      if value = @input_format_options
+        value.validate!
+      end
+
+      if value = @table_creation_parameters
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@client_token, @s3_bucket_source, @input_format, @input_format_options, @input_compression_type, @table_creation_parameters)
   end
 end

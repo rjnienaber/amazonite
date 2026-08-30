@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # The description of the warm throughput value on a global secondary index.
@@ -24,5 +25,17 @@ module Amazonite::DynamoDBV2
       @status : IndexStatus | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @read_units_per_second
+        raise Core::ValidationError.new("ReadUnitsPerSecond value must be >= 1") if value < 1
+      end
+
+      if value = @write_units_per_second
+        raise Core::ValidationError.new("WriteUnitsPerSecond value must be >= 1") if value < 1
+      end
+    end
+
+    def_equals_and_hash(@read_units_per_second, @write_units_per_second, @status)
   end
 end

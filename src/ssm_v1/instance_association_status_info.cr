@@ -68,5 +68,47 @@ module Amazonite::SsmV1
       @association_name : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @association_id
+        raise Core::ValidationError.new("AssociationId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"))
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.:/]{3,128}$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @association_version
+        raise Core::ValidationError.new("AssociationVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST)|([1-9][0-9]*)$"))
+      end
+
+      if value = @instance_id
+        raise Core::ValidationError.new("InstanceId does not match the required pattern") unless value.matches?(Regex.new("^(^i-(\\w{8}|\\w{17})$)|(^mi-\\w{17}$)$"))
+      end
+
+      if value = @execution_summary
+        raise Core::ValidationError.new("ExecutionSummary length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ExecutionSummary length must be <= 512") if value.size > 512
+      end
+
+      if value = @error_code
+        raise Core::ValidationError.new("ErrorCode length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("ErrorCode length must be <= 10") if value.size > 10
+      end
+
+      if value = @output_url
+        value.validate!
+      end
+
+      if value = @association_name
+        raise Core::ValidationError.new("AssociationName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+    end
+
+    def_equals_and_hash(@association_id, @name, @document_version, @association_version, @instance_id, @execution_date, @status, @detailed_status, @execution_summary, @error_code, @output_url, @association_name)
   end
 end

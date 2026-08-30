@@ -31,5 +31,10 @@ module Amazonite::ApiGatewayV1
       @embed : Array(String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@rest_api_id, @position, @limit, @embed)
   end
 end

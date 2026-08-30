@@ -15,5 +15,10 @@ module Amazonite::CloudWatchLogsV1
       @data_source_type : String,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@data_source_name, @data_source_type)
   end
 end

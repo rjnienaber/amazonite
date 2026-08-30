@@ -94,5 +94,50 @@ module Amazonite::SsmV1
       @change_details : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @document_name
+        raise Core::ValidationError.new("DocumentName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.:/]{3,128}$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @parameters
+        raise Core::ValidationError.new("Parameters must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("Parameters must have at most 200 entry(s)") if value.size > 200
+      end
+
+      if value = @change_request_name
+        raise Core::ValidationError.new("ChangeRequestName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChangeRequestName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @client_token
+        raise Core::ValidationError.new("ClientToken length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("ClientToken length must be <= 36") if value.size > 36
+        raise Core::ValidationError.new("ClientToken does not match the required pattern") unless value.matches?(Regex.new("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
+      end
+
+      if value = @runbooks
+        raise Core::ValidationError.new("Runbooks must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Runbooks must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 1000 item(s)") if value.size > 1000
+        value.each(&.validate!)
+      end
+
+      if value = @change_details
+        raise Core::ValidationError.new("ChangeDetails length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChangeDetails length must be <= 32768") if value.size > 32768
+      end
+    end
+
+    def_equals_and_hash(@scheduled_time, @document_name, @document_version, @parameters, @change_request_name, @client_token, @auto_approve, @runbooks, @tags, @scheduled_end_time, @change_details)
   end
 end

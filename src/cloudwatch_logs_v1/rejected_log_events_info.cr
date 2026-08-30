@@ -21,5 +21,10 @@ module Amazonite::CloudWatchLogsV1
       @expired_log_event_end_index : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@too_new_log_event_start_index, @too_old_log_event_end_index, @expired_log_event_end_index)
   end
 end

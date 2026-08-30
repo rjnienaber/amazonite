@@ -13,6 +13,9 @@ module {{ service.module_name }}
 {% if operation.has_doc %}{{ operation.doc }}
 {% endif %}    def {{ operation.function_name }}{% if operation.has_input %}(input : {{ operation.input }}){% endif %} : {{ operation.output }}
       Log.info { "performing '{{ operation.command }}' operation" }
+{% if operation.has_input -%}
+      input.validate! if config.validate_input?
+{% endif -%}
 {% if operation.is_rest -%}
       path = {{ operation.path_literal }}
 {% if operation.has_query -%}

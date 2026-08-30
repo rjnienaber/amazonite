@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # Describes a failed association.
@@ -23,5 +24,13 @@ module Amazonite::SsmV1
       @fault : Fault | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @entry
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@entry, @message, @fault)
   end
 end

@@ -50,5 +50,19 @@ module Amazonite::CloudFormationV1
         status: ((n = node.xpath_node("*[local-name()='Status']")) ? ACF::ResourceSignalStatus.from_json_object_key?(n.content) : nil).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @stack_name
+        raise Core::ValidationError.new("StackName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackName does not match the required pattern") unless value.matches?(Regex.new("^([a-zA-Z][-a-zA-Z0-9]*)|(arn:\\b(aws|aws-us-gov|aws-cn)\\b:[-a-zA-Z0-9:/._+]*)$"))
+      end
+
+      if value = @unique_id
+        raise Core::ValidationError.new("UniqueId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UniqueId length must be <= 64") if value.size > 64
+      end
+    end
+
+    def_equals_and_hash(@stack_name, @logical_resource_id, @unique_id, @status)
   end
 end

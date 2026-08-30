@@ -85,5 +85,32 @@ module Amazonite::IamV1
         private_key_list: node.xpath_nodes("*[local-name()='PrivateKeyList']/*[local-name()='member']").map { |n| SAMLPrivateKey.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @saml_provider_uuid
+        raise Core::ValidationError.new("SAMLProviderUUID length must be >= 22") if value.size < 22
+        raise Core::ValidationError.new("SAMLProviderUUID length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("SAMLProviderUUID does not match the required pattern") unless value.matches?(Regex.new("^[A-Z0-9]+$"))
+      end
+
+      if value = @saml_metadata_document
+        raise Core::ValidationError.new("SAMLMetadataDocument length must be >= 1000") if value.size < 1000
+        raise Core::ValidationError.new("SAMLMetadataDocument length must be <= 10000000") if value.size > 10000000
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+
+      if value = @private_key_list
+        raise Core::ValidationError.new("PrivateKeyList must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("PrivateKeyList must have at most 2 item(s)") if value.size > 2
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@saml_provider_uuid, @saml_metadata_document, @create_date, @valid_until, @tags, @assertion_encryption_mode, @private_key_list)
   end
 end

@@ -132,5 +132,41 @@ module Amazonite::StsV1
         duration_seconds: Core::XMLValue.i32(node.xpath_node("*[local-name()='DurationSeconds']")),
       )
     end
+
+    def validate! : Nil
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("RoleArn length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("RoleArn does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~\u0085\u00A0-퟿\uE000-�က0-ჿFF]+$"))
+      end
+
+      if value = @principal_arn
+        raise Core::ValidationError.new("PrincipalArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("PrincipalArn length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("PrincipalArn does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~\u0085\u00A0-퟿\uE000-�က0-ჿFF]+$"))
+      end
+
+      if value = @saml_assertion
+        raise Core::ValidationError.new("SAMLAssertion length must be >= 4") if value.size < 4
+        raise Core::ValidationError.new("SAMLAssertion length must be <= 100000") if value.size > 100000
+      end
+
+      if value = @policy_arns
+        value.each(&.validate!)
+      end
+
+      if value = @policy
+        raise Core::ValidationError.new("Policy length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Policy length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("Policy does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+
+      if value = @duration_seconds
+        raise Core::ValidationError.new("DurationSeconds value must be >= 900") if value < 900
+        raise Core::ValidationError.new("DurationSeconds value must be <= 43200") if value > 43200
+      end
+    end
+
+    def_equals_and_hash(@role_arn, @principal_arn, @saml_assertion, @policy_arns, @policy, @duration_seconds)
   end
 end

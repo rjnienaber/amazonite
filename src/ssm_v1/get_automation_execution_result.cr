@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class GetAutomationExecutionResult
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::SsmV1
       @automation_execution : AutomationExecution | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @automation_execution
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@automation_execution)
   end
 end

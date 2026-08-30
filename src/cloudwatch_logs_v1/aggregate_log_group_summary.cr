@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Contains an aggregate summary of log groups grouped by data source characteristics, including
   # the count of log groups and their grouping identifiers.
@@ -20,5 +22,13 @@ module Amazonite::CloudWatchLogsV1
       @grouping_identifiers : Array(GroupingIdentifier) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @grouping_identifiers
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@log_group_count, @grouping_identifiers)
   end
 end

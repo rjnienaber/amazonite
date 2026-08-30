@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # The parameters for a `RUN_COMMAND` task type.
@@ -102,5 +103,46 @@ module Amazonite::SsmV1
       @timeout_seconds : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @comment
+        raise Core::ValidationError.new("Comment length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Comment length must be <= 100") if value.size > 100
+      end
+
+      if value = @cloud_watch_output_config
+        value.validate!
+      end
+
+      if value = @document_hash
+        raise Core::ValidationError.new("DocumentHash length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("DocumentHash length must be <= 256") if value.size > 256
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @notification_config
+        value.validate!
+      end
+
+      if value = @output_s3_bucket_name
+        raise Core::ValidationError.new("OutputS3BucketName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("OutputS3BucketName length must be <= 63") if value.size > 63
+      end
+
+      if value = @output_s3_key_prefix
+        raise Core::ValidationError.new("OutputS3KeyPrefix length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("OutputS3KeyPrefix length must be <= 500") if value.size > 500
+      end
+
+      if value = @timeout_seconds
+        raise Core::ValidationError.new("TimeoutSeconds value must be >= 30") if value < 30
+        raise Core::ValidationError.new("TimeoutSeconds value must be <= 2592000") if value > 2592000
+      end
+    end
+
+    def_equals_and_hash(@comment, @cloud_watch_output_config, @document_hash, @document_hash_type, @document_version, @notification_config, @output_s3_bucket_name, @output_s3_key_prefix, @parameters, @service_role_arn, @timeout_seconds)
   end
 end

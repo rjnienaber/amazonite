@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Contains the details of the features enabled on the table when the backup was created. For
   # example, LSIs, GSIs, streams, TTL.
@@ -41,5 +43,33 @@ module Amazonite::DynamoDBV2
       @vector_indexes : Array(VectorIndexInfo) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @local_secondary_indexes
+        value.each(&.validate!)
+      end
+
+      if value = @global_secondary_indexes
+        value.each(&.validate!)
+      end
+
+      if value = @stream_description
+        value.validate!
+      end
+
+      if value = @time_to_live_description
+        value.validate!
+      end
+
+      if value = @sse_description
+        value.validate!
+      end
+
+      if value = @vector_indexes
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@local_secondary_indexes, @global_secondary_indexes, @stream_description, @time_to_live_description, @sse_description, @vector_indexes)
   end
 end

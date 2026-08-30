@@ -27,5 +27,10 @@ module Amazonite::EventBridgeV1
       @value : String,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@type, @key, @value)
   end
 end

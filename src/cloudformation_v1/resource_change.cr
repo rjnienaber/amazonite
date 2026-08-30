@@ -195,5 +195,31 @@ module Amazonite::CloudFormationV1
         previous_deployment_context: Core::XMLValue.string(node.xpath_node("*[local-name()='PreviousDeploymentContext']")),
       )
     end
+
+    def validate! : Nil
+      if value = @resource_type
+        raise Core::ValidationError.new("ResourceType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceType length must be <= 256") if value.size > 256
+      end
+
+      if value = @resource_drift_ignored_attributes
+        value.each(&.validate!)
+      end
+
+      if value = @details
+        value.each(&.validate!)
+      end
+
+      if value = @change_set_id
+        raise Core::ValidationError.new("ChangeSetId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChangeSetId does not match the required pattern") unless value.matches?(Regex.new("^arn:[-a-zA-Z0-9:/]*$"))
+      end
+
+      if value = @module_info
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@policy_action, @action, @logical_resource_id, @physical_resource_id, @resource_type, @replacement, @scope, @resource_drift_status, @resource_drift_ignored_attributes, @details, @change_set_id, @module_info, @before_context, @after_context, @previous_deployment_context)
   end
 end

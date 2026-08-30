@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents a set of primary keys and, for each key, the attributes to retrieve from the table.
   #
@@ -80,5 +82,18 @@ module Amazonite::DynamoDBV2
       @expression_attribute_names : Hash(String, String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @keys
+        raise Core::ValidationError.new("Keys must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Keys must have at most 100 item(s)") if value.size > 100
+      end
+
+      if value = @attributes_to_get
+        raise Core::ValidationError.new("AttributesToGet must have at least 1 item(s)") if value.size < 1
+      end
+    end
+
+    def_equals_and_hash(@keys, @attributes_to_get, @consistent_read, @projection_expression, @expression_attribute_names)
   end
 end

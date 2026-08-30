@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Information about the maintenance window.
   class MaintenanceWindowIdentity
@@ -72,5 +74,46 @@ module Amazonite::SsmV1
       @next_execution_time : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @window_id
+        raise Core::ValidationError.new("WindowId length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("WindowId length must be <= 20") if value.size > 20
+        raise Core::ValidationError.new("WindowId does not match the required pattern") unless value.matches?(Regex.new("^mw-[0-9a-f]{17}$"))
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("Name length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 128") if value.size > 128
+      end
+
+      if value = @duration
+        raise Core::ValidationError.new("Duration value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Duration value must be <= 24") if value > 24
+      end
+
+      if value = @cutoff
+        raise Core::ValidationError.new("Cutoff value must be >= 0") if value < 0
+        raise Core::ValidationError.new("Cutoff value must be <= 23") if value > 23
+      end
+
+      if value = @schedule
+        raise Core::ValidationError.new("Schedule length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Schedule length must be <= 256") if value.size > 256
+      end
+
+      if value = @schedule_offset
+        raise Core::ValidationError.new("ScheduleOffset value must be >= 1") if value < 1
+        raise Core::ValidationError.new("ScheduleOffset value must be <= 6") if value > 6
+      end
+    end
+
+    def_equals_and_hash(@window_id, @name, @description, @enabled, @duration, @cutoff, @schedule, @schedule_timezone, @schedule_offset, @end_date, @start_date, @next_execution_time)
   end
 end

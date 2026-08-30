@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # Represents a log stream, which is a sequence of log events from a single emitter of logs.
   class LogStream
@@ -61,5 +63,39 @@ module Amazonite::CloudWatchLogsV1
       @stored_bytes : Int64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @log_stream_name
+        raise Core::ValidationError.new("logStreamName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("logStreamName length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("logStreamName does not match the required pattern") unless value.matches?(Regex.new("^[^:*]*$"))
+      end
+
+      if value = @creation_time
+        raise Core::ValidationError.new("creationTime value must be >= 0") if value < 0
+      end
+
+      if value = @first_event_timestamp
+        raise Core::ValidationError.new("firstEventTimestamp value must be >= 0") if value < 0
+      end
+
+      if value = @last_event_timestamp
+        raise Core::ValidationError.new("lastEventTimestamp value must be >= 0") if value < 0
+      end
+
+      if value = @last_ingestion_time
+        raise Core::ValidationError.new("lastIngestionTime value must be >= 0") if value < 0
+      end
+
+      if value = @upload_sequence_token
+        raise Core::ValidationError.new("uploadSequenceToken length must be >= 1") if value.size < 1
+      end
+
+      if value = @stored_bytes
+        raise Core::ValidationError.new("storedBytes value must be >= 0") if value < 0
+      end
+    end
+
+    def_equals_and_hash(@log_stream_name, @creation_time, @first_event_timestamp, @last_event_timestamp, @last_ingestion_time, @upload_sequence_token, @arn, @stored_bytes)
   end
 end

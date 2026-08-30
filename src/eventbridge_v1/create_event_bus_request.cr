@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class CreateEventBusRequest
     include JSON::Serializable
@@ -83,5 +85,44 @@ module Amazonite::EventBridgeV1
       @tags : Array(Tag) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^[/\\.\\-_A-Za-z0-9]+$"))
+      end
+
+      if value = @event_source_name
+        raise Core::ValidationError.new("EventSourceName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("EventSourceName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("EventSourceName does not match the required pattern") unless value.matches?(Regex.new("^aws\\.partner(/[\\.\\-_A-Za-z0-9]+){2,}$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 512") if value.size > 512
+      end
+
+      if value = @kms_key_identifier
+        raise Core::ValidationError.new("KmsKeyIdentifier length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KmsKeyIdentifier length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("KmsKeyIdentifier does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-/:]*$"))
+      end
+
+      if value = @dead_letter_config
+        value.validate!
+      end
+
+      if value = @log_config
+        value.validate!
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@name, @event_source_name, @description, @kms_key_identifier, @dead_letter_config, @log_config, @tags)
   end
 end

@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # Defines an approval rule for a patch baseline.
@@ -72,5 +73,23 @@ module Amazonite::SsmV1
       @enable_non_security : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @patch_filter_group
+        value.validate!
+      end
+
+      if value = @approve_after_days
+        raise Core::ValidationError.new("ApproveAfterDays value must be >= 0") if value < 0
+        raise Core::ValidationError.new("ApproveAfterDays value must be <= 360") if value > 360
+      end
+
+      if value = @approve_until_date
+        raise Core::ValidationError.new("ApproveUntilDate length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ApproveUntilDate length must be <= 10") if value.size > 10
+      end
+    end
+
+    def_equals_and_hash(@patch_filter_group, @compliance_level, @approve_after_days, @approve_until_date, @enable_non_security)
   end
 end

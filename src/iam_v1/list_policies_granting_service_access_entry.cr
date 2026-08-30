@@ -48,5 +48,19 @@ module Amazonite::IamV1
         policies: node.xpath_nodes("*[local-name()='Policies']/*[local-name()='member']").map { |n| PolicyGrantingServiceAccess.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @service_namespace
+        raise Core::ValidationError.new("ServiceNamespace length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ServiceNamespace length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("ServiceNamespace does not match the required pattern") unless value.matches?(Regex.new("^[\\w-]*$"))
+      end
+
+      if value = @policies
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@service_namespace, @policies)
   end
 end

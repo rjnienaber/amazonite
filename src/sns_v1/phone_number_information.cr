@@ -71,5 +71,15 @@ module Amazonite::SnsV1
         number_capabilities: node.xpath_nodes("*[local-name()='NumberCapabilities']/*[local-name()='member']").compact_map { |n| AS::NumberCapability.from_json_object_key?(n.content) },
       )
     end
+
+    def validate! : Nil
+      if value = @iso_2_country_code
+        raise Core::ValidationError.new("Iso2CountryCode length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Iso2CountryCode length must be <= 2") if value.size > 2
+        raise Core::ValidationError.new("Iso2CountryCode does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z]{2}$"))
+      end
+    end
+
+    def_equals_and_hash(@created_at, @phone_number, @status, @iso_2_country_code, @route_type, @number_capabilities)
   end
 end

@@ -26,5 +26,10 @@ module Amazonite::SnsV1
         resource_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='ResourceArn']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@resource_arn)
   end
 end

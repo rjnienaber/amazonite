@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # The collection of the GatewayResponse instances of a RestApi as a
   # `responseType`-to-GatewayResponse object map of key-value pairs. As such, pagination is not
@@ -19,5 +21,13 @@ module Amazonite::ApiGatewayV1
       @position : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @items
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@items, @position)
   end
 end

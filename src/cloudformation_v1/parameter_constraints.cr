@@ -25,5 +25,10 @@ module Amazonite::CloudFormationV1
         allowed_values: node.xpath_nodes("*[local-name()='AllowedValues']/*[local-name()='member']").map { |n| n.content },
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@allowed_values)
   end
 end

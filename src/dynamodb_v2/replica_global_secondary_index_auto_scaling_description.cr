@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the auto scaling configuration for a replica global secondary index.
@@ -35,5 +36,23 @@ module Amazonite::DynamoDBV2
       @provisioned_write_capacity_auto_scaling_settings : AutoScalingSettingsDescription | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @index_name
+        raise Core::ValidationError.new("IndexName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("IndexName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("IndexName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @provisioned_read_capacity_auto_scaling_settings
+        value.validate!
+      end
+
+      if value = @provisioned_write_capacity_auto_scaling_settings
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@index_name, @index_status, @provisioned_read_capacity_auto_scaling_settings, @provisioned_write_capacity_auto_scaling_settings)
   end
 end

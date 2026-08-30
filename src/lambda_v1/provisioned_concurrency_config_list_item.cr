@@ -1,4 +1,5 @@
 private alias AL = Amazonite::LambdaV1
+private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
   # Details about the provisioned concurrency configuration for a function alias or version.
@@ -46,5 +47,33 @@ module Amazonite::LambdaV1
       @last_modified : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @function_arn
+        raise Core::ValidationError.new("FunctionArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("FunctionArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("FunctionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @requested_provisioned_concurrent_executions
+        raise Core::ValidationError.new("RequestedProvisionedConcurrentExecutions value must be >= 1") if value < 1
+      end
+
+      if value = @available_provisioned_concurrent_executions
+        raise Core::ValidationError.new("AvailableProvisionedConcurrentExecutions value must be >= 0") if value < 0
+      end
+
+      if value = @allocated_provisioned_concurrent_executions
+        raise Core::ValidationError.new("AllocatedProvisionedConcurrentExecutions value must be >= 0") if value < 0
+      end
+
+      if value = @last_modified
+        raise Core::ValidationError.new("LastModified length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("LastModified length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("LastModified does not match the required pattern") unless value.matches?(Regex.new("^.*$"))
+      end
+    end
+
+    def_equals_and_hash(@function_arn, @requested_provisioned_concurrent_executions, @available_provisioned_concurrent_executions, @allocated_provisioned_concurrent_executions, @status, @status_reason, @last_modified)
   end
 end

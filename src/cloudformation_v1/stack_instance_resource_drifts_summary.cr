@@ -95,5 +95,24 @@ module Amazonite::CloudFormationV1
         timestamp: Core::XMLValue.time(node.xpath_node("*[local-name()='Timestamp']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @physical_resource_id_context
+        raise Core::ValidationError.new("PhysicalResourceIdContext must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("PhysicalResourceIdContext must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @resource_type
+        raise Core::ValidationError.new("ResourceType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceType length must be <= 256") if value.size > 256
+      end
+
+      if value = @property_differences
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@stack_id, @logical_resource_id, @physical_resource_id, @physical_resource_id_context, @resource_type, @property_differences, @stack_resource_drift_status, @timestamp)
   end
 end

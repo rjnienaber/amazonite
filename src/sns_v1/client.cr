@@ -17,6 +17,7 @@ module Amazonite::SnsV1
     # `AddPermission`, `RemovePermission`, and `SetTopicAttributes` actions in your IAM policy.
     def add_permission(input : AS::AddPermissionInput) : Core::Response
       Log.info { "performing 'AddPermission' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AddPermission")
@@ -34,6 +35,7 @@ module Amazonite::SnsV1
     # To resume sending messages, you can opt in the number by using the `OptInPhoneNumber` action.
     def check_if_phone_number_is_opted_out(input : AS::CheckIfPhoneNumberIsOptedOutInput) : Core::ParsedResponse(AS::CheckIfPhoneNumberIsOptedOutResponse)
       Log.info { "performing 'CheckIfPhoneNumberIsOptedOut' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CheckIfPhoneNumberIsOptedOut")
@@ -52,6 +54,7 @@ module Amazonite::SnsV1
     # only when the `AuthenticateOnUnsubscribe` flag is set to "true".
     def confirm_subscription(input : AS::ConfirmSubscriptionInput) : Core::ParsedResponse(AS::ConfirmSubscriptionResponse)
       Log.info { "performing 'ConfirmSubscription' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ConfirmSubscription")
@@ -99,6 +102,7 @@ module Amazonite::SnsV1
     # `CreatePlatformEndpoint` action.
     def create_platform_application(input : AS::CreatePlatformApplicationInput) : Core::ParsedResponse(AS::CreatePlatformApplicationResponse)
       Log.info { "performing 'CreatePlatformApplication' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreatePlatformApplication")
@@ -126,6 +130,7 @@ module Amazonite::SnsV1
     # Baidu](https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePushBaiduEndpoint.html).
     def create_platform_endpoint(input : AS::CreatePlatformEndpointInput) : Core::ParsedResponse(AS::CreateEndpointResponse)
       Log.info { "performing 'CreatePlatformEndpoint' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreatePlatformEndpoint")
@@ -151,6 +156,7 @@ module Amazonite::SnsV1
     # Developer Guide*.
     def create_sms_sandbox_phone_number(input : AS::CreateSMSSandboxPhoneNumberInput) : Core::ParsedResponse(AS::CreateSMSSandboxPhoneNumberResult)
       Log.info { "performing 'CreateSMSSandboxPhoneNumber' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateSMSSandboxPhoneNumber")
@@ -170,6 +176,7 @@ module Amazonite::SnsV1
     # specified name, that topic's ARN is returned without creating a new topic.
     def create_topic(input : AS::CreateTopicInput) : Core::ParsedResponse(AS::CreateTopicResponse)
       Log.info { "performing 'CreateTopic' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateTopic")
@@ -190,6 +197,7 @@ module Amazonite::SnsV1
     # the endpoint from the topic.
     def delete_endpoint(input : AS::DeleteEndpointInput) : Core::Response
       Log.info { "performing 'DeleteEndpoint' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteEndpoint")
@@ -205,6 +213,7 @@ module Amazonite::SnsV1
     # Push Notifications](https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html).
     def delete_platform_application(input : AS::DeletePlatformApplicationInput) : Core::Response
       Log.info { "performing 'DeletePlatformApplication' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeletePlatformApplication")
@@ -227,6 +236,7 @@ module Amazonite::SnsV1
     # Developer Guide*.
     def delete_sms_sandbox_phone_number(input : AS::DeleteSMSSandboxPhoneNumberInput) : Core::ParsedResponse(AS::DeleteSMSSandboxPhoneNumberResult)
       Log.info { "performing 'DeleteSMSSandboxPhoneNumber' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteSMSSandboxPhoneNumber")
@@ -244,6 +254,7 @@ module Amazonite::SnsV1
     # deleting a topic that does not exist does not result in an error.
     def delete_topic(input : AS::DeleteTopicInput) : Core::Response
       Log.info { "performing 'DeleteTopic' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteTopic")
@@ -258,6 +269,7 @@ module Amazonite::SnsV1
     # Amazon SNS topic.
     def get_data_protection_policy(input : AS::GetDataProtectionPolicyInput) : Core::ParsedResponse(AS::GetDataProtectionPolicyResponse)
       Log.info { "performing 'GetDataProtectionPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetDataProtectionPolicy")
@@ -276,6 +288,7 @@ module Amazonite::SnsV1
     # Notifications](https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html).
     def get_endpoint_attributes(input : AS::GetEndpointAttributesInput) : Core::ParsedResponse(AS::GetEndpointAttributesResponse)
       Log.info { "performing 'GetEndpointAttributes' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetEndpointAttributes")
@@ -294,6 +307,7 @@ module Amazonite::SnsV1
     # Notifications](https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html).
     def get_platform_application_attributes(input : AS::GetPlatformApplicationAttributesInput) : Core::ParsedResponse(AS::GetPlatformApplicationAttributesResponse)
       Log.info { "performing 'GetPlatformApplicationAttributes' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetPlatformApplicationAttributes")
@@ -311,6 +325,7 @@ module Amazonite::SnsV1
     # These settings are set with the `SetSMSAttributes` action.
     def get_sms_attributes(input : AS::GetSMSAttributesInput) : Core::ParsedResponse(AS::GetSMSAttributesResponse)
       Log.info { "performing 'GetSMSAttributes' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetSMSAttributes")
@@ -336,6 +351,7 @@ module Amazonite::SnsV1
     # Developer Guide*.
     def get_sms_sandbox_account_status(input : AS::GetSMSSandboxAccountStatusInput) : Core::ParsedResponse(AS::GetSMSSandboxAccountStatusResult)
       Log.info { "performing 'GetSMSSandboxAccountStatus' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetSMSSandboxAccountStatus")
@@ -351,6 +367,7 @@ module Amazonite::SnsV1
     # Returns all of the properties of a subscription.
     def get_subscription_attributes(input : AS::GetSubscriptionAttributesInput) : Core::ParsedResponse(AS::GetSubscriptionAttributesResponse)
       Log.info { "performing 'GetSubscriptionAttributes' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetSubscriptionAttributes")
@@ -367,6 +384,7 @@ module Amazonite::SnsV1
     # authorization of the user.
     def get_topic_attributes(input : AS::GetTopicAttributesInput) : Core::ParsedResponse(AS::GetTopicAttributesResponse)
       Log.info { "performing 'GetTopicAttributes' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetTopicAttributes")
@@ -391,6 +409,7 @@ module Amazonite::SnsV1
     # This action is throttled at 30 transactions per second (TPS).
     def list_endpoints_by_platform_application(input : AS::ListEndpointsByPlatformApplicationInput) : Core::ParsedResponse(AS::ListEndpointsByPlatformApplicationResponse)
       Log.info { "performing 'ListEndpointsByPlatformApplication' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListEndpointsByPlatformApplication")
@@ -409,6 +428,7 @@ module Amazonite::SnsV1
     # in the *Amazon SNS Developer Guide*.
     def list_origination_numbers(input : AS::ListOriginationNumbersRequest) : Core::ParsedResponse(AS::ListOriginationNumbersResult)
       Log.info { "performing 'ListOriginationNumbers' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListOriginationNumbers")
@@ -431,6 +451,7 @@ module Amazonite::SnsV1
     # When there are no more records to return, `NextToken` will be null.
     def list_phone_numbers_opted_out(input : AS::ListPhoneNumbersOptedOutInput) : Core::ParsedResponse(AS::ListPhoneNumbersOptedOutResponse)
       Log.info { "performing 'ListPhoneNumbersOptedOut' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListPhoneNumbersOptedOut")
@@ -455,6 +476,7 @@ module Amazonite::SnsV1
     # This action is throttled at 15 transactions per second (TPS).
     def list_platform_applications(input : AS::ListPlatformApplicationsInput) : Core::ParsedResponse(AS::ListPlatformApplicationsResponse)
       Log.info { "performing 'ListPlatformApplications' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListPlatformApplications")
@@ -480,6 +502,7 @@ module Amazonite::SnsV1
     # Developer Guide*.
     def list_sms_sandbox_phone_numbers(input : AS::ListSMSSandboxPhoneNumbersInput) : Core::ParsedResponse(AS::ListSMSSandboxPhoneNumbersResult)
       Log.info { "performing 'ListSMSSandboxPhoneNumbers' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListSMSSandboxPhoneNumbers")
@@ -499,6 +522,7 @@ module Amazonite::SnsV1
     # This action is throttled at 30 transactions per second (TPS).
     def list_subscriptions(input : AS::ListSubscriptionsInput) : Core::ParsedResponse(AS::ListSubscriptionsResponse)
       Log.info { "performing 'ListSubscriptions' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListSubscriptions")
@@ -518,6 +542,7 @@ module Amazonite::SnsV1
     # This action is throttled at 30 transactions per second (TPS).
     def list_subscriptions_by_topic(input : AS::ListSubscriptionsByTopicInput) : Core::ParsedResponse(AS::ListSubscriptionsByTopicResponse)
       Log.info { "performing 'ListSubscriptionsByTopic' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListSubscriptionsByTopic")
@@ -535,6 +560,7 @@ module Amazonite::SnsV1
     # Notification Service Developer Guide*.
     def list_tags_for_resource(input : AS::ListTagsForResourceRequest) : Core::ParsedResponse(AS::ListTagsForResourceResponse)
       Log.info { "performing 'ListTagsForResource' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListTagsForResource")
@@ -554,6 +580,7 @@ module Amazonite::SnsV1
     # This action is throttled at 30 transactions per second (TPS).
     def list_topics(input : AS::ListTopicsInput) : Core::ParsedResponse(AS::ListTopicsResponse)
       Log.info { "performing 'ListTopics' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListTopics")
@@ -572,6 +599,7 @@ module Amazonite::SnsV1
     # You can opt in a phone number only once every 30 days.
     def opt_in_phone_number(input : AS::OptInPhoneNumberInput) : Core::ParsedResponse(AS::OptInPhoneNumberResponse)
       Log.info { "performing 'OptInPhoneNumber' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "OptInPhoneNumber")
@@ -605,6 +633,7 @@ module Amazonite::SnsV1
     # You can publish messages only to topics and endpoints in the same Amazon Web Services Region.
     def publish(input : AS::PublishInput) : Core::ParsedResponse(AS::PublishResponse)
       Log.info { "performing 'Publish' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "Publish")
@@ -651,6 +680,7 @@ module Amazonite::SnsV1
     # the message to subscribers.
     def publish_batch(input : AS::PublishBatchInput) : Core::ParsedResponse(AS::PublishBatchResponse)
       Log.info { "performing 'PublishBatch' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "PublishBatch")
@@ -666,6 +696,7 @@ module Amazonite::SnsV1
     # Adds or updates an inline policy document that is stored in the specified Amazon SNS topic.
     def put_data_protection_policy(input : AS::PutDataProtectionPolicyInput) : Core::Response
       Log.info { "performing 'PutDataProtectionPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "PutDataProtectionPolicy")
@@ -682,6 +713,7 @@ module Amazonite::SnsV1
     # `AddPermission`, `RemovePermission`, and `SetTopicAttributes` actions in your IAM policy.
     def remove_permission(input : AS::RemovePermissionInput) : Core::Response
       Log.info { "performing 'RemovePermission' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "RemovePermission")
@@ -698,6 +730,7 @@ module Amazonite::SnsV1
     # Notifications](https://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html).
     def set_endpoint_attributes(input : AS::SetEndpointAttributesInput) : Core::Response
       Log.info { "performing 'SetEndpointAttributes' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SetEndpointAttributes")
@@ -716,6 +749,7 @@ module Amazonite::SnsV1
     # for Message Delivery Status](https://docs.aws.amazon.com/sns/latest/dg/sns-msg-status.html).
     def set_platform_application_attributes(input : AS::SetPlatformApplicationAttributesInput) : Core::Response
       Log.info { "performing 'SetPlatformApplicationAttributes' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SetPlatformApplicationAttributes")
@@ -738,6 +772,7 @@ module Amazonite::SnsV1
     # permission to perform the `s3:ListBucket` action.
     def set_sms_attributes(input : AS::SetSMSAttributesInput) : Core::ParsedResponse(AS::SetSMSAttributesResponse)
       Log.info { "performing 'SetSMSAttributes' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SetSMSAttributes")
@@ -753,6 +788,7 @@ module Amazonite::SnsV1
     # Allows a subscription owner to set an attribute of the subscription to a new value.
     def set_subscription_attributes(input : AS::SetSubscriptionAttributesInput) : Core::Response
       Log.info { "performing 'SetSubscriptionAttributes' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SetSubscriptionAttributes")
@@ -769,6 +805,7 @@ module Amazonite::SnsV1
     # `AddPermission`, `RemovePermission`, and `SetTopicAttributes` actions in your IAM policy.
     def set_topic_attributes(input : AS::SetTopicAttributesInput) : Core::Response
       Log.info { "performing 'SetTopicAttributes' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SetTopicAttributes")
@@ -789,6 +826,7 @@ module Amazonite::SnsV1
     # This action is throttled at 100 transactions per second (TPS).
     def subscribe(input : AS::SubscribeInput) : Core::ParsedResponse(AS::SubscribeResponse)
       Log.info { "performing 'Subscribe' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "Subscribe")
@@ -820,6 +858,7 @@ module Amazonite::SnsV1
     # request](https://console.aws.amazon.com/support/home#/case/create?issueType=technical).
     def tag_resource(input : AS::TagResourceRequest) : Core::ParsedResponse(AS::TagResourceResponse)
       Log.info { "performing 'TagResource' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "TagResource")
@@ -841,6 +880,7 @@ module Amazonite::SnsV1
     # This action is throttled at 100 transactions per second (TPS).
     def unsubscribe(input : AS::UnsubscribeInput) : Core::Response
       Log.info { "performing 'Unsubscribe' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "Unsubscribe")
@@ -856,6 +896,7 @@ module Amazonite::SnsV1
     # Guide*.
     def untag_resource(input : AS::UntagResourceRequest) : Core::ParsedResponse(AS::UntagResourceResponse)
       Log.info { "performing 'UntagResource' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UntagResource")
@@ -881,6 +922,7 @@ module Amazonite::SnsV1
     # Developer Guide*.
     def verify_sms_sandbox_phone_number(input : AS::VerifySMSSandboxPhoneNumberInput) : Core::ParsedResponse(AS::VerifySMSSandboxPhoneNumberResult)
       Log.info { "performing 'VerifySMSSandboxPhoneNumber' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "VerifySMSSandboxPhoneNumber")

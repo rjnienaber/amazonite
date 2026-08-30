@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Summary information about an export task.
@@ -23,5 +24,14 @@ module Amazonite::DynamoDBV2
       @export_type : ExportType | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @export_arn
+        raise Core::ValidationError.new("ExportArn length must be >= 37") if value.size < 37
+        raise Core::ValidationError.new("ExportArn length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@export_arn, @export_status, @export_type)
   end
 end

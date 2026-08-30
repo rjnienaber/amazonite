@@ -43,5 +43,15 @@ module Amazonite::CloudFormationV1
         connection_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='ConnectionArn']")),
       )
     end
+
+    def validate! : Nil
+      if value = @connection_arn
+        raise Core::ValidationError.new("ConnectionArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ConnectionArn length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("ConnectionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws(-[\\w]+)*:.+:.+:[0-9]{12}:.+$"))
+      end
+    end
+
+    def_equals_and_hash(@accept_terms_and_conditions, @connection_arn)
   end
 end

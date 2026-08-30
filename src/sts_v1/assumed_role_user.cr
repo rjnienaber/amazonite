@@ -34,5 +34,21 @@ module Amazonite::StsV1
         arn: Core::XMLValue.string(node.xpath_node("*[local-name()='Arn']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @assumed_role_id
+        raise Core::ValidationError.new("AssumedRoleId length must be >= 2") if value.size < 2
+        raise Core::ValidationError.new("AssumedRoleId length must be <= 193") if value.size > 193
+        raise Core::ValidationError.new("AssumedRoleId does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@:-]*$"))
+      end
+
+      if value = @arn
+        raise Core::ValidationError.new("Arn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("Arn length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("Arn does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~\u0085\u00A0-퟿\uE000-�က0-ჿFF]+$"))
+      end
+    end
+
+    def_equals_and_hash(@assumed_role_id, @arn)
   end
 end

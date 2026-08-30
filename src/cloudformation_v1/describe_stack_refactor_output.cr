@@ -81,5 +81,14 @@ module Amazonite::CloudFormationV1
         status_reason: Core::XMLValue.string(node.xpath_node("*[local-name()='StatusReason']")),
       )
     end
+
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@description, @stack_refactor_id, @stack_ids, @execution_status, @execution_status_reason, @status, @status_reason)
   end
 end

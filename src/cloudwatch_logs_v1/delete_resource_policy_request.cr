@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class DeleteResourcePolicyRequest
     include JSON::Serializable
@@ -21,5 +23,13 @@ module Amazonite::CloudWatchLogsV1
       @expected_revision_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @expected_revision_id
+        raise Core::ValidationError.new("expectedRevisionId length must be >= 1") if value.size < 1
+      end
+    end
+
+    def_equals_and_hash(@policy_name, @resource_arn, @expected_revision_id)
   end
 end

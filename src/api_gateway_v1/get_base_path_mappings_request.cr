@@ -27,5 +27,10 @@ module Amazonite::ApiGatewayV1
       @limit : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@domain_name, @domain_name_id, @position, @limit)
   end
 end

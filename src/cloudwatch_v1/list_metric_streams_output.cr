@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class ListMetricStreamsOutput
     include JSON::Serializable
@@ -16,5 +18,13 @@ module Amazonite::CloudWatchV1
       @entries : Array(MetricStreamEntry) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @entries
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@next_token, @entries)
   end
 end

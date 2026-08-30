@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # Details about a specific managed node.
@@ -89,5 +90,71 @@ module Amazonite::SsmV1
       @availability_zone_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @agent_type
+        raise Core::ValidationError.new("AgentType length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AgentType length must be <= 255") if value.size > 255
+      end
+
+      if value = @agent_version
+        raise Core::ValidationError.new("AgentVersion does not match the required pattern") unless value.matches?(Regex.new("^[0-9]{1,6}(\\.[0-9]{1,6}){2,3}$"))
+      end
+
+      if value = @computer_name
+        raise Core::ValidationError.new("ComputerName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ComputerName length must be <= 255") if value.size > 255
+      end
+
+      if value = @instance_status
+        raise Core::ValidationError.new("InstanceStatus length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("InstanceStatus length must be <= 255") if value.size > 255
+      end
+
+      if value = @ip_address
+        raise Core::ValidationError.new("IpAddress length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("IpAddress length must be <= 46") if value.size > 46
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Name length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("Name does not match the required pattern") unless value.matches?(Regex.new("^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"))
+      end
+
+      if value = @platform_name
+        raise Core::ValidationError.new("PlatformName length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("PlatformName length must be <= 120") if value.size > 120
+      end
+
+      if value = @platform_version
+        raise Core::ValidationError.new("PlatformVersion length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("PlatformVersion length must be <= 120") if value.size > 120
+      end
+
+      if value = @source_id
+        raise Core::ValidationError.new("SourceId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SourceId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("SourceId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9:_-]*$"))
+      end
+
+      if value = @source_location
+        raise Core::ValidationError.new("SourceLocation length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SourceLocation length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("SourceLocation does not match the required pattern") unless value.matches?(Regex.new("^.{1,128}$"))
+      end
+
+      if value = @availability_zone
+        raise Core::ValidationError.new("AvailabilityZone length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("AvailabilityZone length must be <= 120") if value.size > 120
+      end
+
+      if value = @availability_zone_id
+        raise Core::ValidationError.new("AvailabilityZoneId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("AvailabilityZoneId length must be <= 50") if value.size > 50
+      end
+    end
+
+    def_equals_and_hash(@agent_type, @agent_version, @computer_name, @instance_status, @ip_address, @managed_status, @name, @platform_type, @platform_name, @platform_version, @resource_type, @source_type, @source_id, @source_location, @availability_zone, @availability_zone_id)
   end
 end

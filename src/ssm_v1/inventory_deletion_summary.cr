@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # Information about the delete operation.
   class InventoryDeletionSummary
@@ -21,5 +23,13 @@ module Amazonite::SsmV1
       @summary_items : Array(InventoryDeletionSummaryItem) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @summary_items
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@total_count, @remaining_count, @summary_items)
   end
 end

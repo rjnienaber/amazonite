@@ -71,5 +71,18 @@ module Amazonite::CloudFormationV1
         parameter_constraints: node.xpath_node("*[local-name()='ParameterConstraints']").try { |n| ParameterConstraints.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @parameter_constraints
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@parameter_key, @default_value, @parameter_type, @no_echo, @description, @parameter_constraints)
   end
 end

@@ -62,5 +62,26 @@ module Amazonite::StsV1
         token_code: Core::XMLValue.string(node.xpath_node("*[local-name()='TokenCode']")),
       )
     end
+
+    def validate! : Nil
+      if value = @duration_seconds
+        raise Core::ValidationError.new("DurationSeconds value must be >= 900") if value < 900
+        raise Core::ValidationError.new("DurationSeconds value must be <= 129600") if value > 129600
+      end
+
+      if value = @serial_number
+        raise Core::ValidationError.new("SerialNumber length must be >= 9") if value.size < 9
+        raise Core::ValidationError.new("SerialNumber length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("SerialNumber does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=/:,.@-]*$"))
+      end
+
+      if value = @token_code
+        raise Core::ValidationError.new("TokenCode length must be >= 6") if value.size < 6
+        raise Core::ValidationError.new("TokenCode length must be <= 6") if value.size > 6
+        raise Core::ValidationError.new("TokenCode does not match the required pattern") unless value.matches?(Regex.new("^[\\d]*$"))
+      end
+    end
+
+    def_equals_and_hash(@duration_seconds, @serial_number, @token_code)
   end
 end

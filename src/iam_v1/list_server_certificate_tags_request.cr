@@ -53,5 +53,26 @@ module Amazonite::IamV1
         max_items: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxItems']")),
       )
     end
+
+    def validate! : Nil
+      if value = @server_certificate_name
+        raise Core::ValidationError.new("ServerCertificateName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ServerCertificateName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ServerCertificateName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @marker
+        raise Core::ValidationError.new("Marker length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Marker length must be <= 320") if value.size > 320
+        raise Core::ValidationError.new("Marker does not match the required pattern") unless value.matches?(Regex.new("^[ -ÿ]+$"))
+      end
+
+      if value = @max_items
+        raise Core::ValidationError.new("MaxItems value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxItems value must be <= 1000") if value > 1000
+      end
+    end
+
+    def_equals_and_hash(@server_certificate_name, @marker, @max_items)
   end
 end

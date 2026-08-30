@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class GetFunctionResponse
     include JSON::Serializable
@@ -33,5 +35,25 @@ module Amazonite::LambdaV1
       @concurrency : Concurrency | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @configuration
+        value.validate!
+      end
+
+      if value = @code
+        value.validate!
+      end
+
+      if value = @tags_error
+        value.validate!
+      end
+
+      if value = @concurrency
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@configuration, @code, @tags, @tags_error, @concurrency)
   end
 end

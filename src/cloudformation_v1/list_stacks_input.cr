@@ -37,5 +37,14 @@ module Amazonite::CloudFormationV1
         stack_status_filter: node.xpath_nodes("*[local-name()='StackStatusFilter']/*[local-name()='member']").compact_map { |n| ACF::StackStatus.from_json_object_key?(n.content) },
       )
     end
+
+    def validate! : Nil
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@next_token, @stack_status_filter)
   end
 end

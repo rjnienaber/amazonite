@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   # Contains the parameters needed for you to provide custom input to a target based on one or more
   # pieces of data extracted from the event.
@@ -68,5 +70,19 @@ module Amazonite::EventBridgeV1
       @input_paths_map : Hash(String, String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @input_paths_map
+        raise Core::ValidationError.new("InputPathsMap must have at least 0 entry(s)") if value.size < 0
+        raise Core::ValidationError.new("InputPathsMap must have at most 100 entry(s)") if value.size > 100
+      end
+
+      if value = @input_template
+        raise Core::ValidationError.new("InputTemplate length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("InputTemplate length must be <= 8192") if value.size > 8192
+      end
+    end
+
+    def_equals_and_hash(@input_paths_map, @input_template)
   end
 end

@@ -17,5 +17,10 @@ module Amazonite::SsmV1
       @target_type : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@count, @target_type)
   end
 end

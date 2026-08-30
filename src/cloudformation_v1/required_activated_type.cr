@@ -66,5 +66,27 @@ module Amazonite::CloudFormationV1
         supported_major_versions: node.xpath_nodes("*[local-name()='SupportedMajorVersions']/*[local-name()='member']").map { |n| n.content.to_i32 },
       )
     end
+
+    def validate! : Nil
+      if value = @type_name_alias
+        raise Core::ValidationError.new("TypeNameAlias length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("TypeNameAlias length must be <= 204") if value.size > 204
+        raise Core::ValidationError.new("TypeNameAlias does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}(::MODULE){0,1}$"))
+      end
+
+      if value = @original_type_name
+        raise Core::ValidationError.new("OriginalTypeName length must be >= 10") if value.size < 10
+        raise Core::ValidationError.new("OriginalTypeName length must be <= 204") if value.size > 204
+        raise Core::ValidationError.new("OriginalTypeName does not match the required pattern") unless value.matches?(Regex.new("^[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}(::MODULE){0,1}$"))
+      end
+
+      if value = @publisher_id
+        raise Core::ValidationError.new("PublisherId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PublisherId length must be <= 40") if value.size > 40
+        raise Core::ValidationError.new("PublisherId does not match the required pattern") unless value.matches?(Regex.new("^[0-9a-zA-Z]{12,40}$"))
+      end
+    end
+
+    def_equals_and_hash(@type_name_alias, @original_type_name, @publisher_id, @supported_major_versions)
   end
 end

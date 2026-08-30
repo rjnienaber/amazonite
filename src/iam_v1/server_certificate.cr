@@ -54,5 +54,31 @@ module Amazonite::IamV1
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @server_certificate_metadata
+        value.validate!
+      end
+
+      if value = @certificate_body
+        raise Core::ValidationError.new("CertificateBody length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CertificateBody length must be <= 16384") if value.size > 16384
+        raise Core::ValidationError.new("CertificateBody does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+
+      if value = @certificate_chain
+        raise Core::ValidationError.new("CertificateChain length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("CertificateChain length must be <= 2097152") if value.size > 2097152
+        raise Core::ValidationError.new("CertificateChain does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@server_certificate_metadata, @certificate_body, @certificate_chain, @tags)
   end
 end

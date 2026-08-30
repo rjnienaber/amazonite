@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchV1
   class DescribeAlarmContributorsInput
     include JSON::Serializable
@@ -15,5 +17,14 @@ module Amazonite::CloudWatchV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @alarm_name
+        raise Core::ValidationError.new("AlarmName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmName length must be <= 255") if value.size > 255
+      end
+    end
+
+    def_equals_and_hash(@alarm_name, @next_token)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListResourceDataSyncResult
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @resource_data_sync_items
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@resource_data_sync_items, @next_token)
   end
 end

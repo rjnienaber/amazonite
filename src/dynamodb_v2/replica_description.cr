@@ -106,5 +106,29 @@ module Amazonite::DynamoDBV2
       @global_table_settings_replication_mode : GlobalTableSettingsReplicationMode | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @provisioned_throughput_override
+        value.validate!
+      end
+
+      if value = @on_demand_throughput_override
+        value.validate!
+      end
+
+      if value = @warm_throughput
+        value.validate!
+      end
+
+      if value = @global_secondary_indexes
+        value.each(&.validate!)
+      end
+
+      if value = @replica_table_class_summary
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@region_name, @replica_status, @replica_arn, @replica_status_description, @replica_status_percent_progress, @kms_master_key_id, @provisioned_throughput_override, @on_demand_throughput_override, @warm_throughput, @global_secondary_indexes, @replica_inaccessible_date_time, @replica_table_class_summary, @global_table_settings_replication_mode)
   end
 end

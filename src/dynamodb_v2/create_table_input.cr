@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents the input of a `CreateTable` operation.
@@ -263,5 +264,64 @@ module Amazonite::DynamoDBV2
       @vector_indexes : Array(VectorIndex) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @attribute_definitions
+        value.each(&.validate!)
+      end
+
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @key_schema
+        raise Core::ValidationError.new("KeySchema must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+
+      if value = @local_secondary_indexes
+        value.each(&.validate!)
+      end
+
+      if value = @global_secondary_indexes
+        value.each(&.validate!)
+      end
+
+      if value = @provisioned_throughput
+        value.validate!
+      end
+
+      if value = @stream_specification
+        value.validate!
+      end
+
+      if value = @sse_specification
+        value.validate!
+      end
+
+      if value = @tags
+        value.each(&.validate!)
+      end
+
+      if value = @warm_throughput
+        value.validate!
+      end
+
+      if value = @on_demand_throughput
+        value.validate!
+      end
+
+      if value = @global_table_source_arn
+        raise Core::ValidationError.new("GlobalTableSourceArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GlobalTableSourceArn length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @vector_indexes
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@attribute_definitions, @table_name, @key_schema, @local_secondary_indexes, @global_secondary_indexes, @billing_mode, @provisioned_throughput, @stream_specification, @sse_specification, @tags, @table_class, @deletion_protection_enabled, @warm_throughput, @resource_policy, @on_demand_throughput, @global_table_source_arn, @global_table_settings_replication_mode, @vector_indexes)
   end
 end

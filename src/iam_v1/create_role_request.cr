@@ -138,5 +138,49 @@ module Amazonite::IamV1
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @path
+        raise Core::ValidationError.new("Path length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Path length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("Path does not match the required pattern") unless value.matches?(Regex.new("^(/)|(/[!-~]+/)$"))
+      end
+
+      if value = @role_name
+        raise Core::ValidationError.new("RoleName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RoleName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("RoleName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @assume_role_policy_document
+        raise Core::ValidationError.new("AssumeRolePolicyDocument length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AssumeRolePolicyDocument length must be <= 131072") if value.size > 131072
+        raise Core::ValidationError.new("AssumeRolePolicyDocument does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 1000") if value.size > 1000
+        raise Core::ValidationError.new("Description does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~¡-ÿ]*$"))
+      end
+
+      if value = @max_session_duration
+        raise Core::ValidationError.new("MaxSessionDuration value must be >= 3600") if value < 3600
+        raise Core::ValidationError.new("MaxSessionDuration value must be <= 43200") if value > 43200
+      end
+
+      if value = @permissions_boundary
+        raise Core::ValidationError.new("PermissionsBoundary length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("PermissionsBoundary length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@path, @role_name, @assume_role_policy_document, @description, @max_session_duration, @permissions_boundary, @tags)
   end
 end

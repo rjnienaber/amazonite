@@ -37,5 +37,19 @@ module Amazonite::KmsV1
       @on_demand_rotation_start_date : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @rotation_period_in_days
+        raise Core::ValidationError.new("RotationPeriodInDays value must be >= 90") if value < 90
+        raise Core::ValidationError.new("RotationPeriodInDays value must be <= 2560") if value > 2560
+      end
+    end
+
+    def_equals_and_hash(@key_rotation_enabled, @key_id, @rotation_period_in_days, @next_rotation_date, @on_demand_rotation_start_date)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The parameters for a `STEP_FUNCTIONS` task.
   #
@@ -33,5 +35,19 @@ module Amazonite::SsmV1
       @name : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @input
+        raise Core::ValidationError.new("Input length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Input length must be <= 4096") if value.size > 4096
+      end
+
+      if value = @name
+        raise Core::ValidationError.new("Name length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Name length must be <= 80") if value.size > 80
+      end
+    end
+
+    def_equals_and_hash(@input, @name)
   end
 end

@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # Defines which patches should be included in a patch baseline.
@@ -38,5 +39,14 @@ module Amazonite::SsmV1
       @values : Array(String),
     )
     end
+
+    def validate! : Nil
+      if value = @values
+        raise Core::ValidationError.new("Values must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Values must have at most 20 item(s)") if value.size > 20
+      end
+    end
+
+    def_equals_and_hash(@key, @values)
   end
 end

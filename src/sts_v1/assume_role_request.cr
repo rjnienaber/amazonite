@@ -300,5 +300,76 @@ module Amazonite::StsV1
         provided_contexts: node.xpath_nodes("*[local-name()='ProvidedContexts']/*[local-name()='member']").map { |n| ProvidedContext.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @role_arn
+        raise Core::ValidationError.new("RoleArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("RoleArn length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("RoleArn does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -~\u0085\u00A0-퟿\uE000-�က0-ჿFF]+$"))
+      end
+
+      if value = @role_session_name
+        raise Core::ValidationError.new("RoleSessionName length must be >= 2") if value.size < 2
+        raise Core::ValidationError.new("RoleSessionName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("RoleSessionName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]*$"))
+      end
+
+      if value = @policy_arns
+        value.each(&.validate!)
+      end
+
+      if value = @policy
+        raise Core::ValidationError.new("Policy length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Policy does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
+      end
+
+      if value = @duration_seconds
+        raise Core::ValidationError.new("DurationSeconds value must be >= 900") if value < 900
+        raise Core::ValidationError.new("DurationSeconds value must be <= 43200") if value > 43200
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+
+      if value = @transitive_tag_keys
+        raise Core::ValidationError.new("TransitiveTagKeys must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("TransitiveTagKeys must have at most 50 item(s)") if value.size > 50
+      end
+
+      if value = @external_id
+        raise Core::ValidationError.new("ExternalId length must be >= 2") if value.size < 2
+        raise Core::ValidationError.new("ExternalId length must be <= 1224") if value.size > 1224
+        raise Core::ValidationError.new("ExternalId does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@:\\/-]*$"))
+      end
+
+      if value = @serial_number
+        raise Core::ValidationError.new("SerialNumber length must be >= 9") if value.size < 9
+        raise Core::ValidationError.new("SerialNumber length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("SerialNumber does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=/:,.@-]*$"))
+      end
+
+      if value = @token_code
+        raise Core::ValidationError.new("TokenCode length must be >= 6") if value.size < 6
+        raise Core::ValidationError.new("TokenCode length must be <= 6") if value.size > 6
+        raise Core::ValidationError.new("TokenCode does not match the required pattern") unless value.matches?(Regex.new("^[\\d]*$"))
+      end
+
+      if value = @source_identity
+        raise Core::ValidationError.new("SourceIdentity length must be >= 2") if value.size < 2
+        raise Core::ValidationError.new("SourceIdentity length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("SourceIdentity does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]*$"))
+      end
+
+      if value = @provided_contexts
+        raise Core::ValidationError.new("ProvidedContexts must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("ProvidedContexts must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@role_arn, @role_session_name, @policy_arns, @policy, @duration_seconds, @tags, @transitive_tag_keys, @external_id, @serial_number, @token_code, @source_identity, @provided_contexts)
   end
 end

@@ -23,6 +23,7 @@ module Amazonite::IamV1
     # An accepted request may be rejected before the exchange token is sent to the partner.
     def accept_delegation_request(input : AI::AcceptDelegationRequestRequest) : Core::Response
       Log.info { "performing 'AcceptDelegationRequest' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AcceptDelegationRequest")
@@ -43,6 +44,7 @@ module Amazonite::IamV1
     # values that the service substitutes into the role during creation.
     def acquire_role(input : AI::AcquireRoleRequest) : Core::ParsedResponse(AI::AcquireRoleResponse)
       Log.info { "performing 'AcquireRole' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AcquireRole")
@@ -62,6 +64,7 @@ module Amazonite::IamV1
     # ID to the provider.
     def add_client_id_to_open_id_connect_provider(input : AI::AddClientIDToOpenIDConnectProviderRequest) : Core::Response
       Log.info { "performing 'AddClientIDToOpenIDConnectProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AddClientIDToOpenIDConnectProvider")
@@ -102,6 +105,7 @@ module Amazonite::IamV1
     # in the *IAM User Guide*.
     def add_role_to_instance_profile(input : AI::AddRoleToInstanceProfileRequest) : Core::Response
       Log.info { "performing 'AddRoleToInstanceProfile' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AddRoleToInstanceProfile")
@@ -115,6 +119,7 @@ module Amazonite::IamV1
     # Adds the specified user to the specified group.
     def add_user_to_group(input : AI::AddUserToGroupRequest) : Core::Response
       Log.info { "performing 'AddUserToGroup' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AddUserToGroup")
@@ -143,6 +148,7 @@ module Amazonite::IamV1
     # Requests](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies-temporary-delegation.html#temporary-delegation-managing-permissions).
     def associate_delegation_request(input : AI::AssociateDelegationRequestRequest) : Core::Response
       Log.info { "performing 'AssociateDelegationRequest' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AssociateDelegationRequest")
@@ -168,6 +174,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def attach_group_policy(input : AI::AttachGroupPolicyRequest) : Core::Response
       Log.info { "performing 'AttachGroupPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AttachGroupPolicy")
@@ -199,6 +206,7 @@ module Amazonite::IamV1
     # in the *IAM User Guide*.
     def attach_role_policy(input : AI::AttachRolePolicyRequest) : Core::Response
       Log.info { "performing 'AttachRolePolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AttachRolePolicy")
@@ -224,6 +232,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def attach_user_policy(input : AI::AttachUserPolicyRequest) : Core::Response
       Log.info { "performing 'AttachUserPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AttachUserPolicy")
@@ -247,6 +256,7 @@ module Amazonite::IamV1
     # *IAM User Guide*.
     def change_password(input : AI::ChangePasswordRequest) : Core::Response
       Log.info { "performing 'ChangePassword' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ChangePassword")
@@ -276,6 +286,7 @@ module Amazonite::IamV1
     # the associated user and then create new keys.
     def create_access_key(input : AI::CreateAccessKeyRequest) : Core::ParsedResponse(AI::CreateAccessKeyResponse)
       Log.info { "performing 'CreateAccessKey' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateAccessKey")
@@ -294,6 +305,7 @@ module Amazonite::IamV1
     # *Amazon Web Services Sign-In User Guide*.
     def create_account_alias(input : AI::CreateAccountAliasRequest) : Core::Response
       Log.info { "performing 'CreateAccountAlias' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateAccountAlias")
@@ -311,6 +323,7 @@ module Amazonite::IamV1
     # documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies-temporary-delegation-partner-guide.html).
     def create_delegation_request(input : AI::CreateDelegationRequestRequest) : Core::ParsedResponse(AI::CreateDelegationRequestResponse)
       Log.info { "performing 'CreateDelegationRequest' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateDelegationRequest")
@@ -330,6 +343,7 @@ module Amazonite::IamV1
     # User Guide*.
     def create_group(input : AI::CreateGroupRequest) : Core::ParsedResponse(AI::CreateGroupResponse)
       Log.info { "performing 'CreateGroup' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateGroup")
@@ -354,6 +368,7 @@ module Amazonite::IamV1
     # User Guide*.
     def create_instance_profile(input : AI::CreateInstanceProfileRequest) : Core::ParsedResponse(AI::CreateInstanceProfileResponse)
       Log.info { "performing 'CreateInstanceProfile' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateInstanceProfile")
@@ -380,6 +395,7 @@ module Amazonite::IamV1
     # *IAM User Guide*.
     def create_login_profile(input : AI::CreateLoginProfileRequest) : Core::ParsedResponse(AI::CreateLoginProfileResponse)
       Log.info { "performing 'CreateLoginProfile' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateLoginProfile")
@@ -432,6 +448,7 @@ module Amazonite::IamV1
     # operation to highly privileged users.
     def create_open_id_connect_provider(input : AI::CreateOpenIDConnectProviderRequest) : Core::ParsedResponse(AI::CreateOpenIDConnectProviderResponse)
       Log.info { "performing 'CreateOpenIDConnectProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateOpenIDConnectProvider")
@@ -461,6 +478,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def create_policy(input : AI::CreatePolicyRequest) : Core::ParsedResponse(AI::CreatePolicyResponse)
       Log.info { "performing 'CreatePolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreatePolicy")
@@ -488,6 +506,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def create_policy_version(input : AI::CreatePolicyVersionRequest) : Core::ParsedResponse(AI::CreatePolicyVersionResponse)
       Log.info { "performing 'CreatePolicyVersion' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreatePolicyVersion")
@@ -509,6 +528,7 @@ module Amazonite::IamV1
     # *IAM User Guide*.
     def create_role(input : AI::CreateRoleRequest) : Core::ParsedResponse(AI::CreateRoleResponse)
       Log.info { "performing 'CreateRole' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateRole")
@@ -546,6 +566,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def create_saml_provider(input : AI::CreateSAMLProviderRequest) : Core::ParsedResponse(AI::CreateSAMLProviderResponse)
       Log.info { "performing 'CreateSAMLProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateSAMLProvider")
@@ -571,6 +592,7 @@ module Amazonite::IamV1
     # Services service that depends on this role.
     def create_service_linked_role(input : AI::CreateServiceLinkedRoleRequest) : Core::ParsedResponse(AI::CreateServiceLinkedRoleResponse)
       Log.info { "performing 'CreateServiceLinkedRole' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateServiceLinkedRole")
@@ -611,6 +633,7 @@ module Amazonite::IamV1
     # in the *IAM User Guide*.
     def create_service_specific_credential(input : AI::CreateServiceSpecificCredentialRequest) : Core::ParsedResponse(AI::CreateServiceSpecificCredentialResponse)
       Log.info { "performing 'CreateServiceSpecificCredential' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateServiceSpecificCredential")
@@ -630,6 +653,7 @@ module Amazonite::IamV1
     # User Guide*.
     def create_user(input : AI::CreateUserRequest) : Core::ParsedResponse(AI::CreateUserResponse)
       Log.info { "performing 'CreateUser' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateUser")
@@ -660,6 +684,7 @@ module Amazonite::IamV1
     # should ensure that the information is destroyed following secure procedures.
     def create_virtual_mfa_device(input : AI::CreateVirtualMFADeviceRequest) : Core::ParsedResponse(AI::CreateVirtualMFADeviceResponse)
       Log.info { "performing 'CreateVirtualMFADevice' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "CreateVirtualMFADevice")
@@ -681,6 +706,7 @@ module Amazonite::IamV1
     # Guide*.
     def deactivate_mfa_device(input : AI::DeactivateMFADeviceRequest) : Core::Response
       Log.info { "performing 'DeactivateMFADevice' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeactivateMFADevice")
@@ -700,6 +726,7 @@ module Amazonite::IamV1
     # users.
     def delete_access_key(input : AI::DeleteAccessKeyRequest) : Core::Response
       Log.info { "performing 'DeleteAccessKey' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteAccessKey")
@@ -716,6 +743,7 @@ module Amazonite::IamV1
     # *Amazon Web Services Sign-In User Guide*.
     def delete_account_alias(input : AI::DeleteAccountAliasRequest) : Core::Response
       Log.info { "performing 'DeleteAccountAlias' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteAccountAlias")
@@ -743,6 +771,7 @@ module Amazonite::IamV1
     # policies.
     def delete_group(input : AI::DeleteGroupRequest) : Core::Response
       Log.info { "performing 'DeleteGroup' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteGroup")
@@ -763,6 +792,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def delete_group_policy(input : AI::DeleteGroupPolicyRequest) : Core::Response
       Log.info { "performing 'DeleteGroupPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteGroupPolicy")
@@ -784,6 +814,7 @@ module Amazonite::IamV1
     # in the *IAM User Guide*.
     def delete_instance_profile(input : AI::DeleteInstanceProfileRequest) : Core::Response
       Log.info { "performing 'DeleteInstanceProfile' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteInstanceProfile")
@@ -813,6 +844,7 @@ module Amazonite::IamV1
     # [DeleteAccessKey](https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteAccessKey.html).
     def delete_login_profile(input : AI::DeleteLoginProfileRequest) : Core::Response
       Log.info { "performing 'DeleteLoginProfile' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteLoginProfile")
@@ -833,6 +865,7 @@ module Amazonite::IamV1
     # a provider that does not exist.
     def delete_open_id_connect_provider(input : AI::DeleteOpenIDConnectProviderRequest) : Core::Response
       Log.info { "performing 'DeleteOpenIDConnectProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteOpenIDConnectProvider")
@@ -874,6 +907,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def delete_policy(input : AI::DeletePolicyRequest) : Core::Response
       Log.info { "performing 'DeletePolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeletePolicy")
@@ -897,6 +931,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def delete_policy_version(input : AI::DeletePolicyVersionRequest) : Core::Response
       Log.info { "performing 'DeletePolicyVersion' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeletePolicyVersion")
@@ -930,6 +965,7 @@ module Amazonite::IamV1
     # break any applications running on the instance.
     def delete_role(input : AI::DeleteRoleRequest) : Core::Response
       Log.info { "performing 'DeleteRole' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteRole")
@@ -949,6 +985,7 @@ module Amazonite::IamV1
     # policies.
     def delete_role_permissions_boundary(input : AI::DeleteRolePermissionsBoundaryRequest) : Core::Response
       Log.info { "performing 'DeleteRolePermissionsBoundary' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteRolePermissionsBoundary")
@@ -969,6 +1006,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def delete_role_policy(input : AI::DeleteRolePolicyRequest) : Core::Response
       Log.info { "performing 'DeleteRolePolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteRolePolicy")
@@ -989,6 +1027,7 @@ module Amazonite::IamV1
     # 4](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html).
     def delete_saml_provider(input : AI::DeleteSAMLProviderRequest) : Core::Response
       Log.info { "performing 'DeleteSAMLProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteSAMLProvider")
@@ -1016,6 +1055,7 @@ module Amazonite::IamV1
     # in the *Elastic Load Balancing API Reference*.
     def delete_server_certificate(input : AI::DeleteServerCertificateRequest) : Core::Response
       Log.info { "performing 'DeleteServerCertificate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteServerCertificate")
@@ -1047,6 +1087,7 @@ module Amazonite::IamV1
     # in the *IAM User Guide*.
     def delete_service_linked_role(input : AI::DeleteServiceLinkedRoleRequest) : Core::ParsedResponse(AI::DeleteServiceLinkedRoleResponse)
       Log.info { "performing 'DeleteServiceLinkedRole' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteServiceLinkedRole")
@@ -1062,6 +1103,7 @@ module Amazonite::IamV1
     # Deletes the specified service-specific credential.
     def delete_service_specific_credential(input : AI::DeleteServiceSpecificCredentialRequest) : Core::Response
       Log.info { "performing 'DeleteServiceSpecificCredential' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteServiceSpecificCredential")
@@ -1081,6 +1123,7 @@ module Amazonite::IamV1
     # IAM users.
     def delete_signing_certificate(input : AI::DeleteSigningCertificateRequest) : Core::Response
       Log.info { "performing 'DeleteSigningCertificate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteSigningCertificate")
@@ -1100,6 +1143,7 @@ module Amazonite::IamV1
     # in the *CodeCommit User Guide*.
     def delete_ssh_public_key(input : AI::DeleteSSHPublicKeyRequest) : Core::Response
       Log.info { "performing 'DeleteSSHPublicKey' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteSSHPublicKey")
@@ -1145,6 +1189,7 @@ module Amazonite::IamV1
     # ([RemoveUserFromGroup](https://docs.aws.amazon.com/IAM/latest/APIReference/API_RemoveUserFromGroup.html))
     def delete_user(input : AI::DeleteUserRequest) : Core::Response
       Log.info { "performing 'DeleteUser' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteUser")
@@ -1161,6 +1206,7 @@ module Amazonite::IamV1
     # to perform all the actions granted in its permissions policies.
     def delete_user_permissions_boundary(input : AI::DeleteUserPermissionsBoundaryRequest) : Core::Response
       Log.info { "performing 'DeleteUserPermissionsBoundary' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteUserPermissionsBoundary")
@@ -1181,6 +1227,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def delete_user_policy(input : AI::DeleteUserPolicyRequest) : Core::Response
       Log.info { "performing 'DeleteUserPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteUserPolicy")
@@ -1198,6 +1245,7 @@ module Amazonite::IamV1
     # [DeactivateMFADevice](https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeactivateMFADevice.html).
     def delete_virtual_mfa_device(input : AI::DeleteVirtualMFADeviceRequest) : Core::Response
       Log.info { "performing 'DeleteVirtualMFADevice' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DeleteVirtualMFADevice")
@@ -1217,6 +1265,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def detach_group_policy(input : AI::DetachGroupPolicyRequest) : Core::Response
       Log.info { "performing 'DetachGroupPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DetachGroupPolicy")
@@ -1236,6 +1285,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def detach_role_policy(input : AI::DetachRolePolicyRequest) : Core::Response
       Log.info { "performing 'DetachRolePolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DetachRolePolicy")
@@ -1255,6 +1305,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def detach_user_policy(input : AI::DetachUserPolicyRequest) : Core::Response
       Log.info { "performing 'DetachUserPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DetachUserPolicy")
@@ -1271,6 +1322,7 @@ module Amazonite::IamV1
     # organization.
     def disable_organizations_root_credentials_management(input : AI::DisableOrganizationsRootCredentialsManagementRequest) : Core::ParsedResponse(AI::DisableOrganizationsRootCredentialsManagementResponse)
       Log.info { "performing 'DisableOrganizationsRootCredentialsManagement' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DisableOrganizationsRootCredentialsManagement")
@@ -1288,6 +1340,7 @@ module Amazonite::IamV1
     # can no longer perform privileged tasks on member accounts in your organization.
     def disable_organizations_root_sessions(input : AI::DisableOrganizationsRootSessionsRequest) : Core::ParsedResponse(AI::DisableOrganizationsRootSessionsResponse)
       Log.info { "performing 'DisableOrganizationsRootSessions' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DisableOrganizationsRootSessions")
@@ -1321,6 +1374,7 @@ module Amazonite::IamV1
     # device.
     def enable_mfa_device(input : AI::EnableMFADeviceRequest) : Core::Response
       Log.info { "performing 'EnableMFADevice' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "EnableMFADevice")
@@ -1349,6 +1403,7 @@ module Amazonite::IamV1
     # in the *Organizations User Guide*.
     def enable_organizations_root_credentials_management(input : AI::EnableOrganizationsRootCredentialsManagementRequest) : Core::ParsedResponse(AI::EnableOrganizationsRootCredentialsManagementResponse)
       Log.info { "performing 'EnableOrganizationsRootCredentialsManagement' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "EnableOrganizationsRootCredentialsManagement")
@@ -1378,6 +1433,7 @@ module Amazonite::IamV1
     # in the *Organizations User Guide*.
     def enable_organizations_root_sessions(input : AI::EnableOrganizationsRootSessionsRequest) : Core::ParsedResponse(AI::EnableOrganizationsRootSessionsResponse)
       Log.info { "performing 'EnableOrganizationsRootSessions' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "EnableOrganizationsRootSessions")
@@ -1536,6 +1592,7 @@ module Amazonite::IamV1
     # in the *IAM User Guide*.
     def generate_organizations_access_report(input : AI::GenerateOrganizationsAccessReportRequest) : Core::ParsedResponse(AI::GenerateOrganizationsAccessReportResponse)
       Log.info { "performing 'GenerateOrganizationsAccessReport' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GenerateOrganizationsAccessReport")
@@ -1606,6 +1663,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def generate_service_last_accessed_details(input : AI::GenerateServiceLastAccessedDetailsRequest) : Core::ParsedResponse(AI::GenerateServiceLastAccessedDetailsResponse)
       Log.info { "performing 'GenerateServiceLastAccessedDetails' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GenerateServiceLastAccessedDetails")
@@ -1623,6 +1681,7 @@ module Amazonite::IamV1
     # that were specified in the last request made with that key.
     def get_access_key_last_used(input : AI::GetAccessKeyLastUsedRequest) : Core::ParsedResponse(AI::GetAccessKeyLastUsedResponse)
       Log.info { "performing 'GetAccessKeyLastUsed' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetAccessKeyLastUsed")
@@ -1650,6 +1709,7 @@ module Amazonite::IamV1
     # using the `MaxItems` and `Marker` parameters.
     def get_account_authorization_details(input : AI::GetAccountAuthorizationDetailsRequest) : Core::ParsedResponse(AI::GetAccountAuthorizationDetailsResponse)
       Log.info { "performing 'GetAccountAuthorizationDetails' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetAccountAuthorizationDetails")
@@ -1690,6 +1750,7 @@ module Amazonite::IamV1
     # to modify these properties.
     def get_account_properties(input : AI::GetAccountPropertiesRequest) : Core::ParsedResponse(AI::GetAccountPropertiesResponse)
       Log.info { "performing 'GetAccountProperties' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetAccountProperties")
@@ -1735,6 +1796,7 @@ module Amazonite::IamV1
     # be included as a part of a real HTML request.
     def get_context_keys_for_custom_policy(input : AI::GetContextKeysForCustomPolicyRequest) : Core::ParsedResponse(AI::GetContextKeysForPolicyResponse)
       Log.info { "performing 'GetContextKeysForCustomPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetContextKeysForCustomPolicy")
@@ -1773,6 +1835,7 @@ module Amazonite::IamV1
     # additional policies that you provide, are included.
     def get_context_keys_for_principal_policy(input : AI::GetContextKeysForPrincipalPolicyRequest) : Core::ParsedResponse(AI::GetContextKeysForPolicyResponse)
       Log.info { "performing 'GetContextKeysForPrincipalPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetContextKeysForPrincipalPolicy")
@@ -1814,6 +1877,7 @@ module Amazonite::IamV1
     # Requests](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies-temporary-delegation.html#temporary-delegation-managing-permissions).
     def get_delegation_request(input : AI::GetDelegationRequestRequest) : Core::ParsedResponse(AI::GetDelegationRequestResponse)
       Log.info { "performing 'GetDelegationRequest' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetDelegationRequest")
@@ -1830,6 +1894,7 @@ module Amazonite::IamV1
     # using the `MaxItems` and `Marker` parameters.
     def get_group(input : AI::GetGroupRequest) : Core::ParsedResponse(AI::GetGroupResponse)
       Log.info { "performing 'GetGroup' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetGroup")
@@ -1862,6 +1927,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def get_group_policy(input : AI::GetGroupPolicyRequest) : Core::ParsedResponse(AI::GetGroupPolicyResponse)
       Log.info { "performing 'GetGroupPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetGroupPolicy")
@@ -1893,6 +1959,7 @@ module Amazonite::IamV1
     # that request.
     def get_human_readable_summary(input : AI::GetHumanReadableSummaryRequest) : Core::ParsedResponse(AI::GetHumanReadableSummaryResponse)
       Log.info { "performing 'GetHumanReadableSummary' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetHumanReadableSummary")
@@ -1911,6 +1978,7 @@ module Amazonite::IamV1
     # in the *IAM User Guide*.
     def get_instance_profile(input : AI::GetInstanceProfileRequest) : Core::ParsedResponse(AI::GetInstanceProfileResponse)
       Log.info { "performing 'GetInstanceProfile' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetInstanceProfile")
@@ -1936,6 +2004,7 @@ module Amazonite::IamV1
     # create a password for the user to access the Amazon Web Services Management Console.
     def get_login_profile(input : AI::GetLoginProfileRequest) : Core::ParsedResponse(AI::GetLoginProfileResponse)
       Log.info { "performing 'GetLoginProfile' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetLoginProfile")
@@ -1951,6 +2020,7 @@ module Amazonite::IamV1
     # Retrieves information about an MFA device for a specified user.
     def get_mfa_device(input : AI::GetMFADeviceRequest) : Core::ParsedResponse(AI::GetMFADeviceResponse)
       Log.info { "performing 'GetMFADevice' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetMFADevice")
@@ -1966,6 +2036,7 @@ module Amazonite::IamV1
     # Returns information about the specified OpenID Connect (OIDC) provider resource object in IAM.
     def get_open_id_connect_provider(input : AI::GetOpenIDConnectProviderRequest) : Core::ParsedResponse(AI::GetOpenIDConnectProviderResponse)
       Log.info { "performing 'GetOpenIDConnectProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetOpenIDConnectProvider")
@@ -2001,6 +2072,7 @@ module Amazonite::IamV1
     # By default, the list is sorted by service namespace.
     def get_organizations_access_report(input : AI::GetOrganizationsAccessReportRequest) : Core::ParsedResponse(AI::GetOrganizationsAccessReportResponse)
       Log.info { "performing 'GetOrganizationsAccessReport' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetOrganizationsAccessReport")
@@ -2050,6 +2122,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def get_policy(input : AI::GetPolicyRequest) : Core::ParsedResponse(AI::GetPolicyResponse)
       Log.info { "performing 'GetPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetPolicy")
@@ -2089,6 +2162,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def get_policy_version(input : AI::GetPolicyVersionRequest) : Core::ParsedResponse(AI::GetPolicyVersionResponse)
       Log.info { "performing 'GetPolicyVersion' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetPolicyVersion")
@@ -2113,6 +2187,7 @@ module Amazonite::IamV1
     # similar functionality, and some SDKs do this decoding automatically.
     def get_role(input : AI::GetRoleRequest) : Core::ParsedResponse(AI::GetRoleResponse)
       Log.info { "performing 'GetRole' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetRole")
@@ -2148,6 +2223,7 @@ module Amazonite::IamV1
     # roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) in the *IAM User Guide*.
     def get_role_policy(input : AI::GetRolePolicyRequest) : Core::ParsedResponse(AI::GetRolePolicyResponse)
       Log.info { "performing 'GetRolePolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetRolePolicy")
@@ -2169,6 +2245,7 @@ module Amazonite::IamV1
     # If you do not specify a minor version, the service returns the template's default minor version.
     def get_role_template_version(input : AI::GetRoleTemplateVersionRequest) : Core::ParsedResponse(AI::GetRoleTemplateVersionResponse)
       Log.info { "performing 'GetRoleTemplateVersion' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetRoleTemplateVersion")
@@ -2188,6 +2265,7 @@ module Amazonite::IamV1
     # 4](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html).
     def get_saml_provider(input : AI::GetSAMLProviderRequest) : Core::ParsedResponse(AI::GetSAMLProviderResponse)
       Log.info { "performing 'GetSAMLProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetSAMLProvider")
@@ -2208,6 +2286,7 @@ module Amazonite::IamV1
     # the server certificates that you manage with IAM.
     def get_server_certificate(input : AI::GetServerCertificateRequest) : Core::ParsedResponse(AI::GetServerCertificateResponse)
       Log.info { "performing 'GetServerCertificate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetServerCertificate")
@@ -2265,6 +2344,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def get_service_last_accessed_details(input : AI::GetServiceLastAccessedDetailsRequest) : Core::ParsedResponse(AI::GetServiceLastAccessedDetailsResponse)
       Log.info { "performing 'GetServiceLastAccessedDetails' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetServiceLastAccessedDetails")
@@ -2298,6 +2378,7 @@ module Amazonite::IamV1
     # listed first.
     def get_service_last_accessed_details_with_entities(input : AI::GetServiceLastAccessedDetailsWithEntitiesRequest) : Core::ParsedResponse(AI::GetServiceLastAccessedDetailsWithEntitiesResponse)
       Log.info { "performing 'GetServiceLastAccessedDetailsWithEntities' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetServiceLastAccessedDetailsWithEntities")
@@ -2318,6 +2399,7 @@ module Amazonite::IamV1
     # service.
     def get_service_linked_role_deletion_status(input : AI::GetServiceLinkedRoleDeletionStatusRequest) : Core::ParsedResponse(AI::GetServiceLinkedRoleDeletionStatusResponse)
       Log.info { "performing 'GetServiceLinkedRoleDeletionStatus' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetServiceLinkedRoleDeletionStatus")
@@ -2339,6 +2421,7 @@ module Amazonite::IamV1
     # in the *CodeCommit User Guide*.
     def get_ssh_public_key(input : AI::GetSSHPublicKeyRequest) : Core::ParsedResponse(AI::GetSSHPublicKeyResponse)
       Log.info { "performing 'GetSSHPublicKey' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetSSHPublicKey")
@@ -2358,6 +2441,7 @@ module Amazonite::IamV1
     # Web Services access key ID used to sign the request to this operation.
     def get_user(input : AI::GetUserRequest) : Core::ParsedResponse(AI::GetUserResponse)
       Log.info { "performing 'GetUser' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetUser")
@@ -2390,6 +2474,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def get_user_policy(input : AI::GetUserPolicyRequest) : Core::ParsedResponse(AI::GetUserPolicyResponse)
       Log.info { "performing 'GetUserPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetUserPolicy")
@@ -2421,6 +2506,7 @@ module Amazonite::IamV1
     # only during key and user creation.
     def list_access_keys(input : AI::ListAccessKeysRequest) : Core::ParsedResponse(AI::ListAccessKeysResponse)
       Log.info { "performing 'ListAccessKeys' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListAccessKeys")
@@ -2440,6 +2526,7 @@ module Amazonite::IamV1
     # in the *IAM User Guide*.
     def list_account_aliases(input : AI::ListAccountAliasesRequest) : Core::ParsedResponse(AI::ListAccountAliasesResponse)
       Log.info { "performing 'ListAccountAliases' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListAccountAliases")
@@ -2467,6 +2554,7 @@ module Amazonite::IamV1
     # specified path prefix), the operation returns an empty list.
     def list_attached_group_policies(input : AI::ListAttachedGroupPoliciesRequest) : Core::ParsedResponse(AI::ListAttachedGroupPoliciesResponse)
       Log.info { "performing 'ListAttachedGroupPolicies' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListAttachedGroupPolicies")
@@ -2494,6 +2582,7 @@ module Amazonite::IamV1
     # specified path prefix), the operation returns an empty list.
     def list_attached_role_policies(input : AI::ListAttachedRolePoliciesRequest) : Core::ParsedResponse(AI::ListAttachedRolePoliciesResponse)
       Log.info { "performing 'ListAttachedRolePolicies' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListAttachedRolePolicies")
@@ -2521,6 +2610,7 @@ module Amazonite::IamV1
     # specified path prefix), the operation returns an empty list.
     def list_attached_user_policies(input : AI::ListAttachedUserPoliciesRequest) : Core::ParsedResponse(AI::ListAttachedUserPoliciesResponse)
       Log.info { "performing 'ListAttachedUserPolicies' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListAttachedUserPolicies")
@@ -2542,6 +2632,7 @@ module Amazonite::IamV1
     # Requests](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies-temporary-delegation.html#temporary-delegation-managing-permissions).
     def list_delegation_requests(input : AI::ListDelegationRequestsRequest) : Core::ParsedResponse(AI::ListDelegationRequestsResponse)
       Log.info { "performing 'ListDelegationRequests' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListDelegationRequests")
@@ -2563,6 +2654,7 @@ module Amazonite::IamV1
     # You can paginate the results using the `MaxItems` and `Marker` parameters.
     def list_entities_for_policy(input : AI::ListEntitiesForPolicyRequest) : Core::ParsedResponse(AI::ListEntitiesForPolicyResponse)
       Log.info { "performing 'ListEntitiesForPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListEntitiesForPolicy")
@@ -2588,6 +2680,7 @@ module Amazonite::IamV1
     # inline policies embedded with the specified group, the operation returns an empty list.
     def list_group_policies(input : AI::ListGroupPoliciesRequest) : Core::ParsedResponse(AI::ListGroupPoliciesResponse)
       Log.info { "performing 'ListGroupPolicies' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListGroupPolicies")
@@ -2605,6 +2698,7 @@ module Amazonite::IamV1
     # You can paginate the results using the `MaxItems` and `Marker` parameters.
     def list_groups(input : AI::ListGroupsRequest) : Core::ParsedResponse(AI::ListGroupsResponse)
       Log.info { "performing 'ListGroups' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListGroups")
@@ -2622,6 +2716,7 @@ module Amazonite::IamV1
     # You can paginate the results using the `MaxItems` and `Marker` parameters.
     def list_groups_for_user(input : AI::ListGroupsForUserRequest) : Core::ParsedResponse(AI::ListGroupsForUserResponse)
       Log.info { "performing 'ListGroupsForUser' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListGroupsForUser")
@@ -2648,6 +2743,7 @@ module Amazonite::IamV1
     # You can paginate the results using the `MaxItems` and `Marker` parameters.
     def list_instance_profiles(input : AI::ListInstanceProfilesRequest) : Core::ParsedResponse(AI::ListInstanceProfilesResponse)
       Log.info { "performing 'ListInstanceProfiles' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListInstanceProfiles")
@@ -2669,6 +2765,7 @@ module Amazonite::IamV1
     # You can paginate the results using the `MaxItems` and `Marker` parameters.
     def list_instance_profiles_for_role(input : AI::ListInstanceProfilesForRoleRequest) : Core::ParsedResponse(AI::ListInstanceProfilesForRoleResponse)
       Log.info { "performing 'ListInstanceProfilesForRole' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListInstanceProfilesForRole")
@@ -2687,6 +2784,7 @@ module Amazonite::IamV1
     # Guide*.
     def list_instance_profile_tags(input : AI::ListInstanceProfileTagsRequest) : Core::ParsedResponse(AI::ListInstanceProfileTagsResponse)
       Log.info { "performing 'ListInstanceProfileTags' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListInstanceProfileTags")
@@ -2707,6 +2805,7 @@ module Amazonite::IamV1
     # You can paginate the results using the `MaxItems` and `Marker` parameters.
     def list_mfa_devices(input : AI::ListMFADevicesRequest) : Core::ParsedResponse(AI::ListMFADevicesResponse)
       Log.info { "performing 'ListMFADevices' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListMFADevices")
@@ -2725,6 +2824,7 @@ module Amazonite::IamV1
     # *IAM User Guide*.
     def list_mfa_device_tags(input : AI::ListMFADeviceTagsRequest) : Core::ParsedResponse(AI::ListMFADeviceTagsResponse)
       Log.info { "performing 'ListMFADeviceTags' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListMFADeviceTags")
@@ -2746,6 +2846,7 @@ module Amazonite::IamV1
     # [GetOpenIDConnectProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetOpenIDConnectProvider.html).
     def list_open_id_connect_providers(input : AI::ListOpenIDConnectProvidersRequest) : Core::ParsedResponse(AI::ListOpenIDConnectProvidersResponse)
       Log.info { "performing 'ListOpenIDConnectProviders' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListOpenIDConnectProviders")
@@ -2768,6 +2869,7 @@ module Amazonite::IamV1
     # Guide*.
     def list_open_id_connect_provider_tags(input : AI::ListOpenIDConnectProviderTagsRequest) : Core::ParsedResponse(AI::ListOpenIDConnectProviderTagsResponse)
       Log.info { "performing 'ListOpenIDConnectProviderTags' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListOpenIDConnectProviderTags")
@@ -2785,6 +2887,7 @@ module Amazonite::IamV1
     # accounts](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html#id_root-user-access-management).
     def list_organizations_features(input : AI::ListOrganizationsFeaturesRequest) : Core::ParsedResponse(AI::ListOrganizationsFeaturesResponse)
       Log.info { "performing 'ListOrganizationsFeatures' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListOrganizationsFeatures")
@@ -2817,6 +2920,7 @@ module Amazonite::IamV1
     # [GetPolicy](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetPolicy.html).
     def list_policies(input : AI::ListPoliciesRequest) : Core::ParsedResponse(AI::ListPoliciesResponse)
       Log.info { "performing 'ListPolicies' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListPolicies")
@@ -2864,6 +2968,7 @@ module Amazonite::IamV1
     # [GetRole](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetRole.html) operations.
     def list_policies_granting_service_access(input : AI::ListPoliciesGrantingServiceAccessRequest) : Core::ParsedResponse(AI::ListPoliciesGrantingServiceAccessResponse)
       Log.info { "performing 'ListPoliciesGrantingServiceAccess' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListPoliciesGrantingServiceAccess")
@@ -2882,6 +2987,7 @@ module Amazonite::IamV1
     # Guide*.
     def list_policy_tags(input : AI::ListPolicyTagsRequest) : Core::ParsedResponse(AI::ListPolicyTagsResponse)
       Log.info { "performing 'ListPolicyTags' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListPolicyTags")
@@ -2902,6 +3008,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def list_policy_versions(input : AI::ListPolicyVersionsRequest) : Core::ParsedResponse(AI::ListPolicyVersionsResponse)
       Log.info { "performing 'ListPolicyVersions' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListPolicyVersions")
@@ -2927,6 +3034,7 @@ module Amazonite::IamV1
     # inline policies embedded with the specified role, the operation returns an empty list.
     def list_role_policies(input : AI::ListRolePoliciesRequest) : Core::ParsedResponse(AI::ListRolePoliciesResponse)
       Log.info { "performing 'ListRolePolicies' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListRolePolicies")
@@ -2959,6 +3067,7 @@ module Amazonite::IamV1
     # You can paginate the results using the `MaxItems` and `Marker` parameters.
     def list_roles(input : AI::ListRolesRequest) : Core::ParsedResponse(AI::ListRolesResponse)
       Log.info { "performing 'ListRoles' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListRoles")
@@ -2977,6 +3086,7 @@ module Amazonite::IamV1
     # Guide*.
     def list_role_tags(input : AI::ListRoleTagsRequest) : Core::ParsedResponse(AI::ListRoleTagsResponse)
       Log.info { "performing 'ListRoleTags' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListRoleTags")
@@ -2999,6 +3109,7 @@ module Amazonite::IamV1
     # 4](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html).
     def list_saml_providers(input : AI::ListSAMLProvidersRequest) : Core::ParsedResponse(AI::ListSAMLProvidersResponse)
       Log.info { "performing 'ListSAMLProviders' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListSAMLProviders")
@@ -3021,6 +3132,7 @@ module Amazonite::IamV1
     # Guide*.
     def list_saml_provider_tags(input : AI::ListSAMLProviderTagsRequest) : Core::ParsedResponse(AI::ListSAMLProviderTagsResponse)
       Log.info { "performing 'ListSAMLProviderTags' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListSAMLProviderTags")
@@ -3049,6 +3161,7 @@ module Amazonite::IamV1
     # [GetServerCertificate](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetServerCertificate.html).
     def list_server_certificates(input : AI::ListServerCertificatesRequest) : Core::ParsedResponse(AI::ListServerCertificatesResponse)
       Log.info { "performing 'ListServerCertificates' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListServerCertificates")
@@ -3073,6 +3186,7 @@ module Amazonite::IamV1
     # in the *IAM User Guide*.
     def list_server_certificate_tags(input : AI::ListServerCertificateTagsRequest) : Core::ParsedResponse(AI::ListServerCertificateTagsResponse)
       Log.info { "performing 'ListServerCertificateTags' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListServerCertificateTags")
@@ -3106,6 +3220,7 @@ module Amazonite::IamV1
     # in the *IAM User Guide*.
     def list_service_specific_credentials(input : AI::ListServiceSpecificCredentialsRequest) : Core::ParsedResponse(AI::ListServiceSpecificCredentialsResponse)
       Log.info { "performing 'ListServiceSpecificCredentials' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListServiceSpecificCredentials")
@@ -3131,6 +3246,7 @@ module Amazonite::IamV1
     # Services account has no associated users.
     def list_signing_certificates(input : AI::ListSigningCertificatesRequest) : Core::ParsedResponse(AI::ListSigningCertificatesResponse)
       Log.info { "performing 'ListSigningCertificates' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListSigningCertificates")
@@ -3156,6 +3272,7 @@ module Amazonite::IamV1
     # using the `MaxItems` and `Marker` parameters.
     def list_ssh_public_keys(input : AI::ListSSHPublicKeysRequest) : Core::ParsedResponse(AI::ListSSHPublicKeysResponse)
       Log.info { "performing 'ListSSHPublicKeys' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListSSHPublicKeys")
@@ -3181,6 +3298,7 @@ module Amazonite::IamV1
     # inline policies embedded with the specified user, the operation returns an empty list.
     def list_user_policies(input : AI::ListUserPoliciesRequest) : Core::ParsedResponse(AI::ListUserPoliciesResponse)
       Log.info { "performing 'ListUserPolicies' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListUserPolicies")
@@ -3211,6 +3329,7 @@ module Amazonite::IamV1
     # You can paginate the results using the `MaxItems` and `Marker` parameters.
     def list_users(input : AI::ListUsersRequest) : Core::ParsedResponse(AI::ListUsersResponse)
       Log.info { "performing 'ListUsers' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListUsers")
@@ -3229,6 +3348,7 @@ module Amazonite::IamV1
     # Guide*.
     def list_user_tags(input : AI::ListUserTagsRequest) : Core::ParsedResponse(AI::ListUserTagsResponse)
       Log.info { "performing 'ListUserTags' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListUserTags")
@@ -3253,6 +3373,7 @@ module Amazonite::IamV1
     # You can paginate the results using the `MaxItems` and `Marker` parameters.
     def list_virtual_mfa_devices(input : AI::ListVirtualMFADevicesRequest) : Core::ParsedResponse(AI::ListVirtualMFADevicesResponse)
       Log.info { "performing 'ListVirtualMFADevices' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ListVirtualMFADevices")
@@ -3274,6 +3395,7 @@ module Amazonite::IamV1
     # to view the current properties.
     def put_account_properties(input : AI::PutAccountPropertiesRequest) : Core::ParsedResponse(AI::PutAccountPropertiesResponse)
       Log.info { "performing 'PutAccountProperties' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "PutAccountProperties")
@@ -3307,6 +3429,7 @@ module Amazonite::IamV1
     # User Guide*.
     def put_group_policy(input : AI::PutGroupPolicyRequest) : Core::Response
       Log.info { "performing 'PutGroupPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "PutGroupPolicy")
@@ -3331,6 +3454,7 @@ module Amazonite::IamV1
     # in the IAM User Guide.
     def put_role_permissions_boundary(input : AI::PutRolePermissionsBoundaryRequest) : Core::Response
       Log.info { "performing 'PutRolePermissionsBoundary' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "PutRolePermissionsBoundary")
@@ -3371,6 +3495,7 @@ module Amazonite::IamV1
     # User Guide*.
     def put_role_policy(input : AI::PutRolePolicyRequest) : Core::Response
       Log.info { "performing 'PutRolePolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "PutRolePolicy")
@@ -3393,6 +3518,7 @@ module Amazonite::IamV1
     # in the IAM User Guide.
     def put_user_permissions_boundary(input : AI::PutUserPermissionsBoundaryRequest) : Core::Response
       Log.info { "performing 'PutUserPermissionsBoundary' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "PutUserPermissionsBoundary")
@@ -3424,6 +3550,7 @@ module Amazonite::IamV1
     # User Guide*.
     def put_user_policy(input : AI::PutUserPolicyRequest) : Core::Response
       Log.info { "performing 'PutUserPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "PutUserPolicy")
@@ -3446,6 +3573,7 @@ module Amazonite::IamV1
     # Requests](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies-temporary-delegation.html#temporary-delegation-managing-permissions).
     def reject_delegation_request(input : AI::RejectDelegationRequestRequest) : Core::Response
       Log.info { "performing 'RejectDelegationRequest' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "RejectDelegationRequest")
@@ -3463,6 +3591,7 @@ module Amazonite::IamV1
     # ID that does not exist.
     def remove_client_id_from_open_id_connect_provider(input : AI::RemoveClientIDFromOpenIDConnectProviderRequest) : Core::Response
       Log.info { "performing 'RemoveClientIDFromOpenIDConnectProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "RemoveClientIDFromOpenIDConnectProvider")
@@ -3486,6 +3615,7 @@ module Amazonite::IamV1
     # in the *IAM User Guide*.
     def remove_role_from_instance_profile(input : AI::RemoveRoleFromInstanceProfileRequest) : Core::Response
       Log.info { "performing 'RemoveRoleFromInstanceProfile' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "RemoveRoleFromInstanceProfile")
@@ -3499,6 +3629,7 @@ module Amazonite::IamV1
     # Removes the specified user from the specified group.
     def remove_user_from_group(input : AI::RemoveUserFromGroupRequest) : Core::Response
       Log.info { "performing 'RemoveUserFromGroup' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "RemoveUserFromGroup")
@@ -3514,6 +3645,7 @@ module Amazonite::IamV1
     # password immediately invalidates the previous password associated with this user.
     def reset_service_specific_credential(input : AI::ResetServiceSpecificCredentialRequest) : Core::ParsedResponse(AI::ResetServiceSpecificCredentialResponse)
       Log.info { "performing 'ResetServiceSpecificCredential' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ResetServiceSpecificCredential")
@@ -3534,6 +3666,7 @@ module Amazonite::IamV1
     # User Guide*.
     def resync_mfa_device(input : AI::ResyncMFADeviceRequest) : Core::Response
       Log.info { "performing 'ResyncMFADevice' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "ResyncMFADevice")
@@ -3558,6 +3691,7 @@ module Amazonite::IamV1
     # Requests](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies-temporary-delegation.html#temporary-delegation-managing-permissions).
     def send_delegation_token(input : AI::SendDelegationTokenRequest) : Core::Response
       Log.info { "performing 'SendDelegationToken' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SendDelegationToken")
@@ -3579,6 +3713,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def set_default_policy_version(input : AI::SetDefaultPolicyVersionRequest) : Core::Response
       Log.info { "performing 'SetDefaultPolicyVersion' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SetDefaultPolicyVersion")
@@ -3615,6 +3750,7 @@ module Amazonite::IamV1
     # operation.
     def set_security_token_service_preferences(input : AI::SetSecurityTokenServicePreferencesRequest) : Core::Response
       Log.info { "performing 'SetSecurityTokenServicePreferences' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SetSecurityTokenServicePreferences")
@@ -3656,6 +3792,7 @@ module Amazonite::IamV1
     # *IAM User Guide*.
     def simulate_custom_policy(input : AI::SimulateCustomPolicyRequest) : Core::ParsedResponse(AI::SimulatePolicyResponse)
       Log.info { "performing 'SimulateCustomPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SimulateCustomPolicy")
@@ -3715,6 +3852,7 @@ module Amazonite::IamV1
     # *IAM User Guide*.
     def simulate_principal_policy(input : AI::SimulatePrincipalPolicyRequest) : Core::ParsedResponse(AI::SimulatePolicyResponse)
       Log.info { "performing 'SimulatePrincipalPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "SimulatePrincipalPolicy")
@@ -3754,6 +3892,7 @@ module Amazonite::IamV1
     # value in your code.
     def tag_instance_profile(input : AI::TagInstanceProfileRequest) : Core::Response
       Log.info { "performing 'TagInstanceProfile' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "TagInstanceProfile")
@@ -3791,6 +3930,7 @@ module Amazonite::IamV1
     # value in your code.
     def tag_mfa_device(input : AI::TagMFADeviceRequest) : Core::Response
       Log.info { "performing 'TagMFADevice' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "TagMFADevice")
@@ -3830,6 +3970,7 @@ module Amazonite::IamV1
     # value in your code.
     def tag_open_id_connect_provider(input : AI::TagOpenIDConnectProviderRequest) : Core::Response
       Log.info { "performing 'TagOpenIDConnectProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "TagOpenIDConnectProvider")
@@ -3867,6 +4008,7 @@ module Amazonite::IamV1
     # value in your code.
     def tag_policy(input : AI::TagPolicyRequest) : Core::Response
       Log.info { "performing 'TagPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "TagPolicy")
@@ -3912,6 +4054,7 @@ module Amazonite::IamV1
     # Guide*.
     def tag_role(input : AI::TagRoleRequest) : Core::Response
       Log.info { "performing 'TagRole' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "TagRole")
@@ -3951,6 +4094,7 @@ module Amazonite::IamV1
     # value in your code.
     def tag_saml_provider(input : AI::TagSAMLProviderRequest) : Core::Response
       Log.info { "performing 'TagSAMLProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "TagSAMLProvider")
@@ -3997,6 +4141,7 @@ module Amazonite::IamV1
     # value in your code.
     def tag_server_certificate(input : AI::TagServerCertificateRequest) : Core::Response
       Log.info { "performing 'TagServerCertificate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "TagServerCertificate")
@@ -4042,6 +4187,7 @@ module Amazonite::IamV1
     # Guide*.
     def tag_user(input : AI::TagUserRequest) : Core::Response
       Log.info { "performing 'TagUser' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "TagUser")
@@ -4057,6 +4203,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def untag_instance_profile(input : AI::UntagInstanceProfileRequest) : Core::Response
       Log.info { "performing 'UntagInstanceProfile' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UntagInstanceProfile")
@@ -4073,6 +4220,7 @@ module Amazonite::IamV1
     # Guide*.
     def untag_mfa_device(input : AI::UntagMFADeviceRequest) : Core::Response
       Log.info { "performing 'UntagMFADevice' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UntagMFADevice")
@@ -4091,6 +4239,7 @@ module Amazonite::IamV1
     # Guide*.
     def untag_open_id_connect_provider(input : AI::UntagOpenIDConnectProviderRequest) : Core::Response
       Log.info { "performing 'UntagOpenIDConnectProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UntagOpenIDConnectProvider")
@@ -4106,6 +4255,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def untag_policy(input : AI::UntagPolicyRequest) : Core::Response
       Log.info { "performing 'UntagPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UntagPolicy")
@@ -4121,6 +4271,7 @@ module Amazonite::IamV1
     # Guide*.
     def untag_role(input : AI::UntagRoleRequest) : Core::Response
       Log.info { "performing 'UntagRole' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UntagRole")
@@ -4139,6 +4290,7 @@ module Amazonite::IamV1
     # Guide*.
     def untag_saml_provider(input : AI::UntagSAMLProviderRequest) : Core::Response
       Log.info { "performing 'UntagSAMLProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UntagSAMLProvider")
@@ -4160,6 +4312,7 @@ module Amazonite::IamV1
     # in the *IAM User Guide*.
     def untag_server_certificate(input : AI::UntagServerCertificateRequest) : Core::Response
       Log.info { "performing 'UntagServerCertificate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UntagServerCertificate")
@@ -4175,6 +4328,7 @@ module Amazonite::IamV1
     # Guide*.
     def untag_user(input : AI::UntagUserRequest) : Core::Response
       Log.info { "performing 'UntagUser' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UntagUser")
@@ -4200,6 +4354,7 @@ module Amazonite::IamV1
     # *IAM User Guide*.
     def update_access_key(input : AI::UpdateAccessKeyRequest) : Core::Response
       Log.info { "performing 'UpdateAccessKey' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateAccessKey")
@@ -4223,6 +4378,7 @@ module Amazonite::IamV1
     # the *IAM User Guide*.
     def update_account_password_policy(input : AI::UpdateAccountPasswordPolicyRequest) : Core::Response
       Log.info { "performing 'UpdateAccountPasswordPolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateAccountPasswordPolicy")
@@ -4239,6 +4395,7 @@ module Amazonite::IamV1
     # identities](https://docs.aws.amazon.com/IAM/latest/UserGuide/roles-toplevel.html).
     def update_assume_role_policy(input : AI::UpdateAssumeRolePolicyRequest) : Core::Response
       Log.info { "performing 'UpdateAssumeRolePolicy' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateAssumeRolePolicy")
@@ -4257,6 +4414,7 @@ module Amazonite::IamV1
     # Requests](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies-temporary-delegation.html#temporary-delegation-managing-permissions).
     def update_delegation_request(input : AI::UpdateDelegationRequestRequest) : Core::Response
       Log.info { "performing 'UpdateDelegationRequest' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateDelegationRequest")
@@ -4282,6 +4440,7 @@ module Amazonite::IamV1
     # management](https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html).
     def update_group(input : AI::UpdateGroupRequest) : Core::Response
       Log.info { "performing 'UpdateGroup' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateGroup")
@@ -4303,6 +4462,7 @@ module Amazonite::IamV1
     # *IAM User Guide*.
     def update_login_profile(input : AI::UpdateLoginProfileRequest) : Core::Response
       Log.info { "performing 'UpdateLoginProfile' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateLoginProfile")
@@ -4335,6 +4495,7 @@ module Amazonite::IamV1
     # operation to highly privileged users.
     def update_open_id_connect_provider_thumbprint(input : AI::UpdateOpenIDConnectProviderThumbprintRequest) : Core::Response
       Log.info { "performing 'UpdateOpenIDConnectProviderThumbprint' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateOpenIDConnectProviderThumbprint")
@@ -4348,6 +4509,7 @@ module Amazonite::IamV1
     # Updates the description or maximum session duration setting of a role.
     def update_role(input : AI::UpdateRoleRequest) : Core::ParsedResponse(AI::UpdateRoleResponse)
       Log.info { "performing 'UpdateRole' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateRole")
@@ -4367,6 +4529,7 @@ module Amazonite::IamV1
     # `Description` parameter in the `UpdateRole` operation.
     def update_role_description(input : AI::UpdateRoleDescriptionRequest) : Core::ParsedResponse(AI::UpdateRoleDescriptionResponse)
       Log.info { "performing 'UpdateRoleDescription' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateRoleDescription")
@@ -4384,6 +4547,7 @@ module Amazonite::IamV1
     # separate request.
     def update_saml_provider(input : AI::UpdateSAMLProviderRequest) : Core::ParsedResponse(AI::UpdateSAMLProviderResponse)
       Log.info { "performing 'UpdateSAMLProvider' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateSAMLProvider")
@@ -4417,6 +4581,7 @@ module Amazonite::IamV1
     # User Guide*.
     def update_server_certificate(input : AI::UpdateServerCertificateRequest) : Core::Response
       Log.info { "performing 'UpdateServerCertificate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateServerCertificate")
@@ -4433,6 +4598,7 @@ module Amazonite::IamV1
     # work flow.
     def update_service_specific_credential(input : AI::UpdateServiceSpecificCredentialRequest) : Core::Response
       Log.info { "performing 'UpdateServiceSpecificCredential' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateServiceSpecificCredential")
@@ -4454,6 +4620,7 @@ module Amazonite::IamV1
     # associated users.
     def update_signing_certificate(input : AI::UpdateSigningCertificateRequest) : Core::Response
       Log.info { "performing 'UpdateSigningCertificate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateSigningCertificate")
@@ -4475,6 +4642,7 @@ module Amazonite::IamV1
     # in the *CodeCommit User Guide*.
     def update_ssh_public_key(input : AI::UpdateSSHPublicKeyRequest) : Core::Response
       Log.info { "performing 'UpdateSSHPublicKey' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateSSHPublicKey")
@@ -4501,6 +4669,7 @@ module Amazonite::IamV1
     # policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/PermissionsAndPolicies.html).
     def update_user(input : AI::UpdateUserRequest) : Core::Response
       Log.info { "performing 'UpdateUser' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UpdateUser")
@@ -4541,6 +4710,7 @@ module Amazonite::IamV1
     # Guide*.
     def upload_server_certificate(input : AI::UploadServerCertificateRequest) : Core::ParsedResponse(AI::UploadServerCertificateResponse)
       Log.info { "performing 'UploadServerCertificate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UploadServerCertificate")
@@ -4578,6 +4748,7 @@ module Amazonite::IamV1
     # User Guide*.
     def upload_signing_certificate(input : AI::UploadSigningCertificateRequest) : Core::ParsedResponse(AI::UploadSigningCertificateResponse)
       Log.info { "performing 'UploadSigningCertificate' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UploadSigningCertificate")
@@ -4599,6 +4770,7 @@ module Amazonite::IamV1
     # in the *CodeCommit User Guide*.
     def upload_ssh_public_key(input : AI::UploadSSHPublicKeyRequest) : Core::ParsedResponse(AI::UploadSSHPublicKeyResponse)
       Log.info { "performing 'UploadSSHPublicKey' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "UploadSSHPublicKey")

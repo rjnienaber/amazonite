@@ -1,4 +1,5 @@
 private alias AAG = Amazonite::ApiGatewayV1
+private alias Core = Amazonite::Core
 
 module Amazonite::ApiGatewayV1
   # Represents an `HTTP`, `HTTP_PROXY`, `AWS`, `AWS_PROXY`, or Mock integration.
@@ -155,5 +156,17 @@ module Amazonite::ApiGatewayV1
       @integration_target : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @integration_responses
+        value.each_value(&.validate!)
+      end
+
+      if value = @tls_config
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@type, @http_method, @uri, @connection_type, @connection_id, @credentials, @request_parameters, @request_templates, @passthrough_behavior, @content_handling, @timeout_in_millis, @cache_namespace, @cache_key_parameters, @integration_responses, @tls_config, @response_transfer_mode, @integration_target)
   end
 end

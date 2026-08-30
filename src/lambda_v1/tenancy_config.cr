@@ -16,5 +16,10 @@ module Amazonite::LambdaV1
       @tenant_isolation_mode : TenantIsolationMode,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@tenant_isolation_mode)
   end
 end

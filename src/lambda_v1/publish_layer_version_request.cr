@@ -51,5 +51,40 @@ module Amazonite::LambdaV1
       @license_info : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @layer_name
+        raise Core::ValidationError.new("LayerName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("LayerName length must be <= 140") if value.size > 140
+        raise Core::ValidationError.new("LayerName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:layer:[a-zA-Z0-9-_]+)|[a-zA-Z0-9-_]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 256") if value.size > 256
+      end
+
+      if value = @content
+        value.validate!
+      end
+
+      if value = @compatible_architectures
+        raise Core::ValidationError.new("CompatibleArchitectures must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("CompatibleArchitectures must have at most 2 item(s)") if value.size > 2
+      end
+
+      if value = @compatible_runtimes
+        raise Core::ValidationError.new("CompatibleRuntimes must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("CompatibleRuntimes must have at most 15 item(s)") if value.size > 15
+      end
+
+      if value = @license_info
+        raise Core::ValidationError.new("LicenseInfo length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("LicenseInfo length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("LicenseInfo does not match the required pattern") unless value.matches?(Regex.new("^.*$"))
+      end
+    end
+
+    def_equals_and_hash(@layer_name, @description, @content, @compatible_architectures, @compatible_runtimes, @license_info)
   end
 end

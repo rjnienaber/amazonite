@@ -171,5 +171,10 @@ module Amazonite::SnsV1
         attribute_value: Core::XMLValue.string(node.xpath_node("*[local-name()='AttributeValue']")),
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@topic_arn, @attribute_name, @attribute_value)
   end
 end

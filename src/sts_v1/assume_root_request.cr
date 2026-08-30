@@ -59,5 +59,23 @@ module Amazonite::StsV1
         duration_seconds: Core::XMLValue.i32(node.xpath_node("*[local-name()='DurationSeconds']")),
       )
     end
+
+    def validate! : Nil
+      if value = @target_principal
+        raise Core::ValidationError.new("TargetPrincipal length must be >= 12") if value.size < 12
+        raise Core::ValidationError.new("TargetPrincipal length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @task_policy_arn
+        value.validate!
+      end
+
+      if value = @duration_seconds
+        raise Core::ValidationError.new("DurationSeconds value must be >= 0") if value < 0
+        raise Core::ValidationError.new("DurationSeconds value must be <= 900") if value > 900
+      end
+    end
+
+    def_equals_and_hash(@target_principal, @task_policy_arn, @duration_seconds)
   end
 end

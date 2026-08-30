@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SecretsManagerV1
   class RotateSecretRequest
     include JSON::Serializable
@@ -97,5 +99,37 @@ module Amazonite::SecretsManagerV1
       @rotate_immediately : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @secret_id
+        raise Core::ValidationError.new("SecretId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("SecretId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @client_request_token
+        raise Core::ValidationError.new("ClientRequestToken length must be >= 32") if value.size < 32
+        raise Core::ValidationError.new("ClientRequestToken length must be <= 64") if value.size > 64
+      end
+
+      if value = @rotation_lambda_arn
+        raise Core::ValidationError.new("RotationLambdaARN length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("RotationLambdaARN length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @rotation_rules
+        value.validate!
+      end
+
+      if value = @external_secret_rotation_metadata
+        value.each(&.validate!)
+      end
+
+      if value = @external_secret_rotation_role_arn
+        raise Core::ValidationError.new("ExternalSecretRotationRoleArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("ExternalSecretRotationRoleArn length must be <= 2048") if value.size > 2048
+      end
+    end
+
+    def_equals_and_hash(@secret_id, @client_request_token, @rotation_lambda_arn, @rotation_rules, @external_secret_rotation_metadata, @external_secret_rotation_role_arn, @rotate_immediately)
   end
 end

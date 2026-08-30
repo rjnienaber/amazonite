@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribePatchGroupsResult
     include JSON::Serializable
@@ -20,5 +22,13 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @mappings
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@mappings, @next_token)
   end
 end

@@ -258,5 +258,147 @@ module Amazonite::LambdaV1
       @durable_config : DurableConfig | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @function_name
+        raise Core::ValidationError.new("FunctionName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("FunctionName length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("FunctionName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:|(((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?))(function:)?([a-zA-Z0-9-_\\.]+)(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @function_arn
+        raise Core::ValidationError.new("FunctionArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("FunctionArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("FunctionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST(\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @role
+        raise Core::ValidationError.new("Role length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Role length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("Role does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+$"))
+      end
+
+      if value = @handler
+        raise Core::ValidationError.new("Handler length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Handler length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("Handler does not match the required pattern") unless value.matches?(Regex.new("^[^\\s]+$"))
+      end
+
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Description length must be <= 256") if value.size > 256
+      end
+
+      if value = @timeout
+        raise Core::ValidationError.new("Timeout value must be >= 1") if value < 1
+        raise Core::ValidationError.new("Timeout value must be <= 5400") if value > 5400
+      end
+
+      if value = @memory_size
+        raise Core::ValidationError.new("MemorySize value must be >= 128") if value < 128
+        raise Core::ValidationError.new("MemorySize value must be <= 32768") if value > 32768
+      end
+
+      if value = @last_modified
+        raise Core::ValidationError.new("LastModified length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("LastModified length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("LastModified does not match the required pattern") unless value.matches?(Regex.new("^.*$"))
+      end
+
+      if value = @version
+        raise Core::ValidationError.new("Version length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Version length must be <= 1024") if value.size > 1024
+        raise Core::ValidationError.new("Version does not match the required pattern") unless value.matches?(Regex.new("^(\\$LATEST|[0-9]+)$"))
+      end
+
+      if value = @vpc_config
+        value.validate!
+      end
+
+      if value = @dead_letter_config
+        value.validate!
+      end
+
+      if value = @environment
+        value.validate!
+      end
+
+      if value = @kms_key_arn
+        raise Core::ValidationError.new("KMSKeyArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("KMSKeyArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("KMSKeyArn does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*)|()$"))
+      end
+
+      if value = @tracing_config
+        value.validate!
+      end
+
+      if value = @master_arn
+        raise Core::ValidationError.new("MasterArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("MasterArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("MasterArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"))
+      end
+
+      if value = @layers
+        value.each(&.validate!)
+      end
+
+      if value = @file_system_configs
+        raise Core::ValidationError.new("FileSystemConfigs must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("FileSystemConfigs must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+
+      if value = @signing_profile_version_arn
+        raise Core::ValidationError.new("SigningProfileVersionArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SigningProfileVersionArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("SigningProfileVersionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)$"))
+      end
+
+      if value = @signing_job_arn
+        raise Core::ValidationError.new("SigningJobArn length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("SigningJobArn length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("SigningJobArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)$"))
+      end
+
+      if value = @image_config_response
+        value.validate!
+      end
+
+      if value = @architectures
+        raise Core::ValidationError.new("Architectures must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Architectures must have at most 1 item(s)") if value.size > 1
+      end
+
+      if value = @ephemeral_storage
+        value.validate!
+      end
+
+      if value = @snap_start
+        value.validate!
+      end
+
+      if value = @runtime_version_config
+        value.validate!
+      end
+
+      if value = @logging_config
+        value.validate!
+      end
+
+      if value = @tenancy_config
+        value.validate!
+      end
+
+      if value = @capacity_provider_config
+        value.validate!
+      end
+
+      if value = @durable_config
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@function_name, @function_arn, @runtime, @role, @handler, @code_size, @description, @timeout, @memory_size, @last_modified, @code_sha_256, @version, @vpc_config, @dead_letter_config, @environment, @kms_key_arn, @tracing_config, @master_arn, @revision_id, @layers, @state, @state_reason, @state_reason_code, @last_update_status, @last_update_status_reason, @last_update_status_reason_code, @file_system_configs, @signing_profile_version_arn, @signing_job_arn, @package_type, @image_config_response, @architectures, @ephemeral_storage, @snap_start, @runtime_version_config, @logging_config, @tenancy_config, @capacity_provider_config, @config_sha_256, @durable_config)
   end
 end

@@ -54,5 +54,14 @@ module Amazonite::IamV1
         context_key_type: (n = node.xpath_node("*[local-name()='ContextKeyType']")) ? AI::ContextKeyTypeEnum.from_json_object_key?(n.content) : nil,
       )
     end
+
+    def validate! : Nil
+      if value = @context_key_name
+        raise Core::ValidationError.new("ContextKeyName length must be >= 5") if value.size < 5
+        raise Core::ValidationError.new("ContextKeyName length must be <= 256") if value.size > 256
+      end
+    end
+
+    def_equals_and_hash(@context_key_name, @context_key_values, @context_key_type)
   end
 end

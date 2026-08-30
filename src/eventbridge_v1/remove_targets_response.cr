@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::EventBridgeV1
   class RemoveTargetsResponse
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::EventBridgeV1
       @failed_entries : Array(RemoveTargetsResultEntry) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @failed_entries
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@failed_entry_count, @failed_entries)
   end
 end

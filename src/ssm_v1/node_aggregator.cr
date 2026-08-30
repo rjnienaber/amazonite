@@ -1,4 +1,5 @@
 private alias AS = Amazonite::SsmV1
+private alias Core = Amazonite::Core
 
 module Amazonite::SsmV1
   # One or more aggregators for viewing counts of nodes using different dimensions.
@@ -28,5 +29,15 @@ module Amazonite::SsmV1
       @aggregators : Array(NodeAggregator) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @aggregators
+        raise Core::ValidationError.new("Aggregators must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Aggregators must have at most 2 item(s)") if value.size > 2
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@aggregator_type, @type_name, @attribute_name, @aggregators)
   end
 end

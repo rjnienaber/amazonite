@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KmsV1
   class GetKeyPolicyRequest
     include JSON::Serializable
@@ -27,5 +29,20 @@ module Amazonite::KmsV1
       @policy_name : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @policy_name
+        raise Core::ValidationError.new("PolicyName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PolicyName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("PolicyName does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+    end
+
+    def_equals_and_hash(@key_id, @policy_name)
   end
 end

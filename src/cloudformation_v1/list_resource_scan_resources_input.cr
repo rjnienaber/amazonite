@@ -81,5 +81,24 @@ module Amazonite::CloudFormationV1
         max_results: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxResults']")),
       )
     end
+
+    def validate! : Nil
+      if value = @tag_key
+        raise Core::ValidationError.new("TagKey length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TagKey length must be <= 128") if value.size > 128
+      end
+
+      if value = @tag_value
+        raise Core::ValidationError.new("TagValue length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TagValue length must be <= 256") if value.size > 256
+      end
+
+      if value = @next_token
+        raise Core::ValidationError.new("NextToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("NextToken length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@resource_scan_id, @resource_identifier, @resource_type_prefix, @tag_key, @tag_value, @next_token, @max_results)
   end
 end

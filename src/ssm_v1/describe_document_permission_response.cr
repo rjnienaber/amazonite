@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class DescribeDocumentPermissionResponse
     include JSON::Serializable
@@ -22,5 +24,18 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @account_ids
+        raise Core::ValidationError.new("AccountIds must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("AccountIds must have at most 20 item(s)") if value.size > 20
+      end
+
+      if value = @account_sharing_info_list
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@account_ids, @account_sharing_info_list, @next_token)
   end
 end

@@ -51,5 +51,20 @@ module Amazonite::IamV1
         credential_age_days: Core::XMLValue.i32(node.xpath_node("*[local-name()='CredentialAgeDays']")),
       )
     end
+
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @credential_age_days
+        raise Core::ValidationError.new("CredentialAgeDays value must be >= 1") if value < 1
+        raise Core::ValidationError.new("CredentialAgeDays value must be <= 36600") if value > 36600
+      end
+    end
+
+    def_equals_and_hash(@user_name, @service_name, @credential_age_days)
   end
 end

@@ -179,5 +179,89 @@ module Amazonite::SsmV1
       @change_request_name : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @automation_execution_id
+        raise Core::ValidationError.new("AutomationExecutionId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("AutomationExecutionId length must be <= 36") if value.size > 36
+      end
+
+      if value = @document_name
+        raise Core::ValidationError.new("DocumentName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{3,128}$"))
+      end
+
+      if value = @document_version
+        raise Core::ValidationError.new("DocumentVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)$"))
+      end
+
+      if value = @outputs
+        raise Core::ValidationError.new("Outputs must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("Outputs must have at most 200 entry(s)") if value.size > 200
+      end
+
+      if value = @parent_automation_execution_id
+        raise Core::ValidationError.new("ParentAutomationExecutionId length must be >= 36") if value.size < 36
+        raise Core::ValidationError.new("ParentAutomationExecutionId length must be <= 36") if value.size > 36
+      end
+
+      if value = @target_parameter_name
+        raise Core::ValidationError.new("TargetParameterName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TargetParameterName length must be <= 50") if value.size > 50
+      end
+
+      if value = @targets
+        raise Core::ValidationError.new("Targets must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Targets must have at most 5 item(s)") if value.size > 5
+        value.each(&.validate!)
+      end
+
+      if value = @target_maps
+        raise Core::ValidationError.new("TargetMaps must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("TargetMaps must have at most 300 item(s)") if value.size > 300
+      end
+
+      if value = @resolved_targets
+        value.validate!
+      end
+
+      if value = @max_concurrency
+        raise Core::ValidationError.new("MaxConcurrency length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MaxConcurrency length must be <= 7") if value.size > 7
+        raise Core::ValidationError.new("MaxConcurrency does not match the required pattern") unless value.matches?(Regex.new("^([1-9][0-9]*|[1-9][0-9]%|[1-9]%|100%)$"))
+      end
+
+      if value = @max_errors
+        raise Core::ValidationError.new("MaxErrors length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("MaxErrors length must be <= 7") if value.size > 7
+        raise Core::ValidationError.new("MaxErrors does not match the required pattern") unless value.matches?(Regex.new("^([1-9][0-9]*|[0]|[1-9][0-9]%|[0-9]%|100%)$"))
+      end
+
+      if value = @alarm_configuration
+        value.validate!
+      end
+
+      if value = @triggered_alarms
+        raise Core::ValidationError.new("TriggeredAlarms must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("TriggeredAlarms must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+
+      if value = @target_locations_url
+        raise Core::ValidationError.new("TargetLocationsURL does not match the required pattern") unless value.matches?(Regex.new("^https:\\/\\/[-a-zA-Z0-9@:%._\\+~#=]{1,253}\\.s3(\\.[a-z\\d-]{9,16})?\\.amazonaws\\.com\\/.{1,2000}$"))
+      end
+
+      if value = @runbooks
+        raise Core::ValidationError.new("Runbooks must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Runbooks must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+
+      if value = @change_request_name
+        raise Core::ValidationError.new("ChangeRequestName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ChangeRequestName length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@automation_execution_id, @document_name, @document_version, @automation_execution_status, @execution_start_time, @execution_end_time, @executed_by, @log_file, @outputs, @mode, @parent_automation_execution_id, @current_step_name, @current_action, @failure_message, @warning_message, @target_parameter_name, @targets, @target_maps, @resolved_targets, @max_concurrency, @max_errors, @target, @automation_type, @alarm_configuration, @triggered_alarms, @target_locations_url, @automation_subtype, @scheduled_time, @runbooks, @ops_item_id, @association_id, @change_request_name)
   end
 end

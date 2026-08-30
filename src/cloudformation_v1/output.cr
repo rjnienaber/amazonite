@@ -52,5 +52,14 @@ module Amazonite::CloudFormationV1
         export_name: Core::XMLValue.string(node.xpath_node("*[local-name()='ExportName']")),
       )
     end
+
+    def validate! : Nil
+      if value = @description
+        raise Core::ValidationError.new("Description length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Description length must be <= 1024") if value.size > 1024
+      end
+    end
+
+    def_equals_and_hash(@output_key, @output_value, @description, @export_name)
   end
 end

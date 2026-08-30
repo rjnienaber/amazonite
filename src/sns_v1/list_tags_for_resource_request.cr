@@ -22,5 +22,14 @@ module Amazonite::SnsV1
         resource_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='ResourceArn']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @resource_arn
+        raise Core::ValidationError.new("ResourceArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ResourceArn length must be <= 1011") if value.size > 1011
+      end
+    end
+
+    def_equals_and_hash(@resource_arn)
   end
 end

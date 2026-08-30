@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   class TestTransformerResponse
     include JSON::Serializable
@@ -11,5 +13,13 @@ module Amazonite::CloudWatchLogsV1
       @transformed_logs : Array(TransformedLogRecord) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @transformed_logs
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@transformed_logs)
   end
 end

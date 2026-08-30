@@ -39,5 +39,14 @@ module Amazonite::CloudFormationV1
         generated_template_name: Core::XMLValue.string(node.xpath_node("*[local-name()='GeneratedTemplateName']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @generated_template_name
+        raise Core::ValidationError.new("GeneratedTemplateName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GeneratedTemplateName length must be <= 128") if value.size > 128
+      end
+    end
+
+    def_equals_and_hash(@format, @generated_template_name)
   end
 end

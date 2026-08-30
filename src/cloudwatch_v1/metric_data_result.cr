@@ -1,4 +1,5 @@
 private alias ACW = Amazonite::CloudWatchV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchV1
   # A `GetMetricData` call returns an array of `MetricDataResult` structures. Each of these
@@ -46,5 +47,18 @@ module Amazonite::CloudWatchV1
       @messages : Array(MessageData) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @id
+        raise Core::ValidationError.new("Id length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Id length must be <= 255") if value.size > 255
+      end
+
+      if value = @messages
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@id, @label, @timestamps, @values, @status_code, @messages)
   end
 end

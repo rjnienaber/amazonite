@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   class AddLayerVersionPermissionRequest
     include JSON::Serializable
@@ -44,5 +46,39 @@ module Amazonite::LambdaV1
       @revision_id : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @layer_name
+        raise Core::ValidationError.new("LayerName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("LayerName length must be <= 140") if value.size > 140
+        raise Core::ValidationError.new("LayerName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:layer:[a-zA-Z0-9-_]+)|[a-zA-Z0-9-_]+$"))
+      end
+
+      if value = @statement_id
+        raise Core::ValidationError.new("StatementId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StatementId length must be <= 100") if value.size > 100
+        raise Core::ValidationError.new("StatementId does not match the required pattern") unless value.matches?(Regex.new("^([a-zA-Z0-9-_]+)$"))
+      end
+
+      if value = @action
+        raise Core::ValidationError.new("Action length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Action length must be <= 22") if value.size > 22
+        raise Core::ValidationError.new("Action does not match the required pattern") unless value.matches?(Regex.new("^lambda:GetLayerVersion$"))
+      end
+
+      if value = @principal
+        raise Core::ValidationError.new("Principal length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("Principal length must be <= 10000") if value.size > 10000
+        raise Core::ValidationError.new("Principal does not match the required pattern") unless value.matches?(Regex.new("^\\d{12}|\\*|arn:(aws[a-zA-Z-]*):iam::\\d{12}:root$"))
+      end
+
+      if value = @organization_id
+        raise Core::ValidationError.new("OrganizationId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("OrganizationId length must be <= 34") if value.size > 34
+        raise Core::ValidationError.new("OrganizationId does not match the required pattern") unless value.matches?(Regex.new("^o-[a-z0-9]{10,32}$"))
+      end
+    end
+
+    def_equals_and_hash(@layer_name, @version_number, @statement_id, @action, @principal, @organization_id, @revision_id)
   end
 end

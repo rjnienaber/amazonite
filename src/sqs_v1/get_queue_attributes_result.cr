@@ -11,5 +11,10 @@ module Amazonite::SqsV1
       @attributes : Hash(QueueAttributeName, String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@attributes)
   end
 end

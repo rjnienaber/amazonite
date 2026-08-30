@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::ApiGatewayV1
   # Requests API Gateway to change information about a Stage resource.
   class UpdateStageRequest
@@ -22,5 +24,13 @@ module Amazonite::ApiGatewayV1
       @patch_operations : Array(PatchOperation) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @patch_operations
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@rest_api_id, @stage_name, @patch_operations)
   end
 end

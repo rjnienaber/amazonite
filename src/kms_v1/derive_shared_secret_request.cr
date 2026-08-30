@@ -109,5 +109,28 @@ module Amazonite::KmsV1
       @recipient : RecipientInfo | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key_id
+        raise Core::ValidationError.new("KeyId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("KeyId length must be <= 2048") if value.size > 2048
+      end
+
+      if value = @public_key
+        raise Core::ValidationError.new("PublicKey length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PublicKey length must be <= 8192") if value.size > 8192
+      end
+
+      if value = @grant_tokens
+        raise Core::ValidationError.new("GrantTokens must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("GrantTokens must have at most 10 item(s)") if value.size > 10
+      end
+
+      if value = @recipient
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@key_id, @key_agreement_algorithm, @public_key, @grant_tokens, @dry_run, @recipient)
   end
 end

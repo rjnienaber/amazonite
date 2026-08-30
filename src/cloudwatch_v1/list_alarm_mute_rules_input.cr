@@ -29,5 +29,19 @@ module Amazonite::CloudWatchV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @alarm_name
+        raise Core::ValidationError.new("AlarmName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AlarmName length must be <= 255") if value.size > 255
+      end
+
+      if value = @max_records
+        raise Core::ValidationError.new("MaxRecords value must be >= 1") if value < 1
+        raise Core::ValidationError.new("MaxRecords value must be <= 100") if value > 100
+      end
+    end
+
+    def_equals_and_hash(@alarm_name, @statuses, @max_records, @next_token)
   end
 end

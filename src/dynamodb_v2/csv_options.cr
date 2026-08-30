@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Processing options for the CSV file being imported.
   class CsvOptions
@@ -19,5 +21,20 @@ module Amazonite::DynamoDBV2
       @header_list : Array(String) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @delimiter
+        raise Core::ValidationError.new("Delimiter length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Delimiter length must be <= 1") if value.size > 1
+        raise Core::ValidationError.new("Delimiter does not match the required pattern") unless value.matches?(Regex.new("^[,;:|\\t ]$"))
+      end
+
+      if value = @header_list
+        raise Core::ValidationError.new("HeaderList must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("HeaderList must have at most 255 item(s)") if value.size > 255
+      end
+    end
+
+    def_equals_and_hash(@delimiter, @header_list)
   end
 end

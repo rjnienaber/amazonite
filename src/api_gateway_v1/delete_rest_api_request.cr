@@ -11,5 +11,10 @@ module Amazonite::ApiGatewayV1
       @rest_api_id : String,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@rest_api_id)
   end
 end

@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   # A structure that describes a single configuration for a log type, including its name, value
@@ -44,5 +45,19 @@ module Amazonite::CloudWatchLogsV1
       @max_value : Float64 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @key_name
+        raise Core::ValidationError.new("keyName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("keyName length must be <= 256") if value.size > 256
+      end
+
+      if value = @default_value
+        raise Core::ValidationError.new("defaultValue length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("defaultValue length must be <= 256") if value.size > 256
+      end
+    end
+
+    def_equals_and_hash(@key_name, @value_type, @default_value, @supported_values, @min_value, @max_value)
   end
 end

@@ -29,5 +29,14 @@ module Amazonite::CloudFormationV1
         logical_resource_id: Core::XMLValue.string(node.xpath_node("*[local-name()='LogicalResourceId']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @stack_name
+        raise Core::ValidationError.new("StackName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StackName does not match the required pattern") unless value.matches?(Regex.new("^([a-zA-Z][-a-zA-Z0-9]*)|(arn:\\b(aws|aws-us-gov|aws-cn)\\b:[-a-zA-Z0-9:/._+]*)$"))
+      end
+    end
+
+    def_equals_and_hash(@stack_name, @logical_resource_id)
   end
 end

@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the output of a `DescribeTable` operation.
   class DescribeTableOutput
@@ -11,5 +13,13 @@ module Amazonite::DynamoDBV2
       @table : TableDescription | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @table
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@table)
   end
 end

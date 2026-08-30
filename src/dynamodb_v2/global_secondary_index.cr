@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the properties of a global secondary index.
   class GlobalSecondaryIndex
@@ -63,5 +65,36 @@ module Amazonite::DynamoDBV2
       @warm_throughput : WarmThroughput | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @index_name
+        raise Core::ValidationError.new("IndexName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("IndexName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("IndexName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @key_schema
+        raise Core::ValidationError.new("KeySchema must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+
+      if value = @projection
+        value.validate!
+      end
+
+      if value = @provisioned_throughput
+        value.validate!
+      end
+
+      if value = @on_demand_throughput
+        value.validate!
+      end
+
+      if value = @warm_throughput
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@index_name, @key_schema, @projection, @provisioned_throughput, @on_demand_throughput, @warm_throughput)
   end
 end

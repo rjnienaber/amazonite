@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # Specific configuration settings for a self-managed Apache Kafka event source.
   class SelfManagedKafkaEventSourceConfig
@@ -20,5 +22,19 @@ module Amazonite::LambdaV1
       @schema_registry_config : KafkaSchemaRegistryConfig | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @consumer_group_id
+        raise Core::ValidationError.new("ConsumerGroupId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ConsumerGroupId length must be <= 200") if value.size > 200
+        raise Core::ValidationError.new("ConsumerGroupId does not match the required pattern") unless value.matches?(Regex.new("^[ a-zA-Z0-9-\\/*:_+=.@-]*$"))
+      end
+
+      if value = @schema_registry_config
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@consumer_group_id, @schema_registry_config)
   end
 end

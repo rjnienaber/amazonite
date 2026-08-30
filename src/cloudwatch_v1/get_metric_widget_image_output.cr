@@ -12,5 +12,10 @@ module Amazonite::CloudWatchV1
       @metric_widget_image : Bytes | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@metric_widget_image)
   end
 end

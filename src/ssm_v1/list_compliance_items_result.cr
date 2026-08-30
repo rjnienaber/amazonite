@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListComplianceItemsResult
     include JSON::Serializable
@@ -15,5 +17,13 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @compliance_items
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@compliance_items, @next_token)
   end
 end

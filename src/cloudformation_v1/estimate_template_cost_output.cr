@@ -26,5 +26,10 @@ module Amazonite::CloudFormationV1
         url: Core::XMLValue.string(node.xpath_node("*[local-name()='Url']")),
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@url)
   end
 end

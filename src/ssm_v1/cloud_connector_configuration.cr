@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   # The configuration that provides access details and targets for connecting to a third-party cloud
   # environment.
@@ -12,5 +14,13 @@ module Amazonite::SsmV1
       @azure_configuration : AzureConfiguration | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @azure_configuration
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@azure_configuration)
   end
 end

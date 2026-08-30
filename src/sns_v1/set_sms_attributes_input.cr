@@ -90,5 +90,10 @@ module Amazonite::SnsV1
         attributes: node.xpath_nodes("*[local-name()='attributes']/*[local-name()='entry']").each_with_object({} of String => String) { |entry, hash| hash[entry.xpath_node("*[local-name()='key']").not_nil!.content] = entry.xpath_node("*[local-name()='value']").not_nil!.content },
       )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@attributes)
   end
 end

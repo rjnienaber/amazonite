@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   # Represents the output for `ListTagsForStream`.
   class ListTagsForStreamOutput
@@ -18,5 +20,15 @@ module Amazonite::KinesisV1
       @has_more_tags : Bool,
     )
     end
+
+    def validate! : Nil
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("Tags must have at most 200 item(s)") if value.size > 200
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@tags, @has_more_tags)
   end
 end

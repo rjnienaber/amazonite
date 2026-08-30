@@ -25,5 +25,13 @@ module Amazonite::CloudFormationV1
         failed_stack_instances_count: Core::XMLValue.i32(node.xpath_node("*[local-name()='FailedStackInstancesCount']")),
       )
     end
+
+    def validate! : Nil
+      if value = @failed_stack_instances_count
+        raise Core::ValidationError.new("FailedStackInstancesCount value must be >= 0") if value < 0
+      end
+    end
+
+    def_equals_and_hash(@failed_stack_instances_count)
   end
 end

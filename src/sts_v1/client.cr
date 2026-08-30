@@ -105,6 +105,7 @@ module Amazonite::StsV1
     # is the time-based one-time password (TOTP) that the MFA device produces.
     def assume_role(input : AS::AssumeRoleRequest) : Core::ParsedResponse(AS::AssumeRoleResponse)
       Log.info { "performing 'AssumeRole' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AssumeRole")
@@ -251,6 +252,7 @@ module Amazonite::StsV1
     # in the *IAM User Guide*.
     def assume_role_with_saml(input : AS::AssumeRoleWithSAMLRequest) : Core::ParsedResponse(AS::AssumeRoleWithSAMLResponse)
       Log.info { "performing 'AssumeRoleWithSAML' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AssumeRoleWithSAML")
@@ -394,6 +396,7 @@ module Amazonite::StsV1
     # credentials.
     def assume_role_with_web_identity(input : AS::AssumeRoleWithWebIdentityRequest) : Core::ParsedResponse(AS::AssumeRoleWithWebIdentityResponse)
       Log.info { "performing 'AssumeRoleWithWebIdentity' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AssumeRoleWithWebIdentity")
@@ -435,6 +438,7 @@ module Amazonite::StsV1
     # in the *Organizations User Guide* for more information on SCPs.
     def assume_root(input : AS::AssumeRootRequest) : Core::ParsedResponse(AS::AssumeRootResponse)
       Log.info { "performing 'AssumeRoot' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "AssumeRoot")
@@ -481,6 +485,7 @@ module Amazonite::StsV1
     # - The values of condition keys in the context of the user's request.
     def decode_authorization_message(input : AS::DecodeAuthorizationMessageRequest) : Core::ParsedResponse(AS::DecodeAuthorizationMessageResponse)
       Log.info { "performing 'DecodeAuthorizationMessage' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "DecodeAuthorizationMessage")
@@ -518,6 +523,7 @@ module Amazonite::StsV1
     # access key might return an error that the key doesn't exist.
     def get_access_key_info(input : AS::GetAccessKeyInfoRequest) : Core::ParsedResponse(AS::GetAccessKeyInfoResponse)
       Log.info { "performing 'GetAccessKeyInfo' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetAccessKeyInfo")
@@ -540,6 +546,7 @@ module Amazonite::StsV1
     # in the *IAM User Guide*.
     def get_caller_identity(input : AS::GetCallerIdentityRequest) : Core::ParsedResponse(AS::GetCallerIdentityResponse)
       Log.info { "performing 'GetCallerIdentity' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetCallerIdentity")
@@ -558,6 +565,7 @@ module Amazonite::StsV1
     # Services resources.
     def get_delegated_access_token(input : AS::GetDelegatedAccessTokenRequest) : Core::ParsedResponse(AS::GetDelegatedAccessTokenResponse)
       Log.info { "performing 'GetDelegatedAccessToken' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetDelegatedAccessToken")
@@ -669,6 +677,7 @@ module Amazonite::StsV1
     # passed in the request takes precedence over the user tag.
     def get_federation_token(input : AS::GetFederationTokenRequest) : Core::ParsedResponse(AS::GetFederationTokenResponse)
       Log.info { "performing 'GetFederationToken' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetFederationToken")
@@ -739,6 +748,7 @@ module Amazonite::StsV1
     # in the *IAM User Guide*.
     def get_session_token(input : AS::GetSessionTokenRequest) : Core::ParsedResponse(AS::GetSessionTokenResponse)
       Log.info { "performing 'GetSessionToken' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetSessionToken")
@@ -757,6 +767,7 @@ module Amazonite::StsV1
     # verification keys published at the issuer's JWKS endpoint.
     def get_web_identity_token(input : AS::GetWebIdentityTokenRequest) : Core::ParsedResponse(AS::GetWebIdentityTokenResponse)
       Log.info { "performing 'GetWebIdentityToken' operation" }
+      input.validate! if config.validate_input?
       params = input.to_query_params("")
       body = URI::Params.build do |form|
         form.add("Action", "GetWebIdentityToken")

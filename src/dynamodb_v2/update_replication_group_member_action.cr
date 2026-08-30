@@ -1,4 +1,5 @@
 private alias ADDB = Amazonite::DynamoDBV2
+private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDBV2
   # Represents a replica to be modified.
@@ -41,5 +42,22 @@ module Amazonite::DynamoDBV2
       @table_class_override : TableClass | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @provisioned_throughput_override
+        value.validate!
+      end
+
+      if value = @on_demand_throughput_override
+        value.validate!
+      end
+
+      if value = @global_secondary_indexes
+        raise Core::ValidationError.new("GlobalSecondaryIndexes must have at least 1 item(s)") if value.size < 1
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@region_name, @kms_master_key_id, @provisioned_throughput_override, @on_demand_throughput_override, @global_secondary_indexes, @table_class_override)
   end
 end

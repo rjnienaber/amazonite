@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::SsmV1
   class ListOpsMetadataResult
     include JSON::Serializable
@@ -15,5 +17,15 @@ module Amazonite::SsmV1
       @next_token : String | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @ops_metadata_list
+        raise Core::ValidationError.new("OpsMetadataList must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("OpsMetadataList must have at most 50 item(s)") if value.size > 50
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@ops_metadata_list, @next_token)
   end
 end

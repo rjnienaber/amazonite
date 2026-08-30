@@ -1,4 +1,5 @@
 private alias ACWL = Amazonite::CloudWatchLogsV1
+private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatchLogsV1
   class DescribeResourcePoliciesRequest
@@ -27,5 +28,18 @@ module Amazonite::CloudWatchLogsV1
       @policy_scope : PolicyScope | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @next_token
+        raise Core::ValidationError.new("nextToken length must be >= 1") if value.size < 1
+      end
+
+      if value = @limit
+        raise Core::ValidationError.new("limit value must be >= 1") if value < 1
+        raise Core::ValidationError.new("limit value must be <= 50") if value > 50
+      end
+    end
+
+    def_equals_and_hash(@next_token, @limit, @resource_arn, @policy_scope)
   end
 end

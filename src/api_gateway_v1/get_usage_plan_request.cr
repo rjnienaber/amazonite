@@ -11,5 +11,10 @@ module Amazonite::ApiGatewayV1
       @usage_plan_id : String,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@usage_plan_id)
   end
 end

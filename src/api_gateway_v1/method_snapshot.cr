@@ -18,5 +18,10 @@ module Amazonite::ApiGatewayV1
       @api_key_required : Bool | Nil = nil,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@authorization_type, @api_key_required)
   end
 end

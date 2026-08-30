@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::CloudWatchLogsV1
   # A stream of structured log data returned by the GetLogObject operation. This stream contains log
   # events with their associated metadata and extracted fields.
@@ -11,5 +13,13 @@ module Amazonite::CloudWatchLogsV1
       @fields : FieldsData | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @fields
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@fields)
   end
 end

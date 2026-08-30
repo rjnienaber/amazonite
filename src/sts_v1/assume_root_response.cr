@@ -47,5 +47,19 @@ module Amazonite::StsV1
         source_identity: Core::XMLValue.string(node.xpath_node("*[local-name()='SourceIdentity']")),
       )
     end
+
+    def validate! : Nil
+      if value = @credentials
+        value.validate!
+      end
+
+      if value = @source_identity
+        raise Core::ValidationError.new("SourceIdentity length must be >= 2") if value.size < 2
+        raise Core::ValidationError.new("SourceIdentity length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("SourceIdentity does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]*$"))
+      end
+    end
+
+    def_equals_and_hash(@credentials, @source_identity)
   end
 end

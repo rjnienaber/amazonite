@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # Represents the settings used to enable point in time recovery.
   class PointInTimeRecoverySpecification
@@ -18,5 +20,14 @@ module Amazonite::DynamoDBV2
       @recovery_period_in_days : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @recovery_period_in_days
+        raise Core::ValidationError.new("RecoveryPeriodInDays value must be >= 1") if value < 1
+        raise Core::ValidationError.new("RecoveryPeriodInDays value must be <= 35") if value > 35
+      end
+    end
+
+    def_equals_and_hash(@point_in_time_recovery_enabled, @recovery_period_in_days)
   end
 end

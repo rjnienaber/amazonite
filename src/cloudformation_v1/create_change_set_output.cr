@@ -34,5 +34,14 @@ module Amazonite::CloudFormationV1
         stack_id: Core::XMLValue.string(node.xpath_node("*[local-name()='StackId']")),
       )
     end
+
+    def validate! : Nil
+      if value = @id
+        raise Core::ValidationError.new("Id length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("Id does not match the required pattern") unless value.matches?(Regex.new("^arn:[-a-zA-Z0-9:/]*$"))
+      end
+    end
+
+    def_equals_and_hash(@id, @stack_id)
   end
 end

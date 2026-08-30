@@ -33,5 +33,15 @@ module Amazonite::EventBridgeV1
       @last_authorized_time : Time | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @connection_arn
+        raise Core::ValidationError.new("ConnectionArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ConnectionArn length must be <= 1600") if value.size > 1600
+        raise Core::ValidationError.new("ConnectionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws([a-z]|\\-)*:events:([a-z]|\\d|\\-)*:([0-9]{12})?:connection\\/[\\.\\-_A-Za-z0-9]+\\/[\\-A-Za-z0-9]+$"))
+      end
+    end
+
+    def_equals_and_hash(@connection_arn, @connection_state, @creation_time, @last_modified_time, @last_authorized_time)
   end
 end

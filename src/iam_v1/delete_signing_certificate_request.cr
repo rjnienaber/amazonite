@@ -38,5 +38,21 @@ module Amazonite::IamV1
         certificate_id: Core::XMLValue.string(node.xpath_node("*[local-name()='CertificateId']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @certificate_id
+        raise Core::ValidationError.new("CertificateId length must be >= 24") if value.size < 24
+        raise Core::ValidationError.new("CertificateId length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("CertificateId does not match the required pattern") unless value.matches?(Regex.new("^[\\w]+$"))
+      end
+    end
+
+    def_equals_and_hash(@user_name, @certificate_id)
   end
 end

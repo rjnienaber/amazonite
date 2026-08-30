@@ -35,5 +35,21 @@ module Amazonite::CloudFormationV1
         scan_filters: node.xpath_nodes("*[local-name()='ScanFilters']/*[local-name()='member']").map { |n| ScanFilter.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @client_request_token
+        raise Core::ValidationError.new("ClientRequestToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ClientRequestToken length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("ClientRequestToken does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+
+      if value = @scan_filters
+        raise Core::ValidationError.new("ScanFilters must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("ScanFilters must have at most 1 item(s)") if value.size > 1
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@client_request_token, @scan_filters)
   end
 end

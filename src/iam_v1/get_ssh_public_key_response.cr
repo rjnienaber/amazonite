@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::IamV1
   # Contains the response to a successful
   # [GetSSHPublicKey](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetSSHPublicKey.html)
@@ -25,5 +27,13 @@ module Amazonite::IamV1
         ssh_public_key: node.xpath_node("*[local-name()='SSHPublicKey']").try { |n| SSHPublicKey.from_xml(n) },
       )
     end
+
+    def validate! : Nil
+      if value = @ssh_public_key
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@ssh_public_key)
   end
 end

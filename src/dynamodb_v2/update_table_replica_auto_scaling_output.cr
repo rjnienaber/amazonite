@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   class UpdateTableReplicaAutoScalingOutput
     include JSON::Serializable
@@ -10,5 +12,13 @@ module Amazonite::DynamoDBV2
       @table_auto_scaling_description : TableAutoScalingDescription | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @table_auto_scaling_description
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@table_auto_scaling_description)
   end
 end

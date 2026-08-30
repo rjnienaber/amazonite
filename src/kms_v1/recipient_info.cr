@@ -29,5 +29,14 @@ module Amazonite::KmsV1
       @attestation_document : Bytes | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @attestation_document
+        raise Core::ValidationError.new("AttestationDocument length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AttestationDocument length must be <= 262144") if value.size > 262144
+      end
+    end
+
+    def_equals_and_hash(@key_encryption_algorithm, @attestation_document)
   end
 end

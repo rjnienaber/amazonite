@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::KinesisV1
   # Represents the input for `CreateStream`.
   class CreateStreamInput
@@ -46,5 +48,37 @@ module Amazonite::KinesisV1
       @max_record_size_in_ki_b : Int32 | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @stream_name
+        raise Core::ValidationError.new("StreamName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("StreamName length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("StreamName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @shard_count
+        raise Core::ValidationError.new("ShardCount value must be >= 1") if value < 1
+      end
+
+      if value = @stream_mode_details
+        value.validate!
+      end
+
+      if value = @tags
+        raise Core::ValidationError.new("Tags must have at least 1 entry(s)") if value.size < 1
+        raise Core::ValidationError.new("Tags must have at most 200 entry(s)") if value.size > 200
+      end
+
+      if value = @warm_throughput_mi_bps
+        raise Core::ValidationError.new("WarmThroughputMiBps value must be >= 0") if value < 0
+      end
+
+      if value = @max_record_size_in_ki_b
+        raise Core::ValidationError.new("MaxRecordSizeInKiB value must be >= 1024") if value < 1024
+        raise Core::ValidationError.new("MaxRecordSizeInKiB value must be <= 10240") if value > 10240
+      end
+    end
+
+    def_equals_and_hash(@stream_name, @shard_count, @stream_mode_details, @tags, @warm_throughput_mi_bps, @max_record_size_in_ki_b)
   end
 end

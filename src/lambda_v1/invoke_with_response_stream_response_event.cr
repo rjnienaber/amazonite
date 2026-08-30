@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::LambdaV1
   # An object that includes a chunk of the response payload. When the stream has ended, Lambda
   # includes a `InvokeComplete` object.
@@ -18,5 +20,17 @@ module Amazonite::LambdaV1
       @invoke_complete : InvokeWithResponseStreamCompleteEvent | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @payload_chunk
+        value.validate!
+      end
+
+      if value = @invoke_complete
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@payload_chunk, @invoke_complete)
   end
 end

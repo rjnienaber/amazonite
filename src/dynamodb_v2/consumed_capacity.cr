@@ -1,3 +1,5 @@
+private alias Core = Amazonite::Core
+
 module Amazonite::DynamoDBV2
   # The capacity units consumed by an operation. The data returned includes the total provisioned
   # throughput consumed, along with statistics for the table and any indexes involved in the
@@ -54,5 +56,30 @@ module Amazonite::DynamoDBV2
       @vector_indexes : Hash(String, VectorCapacity) | Nil = nil,
     )
     end
+
+    def validate! : Nil
+      if value = @table_name
+        raise Core::ValidationError.new("TableName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("TableName length must be <= 1024") if value.size > 1024
+      end
+
+      if value = @table
+        value.validate!
+      end
+
+      if value = @local_secondary_indexes
+        value.each_value(&.validate!)
+      end
+
+      if value = @global_secondary_indexes
+        value.each_value(&.validate!)
+      end
+
+      if value = @vector_indexes
+        value.each_value(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@table_name, @capacity_units, @read_capacity_units, @write_capacity_units, @table, @local_secondary_indexes, @global_secondary_indexes, @vector_indexes)
   end
 end

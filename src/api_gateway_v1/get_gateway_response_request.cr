@@ -18,5 +18,10 @@ module Amazonite::ApiGatewayV1
       @response_type : GatewayResponseType,
     )
     end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@rest_api_id, @response_type)
   end
 end

@@ -25,5 +25,15 @@ module Amazonite::CloudFormationV1
         registration_token: Core::XMLValue.string(node.xpath_node("*[local-name()='RegistrationToken']")).not_nil!,
       )
     end
+
+    def validate! : Nil
+      if value = @registration_token
+        raise Core::ValidationError.new("RegistrationToken length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("RegistrationToken length must be <= 128") if value.size > 128
+        raise Core::ValidationError.new("RegistrationToken does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9][-a-zA-Z0-9]*$"))
+      end
+    end
+
+    def_equals_and_hash(@registration_token)
   end
 end
