@@ -10,6 +10,8 @@ module Amazonite::Core
   # Client, which is typed against ResponseExceptionFactory, accepts a
   # generated query-service ExceptionFactory without any further changes.
   abstract class QueryResponseExceptionFactory < ResponseExceptionFactory
+    # Builds the exception for an awsQuery error response, dispatching on
+    # the XML `<Error><Code>` value via `#create`.
     def build(response : HTTP::Client::Response) : ResponseException
       error = XML.parse(response.body).xpath_node("//*[local-name()='Error']")
       code = error.try(&.xpath_node("*[local-name()='Code']")).try(&.content)

@@ -1,4 +1,16 @@
 module Amazonite::Core
+  # Resolves credentials, region, and endpoint for a `Client`.
+  #
+  # `region` resolves from the constructor argument, then
+  # `AWS_REGION`/`AWS_DEFAULT_REGION`, then the AWS profile's `region`.
+  #
+  # `access_key_id`/`secret_access_key`/`session_token` resolve together:
+  # if both a key and secret are given (via constructor arguments,
+  # `AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY`, or a static profile),
+  # those are used as-is. Otherwise credentials come from the dynamic
+  # provider chain - AssumeRole, SSO cached token, ECS container, then EC2
+  # instance metadata (see the README's "Credentials" section) - and are
+  # refreshed automatically as they near expiry.
   class Config
     Log = ::Log.for(self)
 
@@ -49,14 +61,23 @@ module Amazonite::Core
       current_credentials.secret_access_key
     end
 
+    # `nil` unless the current credentials are temporary (from the
+    # dynamic provider chain).
     def session_token : String?
       current_credentials.session_token
     end
 
+    # When the current credentials expire, or `nil` if they don't (a
+    # static access key/secret, or a chain provider that returned none).
     def expiration : Time?
       current_credentials.expiration
     end
 
+    # The base URL for `endpoint_prefix` (e.g. "dynamodb") - the
+    # constructor's `base_url` if given, else the
+    # `AMAZONITE_<ENDPOINT_PREFIX>_URL` environment variable (handy for
+    # pointing at a local stack like LocalStack), else
+    # `https://<endpoint_prefix>.<region>.amazonaws.com`.
     def endpoint_url(endpoint_prefix) : String
       unless @base_url.nil?
         Log.trace { "using base url from constructor for endpoint_url: #{@base_url}" }
@@ -75,6 +96,10 @@ module Amazonite::Core
       url
     end
 
+    # Yields the `User-Agent` string to send with a request - the
+    # constructor's `user_agent` if given, else one built from the
+    # amazonite/Crystal/LLVM versions and target architecture (cached
+    # after the first call).
     def user_agent(&) : String
       unless @user_agent.nil?
         Log.debug { "using user_agent from constructor: #{@user_agent}" }
@@ -93,6 +118,8 @@ module Amazonite::Core
       yield @built_user_agent
     end
 
+    # The resolved AWS profile name (constructor `profile`, then
+    # `AWS_PROFILE`), or `nil` if none was found.
     def aws_profile
       @ini_parser.profile
     end

@@ -1,4 +1,6 @@
 module Amazonite::Core
+  # Tries each `CredentialsProvider` in order and returns the first
+  # non-`nil` result.
   class CredentialsProviderChain
     def initialize(@providers : Array(CredentialsProvider))
     end

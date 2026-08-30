@@ -1,6 +1,9 @@
 require "ini"
 
 module Amazonite::Core
+  # Resolves the AWS profile to use and reads credentials/region for it
+  # from `~/.aws/credentials` and `~/.aws/config` (or the given filepaths),
+  # matching the standard AWS CLI/SDK config file behavior.
   class IniParser
     Log = ::Log.for(self)
 
@@ -33,6 +36,8 @@ module Amazonite::Core
       @config_filepath = resolve_filepath(config_filepath, "config")
     end
 
+    # Looks up one of `"access_key_id"`, `"secret_access_key"`, or
+    # `"region"` for the resolved profile.
     def [](key)
       case key
       when "access_key_id"     then access_key_id

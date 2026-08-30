@@ -42,6 +42,8 @@ module Amazonite::Core::XMLValue
   end
 end
 
+# The Crystal-type -> query-text conversion counterpart to `XMLValue`, for
+# the awsQuery protocol's generated `to_query_params` model methods.
 module Amazonite::Core::QueryValue
   def self.bool(value : Bool) : String
     value ? "true" : "false"

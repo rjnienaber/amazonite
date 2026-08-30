@@ -13,6 +13,9 @@ module Amazonite::Core
     end
   end
 
+  # Resolves credentials via STS AssumeRole, using the `role_arn`/
+  # `source_profile` chaining configured in `~/.aws/config` for the
+  # active profile.
   class AssumeRoleCredentialsProvider < CredentialsProvider
     EXCEPTION_FACTORY = AssumeRoleExceptionFactory.new
 

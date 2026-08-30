@@ -1,4 +1,8 @@
 module Amazonite::Core
+  # Static credentials from `AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY`/
+  # `AWS_SESSION_TOKEN` - used by `AssumeRoleCredentialsProvider` to
+  # resolve a `source_profile`'s credentials, distinct from `Config`'s own
+  # (higher-priority) environment variable check for the primary profile.
   class EnvironmentCredentialsProvider < CredentialsProvider
     def initialize(@env : Fetcher)
     end

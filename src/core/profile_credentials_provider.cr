@@ -1,4 +1,5 @@
 module Amazonite::Core
+  # Static credentials from the active profile in `~/.aws/credentials`.
   class ProfileCredentialsProvider < CredentialsProvider
     def initialize(@ini_parser : IniParser)
     end

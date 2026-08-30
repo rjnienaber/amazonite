@@ -1,5 +1,8 @@
 require "base64"
 
+# JSON::Serializable converter for AWS's epoch-seconds timestamp shapes -
+# (de)serializes a `Time` as a Unix timestamp in seconds (fractional,
+# millisecond precision) rather than an ISO8601 string.
 module Amazonite::Core::AWSEpochConverter
   def self.to_json(value : Time, json : JSON::Builder) : Nil
     json.number(value.to_unix_ms.to_f / 1000)
@@ -10,6 +13,10 @@ module Amazonite::Core::AWSEpochConverter
   end
 end
 
+# JSON::Serializable converter for an `Array(T)` whose element type `T`
+# needs its own converter (e.g. a list of enum-backed or blob members) -
+# delegates each element to `T.to_json`/`T.from_json` rather than relying
+# on `Array`'s own default JSON mapping.
 module Amazonite::Core::ArrayConverter(T)
   def self.to_json(values : Array(T), json : JSON::Builder) : Nil
     json.array do

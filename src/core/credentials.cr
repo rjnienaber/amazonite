@@ -1,4 +1,7 @@
 module Amazonite::Core
+  # A resolved set of AWS credentials - `session_token`/`expiration` are
+  # only present for temporary credentials (from a `CredentialsProvider`
+  # in the dynamic chain); a static access key/secret has neither.
   class Credentials
     getter access_key_id : String
     getter secret_access_key : String

@@ -6,6 +6,11 @@ require "uuid"
 module Amazonite::Core
   VERSION = "0.2.1"
 
+  # Base HTTP client every generated per-service `Client` subclasses -
+  # signs requests with SigV4, dispatches them over one of the three wire
+  # protocols (`#post` for awsJson, `#rest_request` for rest-json,
+  # `#query_request` for awsQuery), and raises the service's exception
+  # type on a non-2xx response.
   class Client
     Log = ::Log.for(self)
 
@@ -18,6 +23,9 @@ module Amazonite::Core
     )
     end
 
+    # awsJson protocol entry point: routes the operation via the
+    # `X-Amz-Target` header (`target_prefix.command`) and sends `body` as
+    # the entire JSON request body.
     def post(command, url, body : String)
       id = UUID.random.to_s
       client = create_client(id, command, url, body)

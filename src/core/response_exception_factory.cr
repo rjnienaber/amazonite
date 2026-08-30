@@ -1,8 +1,15 @@
 module Amazonite::Core
+  # Builds the `ResponseException` for an error response. Each generated
+  # service module has its own subclass implementing `#create` to map the
+  # service's exception type name to its generated exception class;
+  # `Client` calls `#build` on that instance whenever a request fails.
   abstract class ResponseExceptionFactory
     private VALIDATION_EXCEPTION_TYPE       = ValidationException.name.split("::").last
     private ENTITY_TOO_LARGE_EXCEPTION_TYPE = RequestEntityTooLarge.name.split("::").last
 
+    # Builds the exception for a JSON (awsJson/rest-json) error response,
+    # dispatching on the `x-amzn-errortype` header or the body's `__type`
+    # field via `#create`.
     def build(response : HTTP::Client::Response) : ResponseException
       json = JSON::Parser.new(response.body).parse
 
@@ -29,6 +36,10 @@ module Amazonite::Core
       ResponseException.new(response, response.body)
     end
 
+    # Returns the specific exception for `exception_type` (the service's
+    # exception type name, e.g. "ResourceNotFoundException"), or `nil` if
+    # the service doesn't declare that exception type - in which case
+    # `#build` falls back to a generic `ResponseException`.
     abstract def create(exception_type : String?, http : HTTP::Client::Response, message : String?, code : String?) : ResponseException?
 
     private def parse_exception_type(exception_type : String)
