@@ -62,6 +62,10 @@ module Amazonite::Core
     protected def create_client(id, command, url, body)
       endpoint_url = @config.endpoint_url(@endpoint_prefix)
       client = HTTP::Client.new(URI.parse(endpoint_url))
+      client.dns_timeout = @config.dns_timeout if @config.dns_timeout
+      client.connect_timeout = @config.connect_timeout if @config.connect_timeout
+      client.read_timeout = @config.read_timeout if @config.read_timeout
+      client.write_timeout = @config.write_timeout if @config.write_timeout
       client.before_request do |request|
         before_request(request)
         key = @config.access_key_id

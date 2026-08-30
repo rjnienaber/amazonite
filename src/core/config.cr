@@ -11,6 +11,11 @@ module Amazonite::Core
   # provider chain - AssumeRole, SSO cached token, ECS container, then EC2
   # instance metadata (see the README's "Credentials" section) - and are
   # refreshed automatically as they near expiry.
+  #
+  # `dns_timeout`/`connect_timeout`/`read_timeout`/`write_timeout` accept
+  # either a `Number` (seconds) or a `Time::Span`, matching the overloads
+  # `HTTP::Client` itself accepts, and default to `nil` (the underlying
+  # socket library's defaults) when not given.
   class Config
     Log = ::Log.for(self)
 
@@ -20,8 +25,12 @@ module Amazonite::Core
     @credentials : Credentials
     @dynamic : Bool
     @credentials_provider_chain : CredentialsProviderChain?
+    @dns_timeout : Time::Span?
+    @connect_timeout : Time::Span?
+    @read_timeout : Time::Span?
+    @write_timeout : Time::Span?
 
-    getter region, base_url
+    getter region, base_url, dns_timeout, connect_timeout, read_timeout, write_timeout
 
     def initialize(
       access_key_id : String? = nil,
@@ -32,7 +41,16 @@ module Amazonite::Core
       @user_agent : String? = nil,
       @env : Fetcher = EnvFetcher.new,
       session_token : String? = nil,
+      dns_timeout : (Number | Time::Span)? = nil,
+      connect_timeout : (Number | Time::Span)? = nil,
+      read_timeout : (Number | Time::Span)? = nil,
+      write_timeout : (Number | Time::Span)? = nil,
     )
+      @dns_timeout = to_time_span(dns_timeout)
+      @connect_timeout = to_time_span(connect_timeout)
+      @read_timeout = to_time_span(read_timeout)
+      @write_timeout = to_time_span(write_timeout)
+
       @ini_parser = create_ini_parser(profile, @env)
       @region = resolve_config_value("region", region, "AWS_REGION", "AWS_DEFAULT_REGION")
 
@@ -206,6 +224,10 @@ module Amazonite::Core
             "(role_arn/source_profile), an SSO cached token, ECS container credentials, and EC2 instance metadata"
       Log.error { msg }
       raise Exception.new(msg)
+    end
+
+    private def to_time_span(value : (Number | Time::Span)?) : Time::Span?
+      value.is_a?(Number) ? value.seconds : value
     end
 
     private def resolve_config_value(type, value, *env_var_keys)

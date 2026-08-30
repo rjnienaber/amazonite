@@ -3,6 +3,12 @@ require "../spec_helper"
 class CustomResponseException < Amazonite::Core::ResponseException
 end
 
+class TimeoutInspectingClient < Amazonite::Core::Client
+  def http_client_for(command, url, body)
+    create_client("id", command, url, body)
+  end
+end
+
 class CustomClientExceptionFactory < Amazonite::Core::ResponseExceptionFactory
   def create(exception_type, http, message, code) : Amazonite::Core::ResponseException?
     case exception_type
@@ -97,6 +103,31 @@ describe Amazonite::Core::Client do
     end
 
     e.http.status_code.should eq(400)
+  end
+
+  it "applies configured timeouts to the underlying HTTP client" do
+    local_config = Amazonite::Core::Config.new(
+      "AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1",
+      base_url: "http://www.example.com", dns_timeout: 1.seconds, connect_timeout: 2,
+      read_timeout: 3.seconds, write_timeout: 4)
+
+    client = TimeoutInspectingClient.new("HelloWorld_20221002", "helloworld", "1.0", exception_factory, local_config)
+    http_client = client.http_client_for("Greet", "/foo", "")
+
+    http_client.@dns_timeout.should eq(1.seconds)
+    http_client.@connect_timeout.should eq(2.seconds)
+    http_client.@read_timeout.should eq(3.seconds)
+    http_client.@write_timeout.should eq(4.seconds)
+  end
+
+  it "leaves the underlying HTTP client's timeouts unset by default" do
+    client = TimeoutInspectingClient.new("HelloWorld_20221002", "helloworld", "1.0", exception_factory, create_mock_config("http://www.example.com"))
+    http_client = client.http_client_for("Greet", "/foo", "")
+
+    http_client.@dns_timeout.should be_nil
+    http_client.@connect_timeout.should be_nil
+    http_client.@read_timeout.should be_nil
+    http_client.@write_timeout.should be_nil
   end
 
   it "throws custom exceptions for a method" do
