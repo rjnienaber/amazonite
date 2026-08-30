@@ -13,6 +13,7 @@ require "webmock"
 # resolvable" test for an example of a stub from another file leaking in.
 
 require "../codegen/bindings/*"
+require "../codegen/cli"
 require "../codegen/render"
 require "../codegen/service/*"
 
