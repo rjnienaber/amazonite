@@ -1,5 +1,6 @@
 module Amazonite::SnsV1
   class ListTagsForResourceResponse
+    # The tags associated with the specified topic.
     property tags : Array(Tag) | Nil
 
     def initialize(

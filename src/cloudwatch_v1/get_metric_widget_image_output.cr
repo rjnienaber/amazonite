@@ -4,6 +4,7 @@ module Amazonite::CloudWatchV1
   class GetMetricWidgetImageOutput
     include JSON::Serializable
 
+    # The image of the graph, in the output format specified. The output is base64-encoded.
     @[JSON::Field(key: "MetricWidgetImage", converter: Core::Base64Converter)]
     property metric_widget_image : Bytes | Nil
 

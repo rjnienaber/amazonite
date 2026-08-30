@@ -2,8 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class VerifySMSSandboxPhoneNumberInput
+    # The destination phone number to verify.
     property phone_number : String
 
+    # The OTP sent to the destination number from the `CreateSMSSandBoxPhoneNumber` call.
     property one_time_password : String
 
     def initialize(

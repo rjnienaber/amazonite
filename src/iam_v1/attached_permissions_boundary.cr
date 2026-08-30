@@ -2,9 +2,20 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about an attached permissions boundary.
+  #
+  # An attached permissions boundary is a managed policy that has been attached to a user or role to
+  # set the permissions boundary.
+  #
+  # For more information about permissions boundaries, see [Permissions boundaries for IAM
+  # identities ](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html)
+  # in the *IAM User Guide*.
   class AttachedPermissionsBoundary
+    # The permissions boundary usage type that indicates what type of IAM resource is used as the
+    # permissions boundary for an entity. This data type can only have a value of `Policy`.
     property permissions_boundary_type : PermissionsBoundaryAttachmentType | Nil
 
+    # The ARN of the policy used to set the permissions boundary for the user or role.
     property permissions_boundary_arn : String | Nil
 
     def initialize(

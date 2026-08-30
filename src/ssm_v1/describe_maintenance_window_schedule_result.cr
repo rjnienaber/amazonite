@@ -2,9 +2,11 @@ module Amazonite::SsmV1
   class DescribeMaintenanceWindowScheduleResult
     include JSON::Serializable
 
+    # Information about maintenance window executions scheduled for the specified time range.
     @[JSON::Field(key: "ScheduledWindowExecutions")]
     property scheduled_window_executions : Array(ScheduledWindowExecution) | Nil
 
+    # The token for the next set of items to return. (You use this token in the next call.)
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 

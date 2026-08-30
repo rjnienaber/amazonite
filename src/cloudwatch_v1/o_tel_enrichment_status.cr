@@ -1,6 +1,7 @@
 private alias ACW = Amazonite::CloudWatchV1
 
 module Amazonite::CloudWatchV1
+  # The status of OTel enrichment for the account.
   enum OTelEnrichmentStatus
     Running
     Stopped

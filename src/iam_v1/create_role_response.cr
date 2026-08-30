@@ -1,5 +1,8 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [CreateRole](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html) request.
   class CreateRoleResponse
+    # A structure containing details about the new role.
     property role : Role
 
     def initialize(

@@ -2,9 +2,11 @@ module Amazonite::CloudWatchV1
   class DescribeAlarmHistoryOutput
     include JSON::Serializable
 
+    # The alarm histories, in JSON format.
     @[JSON::Field(key: "AlarmHistoryItems")]
     property alarm_history_items : Array(AlarmHistoryItem) | Nil
 
+    # The token that marks the start of the next batch of returned results.
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 

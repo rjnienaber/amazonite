@@ -1,13 +1,18 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Gives a detailed description of failed messages in the batch.
   class BatchResultErrorEntry
+    # The `Id` of an entry in a batch request
     property id : String
 
+    # An error code representing why the action failed on this entry.
     property code : String
 
+    # A message explaining why the action failed on this entry.
     property message : String | Nil
 
+    # Specifies whether the error happened due to the caller of the batch API action.
     property sender_fault : Bool
 
     def initialize(

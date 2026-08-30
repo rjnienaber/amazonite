@@ -2,51 +2,102 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about a version of an IAM role template, including the configuration that
+  # is used to create roles with
+  # [AcquireRole](https://docs.aws.amazon.com/IAM/latest/APIReference/API_AcquireRole.html). This
+  # structure is returned as a response element by the
+  # [GetRoleTemplateVersion](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetRoleTemplateVersion.html)
+  # operation.
   class RoleTemplateVersion
+    # The Amazon Resource Name (ARN) that identifies the role template.
+    #
+    # For more information about ARNs, see [Amazon Resource Names
+    # (ARNs)](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) in the
+    # *Amazon Web Services General Reference*.
     property template_arn : String | Nil
 
+    # The friendly name that identifies the role template.
     property template_name : String | Nil
 
+    # The identifier of the role template version.
     property template_version_id : String | Nil
 
+    # The description of the role template.
     property description : String | Nil
 
+    # The major version number of the role template.
     property major_version : Int32 | Nil
 
+    # The minor version that the service uses by default when you create a role from this template
+    # without specifying a minor version.
     property default_minor_version : Int32 | Nil
 
+    # Indicates that the role template is managed by an Amazon Web Services service.
     property managed_by_type : ManagedByTypeType | Nil
 
+    # The identifier of the Amazon Web Services service that manages the role template.
     property managed_by_value : String | Nil
 
+    # Specifies whether the role template is enabled. When a template is disabled, you cannot create
+    # roles from it.
     property enabled : Bool | Nil
 
+    # The minor version number of this role template version.
     property minor_version : Int32 | Nil
 
+    # The pattern that is used to generate the name of a role that is created from this template. The
+    # pattern can include `@{parameter}` placeholders that are replaced with the values you supply in
+    # the `ReplacementValues` parameter of
+    # [AcquireRole](https://docs.aws.amazon.com/IAM/latest/APIReference/API_AcquireRole.html).
     property role_name_pattern : String | Nil
 
+    # The pattern that is used to generate the path of a role that is created from this template.
     property role_path_pattern : String | Nil
 
+    # The pattern that is used to generate the description of a role that is created from this
+    # template.
     property role_description_pattern : String | Nil
 
+    # The trust policy template that grants an entity permission to assume roles that you create from
+    # this template.
     property assume_role_policy_document_template : String | Nil
 
+    # A list of inline policy templates that the service embeds in roles that you create from this
+    # template.
     property inline_policy_templates : Array(InlinePolicy) | Nil
 
+    # A list of the ARNs of the managed policies that the service attaches to roles that you create
+    # from this template.
     property managed_policy_arns : Array(String) | Nil
 
+    # The ARN of the policy that sets the permissions boundary for roles that you create from this
+    # template.
+    #
+    # For more information about ARNs, see [Amazon Resource Names
+    # (ARNs)](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) in the
+    # *Amazon Web Services General Reference*.
     property permission_boundary_arn : String | Nil
 
+    # A list of the parameters that are defined for this role template version. You supply values for
+    # these parameters when you create a role with
+    # [AcquireRole](https://docs.aws.amazon.com/IAM/latest/APIReference/API_AcquireRole.html).
     property parameters_definition : Array(ParameterDefinition) | Nil
 
+    # A list of tag templates that are applied to roles that are created from this template.
     property role_tags_template : Array(TagTemplate) | Nil
 
+    # The maximum session duration (in seconds) for roles that are created from this template.
     property max_session_duration : Int32 | Nil
 
+    # Specifies whether this specific minor version of the role template is enabled.
     property version_enabled : Bool | Nil
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the role
+    # template version was created.
     property create_timestamp : Time | Nil
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the role
+    # template version was last updated.
     property update_timestamp : Time | Nil
 
     def initialize(

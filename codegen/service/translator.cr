@@ -141,6 +141,8 @@ module Amazonite::Codegen::Service
             end
           end
         end
+
+        add_documentation(json, op_shape)
       end
     end
 
@@ -210,7 +212,11 @@ module Amazonite::Codegen::Service
         build_list_shape(json, shape)
       when "map"
         build_map_shape(json, shape)
-      when "string", "boolean", "timestamp", "integer", "long", "float", "double", "blob"
+      when "string", "boolean", "timestamp", "integer", "long", "float", "double", "blob", "document"
+        # A Smithy "document" shape is an open, schemaless JSON value (used
+        # e.g. for arbitrary hook/event payloads) - translated the same way
+        # as the other primitives, just mapped to a different Crystal type
+        # in ShapeResolver.
         build_primitive_shape(json, type, shape)
       else
         raise Exception.new("unhandled Smithy shape type: '#{type}'")
@@ -296,6 +302,17 @@ module Amazonite::Codegen::Service
             # name (query param / XML element) unless overridden here - no
             # "location" is set since this isn't an http-binding trait.
             json.field "locationName", xml_name
+          end
+
+          # jsonName is a separate, protocol-independent override from the
+          # http-binding traits above (httpHeader/httpQuery/httpLabel only
+          # matter for rest-json's own routing, and some JSON-protocol
+          # services carry one of those traits vestigially on an ordinary
+          # body member - e.g. DynamoDB's ConfirmRemoveSelfResourceAccess).
+          # Keeping it out of the locationName emitted above means the JSON
+          # body key is never accidentally driven by an unrelated http trait.
+          if json_name = traits["smithy.api#jsonName"]?.try(&.as_s)
+            json.field "jsonName", json_name
           end
         end
 

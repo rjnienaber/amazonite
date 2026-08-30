@@ -2,6 +2,7 @@ module Amazonite::CloudWatchV1
   class PutMetricStreamOutput
     include JSON::Serializable
 
+    # The ARN of the metric stream.
     @[JSON::Field(key: "Arn")]
     property arn : String | Nil
 

@@ -1,7 +1,10 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about the effect that Organizations has on a policy simulation.
   class OrganizationsDecisionDetail
+    # Specifies whether the simulated operation is allowed by the Organizations service control
+    # policies that impact the simulated user's account.
     property allowed_by_organizations : Bool | Nil
 
     def initialize(

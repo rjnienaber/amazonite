@@ -2,9 +2,11 @@ module Amazonite::LambdaV1
   class AddLayerVersionPermissionResponse
     include JSON::Serializable
 
+    # The permission statement.
     @[JSON::Field(key: "Statement")]
     property statement : String | Nil
 
+    # A unique identifier for the current revision of the policy.
     @[JSON::Field(key: "RevisionId")]
     property revision_id : String | Nil
 

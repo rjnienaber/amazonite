@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetLoginProfile](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetLoginProfile.html)
+  # request.
   class GetLoginProfileResponse
+    # A structure containing the user name and the profile creation date for the user.
     property login_profile : LoginProfile
 
     def initialize(

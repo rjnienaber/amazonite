@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::StsV1
   class GetAccessKeyInfoResponse
+    # The number used to identify the Amazon Web Services account.
     property account : String | Nil
 
     def initialize(

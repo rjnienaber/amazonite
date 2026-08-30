@@ -2,9 +2,12 @@ module Amazonite::SsmV1
   class GetInventoryResult
     include JSON::Serializable
 
+    # Collection of inventory entities such as a collection of managed node inventory.
     @[JSON::Field(key: "Entities")]
     property entities : Array(InventoryResultEntity) | Nil
 
+    # The token to use when requesting the next set of items. If there are no additional items to
+    # return, the string is empty.
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 

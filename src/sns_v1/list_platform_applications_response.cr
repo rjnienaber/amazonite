@@ -1,9 +1,13 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Response for `ListPlatformApplications` action.
   class ListPlatformApplicationsResponse
+    # Platform applications returned when calling `ListPlatformApplications` action.
     property platform_applications : Array(PlatformApplication) | Nil
 
+    # `NextToken` string is returned when calling `ListPlatformApplications` action if additional
+    # records are available after the first page results.
     property next_token : String | Nil
 
     def initialize(

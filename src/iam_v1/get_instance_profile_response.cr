@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetInstanceProfile](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetInstanceProfile.html)
+  # request.
   class GetInstanceProfileResponse
+    # A structure containing details about the instance profile.
     property instance_profile : InstanceProfile
 
     def initialize(

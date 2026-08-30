@@ -2,9 +2,11 @@ module Amazonite::LambdaV1
   class GetLayerVersionPolicyResponse
     include JSON::Serializable
 
+    # The policy document.
     @[JSON::Field(key: "Policy")]
     property policy : String | Nil
 
+    # A unique identifier for the current revision of the policy.
     @[JSON::Field(key: "RevisionId")]
     property revision_id : String | Nil
 

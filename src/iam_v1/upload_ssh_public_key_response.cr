@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [UploadSSHPublicKey](https://docs.aws.amazon.com/IAM/latest/APIReference/API_UploadSSHPublicKey.html)
+  # request.
   class UploadSSHPublicKeyResponse
+    # Contains information about the SSH public key.
     property ssh_public_key : SSHPublicKey | Nil
 
     def initialize(

@@ -3,20 +3,41 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GetServiceLastAccessedDetailsResponse
+    # The status of the job.
     property job_status : JobStatusType
 
+    # The type of job. Service jobs return information about when each service was last accessed.
+    # Action jobs also include information about when tracked actions within the service were last
+    # accessed.
     property job_type : AccessAdvisorUsageGranularityType | Nil
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the
+    # report job was created.
     property job_creation_date : Time
 
+    # A `ServiceLastAccessed` object that contains details about the most recent attempt to access the
+    # service.
     property services_last_accessed : Array(ServiceLastAccessed) = [] of ServiceLastAccessed
 
+    # The date and time, in [ISO 8601 date-time format](http://www.iso.org/iso/iso8601), when the
+    # generated report job was completed or failed.
+    #
+    # This field is null if the job is still in progress, as indicated by a job status value of
+    # `IN_PROGRESS`.
     property job_completion_date : Time
 
+    # A flag that indicates whether there are more items to return. If your results were truncated,
+    # you can make a subsequent pagination request using the `Marker` request parameter to retrieve
+    # more items. Note that IAM might return fewer than the `MaxItems` number of results even when
+    # there are more results available. We recommend that you check `IsTruncated` after every call to
+    # ensure that you receive all your results.
     property is_truncated : Bool | Nil
 
+    # When `IsTruncated` is `true`, this element is present and contains the value to use for the
+    # `Marker` parameter in a subsequent pagination request.
     property marker : String | Nil
 
+    # An object that contains details about the reason the operation failed.
     property error : ErrorDetails | Nil
 
     def initialize(
@@ -64,7 +85,7 @@ module Amazonite::IamV1
 
     def self.from_xml(node : XML::Node) : self
       new(
-        job_status: (n = node.xpath_node("*[local-name()='JobStatus']")) ? AI::JobStatusType.from_json_object_key?(n.content) : nil.not_nil!,
+        job_status: ((n = node.xpath_node("*[local-name()='JobStatus']")) ? AI::JobStatusType.from_json_object_key?(n.content) : nil).not_nil!,
         job_type: (n = node.xpath_node("*[local-name()='JobType']")) ? AI::AccessAdvisorUsageGranularityType.from_json_object_key?(n.content) : nil,
         job_creation_date: Core::XMLValue.time(node.xpath_node("*[local-name()='JobCreationDate']")).not_nil!,
         services_last_accessed: node.xpath_nodes("*[local-name()='ServicesLastAccessed']/*[local-name()='member']").map { |n| ServiceLastAccessed.from_xml(n) },

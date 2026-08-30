@@ -1,7 +1,12 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Response for Subscribe action.
   class SubscribeResponse
+    # The ARN of the subscription if it is confirmed, or the string "pending confirmation" if the
+    # subscription requires confirmation. However, if the API request parameter
+    # `ReturnSubscriptionArn` is true, then the value is always the subscription ARN, even if the
+    # subscription requires confirmation.
     property subscription_arn : String | Nil
 
     def initialize(

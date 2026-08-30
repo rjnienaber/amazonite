@@ -1,9 +1,16 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about an IAM policy, including the policy document.
+  #
+  # This data type is used as a response element in the
+  # [GetAccountAuthorizationDetails](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountAuthorizationDetails.html)
+  # operation.
   class PolicyDetail
+    # The name of the policy.
     property policy_name : String | Nil
 
+    # The policy document.
     property policy_document : String | Nil
 
     def initialize(

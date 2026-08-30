@@ -2,9 +2,11 @@ module Amazonite::LambdaV1
   class GetPolicyResponse
     include JSON::Serializable
 
+    # The resource-based policy.
     @[JSON::Field(key: "Policy")]
     property policy : String | Nil
 
+    # A unique identifier for the current revision of the policy.
     @[JSON::Field(key: "RevisionId")]
     property revision_id : String | Nil
 

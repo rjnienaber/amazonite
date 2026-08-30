@@ -3,6 +3,8 @@
 
 Amazonite is an unofficial AWS SDK for Crystal.
 
+[API documentation](https://rjnienaber.github.io/amazonite/) is generated with `crystal docs` and published on every push to `master`.
+
 > Amazonite is not affiliated with, endorsed by, or sponsored by Amazon.com, Inc. or its affiliates. "AWS" and "Amazon" are trademarks of Amazon.com, Inc. or its affiliates.
 
 ## Usage
@@ -77,6 +79,9 @@ API types that can be generated:
 | IAM           | ✅              |✅                 |                                                                       |
 | CloudWatch    | ✅              |✅                 |                                                                       |
 | STS           | ✅              |✅                 |                                                                       |
+| CloudFormation | ✅             |✅                 |                                                                       |
+| API Gateway   | ✅              |✅                 |                                                                       |
+| EventBridge   | ✅              |✅                 |                                                                       |
 | S3            |  🚫             | 🚫                | Consider using [awscr-s3](https://github.com/taylorfinnell/awscr-s3)  |
 
 For example usage, please look at [the integration tests](integration). If you need an API that is not listed here,

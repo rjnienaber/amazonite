@@ -2,10 +2,16 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class ListServiceSpecificCredentialsResponse
+    # A list of structures that each contain details about a service-specific credential.
     property service_specific_credentials : Array(ServiceSpecificCredentialMetadata) | Nil
 
+    # When IsTruncated is true, this element is present and contains the value to use for the Marker
+    # parameter in a subsequent pagination request.
     property marker : String | Nil
 
+    # A flag that indicates whether there are more items to return. If your results were truncated,
+    # you can make a subsequent pagination request using the Marker request parameter to retrieve more
+    # items.
     property is_truncated : Bool | Nil
 
     def initialize(

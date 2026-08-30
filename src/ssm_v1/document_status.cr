@@ -1,6 +1,7 @@
 private alias AS = Amazonite::SsmV1
 
 module Amazonite::SsmV1
+  # The status of a document.
   enum DocumentStatus
     Creating
     Active

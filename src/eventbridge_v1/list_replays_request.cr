@@ -1,0 +1,42 @@
+private alias AEB = Amazonite::EventBridgeV1
+
+module Amazonite::EventBridgeV1
+  class ListReplaysRequest
+    include JSON::Serializable
+
+    # A name prefix to filter the replays returned. Only replays with name that match the prefix are
+    # returned.
+    @[JSON::Field(key: "NamePrefix")]
+    property name_prefix : String | Nil
+
+    # The state of the replay.
+    @[JSON::Field(key: "State", converter: AEB::ReplayState)]
+    property state : ReplayState | Nil
+
+    # The ARN of the archive from which the events are replayed.
+    @[JSON::Field(key: "EventSourceArn")]
+    property event_source_arn : String | Nil
+
+    # The token returned by a previous call, which you can use to retrieve the next set of results.
+    #
+    # The value of `nextToken` is a unique pagination token for each page. To retrieve the next page
+    # of results, make the call again using the returned token. Keep all other arguments unchanged.
+    #
+    # Using an expired pagination token results in an `HTTP 400 InvalidToken` error.
+    @[JSON::Field(key: "NextToken")]
+    property next_token : String | Nil
+
+    # The maximum number of replays to retrieve.
+    @[JSON::Field(key: "Limit")]
+    property limit : Int32 | Nil
+
+    def initialize(
+      @name_prefix : String | Nil = nil,
+      @state : ReplayState | Nil = nil,
+      @event_source_arn : String | Nil = nil,
+      @next_token : String | Nil = nil,
+      @limit : Int32 | Nil = nil,
+    )
+    end
+  end
+end

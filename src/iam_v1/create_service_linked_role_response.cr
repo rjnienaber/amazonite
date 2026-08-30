@@ -1,5 +1,7 @@
 module Amazonite::IamV1
   class CreateServiceLinkedRoleResponse
+    # A [Role](https://docs.aws.amazon.com/IAM/latest/APIReference/API_Role.html) object that contains
+    # details about the newly created role.
     property role : Role | Nil
 
     def initialize(

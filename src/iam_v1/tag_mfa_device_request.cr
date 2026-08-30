@@ -2,8 +2,16 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class TagMFADeviceRequest
+    # The unique identifier for the IAM virtual MFA device to which you want to add tags. For virtual
+    # MFA devices, the serial number is the same as the ARN.
+    #
+    # This parameter allows (through its [regex pattern](http://wikipedia.org/wiki/regex)) a string of
+    # characters consisting of upper and lowercase alphanumeric characters with no spaces. You can
+    # also include any of the following characters: _+=,.@-
     property serial_number : String
 
+    # The list of tags that you want to attach to the IAM virtual MFA device. Each tag consists of a
+    # key name and an associated value.
     property tags : Array(Tag) = [] of Tag
 
     def initialize(

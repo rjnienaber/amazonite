@@ -2,6 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class DeleteServiceLinkedRoleRequest
+    # The name of the service-linked role to be deleted.
     property role_name : String
 
     def initialize(

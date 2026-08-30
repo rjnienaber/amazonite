@@ -2,6 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class DeleteOpenIDConnectProviderRequest
+    # The Amazon Resource Name (ARN) of the IAM OpenID Connect provider resource object to delete. You
+    # can get a list of OpenID Connect provider resource ARNs by using the
+    # [ListOpenIDConnectProviders](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListOpenIDConnectProviders.html)
+    # operation.
     property open_id_connect_provider_arn : String
 
     def initialize(

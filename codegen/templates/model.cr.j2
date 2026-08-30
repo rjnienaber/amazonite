@@ -2,10 +2,12 @@
 {% endif %}{% if shape.needs_core_alias %}private alias Core = Amazonite::Core
 {% endif %}
 {% endif %}module {{ service.module_name }}
-  class {{ shape.name }}
+{% if shape.has_doc %}{{ shape.doc }}
+{% endif %}  class {{ shape.name }}
 {% if service.protocol == "query" -%}
 {% for member in shape.members %}
-    property {{ member.snake_case_name }} : {{ member.type }}{% if member.has_default %} = {{ member.default }}{% endif %}
+{% if member.has_doc %}{{ member.doc }}
+{% endif %}    property {{ member.snake_case_name }} : {{ member.type }}{% if member.has_default %} = {{ member.default }}{% endif %}
 {% endfor -%}
     def initialize{% if shape.has_parameters %}({% for parameter in shape.parameters %}
       @{{ parameter.name }} : {{ parameter.type }}{% if parameter.is_optional %} = nil{% endif %},{% endfor %}
@@ -28,7 +30,8 @@
 {% else -%}
     include JSON::Serializable
 {% for member in shape.members %}
-    @[JSON::Field(key: "{{ member.name }}"{% if member.has_converter %}, converter: {{ member.converter }}{% endif %}{% if member.ignore %}, ignore: true{% endif %})]
+{% if member.has_doc %}{{ member.doc }}
+{% endif %}    @[JSON::Field(key: "{{ member.wire_name }}"{% if member.has_converter %}, converter: {{ member.converter }}{% endif %}{% if member.ignore %}, ignore: true{% endif %})]
     property {{ member.snake_case_name }} : {{ member.type }}{% if member.has_default %} = {{ member.default }}{% endif %}
 {% endfor %}
     def initialize{% if shape.has_parameters %}({% for parameter in shape.parameters %}

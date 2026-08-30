@@ -1,0 +1,92 @@
+private alias ACF = Amazonite::CloudFormationV1
+private alias Core = Amazonite::Core
+
+module Amazonite::CloudFormationV1
+  # Contains high-level information about the specified stack resource.
+  class StackResourceSummary
+    # The logical name of the resource specified in the template.
+    property logical_resource_id : String
+
+    # The name or unique identifier that corresponds to a physical instance ID of the resource.
+    property physical_resource_id : String | Nil
+
+    # Type of resource. (For more information, see [Amazon Web Services resource and property types
+    # reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)
+    # in the *CloudFormation User Guide*.)
+    property resource_type : String
+
+    # Time the status was updated.
+    property last_updated_timestamp : Time
+
+    # Current status of the resource.
+    property resource_status : ResourceStatus
+
+    # Success/failure message associated with the resource.
+    property resource_status_reason : String | Nil
+
+    # Information about whether the resource's actual configuration differs, or has *drifted*, from
+    # its expected configuration, as defined in the stack template and any values specified as
+    # template parameters. For more information, see [Detect unmanaged configuration changes to stacks
+    # and resources with drift
+    # detection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-drift.html).
+    property drift_information : StackResourceDriftInformationSummary | Nil
+
+    # Contains information about the module from which the resource was created, if the resource was
+    # created from a module included in the stack template.
+    property module_info : ModuleInfo | Nil
+
+    def initialize(
+      @logical_resource_id : String,
+      @resource_type : String,
+      @last_updated_timestamp : Time,
+      @resource_status : ResourceStatus,
+      @physical_resource_id : String | Nil = nil,
+      @resource_status_reason : String | Nil = nil,
+      @drift_information : StackResourceDriftInformationSummary | Nil = nil,
+      @module_info : ModuleInfo | Nil = nil,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      params << {"#{prefix}LogicalResourceId", @logical_resource_id}
+
+      if value = @physical_resource_id
+        params << {"#{prefix}PhysicalResourceId", value}
+      end
+
+      params << {"#{prefix}ResourceType", @resource_type}
+
+      params << {"#{prefix}LastUpdatedTimestamp", Core::QueryValue.time(@last_updated_timestamp)}
+
+      params << {"#{prefix}ResourceStatus", @resource_status.to_json_object_key}
+
+      if value = @resource_status_reason
+        params << {"#{prefix}ResourceStatusReason", value}
+      end
+
+      if value = @drift_information
+        params.concat(value.to_query_params("#{prefix}DriftInformation."))
+      end
+
+      if value = @module_info
+        params.concat(value.to_query_params("#{prefix}ModuleInfo."))
+      end
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        logical_resource_id: Core::XMLValue.string(node.xpath_node("*[local-name()='LogicalResourceId']")).not_nil!,
+        physical_resource_id: Core::XMLValue.string(node.xpath_node("*[local-name()='PhysicalResourceId']")),
+        resource_type: Core::XMLValue.string(node.xpath_node("*[local-name()='ResourceType']")).not_nil!,
+        last_updated_timestamp: Core::XMLValue.time(node.xpath_node("*[local-name()='LastUpdatedTimestamp']")).not_nil!,
+        resource_status: ((n = node.xpath_node("*[local-name()='ResourceStatus']")) ? ACF::ResourceStatus.from_json_object_key?(n.content) : nil).not_nil!,
+        resource_status_reason: Core::XMLValue.string(node.xpath_node("*[local-name()='ResourceStatusReason']")),
+        drift_information: node.xpath_node("*[local-name()='DriftInformation']").try { |n| StackResourceDriftInformationSummary.from_xml(n) },
+        module_info: node.xpath_node("*[local-name()='ModuleInfo']").try { |n| ModuleInfo.from_xml(n) },
+      )
+    end
+  end
+end

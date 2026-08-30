@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [CreateInstanceProfile](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateInstanceProfile.html)
+  # request.
   class CreateInstanceProfileResponse
+    # A structure containing details about the new instance profile.
     property instance_profile : InstanceProfile
 
     def initialize(

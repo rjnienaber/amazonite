@@ -3,8 +3,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class EnableOrganizationsRootCredentialsManagementResponse
+    # The unique identifier (ID) of an organization.
     property organization_id : String | Nil
 
+    # The features you have enabled for centralized root access.
     property enabled_features : Array(FeatureType) | Nil
 
     def initialize(

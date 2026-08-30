@@ -1,11 +1,18 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for ConfirmSubscription action.
   class ConfirmSubscriptionInput
+    # The ARN of the topic for which you wish to confirm a subscription.
     property topic_arn : String
 
+    # Short-lived token sent to an endpoint during the `Subscribe` action.
     property token : String
 
+    # Disallows unauthenticated unsubscribes of the subscription. If the value of this parameter is
+    # `true` and the request has an Amazon Web Services signature, then only the topic owner and the
+    # subscription owner can unsubscribe the endpoint. The unsubscribe action requires Amazon Web
+    # Services authentication.
     property authenticate_on_unsubscribe : String | Nil
 
     def initialize(

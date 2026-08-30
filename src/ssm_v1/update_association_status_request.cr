@@ -2,12 +2,15 @@ module Amazonite::SsmV1
   class UpdateAssociationStatusRequest
     include JSON::Serializable
 
+    # The name of the SSM document.
     @[JSON::Field(key: "Name")]
     property name : String
 
+    # The managed node ID.
     @[JSON::Field(key: "InstanceId")]
     property instance_id : String
 
+    # The association status.
     @[JSON::Field(key: "AssociationStatus")]
     property association_status : AssociationStatus
 

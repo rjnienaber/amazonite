@@ -2,10 +2,20 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class AcquireRoleRequest
+    # The Amazon Resource Name (ARN) of the role template to create the role from.
+    #
+    # For more information about ARNs, see [Amazon Resource Names
+    # (ARNs)](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) in the
+    # *Amazon Web Services General Reference*.
     property template_arn : String
 
+    # The minor version of the role template to use. If you do not specify a minor version, the
+    # service uses the template's default minor version.
     property template_minor_version : Int32 | Nil
 
+    # A map of values to substitute for the parameters that are defined in the role template version.
+    # Each key is a parameter name from the template, and each value is a structure that contains the
+    # replacement values for that parameter.
     property replacement_values : Hash(String, ReplacementValueEntry) | Nil
 
     def initialize(

@@ -1,7 +1,10 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # A wrapper type for the topic's Amazon Resource Name (ARN). To retrieve a topic's attributes, use
+  # `GetTopicAttributes`.
   class Topic
+    # The topic's ARN.
     property topic_arn : String | Nil
 
     def initialize(

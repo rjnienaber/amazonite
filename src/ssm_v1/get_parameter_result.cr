@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class GetParameterResult
     include JSON::Serializable
 
+    # Information about a parameter.
     @[JSON::Field(key: "Parameter")]
     property parameter : Parameter | Nil
 

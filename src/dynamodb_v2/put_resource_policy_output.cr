@@ -2,6 +2,8 @@ module Amazonite::DynamoDBV2
   class PutResourcePolicyOutput
     include JSON::Serializable
 
+    # A unique string that represents the revision ID of the policy. If you're comparing revision IDs,
+    # make sure to always use string comparison logic.
     @[JSON::Field(key: "RevisionId")]
     property revision_id : String | Nil
 

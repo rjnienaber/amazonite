@@ -1,5 +1,11 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetContextKeysForPrincipalPolicy](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetContextKeysForPrincipalPolicy.html)
+  # or
+  # [GetContextKeysForCustomPolicy](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetContextKeysForCustomPolicy.html)
+  # request.
   class GetContextKeysForPolicyResponse
+    # The list of context keys that are referenced in the input policies.
     property context_key_names : Array(String) | Nil
 
     def initialize(

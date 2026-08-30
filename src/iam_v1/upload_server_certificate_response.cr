@@ -1,7 +1,16 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [UploadServerCertificate](https://docs.aws.amazon.com/IAM/latest/APIReference/API_UploadServerCertificate.html)
+  # request.
   class UploadServerCertificateResponse
+    # The meta information of the uploaded server certificate without its certificate body,
+    # certificate chain, and private key.
     property server_certificate_metadata : ServerCertificateMetadata | Nil
 
+    # A list of tags that are attached to the new IAM server certificate. The returned list of tags is
+    # sorted by tag key. For more information about tagging, see [Tagging IAM
+    # resources](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html) in the *IAM User
+    # Guide*.
     property tags : Array(Tag) | Nil
 
     def initialize(

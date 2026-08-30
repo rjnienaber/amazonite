@@ -2,8 +2,10 @@ private alias AI = Amazonite::IamV1
 
 module Amazonite::IamV1
   class GetServiceLinkedRoleDeletionStatusResponse
+    # The status of the deletion.
     property status : DeletionTaskStatusType
 
+    # An object that contains details about the reason the deletion failed.
     property reason : DeletionTaskFailureReasonType | Nil
 
     def initialize(
@@ -25,7 +27,7 @@ module Amazonite::IamV1
 
     def self.from_xml(node : XML::Node) : self
       new(
-        status: (n = node.xpath_node("*[local-name()='Status']")) ? AI::DeletionTaskStatusType.from_json_object_key?(n.content) : nil.not_nil!,
+        status: ((n = node.xpath_node("*[local-name()='Status']")) ? AI::DeletionTaskStatusType.from_json_object_key?(n.content) : nil).not_nil!,
         reason: node.xpath_node("*[local-name()='Reason']").try { |n| DeletionTaskFailureReasonType.from_xml(n) },
       )
     end

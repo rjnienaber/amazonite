@@ -2,6 +2,7 @@ module Amazonite::SqsV1
   class ListQueueTagsResult
     include JSON::Serializable
 
+    # The list of all tags added to the specified queue.
     @[JSON::Field(key: "Tags")]
     property tags : Hash(String, String) | Nil
 

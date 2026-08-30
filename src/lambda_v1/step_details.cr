@@ -1,18 +1,25 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::LambdaV1
+  # Details about a step operation.
   class StepDetails
     include JSON::Serializable
 
+    # The current attempt number for this step.
     @[JSON::Field(key: "Attempt")]
     property attempt : Int32 | Nil
 
+    # The date and time when the next attempt is scheduled, in [ISO-8601
+    # format](https://www.w3.org/TR/NOTE-datetime) (YYYY-MM-DDThh:mm:ss.sTZD). Only populated when the
+    # step is in a pending state.
     @[JSON::Field(key: "NextAttemptTimestamp", converter: Core::AWSEpochConverter)]
     property next_attempt_timestamp : Time | Nil
 
+    # The JSON response payload from the step operation.
     @[JSON::Field(key: "Result")]
     property result : String | Nil
 
+    # Details about the step failure.
     @[JSON::Field(key: "Error")]
     property error : ErrorObject | Nil
 

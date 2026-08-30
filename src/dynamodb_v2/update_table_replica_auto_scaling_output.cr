@@ -2,6 +2,7 @@ module Amazonite::DynamoDBV2
   class UpdateTableReplicaAutoScalingOutput
     include JSON::Serializable
 
+    # Returns information about the auto scaling settings of a table with replicas.
     @[JSON::Field(key: "TableAutoScalingDescription")]
     property table_auto_scaling_description : TableAutoScalingDescription | Nil
 

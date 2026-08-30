@@ -2,6 +2,7 @@ module Amazonite::SsmV1
   class DeleteActivationRequest
     include JSON::Serializable
 
+    # The ID of the activation that you want to delete.
     @[JSON::Field(key: "ActivationId")]
     property activation_id : String
 

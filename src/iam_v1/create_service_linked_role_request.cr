@@ -2,10 +2,27 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class CreateServiceLinkedRoleRequest
+    # The service principal for the Amazon Web Services service to which this role is attached. You
+    # use a string similar to a URL but without the http:// in front. For example:
+    # `elasticbeanstalk.amazonaws.com`.
+    #
+    # Service principals are unique and case-sensitive. To find the exact service principal for your
+    # service-linked role, see [Amazon Web Services services that work with
+    # IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html)
+    # in the *IAM User Guide*. Look for the services that have **Yes **in the **Service-Linked Role**
+    # column. Choose the **Yes** link to view the service-linked role documentation for that service.
     property aws_service_name : String
 
+    # The description of the role.
     property description : String | Nil
 
+    # A string that you provide, which is combined with the service-provided prefix to form the
+    # complete role name. If you make multiple requests for the same service, then you must supply a
+    # different `CustomSuffix` for each request. Otherwise the request fails with a duplicate role
+    # name error. For example, you could add `-1` or `-debug` to the suffix.
+    #
+    # Some services do not support the `CustomSuffix` parameter. If you provide an optional suffix and
+    # the operation fails, try the operation again without the suffix.
     property custom_suffix : String | Nil
 
     def initialize(

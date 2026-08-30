@@ -2,8 +2,10 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class RejectDelegationRequestRequest
+    # The unique identifier of the delegation request to reject.
     property delegation_request_id : String
 
+    # Optional notes explaining the reason for rejecting the delegation request.
     property notes : String | Nil
 
     def initialize(

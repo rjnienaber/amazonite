@@ -1,5 +1,6 @@
 module Amazonite::IamV1
   class GetRoleTemplateVersionResponse
+    # A structure that contains details about the requested role template version.
     property role_template_version : RoleTemplateVersion
 
     def initialize(

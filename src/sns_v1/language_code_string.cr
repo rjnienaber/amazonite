@@ -1,6 +1,7 @@
 private alias AS = Amazonite::SnsV1
 
 module Amazonite::SnsV1
+  # Supported language code for sending OTP message
   enum LanguageCodeString
     EnUs
     EnGb

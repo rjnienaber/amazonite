@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetServerCertificate](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetServerCertificate.html)
+  # request.
   class GetServerCertificateResponse
+    # A structure containing details about the server certificate.
     property server_certificate : ServerCertificate
 
     def initialize(

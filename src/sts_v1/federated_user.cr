@@ -1,9 +1,16 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::StsV1
+  # Identifiers for the federated user that is associated with the credentials.
   class FederatedUser
+    # The string that identifies the federated user associated with the credentials, similar to the
+    # unique ID of an IAM user.
     property federated_user_id : String
 
+    # The ARN that specifies the federated user that is associated with the credentials. For more
+    # information about ARNs and how to use them in policies, see [IAM
+    # Identifiers](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html) in the
+    # *IAM User Guide*.
     property arn : String
 
     def initialize(

@@ -4,8 +4,14 @@ module Amazonite::StsV1
   class GetDelegatedAccessTokenResponse
     property credentials : Credentials | Nil
 
+    # The percentage of the maximum policy size that is used by the session policy. The policy size is
+    # calculated as the sum of all the session policies and permission boundaries attached to the
+    # session. If the packed size exceeds 100%, the request fails.
     property packed_policy_size : Int32 | Nil
 
+    # The Amazon Resource Name (ARN) of the principal that was assumed when obtaining the delegated
+    # access token. This ARN identifies the IAM entity whose permissions are granted by the temporary
+    # credentials.
     property assumed_principal : String | Nil
 
     def initialize(

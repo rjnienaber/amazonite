@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for `GetPlatformApplicationAttributes` action.
   class GetPlatformApplicationAttributesInput
+    # `PlatformApplicationArn` for GetPlatformApplicationAttributesInput.
     property platform_application_arn : String
 
     def initialize(

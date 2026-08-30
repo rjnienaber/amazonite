@@ -8,8 +8,10 @@ module Amazonite::Codegen::Bindings
     @query_adds : Array(Crinja::Value)
     @xml_reads : Array(Crinja::Value)
     @module_alias : String
+    @doc : String?
 
-    getter name, members, has_parameters, parameters, needs_core_alias, needs_module_alias, query_adds, xml_reads
+    getter name, members, has_parameters, parameters, needs_core_alias, needs_module_alias, query_adds, xml_reads,
+      doc, has_doc
 
     def initialize(shape : Amazonite::Codegen::Service::Structure, module_alias : String, is_rest : Bool, is_query : Bool = false)
       @name = shape.name
@@ -18,6 +20,8 @@ module Amazonite::Codegen::Bindings
       @is_rest = is_rest
       @module_alias = module_alias
       @payload_member = shape.payload_member
+      @doc = Amazonite::Codegen::Service::Utils.doc_comment(shape.documentation)
+      @has_doc = !!@doc
       @members = shape.members.map { |member| member_value(member, module_alias) }
       if is_query
         @query_adds = shape.members.map { |member| Crinja.value({stmt: query_param_stmt(member)}) }
@@ -66,9 +70,11 @@ module Amazonite::Codegen::Bindings
     private def member_value(member, module_alias)
       converter = raw_payload?(member) ? nil : member_converter(member, module_alias)
       default = member_default(member)
+      doc = Amazonite::Codegen::Service::Utils.doc_comment(member.documentation)
 
       Crinja.value({
         name:            member.name,
+        wire_name:       member.json_wire_name,
         snake_case_name: member.snake_case_name,
         type:            member_type(member),
         has_converter:   !!converter,
@@ -76,6 +82,8 @@ module Amazonite::Codegen::Bindings
         has_default:     !!default,
         default:         default,
         ignore:          not_in_body?(member),
+        doc:             doc,
+        has_doc:         !!doc,
       })
     end
 
@@ -120,17 +128,19 @@ module Amazonite::Codegen::Bindings
       # required (non-nilable) - it's never actually read back through
       # JSON, since rest-json operations build/consume these members via
       # the URI, query string, or headers directly.
-      zero_value(member.crystal_type(true)) if not_in_body?(member) && member.required?
+      zero_value(member) if not_in_body?(member) && member.required?
     end
 
-    private def zero_value(crystal_type : String) : String
-      case crystal_type
+    private def zero_value(member) : String
+      return "#{@module_alias}::#{member.crystal_type(true)}::#{member.enum_type.values.first}" if member.enum_type?
+
+      case member.crystal_type(true)
       when "String"             then "\"\""
       when "Bool"               then "false"
       when "Int32", "Int64"     then "0"
       when "Float32", "Float64" then "0.0"
       else
-        raise Exception.new("no zero value known for required non-body member of type '#{crystal_type}'")
+        raise Exception.new("no zero value known for required non-body member of type '#{member.crystal_type(true)}'")
       end
     end
 
@@ -278,19 +288,26 @@ module Amazonite::Codegen::Bindings
     # `required` (a required member's Crystal property is non-nilable, so
     # its read expression must resolve the Optional away with `.not_nil!`).
     private def scalar_read_expr(node_expr : String, member, required : Bool) : String
-      expr = if member.time_type?
-               @needs_core_alias = true
-               "Core::XMLValue.time(#{node_expr})"
-             elsif member.blob_type?
-               @needs_core_alias = true
-               "Core::XMLValue.bytes(#{node_expr})"
-             elsif member.enum_type?
-               @needs_module_alias = true
-               "(n = #{node_expr}) ? #{@module_alias}::#{member.crystal_type(true)}.from_json_object_key?(n.content) : nil"
-             else
-               @needs_core_alias = true
-               "Core::XMLValue.#{xml_value_method(member.crystal_type(true))}(#{node_expr})"
-             end
+      if member.time_type?
+        @needs_core_alias = true
+        not_nil_if_required("Core::XMLValue.time(#{node_expr})", required)
+      elsif member.blob_type?
+        @needs_core_alias = true
+        not_nil_if_required("Core::XMLValue.bytes(#{node_expr})", required)
+      elsif member.enum_type?
+        @needs_module_alias = true
+        # This is itself a ternary, so `.not_nil!` must wrap the whole
+        # expression in parens rather than plain string-appending the call,
+        # which would otherwise bind only to the `nil` arm.
+        ternary = "(n = #{node_expr}) ? #{@module_alias}::#{member.crystal_type(true)}.from_json_object_key?(n.content) : nil"
+        required ? "(#{ternary}).not_nil!" : ternary
+      else
+        @needs_core_alias = true
+        not_nil_if_required("Core::XMLValue.#{xml_value_method(member.crystal_type(true))}(#{node_expr})", required)
+      end
+    end
+
+    private def not_nil_if_required(expr : String, required : Bool) : String
       required ? "#{expr}.not_nil!" : expr
     end
 

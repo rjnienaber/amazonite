@@ -1,7 +1,10 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::StsV1
+  # A document that contains additional information about the authorization status of a request from
+  # an encoded message that is returned in response to an Amazon Web Services request.
   class DecodeAuthorizationMessageResponse
+    # The API returns a response with the decoded message.
     property decoded_message : String | Nil
 
     def initialize(

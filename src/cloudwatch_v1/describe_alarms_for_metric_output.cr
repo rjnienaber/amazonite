@@ -2,6 +2,7 @@ module Amazonite::CloudWatchV1
   class DescribeAlarmsForMetricOutput
     include JSON::Serializable
 
+    # The information for each alarm with the specified metric.
     @[JSON::Field(key: "MetricAlarms")]
     property metric_alarms : Array(MetricAlarm) | Nil
 

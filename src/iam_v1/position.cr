@@ -1,9 +1,15 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the row and column of a location of a `Statement` element in a policy document.
+  #
+  # This data type is used as a member of the `
+  # [Statement](https://docs.aws.amazon.com/IAM/latest/APIReference/API_Statement.html) ` type.
   class Position
+    # The line containing the specified position in the document.
     property line : Int32 | Nil
 
+    # The column in the line containing the specified position in the document.
     property column : Int32 | Nil
 
     def initialize(

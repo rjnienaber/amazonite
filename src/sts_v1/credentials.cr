@@ -1,13 +1,18 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::StsV1
+  # Amazon Web Services credentials for API authentication.
   class Credentials
+    # The access key ID that identifies the temporary security credentials.
     property access_key_id : String
 
+    # The secret access key that can be used to sign requests.
     property secret_access_key : String
 
+    # The token that users must pass to the service API to use the temporary credentials.
     property session_token : String
 
+    # The date on which the current credentials expire.
     property expiration : Time
 
     def initialize(

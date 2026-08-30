@@ -2,8 +2,19 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class UpdateOpenIDConnectProviderThumbprintRequest
+    # The Amazon Resource Name (ARN) of the IAM OIDC provider resource object for which you want to
+    # update the thumbprint. You can get a list of OIDC provider ARNs by using the
+    # [ListOpenIDConnectProviders](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListOpenIDConnectProviders.html)
+    # operation.
+    #
+    # For more information about ARNs, see [Amazon Resource Names
+    # (ARNs)](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) in the
+    # *Amazon Web Services General Reference*.
     property open_id_connect_provider_arn : String
 
+    # A list of certificate thumbprints that are associated with the specified IAM OpenID Connect
+    # provider. For more information, see
+    # [CreateOpenIDConnectProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateOpenIDConnectProvider.html).
     property thumbprint_list : Array(String) = [] of String
 
     def initialize(

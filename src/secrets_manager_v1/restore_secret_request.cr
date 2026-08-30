@@ -2,6 +2,11 @@ module Amazonite::SecretsManagerV1
   class RestoreSecretRequest
     include JSON::Serializable
 
+    # The ARN or name of the secret to restore.
+    #
+    # For an ARN, we recommend that you specify a complete ARN rather than a partial ARN. See [Finding
+    # a secret from a partial
+    # ARN](https://docs.aws.amazon.com/secretsmanager/latest/userguide/troubleshoot.html#ARN_secretnamehyphen).
     @[JSON::Field(key: "SecretId")]
     property secret_id : String
 

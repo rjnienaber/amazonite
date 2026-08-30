@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetAccountSummary](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountSummary.html)
+  # request.
   class GetAccountSummaryResponse
+    # A set of key–value pairs containing information about IAM entity usage and IAM quotas.
     property summary_map : Hash(SummaryKeyType, Int32) | Nil
 
     def initialize(

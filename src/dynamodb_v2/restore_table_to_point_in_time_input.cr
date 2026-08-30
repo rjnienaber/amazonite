@@ -5,39 +5,62 @@ module Amazonite::DynamoDBV2
   class RestoreTableToPointInTimeInput
     include JSON::Serializable
 
+    # The DynamoDB table that will be restored. This value is an Amazon Resource Name (ARN).
     @[JSON::Field(key: "SourceTableArn")]
     property source_table_arn : String | Nil
 
+    # Name of the source table that is being restored.
     @[JSON::Field(key: "SourceTableName")]
     property source_table_name : String | Nil
 
+    # The name of the new table to which it must be restored to.
     @[JSON::Field(key: "TargetTableName")]
     property target_table_name : String
 
+    # Restore the table to the latest possible time. `LatestRestorableDateTime` is typically 5 minutes
+    # before the current time.
     @[JSON::Field(key: "UseLatestRestorableTime")]
     property use_latest_restorable_time : Bool | Nil
 
+    # Time in the past to restore the table to.
     @[JSON::Field(key: "RestoreDateTime", converter: Core::AWSEpochConverter)]
     property restore_date_time : Time | Nil
 
+    # The billing mode of the restored table.
     @[JSON::Field(key: "BillingModeOverride", converter: ADDB::BillingMode)]
     property billing_mode_override : BillingMode | Nil
 
+    # List of global secondary indexes for the restored table. The indexes provided should match
+    # existing secondary indexes. You can choose to exclude some or all of the indexes at the time of
+    # restore.
+    #
+    # The `WarmThroughput` setting is not supported on global secondary indexes when you use
+    # `RestoreTableToPointInTime`. Although `WarmThroughput` appears in the shared index definition,
+    # including it in a `GlobalSecondaryIndexOverride` entry causes the request to fail with a
+    # validation error.
     @[JSON::Field(key: "GlobalSecondaryIndexOverride")]
     property global_secondary_index_override : Array(GlobalSecondaryIndex) | Nil
 
+    # List of local secondary indexes for the restored table. The indexes provided should match
+    # existing secondary indexes. You can choose to exclude some or all of the indexes at the time of
+    # restore.
     @[JSON::Field(key: "LocalSecondaryIndexOverride")]
     property local_secondary_index_override : Array(LocalSecondaryIndex) | Nil
 
+    # Provisioned throughput settings for the restored table.
     @[JSON::Field(key: "ProvisionedThroughputOverride")]
     property provisioned_throughput_override : ProvisionedThroughput | Nil
 
     @[JSON::Field(key: "OnDemandThroughputOverride")]
     property on_demand_throughput_override : OnDemandThroughput | Nil
 
+    # The new server-side encryption settings for the restored table.
     @[JSON::Field(key: "SSESpecificationOverride")]
     property sse_specification_override : SSESpecification | Nil
 
+    # The vector indexes for the restored table. If not specified, all vector indexes from the source
+    # table are restored. The indexes provided must match existing vector indexes from the source
+    # table. You can choose to exclude some or all of the vector indexes at the time of restore.
     @[JSON::Field(key: "VectorIndexOverride")]
     property vector_index_override : Array(VectorIndex) | Nil
 

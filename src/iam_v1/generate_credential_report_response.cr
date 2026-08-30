@@ -2,9 +2,14 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GenerateCredentialReport](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GenerateCredentialReport.html)
+  # request.
   class GenerateCredentialReportResponse
+    # Information about the state of the credential report.
     property state : ReportStateType | Nil
 
+    # Information about the credential report.
     property description : String | Nil
 
     def initialize(

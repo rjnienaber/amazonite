@@ -1,9 +1,18 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetAccessKeyLastUsed](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccessKeyLastUsed.html)
+  # request. It is also returned as a member of the
+  # [AccessKeyMetaData](https://docs.aws.amazon.com/IAM/latest/APIReference/API_AccessKeyMetaData.html)
+  # structure returned by the
+  # [ListAccessKeys](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListAccessKeys.html)
+  # action.
   class GetAccessKeyLastUsedResponse
+    # The name of the IAM user that owns this access key.
     property user_name : String | Nil
 
+    # Contains information about the last time the access key was used.
     property access_key_last_used : AccessKeyLastUsed | Nil
 
     def initialize(

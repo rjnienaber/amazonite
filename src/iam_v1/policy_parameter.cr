@@ -2,11 +2,15 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about a policy parameter used to customize delegated permissions.
   class PolicyParameter
+    # The name of the policy parameter.
     property name : String | Nil
 
+    # The allowed values for the policy parameter.
     property values : Array(String) | Nil
 
+    # The data type of the policy parameter value.
     property type : PolicyParameterTypeEnum | Nil
 
     def initialize(

@@ -2,9 +2,13 @@ module Amazonite::DynamoDBV2
   class GetResourcePolicyOutput
     include JSON::Serializable
 
+    # The resource-based policy document attached to the resource, which can be a table or stream, in
+    # JSON format.
     @[JSON::Field(key: "Policy")]
     property policy : String | Nil
 
+    # A unique string that represents the revision ID of the policy. If you're comparing revision IDs,
+    # make sure to always use string comparison logic.
     @[JSON::Field(key: "RevisionId")]
     property revision_id : String | Nil
 

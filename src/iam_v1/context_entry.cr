@@ -2,11 +2,25 @@ private alias AI = Amazonite::IamV1
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about a condition context key. It includes the name of the key and
+  # specifies the value (or values, if the context key supports multiple values) to use in the
+  # simulation. This information is used when evaluating the `Condition` elements of the input
+  # policies.
+  #
+  # This data type is used as an input parameter to
+  # [SimulateCustomPolicy](https://docs.aws.amazon.com/IAM/latest/APIReference/API_SimulateCustomPolicy.html)
+  # and
+  # [SimulatePrincipalPolicy](https://docs.aws.amazon.com/IAM/latest/APIReference/API_SimulatePrincipalPolicy.html).
   class ContextEntry
+    # The full name of a condition context key, including the service prefix. For example,
+    # `aws:SourceIp` or `s3:VersionId`.
     property context_key_name : String | Nil
 
+    # The value (or values, if the condition context key supports multiple values) to provide to the
+    # simulation when the key is referenced by a `Condition` element in an input policy.
     property context_key_values : Array(String) | Nil
 
+    # The data type of the value (or values) specified in the `ContextKeyValues` parameter.
     property context_key_type : ContextKeyTypeEnum | Nil
 
     def initialize(

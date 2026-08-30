@@ -1,10 +1,14 @@
 module Amazonite::SsmV1
+  # Inventory query results.
   class InventoryResultEntity
     include JSON::Serializable
 
+    # ID of the inventory result entity. For example, for managed node inventory the result will be
+    # the managed node ID. For EC2 instance inventory, the result will be the instance ID.
     @[JSON::Field(key: "Id")]
     property id : String | Nil
 
+    # The data section in the inventory result entity JSON.
     @[JSON::Field(key: "Data")]
     property data : Hash(String, InventoryResultItem) | Nil
 

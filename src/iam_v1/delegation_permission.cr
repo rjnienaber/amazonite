@@ -1,9 +1,13 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains information about the permissions being delegated in a delegation request.
   class DelegationPermission
+    # This ARN maps to a pre-registered policy content for this partner. See the [partner onboarding
+    # documentation]() to understand how to create a delegation template.
     property policy_template_arn : String | Nil
 
+    # A list of policy parameters that define the scope and constraints of the delegated permissions.
     property parameters : Array(PolicyParameter) | Nil
 
     def initialize(

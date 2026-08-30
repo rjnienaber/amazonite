@@ -1,5 +1,10 @@
 module Amazonite::IamV1
   class ResetServiceSpecificCredentialResponse
+    # A structure with details about the updated service-specific credential, including the new
+    # password.
+    #
+    # This is the **only** time that you can access the password. You cannot recover the password
+    # later, but you can reset it again.
     property service_specific_credential : ServiceSpecificCredential | Nil
 
     def initialize(

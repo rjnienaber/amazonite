@@ -1,9 +1,17 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
+  # Contains the private keys for the SAML provider.
+  #
+  # This data type is used as a response element in the
+  # [GetSAMLProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetSAMLProvider.html)
+  # operation.
   class SAMLPrivateKey
+    # The unique identifier for the SAML private key.
     property key_id : String | Nil
 
+    # The date and time, in [ISO 8601 date-time ](http://www.iso.org/iso/iso8601) format, when the
+    # private key was uploaded.
     property timestamp : Time | Nil
 
     def initialize(

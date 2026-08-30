@@ -1,7 +1,9 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Input for GetSubscriptionAttributes.
   class GetSubscriptionAttributesInput
+    # The ARN of the subscription whose properties you want to get.
     property subscription_arn : String
 
     def initialize(

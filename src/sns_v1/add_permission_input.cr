@@ -2,12 +2,20 @@ private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
   class AddPermissionInput
+    # The ARN of the topic whose access control policy you wish to modify.
     property topic_arn : String
 
+    # A unique identifier for the new policy statement.
     property label : String
 
+    # The Amazon Web Services account IDs of the users (principals) who will be given access to the
+    # specified actions. The users must have Amazon Web Services account, but do not need to be signed
+    # up for this service.
     property aws_account_id : Array(String) = [] of String
 
+    # The action you want to allow for the specified principal(s).
+    #
+    # Valid values: Any Amazon SNS action name, for example `Publish`.
     property action_name : Array(String) = [] of String
 
     def initialize(

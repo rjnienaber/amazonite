@@ -1,9 +1,13 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::SnsV1
+  # Response for ListSubscriptionsByTopic action.
   class ListSubscriptionsByTopicResponse
+    # A list of subscriptions.
     property subscriptions : Array(Subscription) | Nil
 
+    # Token to pass along to the next `ListSubscriptionsByTopic` request. This element is returned if
+    # there are more subscriptions to retrieve.
     property next_token : String | Nil
 
     def initialize(

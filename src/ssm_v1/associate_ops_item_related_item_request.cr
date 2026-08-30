@@ -2,15 +2,26 @@ module Amazonite::SsmV1
   class AssociateOpsItemRelatedItemRequest
     include JSON::Serializable
 
+    # The ID of the OpsItem to which you want to associate a resource as a related item.
     @[JSON::Field(key: "OpsItemId")]
     property ops_item_id : String
 
+    # The type of association that you want to create between an OpsItem and a resource. OpsCenter
+    # supports `IsParentOf` and `RelatesTo` association types.
     @[JSON::Field(key: "AssociationType")]
     property association_type : String
 
+    # The type of resource that you want to associate with an OpsItem. OpsCenter supports the
+    # following types:
+    #
+    # `AWS::SSMIncidents::IncidentRecord`: an Incident Manager incident.
+    #
+    # `AWS::SSM::Document`: a Systems Manager (SSM) document.
     @[JSON::Field(key: "ResourceType")]
     property resource_type : String
 
+    # The Amazon Resource Name (ARN) of the Amazon Web Services resource that you want to associate
+    # with the OpsItem.
     @[JSON::Field(key: "ResourceUri")]
     property resource_uri : String
 

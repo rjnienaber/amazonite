@@ -2,6 +2,8 @@ private alias Core = Amazonite::Core
 
 module Amazonite::StsV1
   class GetDelegatedAccessTokenRequest
+    # The token to exchange for temporary Amazon Web Services credentials. This token must be valid
+    # and unexpired at the time of the request.
     property trade_in_token : String
 
     def initialize(

@@ -1,0 +1,15 @@
+module Amazonite::ApiGatewayV1
+  # Represents a mapping template used to transform a payload.
+  class Template
+    include JSON::Serializable
+
+    # The Apache Velocity Template Language (VTL) template content used for the template resource.
+    @[JSON::Field(key: "value")]
+    property value : String | Nil
+
+    def initialize(
+      @value : String | Nil = nil,
+    )
+    end
+  end
+end

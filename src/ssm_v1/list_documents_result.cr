@@ -2,9 +2,12 @@ module Amazonite::SsmV1
   class ListDocumentsResult
     include JSON::Serializable
 
+    # The names of the SSM documents.
     @[JSON::Field(key: "DocumentIdentifiers")]
     property document_identifiers : Array(DocumentIdentifier) | Nil
 
+    # The token to use when requesting the next set of items. If there are no additional items to
+    # return, the string is empty.
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 

@@ -1,4 +1,5 @@
 module Amazonite::SnsV1
+  # The destination phone number's verification status.
   class VerifySMSSandboxPhoneNumberResult
     def initialize
     end

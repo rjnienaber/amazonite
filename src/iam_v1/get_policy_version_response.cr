@@ -1,5 +1,9 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetPolicyVersion](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetPolicyVersion.html)
+  # request.
   class GetPolicyVersionResponse
+    # A structure containing details about the policy version.
     property policy_version : PolicyVersion | Nil
 
     def initialize(

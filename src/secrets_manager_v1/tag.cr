@@ -1,10 +1,13 @@
 module Amazonite::SecretsManagerV1
+  # A structure that contains information about a tag.
   class Tag
     include JSON::Serializable
 
+    # The key identifier, or name, of the tag.
     @[JSON::Field(key: "Key")]
     property key : String | Nil
 
+    # The string value associated with the key of the tag.
     @[JSON::Field(key: "Value")]
     property value : String | Nil
 

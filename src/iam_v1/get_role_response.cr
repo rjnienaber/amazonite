@@ -1,5 +1,8 @@
 module Amazonite::IamV1
+  # Contains the response to a successful
+  # [GetRole](https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetRole.html) request.
   class GetRoleResponse
+    # A structure containing details about the IAM role.
     property role : Role
 
     def initialize(

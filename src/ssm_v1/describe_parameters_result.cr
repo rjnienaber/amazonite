@@ -2,9 +2,11 @@ module Amazonite::SsmV1
   class DescribeParametersResult
     include JSON::Serializable
 
+    # Parameters returned by the request.
     @[JSON::Field(key: "Parameters")]
     property parameters : Array(ParameterMetadata) | Nil
 
+    # The token to use when requesting the next set of items.
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 

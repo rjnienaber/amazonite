@@ -2,6 +2,9 @@ private alias Core = Amazonite::Core
 
 module Amazonite::IamV1
   class GetServiceLinkedRoleDeletionStatusRequest
+    # The deletion task identifier. This identifier is returned by the
+    # [DeleteServiceLinkedRole](https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteServiceLinkedRole.html)
+    # operation in the format `task/aws-service-role///`.
     property deletion_task_id : String
 
     def initialize(

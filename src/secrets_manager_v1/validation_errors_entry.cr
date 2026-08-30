@@ -1,10 +1,14 @@
 module Amazonite::SecretsManagerV1
+  # Displays errors that occurred during validation of the resource policy.
   class ValidationErrorsEntry
     include JSON::Serializable
 
+    # Checks the name of the policy.
     @[JSON::Field(key: "CheckName")]
     property check_name : String | Nil
 
+    # Displays error messages if validation encounters problems during validation of the resource
+    # policy.
     @[JSON::Field(key: "ErrorMessage")]
     property error_message : String | Nil
 

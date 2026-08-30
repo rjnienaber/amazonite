@@ -2,12 +2,25 @@ module Amazonite::SsmV1
   class DescribePatchGroupsRequest
     include JSON::Serializable
 
+    # The maximum number of patch groups to return (per page).
     @[JSON::Field(key: "MaxResults")]
     property max_results : Int32 | Nil
 
+    # Each element in the array is a structure containing a key-value pair.
+    #
+    # Supported keys for `DescribePatchGroups` include the following:
+    #
+    # - ** `NAME_PREFIX` **
+    #
+    # Sample values: `AWS-` | `My-`.
+    #
+    # - ** `OPERATING_SYSTEM` **
+    #
+    # Sample values: `AMAZON_LINUX` | `SUSE` | `WINDOWS`
     @[JSON::Field(key: "Filters")]
     property filters : Array(PatchOrchestratorFilter) | Nil
 
+    # The token for the next set of items to return. (You received this token from a previous call.)
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 
