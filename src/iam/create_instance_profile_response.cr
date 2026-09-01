@@ -1,0 +1,37 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::Iam
+  # Contains the response to a successful
+  # [CreateInstanceProfile](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateInstanceProfile.html)
+  # request.
+  class CreateInstanceProfileResponse
+    # A structure containing details about the new instance profile.
+    property instance_profile : InstanceProfile
+
+    def initialize(
+      @instance_profile : InstanceProfile,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      params.concat(@instance_profile.to_query_params("#{prefix}InstanceProfile."))
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        instance_profile: node.xpath_node("*[local-name()='InstanceProfile']").try { |n| InstanceProfile.from_xml(n) }.not_nil!,
+      )
+    end
+
+    def validate! : Nil
+      if value = @instance_profile
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@instance_profile)
+  end
+end

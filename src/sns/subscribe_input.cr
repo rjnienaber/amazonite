@@ -1,0 +1,171 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::Sns
+  # Input for Subscribe action.
+  class SubscribeInput
+    # The ARN of the topic you want to subscribe to.
+    property topic_arn : String
+
+    # The protocol that you want to use. Supported protocols include:
+    #
+    # - `http` – delivery of JSON-encoded message via HTTP POST
+    #
+    # - `https` – delivery of JSON-encoded message via HTTPS POST
+    #
+    # - `email` – delivery of message via SMTP
+    #
+    # - `email-json` – delivery of JSON-encoded message via SMTP
+    #
+    # - `sms` – delivery of message via SMS
+    #
+    # - `sqs` – delivery of JSON-encoded message to an Amazon SQS queue
+    #
+    # - `application` – delivery of JSON-encoded message to an EndpointArn for a mobile app and device
+    #
+    # - `lambda` – delivery of JSON-encoded message to an Lambda function
+    #
+    # - `firehose` – delivery of JSON-encoded message to an Amazon Data Firehose delivery stream.
+    property protocol : String
+
+    # The endpoint that you want to receive notifications. Endpoints vary by protocol:
+    #
+    # - For the `http` protocol, the (public) endpoint is a URL beginning with `http://`.
+    #
+    # - For the `https` protocol, the (public) endpoint is a URL beginning with `https://`.
+    #
+    # - For the `email` protocol, the endpoint is an email address.
+    #
+    # - For the `email-json` protocol, the endpoint is an email address.
+    #
+    # - For the `sms` protocol, the endpoint is a phone number of an SMS-enabled device.
+    #
+    # - For the `sqs` protocol, the endpoint is the ARN of an Amazon SQS queue.
+    #
+    # - For the `application` protocol, the endpoint is the EndpointArn of a mobile app and device.
+    #
+    # - For the `lambda` protocol, the endpoint is the ARN of an Lambda function.
+    #
+    # - For the `firehose` protocol, the endpoint is the ARN of an Amazon Data Firehose delivery
+    # stream.
+    property endpoint : String | Nil
+
+    # A map of attributes with their corresponding values.
+    #
+    # The following lists the names, descriptions, and values of the special request parameters that
+    # the `Subscribe` action uses:
+    #
+    # - `DeliveryPolicy` – The policy that defines how Amazon SNS retries failed deliveries to HTTP/S
+    # endpoints.
+    #
+    # - `FilterPolicy` – The simple JSON object that lets your subscriber receive only a subset of
+    # messages, rather than receiving every message published to the topic.
+    #
+    # - `FilterPolicyScope` – This attribute lets you choose the filtering scope by using one of the
+    # following string value types:
+    #
+    # - `MessageAttributes` (default) – The filter is applied on the message attributes.
+    #
+    # - `MessageBody` – The filter is applied on the message body.
+    #
+    # - `RawMessageDelivery` – When set to `true`, enables raw message delivery to Amazon SQS or
+    # HTTP/S endpoints. This eliminates the need for the endpoints to process JSON formatting, which
+    # is otherwise created for Amazon SNS metadata.
+    #
+    # - `RedrivePolicy` – When specified, sends undeliverable messages to the specified Amazon SQS
+    # dead-letter queue. Messages that can't be delivered due to client errors (for example, when the
+    # subscribed endpoint is unreachable) or server errors (for example, when the service that powers
+    # the subscribed endpoint becomes unavailable) are held in the dead-letter queue for further
+    # analysis or reprocessing.
+    #
+    # The following attribute applies only to Amazon Data Firehose delivery stream subscriptions:
+    #
+    # - `SubscriptionRoleArn` – The ARN of the IAM role that has the following:
+    #
+    # - Permission to write to the Firehose delivery stream
+    #
+    # - Amazon SNS listed as a trusted entity
+    #
+    # Specifying a valid ARN for this attribute is required for Firehose delivery stream
+    # subscriptions. For more information, see [Fanout to Firehose delivery
+    # streams](https://docs.aws.amazon.com/sns/latest/dg/sns-firehose-as-subscriber.html) in the
+    # *Amazon SNS Developer Guide*.
+    #
+    # The following attributes apply only to [FIFO
+    # topics](https://docs.aws.amazon.com/sns/latest/dg/sns-fifo-topics.html):
+    #
+    # - `ReplayPolicy` – Adds or updates an inline policy document for a subscription to replay
+    # messages stored in the specified Amazon SNS topic.
+    #
+    # - `ReplayStatus` – Retrieves the status of the subscription message replay, which can be one of
+    # the following:
+    #
+    # - `Completed` – The replay has successfully redelivered all messages, and is now delivering
+    # newly published messages. If an ending point was specified in the `ReplayPolicy` then the
+    # subscription will no longer receive newly published messages.
+    #
+    # - `In progress` – The replay is currently replaying the selected messages.
+    #
+    # - `Failed` – The replay was unable to complete.
+    #
+    # - `Pending` – The default state while the replay initiates.
+    property attributes : Hash(String, String) | Nil
+
+    # Sets whether the response from the `Subscribe` request includes the subscription ARN, even if
+    # the subscription is not yet confirmed.
+    #
+    # If you set this parameter to `true`, the response includes the ARN in all cases, even if the
+    # subscription is not yet confirmed. In addition to the ARN for confirmed subscriptions, the
+    # response also includes the `pending subscription` ARN value for subscriptions that aren't yet
+    # confirmed. A subscription becomes confirmed when the subscriber calls the `ConfirmSubscription`
+    # action with a confirmation token.
+    #
+    # The default value is `false`.
+    property return_subscription_arn : Bool | Nil
+
+    def initialize(
+      @topic_arn : String,
+      @protocol : String,
+      @endpoint : String | Nil = nil,
+      @attributes : Hash(String, String) | Nil = nil,
+      @return_subscription_arn : Bool | Nil = nil,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      params << {"#{prefix}TopicArn", @topic_arn}
+
+      params << {"#{prefix}Protocol", @protocol}
+
+      if value = @endpoint
+        params << {"#{prefix}Endpoint", value}
+      end
+
+      (@attributes || {} of String => String).each_with_index(1) do |(key, value), i|
+        params << {"#{prefix}Attributes.entry.#{i}.key", key}
+        params << {"#{prefix}Attributes.entry.#{i}.value", value}
+      end
+
+      if value = @return_subscription_arn
+        params << {"#{prefix}ReturnSubscriptionArn", Core::QueryValue.bool(value)}
+      end
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        topic_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='TopicArn']")).not_nil!,
+        protocol: Core::XMLValue.string(node.xpath_node("*[local-name()='Protocol']")).not_nil!,
+        endpoint: Core::XMLValue.string(node.xpath_node("*[local-name()='Endpoint']")),
+        attributes: node.xpath_nodes("*[local-name()='Attributes']/*[local-name()='entry']").each_with_object({} of String => String) { |entry, hash| hash[entry.xpath_node("*[local-name()='key']").not_nil!.content] = entry.xpath_node("*[local-name()='value']").not_nil!.content },
+        return_subscription_arn: Core::XMLValue.bool(node.xpath_node("*[local-name()='ReturnSubscriptionArn']")),
+      )
+    end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@topic_arn, @protocol, @endpoint, @attributes, @return_subscription_arn)
+  end
+end

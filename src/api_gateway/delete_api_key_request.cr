@@ -1,0 +1,20 @@
+module Amazonite::ApiGateway
+  # A request to delete the ApiKey resource.
+  class DeleteApiKeyRequest
+    include JSON::Serializable
+
+    # The identifier of the ApiKey resource to be deleted.
+    @[JSON::Field(key: "apiKey", ignore: true)]
+    property api_key : String = ""
+
+    def initialize(
+      @api_key : String,
+    )
+    end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@api_key)
+  end
+end

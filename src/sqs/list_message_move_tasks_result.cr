@@ -1,0 +1,24 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::Sqs
+  class ListMessageMoveTasksResult
+    include JSON::Serializable
+
+    # A list of message movement tasks and their attributes.
+    @[JSON::Field(key: "Results")]
+    property results : Array(ListMessageMoveTasksResultEntry) | Nil
+
+    def initialize(
+      @results : Array(ListMessageMoveTasksResultEntry) | Nil = nil,
+    )
+    end
+
+    def validate! : Nil
+      if value = @results
+        value.each(&.validate!)
+      end
+    end
+
+    def_equals_and_hash(@results)
+  end
+end

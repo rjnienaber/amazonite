@@ -1,0 +1,47 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::DynamoDB
+  # Represents the properties of a replica global secondary index.
+  class ReplicaGlobalSecondaryIndex
+    include JSON::Serializable
+
+    # The name of the global secondary index.
+    @[JSON::Field(key: "IndexName")]
+    property index_name : String
+
+    # Replica table GSI-specific provisioned throughput. If not specified, uses the source table GSI's
+    # read capacity settings.
+    @[JSON::Field(key: "ProvisionedThroughputOverride")]
+    property provisioned_throughput_override : ProvisionedThroughputOverride | Nil
+
+    # Overrides the maximum on-demand throughput settings for the specified global secondary index in
+    # the specified replica table.
+    @[JSON::Field(key: "OnDemandThroughputOverride")]
+    property on_demand_throughput_override : OnDemandThroughputOverride | Nil
+
+    def initialize(
+      @index_name : String,
+      @provisioned_throughput_override : ProvisionedThroughputOverride | Nil = nil,
+      @on_demand_throughput_override : OnDemandThroughputOverride | Nil = nil,
+    )
+    end
+
+    def validate! : Nil
+      if value = @index_name
+        raise Core::ValidationError.new("IndexName length must be >= 3") if value.size < 3
+        raise Core::ValidationError.new("IndexName length must be <= 255") if value.size > 255
+        raise Core::ValidationError.new("IndexName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_.-]+$"))
+      end
+
+      if value = @provisioned_throughput_override
+        value.validate!
+      end
+
+      if value = @on_demand_throughput_override
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@index_name, @provisioned_throughput_override, @on_demand_throughput_override)
+  end
+end

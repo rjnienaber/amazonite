@@ -1,0 +1,62 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::Iam
+  # Contains information about an MFA device.
+  #
+  # This data type is used as a response element in the
+  # [ListMFADevices](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListMFADevices.html)
+  # operation.
+  class MFADevice
+    # The user with whom the MFA device is associated.
+    property user_name : String
+
+    # The serial number that uniquely identifies the MFA device. For virtual MFA devices, the serial
+    # number is the device ARN.
+    property serial_number : String
+
+    # The date when the MFA device was enabled for the user.
+    property enable_date : Time
+
+    def initialize(
+      @user_name : String,
+      @serial_number : String,
+      @enable_date : Time,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      params << {"#{prefix}UserName", @user_name}
+
+      params << {"#{prefix}SerialNumber", @serial_number}
+
+      params << {"#{prefix}EnableDate", Core::QueryValue.time(@enable_date)}
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        user_name: Core::XMLValue.string(node.xpath_node("*[local-name()='UserName']")).not_nil!,
+        serial_number: Core::XMLValue.string(node.xpath_node("*[local-name()='SerialNumber']")).not_nil!,
+        enable_date: Core::XMLValue.time(node.xpath_node("*[local-name()='EnableDate']")).not_nil!,
+      )
+    end
+
+    def validate! : Nil
+      if value = @user_name
+        raise Core::ValidationError.new("UserName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("UserName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
+      end
+
+      if value = @serial_number
+        raise Core::ValidationError.new("SerialNumber length must be >= 9") if value.size < 9
+        raise Core::ValidationError.new("SerialNumber length must be <= 256") if value.size > 256
+        raise Core::ValidationError.new("SerialNumber does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=/:,.@-]+$"))
+      end
+    end
+
+    def_equals_and_hash(@user_name, @serial_number, @enable_date)
+  end
+end

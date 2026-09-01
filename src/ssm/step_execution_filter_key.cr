@@ -1,0 +1,56 @@
+private alias AS = Amazonite::Ssm
+
+module Amazonite::Ssm
+  enum StepExecutionFilterKey
+    StartTimeBefore
+    StartTimeAfter
+    StepExecutionStatus
+    StepExecutionId
+    StepName
+    Action
+    ParentStepExecutionId
+    ParentStepIteration
+    ParentStepIteratorValue
+
+    def self.to_json(e : StepExecutionFilterKey, json : JSON::Builder) : Nil
+      json.string(e.to_s)
+    end
+
+    def self.from_json(pull : JSON::PullParser) : AS::StepExecutionFilterKey
+      value = pull.read_string
+      case value
+      when "StartTimeBefore"         then AS::StepExecutionFilterKey::StartTimeBefore
+      when "StartTimeAfter"          then AS::StepExecutionFilterKey::StartTimeAfter
+      when "StepExecutionStatus"     then AS::StepExecutionFilterKey::StepExecutionStatus
+      when "StepExecutionId"         then AS::StepExecutionFilterKey::StepExecutionId
+      when "StepName"                then AS::StepExecutionFilterKey::StepName
+      when "Action"                  then AS::StepExecutionFilterKey::Action
+      when "ParentStepExecutionId"   then AS::StepExecutionFilterKey::ParentStepExecutionId
+      when "ParentStepIteration"     then AS::StepExecutionFilterKey::ParentStepIteration
+      when "ParentStepIteratorValue" then AS::StepExecutionFilterKey::ParentStepIteratorValue
+      else
+        raise Exception.new("unknown enum value for 'StepExecutionFilterKey' when deserializing from json: '#{value}'")
+      end
+    end
+
+    def to_json_object_key : String
+      to_s
+    end
+
+    def self.from_json_object_key?(key : String) : AS::StepExecutionFilterKey?
+      case key
+      when "StartTimeBefore"         then AS::StepExecutionFilterKey::StartTimeBefore
+      when "StartTimeAfter"          then AS::StepExecutionFilterKey::StartTimeAfter
+      when "StepExecutionStatus"     then AS::StepExecutionFilterKey::StepExecutionStatus
+      when "StepExecutionId"         then AS::StepExecutionFilterKey::StepExecutionId
+      when "StepName"                then AS::StepExecutionFilterKey::StepName
+      when "Action"                  then AS::StepExecutionFilterKey::Action
+      when "ParentStepExecutionId"   then AS::StepExecutionFilterKey::ParentStepExecutionId
+      when "ParentStepIteration"     then AS::StepExecutionFilterKey::ParentStepIteration
+      when "ParentStepIteratorValue" then AS::StepExecutionFilterKey::ParentStepIteratorValue
+      else
+        nil
+      end
+    end
+  end
+end

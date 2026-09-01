@@ -1,0 +1,25 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::CloudWatchLogs
+  class PutQueryDefinitionResponse
+    include JSON::Serializable
+
+    # The ID of the query definition.
+    @[JSON::Field(key: "queryDefinitionId")]
+    property query_definition_id : String | Nil
+
+    def initialize(
+      @query_definition_id : String | Nil = nil,
+    )
+    end
+
+    def validate! : Nil
+      if value = @query_definition_id
+        raise Core::ValidationError.new("queryDefinitionId length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("queryDefinitionId length must be <= 256") if value.size > 256
+      end
+    end
+
+    def_equals_and_hash(@query_definition_id)
+  end
+end

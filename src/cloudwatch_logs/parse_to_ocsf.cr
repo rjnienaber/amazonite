@@ -1,0 +1,55 @@
+private alias ACWL = Amazonite::CloudWatchLogs
+private alias Core = Amazonite::Core
+
+module Amazonite::CloudWatchLogs
+  # This processor converts logs into [Open Cybersecurity Schema Framework (OCSF)](https://ocsf.io)
+  # events.
+  #
+  # For more information about this processor including examples, see
+  # [parseToOCSF](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parseToOCSF)
+  # in the *CloudWatch Logs User Guide*.
+  class ParseToOCSF
+    include JSON::Serializable
+
+    # The path to the field in the log event that you want to parse. If you omit this value, the whole
+    # log message is parsed.
+    @[JSON::Field(key: "source")]
+    property source : String | Nil
+
+    # Specify the service or process that produces the log events that will be converted with this
+    # processor.
+    @[JSON::Field(key: "eventSource", converter: ACWL::EventSource)]
+    property event_source : EventSource
+
+    # Specify which version of the OCSF schema to use for the transformed log events.
+    @[JSON::Field(key: "ocsfVersion", converter: ACWL::OCSFVersion)]
+    property ocsf_version : OCSFVersion
+
+    # The version of the OCSF mapping to use for parsing log data.
+    @[JSON::Field(key: "mappingVersion")]
+    property mapping_version : String | Nil
+
+    def initialize(
+      @event_source : EventSource,
+      @ocsf_version : OCSFVersion,
+      @source : String | Nil = nil,
+      @mapping_version : String | Nil = nil,
+    )
+    end
+
+    def validate! : Nil
+      if value = @source
+        raise Core::ValidationError.new("source length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("source length must be <= 128") if value.size > 128
+      end
+
+      if value = @mapping_version
+        raise Core::ValidationError.new("mappingVersion length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("mappingVersion length must be <= 10") if value.size > 10
+        raise Core::ValidationError.new("mappingVersion does not match the required pattern") unless value.matches?(Regex.new("^\\d+\\.\\d+(\\.\\d+)?$"))
+      end
+    end
+
+    def_equals_and_hash(@source, @event_source, @ocsf_version, @mapping_version)
+  end
+end

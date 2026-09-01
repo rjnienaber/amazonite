@@ -1,0 +1,76 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::CloudFormation
+  class CreateGeneratedTemplateInput
+    # An optional list of resources to be included in the generated template.
+    #
+    # If no resources are specified,the template will be created without any resources. Resources can
+    # be added to the template using the `UpdateGeneratedTemplate` API action.
+    property resources : Array(ResourceDefinition) | Nil
+
+    # The name assigned to the generated template.
+    property generated_template_name : String
+
+    # An optional name or ARN of a stack to use as the base stack for the generated template.
+    property stack_name : String | Nil
+
+    # The configuration details of the generated template, including the `DeletionPolicy` and
+    # `UpdateReplacePolicy`.
+    property template_configuration : TemplateConfiguration | Nil
+
+    def initialize(
+      @generated_template_name : String,
+      @resources : Array(ResourceDefinition) | Nil = nil,
+      @stack_name : String | Nil = nil,
+      @template_configuration : TemplateConfiguration | Nil = nil,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      (@resources || [] of ResourceDefinition).each_with_index(1) do |item, i|
+        params.concat(item.to_query_params("#{prefix}Resources.member.#{i}."))
+      end
+
+      params << {"#{prefix}GeneratedTemplateName", @generated_template_name}
+
+      if value = @stack_name
+        params << {"#{prefix}StackName", value}
+      end
+
+      if value = @template_configuration
+        params.concat(value.to_query_params("#{prefix}TemplateConfiguration."))
+      end
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        resources: node.xpath_nodes("*[local-name()='Resources']/*[local-name()='member']").map { |n| ResourceDefinition.from_xml(n) },
+        generated_template_name: Core::XMLValue.string(node.xpath_node("*[local-name()='GeneratedTemplateName']")).not_nil!,
+        stack_name: Core::XMLValue.string(node.xpath_node("*[local-name()='StackName']")),
+        template_configuration: node.xpath_node("*[local-name()='TemplateConfiguration']").try { |n| TemplateConfiguration.from_xml(n) },
+      )
+    end
+
+    def validate! : Nil
+      if value = @resources
+        raise Core::ValidationError.new("Resources must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("Resources must have at most 500 item(s)") if value.size > 500
+        value.each(&.validate!)
+      end
+
+      if value = @generated_template_name
+        raise Core::ValidationError.new("GeneratedTemplateName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("GeneratedTemplateName length must be <= 128") if value.size > 128
+      end
+
+      if value = @template_configuration
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@resources, @generated_template_name, @stack_name, @template_configuration)
+  end
+end
