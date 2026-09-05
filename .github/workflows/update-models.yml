@@ -1,0 +1,159 @@
+name: Update AWS models
+
+# Nightly: pull the latest api-models-aws, regenerate, and - only if the new
+# models actually change one of the services we generate - run the full CI
+# suite against the result and, if it passes, merge and tag a release so the
+# new version shows up in the shard directories.
+on:
+  schedule:
+    - cron: '17 3 * * *' # Nightly at 03:17, after the 00:37 CI run
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: regenerate and test, but do not merge or tag
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-aws-models
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.detect.outputs.changed }}
+      modules: ${{ steps.detect.outputs.modules }}
+      version: ${{ steps.detect.outputs.version }}
+    steps:
+      - name: download source
+        uses: actions/checkout@v7
+        with:
+          submodules: true
+          # the release job fast-forwards master onto this branch, and tagging
+          # needs the tag list, so a shallow clone won't do
+          fetch-depth: 0
+      - name: install crystal
+        uses: crystal-lang/install-crystal@v1
+      - name: cache shards
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/shards
+          key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
+          restore-keys: ${{ runner.os }}-shards-
+      - name: install dependencies
+        run: shards install
+      - name: update api-models-aws
+        id: models
+        run: |
+          echo "from=$(git -C api-models-aws rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          git submodule update --remote api-models-aws
+          echo "to=$(git -C api-models-aws rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+      - name: regenerate services
+        run: ./scripts/regenerate.sh
+      - name: detect material changes
+        id: detect
+        run: |
+          # New shapes arrive as untracked files, which git diff won't report -
+          # stage first so they show up as adds.
+          git add -A src
+
+          # Every module embeds the submodule sha as its VERSION constant, so a
+          # models bump always rewrites those lines whether or not the service
+          # itself moved. A module counts as changed only if something other
+          # than that one line differs.
+          modules="$(
+            git diff --cached --name-only -- src | while read -r file; do
+              if git diff --cached -U0 -- "$file" \
+                | grep -E '^[-+]' \
+                | grep -vE '^(\+\+\+|---)' \
+                | grep -qvE '^[-+] *VERSION *= *"'; then
+                # src/sqs.cr and src/sqs/client.cr both name sqs
+                echo "${file#src/}" | cut -d/ -f1 | sed 's/\.cr$//'
+              fi
+            done | sort -u | tr '\n' ' ' | sed 's/ *$//'
+          )"
+
+          if [ -z "$modules" ]; then
+            echo "no service changes in ${{ steps.models.outputs.from }}..${{ steps.models.outputs.to }}"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          version="$(awk '/^version:/ { print $2; exit }' shard.yml)"
+          next="$(echo "$version" | awk -F. '{ print $1 "." $2 "." $3 + 1 }')"
+          if git rev-parse -q --verify "refs/tags/v${next}" >/dev/null; then
+            echo "::error::tag v${next} already exists"
+            exit 1
+          fi
+
+          {
+            echo "changed=true"
+            echo "modules=$modules"
+            echo "version=$next"
+          } >> "$GITHUB_OUTPUT"
+      - name: push regenerated branch
+        if: steps.detect.outputs.changed == 'true'
+        env:
+          MODULES: ${{ steps.detect.outputs.modules }}
+          VERSION: ${{ steps.detect.outputs.version }}
+          FROM_SHA: ${{ steps.models.outputs.from }}
+          TO_SHA: ${{ steps.models.outputs.to }}
+        run: |
+          sed -i "s/^version: .*/version: ${VERSION}/" shard.yml
+
+          {
+            echo "Regenerate ${MODULES} from latest api-models-aws"
+            echo
+            echo "Bumps the api-models-aws submodule (${FROM_SHA} -> ${TO_SHA}) and"
+            echo "reruns codegen. Only the modules listed above changed beyond their"
+            echo "VERSION constant; the rest are untouched by this bump."
+            echo
+            echo "Released as v${VERSION}."
+          } > "${RUNNER_TEMP}/commit-message"
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout -B automated/aws-models
+          git add -A
+          git commit --file "${RUNNER_TEMP}/commit-message"
+          git push --force origin automated/aws-models
+
+  test:
+    needs: regenerate
+    if: needs.regenerate.outputs.changed == 'true'
+    uses: ./.github/workflows/ci.yml
+    with:
+      ref: automated/aws-models
+    secrets: inherit
+
+  release:
+    needs: [regenerate, test]
+    if: needs.regenerate.outputs.changed == 'true' && !inputs.dry_run
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: download source
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: merge regenerated branch
+        run: |
+          git fetch origin automated/aws-models
+          # fails rather than merging if master moved while CI was running -
+          # the next nightly run regenerates from the new master
+          git merge --ff-only FETCH_HEAD
+          git push origin master
+      - name: tag release
+        run: |
+          gh release create "v${{ needs.regenerate.outputs.version }}" \
+            --title "v${{ needs.regenerate.outputs.version }}" \
+            --notes "Regenerated ${{ needs.regenerate.outputs.modules }} from the latest api-models-aws."
+      - name: publish api docs
+        # pushes made with GITHUB_TOKEN don't trigger workflows, so docs.yml
+        # has to be kicked off by hand
+        run: gh workflow run docs.yml --ref master

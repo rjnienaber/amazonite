@@ -1,3 +1,4 @@
 [submodule "api-models-aws"]
 	path = api-models-aws
 	url = https://github.com/aws/api-models-aws.git
+	branch = main

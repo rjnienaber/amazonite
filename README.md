@@ -130,12 +130,23 @@ Once you've cloned the repo, have a look at the `scripts` directory for some scr
   * watches for code changes and regenerates the code for apis
 * `./scripts/watch_integration.cr`
   * watches for code changes and executes integration tests
+* `./scripts/regenerate.sh`
+  * regenerates every service and syncs the result from `tmp/` into `src/`
 
 `codegen/codegen.cr` (built as `bin/codegen`, or run directly with `crystal run codegen/codegen.cr --`) accepts flags to point it at a different `api-models-aws` checkout, change the output directory, control log verbosity, and restrict which services/protocols get generated. Run it with `-h` for the full list, e.g.:
 
 ```
 crystal run codegen/codegen.cr -- --models-dir ../api-models-aws --output-dir tmp --service dynamodb --service ssm --log-level debug
 ```
+
+### Releases
+
+The [Update AWS models](.github/workflows/update-models.yml) workflow runs nightly. It pulls the latest
+[api-models-aws](https://github.com/aws/api-models-aws), regenerates every service and checks whether anything changed
+beyond each module's `VERSION` constant (which tracks the submodule commit and so moves on every bump, service change or
+not). If nothing did, the run stops there. Otherwise it pushes the regenerated code to `automated/aws-models`, runs the
+full CI suite against that branch and - only if it passes - fast-forwards `master`, bumps the patch version in
+`shard.yml` and tags a release, so the new version is picked up by the shard directories.
 
 ## Contributing
 

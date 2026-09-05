@@ -5,6 +5,15 @@ on:
     branches: [master]
   schedule:
     - cron: '37 0 * * *' # Nightly at 00:37
+  # Lets update-models.yml run this whole suite against its regenerated branch
+  # before that branch is merged and tagged.
+  workflow_call:
+    inputs:
+      ref:
+        description: commit, branch or tag to test instead of the triggering ref
+        type: string
+        required: false
+        default: ''
 jobs:
   build:
     strategy:
@@ -25,6 +34,9 @@ jobs:
         uses: actions/checkout@v7
         with:
           submodules: true
+          # empty for every trigger other than workflow_call, which checkout
+          # treats as "use the default ref"
+          ref: ${{ inputs.ref }}
       - name: install crystal
         uses: crystal-lang/install-crystal@v1
         with:
@@ -73,6 +85,9 @@ jobs:
         uses: actions/checkout@v7
         with:
           submodules: true
+          # empty for every trigger other than workflow_call, which checkout
+          # treats as "use the default ref"
+          ref: ${{ inputs.ref }}
       - name: install crystal
         uses: crystal-lang/install-crystal@v1
         with:
