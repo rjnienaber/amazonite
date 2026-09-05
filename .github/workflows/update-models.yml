@@ -134,6 +134,10 @@ jobs:
     needs: [regenerate, test]
     if: needs.regenerate.outputs.changed == 'true' && !inputs.dry_run
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      # dispatching docs.yml is an Actions API call, not a push
+      actions: write
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -155,5 +159,6 @@ jobs:
             --notes "Regenerated ${{ needs.regenerate.outputs.modules }} from the latest api-models-aws."
       - name: publish api docs
         # pushes made with GITHUB_TOKEN don't trigger workflows, so docs.yml
-        # has to be kicked off by hand
+        # has to be dispatched explicitly (workflow_dispatch is the documented
+        # exception, but the call still needs actions: write)
         run: gh workflow run docs.yml --ref master
