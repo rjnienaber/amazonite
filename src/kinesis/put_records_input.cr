@@ -21,11 +21,16 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "StreamId")]
     property stream_id : String | Nil
 
+    # Checks if your request will succeed. `DryRun` is an optional parameter.
+    @[JSON::Field(key: "DryRun")]
+    property dry_run : Bool | Nil
+
     def initialize(
       @records : Array(PutRecordsRequestEntry),
       @stream_name : String | Nil = nil,
       @stream_arn : String | Nil = nil,
       @stream_id : String | Nil = nil,
+      @dry_run : Bool | Nil = nil,
     )
     end
 
@@ -55,6 +60,6 @@ module Amazonite::Kinesis
       end
     end
 
-    def_equals_and_hash(@records, @stream_name, @stream_arn, @stream_id)
+    def_equals_and_hash(@records, @stream_name, @stream_arn, @stream_id, @dry_run)
   end
 end

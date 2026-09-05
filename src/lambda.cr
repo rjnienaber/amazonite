@@ -5,6 +5,6 @@ require "./core/*"
 require "./lambda/*"
 
 module Amazonite::Lambda
-  VERSION     = "66407b31"
+  VERSION     = "8153df4c"
   API_VERSION = "2015-03-31"
 end

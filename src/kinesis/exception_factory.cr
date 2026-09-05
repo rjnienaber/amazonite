@@ -4,6 +4,9 @@ module Amazonite::Kinesis
   class AccessDeniedException < Core::ResponseException
   end
 
+  class DryRunOperationException < Core::ResponseException
+  end
+
   class ExpiredIteratorException < Core::ResponseException
   end
 
@@ -53,6 +56,7 @@ module Amazonite::Kinesis
     def create(exception_type, http, message, code) : Core::ResponseException | Nil
       case exception_type
       when "AccessDeniedException"                  then AccessDeniedException.new(http, message, code)
+      when "DryRunOperationException"               then DryRunOperationException.new(http, message, code)
       when "ExpiredIteratorException"               then ExpiredIteratorException.new(http, message, code)
       when "ExpiredNextTokenException"              then ExpiredNextTokenException.new(http, message, code)
       when "InternalFailureException"               then InternalFailureException.new(http, message, code)

@@ -5,6 +5,6 @@ require "./core/*"
 require "./ssm/*"
 
 module Amazonite::Ssm
-  VERSION     = "66407b31"
+  VERSION     = "8153df4c"
   API_VERSION = "2014-11-06"
 end

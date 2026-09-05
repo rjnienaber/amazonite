@@ -5,6 +5,6 @@ require "./core/*"
 require "./sts/*"
 
 module Amazonite::Sts
-  VERSION     = "66407b31"
+  VERSION     = "8153df4c"
   API_VERSION = "2011-06-15"
 end

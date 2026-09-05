@@ -96,6 +96,10 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "MaxRecordSizeInKiB")]
     property max_record_size_in_ki_b : Int32 | Nil
 
+    # The number of channels associated with the stream.
+    @[JSON::Field(key: "ChannelCount")]
+    property channel_count : Int32 | Nil
+
     def initialize(
       @stream_name : String,
       @stream_arn : String,
@@ -111,6 +115,7 @@ module Amazonite::Kinesis
       @consumer_count : Int32 | Nil = nil,
       @warm_throughput : WarmThroughputObject | Nil = nil,
       @max_record_size_in_ki_b : Int32 | Nil = nil,
+      @channel_count : Int32 | Nil = nil,
     )
     end
 
@@ -164,8 +169,13 @@ module Amazonite::Kinesis
         raise Core::ValidationError.new("MaxRecordSizeInKiB value must be >= 1024") if value < 1024
         raise Core::ValidationError.new("MaxRecordSizeInKiB value must be <= 10240") if value > 10240
       end
+
+      if value = @channel_count
+        raise Core::ValidationError.new("ChannelCount value must be >= 0") if value < 0
+        raise Core::ValidationError.new("ChannelCount value must be <= 1000000") if value > 1000000
+      end
     end
 
-    def_equals_and_hash(@stream_name, @stream_arn, @stream_id, @stream_status, @stream_mode_details, @retention_period_hours, @stream_creation_timestamp, @enhanced_monitoring, @encryption_type, @key_id, @open_shard_count, @consumer_count, @warm_throughput, @max_record_size_in_ki_b)
+    def_equals_and_hash(@stream_name, @stream_arn, @stream_id, @stream_status, @stream_mode_details, @retention_period_hours, @stream_creation_timestamp, @enhanced_monitoring, @encryption_type, @key_id, @open_shard_count, @consumer_count, @warm_throughput, @max_record_size_in_ki_b, @channel_count)
   end
 end

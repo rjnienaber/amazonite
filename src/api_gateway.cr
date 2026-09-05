@@ -5,6 +5,6 @@ require "./core/*"
 require "./api_gateway/*"
 
 module Amazonite::ApiGateway
-  VERSION     = "66407b31"
+  VERSION     = "8153df4c"
   API_VERSION = "2015-07-09"
 end

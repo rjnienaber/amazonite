@@ -57,6 +57,10 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "StreamId")]
     property stream_id : String | Nil
 
+    # Checks if your request will succeed. `DryRun` is an optional parameter.
+    @[JSON::Field(key: "DryRun")]
+    property dry_run : Bool | Nil
+
     def initialize(
       @shard_id : String,
       @shard_iterator_type : ShardIteratorType,
@@ -65,6 +69,7 @@ module Amazonite::Kinesis
       @timestamp : Time | Nil = nil,
       @stream_arn : String | Nil = nil,
       @stream_id : String | Nil = nil,
+      @dry_run : Bool | Nil = nil,
     )
     end
 
@@ -82,7 +87,7 @@ module Amazonite::Kinesis
       end
 
       if value = @starting_sequence_number
-        raise Core::ValidationError.new("StartingSequenceNumber does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,128})$"))
+        raise Core::ValidationError.new("StartingSequenceNumber does not match the required pattern") unless value.matches?(Regex.new("^(0|([1-9]\\d{0,128}))$"))
       end
 
       if value = @stream_arn
@@ -98,6 +103,6 @@ module Amazonite::Kinesis
       end
     end
 
-    def_equals_and_hash(@stream_name, @shard_id, @shard_iterator_type, @starting_sequence_number, @timestamp, @stream_arn, @stream_id)
+    def_equals_and_hash(@stream_name, @shard_id, @shard_iterator_type, @starting_sequence_number, @timestamp, @stream_arn, @stream_id, @dry_run)
   end
 end

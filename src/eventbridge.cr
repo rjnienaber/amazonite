@@ -5,6 +5,6 @@ require "./core/*"
 require "./eventbridge/*"
 
 module Amazonite::EventBridge
-  VERSION     = "66407b31"
+  VERSION     = "8153df4c"
   API_VERSION = "2015-10-07"
 end

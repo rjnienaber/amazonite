@@ -5,6 +5,6 @@ require "./core/*"
 require "./cloudformation/*"
 
 module Amazonite::CloudFormation
-  VERSION     = "66407b31"
+  VERSION     = "8153df4c"
   API_VERSION = "2010-05-15"
 end

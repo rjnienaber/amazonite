@@ -40,7 +40,7 @@ module Amazonite::Kinesis
       end
 
       if value = @continuation_sequence_number
-        raise Core::ValidationError.new("ContinuationSequenceNumber does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,128})$"))
+        raise Core::ValidationError.new("ContinuationSequenceNumber does not match the required pattern") unless value.matches?(Regex.new("^(0|([1-9]\\d{0,128}))$"))
       end
 
       if value = @millis_behind_latest

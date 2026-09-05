@@ -44,6 +44,10 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "StreamId")]
     property stream_id : String | Nil
 
+    # Checks if your request will succeed. `DryRun` is an optional parameter.
+    @[JSON::Field(key: "DryRun")]
+    property dry_run : Bool | Nil
+
     def initialize(
       @data : Bytes,
       @partition_key : String,
@@ -52,6 +56,7 @@ module Amazonite::Kinesis
       @sequence_number_for_ordering : String | Nil = nil,
       @stream_arn : String | Nil = nil,
       @stream_id : String | Nil = nil,
+      @dry_run : Bool | Nil = nil,
     )
     end
 
@@ -73,11 +78,11 @@ module Amazonite::Kinesis
       end
 
       if value = @explicit_hash_key
-        raise Core::ValidationError.new("ExplicitHashKey does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,38})$"))
+        raise Core::ValidationError.new("ExplicitHashKey does not match the required pattern") unless value.matches?(Regex.new("^(0|([1-9]\\d{0,38}))$"))
       end
 
       if value = @sequence_number_for_ordering
-        raise Core::ValidationError.new("SequenceNumberForOrdering does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,128})$"))
+        raise Core::ValidationError.new("SequenceNumberForOrdering does not match the required pattern") unless value.matches?(Regex.new("^(0|([1-9]\\d{0,128}))$"))
       end
 
       if value = @stream_arn
@@ -93,6 +98,6 @@ module Amazonite::Kinesis
       end
     end
 
-    def_equals_and_hash(@stream_name, @data, @partition_key, @explicit_hash_key, @sequence_number_for_ordering, @stream_arn, @stream_id)
+    def_equals_and_hash(@stream_name, @data, @partition_key, @explicit_hash_key, @sequence_number_for_ordering, @stream_arn, @stream_id, @dry_run)
   end
 end

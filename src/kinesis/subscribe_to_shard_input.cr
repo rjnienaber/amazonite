@@ -21,11 +21,16 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "StartingPosition")]
     property starting_position : StartingPosition
 
+    # Checks if your request will succeed. `DryRun` is an optional parameter.
+    @[JSON::Field(key: "DryRun")]
+    property dry_run : Bool | Nil
+
     def initialize(
       @consumer_arn : String,
       @shard_id : String,
       @starting_position : StartingPosition,
       @stream_id : String | Nil = nil,
+      @dry_run : Bool | Nil = nil,
     )
     end
 
@@ -53,6 +58,6 @@ module Amazonite::Kinesis
       end
     end
 
-    def_equals_and_hash(@consumer_arn, @stream_id, @shard_id, @starting_position)
+    def_equals_and_hash(@consumer_arn, @stream_id, @shard_id, @starting_position, @dry_run)
   end
 end

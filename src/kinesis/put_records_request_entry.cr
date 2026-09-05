@@ -39,7 +39,7 @@ module Amazonite::Kinesis
       end
 
       if value = @explicit_hash_key
-        raise Core::ValidationError.new("ExplicitHashKey does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,38})$"))
+        raise Core::ValidationError.new("ExplicitHashKey does not match the required pattern") unless value.matches?(Regex.new("^(0|([1-9]\\d{0,38}))$"))
       end
 
       if value = @partition_key

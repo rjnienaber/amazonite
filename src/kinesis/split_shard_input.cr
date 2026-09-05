@@ -53,7 +53,7 @@ module Amazonite::Kinesis
       end
 
       if value = @new_starting_hash_key
-        raise Core::ValidationError.new("NewStartingHashKey does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,38})$"))
+        raise Core::ValidationError.new("NewStartingHashKey does not match the required pattern") unless value.matches?(Regex.new("^(0|([1-9]\\d{0,38}))$"))
       end
 
       if value = @stream_arn

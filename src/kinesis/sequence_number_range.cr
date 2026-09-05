@@ -22,11 +22,11 @@ module Amazonite::Kinesis
 
     def validate! : Nil
       if value = @starting_sequence_number
-        raise Core::ValidationError.new("StartingSequenceNumber does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,128})$"))
+        raise Core::ValidationError.new("StartingSequenceNumber does not match the required pattern") unless value.matches?(Regex.new("^(0|([1-9]\\d{0,128}))$"))
       end
 
       if value = @ending_sequence_number
-        raise Core::ValidationError.new("EndingSequenceNumber does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,128})$"))
+        raise Core::ValidationError.new("EndingSequenceNumber does not match the required pattern") unless value.matches?(Regex.new("^(0|([1-9]\\d{0,128}))$"))
       end
     end
 

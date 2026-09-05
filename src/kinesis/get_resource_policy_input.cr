@@ -22,7 +22,7 @@ module Amazonite::Kinesis
       if value = @resource_arn
         raise Core::ValidationError.new("ResourceARN length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("ResourceARN length must be <= 2048") if value.size > 2048
-        raise Core::ValidationError.new("ResourceARN does not match the required pattern") unless value.matches?(Regex.new("^arn:aws.*:kinesis:.*:\\d{12}:.*stream/\\S+$"))
+        raise Core::ValidationError.new("ResourceARN does not match the required pattern") unless value.matches?(Regex.new("^arn:aws.*:kinesis:.*:\\d{12}:.*(stream|channel)/\\S+$"))
       end
 
       if value = @stream_id

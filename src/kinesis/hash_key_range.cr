@@ -22,11 +22,11 @@ module Amazonite::Kinesis
 
     def validate! : Nil
       if value = @starting_hash_key
-        raise Core::ValidationError.new("StartingHashKey does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,38})$"))
+        raise Core::ValidationError.new("StartingHashKey does not match the required pattern") unless value.matches?(Regex.new("^(0|([1-9]\\d{0,38}))$"))
       end
 
       if value = @ending_hash_key
-        raise Core::ValidationError.new("EndingHashKey does not match the required pattern") unless value.matches?(Regex.new("^0|([1-9]\\d{0,38})$"))
+        raise Core::ValidationError.new("EndingHashKey does not match the required pattern") unless value.matches?(Regex.new("^(0|([1-9]\\d{0,38}))$"))
       end
     end
 

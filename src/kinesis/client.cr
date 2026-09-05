@@ -27,6 +27,32 @@ module Amazonite::Kinesis
       Core::Response.new(response)
     end
 
+    # Creates a channel that delivers records from a Kinesis data stream to a destination. A channel
+    # reads records from the specified stream and writes them to streaming tables on Apache Iceberg
+    # (Amazon S3 Tables) or to a general purpose Amazon S3 bucket.
+    #
+    # You must specify either `S3DestinationConfiguration` or `S3TablesDestinationConfiguration`, but
+    # not both.
+    #
+    # To use this operation, you must have permission to pass the specified service execution IAM role
+    # to Amazon Kinesis Data Streams (the `iam:PassRole` permission on that role).
+    #
+    # Creating a channel is an asynchronous operation. Upon receiving the request, Amazon Kinesis Data
+    # Streams returns immediately with the channel in the `CREATING` state. After provisioning is
+    # complete, Amazon Kinesis Data Streams sets the state to `ACTIVE`. You can use DescribeChannel to
+    # check the current state.
+    #
+    # This operation is only supported for data streams with the on-demand capacity mode.
+    #
+    # This operation has a call limit of 5 transactions per second (TPS) for each Amazon Web Services
+    # account. Exceeding 5 TPS results in a `LimitExceededException`.
+    def create_channel(input : AK::CreateChannelInput) : Core::ParsedResponse(AK::CreateChannelOutput)
+      Log.info { "performing 'CreateChannel' operation" }
+      input.validate! if config.validate_input?
+      response = post("CreateChannel", "/", input.to_json)
+      Core::ParsedResponse(AK::CreateChannelOutput).new(response)
+    end
+
     # Creates a Kinesis data stream. A stream captures and transports data records that are
     # continuously emitted from different data sources or *producers*. Scale-out within a stream is
     # explicitly supported by means of shards, which are uniquely identified groups of data records in
@@ -107,6 +133,21 @@ module Amazonite::Kinesis
       Core::Response.new(response)
     end
 
+    # Deletes the specified channel. Deleting a channel stops delivery from the source stream to the
+    # destination. Data already delivered to the destination is not deleted.
+    #
+    # A stream cannot be deleted while it has active channels. To delete the stream, first delete all
+    # channels attached to it. To find them, use ListChannels with a stream filter.
+    #
+    # This operation has a call limit of 5 transactions per second (TPS) for each Amazon Web Services
+    # account. Exceeding 5 TPS results in a `LimitExceededException`.
+    def delete_channel(input : AK::DeleteChannelInput) : Core::Response
+      Log.info { "performing 'DeleteChannel' operation" }
+      input.validate! if config.validate_input?
+      response = post("DeleteChannel", "/", input.to_json)
+      Core::Response.new(response)
+    end
+
     # Delete a policy for the specified data stream or consumer. Request patterns can be one of the
     # following:
     #
@@ -175,6 +216,20 @@ module Amazonite::Kinesis
       input.validate! if config.validate_input?
       response = post("DescribeAccountSettings", "/", input.to_json)
       Core::ParsedResponse(AK::DescribeAccountSettingsOutput).new(response)
+    end
+
+    # Describes the specified channel, including its configuration and current status.
+    #
+    # Use this operation to verify that a channel reached the `ACTIVE` state after creation, or to
+    # diagnose a channel in the `FAILED` state by reading the `ChannelStatusReason`.
+    #
+    # This operation has a call limit of 5 transactions per second (TPS) for each Amazon Web Services
+    # account. Exceeding 5 TPS results in a `LimitExceededException`.
+    def describe_channel(input : AK::DescribeChannelInput) : Core::ParsedResponse(AK::DescribeChannelOutput)
+      Log.info { "performing 'DescribeChannel' operation" }
+      input.validate! if config.validate_input?
+      response = post("DescribeChannel", "/", input.to_json)
+      Core::ParsedResponse(AK::DescribeChannelOutput).new(response)
     end
 
     # Describes the shard limits and usage for the account.
@@ -420,6 +475,21 @@ module Amazonite::Kinesis
       input.validate! if config.validate_input?
       response = post("IncreaseStreamRetentionPeriod", "/", input.to_json)
       Core::Response.new(response)
+    end
+
+    # Lists the channels in your account. You can filter the results by source stream. The results are
+    # paginated. Use the `NextToken` value returned in the response to retrieve additional results.
+    #
+    # Use this operation to find channels before deleting a stream, or to audit the channels
+    # configured in an Amazon Web Services Region.
+    #
+    # This operation has a call limit of 5 transactions per second (TPS) for each Amazon Web Services
+    # account. Exceeding 5 TPS results in a `LimitExceededException`.
+    def list_channels(input : AK::ListChannelsInput) : Core::ParsedResponse(AK::ListChannelsOutput)
+      Log.info { "performing 'ListChannels' operation" }
+      input.validate! if config.validate_input?
+      response = post("ListChannels", "/", input.to_json)
+      Core::ParsedResponse(AK::ListChannelsOutput).new(response)
     end
 
     # Lists the shards in a stream and provides information about each shard. This operation has a
@@ -881,6 +951,24 @@ module Amazonite::Kinesis
       input.validate! if config.validate_input?
       response = post("UpdateAccountSettings", "/", input.to_json)
       Core::ParsedResponse(AK::UpdateAccountSettingsOutput).new(response)
+    end
+
+    # Updates the data freshness interval or the Amazon CloudWatch Logs configuration of an existing
+    # channel. You cannot change the destination, source stream, record format, schema, encryption
+    # configuration, or service execution role of an existing channel. To change any other setting,
+    # delete the channel and create a new one.
+    #
+    # Updating a channel is an asynchronous operation. Upon receiving the request, Amazon Kinesis Data
+    # Streams sets the channel to the `UPDATING` state and returns immediately. After the change is
+    # applied, Amazon Kinesis Data Streams sets the channel back to the `ACTIVE` state.
+    #
+    # This operation has a call limit of 5 transactions per second (TPS) for each Amazon Web Services
+    # account. Exceeding 5 TPS results in a `LimitExceededException`.
+    def update_channel(input : AK::UpdateChannelInput) : Core::ParsedResponse(AK::UpdateChannelOutput)
+      Log.info { "performing 'UpdateChannel' operation" }
+      input.validate! if config.validate_input?
+      response = post("UpdateChannel", "/", input.to_json)
+      Core::ParsedResponse(AK::UpdateChannelOutput).new(response)
     end
 
     # This allows you to update the `MaxRecordSize` of a single record that you can write to, and read

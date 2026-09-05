@@ -20,11 +20,21 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "OnDemandStreamCountLimit")]
     property on_demand_stream_count_limit : Int32
 
+    # The number of channels in the account.
+    @[JSON::Field(key: "ChannelCount")]
+    property channel_count : Int32 | Nil
+
+    # The maximum number of channels allowed in the account.
+    @[JSON::Field(key: "ChannelCountLimit")]
+    property channel_count_limit : Int32 | Nil
+
     def initialize(
       @shard_limit : Int32,
       @open_shard_count : Int32,
       @on_demand_stream_count : Int32,
       @on_demand_stream_count_limit : Int32,
+      @channel_count : Int32 | Nil = nil,
+      @channel_count_limit : Int32 | Nil = nil,
     )
     end
 
@@ -48,8 +58,18 @@ module Amazonite::Kinesis
         raise Core::ValidationError.new("OnDemandStreamCountLimit value must be >= 0") if value < 0
         raise Core::ValidationError.new("OnDemandStreamCountLimit value must be <= 1000000") if value > 1000000
       end
+
+      if value = @channel_count
+        raise Core::ValidationError.new("ChannelCount value must be >= 0") if value < 0
+        raise Core::ValidationError.new("ChannelCount value must be <= 1000000") if value > 1000000
+      end
+
+      if value = @channel_count_limit
+        raise Core::ValidationError.new("ChannelCountLimit value must be >= 0") if value < 0
+        raise Core::ValidationError.new("ChannelCountLimit value must be <= 1000000") if value > 1000000
+      end
     end
 
-    def_equals_and_hash(@shard_limit, @open_shard_count, @on_demand_stream_count, @on_demand_stream_count_limit)
+    def_equals_and_hash(@shard_limit, @open_shard_count, @on_demand_stream_count, @on_demand_stream_count_limit, @channel_count, @channel_count_limit)
   end
 end

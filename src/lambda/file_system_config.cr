@@ -3,7 +3,7 @@ private alias Core = Amazonite::Core
 module Amazonite::Lambda
   # Details about the connection between a Lambda function and an [Amazon EFS file
   # system](https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html) or an
-  # [Amazon S3 Files file
+  # [Amazon S3 file
   # system](https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html).
   class FileSystemConfig
     include JSON::Serializable
@@ -17,9 +17,17 @@ module Amazonite::Lambda
     @[JSON::Field(key: "LocalMountPath")]
     property local_mount_path : String
 
+    # The configuration for how your function accesses data on an Amazon S3 file system. Valid only
+    # when the file system access point ARN is an Amazon S3 Files access point. If you specify a
+    # different access point type (for example, Amazon Elastic File System), the operation returns an
+    # `InvalidParameterException`.
+    @[JSON::Field(key: "S3FilesConfig")]
+    property s3_files_config : S3FilesConfig | Nil
+
     def initialize(
       @arn : String,
       @local_mount_path : String,
+      @s3_files_config : S3FilesConfig | Nil = nil,
     )
     end
 
@@ -35,8 +43,12 @@ module Amazonite::Lambda
         raise Core::ValidationError.new("LocalMountPath length must be <= 160") if value.size > 160
         raise Core::ValidationError.new("LocalMountPath does not match the required pattern") unless value.matches?(Regex.new("^/mnt/[a-zA-Z0-9-_.]+$"))
       end
+
+      if value = @s3_files_config
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@arn, @local_mount_path)
+    def_equals_and_hash(@arn, @local_mount_path, @s3_files_config)
   end
 end
