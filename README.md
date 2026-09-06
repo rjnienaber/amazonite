@@ -17,14 +17,14 @@ temporary credentials automatically, so a `Client.new` behaves the way you'd exp
 * Typed clients and models generated from AWS's own API definitions, not maintained by hand
 * Automatic credential resolution across env vars, profiles, SSO, ECS, and EC2 instance metadata
 * Automatic refresh of temporary credentials (AssumeRole, SSO, ECS, EC2) as they near expiry
-* 15 AWS services supported today, with integration tests for each - see [Supported APIs](#supported-apis)
+* 15 AWS services supported today, with integration tests for each - see [Supported services](#supported-services)
 * API docs regenerated and published on every push to `master`
 
 ## Contents
 
 - [Usage](#usage)
 - [Credentials](#credentials)
-- [Supported APIs](#supported-apis)
+- [Supported services](#supported-services)
 - [Installation](#installation)
 - [Development](#development)
 - [Contributing](#contributing)
@@ -85,26 +85,125 @@ directly, but if you leave them out, credentials are resolved automatically from
 Temporary credentials (from AssumeRole, SSO, ECS, or EC2) are refreshed automatically as they near
 expiry.
 
-## Supported APIs
+## Supported services
 
-| Name          | Supported?      |Integration Tests  | Notes                                                                 |
-| ------------- | :-------------: | :---------------: |-------------                                                          |
-| DynamoDB      | ✅              |✅                 |                                                                       |
-| SSM           | ✅              |✅                 |                                                                       |
-| SQS           | ✅              |✅                 |                                                                       |
-| KMS           | ✅              |✅                 |                                                                       |
-| Secrets Manager | ✅            |✅                 |                                                                       |
-| Lambda        | ✅              |✅                 | InvokeWithResponseStream isn't generated - uses event-stream framing, not a plain request/response |
-| SNS           | ✅              |✅                 |                                                                       |
-| IAM           | ✅              |✅                 |                                                                       |
-| CloudWatch    | ✅              |✅                 |                                                                       |
-| STS           | ✅              |✅                 |                                                                       |
-| CloudFormation | ✅             |✅                 |                                                                       |
-| API Gateway   | ✅              |✅                 |                                                                       |
-| EventBridge   | ✅              |✅                 |                                                                       |
-| CloudWatch Logs | ✅            |✅                 | GetLogObject and StartLiveTail aren't generated - use event-stream framing, not a plain request/response |
-| Kinesis       | ✅              |✅                 | SubscribeToShard isn't generated - uses event-stream framing, not a plain request/response |
-| S3            |  🚫             | 🚫                | Consider using [awscr-s3](https://github.com/taylorfinnell/awscr-s3)  |
+<!-- Raw HTML because crystal docs renders this file with Markd, a CommonMark
+     implementation, and pipe tables are a GitHub extension CommonMark doesn't include -
+     as markdown the table came out as a paragraph of literal pipes in the API docs.
+     Crystal's doc sanitizer drops every attribute here (align, id, ...), so don't add
+     any expecting them to survive.
+
+     The heading is "services" rather than "APIs" for the same reason: crystal slugs a
+     heading by underscoring it, which turns "APIs" into "ap-is" and leaves every
+     #supported-apis link on the page dangling. -->
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Supported?</th>
+      <th>Integration Tests</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DynamoDB</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>SSM</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>SQS</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>KMS</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Secrets Manager</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Lambda</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>InvokeWithResponseStream isn't generated - uses event-stream framing, not a plain request/response</td>
+    </tr>
+    <tr>
+      <td>SNS</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>IAM</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>CloudWatch</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>STS</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>CloudFormation</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>API Gateway</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>EventBridge</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>CloudWatch Logs</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>GetLogObject and StartLiveTail aren't generated - use event-stream framing, not a plain request/response</td>
+    </tr>
+    <tr>
+      <td>Kinesis</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>SubscribeToShard isn't generated - uses event-stream framing, not a plain request/response</td>
+    </tr>
+    <tr>
+      <td>S3</td>
+      <td>🚫</td>
+      <td>🚫</td>
+      <td>Consider using <a href="https://github.com/taylorfinnell/awscr-s3">awscr-s3</a></td>
+    </tr>
+  </tbody>
+</table>
 
 For example usage, please look at [the integration tests](integration). If you need an API that is not listed here,
 please open an issue or pull request with the generated code.
