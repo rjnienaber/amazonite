@@ -8,7 +8,12 @@ module Amazonite::Codegen::Service
     # Root of the api-models-aws checkout (submodule by default, but
     # overridable via the codegen CLI's --models-dir so a developer can point
     # at an arbitrary clone instead).
-    class_property models_dir : String = "api-models-aws"
+    class_getter models_dir : String = "api-models-aws"
+
+    def self.models_dir=(dir : String) : String
+      @@model_versions = nil if dir != @@models_dir
+      @@models_dir = dir
+    end
 
     # api-models-aws directory names don't always match the service slugs
     # used historically (dynamodb, ssm, ...) - only the exceptions need an
@@ -21,7 +26,15 @@ module Amazonite::Codegen::Service
 
     SLUG_WITH_DATE = /^(.+?)-(\d{4}-\d\d-\d\d)\.normal\.json$/
 
-    @@submodule_commit_sha : String?
+    # api-models-aws tracks a semver per service in this file, keyed by the
+    # same directory name the models live under (model.sqs.version=1.0.6).
+    # Upstream only ever bumps the patch component, once per model release
+    # that touches that service.
+    VERSIONS_FILE = "gradle.properties"
+
+    VERSION_KEY = /^model\.(?<service>.+)\.version$/
+
+    @@model_versions : Hash(String, String)?
 
     # Accepts either a bare service slug (e.g. "dynamodb") or an old-format
     # filename (e.g. "dynamodb-2012-08-10.normal.json") for spec call-site
@@ -45,11 +58,34 @@ module Amazonite::Codegen::Service
       Translator.new(JSON.parse(File.read(matches.first)))
     end
 
-    def self.submodule_commit_sha : String
-      @@submodule_commit_sha ||= begin
-        output = IO::Memory.new
-        Process.run("git", ["-C", models_dir, "rev-parse", "--short", "HEAD"], output: output)
-        output.to_s.strip
+    # The upstream model version for a service, used as the generated
+    # module's VERSION. Takes the same names as .translator.
+    def self.model_version(name : String) : String
+      slug = SLUG_WITH_DATE.match(name).try(&.[1]) || name
+      dir = SERVICE_DIRS.fetch(slug, slug)
+
+      model_versions.fetch(dir) do
+        raise Exception.new("no model.#{dir}.version in #{models_dir}/#{VERSIONS_FILE}")
+      end
+    end
+
+    private def self.model_versions : Hash(String, String)
+      @@model_versions ||= begin
+        path = File.join(models_dir, VERSIONS_FILE)
+        raise Exception.new("couldn't find #{path}") unless File.file?(path)
+
+        versions = {} of String => String
+        File.each_line(path) do |line|
+          key, _, value = line.partition("=")
+          # the file also carries org.gradle.* build settings, and an "all"
+          # roll-up that moves whenever any service does - neither names a
+          # service we generate
+          next unless match = VERSION_KEY.match(key.strip)
+          next if match["service"] == "all"
+
+          versions[match["service"]] = value.strip
+        end
+        versions
       end
     end
   end

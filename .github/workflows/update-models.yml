@@ -53,6 +53,10 @@ jobs:
           git submodule update --remote api-models-aws
           echo "to=$(git -C api-models-aws rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
       - name: regenerate services
+        # the step above moves the submodule past the pointer master records,
+        # which is exactly what regenerate.sh's staleness guard blocks
+        env:
+          ALLOW_MODELS_DRIFT: '1'
         run: ./scripts/regenerate.sh
       - name: detect material changes
         id: detect
@@ -61,10 +65,11 @@ jobs:
           # stage first so they show up as adds.
           git add -A src
 
-          # Every module embeds the submodule sha as its VERSION constant, so a
-          # models bump always rewrites those lines whether or not the service
-          # itself moved. A module counts as changed only if something other
-          # than that one line differs.
+          # Each module embeds its service's upstream model version as VERSION,
+          # which upstream bumps for any model release touching that service -
+          # including ones that change nothing we generate. A module counts as
+          # changed only if something other than that one line differs, so a
+          # docs-only upstream release doesn't cut a shard release on its own.
           modules="$(
             git diff --cached --name-only -- src | while read -r file; do
               if git diff --cached -U0 -- "$file" \

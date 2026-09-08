@@ -5,6 +5,8 @@ require "./core/*"
 require "./secrets_manager/*"
 
 module Amazonite::SecretsManager
-  VERSION     = "8153df4c"
+  # this service's own version in api-models-aws (gradle.properties), not
+  # amazonite's shard version - upstream bumps it per model release
+  VERSION     = "1.0.5"
   API_VERSION = "2017-10-17"
 end

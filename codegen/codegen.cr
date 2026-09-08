@@ -51,11 +51,10 @@ module Amazonite::Codegen
       targets = TARGETS.select { |service| cli.services.includes?(service) }
     end
 
-    aws_version = Service::Files.submodule_commit_sha
-
     targets.each do |service|
       translator = Service::Files.translator(service)
-      ::Log.info { "processing: #{service} (api version #{translator.api_version})" }
+      aws_version = Service::Files.model_version(service)
+      ::Log.info { "processing: #{service} (api version #{translator.api_version}, model version #{aws_version})" }
 
       description = Service::Description.new(aws_version, translator.api_version, translator.translate)
 

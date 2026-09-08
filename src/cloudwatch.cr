@@ -5,6 +5,8 @@ require "./core/*"
 require "./cloudwatch/*"
 
 module Amazonite::CloudWatch
-  VERSION     = "8153df4c"
+  # this service's own version in api-models-aws (gradle.properties), not
+  # amazonite's shard version - upstream bumps it per model release
+  VERSION     = "1.0.17"
   API_VERSION = "2010-08-01"
 end

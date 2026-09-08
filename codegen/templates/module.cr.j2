@@ -5,6 +5,8 @@ require "./core/*"
 require "./{{ service.module_slug }}/*"
 
 module {{ service.module_name }}
+  # this service's own version in api-models-aws (gradle.properties), not
+  # amazonite's shard version - upstream bumps it per model release
   VERSION     = "{{ service.aws_version }}"
   API_VERSION = "{{ service.api_version }}"
 end

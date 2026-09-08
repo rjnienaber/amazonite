@@ -242,8 +242,8 @@ crystal run codegen/codegen.cr -- --models-dir ../api-models-aws --output-dir tm
 
 The [Update AWS models](.github/workflows/update-models.yml) workflow runs nightly. It pulls the latest
 [api-models-aws](https://github.com/aws/api-models-aws), regenerates every service and checks whether anything changed
-beyond each module's `VERSION` constant (which tracks the submodule commit and so moves on every bump, service change or
-not). If nothing did, the run stops there. Otherwise it pushes the regenerated code to `automated/aws-models`, runs the
+beyond each module's `VERSION` constant (which tracks that service's own version in `api-models-aws`, so a bump with no
+generated change isn't worth a release on its own). If nothing did, the run stops there. Otherwise it pushes the regenerated code to `automated/aws-models`, runs the
 full CI suite against that branch and - only if it passes - fast-forwards `master`, bumps the patch version in
 `shard.yml` and tags a release, so the new version is picked up by the shard directories.
 

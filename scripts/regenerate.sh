@@ -9,6 +9,31 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
+# `git pull` leaves the submodule working tree where it was unless
+# submodule.recurse is set, so it's easy to end up regenerating against models
+# older than the ones src/ was built from - which looks like a normal diff but
+# reverts whole services. Compare what's checked out against what this commit
+# records and stop before writing anything. The nightly workflow moves the
+# submodule ahead of the pointer deliberately, so it sets ALLOW_MODELS_DRIFT.
+if [ "${ALLOW_MODELS_DRIFT:-0}" != "1" ]; then
+  expected="$(git rev-parse HEAD:api-models-aws)"
+  actual="$(git -C api-models-aws rev-parse HEAD 2>/dev/null || true)"
+
+  if [ -z "$actual" ]; then
+    echo "api-models-aws isn't checked out. Run:" >&2
+    echo "  git submodule update --init api-models-aws" >&2
+    exit 1
+  fi
+
+  if [ "$actual" != "$expected" ]; then
+    echo "api-models-aws is at ${actual:0:8}, but this commit records ${expected:0:8}." >&2
+    echo "Regenerating would rewrite src/ from the wrong models. Run:" >&2
+    echo "  git submodule update --checkout api-models-aws" >&2
+    echo "or set ALLOW_MODELS_DRIFT=1 to regenerate against the checkout as-is." >&2
+    exit 1
+  fi
+fi
+
 rm -rf tmp
 shards run codegen
 
