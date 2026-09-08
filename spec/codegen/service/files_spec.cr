@@ -46,7 +46,12 @@ describe Amazonite::Codegen::Service::Files do
       begin
         Amazonite::Codegen::Service::Files.models_dir = "does-not-exist"
 
-        expect_raises(Exception, /couldn't find does-not-exist\/gradle.properties/) do
+        # File.join writes a "\" separator on Windows, so the expected path has
+        # to be built the same way the message was rather than spelled with a
+        # literal "/".
+        missing = Regex.escape(File.join("does-not-exist", "gradle.properties"))
+
+        expect_raises(Exception, /couldn't find #{missing}/) do
           Amazonite::Codegen::Service::Files.model_version("sqs")
         end
       ensure
