@@ -1,0 +1,53 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::S3
+  class PutBucketNotificationConfigurationRequest
+    # The name of the bucket.
+    property bucket : String = ""
+
+    property notification_configuration : NotificationConfiguration
+
+    # The account ID of the expected bucket owner. If the account ID that you provide does not match
+    # the actual owner of the bucket, the request fails with the HTTP status code `403 Forbidden`
+    # (access denied).
+    property expected_bucket_owner : String | Nil
+
+    # Skips validation of Amazon SQS, Amazon SNS, and Lambda destinations. True or false value.
+    property skip_destination_validation : Bool | Nil
+
+    def initialize(
+      @bucket : String,
+      @notification_configuration : NotificationConfiguration,
+      @expected_bucket_owner : String | Nil = nil,
+      @skip_destination_validation : Bool | Nil = nil,
+    )
+    end
+
+    # `root` is the element this shape is serialized under, which restXml
+    # takes from the member binding it as the request payload rather than
+    # from the shape's own name - they differ often enough (S3 sends a
+    # CompletedMultipartUpload as <CompleteMultipartUpload>) that the caller
+    # has to supply it.
+    def to_xml(root : String) : String
+      XML.build(indent: nil) do |xml|
+        xml.element(root) { build_xml(xml) }
+      end
+    end
+
+    def build_xml(xml : XML::Builder) : Nil
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+      )
+    end
+
+    def validate! : Nil
+      if value = @notification_configuration
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@bucket, @notification_configuration, @expected_bucket_owner, @skip_destination_validation)
+  end
+end

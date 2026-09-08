@@ -1,13 +1,13 @@
 require "base64"
 require "xml"
 
-# Scalar (de)serialization helpers for the awsQuery protocol's generated
-# `to_query_params`/`from_xml` model methods - the query wire format encodes
-# every scalar as plain text (form value or XML element content), so these
-# just centralize the text <-> Crystal-type conversion for the handful of
-# non-String primitive types (JSON has its own separate converters in
-# converters.cr, since its wire representation differs, e.g. numbers/bools
-# aren't quoted text there).
+# Scalar (de)serialization helpers for the XML-bodied protocols' generated
+# `from_xml`/`to_query_params`/`build_xml` model methods - awsQuery and
+# restXml both encode every scalar as plain text (form value or XML element
+# content), so these just centralize the text <-> Crystal-type conversion for
+# the handful of non-String primitive types (JSON has its own separate
+# converters in converters.cr, since its wire representation differs, e.g.
+# numbers/bools aren't quoted text there).
 module Amazonite::Core::XMLValue
   def self.string(node : XML::Node?) : String?
     node.try(&.content)
@@ -42,8 +42,9 @@ module Amazonite::Core::XMLValue
   end
 end
 
-# The Crystal-type -> query-text conversion counterpart to `XMLValue`, for
-# the awsQuery protocol's generated `to_query_params` model methods.
+# The Crystal-type -> wire-text conversion counterpart to `XMLValue`, shared
+# by awsQuery's generated `to_query_params` and restXml's `build_xml` - a
+# scalar reaches both as the same plain text.
 module Amazonite::Core::QueryValue
   def self.bool(value : Bool) : String
     value ? "true" : "false"

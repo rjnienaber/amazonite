@@ -4,7 +4,7 @@
 {% endif %}module {{ service.module_name }}
 {% if shape.has_doc %}{{ shape.doc }}
 {% endif %}  class {{ shape.name }}
-{% if service.protocol == "query" -%}
+{% if service.protocol == "query" or service.protocol == "rest-xml" -%}
 {% for member in shape.members %}
 {% if member.has_doc %}{{ member.doc }}
 {% endif %}    property {{ member.snake_case_name }} : {{ member.type }}{% if member.has_default %} = {{ member.default }}{% endif %}
@@ -14,6 +14,7 @@
     ){% endif %}
     end
 
+{% if service.protocol == "query" -%}
     def to_query_params(prefix : String) : Array({String, String})
       params = [] of {String, String}
 {% for add in shape.query_adds %}
@@ -21,6 +22,24 @@
 {% endfor -%}
       params
     end
+{% else -%}
+    # `root` is the element this shape is serialized under, which restXml
+    # takes from the member binding it as the request payload rather than
+    # from the shape's own name - they differ often enough (S3 sends a
+    # CompletedMultipartUpload as <CompleteMultipartUpload>) that the caller
+    # has to supply it.
+    def to_xml(root : String) : String
+      XML.build(indent: nil) do |xml|
+        xml.element(root) { build_xml(xml) }
+      end
+    end
+
+    def build_xml(xml : XML::Builder) : Nil
+{% for write in shape.xml_writes %}
+      {{ write.stmt }}
+{% endfor -%}
+    end
+{% endif -%}
 
     def self.from_xml(node : XML::Node) : self
       new({% for read in shape.xml_reads %}

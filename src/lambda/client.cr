@@ -788,8 +788,9 @@ module Amazonite::Lambda
     def list_provisioned_concurrency_configs(input : AL::ListProvisionedConcurrencyConfigsRequest) : Core::ParsedResponse(AL::ListProvisionedConcurrencyConfigsResponse)
       Log.info { "performing 'ListProvisionedConcurrencyConfigs' operation" }
       input.validate! if config.validate_input?
-      path = "/2019-09-30/functions/#{URI.encode_path_segment(input.function_name)}/provisioned-concurrency?List=ALL"
+      path = "/2019-09-30/functions/#{URI.encode_path_segment(input.function_name)}/provisioned-concurrency"
       query = URI::Params.build do |form|
+        form.add("List", "ALL")
         if value = input.marker
           form.add("Marker", value)
         end
@@ -1179,10 +1180,10 @@ module Amazonite::Lambda
         (input.statuses || [] of ExecutionStatus).each do |value|
           form.add("Statuses", value.to_json_object_key)
         end
-        if value = input.started_after.try(&.to_s)
+        if value = input.started_after.try { |time| Core::HeaderValue.format_date_time(time) }
           form.add("StartedAfter", value)
         end
-        if value = input.started_before.try(&.to_s)
+        if value = input.started_before.try { |time| Core::HeaderValue.format_date_time(time) }
           form.add("StartedBefore", value)
         end
         if value = input.reverse_order.try(&.to_s)
@@ -1597,8 +1598,9 @@ module Amazonite::Lambda
     def get_layer_version_by_arn(input : AL::GetLayerVersionByArnRequest) : Core::ParsedResponse(AL::GetLayerVersionResponse)
       Log.info { "performing 'GetLayerVersionByArn' operation" }
       input.validate! if config.validate_input?
-      path = "/2018-10-31/layers?find=LayerVersion"
+      path = "/2018-10-31/layers"
       query = URI::Params.build do |form|
+        form.add("find", "LayerVersion")
         if value = input.arn
           form.add("Arn", value)
         end

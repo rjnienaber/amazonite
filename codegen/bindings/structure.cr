@@ -7,18 +7,20 @@ module Amazonite::Codegen::Bindings
     @payload_member : String?
     @query_adds : Array(Crinja::Value)
     @xml_reads : Array(Crinja::Value)
+    @xml_writes : Array(Crinja::Value)
     @validations : Array(Crinja::Value)
     @module_alias : String
     @doc : String?
 
     getter name, members, has_parameters, parameters, needs_core_alias, needs_module_alias, query_adds, xml_reads,
-      validations, doc, has_doc
+      xml_writes, validations, doc, has_doc
 
-    def initialize(shape : Amazonite::Codegen::Service::Structure, module_alias : String, is_rest : Bool, is_query : Bool = false)
+    def initialize(shape : Amazonite::Codegen::Service::Structure, module_alias : String, is_rest : Bool, is_query : Bool = false, is_rest_xml : Bool = false)
       @name = shape.name
       @needs_core_alias = false
       @needs_module_alias = false
       @is_rest = is_rest
+      @is_rest_xml = is_rest_xml
       @module_alias = module_alias
       @payload_member = shape.payload_member
       @doc = Amazonite::Codegen::Service::Utils.doc_comment(shape.documentation)
@@ -27,9 +29,20 @@ module Amazonite::Codegen::Bindings
       if is_query
         @query_adds = shape.members.map { |member| Crinja.value({stmt: query_param_stmt(member)}) }
         @xml_reads = shape.members.map { |member| Crinja.value({name: member.snake_case_name, expr: xml_read_expr(member)}) }
+        @xml_writes = [] of Crinja::Value
+      elsif is_rest_xml
+        # Only the body half of the shape is XML. The rest is routed to the
+        # URI, query string or headers by the client method, and a raw
+        # payload member is the body rather than a part of it, so both are
+        # left out of the element the shape serializes to.
+        body = shape.members.reject { |member| not_in_body?(member) || member.name == @payload_member }
+        @xml_reads = body.map { |member| Crinja.value({name: member.snake_case_name, expr: xml_read_expr(member)}) }
+        @xml_writes = body.map { |member| Crinja.value({stmt: xml_write_stmt(member)}) }
+        @query_adds = [] of Crinja::Value
       else
         @query_adds = [] of Crinja::Value
         @xml_reads = [] of Crinja::Value
+        @xml_writes = [] of Crinja::Value
       end
 
       @validations = shape.members.compact_map { |member| validation_stmt(member) }.map { |stmt| Crinja.value({stmt: stmt}) }
@@ -121,7 +134,7 @@ module Amazonite::Codegen::Bindings
     # trait, so the check is gated on protocol to avoid wrongly dropping
     # such a member from those services' JSON bodies.
     private def not_in_body?(member)
-      @is_rest && (member.label? || member.query? || member.header? || member.status_code?)
+      @is_rest && (member.label? || member.query? || member.header? || member.prefix_headers? || member.status_code?)
     end
 
     private def member_default(member)
@@ -137,6 +150,8 @@ module Amazonite::Codegen::Bindings
 
     private def zero_value(member) : String
       return "#{@module_alias}::#{member.crystal_type(true)}::#{member.enum_type.values.first}" if member.enum_type?
+      return "[] of #{member.list_item_crystal_type}" if member.list_type?
+      return "{} of #{member.map_key_member.crystal_type(true)} => #{member.map_value_member.crystal_type(true)}" if member.map_type?
 
       case member.crystal_type(true)
       when "String"             then "\"\""
@@ -255,7 +270,7 @@ module Amazonite::Codegen::Bindings
     end
 
     private def scalar_param_stmt(member, accessor) : String
-      entry = %(params << {"\#{prefix}#{member.wire_name}", #{query_value_expr(member.required? ? accessor : "value", member)}})
+      entry = %(params << {"\#{prefix}#{member.wire_name}", #{text_value_expr(member.required? ? accessor : "value", member)}})
       member.required? ? entry : "if value = #{accessor}\n  #{entry}\nend"
     end
 
@@ -271,7 +286,7 @@ module Amazonite::Codegen::Bindings
       item_stmt = if item.structure_type?
                     %(params.concat(item.to_query_params("\#{prefix}#{member.wire_name}.member.\#{i}.")))
                   else
-                    %(params << {"\#{prefix}#{member.wire_name}.member.\#{i}", #{query_value_expr("item", item)}})
+                    %(params << {"\#{prefix}#{member.wire_name}.member.\#{i}", #{text_value_expr("item", item)}})
                   end
       "#{list_accessor}.each_with_index(1) do |item, i|\n  #{item_stmt}\nend"
     end
@@ -280,19 +295,21 @@ module Amazonite::Codegen::Bindings
       key = member.map_key_member
       value = member.map_value_member
       map_accessor = member.required? ? accessor : "(#{accessor} || {} of #{key.crystal_type(true)} => #{value.crystal_type(true)})"
-      key_stmt = %(params << {"\#{prefix}#{member.wire_name}.entry.\#{i}.#{key.wire_name}", #{query_value_expr("key", key)}})
+      key_stmt = %(params << {"\#{prefix}#{member.wire_name}.entry.\#{i}.#{key.wire_name}", #{text_value_expr("key", key)}})
       value_stmt = if value.structure_type?
                      %(params.concat(value.to_query_params("\#{prefix}#{member.wire_name}.entry.\#{i}.#{value.wire_name}.")))
                    else
-                     %(params << {"\#{prefix}#{member.wire_name}.entry.\#{i}.#{value.wire_name}", #{query_value_expr("value", value)}})
+                     %(params << {"\#{prefix}#{member.wire_name}.entry.\#{i}.#{value.wire_name}", #{text_value_expr("value", value)}})
                    end
       "#{map_accessor}.each_with_index(1) do |(key, value), i|\n  #{key_stmt}\n  #{value_stmt}\nend"
     end
 
-    # The wire-text expression for one scalar (non-structure) value -
-    # `accessor` is always a definitely-non-nil local (either a required
-    # property or an `if value = ...`-bound optional one).
-    private def query_value_expr(accessor : String, member) : String
+    # The wire-text expression for one scalar (non-structure) value, shared
+    # by the query protocol's form params and rest-xml's element text (both
+    # encode a scalar as plain text) - `accessor` is always a definitely-
+    # non-nil local (either a required property or an `if value = ...`-bound
+    # optional one).
+    private def text_value_expr(accessor : String, member) : String
       if member.time_type?
         @needs_core_alias = true
         "Core::QueryValue.time(#{accessor})"
@@ -309,6 +326,69 @@ module Amazonite::Codegen::Bindings
       else
         "#{accessor}.to_s"
       end
+    end
+
+    # --- restXml request encoding (Structure#build_xml) ----------------
+    #
+    # Each of these builds a snippet of *generated* Crystal source (as a
+    # String) writing one member into an XML::Builder. Nested structures
+    # recurse by calling into the nested type's own generated build_xml,
+    # so no codegen-time recursion is needed beyond one level per member.
+
+    private def xml_write_stmt(member) : String
+      accessor = "@#{member.snake_case_name}"
+      if member.map_type?
+        map_write_stmt(member, accessor)
+      elsif member.list_type?
+        list_write_stmt(member, accessor)
+      else
+        scalar_write_stmt(member, accessor)
+      end
+    end
+
+    # One `<Name>...</Name>` element, whose content is either a nested
+    # structure's own body or a scalar's wire text.
+    private def element_write(name : String, member, value_var : String) : String
+      if member.structure_type?
+        %(xml.element("#{name}") { #{value_var}.build_xml(xml) })
+      else
+        %(xml.element("#{name}") { xml.text #{text_value_expr(value_var, member)} })
+      end
+    end
+
+    private def scalar_write_stmt(member, accessor) : String
+      return element_write(member.wire_name, member, accessor) if member.required?
+
+      "if value = #{accessor}\n  #{element_write(member.wire_name, member, "value")}\nend"
+    end
+
+    private def list_write_stmt(member, accessor) : String
+      item = member.list_item_member
+      list_accessor = member.required? ? accessor : "(#{accessor} || [] of #{member.list_item_crystal_type})"
+      # A flattened list has no wrapper of its own, so each item takes the
+      # member's name; an unflattened one nests its items under it.
+      item_name = member.flattened? ? member.wire_name : item_element_name(item)
+      each = "#{list_accessor}.each do |item|\n  #{element_write(item_name, item, "item")}\nend"
+      wrap(member, each)
+    end
+
+    private def map_write_stmt(member, accessor) : String
+      key = member.map_key_member
+      value = member.map_value_member
+      map_accessor = member.required? ? accessor : "(#{accessor} || {} of #{key.crystal_type(true)} => #{value.crystal_type(true)})"
+      entry = "#{element_write(key.wire_name, key, "key")}\n  #{element_write(value.wire_name, value, "value")}"
+      entry_name = member.flattened? ? member.wire_name : "entry"
+      each = "#{map_accessor}.each do |key, value|\n  xml.element(\"#{entry_name}\") do\n  #{entry}\n  end\nend"
+      wrap(member, each)
+    end
+
+    # Puts a collection's repeated elements inside the member's own element,
+    # unless the member is flattened - in which case they already carry its
+    # name and there is nothing left to wrap them in.
+    private def wrap(member, stmt : String) : String
+      return stmt if member.flattened?
+
+      %(xml.element("#{member.wire_name}") do\n  #{stmt}\nend)
     end
 
     # --- awsQuery/XML response decoding (Structure.from_xml) -----------
@@ -337,9 +417,23 @@ module Amazonite::Codegen::Bindings
       end
     end
 
+    # The element a list's items sit under: its own xmlName if the model
+    # gave the list member one, otherwise the "member" that awsQuery and
+    # restXml both default to.
+    private def item_element_name(item) : String
+      item.location_name || "member"
+    end
+
+    # The XPath reaching a repeated child of `node` - a flattened list/map
+    # repeats its items directly under the member's own name, where an
+    # unflattened one nests them inside it under a per-item element.
+    private def repeated_path(member, item_name : String) : String
+      member.flattened? ? xp(member.wire_name) : "#{xp(member.wire_name)}/#{xp(item_name)}"
+    end
+
     private def list_read_expr(member) : String
       item = member.list_item_member
-      nodes = %(node.xpath_nodes("#{xp(member.wire_name)}/#{xp("member")}"))
+      nodes = %(node.xpath_nodes("#{repeated_path(member, item_element_name(item))}"))
       if item.structure_type?
         "#{nodes}.map { |n| #{item.crystal_type(true)}.from_xml(n) }"
       elsif item.enum_type?
@@ -356,7 +450,7 @@ module Amazonite::Codegen::Bindings
       key_content = %(entry.xpath_node("#{xp(key.wire_name)}").not_nil!.content)
       value_node = %(entry.xpath_node("#{xp(value.wire_name)}").not_nil!)
       value_expr = present_read_expr(value_node, value)
-      %(node.xpath_nodes("#{xp(member.wire_name)}/#{xp("entry")}").each_with_object({} of #{key.crystal_type(true)} => #{value.crystal_type(true)}) { |entry, hash| hash[#{key_content}] = #{value_expr} })
+      %(node.xpath_nodes("#{repeated_path(member, "entry")}").each_with_object({} of #{key.crystal_type(true)} => #{value.crystal_type(true)}) { |entry, hash| hash[#{key_content}] = #{value_expr} })
     end
 
     # A non-nilable read of a value already known to be present (a map

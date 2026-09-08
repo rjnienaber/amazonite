@@ -21,7 +21,9 @@ module {{ service.module_name }}
 {% if operation.has_query -%}
       query = URI::Params.build do |form|
 {% for query_add in operation.query_adds -%}
-{% if query_add.is_list -%}
+{% if query_add.is_literal -%}
+        form.add("{{ query_add.wire_name }}", "{{ query_add.literal_value }}")
+{% elif query_add.is_list -%}
         ({{ query_add.list_accessor }} || [] of {{ query_add.list_item_type }}).each do |value|
           form.add("{{ query_add.wire_name }}", {{ query_add.item_expr }})
         end
@@ -36,9 +38,13 @@ module {{ service.module_name }}
 {% endif -%}
       headers = HTTP::Headers.new
 {% for header in operation.request_headers -%}
-{% if header.is_list -%}
-      ({{ header.list_accessor }} || [] of {{ header.list_item_type }}).each do |value|
-        headers.add("{{ header.wire_name }}", {{ header.item_expr }})
+{% if header.is_prefix -%}
+      {{ header.accessor }}.each do |key, value|
+        headers["{{ header.wire_name }}#{key}"] = value
+      end
+{% elif header.is_list -%}
+      if value = {{ header.accessor }}
+        headers["{{ header.wire_name }}"] = value.map { |item| {{ header.item_expr }} }.join(",")
       end
 {% else -%}
       if value = {{ header.value_expr }}
@@ -46,8 +52,14 @@ module {{ service.module_name }}
       end
 {% endif -%}
 {% endfor -%}
-      response = rest_request("{{ operation.command }}", "{{ operation.http_method }}", path, headers, {{ operation.body_expr }})
-{% if operation.custom_output -%}
+      response = rest_request("{{ operation.command }}", "{{ operation.http_method }}", path, headers, {{ operation.body_expr }}{% if operation.is_rest_xml %}, "application/xml"{% endif %})
+{% if operation.parse_body -%}
+      result = {{ operation.output_type_bare }}.from_xml(XML.parse(response.body).root.not_nil!)
+{% for assignment in operation.output_assignments -%}
+      result.{{ assignment.name }} = {{ assignment.value_expr }}
+{% endfor -%}
+      {{ operation.output }}.new(response, result)
+{% elif operation.custom_output -%}
       result = {{ operation.output_type }}.new({% for assignment in operation.output_assignments %}
         {{ assignment.name }}: {{ assignment.value_expr }},{% endfor %}
       )

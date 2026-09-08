@@ -27,9 +27,13 @@ module Amazonite::Codegen
     end
 
     def model_file(model : Service::Structure, filepath)
-      is_rest = @description.metadata.protocol == "rest-json"
-      is_query = @description.metadata.protocol == "query"
-      shape = Amazonite::Codegen::Bindings::Structure.new(model, @description.module_alias, is_rest, is_query)
+      protocol = @description.metadata.protocol
+      # rest-xml shares rest-json's http bindings (only body members belong
+      # in the serialized document), so it takes the rest branch too.
+      is_rest_xml = protocol == "rest-xml"
+      is_rest = protocol == "rest-json" || is_rest_xml
+      is_query = protocol == "query"
+      shape = Amazonite::Codegen::Bindings::Structure.new(model, @description.module_alias, is_rest, is_query, is_rest_xml)
       to_file("model.cr", filepath, {"shape" => shape})
     end
 

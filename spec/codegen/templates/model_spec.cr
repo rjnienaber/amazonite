@@ -11,6 +11,20 @@ def render_model(shape_name, spec_filename = "dynamodb-2012-08-10.normal.json")
   Amazonite::Codegen::Render.new(description).to_s("model.cr", {"shape" => shape_binding}).strip
 end
 
+# S3 is the only restXml service generated, and the protocol renders a
+# different template branch (plain properties plus build_xml/from_xml rather
+# than JSON::Serializable), so its shapes need their own flags.
+def render_rest_xml_model(shape_name)
+  source = ServiceJson.load("s3-2006-03-01.normal.json")
+
+  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2006-03-01", source)
+
+  structure = description.resolver.find(shape_name).as(Amazonite::Codegen::Service::Structure)
+  shape_binding = Amazonite::Codegen::Bindings::Structure.new(structure, description.module_alias, true, false, true)
+
+  Amazonite::Codegen::Render.new(description).to_s("model.cr", {"shape" => shape_binding}).strip
+end
+
 describe "model.cr.j2 template" do
   it "parses times in 'ArchivalSummary'" do
     actual = render_model("ArchivalSummary")
@@ -97,6 +111,34 @@ describe "model.cr.j2 template" do
     actual = render_model("RestoreTableFromBackupInput")
 
     expected = load_fixture("templates", "model", "restore_table_from_backup_input.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "wraps a list in its own element in restXml's 'Tagging'" do
+    actual = render_rest_xml_model("Tagging")
+
+    expected = load_fixture("templates", "model", "tagging.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "repeats a flattened list's items without a wrapper in restXml's 'Delete'" do
+    actual = render_rest_xml_model("Delete")
+
+    expected = load_fixture("templates", "model", "delete.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "reads and writes scalars and times in restXml's 'ObjectIdentifier'" do
+    actual = render_rest_xml_model("ObjectIdentifier")
+
+    expected = load_fixture("templates", "model", "object_identifier.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "leaves a header-bound member out of the body in restXml's 'GetObjectTaggingOutput'" do
+    actual = render_rest_xml_model("GetObjectTaggingOutput")
+
+    expected = load_fixture("templates", "model", "get_object_tagging_output.expected.cr").strip
     actual.should eq_diff expected
   end
 end

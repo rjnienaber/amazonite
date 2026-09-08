@@ -7,10 +7,10 @@ module Amazonite::Core
   VERSION = "0.2.1"
 
   # Base HTTP client every generated per-service `Client` subclasses -
-  # signs requests with SigV4, dispatches them over one of the three wire
-  # protocols (`#post` for awsJson, `#rest_request` for rest-json,
-  # `#query_request` for awsQuery), and raises the service's exception
-  # type on a non-2xx response.
+  # signs requests with SigV4, dispatches them over one of the wire
+  # protocols (`#post` for awsJson, `#rest_request` for rest-json and
+  # rest-xml, `#query_request` for awsQuery), and raises the service's
+  # exception type on a non-2xx response.
   class Client
     Log = ::Log.for(self)
 
@@ -35,14 +35,16 @@ module Amazonite::Core
       process_response(id, command, response)
     end
 
-    # rest-json protocol entry point: unlike #post, the caller has already
-    # routed operation members into the method/path/headers/body themselves
-    # (rest-json has no fixed X-Amz-Target routing - the method and URI path
+    # rest protocol entry point: unlike #post, the caller has already routed
+    # operation members into the method/path/headers/body themselves (a rest
+    # protocol has no fixed X-Amz-Target routing - the method and URI path
     # *are* the routing), so this just signs and dispatches what it's given.
-    def rest_request(command : String, method : String, path : String, headers : HTTP::Headers, body : String?)
+    # rest-json and rest-xml differ only in how that body was serialized,
+    # which is what `content_type` announces.
+    def rest_request(command : String, method : String, path : String, headers : HTTP::Headers, body : String?, content_type : String = "application/json")
       id = UUID.random.to_s
       client = create_client(id, command, path, body || "")
-      headers["Content-Type"] = "application/json" if body && !headers.has_key?("Content-Type")
+      headers["Content-Type"] = content_type if body && !headers.has_key?("Content-Type")
       headers["User-Agent"] = @config.user_agent { |agent| "#{agent} command/#{@endpoint_prefix}.#{hyphenate(command)}" }
       response = client.exec(method, path, headers, body)
       process_response(id, command, response)

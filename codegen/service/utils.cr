@@ -14,6 +14,12 @@ module Amazonite::Codegen::Service
 
     def self.pascal_case(name) : String
       name
+        # "*" is AWS's wildcard within an enum value (S3's Event enum has
+        # both "s3:ObjectCreated:*" and "s3:ObjectCreated:Put"), and no
+        # identifier can carry it. Spell it out rather than stripping it,
+        # which would render the wildcard member as "S3ObjectCreated" - a
+        # name that reads like one specific event rather than all of them.
+        .gsub("*", "All")
         # get rid of non-character values
         .split(/[-:\._\/ ]/)
         # split up words on pascal that are pascal already

@@ -1208,8 +1208,9 @@ module Amazonite::ApiGateway
     def import_api_keys(input : AAG::ImportApiKeysRequest) : Core::ParsedResponse(AAG::ApiKeyIds)
       Log.info { "performing 'ImportApiKeys' operation" }
       input.validate! if config.validate_input?
-      path = "/apikeys?mode=import"
+      path = "/apikeys"
       query = URI::Params.build do |form|
+        form.add("mode", "import")
         if value = input.format.try(&.to_json_object_key)
           form.add("format", value)
         end
@@ -1247,8 +1248,9 @@ module Amazonite::ApiGateway
     def import_rest_api(input : AAG::ImportRestApiRequest) : Core::ParsedResponse(AAG::RestApi)
       Log.info { "performing 'ImportRestApi' operation" }
       input.validate! if config.validate_input?
-      path = "/restapis?mode=import"
+      path = "/restapis"
       query = URI::Params.build do |form|
+        form.add("mode", "import")
         if value = input.fail_on_warnings.try(&.to_s)
           form.add("failonwarnings", value)
         end

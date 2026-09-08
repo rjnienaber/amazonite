@@ -25,6 +25,14 @@ module Amazonite::Codegen::Service
       @location_name = json["locationName"]?.try(&.as_s)
       @documentation = json["documentation"]?.try(&.as_s)
       @json_name = json["jsonName"]?.try(&.as_s)
+      @flattened = json["flattened"]?.try(&.as_bool) || false
+    end
+
+    # A flattened list repeats its items under this member's own name rather
+    # than nesting them in a wrapper element - see the trait's note in
+    # Translator#build_member_ref.
+    def flattened?
+      @flattened
     end
 
     # For a "uri"/"querystring"/"header" member, the wire name to use - the
@@ -54,6 +62,12 @@ module Amazonite::Codegen::Service
 
     def header?
       @location == "header"
+    end
+
+    # A map member bound to every header sharing `wire_name` as its prefix
+    # (smithy.api#httpPrefixHeaders), rather than to one named header.
+    def prefix_headers?
+      @location == "headers"
     end
 
     def status_code?
@@ -187,6 +201,13 @@ module Amazonite::Codegen::Service
 
     def time_type?
       @is_time_type ||= @resolver.time?(shape_name)
+    end
+
+    # The smithy.api#timestampFormat this member's shape carries, if any.
+    # Absent, the format is implied by where the member is bound, so the
+    # caller supplies its own default rather than one being assumed here.
+    def timestamp_format : String?
+      @resolver.find(shape_name).timestamp_format
     end
 
     def blob_type?

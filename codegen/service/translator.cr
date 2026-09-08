@@ -35,9 +35,9 @@ module Amazonite::Codegen::Service
     end
 
     # Smithy protocol trait name => old-format metadata.protocol value,
-    # matching the strings aws-sdk-js itself used. Full request/response
-    # rendering (client.cr.j2 etc.) is only exercised for awsJson services -
-    # the rest are translated just far enough for metadata/naming to resolve.
+    # matching the strings aws-sdk-js itself used. Everything but ec2Query is
+    # rendered end to end (client.cr.j2 etc.); ec2 is translated just far
+    # enough for metadata/naming to resolve.
     PROTOCOLS = {
       "awsQuery"  => "query",
       "ec2Query"  => "ec2",
@@ -121,7 +121,7 @@ module Amazonite::Codegen::Service
     private def build_operation(json : JSON::Builder, name : String, op_shape : JSON::Any)
       json.object do
         json.field "name", name
-        json.field("http") { build_http(json, name, op_shape) }
+        json.field("http") { build_http(json, op_shape) }
 
         input_target = op_shape["input"]?.try(&.["target"]?).try(&.as_s)
         if input_target && input_target != "smithy.api#Unit"
@@ -166,11 +166,10 @@ module Amazonite::Codegen::Service
       end
     end
 
-    private def build_http(json : JSON::Builder, name : String, op_shape : JSON::Any)
+    private def build_http(json : JSON::Builder, op_shape : JSON::Any)
       http_trait = op_shape["traits"]?.try(&.["smithy.api#http"]?)
       method = http_trait.try(&.["method"]?.try(&.as_s)) || "POST"
       uri = http_trait.try(&.["uri"]?.try(&.as_s)) || "/"
-      raise Exception.new("operation '#{name}' uses an unsupported greedy URI label: '#{uri}'") if uri.includes?("+}")
       code = http_trait.try(&.["code"]?.try(&.as_i)) || 200
 
       json.object do
@@ -298,6 +297,13 @@ module Amazonite::Codegen::Service
           add_range_constraint(json, shape)
         end
         add_pattern_constraint(json, shape) if type == "string"
+        # A timestamp's wire format otherwise depends on where it's bound
+        # (http-date in a header, date-time in a query string or an XML
+        # body); smithy.api#timestampFormat overrides that per shape, which
+        # S3 leans on to send some headers as ISO 8601 instead.
+        if type == "timestamp" && (format = shape["traits"]?.try(&.["smithy.api#timestampFormat"]?).try(&.as_s))
+          json.field "timestampFormat", format
+        end
         add_documentation(json, shape)
       end
     end
@@ -342,6 +348,14 @@ module Amazonite::Codegen::Service
             json.field "locationName", header_name
           elsif traits["smithy.api#httpResponseCode"]?
             json.field "location", "statusCode"
+          elsif header_prefix = traits["smithy.api#httpPrefixHeaders"]?.try(&.as_s)
+            # A map member bound to a whole family of headers sharing a
+            # prefix (S3's user metadata, "x-amz-meta-"), rather than to one
+            # named header - "headers" (plural) keeps it distinguishable
+            # from a single httpHeader member, which needs different
+            # request/response handling.
+            json.field "location", "headers"
+            json.field "locationName", header_prefix
           elsif xml_name = traits["smithy.api#xmlName"]?.try(&.as_s)
             # awsQuery/restXml use the member's own Smithy name as its wire
             # name (query param / XML element) unless overridden here - no
@@ -359,6 +373,13 @@ module Amazonite::Codegen::Service
           if json_name = traits["smithy.api#jsonName"]?.try(&.as_s)
             json.field "jsonName", json_name
           end
+
+          # A flattened list has no wrapper element: its items repeat under
+          # the member's own name (S3's ListObjectsV2 returns a bare run of
+          # <Contents>), where an unflattened one nests them inside it
+          # (<Buckets><Bucket>...). The two read and write differently, so
+          # the distinction has to survive translation.
+          json.field "flattened", true if traits["smithy.api#xmlFlattened"]?
         end
 
         add_documentation(json, member)

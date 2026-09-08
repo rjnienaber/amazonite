@@ -15,6 +15,10 @@ def render_dynamodb_client(has_errors : Bool, *operation_names)
   render_partial_client("dynamodb-2012-08-10.normal.json", has_errors, *operation_names)
 end
 
+def render_s3_client(*operation_names)
+  render_partial_client("s3-2006-03-01.normal.json", true, *operation_names)
+end
+
 describe "client.cr.j2 template" do
   it "handles 'CreateTable'" do
     actual = render_dynamodb_client(false, "CreateTable")
@@ -55,6 +59,34 @@ describe "client.cr.j2 template" do
     actual = render_partial_client("forecast-2018-06-26.normal.json", false, "CreateAutoPredictor")
 
     expected = load_fixture("templates", "client", "create_auto_predictor.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "parses a restXml body and layers header members on top in 'GetObjectTagging'" do
+    actual = render_s3_client("GetObjectTagging")
+
+    expected = load_fixture("templates", "client", "get_object_tagging.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "folds literal and bound query params into one query string in 'ListObjectsV2'" do
+    actual = render_s3_client("ListObjectsV2")
+
+    expected = load_fixture("templates", "client", "list_objects_v2.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "serializes a payload member under its own wire name in 'PutObjectLegalHold'" do
+    actual = render_s3_client("PutObjectLegalHold")
+
+    expected = load_fixture("templates", "client", "put_object_legal_hold.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "reads http-date and integer headers and a raw payload in 'GetObjectAnnotation'" do
+    actual = render_s3_client("GetObjectAnnotation")
+
+    expected = load_fixture("templates", "client", "get_object_annotation.expected.cr").strip
     actual.should eq_diff expected
   end
 end
