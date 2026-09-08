@@ -25,6 +25,7 @@ module Amazonite::Codegen
     "cloudwatch-logs",
     "kinesis",
     "s3",
+    "ec2",
   ]
 
   # Operations that can't be modeled as a plain request/response call and

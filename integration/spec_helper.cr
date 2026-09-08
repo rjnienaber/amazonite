@@ -15,6 +15,7 @@ require "amazonite/eventbridge"
 require "amazonite/cloudwatch_logs"
 require "amazonite/kinesis"
 require "amazonite/s3"
+require "amazonite/ec2"
 require "./helpers"
 
 def wait_until(&)

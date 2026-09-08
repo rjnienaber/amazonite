@@ -1,12 +1,12 @@
 require "../../spec_helper"
 
-def render_model(shape_name, spec_filename = "dynamodb-2012-08-10.normal.json")
+def render_model(shape_name, spec_filename = "dynamodb-2012-08-10.normal.json", protocol = "json")
   source = ServiceJson.load(spec_filename)
 
   description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", source)
 
   structure = description.resolver.find(shape_name).as(Amazonite::Codegen::Service::Structure)
-  shape_binding = Amazonite::Codegen::Bindings::Structure.new(structure, description.module_alias, false)
+  shape_binding = Amazonite::Codegen::Bindings::Structure.new(structure, description.module_alias, protocol)
 
   Amazonite::Codegen::Render.new(description).to_s("model.cr", {"shape" => shape_binding}).strip
 end
@@ -20,7 +20,22 @@ def render_rest_xml_model(shape_name)
   description = Amazonite::Codegen::Service::Description.new("0.23.2", "2006-03-01", source)
 
   structure = description.resolver.find(shape_name).as(Amazonite::Codegen::Service::Structure)
-  shape_binding = Amazonite::Codegen::Bindings::Structure.new(structure, description.module_alias, true, false, true)
+  shape_binding = Amazonite::Codegen::Bindings::Structure.new(structure, description.module_alias, "rest-xml")
+
+  Amazonite::Codegen::Render.new(description).to_s("model.cr", {"shape" => shape_binding}).strip
+end
+
+# EC2 is the only ec2Query service generated. It names each member twice -
+# the request param takes the ec2QueryName, the response element keeps the
+# xmlName - and flattens every request list, so its shapes need their own
+# flags.
+def render_ec2_model(shape_name)
+  source = ServiceJson.load("ec2-2016-11-15.normal.json")
+
+  description = Amazonite::Codegen::Service::Description.new("0.23.2", "2016-11-15", source)
+
+  structure = description.resolver.find(shape_name).as(Amazonite::Codegen::Service::Structure)
+  shape_binding = Amazonite::Codegen::Bindings::Structure.new(structure, description.module_alias, "ec2")
 
   Amazonite::Codegen::Render.new(description).to_s("model.cr", {"shape" => shape_binding}).strip
 end
@@ -139,6 +154,27 @@ describe "model.cr.j2 template" do
     actual = render_rest_xml_model("GetObjectTaggingOutput")
 
     expected = load_fixture("templates", "model", "get_object_tagging_output.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "writes and reads a member under two different names in ec2Query's 'Tag'" do
+    actual = render_ec2_model("Tag")
+
+    expected = load_fixture("templates", "model", "ec2_tag.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "flattens every list in ec2Query's 'CreateTagsRequest'" do
+    actual = render_ec2_model("CreateTagsRequest")
+
+    expected = load_fixture("templates", "model", "create_tags_request.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "reads a wrapped list of structures in ec2Query's 'DescribeVpcsResult'" do
+    actual = render_ec2_model("DescribeVpcsResult")
+
+    expected = load_fixture("templates", "model", "describe_vpcs_result.expected.cr").strip
     actual.should eq_diff expected
   end
 end

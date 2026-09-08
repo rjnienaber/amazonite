@@ -23,6 +23,7 @@ class TestHelper
     env["AMAZONITE_LOGS_URL"] = "http://localhost:4566" if @use_localstack
     env["AMAZONITE_KINESIS_URL"] = "http://localhost:4566" if @use_localstack
     env["AMAZONITE_S3_URL"] = "http://localhost:4566" if @use_localstack
+    env["AMAZONITE_EC2_URL"] = "http://localhost:4566" if @use_localstack
     env["AWS_PROFILE"] = "local" unless (ENV["AWS_PROFILE"]? || ENV["AWS_ACCESS_KEY_ID"]?)
     env
   end

@@ -1,0 +1,36 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::EC2
+  class DeleteVerifiedAccessEndpointResult
+    # Details about the Verified Access endpoint.
+    property verified_access_endpoint : VerifiedAccessEndpoint | Nil
+
+    def initialize(
+      @verified_access_endpoint : VerifiedAccessEndpoint | Nil = nil,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      if value = @verified_access_endpoint
+        params.concat(value.to_query_params("#{prefix}VerifiedAccessEndpoint."))
+      end
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        verified_access_endpoint: node.xpath_node("*[local-name()='verifiedAccessEndpoint']").try { |n| VerifiedAccessEndpoint.from_xml(n) },
+      )
+    end
+
+    def validate! : Nil
+      if value = @verified_access_endpoint
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@verified_access_endpoint)
+  end
+end

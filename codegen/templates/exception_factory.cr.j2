@@ -4,12 +4,15 @@ module {{ service.module_name }}{% for name in errors.names %}
   class {{ name }} < Core::ResponseException
   end
 {% endfor %}
-  class ExceptionFactory < Core::{% if service.protocol == "query" or service.protocol == "rest-xml" %}Query{% endif %}ResponseExceptionFactory
+  class ExceptionFactory < Core::{% if service.xml_response %}Query{% endif %}ResponseExceptionFactory
     def create(exception_type, http, message, code) : Core::ResponseException | Nil
-      case exception_type
+{% if errors.codes|length > 0 %}      case exception_type
       {% for error in errors.codes %}when "{{ error.code }}" then {{ error.name }}.new(http, message, code)
       {% endfor %}end
-    end
+{% else %}      # this service models no errors of its own, so every failure falls
+      # back to the generic Core::ResponseException the factory builds
+      nil
+{% endif %}    end
   end
 end
 

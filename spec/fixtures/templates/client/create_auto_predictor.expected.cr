@@ -3,10 +3,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::Forecast
   class Client < Core::Client
-    Log = ::Log.for("amazonite.forecast.client")
+    Log               = ::Log.for("amazonite.forecast.client")
+    EXCEPTION_FACTORY = ExceptionFactory.new
 
     def initialize(config = Core::Config.new)
-      super("AmazonForecast", "forecast", "1.1", nil, config)
+      super("AmazonForecast", "forecast", "1.1", EXCEPTION_FACTORY, config)
     end
 
     # Creates an Amazon Forecast predictor.

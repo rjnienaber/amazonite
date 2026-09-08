@@ -8,11 +8,10 @@ module Amazonite::Codegen::Bindings
     @module_alias : String
     @operations : Array(Crinja::Value)
 
-    getter operations, target_prefix, endpoint_prefix, json_version, has_errors, api_version
+    getter operations, target_prefix, endpoint_prefix, json_version, api_version
 
-    def initialize(description : Amazonite::Codegen::Service::Description, has_errors : Bool? = nil)
+    def initialize(description : Amazonite::Codegen::Service::Description)
       metadata = description.metadata
-      @has_errors = has_errors.nil? ? description.has_errors : has_errors
       @target_prefix = metadata.target_prefix
       @endpoint_prefix = metadata.endpoint_prefix
       @json_version = metadata.json_version
@@ -21,7 +20,12 @@ module Amazonite::Codegen::Bindings
       # how the body itself is serialized, so both take the "rest" branch.
       is_rest_xml = metadata.protocol == "rest-xml"
       is_rest = metadata.protocol == "rest-json" || is_rest_xml
-      is_query = metadata.protocol == "query"
+      # awsQuery and ec2Query build the same form-encoded request; they part
+      # ways on the response, where awsQuery nests the output shape in an
+      # <XxxResult> element and ec2Query puts its members straight under the
+      # <XxxResponse> document root.
+      is_ec2 = metadata.protocol == "ec2"
+      is_query = metadata.protocol == "query" || is_ec2
       @api_version = description.api_version
       @module_alias = description.module_alias
 
@@ -49,6 +53,7 @@ module Amazonite::Codegen::Bindings
           is_rest:       is_rest,
           is_rest_xml:   is_rest_xml,
           is_query:      is_query,
+          is_ec2:        is_ec2,
           doc:           doc,
           has_doc:       !!doc,
 

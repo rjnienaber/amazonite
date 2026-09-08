@@ -3,11 +3,11 @@ private alias Core = Amazonite::Core
 
 module {{ service.module_name }}
   class Client < Core::Client
-    Log {% if operations.has_errors %}              {% endif %}= ::Log.for("amazonite.{{ service.module_slug }}.client")
-{% if operations.has_errors %}    EXCEPTION_FACTORY = ExceptionFactory.new
-{% endif %}
+    Log               = ::Log.for("amazonite.{{ service.module_slug }}.client")
+    EXCEPTION_FACTORY = ExceptionFactory.new
+
     def initialize(config = Core::Config.new)
-      super("{{ operations.target_prefix }}", "{{ operations.endpoint_prefix }}", "{{ operations.json_version }}", {% if operations.has_errors %}EXCEPTION_FACTORY, {% else %}nil, {% endif %}config)
+      super("{{ operations.target_prefix }}", "{{ operations.endpoint_prefix }}", "{{ operations.json_version }}", EXCEPTION_FACTORY, config)
     end{% for operation in operations.operations %}
 
 {% if operation.has_doc %}{{ operation.doc }}
@@ -82,7 +82,11 @@ module {{ service.module_name }}
 {% if operation.no_output -%}
       {{ operation.output }}.new(response)
 {% else -%}
+{% if operation.is_ec2 -%}
+      result_node = XML.parse(response.body).root.not_nil!
+{% else -%}
       result_node = XML.parse(response.body).xpath_node("//*[local-name()='{{ operation.result_element }}']").not_nil!
+{% endif -%}
       result = {{ operation.output_type_bare }}.from_xml(result_node)
       {{ operation.output }}.new(response, result)
 {% endif -%}

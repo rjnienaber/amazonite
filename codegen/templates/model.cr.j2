@@ -4,7 +4,7 @@
 {% endif %}module {{ service.module_name }}
 {% if shape.has_doc %}{{ shape.doc }}
 {% endif %}  class {{ shape.name }}
-{% if service.protocol == "query" or service.protocol == "rest-xml" -%}
+{% if service.xml_response -%}
 {% for member in shape.members %}
 {% if member.has_doc %}{{ member.doc }}
 {% endif %}    property {{ member.snake_case_name }} : {{ member.type }}{% if member.has_default %} = {{ member.default }}{% endif %}
@@ -14,7 +14,7 @@
     ){% endif %}
     end
 
-{% if service.protocol == "query" -%}
+{% if service.form_encoded -%}
     def to_query_params(prefix : String) : Array({String, String})
       params = [] of {String, String}
 {% for add in shape.query_adds %}

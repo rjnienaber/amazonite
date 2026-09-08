@@ -1,62 +1,66 @@
 require "../../spec_helper"
 
-def render_partial_client(schema_filename : String, has_errors : Bool, *operation_names)
+def render_partial_client(schema_filename : String, *operation_names)
   source = ServiceJson.load(schema_filename)
   description = Amazonite::Codegen::Service::Description.new("0.23.2", "2012-08-10", source)
 
   operations = operation_names.map { |name| description.find_operation(name) }.to_a
   description.operations = operations
-  operations_binding = Amazonite::Codegen::Bindings::Operations.new(description, has_errors)
+  operations_binding = Amazonite::Codegen::Bindings::Operations.new(description)
 
   Amazonite::Codegen::Render.new(description).to_s("client.cr", {"operations" => operations_binding}).strip
 end
 
-def render_dynamodb_client(has_errors : Bool, *operation_names)
-  render_partial_client("dynamodb-2012-08-10.normal.json", has_errors, *operation_names)
+def render_dynamodb_client(*operation_names)
+  render_partial_client("dynamodb-2012-08-10.normal.json", *operation_names)
 end
 
 def render_s3_client(*operation_names)
-  render_partial_client("s3-2006-03-01.normal.json", true, *operation_names)
+  render_partial_client("s3-2006-03-01.normal.json", *operation_names)
+end
+
+def render_ec2_client(*operation_names)
+  render_partial_client("ec2-2016-11-15.normal.json", *operation_names)
 end
 
 describe "client.cr.j2 template" do
   it "handles 'CreateTable'" do
-    actual = render_dynamodb_client(false, "CreateTable")
+    actual = render_dynamodb_client("CreateTable")
 
     expected = load_fixture("templates", "client", "create_table.expected.cr").strip
     actual.should eq_diff expected
   end
 
   it "handles method with no output" do
-    actual = render_dynamodb_client(false, "UntagResource")
+    actual = render_dynamodb_client("UntagResource")
 
     expected = load_fixture("templates", "client", "untag_resource.expected.cr").strip
     actual.should eq_diff expected
   end
 
   it "handles multiple methods" do
-    actual = render_dynamodb_client(false, "PutItem", "GetItem", "UpdateItem", "DeleteItem")
+    actual = render_dynamodb_client("PutItem", "GetItem", "UpdateItem", "DeleteItem")
 
     expected = load_fixture("templates", "client", "multiple.expected.cr").strip
     actual.should eq_diff expected
   end
 
-  it "adds exception factory if required" do
-    actual = render_dynamodb_client(true, "DeleteTable")
+  it "handles a method whose operation declares errors" do
+    actual = render_dynamodb_client("DeleteTable")
 
     expected = load_fixture("templates", "client", "delete_table.expected.cr").strip
     actual.should eq_diff expected
   end
 
   it "handles method with no input" do
-    actual = render_partial_client("discovery-2015-11-01.normal.json", false, "ExportConfigurations")
+    actual = render_partial_client("discovery-2015-11-01.normal.json", "ExportConfigurations")
 
     expected = load_fixture("templates", "client", "export_configurations.expected.cr").strip
     actual.should eq_diff expected
   end
 
   it "handles method with no input" do
-    actual = render_partial_client("forecast-2018-06-26.normal.json", false, "CreateAutoPredictor")
+    actual = render_partial_client("forecast-2018-06-26.normal.json", "CreateAutoPredictor")
 
     expected = load_fixture("templates", "client", "create_auto_predictor.expected.cr").strip
     actual.should eq_diff expected
@@ -87,6 +91,20 @@ describe "client.cr.j2 template" do
     actual = render_s3_client("GetObjectAnnotation")
 
     expected = load_fixture("templates", "client", "get_object_annotation.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "handles an ec2Query method" do
+    actual = render_ec2_client("DescribeVpcs")
+
+    expected = load_fixture("templates", "client", "describe_vpcs.expected.cr").strip
+    actual.should eq_diff expected
+  end
+
+  it "handles an ec2Query method with no output" do
+    actual = render_ec2_client("DeleteVpc")
+
+    expected = load_fixture("templates", "client", "delete_vpc.expected.cr").strip
     actual.should eq_diff expected
   end
 end
