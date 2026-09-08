@@ -20,8 +20,10 @@ module Amazonite::Codegen::Service
         # which would render the wildcard member as "S3ObjectCreated" - a
         # name that reads like one specific event rather than all of them.
         .gsub("*", "All")
-        # get rid of non-character values
-        .split(/[-:\._\/ ]/)
+        # get rid of non-character values - parentheses included, since EC2
+        # spells a couple of enum values out as prose ("Linux/UNIX (Amazon
+        # VPC)"), and they can't survive into an identifier either
+        .split(/[-:\._\/() ]/)
         # split up words on pascal that are pascal already
         # sometimes a string value will have mixed case so do this so all words
         # are treated the same later on

@@ -1,0 +1,121 @@
+private alias AEC = Amazonite::EC2
+private alias Core = Amazonite::Core
+
+module Amazonite::EC2
+  class ModifyInstanceMetadataOptionsRequest
+    # The ID of the instance.
+    property instance_id : String
+
+    # Indicates whether IMDSv2 is required.
+    #
+    # - `optional` - IMDSv2 is optional. You can choose whether to send a session token in your
+    # instance metadata retrieval requests. If you retrieve IAM role credentials without a session
+    # token, you receive the IMDSv1 role credentials. If you retrieve IAM role credentials using a
+    # valid session token, you receive the IMDSv2 role credentials.
+    #
+    # - `required` - IMDSv2 is required. You must send a session token in your instance metadata
+    # retrieval requests. With this option, retrieving the IAM role credentials always returns IMDSv2
+    # credentials; IMDSv1 credentials are not available.
+    #
+    # Default:
+    #
+    # - If the value of `ImdsSupport` for the Amazon Machine Image (AMI) for your instance is `v2.0`
+    # and the account level default is set to `no-preference`, the default is `required`.
+    #
+    # - If the value of `ImdsSupport` for the Amazon Machine Image (AMI) for your instance is `v2.0`,
+    # but the account level default is set to `V1 or V2`, the default is `optional`.
+    #
+    # The default value can also be affected by other combinations of parameters. For more
+    # information, see [Order of precedence for instance metadata
+    # options](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html#instance-metadata-options-order-of-precedence)
+    # in the *Amazon EC2 User Guide*.
+    property http_tokens : HttpTokensState | Nil
+
+    # The desired HTTP PUT response hop limit for instance metadata requests. The larger the number,
+    # the further instance metadata requests can travel. If no parameter is specified, the existing
+    # state is maintained.
+    #
+    # Possible values: Integers from 1 to 64
+    property http_put_response_hop_limit : Int32 | Nil
+
+    # Enables or disables the HTTP metadata endpoint on your instances. If this parameter is not
+    # specified, the existing state is maintained.
+    #
+    # If you specify a value of `disabled`, you cannot access your instance metadata.
+    property http_endpoint : InstanceMetadataEndpointState | Nil
+
+    # Checks whether you have the required permissions for the action, without actually making the
+    # request, and provides an error response. If you have the required permissions, the error
+    # response is `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    property dry_run : Bool | Nil
+
+    # Enables or disables the IPv6 endpoint for the instance metadata service. Applies only if you
+    # enabled the HTTP metadata endpoint.
+    property http_protocol_ipv_6 : InstanceMetadataProtocolState | Nil
+
+    # Set to `enabled` to allow access to instance tags from the instance metadata. Set to `disabled`
+    # to turn off access to instance tags from the instance metadata. For more information, see [View
+    # tags for your EC2 instances using instance
+    # metadata](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/work-with-tags-in-IMDS.html).
+    property instance_metadata_tags : InstanceMetadataTagsState | Nil
+
+    def initialize(
+      @instance_id : String,
+      @http_tokens : HttpTokensState | Nil = nil,
+      @http_put_response_hop_limit : Int32 | Nil = nil,
+      @http_endpoint : InstanceMetadataEndpointState | Nil = nil,
+      @dry_run : Bool | Nil = nil,
+      @http_protocol_ipv_6 : InstanceMetadataProtocolState | Nil = nil,
+      @instance_metadata_tags : InstanceMetadataTagsState | Nil = nil,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      params << {"#{prefix}InstanceId", @instance_id}
+
+      if value = @http_tokens
+        params << {"#{prefix}HttpTokens", value.to_json_object_key}
+      end
+
+      if value = @http_put_response_hop_limit
+        params << {"#{prefix}HttpPutResponseHopLimit", value.to_s}
+      end
+
+      if value = @http_endpoint
+        params << {"#{prefix}HttpEndpoint", value.to_json_object_key}
+      end
+
+      if value = @dry_run
+        params << {"#{prefix}DryRun", Core::QueryValue.bool(value)}
+      end
+
+      if value = @http_protocol_ipv_6
+        params << {"#{prefix}HttpProtocolIpv6", value.to_json_object_key}
+      end
+
+      if value = @instance_metadata_tags
+        params << {"#{prefix}InstanceMetadataTags", value.to_json_object_key}
+      end
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        instance_id: Core::XMLValue.string(node.xpath_node("*[local-name()='InstanceId']")).not_nil!,
+        http_tokens: (n = node.xpath_node("*[local-name()='HttpTokens']")) ? AEC::HttpTokensState.from_json_object_key?(n.content) : nil,
+        http_put_response_hop_limit: Core::XMLValue.i32(node.xpath_node("*[local-name()='HttpPutResponseHopLimit']")),
+        http_endpoint: (n = node.xpath_node("*[local-name()='HttpEndpoint']")) ? AEC::InstanceMetadataEndpointState.from_json_object_key?(n.content) : nil,
+        dry_run: Core::XMLValue.bool(node.xpath_node("*[local-name()='DryRun']")),
+        http_protocol_ipv_6: (n = node.xpath_node("*[local-name()='HttpProtocolIpv6']")) ? AEC::InstanceMetadataProtocolState.from_json_object_key?(n.content) : nil,
+        instance_metadata_tags: (n = node.xpath_node("*[local-name()='InstanceMetadataTags']")) ? AEC::InstanceMetadataTagsState.from_json_object_key?(n.content) : nil,
+      )
+    end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@instance_id, @http_tokens, @http_put_response_hop_limit, @http_endpoint, @dry_run, @http_protocol_ipv_6, @instance_metadata_tags)
+  end
+end

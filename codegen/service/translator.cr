@@ -35,9 +35,8 @@ module Amazonite::Codegen::Service
     end
 
     # Smithy protocol trait name => old-format metadata.protocol value,
-    # matching the strings aws-sdk-js itself used. Everything but ec2Query is
-    # rendered end to end (client.cr.j2 etc.); ec2 is translated just far
-    # enough for metadata/naming to resolve.
+    # matching the strings aws-sdk-js itself used. All of them are rendered
+    # end to end (client.cr.j2 etc.).
     PROTOCOLS = {
       "awsQuery"  => "query",
       "ec2Query"  => "ec2",
@@ -363,6 +362,8 @@ module Amazonite::Codegen::Service
             json.field "locationName", xml_name
           end
 
+          add_query_name(json, member)
+
           # jsonName is a separate, protocol-independent override from the
           # http-binding traits above (httpHeader/httpQuery/httpLabel only
           # matter for rest-json's own routing, and some JSON-protocol
@@ -384,6 +385,23 @@ module Amazonite::Codegen::Service
 
         add_documentation(json, member)
       end
+    end
+
+    # ec2Query is the one protocol that names the same member differently
+    # in each direction: a request param is named by the ec2QueryName trait
+    # (falling back to the xmlName with its first letter upcased, then to
+    # the member name), while the response element keeps the plain
+    # xmlName the other XML protocols use - EC2 sends <reservationSet> back
+    # for the member it accepts as ReservationSet. Only the request half
+    # needs recording separately; locationName above already carries the
+    # response half.
+    private def add_query_name(json : JSON::Builder, member : JSON::Any)
+      return unless protocol == "ec2"
+
+      traits = member["traits"]?
+      name = traits.try(&.["aws.protocols#ec2QueryName"]?).try(&.as_s)
+      name ||= traits.try(&.["smithy.api#xmlName"]?).try(&.as_s).try { |xml_name| xml_name[0].upcase + xml_name[1..] }
+      json.field "queryName", name if name
     end
 
     private def add_documentation(json : JSON::Builder, node : JSON::Any)

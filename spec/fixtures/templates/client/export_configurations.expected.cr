@@ -3,10 +3,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::ApplicationDiscoveryService
   class Client < Core::Client
-    Log = ::Log.for("amazonite.application_discovery_service.client")
+    Log               = ::Log.for("amazonite.application_discovery_service.client")
+    EXCEPTION_FACTORY = ExceptionFactory.new
 
     def initialize(config = Core::Config.new)
-      super("AWSPoseidonService_V2015_11_01", "discovery", "1.1", nil, config)
+      super("AWSPoseidonService_V2015_11_01", "discovery", "1.1", EXCEPTION_FACTORY, config)
     end
 
     # Deprecated. Use `StartExportTask` instead.

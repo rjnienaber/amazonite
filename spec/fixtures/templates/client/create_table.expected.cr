@@ -3,10 +3,11 @@ private alias Core = Amazonite::Core
 
 module Amazonite::DynamoDB
   class Client < Core::Client
-    Log = ::Log.for("amazonite.dynamodb.client")
+    Log               = ::Log.for("amazonite.dynamodb.client")
+    EXCEPTION_FACTORY = ExceptionFactory.new
 
     def initialize(config = Core::Config.new)
-      super("DynamoDB_20120810", "dynamodb", "1.0", nil, config)
+      super("DynamoDB_20120810", "dynamodb", "1.0", EXCEPTION_FACTORY, config)
     end
 
     # The `CreateTable` operation adds a new table to your account. In an Amazon Web Services account,

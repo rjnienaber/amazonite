@@ -15,12 +15,18 @@ module Amazonite::Codegen::Bindings
     getter name, members, has_parameters, parameters, needs_core_alias, needs_module_alias, query_adds, xml_reads,
       xml_writes, validations, doc, has_doc
 
-    def initialize(shape : Amazonite::Codegen::Service::Structure, module_alias : String, is_rest : Bool, is_query : Bool = false, is_rest_xml : Bool = false)
+    def initialize(shape : Amazonite::Codegen::Service::Structure, module_alias : String, protocol : String)
       @name = shape.name
       @needs_core_alias = false
       @needs_module_alias = false
-      @is_rest = is_rest
-      @is_rest_xml = is_rest_xml
+      # rest-xml routes the http half of a shape exactly as rest-json does
+      # and differs only in how the body is serialized; awsQuery and
+      # ec2Query both form-encode the request and read an XML response,
+      # differing only in how a member is named and how a list is indexed.
+      @is_rest_xml = protocol == "rest-xml"
+      @is_rest = protocol == "rest-json" || @is_rest_xml
+      @is_ec2 = protocol == "ec2"
+      is_query = protocol == "query" || @is_ec2
       @module_alias = module_alias
       @payload_member = shape.payload_member
       @doc = Amazonite::Codegen::Service::Utils.doc_comment(shape.documentation)
@@ -30,7 +36,7 @@ module Amazonite::Codegen::Bindings
         @query_adds = shape.members.map { |member| Crinja.value({stmt: query_param_stmt(member)}) }
         @xml_reads = shape.members.map { |member| Crinja.value({name: member.snake_case_name, expr: xml_read_expr(member)}) }
         @xml_writes = [] of Crinja::Value
-      elsif is_rest_xml
+      elsif @is_rest_xml
         # Only the body half of the shape is XML. The rest is routed to the
         # URI, query string or headers by the client method, and a raw
         # payload member is the body rather than a part of it, so both are
@@ -269,24 +275,35 @@ module Amazonite::Codegen::Bindings
       end
     end
 
+    # The form-param name for one member. ec2Query names a request param
+    # differently from the response element the same member reads back from
+    # (see Member#query_wire_name); awsQuery uses the one name for both.
+    private def param_name(member) : String
+      @is_ec2 ? member.query_wire_name : member.wire_name
+    end
+
     private def scalar_param_stmt(member, accessor) : String
-      entry = %(params << {"\#{prefix}#{member.wire_name}", #{text_value_expr(member.required? ? accessor : "value", member)}})
+      entry = %(params << {"\#{prefix}#{param_name(member)}", #{text_value_expr(member.required? ? accessor : "value", member)}})
       member.required? ? entry : "if value = #{accessor}\n  #{entry}\nend"
     end
 
     private def structure_param_stmt(member, accessor) : String
       value_accessor = member.required? ? accessor : "value"
-      concat = %(params.concat(#{value_accessor}.to_query_params("\#{prefix}#{member.wire_name}.")))
+      concat = %(params.concat(#{value_accessor}.to_query_params("\#{prefix}#{param_name(member)}.")))
       member.required? ? concat : "if value = #{accessor}\n  #{concat}\nend"
     end
 
     private def list_param_stmt(member, accessor) : String
       item = member.list_item_member
       list_accessor = member.required? ? accessor : "(#{accessor} || [] of #{member.list_item_crystal_type})"
+      # awsQuery indexes a list under a "member" segment (Names.member.1);
+      # ec2Query flattens every list, indexing straight off the param name
+      # (InstanceId.1).
+      indexed = @is_ec2 ? %(#{param_name(member)}.\#{i}) : %(#{member.wire_name}.member.\#{i})
       item_stmt = if item.structure_type?
-                    %(params.concat(item.to_query_params("\#{prefix}#{member.wire_name}.member.\#{i}.")))
+                    %(params.concat(item.to_query_params("\#{prefix}#{indexed}.")))
                   else
-                    %(params << {"\#{prefix}#{member.wire_name}.member.\#{i}", #{text_value_expr("item", item)}})
+                    %(params << {"\#{prefix}#{indexed}", #{text_value_expr("item", item)}})
                   end
       "#{list_accessor}.each_with_index(1) do |item, i|\n  #{item_stmt}\nend"
     end
@@ -418,10 +435,10 @@ module Amazonite::Codegen::Bindings
     end
 
     # The element a list's items sit under: its own xmlName if the model
-    # gave the list member one, otherwise the "member" that awsQuery and
-    # restXml both default to.
+    # gave the list member one, otherwise the protocol's default - "item"
+    # for ec2Query, "member" for awsQuery and restXml.
     private def item_element_name(item) : String
-      item.location_name || "member"
+      item.location_name || (@is_ec2 ? "item" : "member")
     end
 
     # The XPath reaching a repeated child of `node` - a flattened list/map

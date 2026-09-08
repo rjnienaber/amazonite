@@ -1,7 +1,7 @@
 module Amazonite::Codegen::Service
   class Member
     private KNOWN_KEYS = ["shape", "documentation", "idempotencyToken", "box", "deprecated", "deprecatedMessage",
-                          "location", "locationName", "jsonName", "jsonvalue", # TODO: should return JSON::Any for this?
+                          "location", "locationName", "jsonName", "queryName", "jsonvalue", # TODO: should return JSON::Any for this?
                           "contextParam", "flattened",
     ]
 
@@ -14,6 +14,7 @@ module Amazonite::Codegen::Service
     @location_name : String?
     @documentation : String?
     @json_name : String?
+    @query_name : String?
 
     getter name, shape_name, location, location_name, documentation
 
@@ -25,6 +26,7 @@ module Amazonite::Codegen::Service
       @location_name = json["locationName"]?.try(&.as_s)
       @documentation = json["documentation"]?.try(&.as_s)
       @json_name = json["jsonName"]?.try(&.as_s)
+      @query_name = json["queryName"]?.try(&.as_s)
       @flattened = json["flattened"]?.try(&.as_bool) || false
     end
 
@@ -50,6 +52,16 @@ module Amazonite::Codegen::Service
     # override or the member's own name.
     def json_wire_name
       @json_name || @name
+    end
+
+    # The form-param name to use for an ec2Query request, where a member is
+    # named differently in each direction (see Translator#add_query_name) -
+    # the explicit ec2QueryName/xmlName override if the model carried one,
+    # otherwise the member's own name, which is already capitalized the way
+    # the wire wants it. Other protocols name a param with wire_name and
+    # never reach this.
+    def query_wire_name
+      @query_name || @name
     end
 
     def label?
