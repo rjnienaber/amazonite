@@ -1,0 +1,344 @@
+private alias AS = Amazonite::S3
+private alias Core = Amazonite::Core
+
+module Amazonite::S3
+  class WriteGetObjectResponseRequest
+    # Route prefix to the HTTP URL generated.
+    property request_route : String = ""
+
+    # A single use encrypted token that maps `WriteGetObjectResponse` to the end user `GetObject`
+    # request.
+    property request_token : String = ""
+
+    # The object data.
+    property body : String | Nil
+
+    # The integer status code for an HTTP response of a corresponding `GetObject` request. The
+    # following is a list of status codes.
+    #
+    # - `200 - OK`
+    #
+    # - `206 - Partial Content`
+    #
+    # - `304 - Not Modified`
+    #
+    # - `400 - Bad Request`
+    #
+    # - `401 - Unauthorized`
+    #
+    # - `403 - Forbidden`
+    #
+    # - `404 - Not Found`
+    #
+    # - `405 - Method Not Allowed`
+    #
+    # - `409 - Conflict`
+    #
+    # - `411 - Length Required`
+    #
+    # - `412 - Precondition Failed`
+    #
+    # - `416 - Range Not Satisfiable`
+    #
+    # - `500 - Internal Server Error`
+    #
+    # - `503 - Service Unavailable`
+    property status_code : Int32 | Nil
+
+    # A string that uniquely identifies an error condition. Returned in the tag of the error XML
+    # response for a corresponding `GetObject` call. Cannot be used with a successful `StatusCode`
+    # header or when the transformed object is provided in the body. All error codes from S3 are
+    # sentence-cased. The regular expression (regex) value is `"^[A-Z][a-zA-Z]+$"`.
+    property error_code : String | Nil
+
+    # Contains a generic description of the error condition. Returned in the tag of the error XML
+    # response for a corresponding `GetObject` call. Cannot be used with a successful `StatusCode`
+    # header or when the transformed object is provided in body.
+    property error_message : String | Nil
+
+    # Indicates that a range of bytes was specified.
+    property accept_ranges : String | Nil
+
+    # Specifies caching behavior along the request/reply chain.
+    property cache_control : String | Nil
+
+    # Specifies presentational information for the object.
+    property content_disposition : String | Nil
+
+    # Specifies what content encodings have been applied to the object and thus what decoding
+    # mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.
+    property content_encoding : String | Nil
+
+    # The language the content is in.
+    property content_language : String | Nil
+
+    # The size of the content body in bytes.
+    property content_length : Int64 | Nil
+
+    # The portion of the object returned in the response.
+    property content_range : String | Nil
+
+    # A standard MIME type describing the format of the object data.
+    property content_type : String | Nil
+
+    # This header can be used as a data integrity check to verify that the data received is the same
+    # data that was originally sent. This specifies the Base64 encoded, 32-bit `CRC32` checksum of the
+    # object returned by the Object Lambda function. This may not match the checksum for the object
+    # stored in Amazon S3. Amazon S3 will perform validation of the checksum values only when the
+    # original `GetObject` request required checksum validation. For more information about checksums,
+    # see [Checking object
+    # integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html)
+    # in the *Amazon S3 User Guide*.
+    #
+    # Only one checksum header can be specified at a time. If you supply multiple checksum headers,
+    # this request will fail.
+    property checksum_crc32 : String | Nil
+
+    # This header can be used as a data integrity check to verify that the data received is the same
+    # data that was originally sent. This specifies the Base64 encoded, 32-bit `CRC32C` checksum of
+    # the object returned by the Object Lambda function. This may not match the checksum for the
+    # object stored in Amazon S3. Amazon S3 will perform validation of the checksum values only when
+    # the original `GetObject` request required checksum validation. For more information about
+    # checksums, see [Checking object
+    # integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html)
+    # in the *Amazon S3 User Guide*.
+    #
+    # Only one checksum header can be specified at a time. If you supply multiple checksum headers,
+    # this request will fail.
+    property checksum_crc32c : String | Nil
+
+    # This header can be used as a data integrity check to verify that the data received is the same
+    # data that was originally sent. This header specifies the Base64 encoded, 64-bit `CRC64NVME`
+    # checksum of the part. For more information, see [Checking object
+    # integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html)
+    # in the *Amazon S3 User Guide*.
+    property checksum_crc64nvme : String | Nil
+
+    # This header can be used as a data integrity check to verify that the data received is the same
+    # data that was originally sent. This specifies the Base64 encoded, 160-bit `SHA1` digest of the
+    # object returned by the Object Lambda function. This may not match the checksum for the object
+    # stored in Amazon S3. Amazon S3 will perform validation of the checksum values only when the
+    # original `GetObject` request required checksum validation. For more information about checksums,
+    # see [Checking object
+    # integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html)
+    # in the *Amazon S3 User Guide*.
+    #
+    # Only one checksum header can be specified at a time. If you supply multiple checksum headers,
+    # this request will fail.
+    property checksum_sha1 : String | Nil
+
+    # This header can be used as a data integrity check to verify that the data received is the same
+    # data that was originally sent. This specifies the Base64 encoded, 256-bit `SHA256` digest of the
+    # object returned by the Object Lambda function. This may not match the checksum for the object
+    # stored in Amazon S3. Amazon S3 will perform validation of the checksum values only when the
+    # original `GetObject` request required checksum validation. For more information about checksums,
+    # see [Checking object
+    # integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html)
+    # in the *Amazon S3 User Guide*.
+    #
+    # Only one checksum header can be specified at a time. If you supply multiple checksum headers,
+    # this request will fail.
+    property checksum_sha256 : String | Nil
+
+    # This header can be used as a data integrity check to verify that the data received is the same
+    # data that was originally sent. This header specifies the Base64 encoded, 512-bit `SHA512` digest
+    # of the part. For more information, see [Checking object
+    # integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html)
+    # in the *Amazon S3 User Guide*.
+    property checksum_sha512 : String | Nil
+
+    # This header can be used as a data integrity check to verify that the data received is the same
+    # data that was originally sent. This header specifies the Base64 encoded, 128-bit `MD5` digest of
+    # the part. For more information, see [Checking object
+    # integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html)
+    # in the *Amazon S3 User Guide*.
+    property checksum_md5 : String | Nil
+
+    # This header can be used as a data integrity check to verify that the data received is the same
+    # data that was originally sent. This header specifies the Base64 encoded, 64-bit `XXHASH64`
+    # checksum of the part. For more information, see [Checking object
+    # integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html)
+    # in the *Amazon S3 User Guide*.
+    property checksum_xxhash64 : String | Nil
+
+    # This header can be used as a data integrity check to verify that the data received is the same
+    # data that was originally sent. This header specifies the Base64 encoded, 64-bit `XXHASH3`
+    # checksum of the part. For more information, see [Checking object
+    # integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html)
+    # in the *Amazon S3 User Guide*.
+    property checksum_xxhash3 : String | Nil
+
+    # This header can be used as a data integrity check to verify that the data received is the same
+    # data that was originally sent. This header specifies the Base64 encoded, 128-bit `XXHASH128`
+    # checksum of the part. For more information, see [Checking object
+    # integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html)
+    # in the *Amazon S3 User Guide*.
+    property checksum_xxhash128 : String | Nil
+
+    # Specifies whether an object stored in Amazon S3 is (`true`) or is not (`false`) a delete marker.
+    # To learn more about delete markers, see [Working with delete
+    # markers](https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeleteMarker.html).
+    property delete_marker : Bool | Nil
+
+    # An opaque identifier assigned by a web server to a specific version of a resource found at a
+    # URL.
+    property e_tag : String | Nil
+
+    # The date and time at which the object is no longer cacheable.
+    property expires : String | Nil
+
+    # If the object expiration is configured (see PUT Bucket lifecycle), the response includes this
+    # header. It includes the `expiry-date` and `rule-id` key-value pairs that provide the object
+    # expiration information. The value of the `rule-id` is URL-encoded.
+    property expiration : String | Nil
+
+    # The date and time that the object was last modified.
+    property last_modified : Time | Nil
+
+    # Set to the number of metadata entries not returned in `x-amz-meta` headers. This can happen if
+    # you create metadata using an API like SOAP that supports more flexible metadata than the REST
+    # API. For example, using SOAP, you can create metadata whose values are not legal HTTP headers.
+    property missing_meta : Int32 | Nil
+
+    # A map of metadata to store with the object in S3.
+    property metadata : Hash(String, String) | Nil
+
+    # Indicates whether an object stored in Amazon S3 has Object Lock enabled. For more information
+    # about S3 Object Lock, see [Object
+    # Lock](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html).
+    property object_lock_mode : ObjectLockMode | Nil
+
+    # Indicates whether an object stored in Amazon S3 has an active legal hold.
+    property object_lock_legal_hold_status : ObjectLockLegalHoldStatus | Nil
+
+    # The date and time when Object Lock is configured to expire.
+    property object_lock_retain_until_date : Time | Nil
+
+    # The count of parts this object has.
+    property parts_count : Int32 | Nil
+
+    # Indicates if request involves bucket that is either a source or destination in a Replication
+    # rule. For more information about S3 Replication, see
+    # [Replication](https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html).
+    property replication_status : ReplicationStatus | Nil
+
+    property request_charged : RequestCharged | Nil
+
+    # Provides information about object restoration operation and expiration time of the restored
+    # object copy.
+    property restore : String | Nil
+
+    # The server-side encryption algorithm used when storing requested object in Amazon S3 or Amazon
+    # FSx.
+    #
+    # When accessing data stored in Amazon FSx file systems using S3 access points, the only valid
+    # server side encryption option is `aws:fsx`.
+    property server_side_encryption : ServerSideEncryption | Nil
+
+    # Encryption algorithm used if server-side encryption with a customer-provided encryption key was
+    # specified for object stored in Amazon S3.
+    property sse_customer_algorithm : String | Nil
+
+    # If present, specifies the ID (Key ID, Key ARN, or Key Alias) of the Amazon Web Services Key
+    # Management Service (Amazon Web Services KMS) symmetric encryption customer managed key that was
+    # used for stored in Amazon S3 object.
+    property ssekms_key_id : String | Nil
+
+    # 128-bit MD5 digest of customer-provided encryption key used in Amazon S3 to encrypt data stored
+    # in S3. For more information, see [Protecting data using server-side encryption with
+    # customer-provided encryption keys
+    # (SSE-C)](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html).
+    property sse_customer_key_md5 : String | Nil
+
+    # Provides storage class information of the object. Amazon S3 returns this header for all objects
+    # except for S3 Standard storage class objects.
+    #
+    # For more information, see [Storage
+    # Classes](https://docs.aws.amazon.com/AmazonS3/latest/dev/storage-class-intro.html).
+    property storage_class : StorageClass | Nil
+
+    # The number of tags, if any, on the object.
+    property tag_count : Int32 | Nil
+
+    # An ID used to reference a specific version of the object.
+    property version_id : String | Nil
+
+    # Indicates whether the object stored in Amazon S3 uses an S3 bucket key for server-side
+    # encryption with Amazon Web Services KMS (SSE-KMS).
+    property bucket_key_enabled : Bool | Nil
+
+    def initialize(
+      @request_route : String,
+      @request_token : String,
+      @body : String | Nil = nil,
+      @status_code : Int32 | Nil = nil,
+      @error_code : String | Nil = nil,
+      @error_message : String | Nil = nil,
+      @accept_ranges : String | Nil = nil,
+      @cache_control : String | Nil = nil,
+      @content_disposition : String | Nil = nil,
+      @content_encoding : String | Nil = nil,
+      @content_language : String | Nil = nil,
+      @content_length : Int64 | Nil = nil,
+      @content_range : String | Nil = nil,
+      @content_type : String | Nil = nil,
+      @checksum_crc32 : String | Nil = nil,
+      @checksum_crc32c : String | Nil = nil,
+      @checksum_crc64nvme : String | Nil = nil,
+      @checksum_sha1 : String | Nil = nil,
+      @checksum_sha256 : String | Nil = nil,
+      @checksum_sha512 : String | Nil = nil,
+      @checksum_md5 : String | Nil = nil,
+      @checksum_xxhash64 : String | Nil = nil,
+      @checksum_xxhash3 : String | Nil = nil,
+      @checksum_xxhash128 : String | Nil = nil,
+      @delete_marker : Bool | Nil = nil,
+      @e_tag : String | Nil = nil,
+      @expires : String | Nil = nil,
+      @expiration : String | Nil = nil,
+      @last_modified : Time | Nil = nil,
+      @missing_meta : Int32 | Nil = nil,
+      @metadata : Hash(String, String) | Nil = nil,
+      @object_lock_mode : ObjectLockMode | Nil = nil,
+      @object_lock_legal_hold_status : ObjectLockLegalHoldStatus | Nil = nil,
+      @object_lock_retain_until_date : Time | Nil = nil,
+      @parts_count : Int32 | Nil = nil,
+      @replication_status : ReplicationStatus | Nil = nil,
+      @request_charged : RequestCharged | Nil = nil,
+      @restore : String | Nil = nil,
+      @server_side_encryption : ServerSideEncryption | Nil = nil,
+      @sse_customer_algorithm : String | Nil = nil,
+      @ssekms_key_id : String | Nil = nil,
+      @sse_customer_key_md5 : String | Nil = nil,
+      @storage_class : StorageClass | Nil = nil,
+      @tag_count : Int32 | Nil = nil,
+      @version_id : String | Nil = nil,
+      @bucket_key_enabled : Bool | Nil = nil,
+    )
+    end
+
+    # `root` is the element this shape is serialized under, which restXml
+    # takes from the member binding it as the request payload rather than
+    # from the shape's own name - they differ often enough (S3 sends a
+    # CompletedMultipartUpload as <CompleteMultipartUpload>) that the caller
+    # has to supply it.
+    def to_xml(root : String) : String
+      XML.build(indent: nil) do |xml|
+        xml.element(root) { build_xml(xml) }
+      end
+    end
+
+    def build_xml(xml : XML::Builder) : Nil
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+      )
+    end
+
+    def validate! : Nil
+    end
+
+    def_equals_and_hash(@request_route, @request_token, @body, @status_code, @error_code, @error_message, @accept_ranges, @cache_control, @content_disposition, @content_encoding, @content_language, @content_length, @content_range, @content_type, @checksum_crc32, @checksum_crc32c, @checksum_crc64nvme, @checksum_sha1, @checksum_sha256, @checksum_sha512, @checksum_md5, @checksum_xxhash64, @checksum_xxhash3, @checksum_xxhash128, @delete_marker, @e_tag, @expires, @expiration, @last_modified, @missing_meta, @metadata, @object_lock_mode, @object_lock_legal_hold_status, @object_lock_retain_until_date, @parts_count, @replication_status, @request_charged, @restore, @server_side_encryption, @sse_customer_algorithm, @ssekms_key_id, @sse_customer_key_md5, @storage_class, @tag_count, @version_id, @bucket_key_enabled)
+  end
+end

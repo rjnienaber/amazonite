@@ -3,9 +3,10 @@ require "../../spec_helper"
 private alias Member = Amazonite::Codegen::Service::Member
 private alias ShapeResolver = Amazonite::Codegen::Service::ShapeResolver
 
-def create_member(shape_name : String, shapes_json : String) : Member
+def create_member(shape_name : String, shapes_json : String, member_json : String? = nil) : Member
   resolver = ShapeResolver.load_json(JSON.parse(shapes_json))
-  Member.new(shape_name, true, JSON.parse(%({"shape": "#{shape_name}"})), resolver)
+  json = member_json || %({"shape": "#{shape_name}"})
+  Member.new(shape_name, true, JSON.parse(json), resolver)
 end
 
 describe Member do
@@ -32,6 +33,39 @@ describe Member do
       shapes_json = %({"Plain": {"type": "string"}})
 
       create_member("Plain", shapes_json).pattern.should be_nil
+    end
+  end
+
+  describe "#prefix_headers?" do
+    it "is true for a map bound to a family of headers sharing a prefix" do
+      shapes_json = %({"Metadata": {"type": "map", "key": {"shape": "S"}, "value": {"shape": "S"}}, "S": {"type": "string"}})
+      member_json = %({"shape": "Metadata", "location": "headers", "locationName": "x-amz-meta-"})
+
+      member = create_member("Metadata", shapes_json, member_json)
+      member.prefix_headers?.should be_true
+      member.header?.should be_false
+      member.wire_name.should eq "x-amz-meta-"
+    end
+
+    it "is false for a member bound to a single named header" do
+      shapes_json = %({"Metadata": {"type": "string"}})
+      member_json = %({"shape": "Metadata", "location": "header", "locationName": "x-amz-meta"})
+
+      create_member("Metadata", shapes_json, member_json).prefix_headers?.should be_false
+    end
+  end
+
+  describe "#timestamp_format" do
+    it "is the format its shape declares, which overrides the one implied by where the member is bound" do
+      shapes_json = %({"Expires": {"type": "timestamp", "timestampFormat": "date-time"}})
+
+      create_member("Expires", shapes_json).timestamp_format.should eq "date-time"
+    end
+
+    it "is nil when the shape declares none, leaving the default to the caller" do
+      shapes_json = %({"LastModified": {"type": "timestamp"}})
+
+      create_member("LastModified", shapes_json).timestamp_format.should be_nil
     end
   end
 end

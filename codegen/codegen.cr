@@ -24,6 +24,7 @@ module Amazonite::Codegen
     "eventbridge",
     "cloudwatch-logs",
     "kinesis",
+    "s3",
   ]
 
   # Operations that can't be modeled as a plain request/response call and
@@ -37,6 +38,7 @@ module Amazonite::Codegen
     "lambda"          => ["InvokeWithResponseStream"],
     "cloudwatch-logs" => ["GetLogObject", "StartLiveTail"],
     "kinesis"         => ["SubscribeToShard"],
+    "s3"              => ["SelectObjectContent"],
   }
 
   def self.main(args = ARGV)

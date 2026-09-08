@@ -17,7 +17,7 @@ temporary credentials automatically, so a `Client.new` behaves the way you'd exp
 * Typed clients and models generated from AWS's own API definitions, not maintained by hand
 * Automatic credential resolution across env vars, profiles, SSO, ECS, and EC2 instance metadata
 * Automatic refresh of temporary credentials (AssumeRole, SSO, ECS, EC2) as they near expiry
-* 15 AWS services supported today, with integration tests for each - see [Supported services](#supported-services)
+* 16 AWS services supported today, with integration tests for each - see [Supported services](#supported-services)
 * API docs regenerated and published on every push to `master`
 
 ## Contents
@@ -198,9 +198,9 @@ expiry.
     </tr>
     <tr>
       <td>S3</td>
-      <td>🚫</td>
-      <td>🚫</td>
-      <td>Consider using <a href="https://github.com/taylorfinnell/awscr-s3">awscr-s3</a></td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>SelectObjectContent isn't generated - uses event-stream framing, not a plain request/response</td>
     </tr>
   </tbody>
 </table>

@@ -2,13 +2,15 @@ require "xml"
 require "./response_exception_factory"
 
 module Amazonite::Core
-  # awsQuery services report errors as XML (`<ErrorResponse><Error><Code>...
-  # </Code><Message>...</Message></Error>...</ErrorResponse>`) rather than
-  # the JSON body ResponseExceptionFactory#build expects, and identify the
-  # error by that <Code> text rather than a JSON __type field or header -
-  # overriding #build here (rather than a standalone class) means Core::
-  # Client, which is typed against ResponseExceptionFactory, accepts a
-  # generated query-service ExceptionFactory without any further changes.
+  # awsQuery and restXml services report errors as XML (`<ErrorResponse>
+  # <Error><Code>...</Code><Message>...</Message></Error></ErrorResponse>`,
+  # or a bare `<Error>` for S3) rather than the JSON body
+  # ResponseExceptionFactory#build expects, and identify the error by that
+  # <Code> text rather than a JSON __type field or header - overriding #build
+  # here (rather than a standalone class) means Core::Client, which is typed
+  # against ResponseExceptionFactory, accepts either protocol's generated
+  # ExceptionFactory without any further changes. The <Error> search is
+  # unanchored, so it finds the element at either depth.
   abstract class QueryResponseExceptionFactory < ResponseExceptionFactory
     # Builds the exception for an awsQuery error response, dispatching on
     # the XML `<Error><Code>` value via `#create`.

@@ -8,8 +8,9 @@ module Amazonite::Codegen::Service
     @min : JSON::Any?
     @max : JSON::Any?
     @pattern : String?
+    @timestamp_format : String?
 
-    getter name, type, documentation, min, max, pattern
+    getter name, type, documentation, min, max, pattern, timestamp_format
 
     def initialize(name : String, json : JSON::Any)
       Utils.verify_keys(KNOWN_KEYS, json)
@@ -25,6 +26,7 @@ module Amazonite::Codegen::Service
       @min = json["min"]?
       @max = json["max"]?
       @pattern = json["pattern"]?.try(&.as_s)
+      @timestamp_format = json["timestampFormat"]?.try(&.as_s)
     end
 
     def snake_case_name
