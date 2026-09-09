@@ -6,7 +6,7 @@ module Amazonite::EC2
     # A description for the security group rule that references this IPv4 address range.
     #
     # Constraints: Up to 255 characters in length. Allowed characters are a-z, A-Z, 0-9, spaces, and
-    # ._-:/()#,@[]+=&;{}!$*
+    # ._-:/()#,@[]+=\&;{}!$*
     property description : String | Nil
 
     # The IPv4 address range. You can either specify a CIDR block or a source security group, not

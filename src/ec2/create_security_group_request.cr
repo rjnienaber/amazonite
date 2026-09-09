@@ -6,14 +6,14 @@ module Amazonite::EC2
     #
     # Constraints: Up to 255 characters in length
     #
-    # Valid characters: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&;{}!$*
+    # Valid characters: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=\&;{}!$*
     property description : String
 
     # The name of the security group. Names are case-insensitive and must be unique within the VPC.
     #
     # Constraints: Up to 255 characters in length. Can't start with `sg-`.
     #
-    # Valid characters: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&;{}!$*
+    # Valid characters: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=\&;{}!$*
     property group_name : String
 
     # The ID of the VPC. Required for a nondefault VPC.

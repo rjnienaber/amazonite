@@ -55,6 +55,12 @@ module Amazonite::Codegen::Service
       text = text.gsub(/<[^>]+>/, "")
       text = text.gsub("&amp;", "&").gsub("&lt;", "<").gsub("&gt;", ">")
         .gsub("&quot;", "\"").gsub("&#39;", "'").gsub("&apos;", "'")
+      # Unescaping above turns EC2's "&amp;;" (in a list of the characters a
+      # tag value may contain) into "&;", an empty entity reference that
+      # crashes the markd build vendored into the Crystal compiler - and so
+      # `crystal docs` - with `Index out of bounds`. A backslash escape renders
+      # as a literal ampersand and keeps the decoder away from it.
+      text = text.gsub(/&(?=;)/) { "\\&" }
       text = text.gsub(/ {2,}/, " ")
       text = text.gsub(/[ \t]*\n[ \t]*/, "\n").gsub(/\n{3,}/, "\n\n").strip
 
@@ -66,7 +72,23 @@ module Amazonite::Codegen::Service
         block.split("\n").each { |line| lines.concat(wrap_line(line.strip, LINE_WIDTH)) }
       end
 
-      lines.map { |line| line.empty? ? "#" : "# #{line}" }.join("\n")
+      lines.map { |line| line.empty? ? "#" : "# #{defuse_list_marker(line)}" }.join("\n")
+    end
+
+    # Wrapping keeps an Int32-overflowing number off the start of a line
+    # wherever there is an earlier word to hold it in place, but a paragraph or
+    # list item that *opens* with one has no such word. Swap that first digit
+    # for the numeric character reference naming it - "&#52;" for "4" - which
+    # renders as the digit itself and leaves markd nothing numeric to read
+    # where it looks for an ordered-list marker.
+    private def self.defuse_list_marker(line : String) : String
+      # markd re-scans a list item's content for a marker of its own, so the
+      # digits it trips over can sit after a bullet rather than at column 0.
+      marker = line[/\A(?:[-*+] |[0-9]{1,9}[.)] )?/]
+      rest = line[marker.size..]
+      return line unless starts_int32_overflow?(rest)
+
+      "#{marker}&##{rest[0].ord};#{rest[1..]}"
     end
 
     private def self.wrap_line(text : String, width : Int32) : Array(String)
@@ -76,7 +98,10 @@ module Amazonite::Codegen::Service
       current = ""
       text.split(" ").each do |word|
         candidate = current.empty? ? word : "#{current} #{word}"
-        if candidate.size > width && !current.empty?
+        # Overshoot the width rather than break in front of a number that
+        # can't open a line: keeping the text plain reads better than the
+        # character-reference escape `defuse_list_marker` would fall back to.
+        if candidate.size > width && !current.empty? && !starts_int32_overflow?(word)
           result << current
           current = word
         else
@@ -85,6 +110,17 @@ module Amazonite::Codegen::Service
       end
       result << current unless current.empty?
       result
+    end
+
+    # True for a word the markd build vendored into the Crystal compiler cannot
+    # survive at the start of a line: it reads the run of digits the line opens
+    # with and converts it to Int32 *before* checking the run is short enough
+    # to be an ordered-list number, so anything above Int32::MAX aborts
+    # `crystal docs` with `Invalid Int32`. EC2 hits this describing 32-bit ASN
+    # ranges ("4200000000 to 4294967294").
+    private def self.starts_int32_overflow?(word : String) : Bool
+      digits = word[/\A[0-9]+/]?
+      !digits.nil? && digits.to_i?.nil?
     end
   end
 end
