@@ -584,6 +584,15 @@ module Amazonite::S3
       if value = input.object_lock_legal_hold_status.try(&.to_json_object_key)
         headers["x-amz-object-lock-legal-hold"] = value
       end
+      if value = input.object_lock_event_hold.try(&.to_json_object_key)
+        headers["x-amz-object-lock-event-hold"] = value
+      end
+      if value = input.object_lock_event_hold_duration_days.try(&.to_s)
+        headers["x-amz-object-lock-event-hold-duration-days"] = value
+      end
+      if value = input.object_lock_event_hold_duration_years.try(&.to_s)
+        headers["x-amz-object-lock-event-hold-duration-years"] = value
+      end
       if value = input.expected_bucket_owner
         headers["x-amz-expected-bucket-owner"] = value
       end
@@ -1237,6 +1246,15 @@ module Amazonite::S3
       end
       if value = input.object_lock_legal_hold_status.try(&.to_json_object_key)
         headers["x-amz-object-lock-legal-hold"] = value
+      end
+      if value = input.object_lock_event_hold.try(&.to_json_object_key)
+        headers["x-amz-object-lock-event-hold"] = value
+      end
+      if value = input.object_lock_event_hold_duration_days.try(&.to_s)
+        headers["x-amz-object-lock-event-hold-duration-days"] = value
+      end
+      if value = input.object_lock_event_hold_duration_years.try(&.to_s)
+        headers["x-amz-object-lock-event-hold-duration-years"] = value
       end
       if value = input.expected_bucket_owner
         headers["x-amz-expected-bucket-owner"] = value
@@ -4120,6 +4138,9 @@ module Amazonite::S3
         object_lock_mode: response.headers["x-amz-object-lock-mode"]?.try { |value| AS::ObjectLockMode.from_json_object_key?(value) },
         object_lock_retain_until_date: Core::HeaderValue.date_time(response.headers["x-amz-object-lock-retain-until-date"]?),
         object_lock_legal_hold_status: response.headers["x-amz-object-lock-legal-hold"]?.try { |value| AS::ObjectLockLegalHoldStatus.from_json_object_key?(value) },
+        object_lock_event_hold: response.headers["x-amz-object-lock-event-hold"]?.try { |value| AS::ObjectLockEventHold.from_json_object_key?(value) },
+        object_lock_event_hold_duration_days: Core::HeaderValue.i32(response.headers["x-amz-object-lock-event-hold-duration-days"]?),
+        object_lock_event_hold_duration_years: Core::HeaderValue.i32(response.headers["x-amz-object-lock-event-hold-duration-years"]?),
         body: response.body,
       )
       Core::ParsedResponse(AS::GetObjectOutput).new(response, result)
@@ -5026,6 +5047,9 @@ module Amazonite::S3
         object_lock_mode: response.headers["x-amz-object-lock-mode"]?.try { |value| AS::ObjectLockMode.from_json_object_key?(value) },
         object_lock_retain_until_date: Core::HeaderValue.date_time(response.headers["x-amz-object-lock-retain-until-date"]?),
         object_lock_legal_hold_status: response.headers["x-amz-object-lock-legal-hold"]?.try { |value| AS::ObjectLockLegalHoldStatus.from_json_object_key?(value) },
+        object_lock_event_hold: response.headers["x-amz-object-lock-event-hold"]?.try { |value| AS::ObjectLockEventHold.from_json_object_key?(value) },
+        object_lock_event_hold_duration_days: Core::HeaderValue.i32(response.headers["x-amz-object-lock-event-hold-duration-days"]?),
+        object_lock_event_hold_duration_years: Core::HeaderValue.i32(response.headers["x-amz-object-lock-event-hold-duration-years"]?),
       )
       Core::ParsedResponse(AS::HeadObjectOutput).new(response, result)
     end
@@ -7894,6 +7918,15 @@ module Amazonite::S3
       end
       if value = input.object_lock_legal_hold_status.try(&.to_json_object_key)
         headers["x-amz-object-lock-legal-hold"] = value
+      end
+      if value = input.object_lock_event_hold.try(&.to_json_object_key)
+        headers["x-amz-object-lock-event-hold"] = value
+      end
+      if value = input.object_lock_event_hold_duration_days.try(&.to_s)
+        headers["x-amz-object-lock-event-hold-duration-days"] = value
+      end
+      if value = input.object_lock_event_hold_duration_years.try(&.to_s)
+        headers["x-amz-object-lock-event-hold-duration-years"] = value
       end
       if value = input.expected_bucket_owner
         headers["x-amz-expected-bucket-owner"] = value

@@ -22,10 +22,15 @@ module Amazonite::S3
     # `Mode`.
     property years : Int32 | Nil
 
+    # The default event hold duration to be applied to new objects placed in the specified bucket.
+    # When configured, new objects will automatically have an event hold enabled with this duration.
+    property default_event_hold : EventHoldDuration | Nil
+
     def initialize(
       @mode : ObjectLockRetentionMode | Nil = nil,
       @days : Int32 | Nil = nil,
       @years : Int32 | Nil = nil,
+      @default_event_hold : EventHoldDuration | Nil = nil,
     )
     end
 
@@ -52,6 +57,10 @@ module Amazonite::S3
       if value = @years
         xml.element("Years") { xml.text value.to_s }
       end
+
+      if value = @default_event_hold
+        xml.element("DefaultEventHold") { value.build_xml(xml) }
+      end
     end
 
     def self.from_xml(node : XML::Node) : self
@@ -59,12 +68,16 @@ module Amazonite::S3
         mode: (n = node.xpath_node("*[local-name()='Mode']")) ? AS::ObjectLockRetentionMode.from_json_object_key?(n.content) : nil,
         days: Core::XMLValue.i32(node.xpath_node("*[local-name()='Days']")),
         years: Core::XMLValue.i32(node.xpath_node("*[local-name()='Years']")),
+        default_event_hold: node.xpath_node("*[local-name()='DefaultEventHold']").try { |n| EventHoldDuration.from_xml(n) },
       )
     end
 
     def validate! : Nil
+      if value = @default_event_hold
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@mode, @days, @years)
+    def_equals_and_hash(@mode, @days, @years, @default_event_hold)
   end
 end

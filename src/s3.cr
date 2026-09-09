@@ -7,6 +7,6 @@ require "./s3/*"
 module Amazonite::S3
   # this service's own version in api-models-aws (gradle.properties), not
   # amazonite's shard version - upstream bumps it per model release
-  VERSION     = "1.0.22"
+  VERSION     = "1.0.23"
   API_VERSION = "2006-03-01"
 end

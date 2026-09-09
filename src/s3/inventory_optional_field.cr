@@ -12,6 +12,8 @@ module Amazonite::S3
     ObjectLockRetainUntilDate
     ObjectLockMode
     ObjectLockLegalHoldStatus
+    ObjectLockEventHoldStatus
+    ObjectLockEventHoldDuration
     IntelligentTieringAccessTier
     BucketKeyStatus
     ChecksumAlgorithm
@@ -36,6 +38,8 @@ module Amazonite::S3
       when "ObjectLockRetainUntilDate"    then AS::InventoryOptionalField::ObjectLockRetainUntilDate
       when "ObjectLockMode"               then AS::InventoryOptionalField::ObjectLockMode
       when "ObjectLockLegalHoldStatus"    then AS::InventoryOptionalField::ObjectLockLegalHoldStatus
+      when "ObjectLockEventHoldStatus"    then AS::InventoryOptionalField::ObjectLockEventHoldStatus
+      when "ObjectLockEventHoldDuration"  then AS::InventoryOptionalField::ObjectLockEventHoldDuration
       when "IntelligentTieringAccessTier" then AS::InventoryOptionalField::IntelligentTieringAccessTier
       when "BucketKeyStatus"              then AS::InventoryOptionalField::BucketKeyStatus
       when "ChecksumAlgorithm"            then AS::InventoryOptionalField::ChecksumAlgorithm
@@ -63,6 +67,8 @@ module Amazonite::S3
       when "ObjectLockRetainUntilDate"    then AS::InventoryOptionalField::ObjectLockRetainUntilDate
       when "ObjectLockMode"               then AS::InventoryOptionalField::ObjectLockMode
       when "ObjectLockLegalHoldStatus"    then AS::InventoryOptionalField::ObjectLockLegalHoldStatus
+      when "ObjectLockEventHoldStatus"    then AS::InventoryOptionalField::ObjectLockEventHoldStatus
+      when "ObjectLockEventHoldDuration"  then AS::InventoryOptionalField::ObjectLockEventHoldDuration
       when "IntelligentTieringAccessTier" then AS::InventoryOptionalField::IntelligentTieringAccessTier
       when "BucketKeyStatus"              then AS::InventoryOptionalField::BucketKeyStatus
       when "ChecksumAlgorithm"            then AS::InventoryOptionalField::ChecksumAlgorithm

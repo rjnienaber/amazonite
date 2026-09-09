@@ -1,3 +1,4 @@
+private alias AEC = Amazonite::EC2
 private alias Core = Amazonite::Core
 
 module Amazonite::EC2
@@ -32,6 +33,9 @@ module Amazonite::EC2
     # The maximum number of the ENA queues for each interface.
     property maximum_ena_queue_count_per_interface : Int32 | Nil
 
+    # The supported interface types for the network card.
+    property interface_types : Array(NetworkCardInterfaceType) | Nil
+
     def initialize(
       @network_card_index : Int32 | Nil = nil,
       @network_performance : String | Nil = nil,
@@ -42,6 +46,7 @@ module Amazonite::EC2
       @default_ena_queue_count_per_interface : Int32 | Nil = nil,
       @maximum_ena_queue_count : Int32 | Nil = nil,
       @maximum_ena_queue_count_per_interface : Int32 | Nil = nil,
+      @interface_types : Array(NetworkCardInterfaceType) | Nil = nil,
     )
     end
 
@@ -83,6 +88,10 @@ module Amazonite::EC2
       if value = @maximum_ena_queue_count_per_interface
         params << {"#{prefix}MaximumEnaQueueCountPerInterface", value.to_s}
       end
+
+      (@interface_types || [] of NetworkCardInterfaceType).each_with_index(1) do |item, i|
+        params << {"#{prefix}InterfaceTypeSet.#{i}", item.to_json_object_key}
+      end
       params
     end
 
@@ -97,12 +106,13 @@ module Amazonite::EC2
         default_ena_queue_count_per_interface: Core::XMLValue.i32(node.xpath_node("*[local-name()='defaultEnaQueueCountPerInterface']")),
         maximum_ena_queue_count: Core::XMLValue.i32(node.xpath_node("*[local-name()='maximumEnaQueueCount']")),
         maximum_ena_queue_count_per_interface: Core::XMLValue.i32(node.xpath_node("*[local-name()='maximumEnaQueueCountPerInterface']")),
+        interface_types: node.xpath_nodes("*[local-name()='interfaceTypeSet']/*[local-name()='item']").compact_map { |n| AEC::NetworkCardInterfaceType.from_json_object_key?(n.content) },
       )
     end
 
     def validate! : Nil
     end
 
-    def_equals_and_hash(@network_card_index, @network_performance, @maximum_network_interfaces, @additional_flexible_network_interfaces, @baseline_bandwidth_in_gbps, @peak_bandwidth_in_gbps, @default_ena_queue_count_per_interface, @maximum_ena_queue_count, @maximum_ena_queue_count_per_interface)
+    def_equals_and_hash(@network_card_index, @network_performance, @maximum_network_interfaces, @additional_flexible_network_interfaces, @baseline_bandwidth_in_gbps, @peak_bandwidth_in_gbps, @default_ena_queue_count_per_interface, @maximum_ena_queue_count, @maximum_ena_queue_count_per_interface, @interface_types)
   end
 end

@@ -614,6 +614,21 @@ module Amazonite::S3
     # This functionality is not supported for directory buckets.
     property object_lock_legal_hold_status : ObjectLockLegalHoldStatus | Nil
 
+    # The event hold status to apply to the object copy. Set to `ON` to enable or `OFF` to disable.
+    #
+    # This functionality is not supported for directory buckets.
+    property object_lock_event_hold : ObjectLockEventHold | Nil
+
+    # The event hold duration in days to apply to the object copy.
+    #
+    # This functionality is not supported for directory buckets.
+    property object_lock_event_hold_duration_days : Int32 | Nil
+
+    # The event hold duration in years to apply to the object copy.
+    #
+    # This functionality is not supported for directory buckets.
+    property object_lock_event_hold_duration_years : Int32 | Nil
+
     # The account ID of the expected destination bucket owner. If the account ID that you provide does
     # not match the actual owner of the destination bucket, the request fails with the HTTP status
     # code `403 Forbidden` (access denied).
@@ -667,6 +682,9 @@ module Amazonite::S3
       @object_lock_mode : ObjectLockMode | Nil = nil,
       @object_lock_retain_until_date : Time | Nil = nil,
       @object_lock_legal_hold_status : ObjectLockLegalHoldStatus | Nil = nil,
+      @object_lock_event_hold : ObjectLockEventHold | Nil = nil,
+      @object_lock_event_hold_duration_days : Int32 | Nil = nil,
+      @object_lock_event_hold_duration_years : Int32 | Nil = nil,
       @expected_bucket_owner : String | Nil = nil,
       @expected_source_bucket_owner : String | Nil = nil,
     )
@@ -701,6 +719,6 @@ module Amazonite::S3
       end
     end
 
-    def_equals_and_hash(@acl, @bucket, @cache_control, @checksum_algorithm, @content_disposition, @content_encoding, @content_language, @content_type, @copy_source, @copy_source_if_match, @copy_source_if_modified_since, @copy_source_if_none_match, @copy_source_if_unmodified_since, @expires, @grant_full_control, @grant_read, @grant_read_acp, @grant_write_acp, @if_match, @if_none_match, @key, @metadata, @metadata_directive, @tagging_directive, @annotation_directive, @server_side_encryption, @storage_class, @website_redirect_location, @sse_customer_algorithm, @sse_customer_key, @sse_customer_key_md5, @ssekms_key_id, @ssekms_encryption_context, @bucket_key_enabled, @copy_source_sse_customer_algorithm, @copy_source_sse_customer_key, @copy_source_sse_customer_key_md5, @request_payer, @tagging, @object_lock_mode, @object_lock_retain_until_date, @object_lock_legal_hold_status, @expected_bucket_owner, @expected_source_bucket_owner)
+    def_equals_and_hash(@acl, @bucket, @cache_control, @checksum_algorithm, @content_disposition, @content_encoding, @content_language, @content_type, @copy_source, @copy_source_if_match, @copy_source_if_modified_since, @copy_source_if_none_match, @copy_source_if_unmodified_since, @expires, @grant_full_control, @grant_read, @grant_read_acp, @grant_write_acp, @if_match, @if_none_match, @key, @metadata, @metadata_directive, @tagging_directive, @annotation_directive, @server_side_encryption, @storage_class, @website_redirect_location, @sse_customer_algorithm, @sse_customer_key, @sse_customer_key_md5, @ssekms_key_id, @ssekms_encryption_context, @bucket_key_enabled, @copy_source_sse_customer_algorithm, @copy_source_sse_customer_key, @copy_source_sse_customer_key_md5, @request_payer, @tagging, @object_lock_mode, @object_lock_retain_until_date, @object_lock_legal_hold_status, @object_lock_event_hold, @object_lock_event_hold_duration_days, @object_lock_event_hold_duration_years, @expected_bucket_owner, @expected_source_bucket_owner)
   end
 end

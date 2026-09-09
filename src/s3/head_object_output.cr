@@ -287,6 +287,22 @@ module Amazonite::S3
     # This functionality is not supported for directory buckets.
     property object_lock_legal_hold_status : ObjectLockLegalHoldStatus | Nil
 
+    # The event hold status for this object. This header is only returned if the requester has the
+    # `s3:GetObjectRetention` permission.
+    #
+    # This functionality is not supported for directory buckets.
+    property object_lock_event_hold : ObjectLockEventHold | Nil
+
+    # The event hold duration in days for this object. Only returned when the event hold is enabled.
+    #
+    # This functionality is not supported for directory buckets.
+    property object_lock_event_hold_duration_days : Int32 | Nil
+
+    # The event hold duration in years for this object. Only returned when the event hold is enabled.
+    #
+    # This functionality is not supported for directory buckets.
+    property object_lock_event_hold_duration_years : Int32 | Nil
+
     def initialize(
       @delete_marker : Bool | Nil = nil,
       @accept_ranges : String | Nil = nil,
@@ -331,6 +347,9 @@ module Amazonite::S3
       @object_lock_mode : ObjectLockMode | Nil = nil,
       @object_lock_retain_until_date : Time | Nil = nil,
       @object_lock_legal_hold_status : ObjectLockLegalHoldStatus | Nil = nil,
+      @object_lock_event_hold : ObjectLockEventHold | Nil = nil,
+      @object_lock_event_hold_duration_days : Int32 | Nil = nil,
+      @object_lock_event_hold_duration_years : Int32 | Nil = nil,
     )
     end
 
@@ -356,6 +375,6 @@ module Amazonite::S3
     def validate! : Nil
     end
 
-    def_equals_and_hash(@delete_marker, @accept_ranges, @expiration, @restore, @archive_status, @last_modified, @content_length, @checksum_crc32, @checksum_crc32c, @checksum_crc64nvme, @checksum_sha1, @checksum_sha256, @checksum_sha512, @checksum_md5, @checksum_xxhash64, @checksum_xxhash3, @checksum_xxhash128, @checksum_type, @e_tag, @missing_meta, @version_id, @cache_control, @content_disposition, @content_encoding, @content_language, @content_type, @content_range, @expires, @website_redirect_location, @server_side_encryption, @metadata, @sse_customer_algorithm, @sse_customer_key_md5, @ssekms_key_id, @bucket_key_enabled, @storage_class, @request_charged, @replication_status, @parts_count, @tag_count, @object_lock_mode, @object_lock_retain_until_date, @object_lock_legal_hold_status)
+    def_equals_and_hash(@delete_marker, @accept_ranges, @expiration, @restore, @archive_status, @last_modified, @content_length, @checksum_crc32, @checksum_crc32c, @checksum_crc64nvme, @checksum_sha1, @checksum_sha256, @checksum_sha512, @checksum_md5, @checksum_xxhash64, @checksum_xxhash3, @checksum_xxhash128, @checksum_type, @e_tag, @missing_meta, @version_id, @cache_control, @content_disposition, @content_encoding, @content_language, @content_type, @content_range, @expires, @website_redirect_location, @server_side_encryption, @metadata, @sse_customer_algorithm, @sse_customer_key_md5, @ssekms_key_id, @bucket_key_enabled, @storage_class, @request_charged, @replication_status, @parts_count, @tag_count, @object_lock_mode, @object_lock_retain_until_date, @object_lock_legal_hold_status, @object_lock_event_hold, @object_lock_event_hold_duration_days, @object_lock_event_hold_duration_years)
   end
 end

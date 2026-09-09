@@ -33,6 +33,7 @@ module Amazonite::S3
     S3ObjectAnnotationAll
     S3ObjectAnnotationPut
     S3ObjectAnnotationDelete
+    S3ObjectRetentionPut
 
     def self.to_json(e : Event, json : JSON::Builder) : Nil
       value = case e
@@ -66,6 +67,7 @@ module Amazonite::S3
               when AS::Event::S3ObjectAnnotationAll                          then "s3:ObjectAnnotation:*"
               when AS::Event::S3ObjectAnnotationPut                          then "s3:ObjectAnnotation:Put"
               when AS::Event::S3ObjectAnnotationDelete                       then "s3:ObjectAnnotation:Delete"
+              when AS::Event::S3ObjectRetentionPut                           then "s3:ObjectRetention:Put"
               else
                 raise Exception.new("unknown enum value for 'Event' when serializing to json: '#{e}'")
               end
@@ -105,6 +107,7 @@ module Amazonite::S3
       when "s3:ObjectAnnotation:*"                            then AS::Event::S3ObjectAnnotationAll
       when "s3:ObjectAnnotation:Put"                          then AS::Event::S3ObjectAnnotationPut
       when "s3:ObjectAnnotation:Delete"                       then AS::Event::S3ObjectAnnotationDelete
+      when "s3:ObjectRetention:Put"                           then AS::Event::S3ObjectRetentionPut
       else
         raise Exception.new("unknown enum value for 'Event' when deserializing from json: '#{value}'")
       end
@@ -142,6 +145,7 @@ module Amazonite::S3
       when AS::Event::S3ObjectAnnotationAll                          then "s3:ObjectAnnotation:*"
       when AS::Event::S3ObjectAnnotationPut                          then "s3:ObjectAnnotation:Put"
       when AS::Event::S3ObjectAnnotationDelete                       then "s3:ObjectAnnotation:Delete"
+      when AS::Event::S3ObjectRetentionPut                           then "s3:ObjectRetention:Put"
       else
         raise Exception.new("unknown enum value for 'Event' when serializing to json: '#{self}'")
       end
@@ -179,6 +183,7 @@ module Amazonite::S3
       when "s3:ObjectAnnotation:*"                            then AS::Event::S3ObjectAnnotationAll
       when "s3:ObjectAnnotation:Put"                          then AS::Event::S3ObjectAnnotationPut
       when "s3:ObjectAnnotation:Delete"                       then AS::Event::S3ObjectAnnotationDelete
+      when "s3:ObjectRetention:Put"                           then AS::Event::S3ObjectRetentionPut
       else
         nil
       end

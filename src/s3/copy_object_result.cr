@@ -18,7 +18,7 @@ module Amazonite::S3
     property checksum_type : ChecksumType | Nil
 
     # The Base64 encoded, 32-bit `CRC32` checksum of the object. This checksum is only present if the
-    # object was uploaded with the object. For more information, see [ Checking object
+    # checksum was uploaded with the object. For more information, see [ Checking object
     # integrity](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html)
     # in the *Amazon S3 User Guide*.
     property checksum_crc32 : String | Nil
