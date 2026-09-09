@@ -110,14 +110,31 @@ jobs:
         run: |
           sed -i "s/^version: .*/version: ${VERSION}/" shard.yml
 
+          # The subject names the services only while they still fit - past three
+          # the list crowds out the trailing "from api-models-aws@sha (vX.Y.Z)",
+          # so it collapses to a count, and to "all" when nothing was untouched.
+          # The full list lives in the body either way.
+          # wc pads its output with spaces on some platforms, and the count
+          # goes straight into the subject line
+          count="$(echo "${MODULES}" | wc -w | tr -d ' ')"
+          set -- src/*.cr
+          total=$#
+          if [ "$count" -le 3 ]; then
+            subject="Regenerate ${MODULES} from api-models-aws@${TO_SHA} (v${VERSION})"
+          elif [ "$count" -ge "$total" ]; then
+            subject="Regenerate all services from api-models-aws@${TO_SHA} (v${VERSION})"
+          else
+            subject="Regenerate ${count} services from api-models-aws@${TO_SHA} (v${VERSION})"
+          fi
+
           {
-            echo "Regenerate ${MODULES} from latest api-models-aws"
+            echo "$subject"
             echo
             echo "Bumps the api-models-aws submodule (${FROM_SHA} -> ${TO_SHA}) and"
-            echo "reruns codegen. Only the modules listed above changed beyond their"
-            echo "VERSION constant; the rest are untouched by this bump."
+            echo "reruns codegen. Only these modules changed beyond their VERSION"
+            echo "constant; the rest are untouched by this bump:"
             echo
-            echo "Released as v${VERSION}."
+            echo "${MODULES}" | fold -sw 70 | sed 's/^/  /; s/ *$//'
           } > "${RUNNER_TEMP}/commit-message"
 
           git config user.name 'github-actions[bot]'
