@@ -1,9 +1,13 @@
-# Crystal's doc generator writes the project's entire type tree into the
-# sidebar of every page it emits. That is quadratic in the number of types,
-# and the generated AWS bindings have enough of them for it to dominate
-# everything else: a leaf page is ~1.9MB, of which ~2.4KB is the type's own
-# documentation and the rest is a copy of the same tree. Across ~7,300 pages
-# that is ~13GB, well past the 1GB GitHub Pages allows for a published site.
+# Prepares the output of `crystal docs` for publishing, which for a project
+# this size means getting it under the 1GB GitHub Pages allows a published
+# site. Two things account for nearly all of it.
+#
+# The first is the sidebar. Crystal's doc generator writes the project's
+# entire type tree into the sidebar of every page it emits. That is quadratic
+# in the number of types, and the generated AWS bindings have enough of them
+# for it to dominate everything else: a leaf page is ~1.9MB, of which ~14KB is
+# the type's own documentation and the rest is a copy of the same tree. Across
+# ~7,300 pages that is ~13GB.
 #
 # The tree is identical on every page apart from the highlighting of the type
 # being viewed, so this lifts it into a single `types-list.js` the browser
@@ -12,15 +16,20 @@
 # running at the end of the body so the tree is in place before doc.js wires
 # up the sidebar on DOMContentLoaded.
 #
-# It is coupled to the generator's HTML, so every step that reads that HTML
-# aborts rather than writing a page whose sidebar would silently be empty.
+# The second is the search index, which the generator emits twice: as JSON,
+# and as a JSONP copy that doc.js reads only when the docs are opened from
+# disk. A published site always takes the JSON, so the copy is dropped.
+#
+# The sidebar work is coupled to the generator's HTML, so every step that
+# reads that HTML aborts rather than writing a page whose sidebar would
+# silently be empty.
 
 require "json"
 
 DOCS = "docs"
 
 def abort_with(message : String) : NoReturn
-  STDERR.puts "share_docs_sidebar: #{message}"
+  STDERR.puts "prepare_docs: #{message}"
   exit 1
 end
 
@@ -107,4 +116,14 @@ pages.each do |page|
   File.write(page, html)
 end
 
-puts "share_docs_sidebar: shared the type tree across #{pages.size} pages"
+puts "prepare_docs: shared the type tree across #{pages.size} pages"
+
+# doc.js picks the JSONP copy only under file://, so nothing the published site
+# does will ever fetch it. Absent, the site is still correct - this is only
+# here to keep it out of the upload.
+jsonp_index = File.join(DOCS, "search-index.js")
+if File.exists?(jsonp_index)
+  freed = File.size(jsonp_index) // 1024 // 1024
+  File.delete(jsonp_index)
+  puts "prepare_docs: dropped search-index.js (#{freed}MB the site never reads)"
+end

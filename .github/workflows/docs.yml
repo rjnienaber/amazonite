@@ -36,11 +36,12 @@ jobs:
             --project-version="$(git rev-parse --short HEAD)" \
             --source-refname="$(git rev-parse HEAD)" \
             --source-url-pattern="https://github.com/${{ github.repository }}/blob/%{refname}/%{path}#L%{line}"
-      # The generator copies the whole type tree into every page, which for a
-      # project this size is ~13GB of sidebar against ~130MB of documentation -
-      # far past the 1GB a published Pages site is allowed.
-      - name: share the sidebar across pages
-        run: crystal run scripts/share_docs_sidebar.cr
+      # The generator copies the whole type tree into every page and emits the
+      # search index twice, which for a project this size is ~13GB against
+      # ~130MB of documentation - far past the 1GB a published Pages site is
+      # allowed.
+      - name: prepare docs for publishing
+        run: crystal run scripts/prepare_docs.cr
       - name: upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
