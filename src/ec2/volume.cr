@@ -49,6 +49,12 @@ module Amazonite::EC2
     # value is `null`.
     property volume_initialization_rate : Int32 | Nil
 
+    # The Amazon Resource Name (ARN) of the volume.
+    property volume_arn : String | Nil
+
+    # The ID of the Amazon Web Services account that owns the volume.
+    property owner_id : String | Nil
+
     # The ID of the volume.
     property volume_id : String | Nil
 
@@ -92,6 +98,8 @@ module Amazonite::EC2
       @sse_type : SSEType | Nil = nil,
       @operator : OperatorResponse | Nil = nil,
       @volume_initialization_rate : Int32 | Nil = nil,
+      @volume_arn : String | Nil = nil,
+      @owner_id : String | Nil = nil,
       @volume_id : String | Nil = nil,
       @size : Int32 | Nil = nil,
       @snapshot_id : String | Nil = nil,
@@ -155,6 +163,14 @@ module Amazonite::EC2
         params << {"#{prefix}VolumeInitializationRate", value.to_s}
       end
 
+      if value = @volume_arn
+        params << {"#{prefix}VolumeArn", value}
+      end
+
+      if value = @owner_id
+        params << {"#{prefix}OwnerId", value}
+      end
+
       if value = @volume_id
         params << {"#{prefix}VolumeId", value}
       end
@@ -207,6 +223,8 @@ module Amazonite::EC2
         sse_type: (n = node.xpath_node("*[local-name()='sseType']")) ? AEC::SSEType.from_json_object_key?(n.content) : nil,
         operator: node.xpath_node("*[local-name()='operator']").try { |n| OperatorResponse.from_xml(n) },
         volume_initialization_rate: Core::XMLValue.i32(node.xpath_node("*[local-name()='volumeInitializationRate']")),
+        volume_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='volumeArn']")),
+        owner_id: Core::XMLValue.string(node.xpath_node("*[local-name()='ownerId']")),
         volume_id: Core::XMLValue.string(node.xpath_node("*[local-name()='volumeId']")),
         size: Core::XMLValue.i32(node.xpath_node("*[local-name()='size']")),
         snapshot_id: Core::XMLValue.string(node.xpath_node("*[local-name()='snapshotId']")),
@@ -233,6 +251,6 @@ module Amazonite::EC2
       end
     end
 
-    def_equals_and_hash(@availability_zone_id, @outpost_arn, @source_volume_id, @iops, @tags, @volume_type, @fast_restored, @multi_attach_enabled, @throughput, @sse_type, @operator, @volume_initialization_rate, @volume_id, @size, @snapshot_id, @availability_zone, @state, @create_time, @attachments, @encrypted, @kms_key_id)
+    def_equals_and_hash(@availability_zone_id, @outpost_arn, @source_volume_id, @iops, @tags, @volume_type, @fast_restored, @multi_attach_enabled, @throughput, @sse_type, @operator, @volume_initialization_rate, @volume_arn, @owner_id, @volume_id, @size, @snapshot_id, @availability_zone, @state, @create_time, @attachments, @encrypted, @kms_key_id)
   end
 end

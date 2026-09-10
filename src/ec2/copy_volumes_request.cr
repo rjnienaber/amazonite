@@ -71,6 +71,19 @@ module Amazonite::EC2
     # Idempotency](https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html).
     property client_token : String | Nil
 
+    # Indicates whether to encrypt the volume copy. If the source volume is encrypted, the service
+    # always encrypts the copy regardless of this value. Set to `true` to encrypt a copy of an
+    # unencrypted source volume during the copy operation. If you set `Encrypted` to `true` but do not
+    # specify `KmsKeyId`, the service uses the default KMS key for EBS encryption in your account.
+    property encrypted : Bool | Nil
+
+    # The identifier of the KMS key to use for encryption of the volume copy. Specify a symmetric
+    # encryption KMS key. You can specify a KMS key using the key ID, key ARN, alias name, or alias
+    # ARN. If you set `Encrypted` to `true` but do not specify this parameter, the service uses the
+    # default KMS key for EBS encryption in your account. For cross-account volume copies, this must
+    # be a KMS key in the calling account.
+    property kms_key_id : String | Nil
+
     def initialize(
       @source_volume_id : String,
       @iops : Int32 | Nil = nil,
@@ -81,6 +94,8 @@ module Amazonite::EC2
       @multi_attach_enabled : Bool | Nil = nil,
       @throughput : Int32 | Nil = nil,
       @client_token : String | Nil = nil,
+      @encrypted : Bool | Nil = nil,
+      @kms_key_id : String | Nil = nil,
     )
     end
 
@@ -120,6 +135,14 @@ module Amazonite::EC2
       if value = @client_token
         params << {"#{prefix}ClientToken", value}
       end
+
+      if value = @encrypted
+        params << {"#{prefix}Encrypted", Core::QueryValue.bool(value)}
+      end
+
+      if value = @kms_key_id
+        params << {"#{prefix}KmsKeyId", value}
+      end
       params
     end
 
@@ -134,6 +157,8 @@ module Amazonite::EC2
         multi_attach_enabled: Core::XMLValue.bool(node.xpath_node("*[local-name()='MultiAttachEnabled']")),
         throughput: Core::XMLValue.i32(node.xpath_node("*[local-name()='Throughput']")),
         client_token: Core::XMLValue.string(node.xpath_node("*[local-name()='ClientToken']")),
+        encrypted: Core::XMLValue.bool(node.xpath_node("*[local-name()='Encrypted']")),
+        kms_key_id: Core::XMLValue.string(node.xpath_node("*[local-name()='KmsKeyId']")),
       )
     end
 
@@ -143,6 +168,6 @@ module Amazonite::EC2
       end
     end
 
-    def_equals_and_hash(@source_volume_id, @iops, @size, @volume_type, @dry_run, @tag_specifications, @multi_attach_enabled, @throughput, @client_token)
+    def_equals_and_hash(@source_volume_id, @iops, @size, @volume_type, @dry_run, @tag_specifications, @multi_attach_enabled, @throughput, @client_token, @encrypted, @kms_key_id)
   end
 end
