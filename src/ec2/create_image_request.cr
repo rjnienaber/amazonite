@@ -38,6 +38,21 @@ module Amazonite::EC2
     # Default: `regional` (for instances in Local Zones only)
     property snapshot_location : SnapshotLocationEnum | Nil
 
+    # The boot mode of the new image, which overrides the default boot mode. By default, if you do not
+    # specify this parameter, the new image inherits the `boot-mode` from the source instance.
+    #
+    # A value of `uefi` indicates that the image only supports UEFI boot mode. You can specify this
+    # parameter only if the `current-instance-boot-mode` of the source instance is `uefi`. To find the
+    # `boot-mode` or `current-instance-boot-mode` of an instance, see
+    # [DescribeInstances](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html).
+    #
+    # The operating system contained in the AMI must be configured to support the specified boot mode.
+    #
+    # For more information, see [Instance launch behavior with Amazon EC2 boot
+    # modes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-boot.html) in the *Amazon EC2
+    # User Guide*.
+    property boot_mode_override : BootModeOverrideValues | Nil
+
     # Checks whether you have the required permissions for the action, without actually making the
     # request, and provides an error response. If you have the required permissions, the error
     # response is `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
@@ -90,6 +105,7 @@ module Amazonite::EC2
       @name : String,
       @tag_specifications : Array(TagSpecification) | Nil = nil,
       @snapshot_location : SnapshotLocationEnum | Nil = nil,
+      @boot_mode_override : BootModeOverrideValues | Nil = nil,
       @dry_run : Bool | Nil = nil,
       @description : String | Nil = nil,
       @no_reboot : Bool | Nil = nil,
@@ -106,6 +122,10 @@ module Amazonite::EC2
 
       if value = @snapshot_location
         params << {"#{prefix}SnapshotLocation", value.to_json_object_key}
+      end
+
+      if value = @boot_mode_override
+        params << {"#{prefix}BootModeOverride", value.to_json_object_key}
       end
 
       if value = @dry_run
@@ -134,6 +154,7 @@ module Amazonite::EC2
       new(
         tag_specifications: node.xpath_nodes("*[local-name()='TagSpecification']/*[local-name()='item']").map { |n| TagSpecification.from_xml(n) },
         snapshot_location: (n = node.xpath_node("*[local-name()='SnapshotLocation']")) ? AEC::SnapshotLocationEnum.from_json_object_key?(n.content) : nil,
+        boot_mode_override: (n = node.xpath_node("*[local-name()='BootModeOverride']")) ? AEC::BootModeOverrideValues.from_json_object_key?(n.content) : nil,
         dry_run: Core::XMLValue.bool(node.xpath_node("*[local-name()='dryRun']")),
         instance_id: Core::XMLValue.string(node.xpath_node("*[local-name()='instanceId']")).not_nil!,
         name: Core::XMLValue.string(node.xpath_node("*[local-name()='name']")).not_nil!,
@@ -163,6 +184,6 @@ module Amazonite::EC2
       end
     end
 
-    def_equals_and_hash(@tag_specifications, @snapshot_location, @dry_run, @instance_id, @name, @description, @no_reboot, @block_device_mappings)
+    def_equals_and_hash(@tag_specifications, @snapshot_location, @boot_mode_override, @dry_run, @instance_id, @name, @description, @no_reboot, @block_device_mappings)
   end
 end
