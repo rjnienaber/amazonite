@@ -21,10 +21,16 @@ module Amazonite::Sts
     # percent, which means the policies and tags exceeded the allowed space.
     property packed_policy_size : Int32 | Nil
 
+    property session_token_utilization : Int32 | Nil
+
+    property session_token_size : Int32 | Nil
+
     def initialize(
       @credentials : Credentials | Nil = nil,
       @federated_user : FederatedUser | Nil = nil,
       @packed_policy_size : Int32 | Nil = nil,
+      @session_token_utilization : Int32 | Nil = nil,
+      @session_token_size : Int32 | Nil = nil,
     )
     end
 
@@ -42,6 +48,14 @@ module Amazonite::Sts
       if value = @packed_policy_size
         params << {"#{prefix}PackedPolicySize", value.to_s}
       end
+
+      if value = @session_token_utilization
+        params << {"#{prefix}SessionTokenUtilization", value.to_s}
+      end
+
+      if value = @session_token_size
+        params << {"#{prefix}SessionTokenSize", value.to_s}
+      end
       params
     end
 
@@ -50,6 +64,8 @@ module Amazonite::Sts
         credentials: node.xpath_node("*[local-name()='Credentials']").try { |n| Credentials.from_xml(n) },
         federated_user: node.xpath_node("*[local-name()='FederatedUser']").try { |n| FederatedUser.from_xml(n) },
         packed_policy_size: Core::XMLValue.i32(node.xpath_node("*[local-name()='PackedPolicySize']")),
+        session_token_utilization: Core::XMLValue.i32(node.xpath_node("*[local-name()='SessionTokenUtilization']")),
+        session_token_size: Core::XMLValue.i32(node.xpath_node("*[local-name()='SessionTokenSize']")),
       )
     end
 
@@ -65,8 +81,16 @@ module Amazonite::Sts
       if value = @packed_policy_size
         raise Core::ValidationError.new("PackedPolicySize value must be >= 0") if value < 0
       end
+
+      if value = @session_token_utilization
+        raise Core::ValidationError.new("SessionTokenUtilization value must be >= 0") if value < 0
+      end
+
+      if value = @session_token_size
+        raise Core::ValidationError.new("SessionTokenSize value must be >= 0") if value < 0
+      end
     end
 
-    def_equals_and_hash(@credentials, @federated_user, @packed_policy_size)
+    def_equals_and_hash(@credentials, @federated_user, @packed_policy_size, @session_token_utilization, @session_token_size)
   end
 end

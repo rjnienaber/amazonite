@@ -89,6 +89,8 @@ module Amazonite::Sts
     # in the *IAM User Guide*.
     property duration_seconds : Int32 | Nil
 
+    property minimum_session_token_size : Int32 | Nil
+
     def initialize(
       @role_arn : String,
       @principal_arn : String,
@@ -96,6 +98,7 @@ module Amazonite::Sts
       @policy_arns : Array(PolicyDescriptorType) | Nil = nil,
       @policy : String | Nil = nil,
       @duration_seconds : Int32 | Nil = nil,
+      @minimum_session_token_size : Int32 | Nil = nil,
     )
     end
 
@@ -119,6 +122,10 @@ module Amazonite::Sts
       if value = @duration_seconds
         params << {"#{prefix}DurationSeconds", value.to_s}
       end
+
+      if value = @minimum_session_token_size
+        params << {"#{prefix}MinimumSessionTokenSize", value.to_s}
+      end
       params
     end
 
@@ -130,6 +137,7 @@ module Amazonite::Sts
         policy_arns: node.xpath_nodes("*[local-name()='PolicyArns']/*[local-name()='member']").map { |n| PolicyDescriptorType.from_xml(n) },
         policy: Core::XMLValue.string(node.xpath_node("*[local-name()='Policy']")),
         duration_seconds: Core::XMLValue.i32(node.xpath_node("*[local-name()='DurationSeconds']")),
+        minimum_session_token_size: Core::XMLValue.i32(node.xpath_node("*[local-name()='MinimumSessionTokenSize']")),
       )
     end
 
@@ -165,8 +173,13 @@ module Amazonite::Sts
         raise Core::ValidationError.new("DurationSeconds value must be >= 900") if value < 900
         raise Core::ValidationError.new("DurationSeconds value must be <= 43200") if value > 43200
       end
+
+      if value = @minimum_session_token_size
+        raise Core::ValidationError.new("MinimumSessionTokenSize value must be >= 0") if value < 0
+        raise Core::ValidationError.new("MinimumSessionTokenSize value must be <= 4096") if value > 4096
+      end
     end
 
-    def_equals_and_hash(@role_arn, @principal_arn, @saml_assertion, @policy_arns, @policy, @duration_seconds)
+    def_equals_and_hash(@role_arn, @principal_arn, @saml_assertion, @policy_arns, @policy, @duration_seconds, @minimum_session_token_size)
   end
 end

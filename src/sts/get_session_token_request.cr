@@ -31,10 +31,13 @@ module Amazonite::Sts
     # digits.
     property token_code : String | Nil
 
+    property minimum_session_token_size : Int32 | Nil
+
     def initialize(
       @duration_seconds : Int32 | Nil = nil,
       @serial_number : String | Nil = nil,
       @token_code : String | Nil = nil,
+      @minimum_session_token_size : Int32 | Nil = nil,
     )
     end
 
@@ -52,6 +55,10 @@ module Amazonite::Sts
       if value = @token_code
         params << {"#{prefix}TokenCode", value}
       end
+
+      if value = @minimum_session_token_size
+        params << {"#{prefix}MinimumSessionTokenSize", value.to_s}
+      end
       params
     end
 
@@ -60,6 +67,7 @@ module Amazonite::Sts
         duration_seconds: Core::XMLValue.i32(node.xpath_node("*[local-name()='DurationSeconds']")),
         serial_number: Core::XMLValue.string(node.xpath_node("*[local-name()='SerialNumber']")),
         token_code: Core::XMLValue.string(node.xpath_node("*[local-name()='TokenCode']")),
+        minimum_session_token_size: Core::XMLValue.i32(node.xpath_node("*[local-name()='MinimumSessionTokenSize']")),
       )
     end
 
@@ -80,8 +88,13 @@ module Amazonite::Sts
         raise Core::ValidationError.new("TokenCode length must be <= 6") if value.size > 6
         raise Core::ValidationError.new("TokenCode does not match the required pattern") unless value.matches?(Regex.new("^[\\d]*$"))
       end
+
+      if value = @minimum_session_token_size
+        raise Core::ValidationError.new("MinimumSessionTokenSize value must be >= 0") if value < 0
+        raise Core::ValidationError.new("MinimumSessionTokenSize value must be <= 4096") if value > 4096
+      end
     end
 
-    def_equals_and_hash(@duration_seconds, @serial_number, @token_code)
+    def_equals_and_hash(@duration_seconds, @serial_number, @token_code, @minimum_session_token_size)
   end
 end

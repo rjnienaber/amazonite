@@ -219,6 +219,8 @@ module Amazonite::Sts
     # `[{"ProviderArn":"arn:aws:iam::aws:contextProvider/IdentityCenter","ContextAssertion":"trusted-context-assertion"}]`
     property provided_contexts : Array(ProvidedContext) | Nil
 
+    property minimum_session_token_size : Int32 | Nil
+
     def initialize(
       @role_arn : String,
       @role_session_name : String,
@@ -232,6 +234,7 @@ module Amazonite::Sts
       @token_code : String | Nil = nil,
       @source_identity : String | Nil = nil,
       @provided_contexts : Array(ProvidedContext) | Nil = nil,
+      @minimum_session_token_size : Int32 | Nil = nil,
     )
     end
 
@@ -281,6 +284,10 @@ module Amazonite::Sts
       (@provided_contexts || [] of ProvidedContext).each_with_index(1) do |item, i|
         params.concat(item.to_query_params("#{prefix}ProvidedContexts.member.#{i}."))
       end
+
+      if value = @minimum_session_token_size
+        params << {"#{prefix}MinimumSessionTokenSize", value.to_s}
+      end
       params
     end
 
@@ -298,6 +305,7 @@ module Amazonite::Sts
         token_code: Core::XMLValue.string(node.xpath_node("*[local-name()='TokenCode']")),
         source_identity: Core::XMLValue.string(node.xpath_node("*[local-name()='SourceIdentity']")),
         provided_contexts: node.xpath_nodes("*[local-name()='ProvidedContexts']/*[local-name()='member']").map { |n| ProvidedContext.from_xml(n) },
+        minimum_session_token_size: Core::XMLValue.i32(node.xpath_node("*[local-name()='MinimumSessionTokenSize']")),
       )
     end
 
@@ -368,8 +376,13 @@ module Amazonite::Sts
         raise Core::ValidationError.new("ProvidedContexts must have at most 5 item(s)") if value.size > 5
         value.each(&.validate!)
       end
+
+      if value = @minimum_session_token_size
+        raise Core::ValidationError.new("MinimumSessionTokenSize value must be >= 0") if value < 0
+        raise Core::ValidationError.new("MinimumSessionTokenSize value must be <= 4096") if value > 4096
+      end
     end
 
-    def_equals_and_hash(@role_arn, @role_session_name, @policy_arns, @policy, @duration_seconds, @tags, @transitive_tag_keys, @external_id, @serial_number, @token_code, @source_identity, @provided_contexts)
+    def_equals_and_hash(@role_arn, @role_session_name, @policy_arns, @policy, @duration_seconds, @tags, @transitive_tag_keys, @external_id, @serial_number, @token_code, @source_identity, @provided_contexts, @minimum_session_token_size)
   end
 end

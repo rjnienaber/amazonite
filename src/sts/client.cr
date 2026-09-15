@@ -765,6 +765,8 @@ module Amazonite::Sts
     # The returned JWT can be used to authenticate with external services that support OIDC discovery.
     # The token is signed by Amazon Web Services STS and can be publicly verified using the
     # verification keys published at the issuer's JWKS endpoint.
+    #
+    # The `GetWebIdentityToken` API is not available on the STS Global endpoint.
     def get_web_identity_token(input : AS::GetWebIdentityTokenRequest) : Core::ParsedResponse(AS::GetWebIdentityTokenResponse)
       Log.info { "performing 'GetWebIdentityToken' operation" }
       input.validate! if config.validate_input?

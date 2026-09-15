@@ -38,11 +38,17 @@ module Amazonite::Sts
     # the following characters: =,.@-
     property source_identity : String | Nil
 
+    property session_token_utilization : Int32 | Nil
+
+    property session_token_size : Int32 | Nil
+
     def initialize(
       @credentials : Credentials | Nil = nil,
       @assumed_role_user : AssumedRoleUser | Nil = nil,
       @packed_policy_size : Int32 | Nil = nil,
       @source_identity : String | Nil = nil,
+      @session_token_utilization : Int32 | Nil = nil,
+      @session_token_size : Int32 | Nil = nil,
     )
     end
 
@@ -64,6 +70,14 @@ module Amazonite::Sts
       if value = @source_identity
         params << {"#{prefix}SourceIdentity", value}
       end
+
+      if value = @session_token_utilization
+        params << {"#{prefix}SessionTokenUtilization", value.to_s}
+      end
+
+      if value = @session_token_size
+        params << {"#{prefix}SessionTokenSize", value.to_s}
+      end
       params
     end
 
@@ -73,6 +87,8 @@ module Amazonite::Sts
         assumed_role_user: node.xpath_node("*[local-name()='AssumedRoleUser']").try { |n| AssumedRoleUser.from_xml(n) },
         packed_policy_size: Core::XMLValue.i32(node.xpath_node("*[local-name()='PackedPolicySize']")),
         source_identity: Core::XMLValue.string(node.xpath_node("*[local-name()='SourceIdentity']")),
+        session_token_utilization: Core::XMLValue.i32(node.xpath_node("*[local-name()='SessionTokenUtilization']")),
+        session_token_size: Core::XMLValue.i32(node.xpath_node("*[local-name()='SessionTokenSize']")),
       )
     end
 
@@ -94,8 +110,16 @@ module Amazonite::Sts
         raise Core::ValidationError.new("SourceIdentity length must be <= 64") if value.size > 64
         raise Core::ValidationError.new("SourceIdentity does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]*$"))
       end
+
+      if value = @session_token_utilization
+        raise Core::ValidationError.new("SessionTokenUtilization value must be >= 0") if value < 0
+      end
+
+      if value = @session_token_size
+        raise Core::ValidationError.new("SessionTokenSize value must be >= 0") if value < 0
+      end
     end
 
-    def_equals_and_hash(@credentials, @assumed_role_user, @packed_policy_size, @source_identity)
+    def_equals_and_hash(@credentials, @assumed_role_user, @packed_policy_size, @source_identity, @session_token_utilization, @session_token_size)
   end
 end

@@ -32,10 +32,13 @@ module Amazonite::Sts
     # By default, the value is set to `900` seconds.
     property duration_seconds : Int32 | Nil
 
+    property minimum_session_token_size : Int32 | Nil
+
     def initialize(
       @target_principal : String,
       @task_policy_arn : PolicyDescriptorType,
       @duration_seconds : Int32 | Nil = nil,
+      @minimum_session_token_size : Int32 | Nil = nil,
     )
     end
 
@@ -49,6 +52,10 @@ module Amazonite::Sts
       if value = @duration_seconds
         params << {"#{prefix}DurationSeconds", value.to_s}
       end
+
+      if value = @minimum_session_token_size
+        params << {"#{prefix}MinimumSessionTokenSize", value.to_s}
+      end
       params
     end
 
@@ -57,6 +64,7 @@ module Amazonite::Sts
         target_principal: Core::XMLValue.string(node.xpath_node("*[local-name()='TargetPrincipal']")).not_nil!,
         task_policy_arn: node.xpath_node("*[local-name()='TaskPolicyArn']").try { |n| PolicyDescriptorType.from_xml(n) }.not_nil!,
         duration_seconds: Core::XMLValue.i32(node.xpath_node("*[local-name()='DurationSeconds']")),
+        minimum_session_token_size: Core::XMLValue.i32(node.xpath_node("*[local-name()='MinimumSessionTokenSize']")),
       )
     end
 
@@ -74,8 +82,13 @@ module Amazonite::Sts
         raise Core::ValidationError.new("DurationSeconds value must be >= 0") if value < 0
         raise Core::ValidationError.new("DurationSeconds value must be <= 900") if value > 900
       end
+
+      if value = @minimum_session_token_size
+        raise Core::ValidationError.new("MinimumSessionTokenSize value must be >= 0") if value < 0
+        raise Core::ValidationError.new("MinimumSessionTokenSize value must be <= 4096") if value > 4096
+      end
     end
 
-    def_equals_and_hash(@target_principal, @task_policy_arn, @duration_seconds)
+    def_equals_and_hash(@target_principal, @task_policy_arn, @duration_seconds, @minimum_session_token_size)
   end
 end

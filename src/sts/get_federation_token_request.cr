@@ -118,12 +118,15 @@ module Amazonite::Sts
     # request takes precedence over the role tag.
     property tags : Array(Tag) | Nil
 
+    property minimum_session_token_size : Int32 | Nil
+
     def initialize(
       @name : String,
       @policy : String | Nil = nil,
       @policy_arns : Array(PolicyDescriptorType) | Nil = nil,
       @duration_seconds : Int32 | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
+      @minimum_session_token_size : Int32 | Nil = nil,
     )
     end
 
@@ -147,6 +150,10 @@ module Amazonite::Sts
       (@tags || [] of Tag).each_with_index(1) do |item, i|
         params.concat(item.to_query_params("#{prefix}Tags.member.#{i}."))
       end
+
+      if value = @minimum_session_token_size
+        params << {"#{prefix}MinimumSessionTokenSize", value.to_s}
+      end
       params
     end
 
@@ -157,6 +164,7 @@ module Amazonite::Sts
         policy_arns: node.xpath_nodes("*[local-name()='PolicyArns']/*[local-name()='member']").map { |n| PolicyDescriptorType.from_xml(n) },
         duration_seconds: Core::XMLValue.i32(node.xpath_node("*[local-name()='DurationSeconds']")),
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
+        minimum_session_token_size: Core::XMLValue.i32(node.xpath_node("*[local-name()='MinimumSessionTokenSize']")),
       )
     end
 
@@ -187,8 +195,13 @@ module Amazonite::Sts
         raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
         value.each(&.validate!)
       end
+
+      if value = @minimum_session_token_size
+        raise Core::ValidationError.new("MinimumSessionTokenSize value must be >= 0") if value < 0
+        raise Core::ValidationError.new("MinimumSessionTokenSize value must be <= 4096") if value > 4096
+      end
     end
 
-    def_equals_and_hash(@name, @policy, @policy_arns, @duration_seconds, @tags)
+    def_equals_and_hash(@name, @policy, @policy_arns, @duration_seconds, @tags, @minimum_session_token_size)
   end
 end

@@ -11,8 +11,14 @@ module Amazonite::Sts
     # recommend that you make no assumptions about the maximum size.
     property credentials : Credentials | Nil
 
+    property session_token_utilization : Int32 | Nil
+
+    property session_token_size : Int32 | Nil
+
     def initialize(
       @credentials : Credentials | Nil = nil,
+      @session_token_utilization : Int32 | Nil = nil,
+      @session_token_size : Int32 | Nil = nil,
     )
     end
 
@@ -22,12 +28,22 @@ module Amazonite::Sts
       if value = @credentials
         params.concat(value.to_query_params("#{prefix}Credentials."))
       end
+
+      if value = @session_token_utilization
+        params << {"#{prefix}SessionTokenUtilization", value.to_s}
+      end
+
+      if value = @session_token_size
+        params << {"#{prefix}SessionTokenSize", value.to_s}
+      end
       params
     end
 
     def self.from_xml(node : XML::Node) : self
       new(
         credentials: node.xpath_node("*[local-name()='Credentials']").try { |n| Credentials.from_xml(n) },
+        session_token_utilization: Core::XMLValue.i32(node.xpath_node("*[local-name()='SessionTokenUtilization']")),
+        session_token_size: Core::XMLValue.i32(node.xpath_node("*[local-name()='SessionTokenSize']")),
       )
     end
 
@@ -35,8 +51,16 @@ module Amazonite::Sts
       if value = @credentials
         value.validate!
       end
+
+      if value = @session_token_utilization
+        raise Core::ValidationError.new("SessionTokenUtilization value must be >= 0") if value < 0
+      end
+
+      if value = @session_token_size
+        raise Core::ValidationError.new("SessionTokenSize value must be >= 0") if value < 0
+      end
     end
 
-    def_equals_and_hash(@credentials)
+    def_equals_and_hash(@credentials, @session_token_utilization, @session_token_size)
   end
 end
