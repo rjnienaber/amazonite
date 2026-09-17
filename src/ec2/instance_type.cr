@@ -1407,6 +1407,29 @@ module Amazonite::EC2
     C9gd24xlarge
     C9gd48xlarge
     C9gdMetal48xl
+    R9gMedium
+    R9gLarge
+    R9gXlarge
+    R9g2xlarge
+    R9g4xlarge
+    R9g8xlarge
+    R9g12xlarge
+    R9g16xlarge
+    R9g24xlarge
+    R9g48xlarge
+    R9gMetal48xl
+    R9gdMedium
+    R9gdLarge
+    R9gdXlarge
+    R9gd2xlarge
+    R9gd4xlarge
+    R9gd8xlarge
+    R9gd12xlarge
+    R9gd16xlarge
+    R9gd24xlarge
+    R9gd48xlarge
+    R9gdMetal48xl
+    M9gMedium
 
     def self.to_json(e : InstanceType, json : JSON::Builder) : Nil
       value = case e
@@ -2815,6 +2838,29 @@ module Amazonite::EC2
               when AEC::InstanceType::C9gd24xlarge       then "c9gd.24xlarge"
               when AEC::InstanceType::C9gd48xlarge       then "c9gd.48xlarge"
               when AEC::InstanceType::C9gdMetal48xl      then "c9gd.metal-48xl"
+              when AEC::InstanceType::R9gMedium          then "r9g.medium"
+              when AEC::InstanceType::R9gLarge           then "r9g.large"
+              when AEC::InstanceType::R9gXlarge          then "r9g.xlarge"
+              when AEC::InstanceType::R9g2xlarge         then "r9g.2xlarge"
+              when AEC::InstanceType::R9g4xlarge         then "r9g.4xlarge"
+              when AEC::InstanceType::R9g8xlarge         then "r9g.8xlarge"
+              when AEC::InstanceType::R9g12xlarge        then "r9g.12xlarge"
+              when AEC::InstanceType::R9g16xlarge        then "r9g.16xlarge"
+              when AEC::InstanceType::R9g24xlarge        then "r9g.24xlarge"
+              when AEC::InstanceType::R9g48xlarge        then "r9g.48xlarge"
+              when AEC::InstanceType::R9gMetal48xl       then "r9g.metal-48xl"
+              when AEC::InstanceType::R9gdMedium         then "r9gd.medium"
+              when AEC::InstanceType::R9gdLarge          then "r9gd.large"
+              when AEC::InstanceType::R9gdXlarge         then "r9gd.xlarge"
+              when AEC::InstanceType::R9gd2xlarge        then "r9gd.2xlarge"
+              when AEC::InstanceType::R9gd4xlarge        then "r9gd.4xlarge"
+              when AEC::InstanceType::R9gd8xlarge        then "r9gd.8xlarge"
+              when AEC::InstanceType::R9gd12xlarge       then "r9gd.12xlarge"
+              when AEC::InstanceType::R9gd16xlarge       then "r9gd.16xlarge"
+              when AEC::InstanceType::R9gd24xlarge       then "r9gd.24xlarge"
+              when AEC::InstanceType::R9gd48xlarge       then "r9gd.48xlarge"
+              when AEC::InstanceType::R9gdMetal48xl      then "r9gd.metal-48xl"
+              when AEC::InstanceType::M9gMedium          then "m9g.medium"
               else
                 raise Exception.new("unknown enum value for 'InstanceType' when serializing to json: '#{e}'")
               end
@@ -4229,6 +4275,29 @@ module Amazonite::EC2
       when "c9gd.24xlarge"        then AEC::InstanceType::C9gd24xlarge
       when "c9gd.48xlarge"        then AEC::InstanceType::C9gd48xlarge
       when "c9gd.metal-48xl"      then AEC::InstanceType::C9gdMetal48xl
+      when "r9g.medium"           then AEC::InstanceType::R9gMedium
+      when "r9g.large"            then AEC::InstanceType::R9gLarge
+      when "r9g.xlarge"           then AEC::InstanceType::R9gXlarge
+      when "r9g.2xlarge"          then AEC::InstanceType::R9g2xlarge
+      when "r9g.4xlarge"          then AEC::InstanceType::R9g4xlarge
+      when "r9g.8xlarge"          then AEC::InstanceType::R9g8xlarge
+      when "r9g.12xlarge"         then AEC::InstanceType::R9g12xlarge
+      when "r9g.16xlarge"         then AEC::InstanceType::R9g16xlarge
+      when "r9g.24xlarge"         then AEC::InstanceType::R9g24xlarge
+      when "r9g.48xlarge"         then AEC::InstanceType::R9g48xlarge
+      when "r9g.metal-48xl"       then AEC::InstanceType::R9gMetal48xl
+      when "r9gd.medium"          then AEC::InstanceType::R9gdMedium
+      when "r9gd.large"           then AEC::InstanceType::R9gdLarge
+      when "r9gd.xlarge"          then AEC::InstanceType::R9gdXlarge
+      when "r9gd.2xlarge"         then AEC::InstanceType::R9gd2xlarge
+      when "r9gd.4xlarge"         then AEC::InstanceType::R9gd4xlarge
+      when "r9gd.8xlarge"         then AEC::InstanceType::R9gd8xlarge
+      when "r9gd.12xlarge"        then AEC::InstanceType::R9gd12xlarge
+      when "r9gd.16xlarge"        then AEC::InstanceType::R9gd16xlarge
+      when "r9gd.24xlarge"        then AEC::InstanceType::R9gd24xlarge
+      when "r9gd.48xlarge"        then AEC::InstanceType::R9gd48xlarge
+      when "r9gd.metal-48xl"      then AEC::InstanceType::R9gdMetal48xl
+      when "m9g.medium"           then AEC::InstanceType::M9gMedium
       else
         raise Exception.new("unknown enum value for 'InstanceType' when deserializing from json: '#{value}'")
       end
@@ -5641,6 +5710,29 @@ module Amazonite::EC2
       when AEC::InstanceType::C9gd24xlarge       then "c9gd.24xlarge"
       when AEC::InstanceType::C9gd48xlarge       then "c9gd.48xlarge"
       when AEC::InstanceType::C9gdMetal48xl      then "c9gd.metal-48xl"
+      when AEC::InstanceType::R9gMedium          then "r9g.medium"
+      when AEC::InstanceType::R9gLarge           then "r9g.large"
+      when AEC::InstanceType::R9gXlarge          then "r9g.xlarge"
+      when AEC::InstanceType::R9g2xlarge         then "r9g.2xlarge"
+      when AEC::InstanceType::R9g4xlarge         then "r9g.4xlarge"
+      when AEC::InstanceType::R9g8xlarge         then "r9g.8xlarge"
+      when AEC::InstanceType::R9g12xlarge        then "r9g.12xlarge"
+      when AEC::InstanceType::R9g16xlarge        then "r9g.16xlarge"
+      when AEC::InstanceType::R9g24xlarge        then "r9g.24xlarge"
+      when AEC::InstanceType::R9g48xlarge        then "r9g.48xlarge"
+      when AEC::InstanceType::R9gMetal48xl       then "r9g.metal-48xl"
+      when AEC::InstanceType::R9gdMedium         then "r9gd.medium"
+      when AEC::InstanceType::R9gdLarge          then "r9gd.large"
+      when AEC::InstanceType::R9gdXlarge         then "r9gd.xlarge"
+      when AEC::InstanceType::R9gd2xlarge        then "r9gd.2xlarge"
+      when AEC::InstanceType::R9gd4xlarge        then "r9gd.4xlarge"
+      when AEC::InstanceType::R9gd8xlarge        then "r9gd.8xlarge"
+      when AEC::InstanceType::R9gd12xlarge       then "r9gd.12xlarge"
+      when AEC::InstanceType::R9gd16xlarge       then "r9gd.16xlarge"
+      when AEC::InstanceType::R9gd24xlarge       then "r9gd.24xlarge"
+      when AEC::InstanceType::R9gd48xlarge       then "r9gd.48xlarge"
+      when AEC::InstanceType::R9gdMetal48xl      then "r9gd.metal-48xl"
+      when AEC::InstanceType::M9gMedium          then "m9g.medium"
       else
         raise Exception.new("unknown enum value for 'InstanceType' when serializing to json: '#{self}'")
       end
@@ -7053,6 +7145,29 @@ module Amazonite::EC2
       when "c9gd.24xlarge"        then AEC::InstanceType::C9gd24xlarge
       when "c9gd.48xlarge"        then AEC::InstanceType::C9gd48xlarge
       when "c9gd.metal-48xl"      then AEC::InstanceType::C9gdMetal48xl
+      when "r9g.medium"           then AEC::InstanceType::R9gMedium
+      when "r9g.large"            then AEC::InstanceType::R9gLarge
+      when "r9g.xlarge"           then AEC::InstanceType::R9gXlarge
+      when "r9g.2xlarge"          then AEC::InstanceType::R9g2xlarge
+      when "r9g.4xlarge"          then AEC::InstanceType::R9g4xlarge
+      when "r9g.8xlarge"          then AEC::InstanceType::R9g8xlarge
+      when "r9g.12xlarge"         then AEC::InstanceType::R9g12xlarge
+      when "r9g.16xlarge"         then AEC::InstanceType::R9g16xlarge
+      when "r9g.24xlarge"         then AEC::InstanceType::R9g24xlarge
+      when "r9g.48xlarge"         then AEC::InstanceType::R9g48xlarge
+      when "r9g.metal-48xl"       then AEC::InstanceType::R9gMetal48xl
+      when "r9gd.medium"          then AEC::InstanceType::R9gdMedium
+      when "r9gd.large"           then AEC::InstanceType::R9gdLarge
+      when "r9gd.xlarge"          then AEC::InstanceType::R9gdXlarge
+      when "r9gd.2xlarge"         then AEC::InstanceType::R9gd2xlarge
+      when "r9gd.4xlarge"         then AEC::InstanceType::R9gd4xlarge
+      when "r9gd.8xlarge"         then AEC::InstanceType::R9gd8xlarge
+      when "r9gd.12xlarge"        then AEC::InstanceType::R9gd12xlarge
+      when "r9gd.16xlarge"        then AEC::InstanceType::R9gd16xlarge
+      when "r9gd.24xlarge"        then AEC::InstanceType::R9gd24xlarge
+      when "r9gd.48xlarge"        then AEC::InstanceType::R9gd48xlarge
+      when "r9gd.metal-48xl"      then AEC::InstanceType::R9gdMetal48xl
+      when "m9g.medium"           then AEC::InstanceType::M9gMedium
       else
         nil
       end
