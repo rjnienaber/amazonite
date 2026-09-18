@@ -3,11 +3,13 @@ private alias AEC = Amazonite::EC2
 module Amazonite::EC2
   enum PayerResponsibilityType
     VpcEndpointAccount
+    ResourceGatewayAccount
     VpcEndpointServiceAccount
 
     def self.to_json(e : PayerResponsibilityType, json : JSON::Builder) : Nil
       value = case e
               when AEC::PayerResponsibilityType::VpcEndpointAccount        then "vpc-endpoint-account"
+              when AEC::PayerResponsibilityType::ResourceGatewayAccount    then "resource-gateway-account"
               when AEC::PayerResponsibilityType::VpcEndpointServiceAccount then "vpc-endpoint-service-account"
               else
                 raise Exception.new("unknown enum value for 'PayerResponsibilityType' when serializing to json: '#{e}'")
@@ -19,6 +21,7 @@ module Amazonite::EC2
       value = pull.read_string
       case value
       when "vpc-endpoint-account"         then AEC::PayerResponsibilityType::VpcEndpointAccount
+      when "resource-gateway-account"     then AEC::PayerResponsibilityType::ResourceGatewayAccount
       when "vpc-endpoint-service-account" then AEC::PayerResponsibilityType::VpcEndpointServiceAccount
       else
         raise Exception.new("unknown enum value for 'PayerResponsibilityType' when deserializing from json: '#{value}'")
@@ -28,6 +31,7 @@ module Amazonite::EC2
     def to_json_object_key : String
       case self
       when AEC::PayerResponsibilityType::VpcEndpointAccount        then "vpc-endpoint-account"
+      when AEC::PayerResponsibilityType::ResourceGatewayAccount    then "resource-gateway-account"
       when AEC::PayerResponsibilityType::VpcEndpointServiceAccount then "vpc-endpoint-service-account"
       else
         raise Exception.new("unknown enum value for 'PayerResponsibilityType' when serializing to json: '#{self}'")
@@ -37,6 +41,7 @@ module Amazonite::EC2
     def self.from_json_object_key?(key : String) : AEC::PayerResponsibilityType?
       case key
       when "vpc-endpoint-account"         then AEC::PayerResponsibilityType::VpcEndpointAccount
+      when "resource-gateway-account"     then AEC::PayerResponsibilityType::ResourceGatewayAccount
       when "vpc-endpoint-service-account" then AEC::PayerResponsibilityType::VpcEndpointServiceAccount
       else
         nil

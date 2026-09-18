@@ -2,9 +2,9 @@ private alias Core = Amazonite::Core
 
 module Amazonite::EC2
   class ValidateSecurityGroupQuotasForInterfaceResult
-    # The operation returns `true` if the specified security groups can be associated with a single
-    # network interface without exceeding the quotas. It returns an error if associating the security
-    # groups would exceed a quota.
+    # Specifies whether the specified security groups can be associated with a single network
+    # interface without exceeding the quotas. If associating the security groups would exceed a quota,
+    # the operation returns an error.
     property valid : Bool | Nil
 
     def initialize(

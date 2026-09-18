@@ -17332,9 +17332,9 @@ module Amazonite::EC2
     end
 
     # Validates whether the specified security groups can be associated with a single network
-    # interface. The operation checks Amazon Virtual Private Cloud (Amazon VPC) quotas for inbound or
-    # outbound rules per security group and security groups per network interface. Only authorized AWS
-    # services can call this operation.
+    # interface. The operation checks Amazon Virtual Private Cloud (Amazon VPC) quotas. It checks
+    # inbound or outbound rules per security group and security groups per network interface. Only
+    # authorized AWS services can call this operation.
     #
     # For more information about security group quotas, see [Amazon VPC
     # quotas](https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-security-groups)

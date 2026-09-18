@@ -7,6 +7,7 @@ module Amazonite::EC2
     GatewayLoadBalancer
     Resource
     ServiceNetwork
+    Tunnel
 
     def self.to_json(e : VpcEndpointType, json : JSON::Builder) : Nil
       json.string(e.to_s)
@@ -20,6 +21,7 @@ module Amazonite::EC2
       when "GatewayLoadBalancer" then AEC::VpcEndpointType::GatewayLoadBalancer
       when "Resource"            then AEC::VpcEndpointType::Resource
       when "ServiceNetwork"      then AEC::VpcEndpointType::ServiceNetwork
+      when "Tunnel"              then AEC::VpcEndpointType::Tunnel
       else
         raise Exception.new("unknown enum value for 'VpcEndpointType' when deserializing from json: '#{value}'")
       end
@@ -36,6 +38,7 @@ module Amazonite::EC2
       when "GatewayLoadBalancer" then AEC::VpcEndpointType::GatewayLoadBalancer
       when "Resource"            then AEC::VpcEndpointType::Resource
       when "ServiceNetwork"      then AEC::VpcEndpointType::ServiceNetwork
+      when "Tunnel"              then AEC::VpcEndpointType::Tunnel
       else
         nil
       end
