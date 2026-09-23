@@ -174,6 +174,28 @@ module Amazonite::EC2
     # interruptible Capacity Reservations.
     property interruption_info : InterruptionInfo | Nil
 
+    # The status of the most recent modification to the Capacity Reservation. A Capacity Reservation
+    # can have one of the following adjustment statuses:
+    #
+    # - `requested` - The modification was requested and is being processed.
+    #
+    # - `applied` - The modification was applied to the Capacity Reservation.
+    #
+    # - `rejected` - The modification was not applied and the Capacity Reservation keeps its existing
+    # configuration.
+    #
+    # This field is not returned if the Capacity Reservation has never been modified.
+    property adjustment_status : CapacityReservationAdjustmentStatus | Nil
+
+    # The configuration that the Capacity Reservation will have after the requested adjustment is
+    # applied.
+    property adjustment_details : CapacityReservationAdjustmentDetails | Nil
+
+    # The start date that you originally requested for the Capacity Reservation, in the ISO8601 format
+    # in the UTC time zone (`YYYY-MM-DDThh:mm:ss.sssZ`). This value doesn't change when you push out
+    # the start date.
+    property original_start_date : Time | Nil
+
     # The zero-size preference configured for the interruptible Capacity Reservation. A value of
     # `retain` keeps the interruptible Capacity Reservation active at zero capacity when you reduce
     # its allocation to zero. A value of `default` cancels the interruptible Capacity Reservation when
@@ -212,6 +234,9 @@ module Amazonite::EC2
       @interruptible : Bool | Nil = nil,
       @interruptible_capacity_allocation : InterruptibleCapacityAllocation | Nil = nil,
       @interruption_info : InterruptionInfo | Nil = nil,
+      @adjustment_status : CapacityReservationAdjustmentStatus | Nil = nil,
+      @adjustment_details : CapacityReservationAdjustmentDetails | Nil = nil,
+      @original_start_date : Time | Nil = nil,
       @zero_size_preference : ZeroSizePreference | Nil = nil,
     )
     end
@@ -343,6 +368,18 @@ module Amazonite::EC2
         params.concat(value.to_query_params("#{prefix}InterruptionInfo."))
       end
 
+      if value = @adjustment_status
+        params << {"#{prefix}AdjustmentStatus", value.to_json_object_key}
+      end
+
+      if value = @adjustment_details
+        params.concat(value.to_query_params("#{prefix}AdjustmentDetails."))
+      end
+
+      if value = @original_start_date
+        params << {"#{prefix}OriginalStartDate", Core::QueryValue.time(value)}
+      end
+
       if value = @zero_size_preference
         params << {"#{prefix}ZeroSizePreference", value.to_json_object_key}
       end
@@ -382,6 +419,9 @@ module Amazonite::EC2
         interruptible: Core::XMLValue.bool(node.xpath_node("*[local-name()='interruptible']")),
         interruptible_capacity_allocation: node.xpath_node("*[local-name()='interruptibleCapacityAllocation']").try { |n| InterruptibleCapacityAllocation.from_xml(n) },
         interruption_info: node.xpath_node("*[local-name()='interruptionInfo']").try { |n| InterruptionInfo.from_xml(n) },
+        adjustment_status: (n = node.xpath_node("*[local-name()='adjustmentStatus']")) ? AEC::CapacityReservationAdjustmentStatus.from_json_object_key?(n.content) : nil,
+        adjustment_details: node.xpath_node("*[local-name()='adjustmentDetails']").try { |n| CapacityReservationAdjustmentDetails.from_xml(n) },
+        original_start_date: Core::XMLValue.time(node.xpath_node("*[local-name()='originalStartDate']")),
         zero_size_preference: (n = node.xpath_node("*[local-name()='zeroSizePreference']")) ? AEC::ZeroSizePreference.from_json_object_key?(n.content) : nil,
       )
     end
@@ -420,8 +460,12 @@ module Amazonite::EC2
       if value = @interruption_info
         value.validate!
       end
+
+      if value = @adjustment_details
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@capacity_reservation_id, @owner_id, @capacity_reservation_arn, @availability_zone_id, @instance_type, @instance_platform, @availability_zone, @tenancy, @total_instance_count, @available_instance_count, @ebs_optimized, @ephemeral_storage, @state, @start_date, @end_date, @end_date_type, @instance_match_criteria, @create_date, @tags, @outpost_arn, @capacity_reservation_fleet_id, @placement_group_arn, @capacity_allocations, @reservation_type, @unused_reservation_billing_owner_id, @commitment_info, @delivery_preference, @capacity_block_id, @interruptible, @interruptible_capacity_allocation, @interruption_info, @zero_size_preference)
+    def_equals_and_hash(@capacity_reservation_id, @owner_id, @capacity_reservation_arn, @availability_zone_id, @instance_type, @instance_platform, @availability_zone, @tenancy, @total_instance_count, @available_instance_count, @ebs_optimized, @ephemeral_storage, @state, @start_date, @end_date, @end_date_type, @instance_match_criteria, @create_date, @tags, @outpost_arn, @capacity_reservation_fleet_id, @placement_group_arn, @capacity_allocations, @reservation_type, @unused_reservation_billing_owner_id, @commitment_info, @delivery_preference, @capacity_block_id, @interruptible, @interruptible_capacity_allocation, @interruption_info, @adjustment_status, @adjustment_details, @original_start_date, @zero_size_preference)
   end
 end

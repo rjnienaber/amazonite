@@ -53,6 +53,21 @@ module Amazonite::EC2
     # usage).
     property instance_match_criteria : InstanceMatchCriteria | Nil
 
+    # Indicates that you accept the modification terms of the quote identified by `QuoteId`. To apply
+    # a quoted modification, set this parameter to `true`.
+    property accept_modification_terms : Bool | Nil
+
+    # The new start date for the Capacity Reservation, in the ISO8601 format in the UTC time zone
+    # (`YYYY-MM-DDThh:mm:ss.sssZ`). Applies to future-dated Capacity Reservations only. Requires a
+    # quote from `CreateCapacityReservationDateChangeQuote`; pass the quote ID in `QuoteId` with
+    # `AcceptModificationTerms` set to `true`.
+    property start_date : Time | Nil
+
+    # The ID of the quote that describes the modification you want to apply. Generate a quote by using
+    # `CreateCapacityReservationDateChangeQuote`. The quote must be in the `active` state, and each
+    # quote can be used only once.
+    property quote_id : String | Nil
+
     def initialize(
       @capacity_reservation_id : String,
       @instance_count : Int32 | Nil = nil,
@@ -62,6 +77,9 @@ module Amazonite::EC2
       @dry_run : Bool | Nil = nil,
       @additional_info : String | Nil = nil,
       @instance_match_criteria : InstanceMatchCriteria | Nil = nil,
+      @accept_modification_terms : Bool | Nil = nil,
+      @start_date : Time | Nil = nil,
+      @quote_id : String | Nil = nil,
     )
     end
 
@@ -97,6 +115,18 @@ module Amazonite::EC2
       if value = @instance_match_criteria
         params << {"#{prefix}InstanceMatchCriteria", value.to_json_object_key}
       end
+
+      if value = @accept_modification_terms
+        params << {"#{prefix}AcceptModificationTerms", Core::QueryValue.bool(value)}
+      end
+
+      if value = @start_date
+        params << {"#{prefix}StartDate", Core::QueryValue.time(value)}
+      end
+
+      if value = @quote_id
+        params << {"#{prefix}QuoteId", value}
+      end
       params
     end
 
@@ -110,12 +140,15 @@ module Amazonite::EC2
         dry_run: Core::XMLValue.bool(node.xpath_node("*[local-name()='DryRun']")),
         additional_info: Core::XMLValue.string(node.xpath_node("*[local-name()='AdditionalInfo']")),
         instance_match_criteria: (n = node.xpath_node("*[local-name()='InstanceMatchCriteria']")) ? AEC::InstanceMatchCriteria.from_json_object_key?(n.content) : nil,
+        accept_modification_terms: Core::XMLValue.bool(node.xpath_node("*[local-name()='AcceptModificationTerms']")),
+        start_date: Core::XMLValue.time(node.xpath_node("*[local-name()='StartDate']")),
+        quote_id: Core::XMLValue.string(node.xpath_node("*[local-name()='QuoteId']")),
       )
     end
 
     def validate! : Nil
     end
 
-    def_equals_and_hash(@capacity_reservation_id, @instance_count, @end_date, @end_date_type, @accept, @dry_run, @additional_info, @instance_match_criteria)
+    def_equals_and_hash(@capacity_reservation_id, @instance_count, @end_date, @end_date_type, @accept, @dry_run, @additional_info, @instance_match_criteria, @accept_modification_terms, @start_date, @quote_id)
   end
 end

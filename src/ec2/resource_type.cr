@@ -113,6 +113,7 @@ module Amazonite::EC2
     IpamPoolAllocation
     CapacityReservationCancellationQuote
     ApplicationStatusCheck
+    CapacityReservationModificationQuote
 
     def self.to_json(e : ResourceType, json : JSON::Builder) : Nil
       value = case e
@@ -227,6 +228,7 @@ module Amazonite::EC2
               when AEC::ResourceType::IpamPoolAllocation                                     then "ipam-pool-allocation"
               when AEC::ResourceType::CapacityReservationCancellationQuote                   then "capacity-reservation-cancellation-quote"
               when AEC::ResourceType::ApplicationStatusCheck                                 then "application-status-check"
+              when AEC::ResourceType::CapacityReservationModificationQuote                   then "capacity-reservation-modification-quote"
               else
                 raise Exception.new("unknown enum value for 'ResourceType' when serializing to json: '#{e}'")
               end
@@ -347,6 +349,7 @@ module Amazonite::EC2
       when "ipam-pool-allocation"                                          then AEC::ResourceType::IpamPoolAllocation
       when "capacity-reservation-cancellation-quote"                       then AEC::ResourceType::CapacityReservationCancellationQuote
       when "application-status-check"                                      then AEC::ResourceType::ApplicationStatusCheck
+      when "capacity-reservation-modification-quote"                       then AEC::ResourceType::CapacityReservationModificationQuote
       else
         raise Exception.new("unknown enum value for 'ResourceType' when deserializing from json: '#{value}'")
       end
@@ -465,6 +468,7 @@ module Amazonite::EC2
       when AEC::ResourceType::IpamPoolAllocation                                     then "ipam-pool-allocation"
       when AEC::ResourceType::CapacityReservationCancellationQuote                   then "capacity-reservation-cancellation-quote"
       when AEC::ResourceType::ApplicationStatusCheck                                 then "application-status-check"
+      when AEC::ResourceType::CapacityReservationModificationQuote                   then "capacity-reservation-modification-quote"
       else
         raise Exception.new("unknown enum value for 'ResourceType' when serializing to json: '#{self}'")
       end
@@ -583,6 +587,7 @@ module Amazonite::EC2
       when "ipam-pool-allocation"                                          then AEC::ResourceType::IpamPoolAllocation
       when "capacity-reservation-cancellation-quote"                       then AEC::ResourceType::CapacityReservationCancellationQuote
       when "application-status-check"                                      then AEC::ResourceType::ApplicationStatusCheck
+      when "capacity-reservation-modification-quote"                       then AEC::ResourceType::CapacityReservationModificationQuote
       else
         nil
       end
