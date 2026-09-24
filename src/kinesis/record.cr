@@ -23,8 +23,13 @@ module Amazonite::Kinesis
     property data : Bytes
 
     # Identifies which shard in the stream the data record is assigned to.
+    #
+    # For a stream that uses the `AUTO` record distribution strategy, this value is not returned if
+    # the producer did not provide a partition key when writing the record. If the producer provided a
+    # partition key, the original value is returned even though it was not used to determine shard
+    # placement.
     @[JSON::Field(key: "PartitionKey")]
-    property partition_key : String
+    property partition_key : String | Nil
 
     # The encryption type used on the record. This parameter can be one of the following values:
     #
@@ -38,8 +43,8 @@ module Amazonite::Kinesis
     def initialize(
       @sequence_number : String,
       @data : Bytes,
-      @partition_key : String,
       @approximate_arrival_timestamp : Time | Nil = nil,
+      @partition_key : String | Nil = nil,
       @encryption_type : EncryptionType | Nil = nil,
     )
     end

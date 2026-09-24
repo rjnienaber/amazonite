@@ -4,7 +4,9 @@ module Amazonite::Kinesis
   class UpdateChannelOutput
     include JSON::Serializable
 
-    # The configuration and current status of the updated channel.
+    # The configuration and current status of the channel after the update, including its ARN,
+    # destination configuration, and lifecycle state. Immediately after the request, the state is
+    # `UPDATING`.
     @[JSON::Field(key: "ChannelDescription")]
     property channel_description : ChannelDescription
 

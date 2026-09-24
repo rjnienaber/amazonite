@@ -5,7 +5,8 @@ module Amazonite::Kinesis
   class ChannelLoggingUpdateInput
     include JSON::Serializable
 
-    # The updated Amazon CloudWatch Logs settings for the channel.
+    # The updated Amazon CloudWatch Logs settings, including whether logging is enabled and the target
+    # log group and log stream.
     @[JSON::Field(key: "CloudWatchLogs")]
     property cloud_watch_logs : CloudWatchLogsUpdateInput
 

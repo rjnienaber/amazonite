@@ -18,14 +18,13 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "StreamConfigurationList")]
     property stream_configuration_list : Array(ChannelStreamConfiguration) = [] of ChannelStreamConfiguration
 
-    # The configuration for delivery to a general purpose Amazon S3 bucket. You must specify either
-    # `S3DestinationConfiguration` or `S3TablesDestinationConfiguration`, but not both.
+    # The configuration for delivery to a general purpose Amazon S3 bucket. Specify this parameter
+    # when `S3TablesDestinationConfiguration` is not specified.
     @[JSON::Field(key: "S3DestinationConfiguration")]
     property s3_destination_configuration : S3DestinationConfiguration | Nil
 
-    # The configuration for delivery to streaming tables on Apache Iceberg in Amazon S3 Tables. You
-    # must specify either `S3DestinationConfiguration` or `S3TablesDestinationConfiguration`, but not
-    # both.
+    # The configuration for delivery to streaming tables on Apache Iceberg in Amazon S3 Tables.
+    # Specify this parameter when `S3DestinationConfiguration` is not specified.
     @[JSON::Field(key: "S3TablesDestinationConfiguration")]
     property s3_tables_destination_configuration : S3TablesDestinationConfiguration | Nil
 

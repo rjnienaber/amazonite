@@ -100,6 +100,14 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "ChannelCount")]
     property channel_count : Int32 | Nil
 
+    # The record distribution strategy that the stream currently uses. A value of `AUTO` indicates
+    # that Amazon Kinesis Data Streams distributes records across shards using service-managed
+    # algorithms. A value of `USER_PARTITION_KEY` indicates that shard placement is determined by the
+    # partition key that producers supply. This field is only present for streams that use the
+    # on-demand capacity mode.
+    @[JSON::Field(key: "RecordDistributionStrategy", converter: AK::RecordDistributionStrategy)]
+    property record_distribution_strategy : RecordDistributionStrategy | Nil
+
     def initialize(
       @stream_name : String,
       @stream_arn : String,
@@ -116,6 +124,7 @@ module Amazonite::Kinesis
       @warm_throughput : WarmThroughputObject | Nil = nil,
       @max_record_size_in_ki_b : Int32 | Nil = nil,
       @channel_count : Int32 | Nil = nil,
+      @record_distribution_strategy : RecordDistributionStrategy | Nil = nil,
     )
     end
 
@@ -176,6 +185,6 @@ module Amazonite::Kinesis
       end
     end
 
-    def_equals_and_hash(@stream_name, @stream_arn, @stream_id, @stream_status, @stream_mode_details, @retention_period_hours, @stream_creation_timestamp, @enhanced_monitoring, @encryption_type, @key_id, @open_shard_count, @consumer_count, @warm_throughput, @max_record_size_in_ki_b, @channel_count)
+    def_equals_and_hash(@stream_name, @stream_arn, @stream_id, @stream_status, @stream_mode_details, @retention_period_hours, @stream_creation_timestamp, @enhanced_monitoring, @encryption_type, @key_id, @open_shard_count, @consumer_count, @warm_throughput, @max_record_size_in_ki_b, @channel_count, @record_distribution_strategy)
   end
 end

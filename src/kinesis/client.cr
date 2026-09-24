@@ -136,8 +136,8 @@ module Amazonite::Kinesis
     # Deletes the specified channel. Deleting a channel stops delivery from the source stream to the
     # destination. Data already delivered to the destination is not deleted.
     #
-    # A stream cannot be deleted while it has active channels. To delete the stream, first delete all
-    # channels attached to it. To find them, use ListChannels with a stream filter.
+    # A stream cannot be deleted while it has active channels. Use ListChannels with a stream filter
+    # to find the channels attached to a stream before deleting it.
     #
     # This operation has a call limit of 5 transactions per second (TPS) for each Amazon Web Services
     # account. Exceeding 5 TPS results in a `LimitExceededException`.
@@ -1041,6 +1041,37 @@ module Amazonite::Kinesis
       Log.info { "performing 'UpdateStreamMode' operation" }
       input.validate! if config.validate_input?
       response = post("UpdateStreamMode", "/", input.to_json)
+      Core::Response.new(response)
+    end
+
+    # Updates the record distribution strategy for the specified Amazon Kinesis Data Streams on-demand
+    # data stream. The record distribution strategy determines how Amazon Kinesis Data Streams
+    # distributes records across the shards in a stream.
+    #
+    # You must specify the stream using the `StreamARN` parameter.
+    #
+    # The record distribution strategy is a stream-level setting. You can switch between the following
+    # strategies at any time, and the change takes effect immediately without downtime, data loss, or
+    # disruption to producer or consumer applications:
+    #
+    # - `AUTO` – Amazon Kinesis Data Streams distributes records evenly across shards using
+    # service-managed algorithms, and ignores any partition key and `ExplicitHashKey` that a producer
+    # provides. Use this strategy for stateless workloads that do not require partition-key ordering.
+    #
+    # - `USER_PARTITION_KEY` – Producers must provide a partition key, and Amazon Kinesis Data Streams
+    # uses the partition key to determine shard placement. Records that share a partition key are sent
+    # to the same shard. This is the default strategy.
+    #
+    # This operation is only supported for data streams that use the on-demand capacity mode.
+    # Provisioned capacity mode streams do not support the record distribution strategy setting.
+    # Attempting to set `AUTO` on a provisioned stream results in an `InvalidArgumentException`.
+    #
+    # New records that arrive after the change are distributed according to the new strategy. Records
+    # already in the stream keep their original shard assignments and are not redistributed.
+    def update_stream_record_distribution_strategy(input : AK::UpdateStreamRecordDistributionStrategyInput) : Core::Response
+      Log.info { "performing 'UpdateStreamRecordDistributionStrategy' operation" }
+      input.validate! if config.validate_input?
+      response = post("UpdateStreamRecordDistributionStrategy", "/", input.to_json)
       Core::Response.new(response)
     end
 

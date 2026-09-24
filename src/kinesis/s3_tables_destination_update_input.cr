@@ -4,8 +4,8 @@ module Amazonite::Kinesis
   class S3TablesDestinationUpdateInput
     include JSON::Serializable
 
-    # The maximum age, in seconds, of undelivered data. Valid range is 300 to 900 seconds (5 to 15
-    # minutes).
+    # The maximum age, in seconds, of undelivered data before the channel delivers it to the
+    # destination.
     @[JSON::Field(key: "DataFreshnessInSeconds")]
     property data_freshness_in_seconds : Int32
 

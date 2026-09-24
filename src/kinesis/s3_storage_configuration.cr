@@ -22,7 +22,7 @@ module Amazonite::Kinesis
 
     # The Amazon S3 storage class for delivered objects. Valid values:
     #
-    # - `STANDARD` - Default storage class for frequently accessed data. (default)
+    # - `STANDARD` - The default storage class, for frequently accessed data.
     #
     # - `INTELLIGENT_TIERING` - Automatically moves objects to the most cost-effective access tier
     # based on usage patterns.

@@ -21,8 +21,15 @@ module Amazonite::Kinesis
     # data to a specific shard. Specifically, an MD5 hash function is used to map partition keys to
     # 128-bit integer values and to map associated data records to shards. As a result of this hashing
     # mechanism, all data records with the same partition key map to the same shard within the stream.
+    #
+    # If the stream uses the `USER_PARTITION_KEY` record distribution strategy (the default), a
+    # partition key is required. If the stream uses the `AUTO` record distribution strategy, the
+    # partition key is optional and any value you provide is ignored, along with any `ExplicitHashKey`
+    # you provide. In that case, Amazon Kinesis Data Streams distributes the record across shards
+    # using service-managed algorithms. For more information, see
+    # `UpdateStreamRecordDistributionStrategy`.
     @[JSON::Field(key: "PartitionKey")]
-    property partition_key : String
+    property partition_key : String | Nil
 
     # The hash value used to explicitly determine the shard the data record is assigned to by
     # overriding the partition key hash.
@@ -50,8 +57,8 @@ module Amazonite::Kinesis
 
     def initialize(
       @data : Bytes,
-      @partition_key : String,
       @stream_name : String | Nil = nil,
+      @partition_key : String | Nil = nil,
       @explicit_hash_key : String | Nil = nil,
       @sequence_number_for_ordering : String | Nil = nil,
       @stream_arn : String | Nil = nil,

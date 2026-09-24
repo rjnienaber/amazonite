@@ -1,3 +1,4 @@
+private alias AK = Amazonite::Kinesis
 private alias Core = Amazonite::Core
 
 module Amazonite::Kinesis
@@ -39,6 +40,21 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "MaxRecordSizeInKiB")]
     property max_record_size_in_ki_b : Int32 | Nil
 
+    # The record distribution strategy for the stream, which determines how Amazon Kinesis Data
+    # Streams distributes records across shards. Specify one of the following values:
+    #
+    # - `AUTO` – Amazon Kinesis Data Streams distributes records evenly across shards and ignores any
+    # partition key and `ExplicitHashKey` that producers supply. Use this value for stateless
+    # workloads that do not require partition-key ordering.
+    #
+    # - `USER_PARTITION_KEY` – Producers must supply a partition key, which Amazon Kinesis Data
+    # Streams uses to determine shard placement. This is the default.
+    #
+    # The record distribution strategy is only supported for streams that use the on-demand capacity
+    # mode. If you do not specify this parameter, the stream uses `USER_PARTITION_KEY`.
+    @[JSON::Field(key: "RecordDistributionStrategy", converter: AK::RecordDistributionStrategy)]
+    property record_distribution_strategy : RecordDistributionStrategy | Nil
+
     def initialize(
       @stream_name : String,
       @shard_count : Int32 | Nil = nil,
@@ -46,6 +62,7 @@ module Amazonite::Kinesis
       @tags : Hash(String, String) | Nil = nil,
       @warm_throughput_mi_bps : Int32 | Nil = nil,
       @max_record_size_in_ki_b : Int32 | Nil = nil,
+      @record_distribution_strategy : RecordDistributionStrategy | Nil = nil,
     )
     end
 
@@ -79,6 +96,6 @@ module Amazonite::Kinesis
       end
     end
 
-    def_equals_and_hash(@stream_name, @shard_count, @stream_mode_details, @tags, @warm_throughput_mi_bps, @max_record_size_in_ki_b)
+    def_equals_and_hash(@stream_name, @shard_count, @stream_mode_details, @tags, @warm_throughput_mi_bps, @max_record_size_in_ki_b, @record_distribution_strategy)
   end
 end

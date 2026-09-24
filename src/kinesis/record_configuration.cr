@@ -19,8 +19,7 @@ module Amazonite::Kinesis
     property record_format_type : RecordFormatType
 
     # The Amazon Resource Name (ARN) of the Amazon Web Services Glue Schema Registry schema used to
-    # validate records. Required when the channel destination is a streaming table (Amazon S3 Tables),
-    # for both the `JSON` and `GSR_JSON` record formats.
+    # validate records. Required when the channel destination is a streaming table.
     @[JSON::Field(key: "GSRSchemaARN")]
     property gsr_schema_arn : String | Nil
 

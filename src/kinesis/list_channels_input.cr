@@ -14,7 +14,7 @@ module Amazonite::Kinesis
     property max_results : Int32 | Nil
 
     # The pagination token returned by a previous call. Specify this token to retrieve the next page
-    # of results. This value is `null` when there are no more results to return.
+    # of results.
     @[JSON::Field(key: "NextToken")]
     property next_token : String | Nil
 

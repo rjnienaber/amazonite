@@ -59,7 +59,8 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "S3TablesDestinationConfiguration")]
     property s3_tables_destination_configuration : S3TablesDestinationDescription | Nil
 
-    # The server-side encryption configuration for the channel.
+    # The Amazon Web Services KMS key configuration that Amazon Kinesis Data Streams uses to encrypt
+    # data delivered to the channel's destination.
     @[JSON::Field(key: "EncryptionConfiguration")]
     property encryption_configuration : ChannelEncryptionConfiguration | Nil
 

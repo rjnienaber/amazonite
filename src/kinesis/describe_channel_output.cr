@@ -4,7 +4,8 @@ module Amazonite::Kinesis
   class DescribeChannelOutput
     include JSON::Serializable
 
-    # The configuration and current status of the channel.
+    # The configuration and current status of the channel, including its ARN, source stream,
+    # destination configuration, and lifecycle state.
     @[JSON::Field(key: "ChannelDescription")]
     property channel_description : ChannelDescription
 

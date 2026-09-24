@@ -8,13 +8,15 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "ChannelARN")]
     property channel_arn : String
 
-    # The updated configuration for a general purpose Amazon S3 destination. Only
-    # `DataFreshnessInSeconds` can be updated.
+    # The updated configuration for a general purpose Amazon S3 destination. Specify this parameter
+    # when the channel delivers to a general purpose Amazon S3 bucket. Only `DataFreshnessInSeconds`
+    # can be updated.
     @[JSON::Field(key: "S3DestinationConfiguration")]
     property s3_destination_configuration : S3DestinationUpdateInput | Nil
 
-    # The updated configuration for a streaming table destination. Only `DataFreshnessInSeconds` can
-    # be updated.
+    # The updated configuration for a streaming table destination. Specify this parameter when the
+    # channel delivers to streaming tables on Apache Iceberg in Amazon S3 Tables. Only
+    # `DataFreshnessInSeconds` can be updated.
     @[JSON::Field(key: "S3TablesDestinationConfiguration")]
     property s3_tables_destination_configuration : S3TablesDestinationUpdateInput | Nil
 
