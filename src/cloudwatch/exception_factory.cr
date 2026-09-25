@@ -55,6 +55,9 @@ module Amazonite::CloudWatch
   class ResourceNotFoundException < Core::ResponseException
   end
 
+  class ValidationException < Core::ResponseException
+  end
+
   class ExceptionFactory < Core::ResponseExceptionFactory
     def create(exception_type, http, message, code) : Core::ResponseException | Nil
       case exception_type
@@ -76,6 +79,7 @@ module Amazonite::CloudWatch
       when "ResourceConflict"                     then ResourceConflict.new(http, message, code)
       when "ResourceNotFound"                     then ResourceNotFound.new(http, message, code)
       when "ResourceNotFoundException"            then ResourceNotFoundException.new(http, message, code)
+      when "ValidationException"                  then ValidationException.new(http, message, code)
       end
     end
   end

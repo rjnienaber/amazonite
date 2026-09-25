@@ -35,7 +35,8 @@ module Amazonite::EventBridge
     # The logging configuration settings for the event bus.
     #
     # For more information, see [Configuring logs for event
-    # buses](https://docs.aws.amazon.com/eb-event-bus-logs.html) in the *EventBridge User Guide*.
+    # buses](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus-logs.html) in the
+    # *EventBridge User Guide*.
     @[JSON::Field(key: "LogConfig")]
     property log_config : LogConfig | Nil
 
@@ -47,6 +48,11 @@ module Amazonite::EventBridge
     @[JSON::Field(key: "LastModifiedTime", converter: Core::AWSEpochConverter)]
     property last_modified_time : Time | Nil
 
+    # If the event bus was created on behalf of your account by an Amazon Web Services service, this
+    # field displays the principal name of the service that created the event bus.
+    @[JSON::Field(key: "ManagedBy")]
+    property managed_by : String | Nil
+
     def initialize(
       @name : String | Nil = nil,
       @arn : String | Nil = nil,
@@ -57,6 +63,7 @@ module Amazonite::EventBridge
       @log_config : LogConfig | Nil = nil,
       @creation_time : Time | Nil = nil,
       @last_modified_time : Time | Nil = nil,
+      @managed_by : String | Nil = nil,
     )
     end
 
@@ -79,8 +86,13 @@ module Amazonite::EventBridge
       if value = @log_config
         value.validate!
       end
+
+      if value = @managed_by
+        raise Core::ValidationError.new("ManagedBy length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ManagedBy length must be <= 128") if value.size > 128
+      end
     end
 
-    def_equals_and_hash(@name, @arn, @description, @kms_key_identifier, @dead_letter_config, @policy, @log_config, @creation_time, @last_modified_time)
+    def_equals_and_hash(@name, @arn, @description, @kms_key_identifier, @dead_letter_config, @policy, @log_config, @creation_time, @last_modified_time, @managed_by)
   end
 end

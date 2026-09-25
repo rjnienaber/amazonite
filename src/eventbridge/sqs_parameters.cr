@@ -1,11 +1,12 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::EventBridge
-  # This structure includes the custom parameter to be used when the target is an SQS FIFO queue.
+  # The custom parameters for EventBridge to use for a target that is an Amazon SQS fair or FIFO
+  # queue.
   class SqsParameters
     include JSON::Serializable
 
-    # The FIFO message group ID to use as the target.
+    # The ID of the message group to use as the target.
     @[JSON::Field(key: "MessageGroupId")]
     property message_group_id : String | Nil
 

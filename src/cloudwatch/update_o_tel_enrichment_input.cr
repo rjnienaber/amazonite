@@ -1,30 +1,29 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatch
-  class StartOTelEnrichmentOutput
+  class UpdateOTelEnrichmentInput
     include JSON::Serializable
 
-    # The include filters that are stored for the account.
+    # The metric namespaces, and the metric names, to enrich. If this parameter is omitted, every
+    # namespace that Amazon CloudWatch supports for enrichment is in scope.
+    #
+    # A maximum of 100 filters is allowed across `IncludeFilters` and `ExcludeFilters` combined.
     @[JSON::Field(key: "IncludeFilters")]
     property include_filters : Array(OTelEnrichmentMetricSelector) | Nil
 
-    # The exclude filters that are stored for the account.
+    # The metric namespaces, and the metric names, to leave unenriched. If this parameter is omitted,
+    # nothing is excluded.
+    #
+    # Amazon CloudWatch applies `ExcludeFilters` after `IncludeFilters`, so a metric that both
+    # parameters match is not enriched.
+    #
+    # A maximum of 100 filters is allowed across `IncludeFilters` and `ExcludeFilters` combined.
     @[JSON::Field(key: "ExcludeFilters")]
     property exclude_filters : Array(OTelEnrichmentMetricSelector) | Nil
-
-    # The date and time that enrichment started for the account.
-    @[JSON::Field(key: "CreatedAt", converter: Core::AWSEpochConverter)]
-    property created_at : Time | Nil
-
-    # The date and time that the enrichment configuration for the account was last stored.
-    @[JSON::Field(key: "UpdatedAt", converter: Core::AWSEpochConverter)]
-    property updated_at : Time | Nil
 
     def initialize(
       @include_filters : Array(OTelEnrichmentMetricSelector) | Nil = nil,
       @exclude_filters : Array(OTelEnrichmentMetricSelector) | Nil = nil,
-      @created_at : Time | Nil = nil,
-      @updated_at : Time | Nil = nil,
     )
     end
 
@@ -42,6 +41,6 @@ module Amazonite::CloudWatch
       end
     end
 
-    def_equals_and_hash(@include_filters, @exclude_filters, @created_at, @updated_at)
+    def_equals_and_hash(@include_filters, @exclude_filters)
   end
 end

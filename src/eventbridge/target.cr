@@ -70,9 +70,9 @@ module Amazonite::EventBridge
     @[JSON::Field(key: "BatchParameters")]
     property batch_parameters : BatchParameters | Nil
 
-    # Contains the message group ID to use when the target is a FIFO queue.
+    # Contains the message group ID to use when the target is an Amazon SQS fair or FIFO queue.
     #
-    # If you specify an SQS FIFO queue as a target, the queue must have content-based deduplication
+    # If you specify a fair or FIFO queue as a target, the queue must have content-based deduplication
     # enabled.
     @[JSON::Field(key: "SqsParameters")]
     property sqs_parameters : SqsParameters | Nil

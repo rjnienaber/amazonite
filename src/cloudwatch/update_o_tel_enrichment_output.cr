@@ -1,14 +1,17 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatch
-  class StartOTelEnrichmentOutput
+  class UpdateOTelEnrichmentOutput
     include JSON::Serializable
 
-    # The include filters that are stored for the account.
+    # The include filters that are stored for the account after the replacement. This parameter is
+    # omitted when the request cleared the include filters, which means that every supported namespace
+    # is in scope.
     @[JSON::Field(key: "IncludeFilters")]
     property include_filters : Array(OTelEnrichmentMetricSelector) | Nil
 
-    # The exclude filters that are stored for the account.
+    # The exclude filters that are stored for the account after the replacement. This parameter is
+    # omitted when the request cleared the exclude filters, which means that nothing is excluded.
     @[JSON::Field(key: "ExcludeFilters")]
     property exclude_filters : Array(OTelEnrichmentMetricSelector) | Nil
 

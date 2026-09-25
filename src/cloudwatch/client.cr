@@ -72,6 +72,30 @@ module Amazonite::CloudWatch
       Core::ParsedResponse(ACW::AssociateDatasetKmsKeyOutput).new(response)
     end
 
+    # Creates a resource metrics configuration for an Amazon Web Services resource. After you create a
+    # configuration, Amazon CloudWatch collects detailed metrics for that resource.
+    #
+    # Each Amazon Web Services resource can have only one resource metrics configuration. If a
+    # configuration already exists for the specified resource ARN, this operation returns a
+    # `ConflictException`. To modify an existing configuration, use
+    # [UpdateResourceMetricsConfiguration](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_UpdateResourceMetricsConfiguration.html).
+    #
+    # If the Amazon Web Services resource that you specify in `ResourceArn` does not exist, this
+    # operation returns a `ResourceNotFoundException`. Verify that the resource ARN is correct and
+    # that the resource exists before you retry the request.
+    #
+    # To create a resource metrics configuration, you must have the
+    # `cloudwatch:CreateResourceMetricsConfiguration` permission. For information about scoping this
+    # permission to specific resources, see [Condition keys for resource metrics configuration
+    # access](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/iam-cw-condition-keys-resource-arn.html)
+    # in the *Amazon CloudWatch User Guide*.
+    def create_resource_metrics_configuration(input : ACW::CreateResourceMetricsConfigurationInput) : Core::ParsedResponse(ACW::CreateResourceMetricsConfigurationOutput)
+      Log.info { "performing 'CreateResourceMetricsConfiguration' operation" }
+      input.validate! if config.validate_input?
+      response = post("CreateResourceMetricsConfiguration", "/", input.to_json)
+      Core::ParsedResponse(ACW::CreateResourceMetricsConfigurationOutput).new(response)
+    end
+
     # Deletes a specific alarm mute rule.
     #
     # When you delete a mute rule, any alarms that are currently being muted by that rule are
@@ -159,6 +183,25 @@ module Amazonite::CloudWatch
       input.validate! if config.validate_input?
       response = post("DeleteMetricStream", "/", input.to_json)
       Core::ParsedResponse(ACW::DeleteMetricStreamOutput).new(response)
+    end
+
+    # Deletes the resource metrics configuration for an Amazon Web Services resource. After you delete
+    # the configuration, Amazon CloudWatch stops collecting detailed metrics for the resource. Metric
+    # data that Amazon CloudWatch already collected for the resource is not deleted.
+    #
+    # This operation returns a `ResourceNotFoundException` if no resource metrics configuration exists
+    # for the specified resource ARN. Verify that the resource ARN is correct.
+    #
+    # To delete a resource metrics configuration, you must have the
+    # `cloudwatch:DeleteResourceMetricsConfiguration` permission. For information about scoping this
+    # permission to specific resources, see [Condition keys for resource metrics configuration
+    # access](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/iam-cw-condition-keys-resource-arn.html)
+    # in the *Amazon CloudWatch User Guide*.
+    def delete_resource_metrics_configuration(input : ACW::DeleteResourceMetricsConfigurationInput) : Core::ParsedResponse(ACW::DeleteResourceMetricsConfigurationOutput)
+      Log.info { "performing 'DeleteResourceMetricsConfiguration' operation" }
+      input.validate! if config.validate_input?
+      response = post("DeleteResourceMetricsConfiguration", "/", input.to_json)
+      Core::ParsedResponse(ACW::DeleteResourceMetricsConfigurationOutput).new(response)
     end
 
     # Returns the information of the current alarm contributors that are in `ALARM` state. This
@@ -338,6 +381,13 @@ module Amazonite::CloudWatch
     # To copy an existing dashboard, use `GetDashboard`, and then use the data returned within
     # `DashboardBody` as the template for the new dashboard when you call `PutDashboard` to create the
     # copy.
+    #
+    # You might have recently enabled an [opt-in Region (Region that is disabled by
+    # default)](https://docs.aws.amazon.com/glossary/latest/reference/glos-chap.html#optinregion) for
+    # your account. In that Region, `GetDashboard` can return an access denied error for up to 24
+    # hours after you enable the Region. This delay occurs while dashboard data propagates. The error
+    # does not indicate a problem with your permissions. Because dashboards are global, you can call
+    # `GetDashboard` in any other enabled Region, or retry after propagation completes.
     def get_dashboard(input : ACW::GetDashboardInput) : Core::ParsedResponse(ACW::GetDashboardOutput)
       Log.info { "performing 'GetDashboard' operation" }
       input.validate! if config.validate_input?
@@ -416,8 +466,9 @@ module Amazonite::CloudWatch
     #
     # If you include a Metrics Insights query, each `GetMetricData` operation can include only one
     # query. But the same `GetMetricData` operation can also retrieve other metrics. Metrics Insights
-    # queries can query only the most recent three hours of metric data. For more information about
-    # Metrics Insights, see [Query your metrics with CloudWatch Metrics
+    # queries can query the most recent two weeks of metric data. For alarm condition evaluations,
+    # Metrics Insights queries can query only the most recent three hours of metric data. For more
+    # information about Metrics Insights, see [Query your metrics with CloudWatch Metrics
     # Insights](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/query_with_cloudwatch-metrics-insights.html).
     #
     # Calls to the `GetMetricData` API have a different pricing structure than calls to
@@ -558,6 +609,26 @@ module Amazonite::CloudWatch
       Core::ParsedResponse(ACW::GetOTelEnrichmentOutput).new(response)
     end
 
+    # Retrieves the current resource metrics configuration for an Amazon Web Services resource. The
+    # response includes the resource ARN, any metric selections, and the times at which the
+    # configuration was created and last updated.
+    #
+    # This operation returns a `ResourceNotFoundException` if no resource metrics configuration exists
+    # for the specified resource ARN. To create a configuration, use
+    # [CreateResourceMetricsConfiguration](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_CreateResourceMetricsConfiguration.html).
+    #
+    # To retrieve a resource metrics configuration, you must have the
+    # `cloudwatch:GetResourceMetricsConfiguration` permission. For information about scoping this
+    # permission to specific resources, see [Condition keys for resource metrics configuration
+    # access](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/iam-cw-condition-keys-resource-arn.html)
+    # in the *Amazon CloudWatch User Guide*.
+    def get_resource_metrics_configuration(input : ACW::GetResourceMetricsConfigurationInput) : Core::ParsedResponse(ACW::GetResourceMetricsConfigurationOutput)
+      Log.info { "performing 'GetResourceMetricsConfiguration' operation" }
+      input.validate! if config.validate_input?
+      response = post("GetResourceMetricsConfiguration", "/", input.to_json)
+      Core::ParsedResponse(ACW::GetResourceMetricsConfigurationOutput).new(response)
+    end
+
     # Lists alarm mute rules in your Amazon Web Services account and region.
     #
     # You can filter the results by alarm name to find all mute rules targeting a specific alarm, or
@@ -583,6 +654,13 @@ module Amazonite::CloudWatch
     # `ListDashboards` returns up to 1000 results on one page. If there are more than 1000 dashboards,
     # you can call `ListDashboards` again and include the value you received for `NextToken` in the
     # first call, to receive the next 1000 results.
+    #
+    # You might have recently enabled an [opt-in Region (Region that is disabled by
+    # default)](https://docs.aws.amazon.com/glossary/latest/reference/glos-chap.html#optinregion) for
+    # your account. In that Region, `ListDashboards` can return an access denied error for up to 24
+    # hours after you enable the Region. This delay occurs while dashboard data propagates. The error
+    # does not indicate a problem with your permissions. Because dashboards are global, you can call
+    # `ListDashboards` in any other enabled Region, or retry after propagation completes.
     def list_dashboards(input : ACW::ListDashboardsInput) : Core::ParsedResponse(ACW::ListDashboardsOutput)
       Log.info { "performing 'ListDashboards' operation" }
       input.validate! if config.validate_input?
@@ -1035,6 +1113,12 @@ module Amazonite::CloudWatch
     # Before calling this operation, you must enable resource tags on telemetry for your account. For
     # more information, see [Enable resource tags on
     # telemetry](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/EnableResourceTagsOnTelemetry.html).
+    #
+    # Optionally, `IncludeFilters` and `ExcludeFilters` limit enrichment to a subset of the account's
+    # metrics. These filters are stored only when this operation starts enrichment. Calling
+    # `StartOTelEnrichment` for an account where enrichment is already running has no effect and does
+    # not modify the filters that are applied. To change them, use
+    # [UpdateOTelEnrichment](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_UpdateOTelEnrichment.html).
     def start_o_tel_enrichment(input : ACW::StartOTelEnrichmentInput) : Core::ParsedResponse(ACW::StartOTelEnrichmentOutput)
       Log.info { "performing 'StartOTelEnrichment' operation" }
       input.validate! if config.validate_input?
@@ -1093,6 +1177,45 @@ module Amazonite::CloudWatch
       input.validate! if config.validate_input?
       response = post("UntagResource", "/", input.to_json)
       Core::ParsedResponse(ACW::UntagResourceOutput).new(response)
+    end
+
+    # Replaces the filters that determine which CloudWatch vended metrics are enriched with resource
+    # ARN and resource tag labels for the account. Enrichment must already be running for the account.
+    # If it is not, this operation returns a `ResourceNotFoundException`. To start enrichment, use
+    # [StartOTelEnrichment](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_StartOTelEnrichment.html).
+    #
+    # The filters in the request completely replace the stored filters; they are not merged with them.
+    # `IncludeFilters` and `ExcludeFilters` are replaced as a pair, so a request that specifies only
+    # `IncludeFilters` also clears the stored `ExcludeFilters`, and a request that specifies neither
+    # clears both.
+    def update_o_tel_enrichment(input : ACW::UpdateOTelEnrichmentInput) : Core::ParsedResponse(ACW::UpdateOTelEnrichmentOutput)
+      Log.info { "performing 'UpdateOTelEnrichment' operation" }
+      input.validate! if config.validate_input?
+      response = post("UpdateOTelEnrichment", "/", input.to_json)
+      Core::ParsedResponse(ACW::UpdateOTelEnrichmentOutput).new(response)
+    end
+
+    # Updates the resource metrics configuration for an Amazon Web Services resource. The
+    # `MetricSelections` value that you provide replaces any existing metric selections for the
+    # resource; it is not merged with them.
+    #
+    # If you omit `MetricSelections`, Amazon CloudWatch removes any existing metric selection filter
+    # and collects all available detailed metrics for the resource.
+    #
+    # This operation returns a `ResourceNotFoundException` if no resource metrics configuration exists
+    # for the specified resource ARN. To create a configuration, use
+    # [CreateResourceMetricsConfiguration](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_CreateResourceMetricsConfiguration.html).
+    #
+    # To update a resource metrics configuration, you must have the
+    # `cloudwatch:UpdateResourceMetricsConfiguration` permission. For information about scoping this
+    # permission to specific resources, see [Condition keys for resource metrics configuration
+    # access](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/iam-cw-condition-keys-resource-arn.html)
+    # in the *Amazon CloudWatch User Guide*.
+    def update_resource_metrics_configuration(input : ACW::UpdateResourceMetricsConfigurationInput) : Core::ParsedResponse(ACW::UpdateResourceMetricsConfigurationOutput)
+      Log.info { "performing 'UpdateResourceMetricsConfiguration' operation" }
+      input.validate! if config.validate_input?
+      response = post("UpdateResourceMetricsConfiguration", "/", input.to_json)
+      Core::ParsedResponse(ACW::UpdateResourceMetricsConfigurationOutput).new(response)
     end
   end
 end
