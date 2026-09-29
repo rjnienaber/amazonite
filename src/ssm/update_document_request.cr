@@ -37,8 +37,8 @@ module Amazonite::Ssm
     @[JSON::Field(key: "DocumentVersion")]
     property document_version : String | Nil
 
-    # Specify the document format for the new document version. Systems Manager supports JSON and YAML
-    # documents. JSON is the default format.
+    # Specify the document format for the new document version. The document format can be JSON, YAML,
+    # or TEXT. JSON is the default format.
     @[JSON::Field(key: "DocumentFormat", converter: AS::DocumentFormat)]
     property document_format : DocumentFormat | Nil
 

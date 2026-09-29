@@ -12,10 +12,15 @@ module Amazonite::EC2
     # The name of the CloudWatch Logs log stream to which the connection data is published.
     property cloudwatch_log_stream : String | Nil
 
+    # Specifies whether to include the authorization policy evaluation context in the connection logs
+    # for the Client VPN endpoint.
+    property include_authorization_policy_context : Bool | Nil
+
     def initialize(
       @enabled : Bool | Nil = nil,
       @cloudwatch_log_group : String | Nil = nil,
       @cloudwatch_log_stream : String | Nil = nil,
+      @include_authorization_policy_context : Bool | Nil = nil,
     )
     end
 
@@ -33,6 +38,10 @@ module Amazonite::EC2
       if value = @cloudwatch_log_stream
         params << {"#{prefix}CloudwatchLogStream", value}
       end
+
+      if value = @include_authorization_policy_context
+        params << {"#{prefix}IncludeAuthorizationPolicyContext", Core::QueryValue.bool(value)}
+      end
       params
     end
 
@@ -41,12 +50,13 @@ module Amazonite::EC2
         enabled: Core::XMLValue.bool(node.xpath_node("*[local-name()='Enabled']")),
         cloudwatch_log_group: Core::XMLValue.string(node.xpath_node("*[local-name()='CloudwatchLogGroup']")),
         cloudwatch_log_stream: Core::XMLValue.string(node.xpath_node("*[local-name()='CloudwatchLogStream']")),
+        include_authorization_policy_context: Core::XMLValue.bool(node.xpath_node("*[local-name()='IncludeAuthorizationPolicyContext']")),
       )
     end
 
     def validate! : Nil
     end
 
-    def_equals_and_hash(@enabled, @cloudwatch_log_group, @cloudwatch_log_stream)
+    def_equals_and_hash(@enabled, @cloudwatch_log_group, @cloudwatch_log_stream, @include_authorization_policy_context)
   end
 end

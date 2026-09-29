@@ -103,7 +103,7 @@ module Amazonite::Ssm
       end
 
       if value = @association_version
-        raise Core::ValidationError.new("AssociationVersion does not match the required pattern") unless value.matches?(Regex.new("^([$]LATEST)|([1-9][0-9]*)$"))
+        raise Core::ValidationError.new("AssociationVersion does not match the required pattern") unless value.matches?(Regex.new("^(([$]LATEST)|([1-9][0-9]*))$"))
       end
 
       if value = @document_version

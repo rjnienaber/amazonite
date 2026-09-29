@@ -47,7 +47,7 @@ module Amazonite::Ssm
       if value = @key
         raise Core::ValidationError.new("Key length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("Key length must be <= 132") if value.size > 132
-        raise Core::ValidationError.new("Key does not match the required pattern") unless value.matches?(Regex.new("^tag:.+|Name|Type|KeyId|Path|Label|Tier|DataType$"))
+        raise Core::ValidationError.new("Key does not match the required pattern") unless value.matches?(Regex.new("^(tag:.+|Name|Type|KeyId|Path|Label|Tier|DataType)$"))
       end
 
       if value = @option

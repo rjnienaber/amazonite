@@ -4311,6 +4311,22 @@ module Amazonite::EC2
       Core::ParsedResponse(AEC::DeleteClientVpnEndpointResult).new(response, result)
     end
 
+    # Deletes the authorization policy for a Client VPN endpoint.
+    def delete_client_vpn_endpoint_authorization_policy(input : AEC::DeleteClientVpnEndpointAuthorizationPolicyRequest) : Core::ParsedResponse(AEC::DeleteClientVpnEndpointAuthorizationPolicyResult)
+      Log.info { "performing 'DeleteClientVpnEndpointAuthorizationPolicy' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "DeleteClientVpnEndpointAuthorizationPolicy")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("DeleteClientVpnEndpointAuthorizationPolicy", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::DeleteClientVpnEndpointAuthorizationPolicyResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::DeleteClientVpnEndpointAuthorizationPolicyResult).new(response, result)
+    end
+
     # Deletes a route from a Client VPN endpoint. You can only delete routes that you manually added
     # using the **CreateClientVpnRoute** action. You cannot delete routes that were automatically
     # added when associating a subnet. To remove routes that have been automatically added,
@@ -11997,6 +12013,22 @@ module Amazonite::EC2
       Core::ParsedResponse(AEC::GetCapacityReservationUsageResult).new(response, result)
     end
 
+    # Describes the authorization policy for a Client VPN endpoint.
+    def get_client_vpn_endpoint_authorization_policy(input : AEC::GetClientVpnEndpointAuthorizationPolicyRequest) : Core::ParsedResponse(AEC::GetClientVpnEndpointAuthorizationPolicyResult)
+      Log.info { "performing 'GetClientVpnEndpointAuthorizationPolicy' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "GetClientVpnEndpointAuthorizationPolicy")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("GetClientVpnEndpointAuthorizationPolicy", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::GetClientVpnEndpointAuthorizationPolicyResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::GetClientVpnEndpointAuthorizationPolicyResult).new(response, result)
+    end
+
     # Describes the allocations from the specified customer-owned address pool.
     def get_coip_pool_usage(input : AEC::GetCoipPoolUsageRequest) : Core::ParsedResponse(AEC::GetCoipPoolUsageResult)
       Log.info { "performing 'GetCoipPoolUsage' operation" }
@@ -13755,6 +13787,25 @@ module Amazonite::EC2
       result_node = XML.parse(response.body).root.not_nil!
       result = AEC::ModifyClientVpnEndpointResult.from_xml(result_node)
       Core::ParsedResponse(AEC::ModifyClientVpnEndpointResult).new(response, result)
+    end
+
+    # Creates or updates the authorization policy for a Client VPN endpoint. A Client VPN endpoint can
+    # have one authorization policy. If a policy already exists for the endpoint, the values that you
+    # specify replace the corresponding values in the existing policy, and values that you do not
+    # specify remain unchanged.
+    def modify_client_vpn_endpoint_authorization_policy(input : AEC::ModifyClientVpnEndpointAuthorizationPolicyRequest) : Core::ParsedResponse(AEC::ModifyClientVpnEndpointAuthorizationPolicyResult)
+      Log.info { "performing 'ModifyClientVpnEndpointAuthorizationPolicy' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "ModifyClientVpnEndpointAuthorizationPolicy")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("ModifyClientVpnEndpointAuthorizationPolicy", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::ModifyClientVpnEndpointAuthorizationPolicyResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::ModifyClientVpnEndpointAuthorizationPolicyResult).new(response, result)
     end
 
     # Modifies the default credit option for CPU usage of burstable performance instances. The default

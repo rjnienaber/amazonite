@@ -1,3 +1,4 @@
+private alias AS = Amazonite::Ssm
 private alias Core = Amazonite::Core
 
 module Amazonite::Ssm
@@ -17,10 +18,22 @@ module Amazonite::Ssm
     @[JSON::Field(key: "PolicyHash")]
     property policy_hash : String
 
+    # Specifies the intended outcome of the operation. Applies only to the `Document` resource type.
+    # The operation ignores this parameter for other resource types. Optional. Defaults to
+    # `RemoveSharing`.
+    #
+    # - `RemoveSharing` – Deletes the resource policy and removes sharing of the document.
+    #
+    # - `RollbackMigration` – Reverts the document to Custom sharing, preserving existing consumer
+    # access, instead of removing the policy.
+    @[JSON::Field(key: "DeletionMode", converter: AS::DeletionMode)]
+    property deletion_mode : DeletionMode | Nil
+
     def initialize(
       @resource_arn : String,
       @policy_id : String,
       @policy_hash : String,
+      @deletion_mode : DeletionMode | Nil = nil,
     )
     end
 
@@ -31,6 +44,6 @@ module Amazonite::Ssm
       end
     end
 
-    def_equals_and_hash(@resource_arn, @policy_id, @policy_hash)
+    def_equals_and_hash(@resource_arn, @policy_id, @policy_hash, @deletion_mode)
   end
 end

@@ -110,6 +110,9 @@ module Amazonite::EC2
     # The Transit Gateway configuration for the Client VPN endpoint.
     property transit_gateway_configuration : TransitGatewayConfigurationDescribeEndpointStructure | Nil
 
+    # The device trust providers configured for the Client VPN endpoint, if applicable.
+    property device_posture_options : DevicePostureResponseOptions | Nil
+
     def initialize(
       @client_vpn_endpoint_id : String | Nil = nil,
       @description : String | Nil = nil,
@@ -139,6 +142,7 @@ module Amazonite::EC2
       @endpoint_ip_address_type : EndpointIpAddressType | Nil = nil,
       @traffic_ip_address_type : TrafficIpAddressType | Nil = nil,
       @transit_gateway_configuration : TransitGatewayConfigurationDescribeEndpointStructure | Nil = nil,
+      @device_posture_options : DevicePostureResponseOptions | Nil = nil,
     )
     end
 
@@ -256,6 +260,10 @@ module Amazonite::EC2
       if value = @transit_gateway_configuration
         params.concat(value.to_query_params("#{prefix}TransitGatewayConfiguration."))
       end
+
+      if value = @device_posture_options
+        params.concat(value.to_query_params("#{prefix}DevicePostureOptions."))
+      end
       params
     end
 
@@ -289,6 +297,7 @@ module Amazonite::EC2
         endpoint_ip_address_type: (n = node.xpath_node("*[local-name()='endpointIpAddressType']")) ? AEC::EndpointIpAddressType.from_json_object_key?(n.content) : nil,
         traffic_ip_address_type: (n = node.xpath_node("*[local-name()='trafficIpAddressType']")) ? AEC::TrafficIpAddressType.from_json_object_key?(n.content) : nil,
         transit_gateway_configuration: node.xpath_node("*[local-name()='transitGatewayConfiguration']").try { |n| TransitGatewayConfigurationDescribeEndpointStructure.from_xml(n) },
+        device_posture_options: node.xpath_node("*[local-name()='devicePostureOptions']").try { |n| DevicePostureResponseOptions.from_xml(n) },
       )
     end
 
@@ -328,8 +337,12 @@ module Amazonite::EC2
       if value = @transit_gateway_configuration
         value.validate!
       end
+
+      if value = @device_posture_options
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@client_vpn_endpoint_id, @description, @status, @creation_time, @deletion_time, @dns_name, @client_cidr_block, @dns_servers, @split_tunnel, @vpn_protocol, @transport_protocol, @vpn_port, @associated_target_networks, @server_certificate_arn, @authentication_options, @connection_log_options, @tags, @security_group_ids, @vpc_id, @self_service_portal_url, @client_connect_options, @session_timeout_hours, @client_login_banner_options, @client_route_enforcement_options, @disconnect_on_session_timeout, @endpoint_ip_address_type, @traffic_ip_address_type, @transit_gateway_configuration)
+    def_equals_and_hash(@client_vpn_endpoint_id, @description, @status, @creation_time, @deletion_time, @dns_name, @client_cidr_block, @dns_servers, @split_tunnel, @vpn_protocol, @transport_protocol, @vpn_port, @associated_target_networks, @server_certificate_arn, @authentication_options, @connection_log_options, @tags, @security_group_ids, @vpc_id, @self_service_portal_url, @client_connect_options, @session_timeout_hours, @client_login_banner_options, @client_route_enforcement_options, @disconnect_on_session_timeout, @endpoint_ip_address_type, @traffic_ip_address_type, @transit_gateway_configuration, @device_posture_options)
   end
 end

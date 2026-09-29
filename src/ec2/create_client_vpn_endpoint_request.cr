@@ -133,6 +133,10 @@ module Amazonite::EC2
     # `TransitGatewayConfiguration` and `VpcId`/`SecurityGroupIds`.
     property transit_gateway_configuration : TransitGatewayConfigurationInputStructure | Nil
 
+    # The device posture options for the Client VPN endpoint. Use this parameter to specify the device
+    # trust providers that the endpoint uses to evaluate the security posture of connecting devices.
+    property device_posture_options : DevicePostureOptions | Nil
+
     def initialize(
       @server_certificate_arn : String,
       @authentication_options : Array(ClientVpnAuthenticationRequest),
@@ -157,6 +161,7 @@ module Amazonite::EC2
       @endpoint_ip_address_type : EndpointIpAddressType | Nil = nil,
       @traffic_ip_address_type : TrafficIpAddressType | Nil = nil,
       @transit_gateway_configuration : TransitGatewayConfigurationInputStructure | Nil = nil,
+      @device_posture_options : DevicePostureOptions | Nil = nil,
     )
     end
 
@@ -250,6 +255,10 @@ module Amazonite::EC2
       if value = @transit_gateway_configuration
         params.concat(value.to_query_params("#{prefix}TransitGatewayConfiguration."))
       end
+
+      if value = @device_posture_options
+        params.concat(value.to_query_params("#{prefix}DevicePostureOptions."))
+      end
       params
     end
 
@@ -278,6 +287,7 @@ module Amazonite::EC2
         endpoint_ip_address_type: (n = node.xpath_node("*[local-name()='EndpointIpAddressType']")) ? AEC::EndpointIpAddressType.from_json_object_key?(n.content) : nil,
         traffic_ip_address_type: (n = node.xpath_node("*[local-name()='TrafficIpAddressType']")) ? AEC::TrafficIpAddressType.from_json_object_key?(n.content) : nil,
         transit_gateway_configuration: node.xpath_node("*[local-name()='TransitGatewayConfiguration']").try { |n| TransitGatewayConfigurationInputStructure.from_xml(n) },
+        device_posture_options: node.xpath_node("*[local-name()='DevicePostureOptions']").try { |n| DevicePostureOptions.from_xml(n) },
       )
     end
 
@@ -309,8 +319,12 @@ module Amazonite::EC2
       if value = @transit_gateway_configuration
         value.validate!
       end
+
+      if value = @device_posture_options
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@client_cidr_block, @server_certificate_arn, @authentication_options, @connection_log_options, @dns_servers, @transport_protocol, @vpn_port, @description, @split_tunnel, @dry_run, @client_token, @tag_specifications, @security_group_ids, @vpc_id, @self_service_portal, @client_connect_options, @session_timeout_hours, @client_login_banner_options, @client_route_enforcement_options, @disconnect_on_session_timeout, @endpoint_ip_address_type, @traffic_ip_address_type, @transit_gateway_configuration)
+    def_equals_and_hash(@client_cidr_block, @server_certificate_arn, @authentication_options, @connection_log_options, @dns_servers, @transport_protocol, @vpn_port, @description, @split_tunnel, @dry_run, @client_token, @tag_specifications, @security_group_ids, @vpc_id, @self_service_portal, @client_connect_options, @session_timeout_hours, @client_login_banner_options, @client_route_enforcement_options, @disconnect_on_session_timeout, @endpoint_ip_address_type, @traffic_ip_address_type, @transit_gateway_configuration, @device_posture_options)
   end
 end

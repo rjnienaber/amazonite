@@ -7,6 +7,7 @@ module Amazonite::EC2
     Apnic
     Arin
     Lacnic
+    Nicbr
 
     def self.to_json(e : Rir, json : JSON::Builder) : Nil
       value = case e
@@ -14,6 +15,7 @@ module Amazonite::EC2
               when AEC::Rir::Apnic  then "apnic"
               when AEC::Rir::Arin   then "arin"
               when AEC::Rir::Lacnic then "lacnic"
+              when AEC::Rir::Nicbr  then "nicbr"
               else
                 raise Exception.new("unknown enum value for 'Rir' when serializing to json: '#{e}'")
               end
@@ -27,6 +29,7 @@ module Amazonite::EC2
       when "apnic"  then AEC::Rir::Apnic
       when "arin"   then AEC::Rir::Arin
       when "lacnic" then AEC::Rir::Lacnic
+      when "nicbr"  then AEC::Rir::Nicbr
       else
         raise Exception.new("unknown enum value for 'Rir' when deserializing from json: '#{value}'")
       end
@@ -38,6 +41,7 @@ module Amazonite::EC2
       when AEC::Rir::Apnic  then "apnic"
       when AEC::Rir::Arin   then "arin"
       when AEC::Rir::Lacnic then "lacnic"
+      when AEC::Rir::Nicbr  then "nicbr"
       else
         raise Exception.new("unknown enum value for 'Rir' when serializing to json: '#{self}'")
       end
@@ -49,6 +53,7 @@ module Amazonite::EC2
       when "apnic"  then AEC::Rir::Apnic
       when "arin"   then AEC::Rir::Arin
       when "lacnic" then AEC::Rir::Lacnic
+      when "nicbr"  then AEC::Rir::Nicbr
       else
         nil
       end

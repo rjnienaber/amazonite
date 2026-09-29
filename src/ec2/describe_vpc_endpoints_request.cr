@@ -34,7 +34,7 @@ module Amazonite::EC2
     # `available` | `deleting` | `deleted` | `rejected` | `failed`).
     #
     # - `vpc-endpoint-type` - The type of VPC endpoint (`Interface` | `Gateway` |
-    # `GatewayLoadBalancer` | `Resource` | `ServiceNetwork`).
+    # `GatewayLoadBalancer` | `Resource` | `ServiceNetwork` | `Tunnel`).
     property filters : Array(Filter) | Nil
 
     # The maximum number of items to return for this request. The request returns a token that you can

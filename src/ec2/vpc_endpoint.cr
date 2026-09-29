@@ -8,6 +8,10 @@ module Amazonite::EC2
     property vpc_endpoint_id : String | Nil
 
     # The type of endpoint.
+    #
+    # For more information about the types of VPC endpoints, see [VPC
+    # endpoints](https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html#concepts-vpc-endpoints)
+    # in the *Amazon Web Services PrivateLink User Guide*.
     property vpc_endpoint_type : VpcEndpointType | Nil
 
     # The ID of the VPC to which the endpoint is associated.
@@ -25,11 +29,12 @@ module Amazonite::EC2
     # (Gateway endpoint) The IDs of the route tables associated with the endpoint.
     property route_table_ids : Array(String) | Nil
 
-    # (Interface endpoint) The subnets for the endpoint.
+    # (Interface, Gateway Load Balancer endpoints, Resource, ServiceNetwork, and Tunnel endpoints
+    # only) The subnets for the endpoint.
     property subnet_ids : Array(String) | Nil
 
-    # (Interface endpoint) Information about the security groups that are associated with the network
-    # interface.
+    # (Interface, Resource, ServiceNetwork, and Tunnel endpoints only) Information about the security
+    # groups that are associated with the network interface.
     property groups : Array(SecurityGroupIdentifier) | Nil
 
     # The IP address type for the endpoint.
@@ -44,7 +49,8 @@ module Amazonite::EC2
     # Indicates whether the endpoint is being managed by its service.
     property requester_managed : Bool | Nil
 
-    # (Interface endpoint) The network interfaces for the endpoint.
+    # (Interface, Gateway Load Balancer endpoints, Resource, ServiceNetwork, and Tunnel endpoints
+    # only) The network interfaces for the endpoint.
     property network_interface_ids : Array(String) | Nil
 
     # (Interface endpoint) The DNS entries for the endpoint.

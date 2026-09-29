@@ -93,6 +93,11 @@ module Amazonite::EC2
     # supported.
     property transit_gateway_configuration : TransitGatewayConfigurationInputStructure | Nil
 
+    # The device posture options for the Client VPN endpoint. Specifying this parameter replaces the
+    # entire device posture configuration for the endpoint. To remove all device trust providers,
+    # specify an empty list.
+    property device_posture_options : DevicePostureOptions | Nil
+
     def initialize(
       @client_vpn_endpoint_id : String,
       @server_certificate_arn : String | Nil = nil,
@@ -111,6 +116,7 @@ module Amazonite::EC2
       @client_route_enforcement_options : ClientRouteEnforcementOptions | Nil = nil,
       @disconnect_on_session_timeout : Bool | Nil = nil,
       @transit_gateway_configuration : TransitGatewayConfigurationInputStructure | Nil = nil,
+      @device_posture_options : DevicePostureOptions | Nil = nil,
     )
     end
 
@@ -182,6 +188,10 @@ module Amazonite::EC2
       if value = @transit_gateway_configuration
         params.concat(value.to_query_params("#{prefix}TransitGatewayConfiguration."))
       end
+
+      if value = @device_posture_options
+        params.concat(value.to_query_params("#{prefix}DevicePostureOptions."))
+      end
       params
     end
 
@@ -204,6 +214,7 @@ module Amazonite::EC2
         client_route_enforcement_options: node.xpath_node("*[local-name()='ClientRouteEnforcementOptions']").try { |n| ClientRouteEnforcementOptions.from_xml(n) },
         disconnect_on_session_timeout: Core::XMLValue.bool(node.xpath_node("*[local-name()='DisconnectOnSessionTimeout']")),
         transit_gateway_configuration: node.xpath_node("*[local-name()='TransitGatewayConfiguration']").try { |n| TransitGatewayConfigurationInputStructure.from_xml(n) },
+        device_posture_options: node.xpath_node("*[local-name()='DevicePostureOptions']").try { |n| DevicePostureOptions.from_xml(n) },
       )
     end
 
@@ -231,8 +242,12 @@ module Amazonite::EC2
       if value = @transit_gateway_configuration
         value.validate!
       end
+
+      if value = @device_posture_options
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@client_vpn_endpoint_id, @server_certificate_arn, @connection_log_options, @dns_servers, @vpn_port, @description, @split_tunnel, @dry_run, @security_group_ids, @vpc_id, @self_service_portal, @client_connect_options, @session_timeout_hours, @client_login_banner_options, @client_route_enforcement_options, @disconnect_on_session_timeout, @transit_gateway_configuration)
+    def_equals_and_hash(@client_vpn_endpoint_id, @server_certificate_arn, @connection_log_options, @dns_servers, @vpn_port, @description, @split_tunnel, @dry_run, @security_group_ids, @vpc_id, @self_service_portal, @client_connect_options, @session_timeout_hours, @client_login_banner_options, @client_route_enforcement_options, @disconnect_on_session_timeout, @transit_gateway_configuration, @device_posture_options)
   end
 end

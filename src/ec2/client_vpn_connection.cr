@@ -52,6 +52,10 @@ module Amazonite::EC2
     # The statuses returned by the client connect handler for posture compliance, if applicable.
     property posture_compliance_statuses : Array(String) | Nil
 
+    # The date and time the authorization policy was last evaluated for the client connection, if
+    # applicable.
+    property authorization_policy_last_evaluated_time : String | Nil
+
     def initialize(
       @client_vpn_endpoint_id : String | Nil = nil,
       @timestamp : String | Nil = nil,
@@ -68,6 +72,7 @@ module Amazonite::EC2
       @status : ClientVpnConnectionStatus | Nil = nil,
       @connection_end_time : String | Nil = nil,
       @posture_compliance_statuses : Array(String) | Nil = nil,
+      @authorization_policy_last_evaluated_time : String | Nil = nil,
     )
     end
 
@@ -133,6 +138,10 @@ module Amazonite::EC2
       (@posture_compliance_statuses || [] of String).each_with_index(1) do |item, i|
         params << {"#{prefix}PostureComplianceStatusSet.#{i}", item}
       end
+
+      if value = @authorization_policy_last_evaluated_time
+        params << {"#{prefix}AuthorizationPolicyLastEvaluatedTime", value}
+      end
       params
     end
 
@@ -153,6 +162,7 @@ module Amazonite::EC2
         status: node.xpath_node("*[local-name()='status']").try { |n| ClientVpnConnectionStatus.from_xml(n) },
         connection_end_time: Core::XMLValue.string(node.xpath_node("*[local-name()='connectionEndTime']")),
         posture_compliance_statuses: node.xpath_nodes("*[local-name()='postureComplianceStatusSet']/*[local-name()='item']").map { |n| n.content },
+        authorization_policy_last_evaluated_time: Core::XMLValue.string(node.xpath_node("*[local-name()='authorizationPolicyLastEvaluatedTime']")),
       )
     end
 
@@ -162,6 +172,6 @@ module Amazonite::EC2
       end
     end
 
-    def_equals_and_hash(@client_vpn_endpoint_id, @timestamp, @connection_id, @username, @connection_established_time, @ingress_bytes, @egress_bytes, @ingress_packets, @egress_packets, @client_ip, @client_ipv_6_address, @common_name, @status, @connection_end_time, @posture_compliance_statuses)
+    def_equals_and_hash(@client_vpn_endpoint_id, @timestamp, @connection_id, @username, @connection_established_time, @ingress_bytes, @egress_bytes, @ingress_packets, @egress_packets, @client_ip, @client_ipv_6_address, @common_name, @status, @connection_end_time, @posture_compliance_statuses, @authorization_policy_last_evaluated_time)
   end
 end
