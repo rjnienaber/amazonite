@@ -36,6 +36,8 @@ jobs:
           # the release job fast-forwards master onto this branch, and tagging
           # needs the tag list, so a shallow clone won't do
           fetch-depth: 0
+      - name: refresh apt index
+        run: sudo apt-get update
       - name: install crystal
         uses: crystal-lang/install-crystal@v1
       - name: cache shards

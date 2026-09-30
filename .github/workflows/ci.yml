@@ -37,6 +37,9 @@ jobs:
           # empty for every trigger other than workflow_call, which checkout
           # treats as "use the default ref"
           ref: ${{ inputs.ref }}
+      - name: refresh apt index
+        if: runner.os == 'Linux'
+        run: sudo apt-get update
       - name: install crystal
         uses: crystal-lang/install-crystal@v1
         with:
@@ -88,6 +91,8 @@ jobs:
           # empty for every trigger other than workflow_call, which checkout
           # treats as "use the default ref"
           ref: ${{ inputs.ref }}
+      - name: refresh apt index
+        run: sudo apt-get update
       - name: install crystal
         uses: crystal-lang/install-crystal@v1
         with:
