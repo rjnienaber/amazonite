@@ -12,3 +12,4 @@ tmp/*
 notes.md
 test.cr
 .tool-versions
+/.playwright-mcp/
