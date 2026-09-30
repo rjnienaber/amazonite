@@ -236,7 +236,7 @@ Once you've cloned the repo, have a look at the `scripts` directory for some scr
 * `./scripts/watch_integration.cr`
   * watches for code changes and executes integration tests
 * `./scripts/regenerate.sh`
-  * regenerates every service and syncs the result from `tmp/` into `src/`
+  * regenerates every service and syncs the result from `tmp/` into `src/` and `services/`
 
 `codegen/codegen.cr` (built as `bin/codegen`, or run directly with `crystal run codegen/codegen.cr --`) accepts flags to point it at a different `api-models-aws` checkout, change the output directory, control log verbosity, and restrict which services/protocols get generated. Run it with `-h` for the full list, e.g.:
 

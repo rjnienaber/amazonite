@@ -62,7 +62,7 @@ jobs:
         run: shards run codegen
       - name: validate generated code
         run: |
-          cp -R src/core tmp
+          cp -R src/core tmp/src
           ./scripts/compile.sh
       - name: run unit tests
         run: crystal spec

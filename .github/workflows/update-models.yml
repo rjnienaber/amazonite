@@ -65,7 +65,7 @@ jobs:
         run: |
           # New shapes arrive as untracked files, which git diff won't report -
           # stage first so they show up as adds.
-          git add -A src
+          git add -A src services
 
           # Each module embeds its service's upstream model version as VERSION,
           # which upstream bumps for any model release touching that service -
@@ -73,13 +73,13 @@ jobs:
           # changed only if something other than that one line differs, so a
           # docs-only upstream release doesn't cut a shard release on its own.
           modules="$(
-            git diff --cached --name-only -- src | while read -r file; do
+            git diff --cached --name-only -- src services | while read -r file; do
               if git diff --cached -U0 -- "$file" \
                 | grep -E '^[-+]' \
                 | grep -vE '^(\+\+\+|---)' \
                 | grep -qvE '^[-+] *VERSION *= *"'; then
-                # src/sqs.cr and src/sqs/client.cr both name sqs
-                echo "${file#src/}" | cut -d/ -f1 | sed 's/\.cr$//'
+                # src/sqs.cr and services/sqs/client.cr both name sqs
+                echo "$file" | cut -d/ -f2 | sed 's/\.cr$//'
               fi
             done | sort -u | tr '\n' ' ' | sed 's/ *$//'
           )"

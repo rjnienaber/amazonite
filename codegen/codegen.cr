@@ -71,9 +71,12 @@ module Amazonite::Codegen
       excluded = EXCLUDED_OPERATIONS[service]?
       description.operations.reject! { |op| excluded.includes?(op.name) } if excluded
 
-      src_dir = File.expand_path(cli.output_dir)
-      module_dir = File.join(src_dir, description.module_slug)
-      module_file_path = File.join(src_dir, "#{description.module_slug}.cr")
+      # The generated types live outside src/ so that a bare `crystal docs`
+      # (as run by crystaldoc.info) only sees the small entry files - see
+      # module.cr.j2
+      output_dir = File.expand_path(cli.output_dir)
+      module_dir = File.join(output_dir, "services", description.module_slug)
+      module_file_path = File.join(output_dir, "src", "#{description.module_slug}.cr")
 
       FileUtils.rm_rf(module_dir)
       FileUtils.rm_rf(module_file_path)

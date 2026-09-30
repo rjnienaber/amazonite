@@ -2,7 +2,14 @@ require "json"
 require "xml"
 
 require "./core/*"
-require "./ec2/*"
+
+# Building every service's ~7,000 types is more than third-party doc hosts like
+# crystaldoc.info will run, so a plain `crystal docs` (which sets the docs flag)
+# documents only core and the service modules. The published docs pass the
+# services/ files explicitly to get everything - see .github/workflows/docs.yml
+{% unless flag?(:docs) %}
+  require "../services/ec2/*"
+{% end %}
 
 module Amazonite::EC2
   # this service's own version in api-models-aws (gradle.properties), not

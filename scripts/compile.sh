@@ -2,4 +2,4 @@
 
 set -e
 
-crystal eval 'require "./tmp/*"'
+crystal eval 'require "./tmp/src/*"'

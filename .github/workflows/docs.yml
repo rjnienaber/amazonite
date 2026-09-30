@@ -33,11 +33,14 @@ jobs:
         run: shards install
       - name: generate api docs
         run: |
+          # a bare `crystal docs` skips the generated services (see src/*.cr),
+          # so hand it their files explicitly
           crystal docs \
             --project-name=Amazonite \
             --project-version="$(git rev-parse --short HEAD)" \
             --source-refname="$(git rev-parse HEAD)" \
-            --source-url-pattern="https://github.com/${{ github.repository }}/blob/%{refname}/%{path}#L%{line}"
+            --source-url-pattern="https://github.com/${{ github.repository }}/blob/%{refname}/%{path}#L%{line}" \
+            src/*.cr services/*/*.cr
       # The generator copies the whole type tree into every page and emits the
       # search index twice, which for a project this size is ~13GB against
       # ~130MB of documentation - far past the 1GB a published Pages site is
