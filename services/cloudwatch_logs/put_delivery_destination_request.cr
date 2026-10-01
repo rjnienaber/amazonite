@@ -40,6 +40,12 @@ module Amazonite::CloudWatchLogs
     @[JSON::Field(key: "deliveryDestinationType", converter: ACWL::DeliveryDestinationType)]
     property delivery_destination_type : DeliveryDestinationType | Nil
 
+    # The ARN of an IAM role in your account that CloudWatch Logs assumes to deliver to this delivery
+    # destination. The trust policy of the role must allow CloudWatch Logs to assume it. This
+    # parameter is supported only for X-Ray trace delivery destinations.
+    @[JSON::Field(key: "roleArn")]
+    property role_arn : String | Nil
+
     # An optional list of key-value pairs to associate with the resource.
     #
     # For more information about tagging, see [Tagging Amazon Web Services
@@ -52,6 +58,7 @@ module Amazonite::CloudWatchLogs
       @output_format : OutputFormat | Nil = nil,
       @delivery_destination_configuration : DeliveryDestinationConfiguration | Nil = nil,
       @delivery_destination_type : DeliveryDestinationType | Nil = nil,
+      @role_arn : String | Nil = nil,
       @tags : Hash(String, String) | Nil = nil,
     )
     end
@@ -73,6 +80,6 @@ module Amazonite::CloudWatchLogs
       end
     end
 
-    def_equals_and_hash(@name, @output_format, @delivery_destination_configuration, @delivery_destination_type, @tags)
+    def_equals_and_hash(@name, @output_format, @delivery_destination_configuration, @delivery_destination_type, @role_arn, @tags)
   end
 end

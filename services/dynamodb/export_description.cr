@@ -98,6 +98,11 @@ module Amazonite::DynamoDB
     @[JSON::Field(key: "IncrementalExportSpecification")]
     property incremental_export_specification : IncrementalExportSpecification | Nil
 
+    # The filter criteria applied to the export. When present, only items that match the specified key
+    # conditions and filter expressions are included in the export output.
+    @[JSON::Field(key: "FilterSpecification")]
+    property filter_specification : FilterSpecification | Nil
+
     def initialize(
       @export_arn : String | Nil = nil,
       @export_status : ExportStatus | Nil = nil,
@@ -120,6 +125,7 @@ module Amazonite::DynamoDB
       @item_count : Int64 | Nil = nil,
       @export_type : ExportType | Nil = nil,
       @incremental_export_specification : IncrementalExportSpecification | Nil = nil,
+      @filter_specification : FilterSpecification | Nil = nil,
     )
     end
 
@@ -173,8 +179,12 @@ module Amazonite::DynamoDB
       if value = @incremental_export_specification
         value.validate!
       end
+
+      if value = @filter_specification
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@export_arn, @export_status, @start_time, @end_time, @export_manifest, @table_arn, @table_id, @export_time, @client_token, @s3_bucket, @s3_bucket_owner, @s3_prefix, @s3_sse_algorithm, @s3_sse_kms_key_id, @failure_code, @failure_message, @export_format, @billed_size_bytes, @item_count, @export_type, @incremental_export_specification)
+    def_equals_and_hash(@export_arn, @export_status, @start_time, @end_time, @export_manifest, @table_arn, @table_id, @export_time, @client_token, @s3_bucket, @s3_bucket_owner, @s3_prefix, @s3_sse_algorithm, @s3_sse_kms_key_id, @failure_code, @failure_message, @export_format, @billed_size_bytes, @item_count, @export_type, @incremental_export_specification, @filter_specification)
   end
 end

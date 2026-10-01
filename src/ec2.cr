@@ -14,6 +14,6 @@ require "./core/*"
 module Amazonite::EC2
   # this service's own version in api-models-aws (gradle.properties), not
   # amazonite's shard version - upstream bumps it per model release
-  VERSION     = "1.0.115"
+  VERSION     = "1.0.116"
   API_VERSION = "2016-11-15"
 end

@@ -202,6 +202,17 @@ module Amazonite::EC2
     # you reduce its allocation to zero.
     property zero_size_preference : ZeroSizePreference | Nil
 
+    # Only supported for UltraServers.
+    #
+    # Indicates whether you can launch instances into the Capacity Reservation. A Capacity Reservation
+    # can have the following launch statuses:
+    #
+    # - `launchable` - You can launch instances into the Capacity Reservation.
+    #
+    # - `unlaunchable` - You can't launch instances into the Capacity Reservation. For example, the
+    # Capacity Reservation is not active.
+    property launch_status : CapacityReservationLaunchStatus | Nil
+
     def initialize(
       @capacity_reservation_id : String | Nil = nil,
       @owner_id : String | Nil = nil,
@@ -238,6 +249,7 @@ module Amazonite::EC2
       @adjustment_details : CapacityReservationAdjustmentDetails | Nil = nil,
       @original_start_date : Time | Nil = nil,
       @zero_size_preference : ZeroSizePreference | Nil = nil,
+      @launch_status : CapacityReservationLaunchStatus | Nil = nil,
     )
     end
 
@@ -383,6 +395,10 @@ module Amazonite::EC2
       if value = @zero_size_preference
         params << {"#{prefix}ZeroSizePreference", value.to_json_object_key}
       end
+
+      if value = @launch_status
+        params << {"#{prefix}LaunchStatus", value.to_json_object_key}
+      end
       params
     end
 
@@ -423,6 +439,7 @@ module Amazonite::EC2
         adjustment_details: node.xpath_node("*[local-name()='adjustmentDetails']").try { |n| CapacityReservationAdjustmentDetails.from_xml(n) },
         original_start_date: Core::XMLValue.time(node.xpath_node("*[local-name()='originalStartDate']")),
         zero_size_preference: (n = node.xpath_node("*[local-name()='zeroSizePreference']")) ? AEC::ZeroSizePreference.from_json_object_key?(n.content) : nil,
+        launch_status: (n = node.xpath_node("*[local-name()='launchStatus']")) ? AEC::CapacityReservationLaunchStatus.from_json_object_key?(n.content) : nil,
       )
     end
 
@@ -466,6 +483,6 @@ module Amazonite::EC2
       end
     end
 
-    def_equals_and_hash(@capacity_reservation_id, @owner_id, @capacity_reservation_arn, @availability_zone_id, @instance_type, @instance_platform, @availability_zone, @tenancy, @total_instance_count, @available_instance_count, @ebs_optimized, @ephemeral_storage, @state, @start_date, @end_date, @end_date_type, @instance_match_criteria, @create_date, @tags, @outpost_arn, @capacity_reservation_fleet_id, @placement_group_arn, @capacity_allocations, @reservation_type, @unused_reservation_billing_owner_id, @commitment_info, @delivery_preference, @capacity_block_id, @interruptible, @interruptible_capacity_allocation, @interruption_info, @adjustment_status, @adjustment_details, @original_start_date, @zero_size_preference)
+    def_equals_and_hash(@capacity_reservation_id, @owner_id, @capacity_reservation_arn, @availability_zone_id, @instance_type, @instance_platform, @availability_zone, @tenancy, @total_instance_count, @available_instance_count, @ebs_optimized, @ephemeral_storage, @state, @start_date, @end_date, @end_date_type, @instance_match_criteria, @create_date, @tags, @outpost_arn, @capacity_reservation_fleet_id, @placement_group_arn, @capacity_allocations, @reservation_type, @unused_reservation_billing_owner_id, @commitment_info, @delivery_preference, @capacity_block_id, @interruptible, @interruptible_capacity_allocation, @interruption_info, @adjustment_status, @adjustment_details, @original_start_date, @zero_size_preference, @launch_status)
   end
 end

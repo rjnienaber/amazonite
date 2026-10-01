@@ -53,6 +53,11 @@ module Amazonite::CloudWatchLogs
     @[JSON::Field(key: "deliveryDestinationConfiguration")]
     property delivery_destination_configuration : DeliveryDestinationConfiguration | Nil
 
+    # The ARN of the IAM role that CloudWatch Logs assumes to deliver to this delivery destination.
+    # This field is present only for X-Ray trace delivery destinations that were created with a role.
+    @[JSON::Field(key: "roleArn")]
+    property role_arn : String | Nil
+
     # The tags that have been assigned to this delivery destination.
     @[JSON::Field(key: "tags")]
     property tags : Hash(String, String) | Nil
@@ -63,6 +68,7 @@ module Amazonite::CloudWatchLogs
       @delivery_destination_type : DeliveryDestinationType | Nil = nil,
       @output_format : OutputFormat | Nil = nil,
       @delivery_destination_configuration : DeliveryDestinationConfiguration | Nil = nil,
+      @role_arn : String | Nil = nil,
       @tags : Hash(String, String) | Nil = nil,
     )
     end
@@ -84,6 +90,6 @@ module Amazonite::CloudWatchLogs
       end
     end
 
-    def_equals_and_hash(@name, @arn, @delivery_destination_type, @output_format, @delivery_destination_configuration, @tags)
+    def_equals_and_hash(@name, @arn, @delivery_destination_type, @output_format, @delivery_destination_configuration, @role_arn, @tags)
   end
 end

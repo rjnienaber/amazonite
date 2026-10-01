@@ -69,6 +69,12 @@ module Amazonite::DynamoDB
     @[JSON::Field(key: "IncrementalExportSpecification")]
     property incremental_export_specification : IncrementalExportSpecification | Nil
 
+    # The criteria used to filter which items are included in the point-in-time export. When you
+    # specify this parameter, only items that match the key conditions and filter expressions are
+    # exported.
+    @[JSON::Field(key: "FilterSpecification")]
+    property filter_specification : FilterSpecification | Nil
+
     def initialize(
       @table_arn : String,
       @s3_bucket : String,
@@ -81,6 +87,7 @@ module Amazonite::DynamoDB
       @export_format : ExportFormat | Nil = nil,
       @export_type : ExportType | Nil = nil,
       @incremental_export_specification : IncrementalExportSpecification | Nil = nil,
+      @filter_specification : FilterSpecification | Nil = nil,
     )
     end
 
@@ -117,8 +124,12 @@ module Amazonite::DynamoDB
       if value = @incremental_export_specification
         value.validate!
       end
+
+      if value = @filter_specification
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@table_arn, @export_time, @client_token, @s3_bucket, @s3_bucket_owner, @s3_prefix, @s3_sse_algorithm, @s3_sse_kms_key_id, @export_format, @export_type, @incremental_export_specification)
+    def_equals_and_hash(@table_arn, @export_time, @client_token, @s3_bucket, @s3_bucket_owner, @s3_prefix, @s3_sse_algorithm, @s3_sse_kms_key_id, @export_format, @export_type, @incremental_export_specification, @filter_specification)
   end
 end
