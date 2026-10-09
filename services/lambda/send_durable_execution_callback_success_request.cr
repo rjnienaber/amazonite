@@ -27,7 +27,7 @@ module Amazonite::Lambda
 
       if value = @result
         raise Core::ValidationError.new("Result length must be >= 0") if value.size < 0
-        raise Core::ValidationError.new("Result length must be <= 262144") if value.size > 262144
+        raise Core::ValidationError.new("Result length must be <= 1048576") if value.size > 1048576
       end
     end
 

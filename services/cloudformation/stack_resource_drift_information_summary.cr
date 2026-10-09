@@ -17,9 +17,10 @@ module Amazonite::CloudFormation
     # Any resources that don't currently support drift detection have a status of `NOT_CHECKED`. For
     # more information, see [Resource type support for imports and drift
     # detection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-supported-resources.html).
-    # If you performed an ContinueUpdateRollback operation on a stack, any resources included in
-    # `ResourcesToSkip` will also have a status of `NOT_CHECKED`. For more information about skipping
-    # resources during rollback operations, see [Continue rolling back an
+    # If you performed a ContinueUpdateRollback operation on a stack, resources skipped using
+    # `ResourcesToSkip` or `ForceRollback` also have a status of `NOT_CHECKED`. To detect whether a
+    # skipped resource actually differs from the template, run DetectStackResourceDrift. For more
+    # information about skipping resources during rollback operations, see [Continue rolling back an
     # update](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-continueupdaterollback.html)
     # in the *CloudFormation User Guide*.
     #

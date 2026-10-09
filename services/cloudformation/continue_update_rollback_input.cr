@@ -59,11 +59,36 @@ module Amazonite::CloudFormation
     # CloudFormation successfully received them.
     property client_request_token : String | Nil
 
+    # Specifies whether CloudFormation forces the rollback to continue by skipping resources currently
+    # in the `UPDATE_FAILED` state. Use this instead of listing each resource individually in
+    # `ResourcesToSkip`. Only resources that entered the `UPDATE_FAILED` state because a rollback
+    # failed are skipped. If you don't specify a value, the default is `false` and CloudFormation
+    # doesn't skip any resources.
+    #
+    # `ForceRollback` and `ResourcesToSkip` are mutually exclusive. Specifying both in the same
+    # request returns a validation error.
+    #
+    # We recommend that you
+    # [troubleshoot](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html#troubleshooting-errors-update-rollback-failed)
+    # resources before skipping them. CloudFormation sets the status of the skipped resources to
+    # `UPDATE_COMPLETE` and continues to roll back the stack, including resources in nested stacks.
+    # After the rollback completes, the skipped resources no longer match the resources in the stack
+    # template. Before performing another stack update, you must update the stack or resources to be
+    # consistent with each other. If you don't, subsequent stack updates might fail, and the stack
+    # will become unrecoverable.
+    #
+    # Drift detection reports skipped resources as `NOT_CHECKED`. For guidance, see [Continue rolling
+    # back an
+    # update](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-continueupdaterollback.html)
+    # in the *CloudFormation User Guide*.
+    property force_rollback : Bool | Nil
+
     def initialize(
       @stack_name : String,
       @role_arn : String | Nil = nil,
       @resources_to_skip : Array(String) | Nil = nil,
       @client_request_token : String | Nil = nil,
+      @force_rollback : Bool | Nil = nil,
     )
     end
 
@@ -83,6 +108,10 @@ module Amazonite::CloudFormation
       if value = @client_request_token
         params << {"#{prefix}ClientRequestToken", value}
       end
+
+      if value = @force_rollback
+        params << {"#{prefix}ForceRollback", Core::QueryValue.bool(value)}
+      end
       params
     end
 
@@ -92,6 +121,7 @@ module Amazonite::CloudFormation
         role_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='RoleARN']")),
         resources_to_skip: node.xpath_nodes("*[local-name()='ResourcesToSkip']/*[local-name()='member']").map { |n| n.content },
         client_request_token: Core::XMLValue.string(node.xpath_node("*[local-name()='ClientRequestToken']")),
+        force_rollback: Core::XMLValue.bool(node.xpath_node("*[local-name()='ForceRollback']")),
       )
     end
 
@@ -113,6 +143,6 @@ module Amazonite::CloudFormation
       end
     end
 
-    def_equals_and_hash(@stack_name, @role_arn, @resources_to_skip, @client_request_token)
+    def_equals_and_hash(@stack_name, @role_arn, @resources_to_skip, @client_request_token, @force_rollback)
   end
 end

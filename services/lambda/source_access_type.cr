@@ -10,17 +10,31 @@ module Amazonite::Lambda
     VirtualHost
     ClientCertificateTlsAuth
     ServerRootCaCertificate
+    OauthbearerAuth
+    OauthbearerScope
+    OauthbearerAudience
+    OauthbearerLogicalCluster
+    OauthbearerIdentityPool
+    IamAuth
+    IamOauthbearerAuth
 
     def self.to_json(e : SourceAccessType, json : JSON::Builder) : Nil
       value = case e
-              when AL::SourceAccessType::BasicAuth                then "BASIC_AUTH"
-              when AL::SourceAccessType::VpcSubnet                then "VPC_SUBNET"
-              when AL::SourceAccessType::VpcSecurityGroup         then "VPC_SECURITY_GROUP"
-              when AL::SourceAccessType::SaslScram512Auth         then "SASL_SCRAM_512_AUTH"
-              when AL::SourceAccessType::SaslScram256Auth         then "SASL_SCRAM_256_AUTH"
-              when AL::SourceAccessType::VirtualHost              then "VIRTUAL_HOST"
-              when AL::SourceAccessType::ClientCertificateTlsAuth then "CLIENT_CERTIFICATE_TLS_AUTH"
-              when AL::SourceAccessType::ServerRootCaCertificate  then "SERVER_ROOT_CA_CERTIFICATE"
+              when AL::SourceAccessType::BasicAuth                 then "BASIC_AUTH"
+              when AL::SourceAccessType::VpcSubnet                 then "VPC_SUBNET"
+              when AL::SourceAccessType::VpcSecurityGroup          then "VPC_SECURITY_GROUP"
+              when AL::SourceAccessType::SaslScram512Auth          then "SASL_SCRAM_512_AUTH"
+              when AL::SourceAccessType::SaslScram256Auth          then "SASL_SCRAM_256_AUTH"
+              when AL::SourceAccessType::VirtualHost               then "VIRTUAL_HOST"
+              when AL::SourceAccessType::ClientCertificateTlsAuth  then "CLIENT_CERTIFICATE_TLS_AUTH"
+              when AL::SourceAccessType::ServerRootCaCertificate   then "SERVER_ROOT_CA_CERTIFICATE"
+              when AL::SourceAccessType::OauthbearerAuth           then "OAUTHBEARER_AUTH"
+              when AL::SourceAccessType::OauthbearerScope          then "OAUTHBEARER_SCOPE"
+              when AL::SourceAccessType::OauthbearerAudience       then "OAUTHBEARER_AUDIENCE"
+              when AL::SourceAccessType::OauthbearerLogicalCluster then "OAUTHBEARER_LOGICAL_CLUSTER"
+              when AL::SourceAccessType::OauthbearerIdentityPool   then "OAUTHBEARER_IDENTITY_POOL"
+              when AL::SourceAccessType::IamAuth                   then "IAM_AUTH"
+              when AL::SourceAccessType::IamOauthbearerAuth        then "IAM_OAUTHBEARER_AUTH"
               else
                 raise Exception.new("unknown enum value for 'SourceAccessType' when serializing to json: '#{e}'")
               end
@@ -38,6 +52,13 @@ module Amazonite::Lambda
       when "VIRTUAL_HOST"                then AL::SourceAccessType::VirtualHost
       when "CLIENT_CERTIFICATE_TLS_AUTH" then AL::SourceAccessType::ClientCertificateTlsAuth
       when "SERVER_ROOT_CA_CERTIFICATE"  then AL::SourceAccessType::ServerRootCaCertificate
+      when "OAUTHBEARER_AUTH"            then AL::SourceAccessType::OauthbearerAuth
+      when "OAUTHBEARER_SCOPE"           then AL::SourceAccessType::OauthbearerScope
+      when "OAUTHBEARER_AUDIENCE"        then AL::SourceAccessType::OauthbearerAudience
+      when "OAUTHBEARER_LOGICAL_CLUSTER" then AL::SourceAccessType::OauthbearerLogicalCluster
+      when "OAUTHBEARER_IDENTITY_POOL"   then AL::SourceAccessType::OauthbearerIdentityPool
+      when "IAM_AUTH"                    then AL::SourceAccessType::IamAuth
+      when "IAM_OAUTHBEARER_AUTH"        then AL::SourceAccessType::IamOauthbearerAuth
       else
         raise Exception.new("unknown enum value for 'SourceAccessType' when deserializing from json: '#{value}'")
       end
@@ -45,14 +66,21 @@ module Amazonite::Lambda
 
     def to_json_object_key : String
       case self
-      when AL::SourceAccessType::BasicAuth                then "BASIC_AUTH"
-      when AL::SourceAccessType::VpcSubnet                then "VPC_SUBNET"
-      when AL::SourceAccessType::VpcSecurityGroup         then "VPC_SECURITY_GROUP"
-      when AL::SourceAccessType::SaslScram512Auth         then "SASL_SCRAM_512_AUTH"
-      when AL::SourceAccessType::SaslScram256Auth         then "SASL_SCRAM_256_AUTH"
-      when AL::SourceAccessType::VirtualHost              then "VIRTUAL_HOST"
-      when AL::SourceAccessType::ClientCertificateTlsAuth then "CLIENT_CERTIFICATE_TLS_AUTH"
-      when AL::SourceAccessType::ServerRootCaCertificate  then "SERVER_ROOT_CA_CERTIFICATE"
+      when AL::SourceAccessType::BasicAuth                 then "BASIC_AUTH"
+      when AL::SourceAccessType::VpcSubnet                 then "VPC_SUBNET"
+      when AL::SourceAccessType::VpcSecurityGroup          then "VPC_SECURITY_GROUP"
+      when AL::SourceAccessType::SaslScram512Auth          then "SASL_SCRAM_512_AUTH"
+      when AL::SourceAccessType::SaslScram256Auth          then "SASL_SCRAM_256_AUTH"
+      when AL::SourceAccessType::VirtualHost               then "VIRTUAL_HOST"
+      when AL::SourceAccessType::ClientCertificateTlsAuth  then "CLIENT_CERTIFICATE_TLS_AUTH"
+      when AL::SourceAccessType::ServerRootCaCertificate   then "SERVER_ROOT_CA_CERTIFICATE"
+      when AL::SourceAccessType::OauthbearerAuth           then "OAUTHBEARER_AUTH"
+      when AL::SourceAccessType::OauthbearerScope          then "OAUTHBEARER_SCOPE"
+      when AL::SourceAccessType::OauthbearerAudience       then "OAUTHBEARER_AUDIENCE"
+      when AL::SourceAccessType::OauthbearerLogicalCluster then "OAUTHBEARER_LOGICAL_CLUSTER"
+      when AL::SourceAccessType::OauthbearerIdentityPool   then "OAUTHBEARER_IDENTITY_POOL"
+      when AL::SourceAccessType::IamAuth                   then "IAM_AUTH"
+      when AL::SourceAccessType::IamOauthbearerAuth        then "IAM_OAUTHBEARER_AUTH"
       else
         raise Exception.new("unknown enum value for 'SourceAccessType' when serializing to json: '#{self}'")
       end
@@ -68,6 +96,13 @@ module Amazonite::Lambda
       when "VIRTUAL_HOST"                then AL::SourceAccessType::VirtualHost
       when "CLIENT_CERTIFICATE_TLS_AUTH" then AL::SourceAccessType::ClientCertificateTlsAuth
       when "SERVER_ROOT_CA_CERTIFICATE"  then AL::SourceAccessType::ServerRootCaCertificate
+      when "OAUTHBEARER_AUTH"            then AL::SourceAccessType::OauthbearerAuth
+      when "OAUTHBEARER_SCOPE"           then AL::SourceAccessType::OauthbearerScope
+      when "OAUTHBEARER_AUDIENCE"        then AL::SourceAccessType::OauthbearerAudience
+      when "OAUTHBEARER_LOGICAL_CLUSTER" then AL::SourceAccessType::OauthbearerLogicalCluster
+      when "OAUTHBEARER_IDENTITY_POOL"   then AL::SourceAccessType::OauthbearerIdentityPool
+      when "IAM_AUTH"                    then AL::SourceAccessType::IamAuth
+      when "IAM_OAUTHBEARER_AUTH"        then AL::SourceAccessType::IamOauthbearerAuth
       else
         nil
       end

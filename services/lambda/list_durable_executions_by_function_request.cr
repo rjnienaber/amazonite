@@ -10,7 +10,8 @@ module Amazonite::Lambda
     @[JSON::Field(key: "FunctionName", ignore: true)]
     property function_name : String = ""
 
-    # The function version or alias. If not specified, lists executions for the $LATEST version.
+    # The function version to filter executions by. If you don't specify a qualifier, this operation
+    # returns executions across all versions of the Lambda function.
     @[JSON::Field(key: "Qualifier", ignore: true)]
     property qualifier : String | Nil
 

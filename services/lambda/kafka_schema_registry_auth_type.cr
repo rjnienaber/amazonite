@@ -5,12 +5,14 @@ module Amazonite::Lambda
     BasicAuth
     ClientCertificateTlsAuth
     ServerRootCaCertificate
+    OauthbearerAuth
 
     def self.to_json(e : KafkaSchemaRegistryAuthType, json : JSON::Builder) : Nil
       value = case e
               when AL::KafkaSchemaRegistryAuthType::BasicAuth                then "BASIC_AUTH"
               when AL::KafkaSchemaRegistryAuthType::ClientCertificateTlsAuth then "CLIENT_CERTIFICATE_TLS_AUTH"
               when AL::KafkaSchemaRegistryAuthType::ServerRootCaCertificate  then "SERVER_ROOT_CA_CERTIFICATE"
+              when AL::KafkaSchemaRegistryAuthType::OauthbearerAuth          then "OAUTHBEARER_AUTH"
               else
                 raise Exception.new("unknown enum value for 'KafkaSchemaRegistryAuthType' when serializing to json: '#{e}'")
               end
@@ -23,6 +25,7 @@ module Amazonite::Lambda
       when "BASIC_AUTH"                  then AL::KafkaSchemaRegistryAuthType::BasicAuth
       when "CLIENT_CERTIFICATE_TLS_AUTH" then AL::KafkaSchemaRegistryAuthType::ClientCertificateTlsAuth
       when "SERVER_ROOT_CA_CERTIFICATE"  then AL::KafkaSchemaRegistryAuthType::ServerRootCaCertificate
+      when "OAUTHBEARER_AUTH"            then AL::KafkaSchemaRegistryAuthType::OauthbearerAuth
       else
         raise Exception.new("unknown enum value for 'KafkaSchemaRegistryAuthType' when deserializing from json: '#{value}'")
       end
@@ -33,6 +36,7 @@ module Amazonite::Lambda
       when AL::KafkaSchemaRegistryAuthType::BasicAuth                then "BASIC_AUTH"
       when AL::KafkaSchemaRegistryAuthType::ClientCertificateTlsAuth then "CLIENT_CERTIFICATE_TLS_AUTH"
       when AL::KafkaSchemaRegistryAuthType::ServerRootCaCertificate  then "SERVER_ROOT_CA_CERTIFICATE"
+      when AL::KafkaSchemaRegistryAuthType::OauthbearerAuth          then "OAUTHBEARER_AUTH"
       else
         raise Exception.new("unknown enum value for 'KafkaSchemaRegistryAuthType' when serializing to json: '#{self}'")
       end
@@ -43,6 +47,7 @@ module Amazonite::Lambda
       when "BASIC_AUTH"                  then AL::KafkaSchemaRegistryAuthType::BasicAuth
       when "CLIENT_CERTIFICATE_TLS_AUTH" then AL::KafkaSchemaRegistryAuthType::ClientCertificateTlsAuth
       when "SERVER_ROOT_CA_CERTIFICATE"  then AL::KafkaSchemaRegistryAuthType::ServerRootCaCertificate
+      when "OAUTHBEARER_AUTH"            then AL::KafkaSchemaRegistryAuthType::OauthbearerAuth
       else
         nil
       end

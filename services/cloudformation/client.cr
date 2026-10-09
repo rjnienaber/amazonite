@@ -116,6 +116,9 @@ module Amazonite::CloudFormation
     # in the *CloudFormation User Guide*. For information for troubleshooting a failed update
     # rollback, see [Update rollback
     # failed](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html#troubleshooting-errors-update-rollback-failed).
+    #
+    # `ForceRollback` and `ResourcesToSkip` are mutually exclusive. For details, see
+    # ContinueUpdateRollbackInput$ForceRollback.
     def continue_update_rollback(input : ACF::ContinueUpdateRollbackInput) : Core::ParsedResponse(ACF::ContinueUpdateRollbackOutput)
       Log.info { "performing 'ContinueUpdateRollback' operation" }
       input.validate! if config.validate_input?
