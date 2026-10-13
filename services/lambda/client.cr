@@ -10,9 +10,9 @@ module Amazonite::Lambda
       super("AWSGirApiService", "lambda", "1.0", EXCEPTION_FACTORY, config)
     end
 
-    # Deletes a Lambda function. To delete a specific function version, use the `Qualifier` parameter.
-    # Otherwise, all versions and aliases are deleted. This doesn't require the user to have explicit
-    # permissions for DeleteAlias.
+    # Deletes a Lambda Event Function. To delete a specific function version, use the `Qualifier`
+    # parameter. Otherwise, all versions and aliases are deleted. This doesn't require the user to
+    # have explicit permissions for DeleteAlias.
     #
     # A deleted Lambda function cannot be recovered. Ensure that you specify the correct function name
     # and version before deleting.
@@ -301,7 +301,7 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::ListFunctionVersionsByCapacityProviderResponse).new(response)
     end
 
-    # Creates a capacity provider that manages compute resources for Lambda functions
+    # Creates a capacity provider that manages compute resources for Lambda Event Functions
     def create_capacity_provider(input : AL::CreateCapacityProviderRequest) : Core::ParsedResponse(AL::CreateCapacityProviderResponse)
       Log.info { "performing 'CreateCapacityProvider' operation" }
       input.validate! if config.validate_input?
@@ -563,8 +563,8 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::GetDurableExecutionResponse).new(response)
     end
 
-    # Creates a mapping between an event source and an Lambda function. Lambda reads items from the
-    # event source and invokes the function.
+    # Creates a mapping between an event source and an Lambda Event Function. Lambda reads items from
+    # the event source and invokes the function.
     #
     # For details about how to configure different event sources, see the following topics.
     #
@@ -826,8 +826,9 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::Concurrency).new(response)
     end
 
-    # Updates a Lambda function's code. If code signing is enabled for the function, the code package
-    # must be signed by a trusted publisher. For more information, see [Configuring code signing for
+    # Updates a Lambda Event Function's code. If code signing is enabled for the function, the code
+    # package must be signed by a trusted publisher. For more information, see [Configuring code
+    # signing for
     # Lambda](https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html).
     #
     # If the function's package type is `Image`, then you must specify the code package in `ImageUri`
@@ -859,7 +860,7 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::FunctionConfiguration).new(response)
     end
 
-    # Modify the version-specific settings of a Lambda function.
+    # Modifies the version-specific settings of a Lambda Event Function.
     #
     # When you update a function, Lambda provisions an instance of the function and its supporting
     # resources. If your function connects to a VPC, this process can take a minute. During this time,
@@ -956,8 +957,8 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::GetFunctionCodeSigningConfigResponse).new(response)
     end
 
-    # Returns the version-specific settings of a Lambda function or version. The output includes only
-    # options that can vary between versions of a function. To modify these settings, use
+    # Returns the version-specific settings of a Lambda Event Function or version. The output includes
+    # only options that can vary between versions of a function. To modify these settings, use
     # UpdateFunctionConfiguration.
     #
     # To get all of a function's details, including function-level settings, use GetFunction.
@@ -1058,8 +1059,8 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::GetRuntimeManagementConfigResponse).new(response)
     end
 
-    # Invokes a Lambda function. You can invoke a function synchronously (and wait for the response),
-    # or asynchronously. By default, Lambda invokes your function synchronously (i.e.
+    # Invokes a Lambda Event Function. You can invoke a function synchronously (and wait for the
+    # response), or asynchronously. By default, Lambda invokes your function synchronously (i.e.
     # the`InvocationType` is `RequestResponse`). To invoke a function asynchronously, set
     # `InvocationType` to `Event`. Lambda passes the `ClientContext` object to your function for
     # synchronous invocations only.
@@ -1305,7 +1306,7 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::UpdateFunctionUrlConfigResponse).new(response)
     end
 
-    # Creates a Lambda function. To create a function, you need a [deployment
+    # Creates a Lambda Event Function. To create a function, you need a [deployment
     # package](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-package.html) and an
     # [execution
     # role](https://docs.aws.amazon.com/lambda/latest/dg/intro-permission-model.html#lambda-intro-execution-role).
@@ -1369,8 +1370,8 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::FunctionConfiguration).new(response)
     end
 
-    # Returns a list of Lambda functions, with the version-specific configuration of each. Lambda
-    # returns up to 50 functions per call.
+    # Returns a list of Lambda Event Functions, with the version-specific configuration of each.
+    # Lambda returns up to 50 functions per call.
     #
     # Set `FunctionVersion` to `ALL` to include all published versions of each function in addition to
     # the unpublished version.
@@ -1404,8 +1405,8 @@ module Amazonite::Lambda
     end
 
     # Creates an [alias](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html) for
-    # a Lambda function version. Use aliases to provide clients with a function identifier that you
-    # can update to invoke a different version.
+    # a Lambda Event Function version. Use aliases to provide clients with a function identifier that
+    # you can update to invoke a different version.
     #
     # You can also map an alias to split invocation requests between two versions. Use the
     # `RoutingConfig` parameter to specify a second version and the percentage of invocation requests
@@ -1419,7 +1420,7 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::AliasConfiguration).new(response)
     end
 
-    # Returns details about a Lambda function
+    # Returns details about a Lambda Event Function
     # [alias](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html).
     def get_alias(input : AL::GetAliasRequest) : Core::ParsedResponse(AL::AliasConfiguration)
       Log.info { "performing 'GetAlias' operation" }
@@ -1430,7 +1431,7 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::AliasConfiguration).new(response)
     end
 
-    # Updates the configuration of a Lambda function
+    # Updates the configuration of a Lambda Event Function
     # [alias](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html).
     def update_alias(input : AL::UpdateAliasRequest) : Core::ParsedResponse(AL::AliasConfiguration)
       Log.info { "performing 'UpdateAlias' operation" }
@@ -1441,7 +1442,7 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::AliasConfiguration).new(response)
     end
 
-    # Deletes a Lambda function
+    # Deletes a Lambda Event Function
     # [alias](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html).
     def delete_alias(input : AL::DeleteAliasRequest) : Core::Response
       Log.info { "performing 'DeleteAlias' operation" }
@@ -1454,7 +1455,7 @@ module Amazonite::Lambda
 
     # Returns a list of
     # [aliases](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html) for a Lambda
-    # function.
+    # Event Function.
     def list_aliases(input : AL::ListAliasesRequest) : Core::ParsedResponse(AL::ListAliasesResponse)
       Log.info { "performing 'ListAliases' operation" }
       input.validate! if config.validate_input?
