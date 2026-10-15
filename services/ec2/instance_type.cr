@@ -1430,6 +1430,15 @@ module Amazonite::EC2
     R9gd48xlarge
     R9gdMetal48xl
     M9gMedium
+    T8iNano
+    T8iMicro
+    T8iSmall
+    T8iMedium
+    I8gMetal48xl
+    R8gb48xlarge
+    R8gbMetal48xl
+    M9gdMedium
+    Trn2u48xlarge
 
     def self.to_json(e : InstanceType, json : JSON::Builder) : Nil
       value = case e
@@ -2861,6 +2870,15 @@ module Amazonite::EC2
               when AEC::InstanceType::R9gd48xlarge       then "r9gd.48xlarge"
               when AEC::InstanceType::R9gdMetal48xl      then "r9gd.metal-48xl"
               when AEC::InstanceType::M9gMedium          then "m9g.medium"
+              when AEC::InstanceType::T8iNano            then "t8i.nano"
+              when AEC::InstanceType::T8iMicro           then "t8i.micro"
+              when AEC::InstanceType::T8iSmall           then "t8i.small"
+              when AEC::InstanceType::T8iMedium          then "t8i.medium"
+              when AEC::InstanceType::I8gMetal48xl       then "i8g.metal-48xl"
+              when AEC::InstanceType::R8gb48xlarge       then "r8gb.48xlarge"
+              when AEC::InstanceType::R8gbMetal48xl      then "r8gb.metal-48xl"
+              when AEC::InstanceType::M9gdMedium         then "m9gd.medium"
+              when AEC::InstanceType::Trn2u48xlarge      then "trn2u.48xlarge"
               else
                 raise Exception.new("unknown enum value for 'InstanceType' when serializing to json: '#{e}'")
               end
@@ -4298,6 +4316,15 @@ module Amazonite::EC2
       when "r9gd.48xlarge"        then AEC::InstanceType::R9gd48xlarge
       when "r9gd.metal-48xl"      then AEC::InstanceType::R9gdMetal48xl
       when "m9g.medium"           then AEC::InstanceType::M9gMedium
+      when "t8i.nano"             then AEC::InstanceType::T8iNano
+      when "t8i.micro"            then AEC::InstanceType::T8iMicro
+      when "t8i.small"            then AEC::InstanceType::T8iSmall
+      when "t8i.medium"           then AEC::InstanceType::T8iMedium
+      when "i8g.metal-48xl"       then AEC::InstanceType::I8gMetal48xl
+      when "r8gb.48xlarge"        then AEC::InstanceType::R8gb48xlarge
+      when "r8gb.metal-48xl"      then AEC::InstanceType::R8gbMetal48xl
+      when "m9gd.medium"          then AEC::InstanceType::M9gdMedium
+      when "trn2u.48xlarge"       then AEC::InstanceType::Trn2u48xlarge
       else
         raise Exception.new("unknown enum value for 'InstanceType' when deserializing from json: '#{value}'")
       end
@@ -5733,6 +5760,15 @@ module Amazonite::EC2
       when AEC::InstanceType::R9gd48xlarge       then "r9gd.48xlarge"
       when AEC::InstanceType::R9gdMetal48xl      then "r9gd.metal-48xl"
       when AEC::InstanceType::M9gMedium          then "m9g.medium"
+      when AEC::InstanceType::T8iNano            then "t8i.nano"
+      when AEC::InstanceType::T8iMicro           then "t8i.micro"
+      when AEC::InstanceType::T8iSmall           then "t8i.small"
+      when AEC::InstanceType::T8iMedium          then "t8i.medium"
+      when AEC::InstanceType::I8gMetal48xl       then "i8g.metal-48xl"
+      when AEC::InstanceType::R8gb48xlarge       then "r8gb.48xlarge"
+      when AEC::InstanceType::R8gbMetal48xl      then "r8gb.metal-48xl"
+      when AEC::InstanceType::M9gdMedium         then "m9gd.medium"
+      when AEC::InstanceType::Trn2u48xlarge      then "trn2u.48xlarge"
       else
         raise Exception.new("unknown enum value for 'InstanceType' when serializing to json: '#{self}'")
       end
@@ -7168,6 +7204,15 @@ module Amazonite::EC2
       when "r9gd.48xlarge"        then AEC::InstanceType::R9gd48xlarge
       when "r9gd.metal-48xl"      then AEC::InstanceType::R9gdMetal48xl
       when "m9g.medium"           then AEC::InstanceType::M9gMedium
+      when "t8i.nano"             then AEC::InstanceType::T8iNano
+      when "t8i.micro"            then AEC::InstanceType::T8iMicro
+      when "t8i.small"            then AEC::InstanceType::T8iSmall
+      when "t8i.medium"           then AEC::InstanceType::T8iMedium
+      when "i8g.metal-48xl"       then AEC::InstanceType::I8gMetal48xl
+      when "r8gb.48xlarge"        then AEC::InstanceType::R8gb48xlarge
+      when "r8gb.metal-48xl"      then AEC::InstanceType::R8gbMetal48xl
+      when "m9gd.medium"          then AEC::InstanceType::M9gdMedium
+      when "trn2u.48xlarge"       then AEC::InstanceType::Trn2u48xlarge
       else
         nil
       end

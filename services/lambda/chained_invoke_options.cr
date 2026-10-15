@@ -14,9 +14,20 @@ module Amazonite::Lambda
     @[JSON::Field(key: "TenantId")]
     property tenant_id : String | Nil
 
+    # The optional X-Ray trace header to use when starting the chained invocation. If you omit this
+    # value, the child invocation inherits the parent durable execution's trace header.
+    #
+    # Specify this value on the `START` update for the chained invocation operation. For more
+    # information about the header format, see [Tracing
+    # header](https://docs.aws.amazon.com/xray/latest/devguide/xray-concepts.html#xray-concepts-tracingheader)
+    # in the *X-Ray Developer Guide*.
+    @[JSON::Field(key: "XAmznTraceId")]
+    property x_amzn_trace_id : String | Nil
+
     def initialize(
       @function_name : String,
       @tenant_id : String | Nil = nil,
+      @x_amzn_trace_id : String | Nil = nil,
     )
     end
 
@@ -32,8 +43,13 @@ module Amazonite::Lambda
         raise Core::ValidationError.new("TenantId length must be <= 256") if value.size > 256
         raise Core::ValidationError.new("TenantId does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9\\._:\\/=+\\-@ ]+$"))
       end
+
+      if value = @x_amzn_trace_id
+        raise Core::ValidationError.new("XAmznTraceId length must be >= 0") if value.size < 0
+        raise Core::ValidationError.new("XAmznTraceId length must be <= 8192") if value.size > 8192
+      end
     end
 
-    def_equals_and_hash(@function_name, @tenant_id)
+    def_equals_and_hash(@function_name, @tenant_id, @x_amzn_trace_id)
   end
 end

@@ -76,7 +76,7 @@ module Amazonite::Lambda
       if value = @runtime_version_arn
         raise Core::ValidationError.new("RuntimeVersionArn length must be >= 26") if value.size < 26
         raise Core::ValidationError.new("RuntimeVersionArn length must be <= 2048") if value.size > 2048
-        raise Core::ValidationError.new("RuntimeVersionArn does not match the required pattern") unless value.matches?(Regex.new("^arn:(aws[a-zA-Z-]*):lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}::runtime:.+$"))
+        raise Core::ValidationError.new("RuntimeVersionArn does not match the required pattern") unless value.matches?(Regex.new("^((arn:(aws[a-zA-Z-]*):lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}::runtime:.+)|(arn:(aws[a-zA-Z-]*):lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:runtime/[A-Za-z0-9_.-]{1,128}/version/[A-Za-z0-9_.-]{1,128}))$"))
       end
     end
 
