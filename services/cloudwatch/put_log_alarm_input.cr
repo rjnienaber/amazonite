@@ -148,6 +148,11 @@ module Amazonite::CloudWatch
     @[JSON::Field(key: "WarmUpConfiguration")]
     property warm_up_configuration : WarmUpConfiguration | Nil
 
+    # Settings that change the content of the notifications and events that the alarm sends when its
+    # state changes. These settings apply to the alarm's actions, whichever state triggers them.
+    @[JSON::Field(key: "ActionConfiguration")]
+    property action_configuration : ActionConfiguration | Nil
+
     def initialize(
       @alarm_name : String,
       @scheduled_query_configuration : ScheduledQueryConfiguration,
@@ -165,6 +170,7 @@ module Amazonite::CloudWatch
       @treat_missing_data : String | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
       @warm_up_configuration : WarmUpConfiguration | Nil = nil,
+      @action_configuration : ActionConfiguration | Nil = nil,
     )
     end
 
@@ -218,8 +224,12 @@ module Amazonite::CloudWatch
       if value = @warm_up_configuration
         value.validate!
       end
+
+      if value = @action_configuration
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@alarm_name, @alarm_description, @scheduled_query_configuration, @action_log_line_count, @action_log_line_role_arn, @actions_enabled, @ok_actions, @alarm_actions, @insufficient_data_actions, @query_results_to_evaluate, @query_results_to_alarm, @threshold, @comparison_operator, @treat_missing_data, @tags, @warm_up_configuration)
+    def_equals_and_hash(@alarm_name, @alarm_description, @scheduled_query_configuration, @action_log_line_count, @action_log_line_role_arn, @actions_enabled, @ok_actions, @alarm_actions, @insufficient_data_actions, @query_results_to_evaluate, @query_results_to_alarm, @threshold, @comparison_operator, @treat_missing_data, @tags, @warm_up_configuration, @action_configuration)
   end
 end

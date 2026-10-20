@@ -125,6 +125,11 @@ module Amazonite::CloudWatch
     @[JSON::Field(key: "WarmUpConfiguration")]
     property warm_up_configuration : WarmUpConfiguration | Nil
 
+    # Settings that change the content of the notifications and events that the alarm sends when its
+    # state changes. These settings apply to the alarm's actions, whichever state triggers them.
+    @[JSON::Field(key: "ActionConfiguration")]
+    property action_configuration : ActionConfiguration | Nil
+
     def initialize(
       @alarm_name : String | Nil = nil,
       @alarm_arn : String | Nil = nil,
@@ -149,6 +154,7 @@ module Amazonite::CloudWatch
       @action_log_line_count : Int32 | Nil = nil,
       @action_log_line_role_arn : String | Nil = nil,
       @warm_up_configuration : WarmUpConfiguration | Nil = nil,
+      @action_configuration : ActionConfiguration | Nil = nil,
     )
     end
 
@@ -213,8 +219,12 @@ module Amazonite::CloudWatch
       if value = @warm_up_configuration
         value.validate!
       end
+
+      if value = @action_configuration
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@alarm_name, @alarm_arn, @alarm_description, @alarm_configuration_updated_timestamp, @actions_enabled, @ok_actions, @alarm_actions, @insufficient_data_actions, @state_value, @state_reason, @state_reason_data, @state_updated_timestamp, @scheduled_query_configuration, @query_results_to_evaluate, @query_results_to_alarm, @threshold, @comparison_operator, @treat_missing_data, @state_transitioned_timestamp, @evaluation_state, @action_log_line_count, @action_log_line_role_arn, @warm_up_configuration)
+    def_equals_and_hash(@alarm_name, @alarm_arn, @alarm_description, @alarm_configuration_updated_timestamp, @actions_enabled, @ok_actions, @alarm_actions, @insufficient_data_actions, @state_value, @state_reason, @state_reason_data, @state_updated_timestamp, @scheduled_query_configuration, @query_results_to_evaluate, @query_results_to_alarm, @threshold, @comparison_operator, @treat_missing_data, @state_transitioned_timestamp, @evaluation_state, @action_log_line_count, @action_log_line_role_arn, @warm_up_configuration, @action_configuration)
   end
 end

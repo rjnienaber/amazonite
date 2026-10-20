@@ -99,6 +99,11 @@ module Amazonite::CloudWatch
     @[JSON::Field(key: "ActionsSuppressorExtensionPeriod")]
     property actions_suppressor_extension_period : Int32 | Nil
 
+    # Settings that change the content of the notifications and events that the alarm sends when its
+    # state changes. These settings apply to the alarm's actions, whichever state triggers them.
+    @[JSON::Field(key: "ActionConfiguration")]
+    property action_configuration : ActionConfiguration | Nil
+
     def initialize(
       @actions_enabled : Bool | Nil = nil,
       @alarm_actions : Array(String) | Nil = nil,
@@ -119,6 +124,7 @@ module Amazonite::CloudWatch
       @actions_suppressor : String | Nil = nil,
       @actions_suppressor_wait_period : Int32 | Nil = nil,
       @actions_suppressor_extension_period : Int32 | Nil = nil,
+      @action_configuration : ActionConfiguration | Nil = nil,
     )
     end
 
@@ -177,8 +183,12 @@ module Amazonite::CloudWatch
         raise Core::ValidationError.new("ActionsSuppressor length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("ActionsSuppressor length must be <= 1600") if value.size > 1600
       end
+
+      if value = @action_configuration
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@actions_enabled, @alarm_actions, @alarm_arn, @alarm_configuration_updated_timestamp, @alarm_description, @alarm_name, @alarm_rule, @insufficient_data_actions, @ok_actions, @state_reason, @state_reason_data, @state_updated_timestamp, @state_value, @state_transitioned_timestamp, @actions_suppressed_by, @actions_suppressed_reason, @actions_suppressor, @actions_suppressor_wait_period, @actions_suppressor_extension_period)
+    def_equals_and_hash(@actions_enabled, @alarm_actions, @alarm_arn, @alarm_configuration_updated_timestamp, @alarm_description, @alarm_name, @alarm_rule, @insufficient_data_actions, @ok_actions, @state_reason, @state_reason_data, @state_updated_timestamp, @state_value, @state_transitioned_timestamp, @actions_suppressed_by, @actions_suppressed_reason, @actions_suppressor, @actions_suppressor_wait_period, @actions_suppressor_extension_period, @action_configuration)
   end
 end

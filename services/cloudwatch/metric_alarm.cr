@@ -179,6 +179,11 @@ module Amazonite::CloudWatch
     @[JSON::Field(key: "EvaluationInterval")]
     property evaluation_interval : Int32 | Nil
 
+    # Settings that change the content of the notifications and events that the alarm sends when its
+    # state changes. These settings apply to the alarm's actions, whichever state triggers them.
+    @[JSON::Field(key: "ActionConfiguration")]
+    property action_configuration : ActionConfiguration | Nil
+
     def initialize(
       @alarm_name : String | Nil = nil,
       @alarm_arn : String | Nil = nil,
@@ -213,6 +218,7 @@ module Amazonite::CloudWatch
       @warm_up_configuration : WarmUpConfiguration | Nil = nil,
       @evaluation_criteria : EvaluationCriteria | Nil = nil,
       @evaluation_interval : Int32 | Nil = nil,
+      @action_configuration : ActionConfiguration | Nil = nil,
     )
     end
 
@@ -321,8 +327,12 @@ module Amazonite::CloudWatch
         raise Core::ValidationError.new("EvaluationInterval value must be >= 10") if value < 10
         raise Core::ValidationError.new("EvaluationInterval value must be <= 3600") if value > 3600
       end
+
+      if value = @action_configuration
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@alarm_name, @alarm_arn, @alarm_description, @alarm_configuration_updated_timestamp, @actions_enabled, @ok_actions, @alarm_actions, @insufficient_data_actions, @state_value, @state_reason, @state_reason_data, @state_updated_timestamp, @metric_name, @namespace, @statistic, @extended_statistic, @dimensions, @period, @unit, @evaluation_periods, @datapoints_to_alarm, @threshold, @comparison_operator, @treat_missing_data, @evaluate_low_sample_count_percentile, @metrics, @threshold_metric_id, @evaluation_state, @state_transitioned_timestamp, @evaluation_window, @warm_up_configuration, @evaluation_criteria, @evaluation_interval)
+    def_equals_and_hash(@alarm_name, @alarm_arn, @alarm_description, @alarm_configuration_updated_timestamp, @actions_enabled, @ok_actions, @alarm_actions, @insufficient_data_actions, @state_value, @state_reason, @state_reason_data, @state_updated_timestamp, @metric_name, @namespace, @statistic, @extended_statistic, @dimensions, @period, @unit, @evaluation_periods, @datapoints_to_alarm, @threshold, @comparison_operator, @treat_missing_data, @evaluate_low_sample_count_percentile, @metrics, @threshold_metric_id, @evaluation_state, @state_transitioned_timestamp, @evaluation_window, @warm_up_configuration, @evaluation_criteria, @evaluation_interval, @action_configuration)
   end
 end
