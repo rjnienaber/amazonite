@@ -234,6 +234,9 @@ module Amazonite::DynamoDB
     property global_table_version : String | Nil
 
     # Represents replicas of the table.
+    #
+    # After a successful disassociation, this list is absent or empty. To confirm disassociation, also
+    # verify that `TableStatus` is `ACTIVE`.
     @[JSON::Field(key: "Replicas")]
     property replicas : Array(ReplicaDescription) | Nil
 
@@ -272,6 +275,11 @@ module Amazonite::DynamoDB
     # Indicates whether deletion protection is enabled (true) or disabled (false) on the table.
     @[JSON::Field(key: "DeletionProtectionEnabled")]
     property deletion_protection_enabled : Bool | Nil
+
+    # Specifies whether disassociation protection is enabled (`true`) or disabled (`false`) for the
+    # local global table replica. Protection is enabled by default.
+    @[JSON::Field(key: "DisassociationProtectionEnabled")]
+    property disassociation_protection_enabled : Bool | Nil
 
     # The maximum number of read and write units for the specified on-demand table. If you use this
     # parameter, you must specify `MaxReadRequestUnits`, `MaxWriteRequestUnits`, or both.
@@ -354,6 +362,7 @@ module Amazonite::DynamoDB
       @archival_summary : ArchivalSummary | Nil = nil,
       @table_class_summary : TableClassSummary | Nil = nil,
       @deletion_protection_enabled : Bool | Nil = nil,
+      @disassociation_protection_enabled : Bool | Nil = nil,
       @on_demand_throughput : OnDemandThroughput | Nil = nil,
       @warm_throughput : TableWarmThroughputDescription | Nil = nil,
       @multi_region_consistency : MultiRegionConsistency | Nil = nil,
@@ -443,6 +452,6 @@ module Amazonite::DynamoDB
       end
     end
 
-    def_equals_and_hash(@attribute_definitions, @table_name, @key_schema, @table_status, @creation_date_time, @provisioned_throughput, @table_size_bytes, @item_count, @table_arn, @table_id, @billing_mode_summary, @local_secondary_indexes, @global_secondary_indexes, @stream_specification, @latest_stream_label, @latest_stream_arn, @global_table_version, @replicas, @global_table_witnesses, @global_table_settings_replication_mode, @restore_summary, @sse_description, @archival_summary, @table_class_summary, @deletion_protection_enabled, @on_demand_throughput, @warm_throughput, @multi_region_consistency, @vector_indexes)
+    def_equals_and_hash(@attribute_definitions, @table_name, @key_schema, @table_status, @creation_date_time, @provisioned_throughput, @table_size_bytes, @item_count, @table_arn, @table_id, @billing_mode_summary, @local_secondary_indexes, @global_secondary_indexes, @stream_specification, @latest_stream_label, @latest_stream_arn, @global_table_version, @replicas, @global_table_witnesses, @global_table_settings_replication_mode, @restore_summary, @sse_description, @archival_summary, @table_class_summary, @deletion_protection_enabled, @disassociation_protection_enabled, @on_demand_throughput, @warm_throughput, @multi_region_consistency, @vector_indexes)
   end
 end

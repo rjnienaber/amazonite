@@ -65,7 +65,7 @@ module Amazonite::DynamoDB
     @[JSON::Field(key: "SSESpecification")]
     property sse_specification : SSESpecification | Nil
 
-    # A list of replica update actions (create, delete, or update) for the table.
+    # A list of replica update actions (create, delete, update, or disassociate) for the table.
     @[JSON::Field(key: "ReplicaUpdates")]
     property replica_updates : Array(ReplicationGroupUpdate) | Nil
 
@@ -138,6 +138,17 @@ module Amazonite::DynamoDB
     @[JSON::Field(key: "GlobalTableSettingsReplicationMode", converter: ADDB::GlobalTableSettingsReplicationMode)]
     property global_table_settings_replication_mode : GlobalTableSettingsReplicationMode | Nil
 
+    # Specifies whether disassociation protection is enabled (`true`) or disabled (`false`) for the
+    # local replica of a multi-Region eventual consistency (MREC) global table using Version
+    # 2019.11.21.
+    #
+    # Disassociation protection is enabled by default. If you omit this parameter, the existing
+    # setting is unchanged. This setting is independent of `DeletionProtectionEnabled`.
+    #
+    # You can't combine this change with any other change in the same `UpdateTable` request.
+    @[JSON::Field(key: "DisassociationProtectionEnabled")]
+    property disassociation_protection_enabled : Bool | Nil
+
     # A list of vector indexes to be added to or removed from the table. You can add or remove one
     # vector index for each `UpdateTable` operation.
     #
@@ -162,6 +173,7 @@ module Amazonite::DynamoDB
       @on_demand_throughput : OnDemandThroughput | Nil = nil,
       @warm_throughput : WarmThroughput | Nil = nil,
       @global_table_settings_replication_mode : GlobalTableSettingsReplicationMode | Nil = nil,
+      @disassociation_protection_enabled : Bool | Nil = nil,
       @vector_index_updates : Array(VectorIndexUpdate) | Nil = nil,
     )
     end
@@ -216,6 +228,6 @@ module Amazonite::DynamoDB
       end
     end
 
-    def_equals_and_hash(@attribute_definitions, @table_name, @billing_mode, @provisioned_throughput, @global_secondary_index_updates, @stream_specification, @sse_specification, @replica_updates, @table_class, @deletion_protection_enabled, @multi_region_consistency, @global_table_witness_updates, @on_demand_throughput, @warm_throughput, @global_table_settings_replication_mode, @vector_index_updates)
+    def_equals_and_hash(@attribute_definitions, @table_name, @billing_mode, @provisioned_throughput, @global_secondary_index_updates, @stream_specification, @sse_specification, @replica_updates, @table_class, @deletion_protection_enabled, @multi_region_consistency, @global_table_witness_updates, @on_demand_throughput, @warm_throughput, @global_table_settings_replication_mode, @disassociation_protection_enabled, @vector_index_updates)
   end
 end

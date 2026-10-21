@@ -1,3 +1,4 @@
+private alias ACW = Amazonite::CloudWatch
 private alias Core = Amazonite::Core
 
 module Amazonite::CloudWatch
@@ -21,9 +22,39 @@ module Amazonite::CloudWatch
     @[JSON::Field(key: "MetricTimezone")]
     property metric_timezone : String | Nil
 
+    # The speed at which the anomaly detection model adapts to sustained changes in the metric's
+    # baseline. Faster adaptation lets the model track shifting workloads sooner, but increases the
+    # chance that the model treats a real, lasting change as normal.
+    #
+    # Valid values:
+    #
+    # - `FAST` - The model adapts quickly to sustained changes in the baseline.
+    #
+    # - `NORMAL` - The model adapts at a moderate pace. This is the default value.
+    #
+    # - `SLOW` - The model adapts slowly, reducing the risk of treating a real change as normal.
+    @[JSON::Field(key: "AdaptationSpeed", converter: ACW::AnomalyDetectorAdaptationSpeed)]
+    property adaptation_speed : AnomalyDetectorAdaptationSpeed | Nil
+
+    # The aggressiveness with which CloudWatch filters outliers from the metric data that the anomaly
+    # detection model uses. Stronger filtering excludes more extreme values, which can produce a
+    # tighter band of expected values but may also suppress legitimate spikes.
+    #
+    # Valid values:
+    #
+    # - `MINIMAL` - Excludes only the most extreme outliers.
+    #
+    # - `MODERATE` - Excludes a moderate range of outliers. This is the default value.
+    #
+    # - `STRICT` - Excludes a wider range of outliers, which can suppress legitimate spikes.
+    @[JSON::Field(key: "OutlierFilteringStrength", converter: ACW::AnomalyDetectorOutlierFilteringStrength)]
+    property outlier_filtering_strength : AnomalyDetectorOutlierFilteringStrength | Nil
+
     def initialize(
       @excluded_time_ranges : Array(Range) | Nil = nil,
       @metric_timezone : String | Nil = nil,
+      @adaptation_speed : AnomalyDetectorAdaptationSpeed | Nil = nil,
+      @outlier_filtering_strength : AnomalyDetectorOutlierFilteringStrength | Nil = nil,
     )
     end
 
@@ -39,6 +70,6 @@ module Amazonite::CloudWatch
       end
     end
 
-    def_equals_and_hash(@excluded_time_ranges, @metric_timezone)
+    def_equals_and_hash(@excluded_time_ranges, @metric_timezone, @adaptation_speed, @outlier_filtering_strength)
   end
 end
