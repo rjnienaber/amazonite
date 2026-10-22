@@ -48,6 +48,9 @@ module Amazonite::EC2
     # The route in a transit gateway route table.
     property transit_gateway_route_table_route : TransitGatewayRouteTableRoute | Nil
 
+    # The entry in a transit gateway policy table.
+    property transit_gateway_policy_table_entry : AnalysisTransitGatewayPolicyTableEntry | Nil
+
     # The explanation codes.
     property explanations : Array(Explanation) | Nil
 
@@ -79,6 +82,7 @@ module Amazonite::EC2
       @additional_details : Array(AdditionalDetail) | Nil = nil,
       @transit_gateway : AnalysisComponent | Nil = nil,
       @transit_gateway_route_table_route : TransitGatewayRouteTableRoute | Nil = nil,
+      @transit_gateway_policy_table_entry : AnalysisTransitGatewayPolicyTableEntry | Nil = nil,
       @explanations : Array(Explanation) | Nil = nil,
       @elastic_load_balancer_listener : AnalysisComponent | Nil = nil,
       @firewall_stateless_rule : FirewallStatelessRule | Nil = nil,
@@ -150,6 +154,10 @@ module Amazonite::EC2
         params.concat(value.to_query_params("#{prefix}TransitGatewayRouteTableRoute."))
       end
 
+      if value = @transit_gateway_policy_table_entry
+        params.concat(value.to_query_params("#{prefix}TransitGatewayPolicyTableEntry."))
+      end
+
       (@explanations || [] of Explanation).each_with_index(1) do |item, i|
         params.concat(item.to_query_params("#{prefix}ExplanationSet.#{i}."))
       end
@@ -189,6 +197,7 @@ module Amazonite::EC2
         additional_details: node.xpath_nodes("*[local-name()='additionalDetailSet']/*[local-name()='item']").map { |n| AdditionalDetail.from_xml(n) },
         transit_gateway: node.xpath_node("*[local-name()='transitGateway']").try { |n| AnalysisComponent.from_xml(n) },
         transit_gateway_route_table_route: node.xpath_node("*[local-name()='transitGatewayRouteTableRoute']").try { |n| TransitGatewayRouteTableRoute.from_xml(n) },
+        transit_gateway_policy_table_entry: node.xpath_node("*[local-name()='transitGatewayPolicyTableEntry']").try { |n| AnalysisTransitGatewayPolicyTableEntry.from_xml(n) },
         explanations: node.xpath_nodes("*[local-name()='explanationSet']/*[local-name()='item']").map { |n| Explanation.from_xml(n) },
         elastic_load_balancer_listener: node.xpath_node("*[local-name()='elasticLoadBalancerListener']").try { |n| AnalysisComponent.from_xml(n) },
         firewall_stateless_rule: node.xpath_node("*[local-name()='firewallStatelessRule']").try { |n| FirewallStatelessRule.from_xml(n) },
@@ -254,6 +263,10 @@ module Amazonite::EC2
         value.validate!
       end
 
+      if value = @transit_gateway_policy_table_entry
+        value.validate!
+      end
+
       if value = @explanations
         value.each(&.validate!)
       end
@@ -271,6 +284,6 @@ module Amazonite::EC2
       end
     end
 
-    def_equals_and_hash(@sequence_number, @acl_rule, @attached_to, @component, @destination_vpc, @outbound_header, @inbound_header, @route_table_route, @security_group_rule, @source_vpc, @subnet, @vpc, @additional_details, @transit_gateway, @transit_gateway_route_table_route, @explanations, @elastic_load_balancer_listener, @firewall_stateless_rule, @firewall_stateful_rule, @service_name)
+    def_equals_and_hash(@sequence_number, @acl_rule, @attached_to, @component, @destination_vpc, @outbound_header, @inbound_header, @route_table_route, @security_group_rule, @source_vpc, @subnet, @vpc, @additional_details, @transit_gateway, @transit_gateway_route_table_route, @transit_gateway_policy_table_entry, @explanations, @elastic_load_balancer_listener, @firewall_stateless_rule, @firewall_stateful_rule, @service_name)
   end
 end

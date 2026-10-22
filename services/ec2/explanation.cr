@@ -156,6 +156,12 @@ module Amazonite::EC2
     # The transit gateway route table route.
     property transit_gateway_route_table_route : TransitGatewayRouteTableRoute | Nil
 
+    # The transit gateway policy table.
+    property transit_gateway_policy_table : AnalysisComponent | Nil
+
+    # The transit gateway policy table entry.
+    property transit_gateway_policy_table_entry : AnalysisTransitGatewayPolicyTableEntry | Nil
+
     # The transit gateway attachment.
     property transit_gateway_attachment : AnalysisComponent | Nil
 
@@ -221,6 +227,8 @@ module Amazonite::EC2
       @transit_gateway : AnalysisComponent | Nil = nil,
       @transit_gateway_route_table : AnalysisComponent | Nil = nil,
       @transit_gateway_route_table_route : TransitGatewayRouteTableRoute | Nil = nil,
+      @transit_gateway_policy_table : AnalysisComponent | Nil = nil,
+      @transit_gateway_policy_table_entry : AnalysisTransitGatewayPolicyTableEntry | Nil = nil,
       @transit_gateway_attachment : AnalysisComponent | Nil = nil,
       @component_account : String | Nil = nil,
       @component_region : String | Nil = nil,
@@ -428,6 +436,14 @@ module Amazonite::EC2
         params.concat(value.to_query_params("#{prefix}TransitGatewayRouteTableRoute."))
       end
 
+      if value = @transit_gateway_policy_table
+        params.concat(value.to_query_params("#{prefix}TransitGatewayPolicyTable."))
+      end
+
+      if value = @transit_gateway_policy_table_entry
+        params.concat(value.to_query_params("#{prefix}TransitGatewayPolicyTableEntry."))
+      end
+
       if value = @transit_gateway_attachment
         params.concat(value.to_query_params("#{prefix}TransitGatewayAttachment."))
       end
@@ -501,6 +517,8 @@ module Amazonite::EC2
         transit_gateway: node.xpath_node("*[local-name()='transitGateway']").try { |n| AnalysisComponent.from_xml(n) },
         transit_gateway_route_table: node.xpath_node("*[local-name()='transitGatewayRouteTable']").try { |n| AnalysisComponent.from_xml(n) },
         transit_gateway_route_table_route: node.xpath_node("*[local-name()='transitGatewayRouteTableRoute']").try { |n| TransitGatewayRouteTableRoute.from_xml(n) },
+        transit_gateway_policy_table: node.xpath_node("*[local-name()='transitGatewayPolicyTable']").try { |n| AnalysisComponent.from_xml(n) },
+        transit_gateway_policy_table_entry: node.xpath_node("*[local-name()='transitGatewayPolicyTableEntry']").try { |n| AnalysisTransitGatewayPolicyTableEntry.from_xml(n) },
         transit_gateway_attachment: node.xpath_node("*[local-name()='transitGatewayAttachment']").try { |n| AnalysisComponent.from_xml(n) },
         component_account: Core::XMLValue.string(node.xpath_node("*[local-name()='componentAccount']")),
         component_region: Core::XMLValue.string(node.xpath_node("*[local-name()='componentRegion']")),
@@ -672,6 +690,14 @@ module Amazonite::EC2
         value.validate!
       end
 
+      if value = @transit_gateway_policy_table
+        value.validate!
+      end
+
+      if value = @transit_gateway_policy_table_entry
+        value.validate!
+      end
+
       if value = @transit_gateway_attachment
         value.validate!
       end
@@ -693,6 +719,6 @@ module Amazonite::EC2
       end
     end
 
-    def_equals_and_hash(@acl, @acl_rule, @address, @addresses, @attached_to, @availability_zones, @availability_zone_ids, @cidrs, @component, @customer_gateway, @destination, @destination_vpc, @direction, @explanation_code, @ingress_route_table, @internet_gateway, @load_balancer_arn, @classic_load_balancer_listener, @load_balancer_listener_port, @load_balancer_target, @load_balancer_target_group, @load_balancer_target_groups, @load_balancer_target_port, @elastic_load_balancer_listener, @missing_component, @nat_gateway, @network_interface, @packet_field, @vpc_peering_connection, @port, @port_ranges, @prefix_list, @protocols, @route_table_route, @route_table, @security_group, @security_group_rule, @security_groups, @source_vpc, @state, @subnet, @subnet_route_table, @vpc, @vpc_endpoint, @vpn_connection, @vpn_gateway, @transit_gateway, @transit_gateway_route_table, @transit_gateway_route_table_route, @transit_gateway_attachment, @component_account, @component_region, @firewall_stateless_rule, @firewall_stateful_rule)
+    def_equals_and_hash(@acl, @acl_rule, @address, @addresses, @attached_to, @availability_zones, @availability_zone_ids, @cidrs, @component, @customer_gateway, @destination, @destination_vpc, @direction, @explanation_code, @ingress_route_table, @internet_gateway, @load_balancer_arn, @classic_load_balancer_listener, @load_balancer_listener_port, @load_balancer_target, @load_balancer_target_group, @load_balancer_target_groups, @load_balancer_target_port, @elastic_load_balancer_listener, @missing_component, @nat_gateway, @network_interface, @packet_field, @vpc_peering_connection, @port, @port_ranges, @prefix_list, @protocols, @route_table_route, @route_table, @security_group, @security_group_rule, @security_groups, @source_vpc, @state, @subnet, @subnet_route_table, @vpc, @vpc_endpoint, @vpn_connection, @vpn_gateway, @transit_gateway, @transit_gateway_route_table, @transit_gateway_route_table_route, @transit_gateway_policy_table, @transit_gateway_policy_table_entry, @transit_gateway_attachment, @component_account, @component_region, @firewall_stateless_rule, @firewall_stateful_rule)
   end
 end

@@ -2,7 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::EC2
   # Describes the status of an instance, including system status, instance status, attached EBS
-  # status, and application status.
+  # status, application status, and performance status.
   class InstanceStatus
     # The Availability Zone of the instance.
     property availability_zone : String | Nil
@@ -41,6 +41,10 @@ module Amazonite::EC2
     # Reports the application-level health status for the instance.
     property application_status : ApplicationStatusSummary | Nil
 
+    # Reports the performance-related health status for the instance. This information is returned
+    # only when performance status checks are enabled for the instance.
+    property performance_status : PerformanceStatusSummary | Nil
+
     def initialize(
       @availability_zone : String | Nil = nil,
       @availability_zone_id : String | Nil = nil,
@@ -53,6 +57,7 @@ module Amazonite::EC2
       @system_status : InstanceStatusSummary | Nil = nil,
       @attached_ebs_status : EbsStatusSummary | Nil = nil,
       @application_status : ApplicationStatusSummary | Nil = nil,
+      @performance_status : PerformanceStatusSummary | Nil = nil,
     )
     end
 
@@ -102,6 +107,10 @@ module Amazonite::EC2
       if value = @application_status
         params.concat(value.to_query_params("#{prefix}ApplicationStatus."))
       end
+
+      if value = @performance_status
+        params.concat(value.to_query_params("#{prefix}PerformanceStatus."))
+      end
       params
     end
 
@@ -118,6 +127,7 @@ module Amazonite::EC2
         system_status: node.xpath_node("*[local-name()='systemStatus']").try { |n| InstanceStatusSummary.from_xml(n) },
         attached_ebs_status: node.xpath_node("*[local-name()='attachedEbsStatus']").try { |n| EbsStatusSummary.from_xml(n) },
         application_status: node.xpath_node("*[local-name()='applicationStatus']").try { |n| ApplicationStatusSummary.from_xml(n) },
+        performance_status: node.xpath_node("*[local-name()='performanceStatus']").try { |n| PerformanceStatusSummary.from_xml(n) },
       )
     end
 
@@ -149,8 +159,12 @@ module Amazonite::EC2
       if value = @application_status
         value.validate!
       end
+
+      if value = @performance_status
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@availability_zone, @availability_zone_id, @outpost_arn, @operator, @events, @instance_id, @instance_state, @instance_status, @system_status, @attached_ebs_status, @application_status)
+    def_equals_and_hash(@availability_zone, @availability_zone_id, @outpost_arn, @operator, @events, @instance_id, @instance_state, @instance_status, @system_status, @attached_ebs_status, @application_status, @performance_status)
   end
 end

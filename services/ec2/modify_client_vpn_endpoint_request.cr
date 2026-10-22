@@ -94,8 +94,8 @@ module Amazonite::EC2
     property transit_gateway_configuration : TransitGatewayConfigurationInputStructure | Nil
 
     # The device posture options for the Client VPN endpoint. Specifying this parameter replaces the
-    # entire device posture configuration for the endpoint. To remove all device trust providers,
-    # specify an empty list.
+    # entire device posture configuration for the endpoint. To disable device posture and remove all
+    # device trust providers, specify `false` for `Enabled`.
     property device_posture_options : DevicePostureOptions | Nil
 
     def initialize(
