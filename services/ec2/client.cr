@@ -5674,10 +5674,12 @@ module Amazonite::EC2
       Core::ParsedResponse(AEC::DeleteTransitGatewayRouteResult).new(response, result)
     end
 
-    # Deletes the specified transit gateway route table. If there are any route tables associated with
-    # the transit gateway route table, you must first run DisassociateRouteTable before you can delete
-    # the transit gateway route table. This removes any route tables associated with the transit
-    # gateway route table.
+    # Deletes the specified transit gateway route table. Before you can delete a transit gateway route
+    # table, you must disassociate all attachments from it by using
+    # DisassociateTransitGatewayRouteTable and wait for the disassociations to complete. You can't
+    # delete a transit gateway route table that is the default association route table or default
+    # propagation route table for the transit gateway. To change the default route tables, use
+    # ModifyTransitGateway.
     def delete_transit_gateway_route_table(input : AEC::DeleteTransitGatewayRouteTableRequest) : Core::ParsedResponse(AEC::DeleteTransitGatewayRouteTableResult)
       Log.info { "performing 'DeleteTransitGatewayRouteTable' operation" }
       input.validate! if config.validate_input?
@@ -13154,6 +13156,23 @@ module Amazonite::EC2
       Core::ParsedResponse(AEC::GetSubnetCidrReservationsResult).new(response, result)
     end
 
+    # Describes the NAT configuration for the specified transit gateway attachment. Only the owner of
+    # the transit gateway can describe the NAT configuration.
+    def get_transit_gateway_attachment_nat_configuration(input : AEC::GetTransitGatewayAttachmentNatConfigurationRequest) : Core::ParsedResponse(AEC::GetTransitGatewayAttachmentNatConfigurationResult)
+      Log.info { "performing 'GetTransitGatewayAttachmentNatConfiguration' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "GetTransitGatewayAttachmentNatConfiguration")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("GetTransitGatewayAttachmentNatConfiguration", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::GetTransitGatewayAttachmentNatConfigurationResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::GetTransitGatewayAttachmentNatConfigurationResult).new(response, result)
+    end
+
     # Lists the route tables to which the specified resource attachment propagates routes.
     def get_transit_gateway_attachment_propagations(input : AEC::GetTransitGatewayAttachmentPropagationsRequest) : Core::ParsedResponse(AEC::GetTransitGatewayAttachmentPropagationsResult)
       Log.info { "performing 'GetTransitGatewayAttachmentPropagations' operation" }
@@ -14901,6 +14920,37 @@ module Amazonite::EC2
       result_node = XML.parse(response.body).root.not_nil!
       result = AEC::ModifyTransitGatewayResult.from_xml(result_node)
       Core::ParsedResponse(AEC::ModifyTransitGatewayResult).new(response, result)
+    end
+
+    # Modifies the NAT configuration for the specified transit gateway attachment. Use this operation
+    # to do the following:
+    #
+    # - Enable or disable NAT gateway support for the attachment.
+    #
+    # - Specify whether the transit gateway installs routes for the NAT CIDRs.
+    #
+    # - Replace the NAT gateway rules for the attachment.
+    #
+    # Only the owner of the transit gateway can modify the NAT configuration.
+    #
+    # With NAT gateway support enabled, the transit gateway translates addresses in each rule's
+    # `MatchSourceCidr` range to the corresponding addresses in its `NatCidr` range.
+    #
+    # The transit gateway applies changes asynchronously. To check the result, use
+    # `GetTransitGatewayAttachmentNatConfiguration`.
+    def modify_transit_gateway_attachment_nat_configuration(input : AEC::ModifyTransitGatewayAttachmentNatConfigurationRequest) : Core::ParsedResponse(AEC::ModifyTransitGatewayAttachmentNatConfigurationResult)
+      Log.info { "performing 'ModifyTransitGatewayAttachmentNatConfiguration' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "ModifyTransitGatewayAttachmentNatConfiguration")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("ModifyTransitGatewayAttachmentNatConfiguration", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::ModifyTransitGatewayAttachmentNatConfigurationResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::ModifyTransitGatewayAttachmentNatConfigurationResult).new(response, result)
     end
 
     # Modifies a transit gateway metering policy.

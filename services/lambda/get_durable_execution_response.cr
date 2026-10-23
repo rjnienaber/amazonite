@@ -21,20 +21,20 @@ module Amazonite::Lambda
     @[JSON::Field(key: "FunctionArn")]
     property function_arn : String
 
-    # The JSON input payload that was provided when the durable execution was started. For
-    # asynchronous invocations, this is limited to 256 KB. For synchronous invocations, this can be up
-    # to 6 MB.
+    # The JSON input payload that you provided when you started the durable execution. Asynchronous
+    # invocations support up to 1 MB, and synchronous invocations support up to 6 MB.
     @[JSON::Field(key: "InputPayload")]
     property input_payload : String | Nil
 
     # The JSON result returned by the durable execution if it completed successfully. This field is
-    # only present when the execution status is `SUCCEEDED`. The result is limited to 256 KB.
+    # only present when the execution status is `SUCCEEDED`. Asynchronous invocations support up to 1
+    # MB, and synchronous invocations support up to 6 MB.
     @[JSON::Field(key: "Result")]
     property result : String | Nil
 
     # Error information if the durable execution failed. This field is only present when the execution
     # status is `FAILED`, `TIMED_OUT`, or `STOPPED`. The combined size of all error fields is limited
-    # to 256 KB.
+    # to 1 MB.
     @[JSON::Field(key: "Error")]
     property error : ErrorObject | Nil
 

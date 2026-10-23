@@ -32,13 +32,13 @@ module Amazonite::Lambda
     property action : OperationAction
 
     # The payload for successful operations. The maximum payload size is 6 MB for synchronous
-    # `EXECUTION` operations (RequestResponse invocationType), 1 MB for asynchronous `EXECUTION`
-    # (Event invocationType) and `CHAINED_INVOKE` operations, and 256 KB for `CONTEXT`, `STEP`,
-    # `WAIT`, and `CALLBACK` operations.
+    # `EXECUTION` operations (RequestResponse invocationType), and 1 MB for asynchronous `EXECUTION`
+    # (Event invocationType), `CHAINED_INVOKE`, `CONTEXT`, `STEP`, `WAIT`, and `CALLBACK` operations.
     @[JSON::Field(key: "Payload")]
     property payload : String | Nil
 
-    # The error information for failed operations.
+    # The error information for failed operations. The combined size of all error fields is limited to
+    # 1 MB.
     @[JSON::Field(key: "Error")]
     property error : ErrorObject | Nil
 

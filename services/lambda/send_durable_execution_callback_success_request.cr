@@ -8,7 +8,7 @@ module Amazonite::Lambda
     @[JSON::Field(key: "CallbackId", ignore: true)]
     property callback_id : String = ""
 
-    # The result data from the successful callback operation. Maximum size is 256 KB.
+    # The result data from the successful callback operation. Maximum size is 1 MB.
     @[JSON::Field(key: "Result")]
     property result : String | Nil
 

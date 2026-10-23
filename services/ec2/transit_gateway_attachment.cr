@@ -34,6 +34,10 @@ module Amazonite::EC2
     # The tags for the attachment.
     property tags : Array(Tag) | Nil
 
+    # The state of NAT gateway support for the attachment. Only the owner of the transit gateway
+    # receives this parameter.
+    property nat_gateway_support : TransitGatewayAttachmentNatGatewaySupportState | Nil
+
     def initialize(
       @transit_gateway_attachment_id : String | Nil = nil,
       @transit_gateway_id : String | Nil = nil,
@@ -45,6 +49,7 @@ module Amazonite::EC2
       @association : TransitGatewayAttachmentAssociation | Nil = nil,
       @creation_time : Time | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
+      @nat_gateway_support : TransitGatewayAttachmentNatGatewaySupportState | Nil = nil,
     )
     end
 
@@ -90,6 +95,10 @@ module Amazonite::EC2
       (@tags || [] of Tag).each_with_index(1) do |item, i|
         params.concat(item.to_query_params("#{prefix}TagSet.#{i}."))
       end
+
+      if value = @nat_gateway_support
+        params << {"#{prefix}NatGatewaySupport", value.to_json_object_key}
+      end
       params
     end
 
@@ -105,6 +114,7 @@ module Amazonite::EC2
         association: node.xpath_node("*[local-name()='association']").try { |n| TransitGatewayAttachmentAssociation.from_xml(n) },
         creation_time: Core::XMLValue.time(node.xpath_node("*[local-name()='creationTime']")),
         tags: node.xpath_nodes("*[local-name()='tagSet']/*[local-name()='item']").map { |n| Tag.from_xml(n) },
+        nat_gateway_support: (n = node.xpath_node("*[local-name()='natGatewaySupport']")) ? AEC::TransitGatewayAttachmentNatGatewaySupportState.from_json_object_key?(n.content) : nil,
       )
     end
 
@@ -118,6 +128,6 @@ module Amazonite::EC2
       end
     end
 
-    def_equals_and_hash(@transit_gateway_attachment_id, @transit_gateway_id, @transit_gateway_owner_id, @resource_owner_id, @resource_type, @resource_id, @state, @association, @creation_time, @tags)
+    def_equals_and_hash(@transit_gateway_attachment_id, @transit_gateway_id, @transit_gateway_owner_id, @resource_owner_id, @resource_type, @resource_id, @state, @association, @creation_time, @tags, @nat_gateway_support)
   end
 end

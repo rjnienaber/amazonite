@@ -8,7 +8,8 @@ module Amazonite::Lambda
     @[JSON::Field(key: "CallbackId", ignore: true)]
     property callback_id : String = ""
 
-    # Error details describing why the callback operation failed.
+    # Error details describing why the callback operation failed. The combined size of all error
+    # fields is limited to 1 MB.
     @[JSON::Field(key: "Error")]
     property error : ErrorObject | Nil
 

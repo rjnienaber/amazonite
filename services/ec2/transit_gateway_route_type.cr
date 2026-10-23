@@ -4,11 +4,13 @@ module Amazonite::EC2
   enum TransitGatewayRouteType
     Static
     Propagated
+    System
 
     def self.to_json(e : TransitGatewayRouteType, json : JSON::Builder) : Nil
       value = case e
               when AEC::TransitGatewayRouteType::Static     then "static"
               when AEC::TransitGatewayRouteType::Propagated then "propagated"
+              when AEC::TransitGatewayRouteType::System     then "system"
               else
                 raise Exception.new("unknown enum value for 'TransitGatewayRouteType' when serializing to json: '#{e}'")
               end
@@ -20,6 +22,7 @@ module Amazonite::EC2
       case value
       when "static"     then AEC::TransitGatewayRouteType::Static
       when "propagated" then AEC::TransitGatewayRouteType::Propagated
+      when "system"     then AEC::TransitGatewayRouteType::System
       else
         raise Exception.new("unknown enum value for 'TransitGatewayRouteType' when deserializing from json: '#{value}'")
       end
@@ -29,6 +32,7 @@ module Amazonite::EC2
       case self
       when AEC::TransitGatewayRouteType::Static     then "static"
       when AEC::TransitGatewayRouteType::Propagated then "propagated"
+      when AEC::TransitGatewayRouteType::System     then "system"
       else
         raise Exception.new("unknown enum value for 'TransitGatewayRouteType' when serializing to json: '#{self}'")
       end
@@ -38,6 +42,7 @@ module Amazonite::EC2
       case key
       when "static"     then AEC::TransitGatewayRouteType::Static
       when "propagated" then AEC::TransitGatewayRouteType::Propagated
+      when "system"     then AEC::TransitGatewayRouteType::System
       else
         nil
       end

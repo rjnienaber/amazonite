@@ -8,7 +8,8 @@ module Amazonite::Lambda
     @[JSON::Field(key: "DurableExecutionArn", ignore: true)]
     property durable_execution_arn : String = ""
 
-    # Optional error details explaining why the execution is being stopped.
+    # Optional error details explaining why the execution is being stopped. The combined size of all
+    # error fields is limited to 1 MB.
     @[JSON::Field(key: "Error")]
     property error : ErrorObject | Nil
 
