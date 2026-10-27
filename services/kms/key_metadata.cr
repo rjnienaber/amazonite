@@ -129,6 +129,11 @@ module Amazonite::Kms
     @[JSON::Field(key: "KeyAgreementAlgorithms", converter: Core::ArrayConverter(AK::KeyAgreementAlgorithmSpec))]
     property key_agreement_algorithms : Array(KeyAgreementAlgorithmSpec) | Nil
 
+    # The key encapsulation algorithm that the KMS key supports. This field appears only for KMS keys
+    # with a `KeyUsage` value of `ENCAPSULATE_DECAPSULATE`.
+    @[JSON::Field(key: "EncapsulationAlgorithms", converter: Core::ArrayConverter(AK::EncapsulationAlgorithmSpec))]
+    property encapsulation_algorithms : Array(EncapsulationAlgorithmSpec) | Nil
+
     # Indicates whether the KMS key is a multi-Region (`True`) or regional (`False`) key. This value
     # is `True` for multi-Region primary and replica keys and `False` for regional KMS keys.
     #
@@ -211,6 +216,7 @@ module Amazonite::Kms
       @encryption_algorithms : Array(EncryptionAlgorithmSpec) | Nil = nil,
       @signing_algorithms : Array(SigningAlgorithmSpec) | Nil = nil,
       @key_agreement_algorithms : Array(KeyAgreementAlgorithmSpec) | Nil = nil,
+      @encapsulation_algorithms : Array(EncapsulationAlgorithmSpec) | Nil = nil,
       @multi_region : Bool | Nil = nil,
       @multi_region_configuration : MultiRegionConfiguration | Nil = nil,
       @pending_deletion_window_in_days : Int32 | Nil = nil,
@@ -267,6 +273,6 @@ module Amazonite::Kms
       end
     end
 
-    def_equals_and_hash(@aws_account_id, @key_id, @arn, @creation_date, @enabled, @description, @key_usage, @key_state, @deletion_date, @valid_to, @origin, @custom_key_store_id, @cloud_hsm_cluster_id, @expiration_model, @key_manager, @customer_master_key_spec, @key_spec, @encryption_algorithms, @signing_algorithms, @key_agreement_algorithms, @multi_region, @multi_region_configuration, @pending_deletion_window_in_days, @mac_algorithms, @xks_key_configuration, @current_key_material_id)
+    def_equals_and_hash(@aws_account_id, @key_id, @arn, @creation_date, @enabled, @description, @key_usage, @key_state, @deletion_date, @valid_to, @origin, @custom_key_store_id, @cloud_hsm_cluster_id, @expiration_model, @key_manager, @customer_master_key_spec, @key_spec, @encryption_algorithms, @signing_algorithms, @key_agreement_algorithms, @encapsulation_algorithms, @multi_region, @multi_region_configuration, @pending_deletion_window_in_days, @mac_algorithms, @xks_key_configuration, @current_key_material_id)
   end
 end

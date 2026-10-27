@@ -529,6 +529,60 @@ module Amazonite::Kms
       Core::ParsedResponse(AK::CreateKeyResponse).new(response)
     end
 
+    # Recovers the shared secret that was encapsulated with the public key of an ML-KEM KMS key.
+    # Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM), specified in [FIPS
+    # 203](https://csrc.nist.gov/pubs/fips/203/final) on the NIST website, is a post-quantum algorithm
+    # for establishing a shared secret between two parties. For an example of how two parties
+    # establish a shared secret over an insecure channel using ML-KEM, see [ML-KEM keys in
+    # KMS](https://docs.aws.amazon.com/kms/latest/developerguide/pqkeys.html#mlkem) in the *Key
+    # Management Service Developer Guide*.
+    #
+    # The Decapsulate operation is not available in China Regions.
+    #
+    # `Decapsulate` returns the shared secret as a 32-byte value. You can use it directly as key
+    # material, or run it through a key derivation function to derive multiple keys and nonces.
+    #
+    # `Decapsulate` returns an `InvalidCiphertextException` when the length of the
+    # `SharedSecretCiphertextBlob` is inconsistent with the ML-KEM key spec. In all other cases,
+    # `Decapsulate` returns a 32-byte pseudo-random value. This is true even when the
+    # `SharedSecretCiphertextBlob` was created using a different ML-KEM key or altered from its
+    # original value. This behavior is a security feature called *implicit rejection* that helps
+    # protect against chosen-ciphertext attacks.
+    #
+    # Because a response does not indicate that the ciphertext and key are valid, confirm the two
+    # parties derived the same shared secret before using it.
+    #
+    # The KMS key that you use for this operation must be in a compatible key state. For details, see
+    # [Key states of KMS keys](https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html)
+    # in the *Key Management Service Developer Guide*.
+    #
+    # **Cross-account use**: Yes. To perform this operation with a KMS key in a different Amazon Web
+    # Services account, specify the key ARN or alias ARN in the value of the `KeyId` parameter.
+    #
+    # **Required permissions**:
+    # [kms:Decapsulate](https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html)
+    # (key policy)
+    #
+    # **Related operations:**
+    #
+    # - Encapsulate
+    #
+    # - CreateKey
+    #
+    # - GetPublicKey
+    #
+    # - DescribeKey
+    #
+    # **Eventual consistency**: The KMS API follows an eventual consistency model. For more
+    # information, see [KMS eventual
+    # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
+    def decapsulate(input : AK::DecapsulateRequest) : Core::ParsedResponse(AK::DecapsulateResponse)
+      Log.info { "performing 'Decapsulate' operation" }
+      input.validate! if config.validate_input?
+      response = post("Decapsulate", "/", input.to_json)
+      Core::ParsedResponse(AK::DecapsulateResponse).new(response)
+    end
+
     # Decrypts ciphertext that was encrypted by a KMS key using any of the following operations:
     #
     # - Encrypt
@@ -1251,6 +1305,51 @@ module Amazonite::Kms
       Core::Response.new(response)
     end
 
+    # Generates a shared secret and its encapsulated (ciphertext) form using the public key of an
+    # ML-KEM KMS key pair. Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM), specified in
+    # [FIPS 203](https://csrc.nist.gov/pubs/fips/203/final) on the NIST website, is a post-quantum
+    # algorithm for establishing a shared secret between two parties.
+    #
+    # For an example of how two parties establish a shared secret over an insecure channel using
+    # ML-KEM, see [ML-KEM keys in
+    # KMS](https://docs.aws.amazon.com/kms/latest/developerguide/pqkeys.html#mlkem) in the *Key
+    # Management Service Developer Guide*.
+    #
+    # The Encapsulate operation is not available in China Regions.
+    #
+    # The KMS key that you use for this operation must be in a compatible key state. For details, see
+    # [Key states of KMS keys](https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html)
+    # in the *Key Management Service Developer Guide*.
+    #
+    # **Cross-account use**: Yes. To perform this operation with a KMS key in a different Amazon Web
+    # Services account, specify the key ARN or alias ARN in the value of the `KeyId` parameter.
+    #
+    # **Required permissions**:
+    # [kms:Encapsulate](https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html)
+    # (key policy)
+    #
+    # **Related operations:**
+    #
+    # - Decapsulate
+    #
+    # - DeriveSharedSecret
+    #
+    # - CreateKey
+    #
+    # - GetPublicKey
+    #
+    # - DescribeKey
+    #
+    # **Eventual consistency**: The KMS API follows an eventual consistency model. For more
+    # information, see [KMS eventual
+    # consistency](https://docs.aws.amazon.com/kms/latest/developerguide/accessing-kms.html#programming-eventual-consistency).
+    def encapsulate(input : AK::EncapsulateRequest) : Core::ParsedResponse(AK::EncapsulateResponse)
+      Log.info { "performing 'Encapsulate' operation" }
+      input.validate! if config.validate_input?
+      response = post("Encapsulate", "/", input.to_json)
+      Core::ParsedResponse(AK::EncapsulateResponse).new(response)
+    end
+
     # Encrypts plaintext of up to 4,096 bytes using a KMS key. You can use a symmetric or asymmetric
     # KMS key with a `KeyUsage` of `ENCRYPT_DECRYPT`.
     #
@@ -1474,6 +1573,9 @@ module Amazonite::Kms
     # 5280](https://tools.ietf.org/html/rfc5280). The private key is a DER-encoded PKCS8
     # PrivateKeyInfo, as specified in [RFC 5958](https://tools.ietf.org/html/rfc5958).
     #
+    # For ML-KEM data key pairs, the DER-encoded PKCS8 PrivateKeyInfo contains the private key in seed
+    # format. As a result, the length of the private key is the same for all ML-KEM key pair specs.
+    #
     # `GenerateDataKeyPair` also supports [Amazon Web Services Nitro
     # Enclaves](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitro-enclave.html), which provide
     # an isolated compute environment in Amazon EC2. To call `GenerateDataKeyPair` for an Amazon Web
@@ -1553,6 +1655,9 @@ module Amazonite::Kms
     # in the key are not related to the caller or KMS key that is used to encrypt the private key. The
     # public key is a DER-encoded X.509 SubjectPublicKeyInfo, as specified in [RFC
     # 5280](https://tools.ietf.org/html/rfc5280).
+    #
+    # For ML-KEM data key pairs, the DER-encoded PKCS8 PrivateKeyInfo contains the private key in seed
+    # format. As a result, the length of the private key is the same for all ML-KEM key pair specs.
     #
     # You can use an optional encryption context to add additional security to the encryption
     # operation. If you specify an `EncryptionContext`, you must specify the same encryption context
@@ -1787,7 +1892,8 @@ module Amazonite::Kms
     # key](https://docs.aws.amazon.com/kms/latest/developerguide/enabling-keys.html) and monitor
     # CloudTrail for `DisabledException` entries, as there could be infrequent workflows that are
     # dependent on the key. By looking for this exception, you can identify potential dependencies and
-    # workload failures before they occur.
+    # workload failures before they occur. CloudTrail remains the authoritative source for all API
+    # calls made to your key.
     #
     # **Cross-account use**: No. You cannot perform this operation on a KMS key in a different Amazon
     # Web Services account.

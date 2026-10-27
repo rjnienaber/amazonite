@@ -19,6 +19,8 @@ module Amazonite::Kms
     GenerateMac
     VerifyMac
     DeriveSharedSecret
+    Encapsulate
+    Decapsulate
 
     def self.to_json(e : GrantOperation, json : JSON::Builder) : Nil
       json.string(e.to_s)
@@ -44,6 +46,8 @@ module Amazonite::Kms
       when "GenerateMac"                         then AK::GrantOperation::GenerateMac
       when "VerifyMac"                           then AK::GrantOperation::VerifyMac
       when "DeriveSharedSecret"                  then AK::GrantOperation::DeriveSharedSecret
+      when "Encapsulate"                         then AK::GrantOperation::Encapsulate
+      when "Decapsulate"                         then AK::GrantOperation::Decapsulate
       else
         raise Exception.new("unknown enum value for 'GrantOperation' when deserializing from json: '#{value}'")
       end
@@ -72,6 +76,8 @@ module Amazonite::Kms
       when "GenerateMac"                         then AK::GrantOperation::GenerateMac
       when "VerifyMac"                           then AK::GrantOperation::VerifyMac
       when "DeriveSharedSecret"                  then AK::GrantOperation::DeriveSharedSecret
+      when "Encapsulate"                         then AK::GrantOperation::Encapsulate
+      when "Decapsulate"                         then AK::GrantOperation::Decapsulate
       else
         nil
       end

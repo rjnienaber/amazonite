@@ -19,6 +19,9 @@ module Amazonite::Kms
     MlDsa65
     MlDsa87
     EccNistEdwards25519
+    MlKem512
+    MlKem768
+    MlKem1024
 
     def self.to_json(e : KeySpec, json : JSON::Builder) : Nil
       value = case e
@@ -39,6 +42,9 @@ module Amazonite::Kms
               when AK::KeySpec::MlDsa65             then "ML_DSA_65"
               when AK::KeySpec::MlDsa87             then "ML_DSA_87"
               when AK::KeySpec::EccNistEdwards25519 then "ECC_NIST_EDWARDS25519"
+              when AK::KeySpec::MlKem512            then "ML_KEM_512"
+              when AK::KeySpec::MlKem768            then "ML_KEM_768"
+              when AK::KeySpec::MlKem1024           then "ML_KEM_1024"
               else
                 raise Exception.new("unknown enum value for 'KeySpec' when serializing to json: '#{e}'")
               end
@@ -65,6 +71,9 @@ module Amazonite::Kms
       when "ML_DSA_65"             then AK::KeySpec::MlDsa65
       when "ML_DSA_87"             then AK::KeySpec::MlDsa87
       when "ECC_NIST_EDWARDS25519" then AK::KeySpec::EccNistEdwards25519
+      when "ML_KEM_512"            then AK::KeySpec::MlKem512
+      when "ML_KEM_768"            then AK::KeySpec::MlKem768
+      when "ML_KEM_1024"           then AK::KeySpec::MlKem1024
       else
         raise Exception.new("unknown enum value for 'KeySpec' when deserializing from json: '#{value}'")
       end
@@ -89,6 +98,9 @@ module Amazonite::Kms
       when AK::KeySpec::MlDsa65             then "ML_DSA_65"
       when AK::KeySpec::MlDsa87             then "ML_DSA_87"
       when AK::KeySpec::EccNistEdwards25519 then "ECC_NIST_EDWARDS25519"
+      when AK::KeySpec::MlKem512            then "ML_KEM_512"
+      when AK::KeySpec::MlKem768            then "ML_KEM_768"
+      when AK::KeySpec::MlKem1024           then "ML_KEM_1024"
       else
         raise Exception.new("unknown enum value for 'KeySpec' when serializing to json: '#{self}'")
       end
@@ -113,6 +125,9 @@ module Amazonite::Kms
       when "ML_DSA_65"             then AK::KeySpec::MlDsa65
       when "ML_DSA_87"             then AK::KeySpec::MlDsa87
       when "ECC_NIST_EDWARDS25519" then AK::KeySpec::EccNistEdwards25519
+      when "ML_KEM_512"            then AK::KeySpec::MlKem512
+      when "ML_KEM_768"            then AK::KeySpec::MlKem768
+      when "ML_KEM_1024"           then AK::KeySpec::MlKem1024
       else
         nil
       end

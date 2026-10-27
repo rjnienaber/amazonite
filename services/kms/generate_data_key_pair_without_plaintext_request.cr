@@ -53,7 +53,7 @@ module Amazonite::Kms
     # to sign and verify (but not both), the rule that permits you to use ECC KMS keys only to sign
     # and verify, and the rule that permits you to use ML-DSA key pairs to sign and verify only are
     # not effective on data key pairs, which are used outside of KMS. The SM2 key spec is only
-    # available in China Regions.
+    # available in China Regions. The ML-KEM key specs are not available in China Regions.
     @[JSON::Field(key: "KeyPairSpec", converter: AK::DataKeyPairSpec)]
     property key_pair_spec : DataKeyPairSpec
 

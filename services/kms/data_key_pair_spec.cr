@@ -11,6 +11,9 @@ module Amazonite::Kms
     EccSecgP256k1
     Sm2
     EccNistEdwards25519
+    MlKem512
+    MlKem768
+    MlKem1024
 
     def self.to_json(e : DataKeyPairSpec, json : JSON::Builder) : Nil
       value = case e
@@ -23,6 +26,9 @@ module Amazonite::Kms
               when AK::DataKeyPairSpec::EccSecgP256k1       then "ECC_SECG_P256K1"
               when AK::DataKeyPairSpec::Sm2                 then "SM2"
               when AK::DataKeyPairSpec::EccNistEdwards25519 then "ECC_NIST_EDWARDS25519"
+              when AK::DataKeyPairSpec::MlKem512            then "ML_KEM_512"
+              when AK::DataKeyPairSpec::MlKem768            then "ML_KEM_768"
+              when AK::DataKeyPairSpec::MlKem1024           then "ML_KEM_1024"
               else
                 raise Exception.new("unknown enum value for 'DataKeyPairSpec' when serializing to json: '#{e}'")
               end
@@ -41,6 +47,9 @@ module Amazonite::Kms
       when "ECC_SECG_P256K1"       then AK::DataKeyPairSpec::EccSecgP256k1
       when "SM2"                   then AK::DataKeyPairSpec::Sm2
       when "ECC_NIST_EDWARDS25519" then AK::DataKeyPairSpec::EccNistEdwards25519
+      when "ML_KEM_512"            then AK::DataKeyPairSpec::MlKem512
+      when "ML_KEM_768"            then AK::DataKeyPairSpec::MlKem768
+      when "ML_KEM_1024"           then AK::DataKeyPairSpec::MlKem1024
       else
         raise Exception.new("unknown enum value for 'DataKeyPairSpec' when deserializing from json: '#{value}'")
       end
@@ -57,6 +66,9 @@ module Amazonite::Kms
       when AK::DataKeyPairSpec::EccSecgP256k1       then "ECC_SECG_P256K1"
       when AK::DataKeyPairSpec::Sm2                 then "SM2"
       when AK::DataKeyPairSpec::EccNistEdwards25519 then "ECC_NIST_EDWARDS25519"
+      when AK::DataKeyPairSpec::MlKem512            then "ML_KEM_512"
+      when AK::DataKeyPairSpec::MlKem768            then "ML_KEM_768"
+      when AK::DataKeyPairSpec::MlKem1024           then "ML_KEM_1024"
       else
         raise Exception.new("unknown enum value for 'DataKeyPairSpec' when serializing to json: '#{self}'")
       end
@@ -73,6 +85,9 @@ module Amazonite::Kms
       when "ECC_SECG_P256K1"       then AK::DataKeyPairSpec::EccSecgP256k1
       when "SM2"                   then AK::DataKeyPairSpec::Sm2
       when "ECC_NIST_EDWARDS25519" then AK::DataKeyPairSpec::EccNistEdwards25519
+      when "ML_KEM_512"            then AK::DataKeyPairSpec::MlKem512
+      when "ML_KEM_768"            then AK::DataKeyPairSpec::MlKem768
+      when "ML_KEM_1024"           then AK::DataKeyPairSpec::MlKem1024
       else
         nil
       end

@@ -14,6 +14,8 @@ module Amazonite::Kms
     Sign
     Verify
     VerifyMac
+    Encapsulate
+    Decapsulate
 
     def self.to_json(e : KeyLastUsageTrackingOperation, json : JSON::Builder) : Nil
       json.string(e.to_s)
@@ -34,6 +36,8 @@ module Amazonite::Kms
       when "Sign"                                then AK::KeyLastUsageTrackingOperation::Sign
       when "Verify"                              then AK::KeyLastUsageTrackingOperation::Verify
       when "VerifyMac"                           then AK::KeyLastUsageTrackingOperation::VerifyMac
+      when "Encapsulate"                         then AK::KeyLastUsageTrackingOperation::Encapsulate
+      when "Decapsulate"                         then AK::KeyLastUsageTrackingOperation::Decapsulate
       else
         raise Exception.new("unknown enum value for 'KeyLastUsageTrackingOperation' when deserializing from json: '#{value}'")
       end
@@ -57,6 +61,8 @@ module Amazonite::Kms
       when "Sign"                                then AK::KeyLastUsageTrackingOperation::Sign
       when "Verify"                              then AK::KeyLastUsageTrackingOperation::Verify
       when "VerifyMac"                           then AK::KeyLastUsageTrackingOperation::VerifyMac
+      when "Encapsulate"                         then AK::KeyLastUsageTrackingOperation::Encapsulate
+      when "Decapsulate"                         then AK::KeyLastUsageTrackingOperation::Decapsulate
       else
         nil
       end

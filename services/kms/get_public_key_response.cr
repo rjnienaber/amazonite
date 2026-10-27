@@ -59,6 +59,11 @@ module Amazonite::Kms
     @[JSON::Field(key: "KeyAgreementAlgorithms", converter: Core::ArrayConverter(AK::KeyAgreementAlgorithmSpec))]
     property key_agreement_algorithms : Array(KeyAgreementAlgorithmSpec) | Nil
 
+    # The key encapsulation algorithm used to establish a shared secret. This field is present only
+    # when the KMS key has a `KeyUsage` value of `ENCAPSULATE_DECAPSULATE`.
+    @[JSON::Field(key: "EncapsulationAlgorithms", converter: Core::ArrayConverter(AK::EncapsulationAlgorithmSpec))]
+    property encapsulation_algorithms : Array(EncapsulationAlgorithmSpec) | Nil
+
     def initialize(
       @key_id : String | Nil = nil,
       @public_key : Bytes | Nil = nil,
@@ -68,6 +73,7 @@ module Amazonite::Kms
       @encryption_algorithms : Array(EncryptionAlgorithmSpec) | Nil = nil,
       @signing_algorithms : Array(SigningAlgorithmSpec) | Nil = nil,
       @key_agreement_algorithms : Array(KeyAgreementAlgorithmSpec) | Nil = nil,
+      @encapsulation_algorithms : Array(EncapsulationAlgorithmSpec) | Nil = nil,
     )
     end
 
@@ -83,6 +89,6 @@ module Amazonite::Kms
       end
     end
 
-    def_equals_and_hash(@key_id, @public_key, @customer_master_key_spec, @key_spec, @key_usage, @encryption_algorithms, @signing_algorithms, @key_agreement_algorithms)
+    def_equals_and_hash(@key_id, @public_key, @customer_master_key_spec, @key_spec, @key_usage, @encryption_algorithms, @signing_algorithms, @key_agreement_algorithms, @encapsulation_algorithms)
   end
 end
