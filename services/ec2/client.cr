@@ -12309,6 +12309,25 @@ module Amazonite::EC2
       Core::ParsedResponse(AEC::GetImageBlockPublicAccessStateResult).new(response, result)
     end
 
+    # Describes the Amazon Inspector vulnerability findings for the specified AMI.
+    #
+    # You can get findings for AMIs that you own, AMIs that are shared with you, and public AMIs.
+    # Amazon Inspector returns findings only for AMIs that it has scanned.
+    def get_image_findings(input : AEC::GetImageFindingsRequest) : Core::ParsedResponse(AEC::GetImageFindingsResult)
+      Log.info { "performing 'GetImageFindings' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "GetImageFindings")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("GetImageFindings", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::GetImageFindingsResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::GetImageFindingsResult).new(response, result)
+    end
+
     # Gets the default instance metadata service (IMDS) settings that are set at the account level in
     # the specified Amazon Web Services Region.
     #

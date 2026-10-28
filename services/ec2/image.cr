@@ -130,6 +130,13 @@ module Amazonite::EC2
     # The watermarks attached to the AMI.
     property image_watermarks : Array(ImageWatermark) | Nil
 
+    # The Amazon Inspector scan results for the AMI. This information is present only for AMIs that
+    # Amazon Inspector has scanned.
+    #
+    # When you share an AMI with other accounts, organizations, or organizational units (OUs), or make
+    # it public, its scan results are available to the accounts that can use the AMI.
+    property scan_results : ScanResults | Nil
+
     # The instance type specification for the AMI, which defines which instance types are compatible
     # with this image.
     property instance_type_specification : InstanceTypeSpecification | Nil
@@ -200,6 +207,7 @@ module Amazonite::EC2
       @free_tier_eligible : Bool | Nil = nil,
       @public_ssm_parameter_name : String | Nil = nil,
       @image_watermarks : Array(ImageWatermark) | Nil = nil,
+      @scan_results : ScanResults | Nil = nil,
       @instance_type_specification : InstanceTypeSpecification | Nil = nil,
       @image_id : String | Nil = nil,
       @image_location : String | Nil = nil,
@@ -327,6 +335,10 @@ module Amazonite::EC2
         params.concat(item.to_query_params("#{prefix}ImageWatermarkSet.#{i}."))
       end
 
+      if value = @scan_results
+        params.concat(value.to_query_params("#{prefix}ScanResults."))
+      end
+
       if value = @instance_type_specification
         params.concat(value.to_query_params("#{prefix}InstanceTypeSpecification."))
       end
@@ -410,6 +422,7 @@ module Amazonite::EC2
         free_tier_eligible: Core::XMLValue.bool(node.xpath_node("*[local-name()='freeTierEligible']")),
         public_ssm_parameter_name: Core::XMLValue.string(node.xpath_node("*[local-name()='publicSsmParameterName']")),
         image_watermarks: node.xpath_nodes("*[local-name()='imageWatermarkSet']/*[local-name()='item']").map { |n| ImageWatermark.from_xml(n) },
+        scan_results: node.xpath_node("*[local-name()='scanResults']").try { |n| ScanResults.from_xml(n) },
         instance_type_specification: node.xpath_node("*[local-name()='instanceTypeSpecification']").try { |n| InstanceTypeSpecification.from_xml(n) },
         image_id: Core::XMLValue.string(node.xpath_node("*[local-name()='imageId']")),
         image_location: Core::XMLValue.string(node.xpath_node("*[local-name()='imageLocation']")),
@@ -443,6 +456,10 @@ module Amazonite::EC2
         value.each(&.validate!)
       end
 
+      if value = @scan_results
+        value.validate!
+      end
+
       if value = @instance_type_specification
         value.validate!
       end
@@ -452,6 +469,6 @@ module Amazonite::EC2
       end
     end
 
-    def_equals_and_hash(@platform_details, @usage_operation, @block_device_mappings, @description, @ena_support, @hypervisor, @image_owner_alias, @name, @root_device_name, @root_device_type, @sriov_net_support, @state_reason, @tags, @virtualization_type, @boot_mode, @tpm_support, @deprecation_time, @imds_support, @source_instance_id, @deregistration_protection, @last_launched_time, @image_allowed, @source_image_id, @source_image_region, @free_tier_eligible, @public_ssm_parameter_name, @image_watermarks, @instance_type_specification, @image_id, @image_location, @state, @owner_id, @creation_date, @public, @product_codes, @architecture, @image_type, @kernel_id, @ramdisk_id, @platform)
+    def_equals_and_hash(@platform_details, @usage_operation, @block_device_mappings, @description, @ena_support, @hypervisor, @image_owner_alias, @name, @root_device_name, @root_device_type, @sriov_net_support, @state_reason, @tags, @virtualization_type, @boot_mode, @tpm_support, @deprecation_time, @imds_support, @source_instance_id, @deregistration_protection, @last_launched_time, @image_allowed, @source_image_id, @source_image_region, @free_tier_eligible, @public_ssm_parameter_name, @image_watermarks, @scan_results, @instance_type_specification, @image_id, @image_location, @state, @owner_id, @creation_date, @public, @product_codes, @architecture, @image_type, @kernel_id, @ramdisk_id, @platform)
   end
 end

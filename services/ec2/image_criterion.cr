@@ -67,6 +67,11 @@ module Amazonite::EC2
     # Maximum: 50 values
     property image_watermarks : Array(ImageWatermarkFilterResponse) | Nil
 
+    # The Amazon Inspector scan-result criteria that an AMI must meet to be allowed. The criteria can
+    # limit the highest finding severity, the number of days since Amazon Inspector last scanned the
+    # AMI, and the number of days since Amazon Inspector reported a fix as available.
+    property scan_result_condition : ScanResultCondition | Nil
+
     def initialize(
       @image_providers : Array(String) | Nil = nil,
       @marketplace_product_codes : Array(String) | Nil = nil,
@@ -74,6 +79,7 @@ module Amazonite::EC2
       @deprecation_time_condition : DeprecationTimeCondition | Nil = nil,
       @creation_date_condition : CreationDateCondition | Nil = nil,
       @image_watermarks : Array(ImageWatermarkFilterResponse) | Nil = nil,
+      @scan_result_condition : ScanResultCondition | Nil = nil,
     )
     end
 
@@ -103,6 +109,10 @@ module Amazonite::EC2
       (@image_watermarks || [] of ImageWatermarkFilterResponse).each_with_index(1) do |item, i|
         params.concat(item.to_query_params("#{prefix}ImageWatermarkSet.#{i}."))
       end
+
+      if value = @scan_result_condition
+        params.concat(value.to_query_params("#{prefix}ScanResultCondition."))
+      end
       params
     end
 
@@ -114,6 +124,7 @@ module Amazonite::EC2
         deprecation_time_condition: node.xpath_node("*[local-name()='deprecationTimeCondition']").try { |n| DeprecationTimeCondition.from_xml(n) },
         creation_date_condition: node.xpath_node("*[local-name()='creationDateCondition']").try { |n| CreationDateCondition.from_xml(n) },
         image_watermarks: node.xpath_nodes("*[local-name()='imageWatermarkSet']/*[local-name()='item']").map { |n| ImageWatermarkFilterResponse.from_xml(n) },
+        scan_result_condition: node.xpath_node("*[local-name()='scanResultCondition']").try { |n| ScanResultCondition.from_xml(n) },
       )
     end
 
@@ -129,8 +140,12 @@ module Amazonite::EC2
       if value = @image_watermarks
         value.each(&.validate!)
       end
+
+      if value = @scan_result_condition
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@image_providers, @marketplace_product_codes, @image_names, @deprecation_time_condition, @creation_date_condition, @image_watermarks)
+    def_equals_and_hash(@image_providers, @marketplace_product_codes, @image_names, @deprecation_time_condition, @creation_date_condition, @image_watermarks, @scan_result_condition)
   end
 end
