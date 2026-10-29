@@ -20,6 +20,15 @@ module Amazonite::EC2
     # Information about the instance types for which to reserve the capacity.
     property instance_type_specifications : Array(ReservationFleetInstanceSpecification) | Nil
 
+    # Reserved for internal use.
+    property instance_requirements : InstanceRequirementsRequest | Nil
+
+    # Reserved for internal use.
+    property availability_zone : String | Nil
+
+    # Reserved for internal use.
+    property availability_zone_id : String | Nil
+
     # Indicates the tenancy of the Capacity Reservation Fleet. All Capacity Reservations in the Fleet
     # inherit this tenancy. The Capacity Reservation Fleet can have one of the following tenancy
     # settings:
@@ -71,6 +80,9 @@ module Amazonite::EC2
       @allocation_strategy : String | Nil = nil,
       @client_token : String | Nil = nil,
       @instance_type_specifications : Array(ReservationFleetInstanceSpecification) | Nil = nil,
+      @instance_requirements : InstanceRequirementsRequest | Nil = nil,
+      @availability_zone : String | Nil = nil,
+      @availability_zone_id : String | Nil = nil,
       @tenancy : FleetCapacityReservationTenancy | Nil = nil,
       @end_date : Time | Nil = nil,
       @instance_match_criteria : FleetInstanceMatchCriteria | Nil = nil,
@@ -92,6 +104,18 @@ module Amazonite::EC2
 
       (@instance_type_specifications || [] of ReservationFleetInstanceSpecification).each_with_index(1) do |item, i|
         params.concat(item.to_query_params("#{prefix}InstanceTypeSpecification.#{i}."))
+      end
+
+      if value = @instance_requirements
+        params.concat(value.to_query_params("#{prefix}InstanceRequirements."))
+      end
+
+      if value = @availability_zone
+        params << {"#{prefix}AvailabilityZone", value}
+      end
+
+      if value = @availability_zone_id
+        params << {"#{prefix}AvailabilityZoneId", value}
       end
 
       if value = @tenancy
@@ -123,6 +147,9 @@ module Amazonite::EC2
         allocation_strategy: Core::XMLValue.string(node.xpath_node("*[local-name()='AllocationStrategy']")),
         client_token: Core::XMLValue.string(node.xpath_node("*[local-name()='ClientToken']")),
         instance_type_specifications: node.xpath_nodes("*[local-name()='InstanceTypeSpecification']/*[local-name()='item']").map { |n| ReservationFleetInstanceSpecification.from_xml(n) },
+        instance_requirements: node.xpath_node("*[local-name()='InstanceRequirements']").try { |n| InstanceRequirementsRequest.from_xml(n) },
+        availability_zone: Core::XMLValue.string(node.xpath_node("*[local-name()='AvailabilityZone']")),
+        availability_zone_id: Core::XMLValue.string(node.xpath_node("*[local-name()='AvailabilityZoneId']")),
         tenancy: (n = node.xpath_node("*[local-name()='Tenancy']")) ? AEC::FleetCapacityReservationTenancy.from_json_object_key?(n.content) : nil,
         total_target_capacity: Core::XMLValue.i32(node.xpath_node("*[local-name()='TotalTargetCapacity']")).not_nil!,
         end_date: Core::XMLValue.time(node.xpath_node("*[local-name()='EndDate']")),
@@ -137,11 +164,15 @@ module Amazonite::EC2
         value.each(&.validate!)
       end
 
+      if value = @instance_requirements
+        value.validate!
+      end
+
       if value = @tag_specifications
         value.each(&.validate!)
       end
     end
 
-    def_equals_and_hash(@allocation_strategy, @client_token, @instance_type_specifications, @tenancy, @total_target_capacity, @end_date, @instance_match_criteria, @tag_specifications, @dry_run)
+    def_equals_and_hash(@allocation_strategy, @client_token, @instance_type_specifications, @instance_requirements, @availability_zone, @availability_zone_id, @tenancy, @total_target_capacity, @end_date, @instance_match_criteria, @tag_specifications, @dry_run)
   end
 end

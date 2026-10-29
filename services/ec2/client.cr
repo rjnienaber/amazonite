@@ -11996,6 +11996,33 @@ module Amazonite::EC2
       Core::ParsedResponse(AEC::GetCapacityManagerMonitoredTagKeysResult).new(response, result)
     end
 
+    # Scores how well each instance type and Availability Zone combination can support a capacity
+    # request, based on current Amazon EC2 capacity. The response includes a score for each
+    # combination and an aggregate score for all combinations in the request. This action doesn't
+    # launch or reserve instances, and a score doesn't guarantee that a later launch will succeed.
+    #
+    # Call this action in the Region where you turned on Capacity Manager. A single request can
+    # include Availability Zones in any Region. Real-time supportability checks are available only to
+    # Amazon Web Services Support customers on the Unified Operations plan.
+    #
+    # For more information, see [Check
+    # supportability](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/capacity-manager-supportability.html)
+    # in the *Amazon EC2 User Guide*.
+    def get_capacity_manager_supportability_scores(input : AEC::GetCapacityManagerSupportabilityScoresRequest) : Core::ParsedResponse(AEC::GetCapacityManagerSupportabilityScoresResult)
+      Log.info { "performing 'GetCapacityManagerSupportabilityScores' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "GetCapacityManagerSupportabilityScores")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("GetCapacityManagerSupportabilityScores", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::GetCapacityManagerSupportabilityScoresResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::GetCapacityManagerSupportabilityScoresResult).new(response, result)
+    end
+
     # Gets usage information about a Capacity Reservation. If the Capacity Reservation is shared, it
     # shows usage information for the Capacity Reservation owner and each Amazon Web Services account
     # that is currently using the shared capacity. If the Capacity Reservation is not shared, it shows

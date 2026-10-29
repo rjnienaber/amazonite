@@ -51,6 +51,16 @@ module Amazonite::EC2
     SpotTotalCountVcpu
     SpotInterruptionRateInst
     SpotInterruptionRateVcpu
+    CapacityTotalRequestedVcpu
+    CapacityTotalFulfilledVcpu
+    SpotCapacityTotalRequestedVcpu
+    SpotCapacityTotalFulfilledVcpu
+    CapacityRequestFulfillmentRate
+    AvgInstAzCountPerRequestedVcpu
+    InstAzFulfillmentRate
+    SpotCapacityRequestFulfillmentRate
+    SpotAvgInstAzCountPerRequestedVcpu
+    SpotInstAzFulfillmentRate
 
     def self.to_json(e : Metric, json : JSON::Builder) : Nil
       value = case e
@@ -103,6 +113,16 @@ module Amazonite::EC2
               when AEC::Metric::SpotTotalCountVcpu                    then "spot-total-count-vcpu"
               when AEC::Metric::SpotInterruptionRateInst              then "spot-interruption-rate-inst"
               when AEC::Metric::SpotInterruptionRateVcpu              then "spot-interruption-rate-vcpu"
+              when AEC::Metric::CapacityTotalRequestedVcpu            then "capacity-total-requested-vcpu"
+              when AEC::Metric::CapacityTotalFulfilledVcpu            then "capacity-total-fulfilled-vcpu"
+              when AEC::Metric::SpotCapacityTotalRequestedVcpu        then "spot-capacity-total-requested-vcpu"
+              when AEC::Metric::SpotCapacityTotalFulfilledVcpu        then "spot-capacity-total-fulfilled-vcpu"
+              when AEC::Metric::CapacityRequestFulfillmentRate        then "capacity-request-fulfillment-rate"
+              when AEC::Metric::AvgInstAzCountPerRequestedVcpu        then "avg-inst-az-count-per-requested-vcpu"
+              when AEC::Metric::InstAzFulfillmentRate                 then "inst-az-fulfillment-rate"
+              when AEC::Metric::SpotCapacityRequestFulfillmentRate    then "spot-capacity-request-fulfillment-rate"
+              when AEC::Metric::SpotAvgInstAzCountPerRequestedVcpu    then "spot-avg-inst-az-count-per-requested-vcpu"
+              when AEC::Metric::SpotInstAzFulfillmentRate             then "spot-inst-az-fulfillment-rate"
               else
                 raise Exception.new("unknown enum value for 'Metric' when serializing to json: '#{e}'")
               end
@@ -161,6 +181,16 @@ module Amazonite::EC2
       when "spot-total-count-vcpu"                      then AEC::Metric::SpotTotalCountVcpu
       when "spot-interruption-rate-inst"                then AEC::Metric::SpotInterruptionRateInst
       when "spot-interruption-rate-vcpu"                then AEC::Metric::SpotInterruptionRateVcpu
+      when "capacity-total-requested-vcpu"              then AEC::Metric::CapacityTotalRequestedVcpu
+      when "capacity-total-fulfilled-vcpu"              then AEC::Metric::CapacityTotalFulfilledVcpu
+      when "spot-capacity-total-requested-vcpu"         then AEC::Metric::SpotCapacityTotalRequestedVcpu
+      when "spot-capacity-total-fulfilled-vcpu"         then AEC::Metric::SpotCapacityTotalFulfilledVcpu
+      when "capacity-request-fulfillment-rate"          then AEC::Metric::CapacityRequestFulfillmentRate
+      when "avg-inst-az-count-per-requested-vcpu"       then AEC::Metric::AvgInstAzCountPerRequestedVcpu
+      when "inst-az-fulfillment-rate"                   then AEC::Metric::InstAzFulfillmentRate
+      when "spot-capacity-request-fulfillment-rate"     then AEC::Metric::SpotCapacityRequestFulfillmentRate
+      when "spot-avg-inst-az-count-per-requested-vcpu"  then AEC::Metric::SpotAvgInstAzCountPerRequestedVcpu
+      when "spot-inst-az-fulfillment-rate"              then AEC::Metric::SpotInstAzFulfillmentRate
       else
         raise Exception.new("unknown enum value for 'Metric' when deserializing from json: '#{value}'")
       end
@@ -217,6 +247,16 @@ module Amazonite::EC2
       when AEC::Metric::SpotTotalCountVcpu                    then "spot-total-count-vcpu"
       when AEC::Metric::SpotInterruptionRateInst              then "spot-interruption-rate-inst"
       when AEC::Metric::SpotInterruptionRateVcpu              then "spot-interruption-rate-vcpu"
+      when AEC::Metric::CapacityTotalRequestedVcpu            then "capacity-total-requested-vcpu"
+      when AEC::Metric::CapacityTotalFulfilledVcpu            then "capacity-total-fulfilled-vcpu"
+      when AEC::Metric::SpotCapacityTotalRequestedVcpu        then "spot-capacity-total-requested-vcpu"
+      when AEC::Metric::SpotCapacityTotalFulfilledVcpu        then "spot-capacity-total-fulfilled-vcpu"
+      when AEC::Metric::CapacityRequestFulfillmentRate        then "capacity-request-fulfillment-rate"
+      when AEC::Metric::AvgInstAzCountPerRequestedVcpu        then "avg-inst-az-count-per-requested-vcpu"
+      when AEC::Metric::InstAzFulfillmentRate                 then "inst-az-fulfillment-rate"
+      when AEC::Metric::SpotCapacityRequestFulfillmentRate    then "spot-capacity-request-fulfillment-rate"
+      when AEC::Metric::SpotAvgInstAzCountPerRequestedVcpu    then "spot-avg-inst-az-count-per-requested-vcpu"
+      when AEC::Metric::SpotInstAzFulfillmentRate             then "spot-inst-az-fulfillment-rate"
       else
         raise Exception.new("unknown enum value for 'Metric' when serializing to json: '#{self}'")
       end
@@ -273,6 +313,16 @@ module Amazonite::EC2
       when "spot-total-count-vcpu"                      then AEC::Metric::SpotTotalCountVcpu
       when "spot-interruption-rate-inst"                then AEC::Metric::SpotInterruptionRateInst
       when "spot-interruption-rate-vcpu"                then AEC::Metric::SpotInterruptionRateVcpu
+      when "capacity-total-requested-vcpu"              then AEC::Metric::CapacityTotalRequestedVcpu
+      when "capacity-total-fulfilled-vcpu"              then AEC::Metric::CapacityTotalFulfilledVcpu
+      when "spot-capacity-total-requested-vcpu"         then AEC::Metric::SpotCapacityTotalRequestedVcpu
+      when "spot-capacity-total-fulfilled-vcpu"         then AEC::Metric::SpotCapacityTotalFulfilledVcpu
+      when "capacity-request-fulfillment-rate"          then AEC::Metric::CapacityRequestFulfillmentRate
+      when "avg-inst-az-count-per-requested-vcpu"       then AEC::Metric::AvgInstAzCountPerRequestedVcpu
+      when "inst-az-fulfillment-rate"                   then AEC::Metric::InstAzFulfillmentRate
+      when "spot-capacity-request-fulfillment-rate"     then AEC::Metric::SpotCapacityRequestFulfillmentRate
+      when "spot-avg-inst-az-count-per-requested-vcpu"  then AEC::Metric::SpotAvgInstAzCountPerRequestedVcpu
+      when "spot-inst-az-fulfillment-rate"              then AEC::Metric::SpotInstAzFulfillmentRate
       else
         nil
       end
