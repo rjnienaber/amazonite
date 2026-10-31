@@ -370,11 +370,11 @@ module Amazonite::CloudWatchLogs
     # If you delete a field index policy, the indexing of the log events that happened before you
     # deleted the policy will still be used for up to 30 days to improve CloudWatch Logs Insights
     # queries.
-    def delete_account_policy(input : ACWL::DeleteAccountPolicyRequest) : Core::Response
+    def delete_account_policy(input : ACWL::DeleteAccountPolicyRequest) : Core::ParsedResponse(ACWL::DeleteAccountPolicyResponse)
       Log.info { "performing 'DeleteAccountPolicy' operation" }
       input.validate! if config.validate_input?
       response = post("DeleteAccountPolicy", "/", input.to_json)
-      Core::Response.new(response)
+      Core::ParsedResponse(ACWL::DeleteAccountPolicyResponse).new(response)
     end
 
     # Deletes the data protection policy from the specified log group.

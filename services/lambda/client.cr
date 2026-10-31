@@ -116,7 +116,8 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::GetResourcePolicyResponse).new(response)
     end
 
-    # Retrieves a list of configurations for asynchronous invocation for a function.
+    # Retrieves a list of configurations for asynchronous invocation for a Lambda Event Function. To
+    # retrieve more configurations, use the `Marker` parameter.
     #
     # To configure options for asynchronous invocation, use PutFunctionEventInvokeConfig.
     def list_function_event_invoke_configs(input : AL::ListFunctionEventInvokeConfigsRequest) : Core::ParsedResponse(AL::ListFunctionEventInvokeConfigsResponse)
@@ -763,7 +764,7 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::ListEventSourceMappingsResponse).new(response)
     end
 
-    # Removes a concurrent execution limit from a function.
+    # Removes a concurrent execution limit from a Lambda Event Function.
     def delete_function_concurrency(input : AL::DeleteFunctionConcurrencyRequest) : Core::Response
       Log.info { "performing 'DeleteFunctionConcurrency' operation" }
       input.validate! if config.validate_input?
@@ -804,8 +805,8 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::ListProvisionedConcurrencyConfigsResponse).new(response)
     end
 
-    # Sets the maximum number of simultaneous executions for a function, and reserves capacity for
-    # that concurrency level.
+    # Sets the maximum number of simultaneous executions for a Lambda Event Function, and reserves
+    # capacity for that concurrency level.
     #
     # Concurrency settings apply to the function as a whole, including all published versions and the
     # unpublished version. Reserving concurrency both ensures that your function has capacity to
@@ -929,9 +930,9 @@ module Amazonite::Lambda
       Core::Response.new(response)
     end
 
-    # Returns information about the function or function version, with a link to download the
-    # deployment package that's valid for 10 minutes. If you specify a function version, only details
-    # that are specific to that version are returned.
+    # Returns information about a Lambda Event Function or function version, with a link to download
+    # the deployment package that's valid for 10 minutes. If you specify a function version, only
+    # details that are specific to that version are returned.
     def get_function(input : AL::GetFunctionRequest) : Core::ParsedResponse(AL::GetFunctionResponse)
       Log.info { "performing 'GetFunction' operation" }
       input.validate! if config.validate_input?
@@ -1233,9 +1234,9 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::PutFunctionCodeSigningConfigResponse).new(response)
     end
 
-    # Sets your function's [recursive loop
-    # detection](https://docs.aws.amazon.com/lambda/latest/dg/invocation-recursion.html)
-    # configuration.
+    # Sets the [recursive loop
+    # detection](https://docs.aws.amazon.com/lambda/latest/dg/invocation-recursion.html) configuration
+    # for a Lambda Event Function.
     #
     # When you configure a Lambda function to output to the same service or resource that invokes the
     # function, it's possible to create an infinite recursive loop. For example, a Lambda function
@@ -1290,7 +1291,7 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::PutRuntimeManagementConfigResponse).new(response)
     end
 
-    # Updates the configuration for a Lambda function URL.
+    # Updates the configuration for a function URL of a Lambda Event Function.
     def update_function_url_config(input : AL::UpdateFunctionUrlConfigRequest) : Core::ParsedResponse(AL::UpdateFunctionUrlConfigResponse)
       Log.info { "performing 'UpdateFunctionUrlConfig' operation" }
       input.validate! if config.validate_input?
@@ -1478,8 +1479,9 @@ module Amazonite::Lambda
     end
 
     # Returns a list of
-    # [versions](https://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html), with the
-    # version-specific configuration of each. Lambda returns up to 50 versions per call.
+    # [versions](https://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html) of a Lambda
+    # Event Function, with the version-specific configuration of each. Lambda returns up to 50
+    # versions per call.
     def list_versions_by_function(input : AL::ListVersionsByFunctionRequest) : Core::ParsedResponse(AL::ListVersionsByFunctionResponse)
       Log.info { "performing 'ListVersionsByFunction' operation" }
       input.validate! if config.validate_input?
@@ -1499,8 +1501,8 @@ module Amazonite::Lambda
     end
 
     # Creates a [version](https://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html) from
-    # the current code and configuration of a function. Use versions to create a snapshot of your
-    # function code and configuration that doesn't change.
+    # the current code and configuration of a Lambda Event Function. Use versions to create a snapshot
+    # of your function code and configuration that doesn't change.
     #
     # Lambda doesn't publish a version if the function's configuration and code haven't changed since
     # the last version. Use UpdateFunctionCode or UpdateFunctionConfiguration to update the function

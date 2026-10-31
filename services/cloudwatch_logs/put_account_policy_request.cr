@@ -141,18 +141,28 @@ module Amazonite::CloudWatchLogs
     @[JSON::Field(key: "selectionCriteria")]
     property selection_criteria : String | Nil
 
+    # Specifies whether to preview the impact of the policy without creating or updating it. If you
+    # specify `true`, CloudWatch Logs validates the request, does not save the policy, and returns the
+    # estimated impact in `dryRunResult` instead of `accountPolicy`. The default is `false`.
+    #
+    # Specifying `dryRun` is valid only when you specify `RETENTION_POLICY` for `policyType`. Only one
+    # dry run can be in progress for an account at a time.
+    @[JSON::Field(key: "dryRun")]
+    property dry_run : Bool | Nil
+
     def initialize(
       @policy_name : String,
       @policy_document : String,
       @policy_type : PolicyType,
       @scope : Scope | Nil = nil,
       @selection_criteria : String | Nil = nil,
+      @dry_run : Bool | Nil = nil,
     )
     end
 
     def validate! : Nil
     end
 
-    def_equals_and_hash(@policy_name, @policy_document, @policy_type, @scope, @selection_criteria)
+    def_equals_and_hash(@policy_name, @policy_document, @policy_type, @scope, @selection_criteria, @dry_run)
   end
 end

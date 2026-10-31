@@ -7,6 +7,7 @@ module Amazonite::CloudWatchLogs
     FieldIndexPolicy
     TransformerPolicy
     MetricExtractionPolicy
+    RetentionPolicy
 
     def self.to_json(e : PolicyType, json : JSON::Builder) : Nil
       value = case e
@@ -15,6 +16,7 @@ module Amazonite::CloudWatchLogs
               when ACWL::PolicyType::FieldIndexPolicy         then "FIELD_INDEX_POLICY"
               when ACWL::PolicyType::TransformerPolicy        then "TRANSFORMER_POLICY"
               when ACWL::PolicyType::MetricExtractionPolicy   then "METRIC_EXTRACTION_POLICY"
+              when ACWL::PolicyType::RetentionPolicy          then "RETENTION_POLICY"
               else
                 raise Exception.new("unknown enum value for 'PolicyType' when serializing to json: '#{e}'")
               end
@@ -29,6 +31,7 @@ module Amazonite::CloudWatchLogs
       when "FIELD_INDEX_POLICY"         then ACWL::PolicyType::FieldIndexPolicy
       when "TRANSFORMER_POLICY"         then ACWL::PolicyType::TransformerPolicy
       when "METRIC_EXTRACTION_POLICY"   then ACWL::PolicyType::MetricExtractionPolicy
+      when "RETENTION_POLICY"           then ACWL::PolicyType::RetentionPolicy
       else
         raise Exception.new("unknown enum value for 'PolicyType' when deserializing from json: '#{value}'")
       end
@@ -41,6 +44,7 @@ module Amazonite::CloudWatchLogs
       when ACWL::PolicyType::FieldIndexPolicy         then "FIELD_INDEX_POLICY"
       when ACWL::PolicyType::TransformerPolicy        then "TRANSFORMER_POLICY"
       when ACWL::PolicyType::MetricExtractionPolicy   then "METRIC_EXTRACTION_POLICY"
+      when ACWL::PolicyType::RetentionPolicy          then "RETENTION_POLICY"
       else
         raise Exception.new("unknown enum value for 'PolicyType' when serializing to json: '#{self}'")
       end
@@ -53,6 +57,7 @@ module Amazonite::CloudWatchLogs
       when "FIELD_INDEX_POLICY"         then ACWL::PolicyType::FieldIndexPolicy
       when "TRANSFORMER_POLICY"         then ACWL::PolicyType::TransformerPolicy
       when "METRIC_EXTRACTION_POLICY"   then ACWL::PolicyType::MetricExtractionPolicy
+      when "RETENTION_POLICY"           then ACWL::PolicyType::RetentionPolicy
       else
         nil
       end

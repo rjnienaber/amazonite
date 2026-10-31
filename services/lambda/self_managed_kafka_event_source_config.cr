@@ -1,3 +1,4 @@
+private alias AL = Amazonite::Lambda
 private alias Core = Amazonite::Core
 
 module Amazonite::Lambda
@@ -17,9 +18,29 @@ module Amazonite::Lambda
     @[JSON::Field(key: "SchemaRegistryConfig")]
     property schema_registry_config : KafkaSchemaRegistryConfig | Nil
 
+    # The mode that Lambda uses to consume records from your self-managed Apache Kafka topic. The
+    # default is `Stream`.
+    #
+    # - `Stream` – Lambda consumes records using a Kafka consumer group and preserves the order of
+    # records within each partition. This is the default when you omit `ConsumptionMode`.
+    #
+    # - `Queue` – Lambda consumes records using a Kafka share group. Multiple consumers can process
+    # records from the same partitions concurrently. Queue mode does not preserve per-partition order.
+    # Queue mode requires an Apache Kafka cluster running version 4.2 or later with share groups
+    # enabled.
+    #
+    # You cannot change `ConsumptionMode` after you create the event source mapping. To use a
+    # different consumption mode, create a new event source mapping.
+    #
+    # When `ConsumptionMode` is `Queue`, the `StartingPosition`, `StartingPositionTimestamp`, and
+    # `MaximumBatchingWindowInSeconds` parameters are not supported.
+    @[JSON::Field(key: "ConsumptionMode", converter: AL::KafkaEventSourceMappingConsumptionMode)]
+    property consumption_mode : KafkaEventSourceMappingConsumptionMode | Nil
+
     def initialize(
       @consumer_group_id : String | Nil = nil,
       @schema_registry_config : KafkaSchemaRegistryConfig | Nil = nil,
+      @consumption_mode : KafkaEventSourceMappingConsumptionMode | Nil = nil,
     )
     end
 
@@ -35,6 +56,6 @@ module Amazonite::Lambda
       end
     end
 
-    def_equals_and_hash(@consumer_group_id, @schema_registry_config)
+    def_equals_and_hash(@consumer_group_id, @schema_registry_config, @consumption_mode)
   end
 end

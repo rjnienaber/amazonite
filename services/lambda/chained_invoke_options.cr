@@ -14,8 +14,9 @@ module Amazonite::Lambda
     @[JSON::Field(key: "TenantId")]
     property tenant_id : String | Nil
 
-    # The optional X-Ray trace header to use when starting the chained invocation. If you omit this
-    # value, the child invocation inherits the parent durable execution's trace header.
+    # The X-Ray trace header to use when starting the chained invocation. This parameter is optional.
+    # If you omit this value, the child invocation inherits the parent durable execution's trace
+    # header.
     #
     # Specify this value on the `START` update for the chained invocation operation. For more
     # information about the header format, see [Tracing

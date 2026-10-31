@@ -94,6 +94,8 @@ module Amazonite::Lambda
     #
     # Related setting: For Kinesis, DynamoDB, and Amazon SQS event sources, when you set `BatchSize`
     # to a value greater than 10, you must set `MaximumBatchingWindowInSeconds` to at least 1.
+    #
+    # Not supported for Kafka event source mappings when `ConsumptionMode` is `Queue`.
     @[JSON::Field(key: "MaximumBatchingWindowInSeconds")]
     property maximum_batching_window_in_seconds : Int32 | Nil
 
@@ -120,6 +122,10 @@ module Amazonite::Lambda
     # (Kinesis, DynamoDB Streams, Amazon MSK, and self-managed Apache Kafka) Discard records after the
     # specified number of retries. The default value is infinite (-1). When set to infinite (-1),
     # failed records are retried until the record expires.
+    #
+    # For Kafka `Stream` consumption mode, the default is `-1` (infinite retries; capped at 10 when an
+    # on-failure destination is configured). For Kafka `Queue` consumption mode, the default is `0`,
+    # and if no on-failure destination is configured the Kafka broker performs retries.
     @[JSON::Field(key: "MaximumRetryAttempts")]
     property maximum_retry_attempts : Int32 | Nil
 

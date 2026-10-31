@@ -98,6 +98,14 @@ module Amazonite::CloudWatchLogs
     @[JSON::Field(key: "bearerTokenAuthenticationEnabled")]
     property bearer_token_authentication_enabled : Bool | Nil
 
+    # The name of the account-level retention policy that determines the retention period of this log
+    # group. This field is returned only when an account-level retention policy applies to the log
+    # group. When it is returned, `retentionInDays` shows the retention period from that policy
+    # instead of the retention period set on the log group. If the policy specifies that log events
+    # never expire, `retentionInDays` is not returned.
+    @[JSON::Field(key: "retentionPolicyName")]
+    property retention_policy_name : String | Nil
+
     def initialize(
       @log_group_name : String | Nil = nil,
       @creation_time : Int64 | Nil = nil,
@@ -112,6 +120,7 @@ module Amazonite::CloudWatchLogs
       @log_group_arn : String | Nil = nil,
       @deletion_protection_enabled : Bool | Nil = nil,
       @bearer_token_authentication_enabled : Bool | Nil = nil,
+      @retention_policy_name : String | Nil = nil,
     )
     end
 
@@ -136,6 +145,6 @@ module Amazonite::CloudWatchLogs
       end
     end
 
-    def_equals_and_hash(@log_group_name, @creation_time, @retention_in_days, @metric_filter_count, @arn, @stored_bytes, @kms_key_id, @data_protection_status, @inherited_properties, @log_group_class, @log_group_arn, @deletion_protection_enabled, @bearer_token_authentication_enabled)
+    def_equals_and_hash(@log_group_name, @creation_time, @retention_in_days, @metric_filter_count, @arn, @stored_bytes, @kms_key_id, @data_protection_status, @inherited_properties, @log_group_class, @log_group_arn, @deletion_protection_enabled, @bearer_token_authentication_enabled, @retention_policy_name)
   end
 end
