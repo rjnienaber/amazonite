@@ -170,6 +170,16 @@ module Amazonite::DynamoDB
       Core::ParsedResponse(ADDB::BatchWriteItemOutput).new(response)
     end
 
+    # Cancels an in-progress bulk operation asynchronously. Cancellation doesn't remove items that the
+    # operation has already written. Use `DescribeBulkOperation` to monitor the operation until it
+    # reaches a terminal status.
+    def cancel_bulk_operation(input : ADDB::CancelBulkOperationInput) : Core::ParsedResponse(ADDB::CancelBulkOperationOutput)
+      Log.info { "performing 'CancelBulkOperation' operation" }
+      input.validate! if config.validate_input?
+      response = post("CancelBulkOperation", "/", input.to_json)
+      Core::ParsedResponse(ADDB::CancelBulkOperationOutput).new(response)
+    end
+
     # Creates a backup for an existing table.
     #
     # Each time you create an on-demand backup, the entire table data is backed up. There is no limit
@@ -362,6 +372,14 @@ module Amazonite::DynamoDB
       input.validate! if config.validate_input?
       response = post("DescribeBackup", "/", input.to_json)
       Core::ParsedResponse(ADDB::DescribeBackupOutput).new(response)
+    end
+
+    # Describes the specified bulk operation.
+    def describe_bulk_operation(input : ADDB::DescribeBulkOperationInput) : Core::ParsedResponse(ADDB::DescribeBulkOperationOutput)
+      Log.info { "performing 'DescribeBulkOperation' operation" }
+      input.validate! if config.validate_input?
+      response = post("DescribeBulkOperation", "/", input.to_json)
+      Core::ParsedResponse(ADDB::DescribeBulkOperationOutput).new(response)
     end
 
     # Checks the status of continuous backups and point in time recovery on the specified table.
@@ -694,6 +712,16 @@ module Amazonite::DynamoDB
       Core::ParsedResponse(ADDB::ListBackupsOutput).new(response)
     end
 
+    # Lists bulk operations that started within the past 90 days for the current Amazon Web Services
+    # account and Amazon Web Services Region, with the most recent operations first. Results are
+    # paginated. Use the `NextToken` parameter to retrieve additional results.
+    def list_bulk_operations(input : ADDB::ListBulkOperationsInput) : Core::ParsedResponse(ADDB::ListBulkOperationsOutput)
+      Log.info { "performing 'ListBulkOperations' operation" }
+      input.validate! if config.validate_input?
+      response = post("ListBulkOperations", "/", input.to_json)
+      Core::ParsedResponse(ADDB::ListBulkOperationsOutput).new(response)
+    end
+
     # Returns a list of ContributorInsightsSummary for a table and all its global secondary indexes.
     def list_contributor_insights(input : ADDB::ListContributorInsightsInput) : Core::ParsedResponse(ADDB::ListContributorInsightsOutput)
       Log.info { "performing 'ListContributorInsights' operation" }
@@ -998,6 +1026,15 @@ module Amazonite::DynamoDB
       input.validate! if config.validate_input?
       response = post("SearchVectors", "/", input.to_json)
       Core::ParsedResponse(ADDB::SearchVectorsOutput).new(response)
+    end
+
+    # Starts an asynchronous bulk operation that reads items from Amazon S3 and writes them to an
+    # existing DynamoDB table, so you can efficiently load or migrate large datasets.
+    def start_bulk_put_items(input : ADDB::StartBulkPutItemsInput) : Core::ParsedResponse(ADDB::StartBulkPutItemsOutput)
+      Log.info { "performing 'StartBulkPutItems' operation" }
+      input.validate! if config.validate_input?
+      response = post("StartBulkPutItems", "/", input.to_json)
+      Core::ParsedResponse(ADDB::StartBulkPutItemsOutput).new(response)
     end
 
     # Associate a set of tags with an Amazon DynamoDB resource. You can then activate these

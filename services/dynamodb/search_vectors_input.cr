@@ -45,9 +45,8 @@ module Amazonite::DynamoDB
     # attributes defined in the vector index search schema, including `HASH` and `INLINE_FILTER` key
     # elements.
     #
-    # Only the equality operator (`=`) is supported for `HASH` attributes. Comparison and range
-    # operators are supported for `INLINE_FILTER` attributes. Only top-level attributes from the
-    # search schema can be referenced.
+    # The `HASH` and `INLINE_FILTER` attributes support only the equality operator (`=`). You can
+    # reference only top-level attributes from the search schema.
     @[JSON::Field(key: "SearchConditionExpression")]
     property search_condition_expression : String | Nil
 
