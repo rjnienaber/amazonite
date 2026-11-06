@@ -98,6 +98,27 @@ module Amazonite::CloudWatchLogs
     #
     # You can use `FieldsV2` to specify the type for each field. Supported types are `FIELD_INDEX` and
     # `FACET`. Field names within `Fields` and `FieldsV2` must be mutually exclusive.
+    #
+    # **Retention policy**
+    #
+    # A retention policy must include the following attributes in a JSON block:
+    #
+    # retentionInDays The number of days to retain log events. Valid values are 30, 60, 90, 120, 150,
+    # 180, 365, 400, 545, 731, 1096, 1827, 2192, 2557, 2922, 3288, and 3653. To retain log events
+    # indefinitely, specify the string `NEVER_EXPIRE`.
+    #
+    # enforcementMode Specifies which log groups the policy applies to. Valid values are `NEW_ONLY`
+    # and `RETROACTIVE`.
+    #
+    # `RETROACTIVE` applies the policy to every log group that matches the selection criteria,
+    # including log groups that existed before you created the policy.
+    #
+    # `NEW_ONLY` applies the policy only to log groups that are created after you create the policy.
+    # Log groups that already existed when you created the policy keep their own retention period.
+    #
+    # The following is an example of a retention policy document.
+    #
+    # `"policyDocument": "{\"retentionInDays\": 90, \"enforcementMode\": \"RETROACTIVE\"}"`
     @[JSON::Field(key: "policyDocument")]
     property policy_document : String
 
@@ -115,7 +136,7 @@ module Amazonite::CloudWatchLogs
     # source name and type combination.
     #
     # Specifying `selectionCriteria` is valid only when you specify `SUBSCRIPTION_FILTER_POLICY`,
-    # `FIELD_INDEX_POLICY` or `TRANSFORMER_POLICY`for `policyType`.
+    # `FIELD_INDEX_POLICY`, `TRANSFORMER_POLICY`, or `RETENTION_POLICY` for `policyType`.
     #
     # - If `policyType` is `SUBSCRIPTION_FILTER_POLICY`, the only supported `selectionCriteria` filter
     # is `LogGroupName NOT IN []`
@@ -131,6 +152,10 @@ module Amazonite::CloudWatchLogs
     #
     # When you specify `selectionCriteria` for a field index policy you can use either
     # `LogGroupNamePrefix` by itself or `DataSourceName` and `DataSourceType` together.
+    #
+    # - If `policyType` is `RETENTION_POLICY`, the only supported `selectionCriteria` filter is
+    # `LogGroupNamePrefix`. If you omit `selectionCriteria`, the retention policy applies to all log
+    # groups in the account.
     #
     # The `selectionCriteria` string can be up to 25KB in length. The length is determined by using
     # its UTF-8 bytes.

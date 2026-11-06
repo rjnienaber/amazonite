@@ -5,12 +5,14 @@ module Amazonite::CloudWatchLogs
     Standard
     InfrequentAccess
     Delivery
+    Essentials
 
     def self.to_json(e : LogGroupClass, json : JSON::Builder) : Nil
       value = case e
               when ACWL::LogGroupClass::Standard         then "STANDARD"
               when ACWL::LogGroupClass::InfrequentAccess then "INFREQUENT_ACCESS"
               when ACWL::LogGroupClass::Delivery         then "DELIVERY"
+              when ACWL::LogGroupClass::Essentials       then "ESSENTIALS"
               else
                 raise Exception.new("unknown enum value for 'LogGroupClass' when serializing to json: '#{e}'")
               end
@@ -23,6 +25,7 @@ module Amazonite::CloudWatchLogs
       when "STANDARD"          then ACWL::LogGroupClass::Standard
       when "INFREQUENT_ACCESS" then ACWL::LogGroupClass::InfrequentAccess
       when "DELIVERY"          then ACWL::LogGroupClass::Delivery
+      when "ESSENTIALS"        then ACWL::LogGroupClass::Essentials
       else
         raise Exception.new("unknown enum value for 'LogGroupClass' when deserializing from json: '#{value}'")
       end
@@ -33,6 +36,7 @@ module Amazonite::CloudWatchLogs
       when ACWL::LogGroupClass::Standard         then "STANDARD"
       when ACWL::LogGroupClass::InfrequentAccess then "INFREQUENT_ACCESS"
       when ACWL::LogGroupClass::Delivery         then "DELIVERY"
+      when ACWL::LogGroupClass::Essentials       then "ESSENTIALS"
       else
         raise Exception.new("unknown enum value for 'LogGroupClass' when serializing to json: '#{self}'")
       end
@@ -43,6 +47,7 @@ module Amazonite::CloudWatchLogs
       when "STANDARD"          then ACWL::LogGroupClass::Standard
       when "INFREQUENT_ACCESS" then ACWL::LogGroupClass::InfrequentAccess
       when "DELIVERY"          then ACWL::LogGroupClass::Delivery
+      when "ESSENTIALS"        then ACWL::LogGroupClass::Essentials
       else
         nil
       end

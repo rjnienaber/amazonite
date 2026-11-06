@@ -27,12 +27,15 @@ module Amazonite::CloudWatchLogs
     @[JSON::Field(key: "tags")]
     property tags : Hash(String, String) | Nil
 
-    # Use this parameter to specify the log group class for this log group. There are three classes:
+    # Use this parameter to specify the log group class for this log group. There are four classes:
     #
     # - The `Standard` log class supports all CloudWatch Logs features.
     #
     # - The `Infrequent Access` log class supports a subset of CloudWatch Logs features and incurs
     # lower costs.
+    #
+    # - The `Essentials` log class supports a subset of CloudWatch Logs features and incurs lower
+    # costs.
     #
     # - Use the `Delivery` log class only for delivering Lambda logs to store in Amazon S3 or Amazon
     # Data Firehose. Log events in log groups in the Delivery class are kept in CloudWatch Logs for
