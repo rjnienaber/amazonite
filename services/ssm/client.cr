@@ -333,6 +333,12 @@ module Amazonite::Ssm
 
     # Delete a parameter from the system. After deleting a parameter, wait for at least 30 seconds to
     # create a parameter with the same name.
+    #
+    # This operation is authorized against the `ssm:DeleteParameter` action. Denying that action alone
+    # doesn't restrict DeleteParameters, which is authorized against its own action. For more
+    # information, see [Restricting access to specific parameters and
+    # paths](https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-restrict-parameter-access.html)
+    # in the *Amazon Web Services Systems Manager User Guide*.
     def delete_parameter(input : AS::DeleteParameterRequest) : Core::ParsedResponse(AS::DeleteParameterResult)
       Log.info { "performing 'DeleteParameter' operation" }
       input.validate! if config.validate_input?
@@ -342,6 +348,13 @@ module Amazonite::Ssm
 
     # Delete a list of parameters. After deleting a parameter, wait for at least 30 seconds to create
     # a parameter with the same name.
+    #
+    # This operation is authorized against the `ssm:DeleteParameters` action, not against
+    # `ssm:DeleteParameter`. Denying `ssm:DeleteParameter` for a parameter doesn't prevent a principal
+    # from deleting that parameter with this operation. For more information, see [Restricting access
+    # to specific parameters and
+    # paths](https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-restrict-parameter-access.html)
+    # in the *Amazon Web Services Systems Manager User Guide*.
     def delete_parameters(input : AS::DeleteParametersRequest) : Core::ParsedResponse(AS::DeleteParametersResult)
       Log.info { "performing 'DeleteParameters' operation" }
       input.validate! if config.validate_input?
@@ -389,6 +402,24 @@ module Amazonite::Ssm
       input.validate! if config.validate_input?
       response = post("DeleteResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(AS::DeleteResourcePolicyResponse).new(response)
+    end
+
+    # Removes the Default Host Management Configuration (DHMC) for an Amazon Web Services account and
+    # Amazon Web Services Region. After you deregister DHMC, Amazon EC2 instances are no longer
+    # automatically managed as managed nodes by Amazon Web Services Systems Manager.
+    #
+    # To use this operation, you must have the following permissions:
+    #
+    # - You need the `ssm:GetServiceSetting` and `ssm:ResetServiceSetting` permissions for the
+    # `/ssm/managed-instance/default-ec2-instance-management-role` service setting.
+    #
+    # If the registered role is service-managed, you also need the `iam:DeleteRole` permission so that
+    # Amazon Web Services Systems Manager can remove the role it created.
+    def deregister_default_host_management_configuration(input : AS::DeregisterDefaultHostManagementConfigurationRequest) : Core::ParsedResponse(AS::DeregisterDefaultHostManagementConfigurationResult)
+      Log.info { "performing 'DeregisterDefaultHostManagementConfiguration' operation" }
+      input.validate! if config.validate_input?
+      response = post("DeregisterDefaultHostManagementConfiguration", "/", input.to_json)
+      Core::ParsedResponse(AS::DeregisterDefaultHostManagementConfigurationResult).new(response)
     end
 
     # Removes the server or virtual machine from the list of registered servers.
@@ -1018,6 +1049,13 @@ module Amazonite::Ssm
     #
     # To get information about more than one parameter at a time, use the GetParameters operation.
     #
+    # This operation is authorized against the `ssm:GetParameter` action. Denying that action alone
+    # doesn't restrict GetParameters, GetParameterHistory, or GetParametersByPath, each of which is
+    # authorized against its own action. For more information, see [How Parameter Store authorizes
+    # parameter
+    # retrieval](https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-retrieval-authorization.html)
+    # in the *Amazon Web Services Systems Manager User Guide*.
+    #
     # Parameter Store throughput defines the number of API transactions per second (TPS) that Systems
     # Manager can process. This applies to `GetParameter`, `GetParameters`, and `PutParameter` API
     # calls for your Amazon Web Services account and Amazon Web Services Region. By default, Parameter
@@ -1047,6 +1085,15 @@ module Amazonite::Ssm
     # If you change the KMS key alias for the KMS key used to encrypt a parameter, then you must also
     # update the key alias the parameter uses to reference KMS. Otherwise, `GetParameterHistory`
     # retrieves whatever the original key alias was referencing.
+    #
+    # This operation is authorized against the `ssm:GetParameterHistory` action, not against
+    # `ssm:GetParameter`. Because parameter history includes every version of a parameter, including
+    # the current one, a principal who is denied `ssm:GetParameter`, `ssm:GetParameters`, and
+    # `ssm:GetParametersByPath` but allowed `ssm:GetParameterHistory` can still read the current
+    # value. To restrict access to a parameter value, deny every action that can return it. For more
+    # information, see [How Parameter Store authorizes parameter
+    # retrieval](https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-retrieval-authorization.html)
+    # in the *Amazon Web Services Systems Manager User Guide*.
     def get_parameter_history(input : AS::GetParameterHistoryRequest) : Core::ParsedResponse(AS::GetParameterHistoryResult)
       Log.info { "performing 'GetParameterHistory' operation" }
       input.validate! if config.validate_input?
@@ -1057,6 +1104,14 @@ module Amazonite::Ssm
     # Get information about one or more parameters by specifying multiple parameter names.
     #
     # To get information about a single parameter, you can use the GetParameter operation instead.
+    #
+    # This operation is authorized against the `ssm:GetParameters` action, not against
+    # `ssm:GetParameter`. Denying `ssm:GetParameter` for a parameter doesn't prevent a principal from
+    # retrieving that parameter with this operation. To restrict access to a parameter value, deny
+    # every action that can return it. For more information, see [How Parameter Store authorizes
+    # parameter
+    # retrieval](https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-retrieval-authorization.html)
+    # in the *Amazon Web Services Systems Manager User Guide*.
     #
     # Parameter names can't contain spaces. The service removes any spaces specified for the beginning
     # or end of a parameter name. If the specified name for a parameter contains spaces between
@@ -1083,6 +1138,18 @@ module Amazonite::Ssm
     end
 
     # Retrieve information about one or more parameters under a specified level in a hierarchy.
+    #
+    # This operation is authorized against the `ssm:GetParametersByPath` action for the path that you
+    # specify in the request. It isn't authorized against the individual parameters that it returns,
+    # and it isn't authorized against `ssm:GetParameter`. A principal who is allowed to call this
+    # operation for the path `/a` with `Recursive` set to `true` receives every parameter under that
+    # path, including `/a/b`, even if a policy explicitly denies access to `/a/b`.
+    #
+    # To prevent a parameter from being returned by this operation, deny the `ssm:GetParametersByPath`
+    # action on every ancestor path that could include the parameter in its results. For more
+    # information, see [Restricting access to specific parameters and
+    # paths](https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-restrict-parameter-access.html)
+    # in the *Amazon Web Services Systems Manager User Guide*.
     #
     # Request results are returned on a best-effort basis. If you specify `MaxResults` in the request,
     # the response includes information up to the limit specified. The number of items returned,
@@ -1523,6 +1590,29 @@ module Amazonite::Ssm
       input.validate! if config.validate_input?
       response = post("PutResourcePolicy", "/", input.to_json)
       Core::ParsedResponse(AS::PutResourcePolicyResponse).new(response)
+    end
+
+    # Enables Default Host Management Configuration (DHMC) for the current Amazon Web Services account
+    # and Amazon Web Services Region. With DHMC enabled, you don't need to configure additional
+    # resources, such as an instance profile, to use your Amazon EC2 instances as managed nodes in
+    # Amazon Web Services Systems Manager.
+    #
+    # To use this operation, you must have the following permissions:
+    #
+    # - You need the `ssm:GetServiceSetting` and `ssm:UpdateServiceSetting` permissions for the
+    # `/ssm/managed-instance/default-ec2-instance-management-role` service setting.
+    #
+    # - You need the `iam:GetRole` and `iam:PassRole` permissions for the role used for Default Host
+    # Management Configuration.
+    #
+    # If `PermissionModel` is `SERVICE_MANAGED`, you also need the `iam:CreateRole` and
+    # `iam:AttachRolePolicy` permissions so that Amazon Web Services Systems Manager can create and
+    # configure the role on your behalf.
+    def register_default_host_management_configuration(input : AS::RegisterDefaultHostManagementConfigurationRequest) : Core::ParsedResponse(AS::RegisterDefaultHostManagementConfigurationResult)
+      Log.info { "performing 'RegisterDefaultHostManagementConfiguration' operation" }
+      input.validate! if config.validate_input?
+      response = post("RegisterDefaultHostManagementConfiguration", "/", input.to_json)
+      Core::ParsedResponse(AS::RegisterDefaultHostManagementConfigurationResult).new(response)
     end
 
     # Defines the default patch baseline for the relevant operating system.
