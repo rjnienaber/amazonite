@@ -12244,7 +12244,7 @@ module Amazonite::EC2
     # - Create a set of named queries in Athena that you can use to get started quickly
     #
     # `GetFlowLogsIntegrationTemplate` does not support integration between Amazon Web Services
-    # Transit Gateway Flow Logs and Amazon Athena.
+    # Transit Gateway Flow Logs or Amazon Web Services Cloud WAN Flow Logs and Amazon Athena.
     def get_flow_logs_integration_template(input : AEC::GetFlowLogsIntegrationTemplateRequest) : Core::ParsedResponse(AEC::GetFlowLogsIntegrationTemplateResult)
       Log.info { "performing 'GetFlowLogsIntegrationTemplate' operation" }
       input.validate! if config.validate_input?

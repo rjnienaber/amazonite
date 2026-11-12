@@ -8,6 +8,9 @@ module Amazonite::EC2
     TransitGateway
     TransitGatewayAttachment
     RegionalNatGateway
+    CoreNetwork
+    CoreNetworkEdge
+    CoreNetworkAttachment
 
     def self.to_json(e : FlowLogsResourceType, json : JSON::Builder) : Nil
       value = case e
@@ -17,6 +20,9 @@ module Amazonite::EC2
               when AEC::FlowLogsResourceType::TransitGateway           then "TransitGateway"
               when AEC::FlowLogsResourceType::TransitGatewayAttachment then "TransitGatewayAttachment"
               when AEC::FlowLogsResourceType::RegionalNatGateway       then "RegionalNatGateway"
+              when AEC::FlowLogsResourceType::CoreNetwork              then "CoreNetwork"
+              when AEC::FlowLogsResourceType::CoreNetworkEdge          then "CoreNetworkEdge"
+              when AEC::FlowLogsResourceType::CoreNetworkAttachment    then "CoreNetworkAttachment"
               else
                 raise Exception.new("unknown enum value for 'FlowLogsResourceType' when serializing to json: '#{e}'")
               end
@@ -32,6 +38,9 @@ module Amazonite::EC2
       when "TransitGateway"           then AEC::FlowLogsResourceType::TransitGateway
       when "TransitGatewayAttachment" then AEC::FlowLogsResourceType::TransitGatewayAttachment
       when "RegionalNatGateway"       then AEC::FlowLogsResourceType::RegionalNatGateway
+      when "CoreNetwork"              then AEC::FlowLogsResourceType::CoreNetwork
+      when "CoreNetworkEdge"          then AEC::FlowLogsResourceType::CoreNetworkEdge
+      when "CoreNetworkAttachment"    then AEC::FlowLogsResourceType::CoreNetworkAttachment
       else
         raise Exception.new("unknown enum value for 'FlowLogsResourceType' when deserializing from json: '#{value}'")
       end
@@ -45,6 +54,9 @@ module Amazonite::EC2
       when AEC::FlowLogsResourceType::TransitGateway           then "TransitGateway"
       when AEC::FlowLogsResourceType::TransitGatewayAttachment then "TransitGatewayAttachment"
       when AEC::FlowLogsResourceType::RegionalNatGateway       then "RegionalNatGateway"
+      when AEC::FlowLogsResourceType::CoreNetwork              then "CoreNetwork"
+      when AEC::FlowLogsResourceType::CoreNetworkEdge          then "CoreNetworkEdge"
+      when AEC::FlowLogsResourceType::CoreNetworkAttachment    then "CoreNetworkAttachment"
       else
         raise Exception.new("unknown enum value for 'FlowLogsResourceType' when serializing to json: '#{self}'")
       end
@@ -58,6 +70,9 @@ module Amazonite::EC2
       when "TransitGateway"           then AEC::FlowLogsResourceType::TransitGateway
       when "TransitGatewayAttachment" then AEC::FlowLogsResourceType::TransitGatewayAttachment
       when "RegionalNatGateway"       then AEC::FlowLogsResourceType::RegionalNatGateway
+      when "CoreNetwork"              then AEC::FlowLogsResourceType::CoreNetwork
+      when "CoreNetworkEdge"          then AEC::FlowLogsResourceType::CoreNetworkEdge
+      when "CoreNetworkAttachment"    then AEC::FlowLogsResourceType::CoreNetworkAttachment
       else
         nil
       end
