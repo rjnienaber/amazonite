@@ -114,6 +114,7 @@ module Amazonite::EC2
     CapacityReservationCancellationQuote
     ApplicationStatusCheck
     CapacityReservationModificationQuote
+    MetricCategory
 
     def self.to_json(e : ResourceType, json : JSON::Builder) : Nil
       value = case e
@@ -229,6 +230,7 @@ module Amazonite::EC2
               when AEC::ResourceType::CapacityReservationCancellationQuote                   then "capacity-reservation-cancellation-quote"
               when AEC::ResourceType::ApplicationStatusCheck                                 then "application-status-check"
               when AEC::ResourceType::CapacityReservationModificationQuote                   then "capacity-reservation-modification-quote"
+              when AEC::ResourceType::MetricCategory                                         then "metric-category"
               else
                 raise Exception.new("unknown enum value for 'ResourceType' when serializing to json: '#{e}'")
               end
@@ -350,6 +352,7 @@ module Amazonite::EC2
       when "capacity-reservation-cancellation-quote"                       then AEC::ResourceType::CapacityReservationCancellationQuote
       when "application-status-check"                                      then AEC::ResourceType::ApplicationStatusCheck
       when "capacity-reservation-modification-quote"                       then AEC::ResourceType::CapacityReservationModificationQuote
+      when "metric-category"                                               then AEC::ResourceType::MetricCategory
       else
         raise Exception.new("unknown enum value for 'ResourceType' when deserializing from json: '#{value}'")
       end
@@ -469,6 +472,7 @@ module Amazonite::EC2
       when AEC::ResourceType::CapacityReservationCancellationQuote                   then "capacity-reservation-cancellation-quote"
       when AEC::ResourceType::ApplicationStatusCheck                                 then "application-status-check"
       when AEC::ResourceType::CapacityReservationModificationQuote                   then "capacity-reservation-modification-quote"
+      when AEC::ResourceType::MetricCategory                                         then "metric-category"
       else
         raise Exception.new("unknown enum value for 'ResourceType' when serializing to json: '#{self}'")
       end
@@ -588,6 +592,7 @@ module Amazonite::EC2
       when "capacity-reservation-cancellation-quote"                       then AEC::ResourceType::CapacityReservationCancellationQuote
       when "application-status-check"                                      then AEC::ResourceType::ApplicationStatusCheck
       when "capacity-reservation-modification-quote"                       then AEC::ResourceType::CapacityReservationModificationQuote
+      when "metric-category"                                               then AEC::ResourceType::MetricCategory
       else
         nil
       end

@@ -4,7 +4,8 @@ module Amazonite::EC2
   # A single entry in an image usage report, detailing how an image is being used by a specific
   # Amazon Web Services account and resource type.
   class ImageUsageReportEntry
-    # The type of resource (`ec2:Instance` or `ec2:LaunchTemplate`).
+    # The type of resource (`ec2:Instance` | `ec2:LaunchTemplate` | `imagebuilder:ImageRecipe` |
+    # `imagebuilder:ContainerRecipe`).
     property resource_type : String | Nil
 
     # The ID of the report.

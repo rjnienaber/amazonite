@@ -32,6 +32,12 @@ module Amazonite::EC2
     # The exclusion configuration for Elastic File System service.
     property elastic_file_system : VpcEncryptionControlExclusionState | Nil
 
+    # The exclusion configuration for AWS Global Accelerator.
+    property global_accelerator : VpcEncryptionControlExclusionState | Nil
+
+    # The exclusion configuration for Amazon API Gateway V2.
+    property api_gateway_v2 : VpcEncryptionControlExclusionState | Nil
+
     def initialize(
       @internet_gateway : VpcEncryptionControlExclusionState | Nil = nil,
       @egress_only_internet_gateway : VpcEncryptionControlExclusionState | Nil = nil,
@@ -41,6 +47,8 @@ module Amazonite::EC2
       @lambda : VpcEncryptionControlExclusionState | Nil = nil,
       @vpc_lattice : VpcEncryptionControlExclusionState | Nil = nil,
       @elastic_file_system : VpcEncryptionControlExclusionState | Nil = nil,
+      @global_accelerator : VpcEncryptionControlExclusionState | Nil = nil,
+      @api_gateway_v2 : VpcEncryptionControlExclusionState | Nil = nil,
     )
     end
 
@@ -78,6 +86,14 @@ module Amazonite::EC2
       if value = @elastic_file_system
         params << {"#{prefix}ElasticFileSystem", value.to_json_object_key}
       end
+
+      if value = @global_accelerator
+        params << {"#{prefix}GlobalAccelerator", value.to_json_object_key}
+      end
+
+      if value = @api_gateway_v2
+        params << {"#{prefix}ApiGatewayV2", value.to_json_object_key}
+      end
       params
     end
 
@@ -91,12 +107,14 @@ module Amazonite::EC2
         lambda: (n = node.xpath_node("*[local-name()='lambda']")) ? AEC::VpcEncryptionControlExclusionState.from_json_object_key?(n.content) : nil,
         vpc_lattice: (n = node.xpath_node("*[local-name()='vpcLattice']")) ? AEC::VpcEncryptionControlExclusionState.from_json_object_key?(n.content) : nil,
         elastic_file_system: (n = node.xpath_node("*[local-name()='elasticFileSystem']")) ? AEC::VpcEncryptionControlExclusionState.from_json_object_key?(n.content) : nil,
+        global_accelerator: (n = node.xpath_node("*[local-name()='globalAccelerator']")) ? AEC::VpcEncryptionControlExclusionState.from_json_object_key?(n.content) : nil,
+        api_gateway_v2: (n = node.xpath_node("*[local-name()='apiGatewayV2']")) ? AEC::VpcEncryptionControlExclusionState.from_json_object_key?(n.content) : nil,
       )
     end
 
     def validate! : Nil
     end
 
-    def_equals_and_hash(@internet_gateway, @egress_only_internet_gateway, @nat_gateway, @virtual_private_gateway, @vpc_peering, @lambda, @vpc_lattice, @elastic_file_system)
+    def_equals_and_hash(@internet_gateway, @egress_only_internet_gateway, @nat_gateway, @virtual_private_gateway, @vpc_peering, @lambda, @vpc_lattice, @elastic_file_system, @global_accelerator, @api_gateway_v2)
   end
 end

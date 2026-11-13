@@ -12,8 +12,15 @@ module Amazonite::SecretsManager
     @[JSON::Field(key: "SecretId")]
     property secret_id : String
 
+    # The name of the resource policy to delete. If you don't specify this field, Secrets Manager uses
+    # `default`. You can only delete the `default` policy; if you specify any other name, the
+    # operation returns an `InvalidParameterException`.
+    @[JSON::Field(key: "PolicyName")]
+    property policy_name : String | Nil
+
     def initialize(
       @secret_id : String,
+      @policy_name : String | Nil = nil,
     )
     end
 
@@ -22,8 +29,14 @@ module Amazonite::SecretsManager
         raise Core::ValidationError.new("SecretId length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("SecretId length must be <= 2048") if value.size > 2048
       end
+
+      if value = @policy_name
+        raise Core::ValidationError.new("PolicyName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PolicyName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("PolicyName does not match the required pattern") unless value.matches?(Regex.new("^[0-9A-Za-z\\-\\_]+$"))
+      end
     end
 
-    def_equals_and_hash(@secret_id)
+    def_equals_and_hash(@secret_id, @policy_name)
   end
 end

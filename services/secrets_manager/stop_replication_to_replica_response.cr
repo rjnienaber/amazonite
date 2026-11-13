@@ -4,8 +4,9 @@ module Amazonite::SecretsManager
   class StopReplicationToReplicaResponse
     include JSON::Serializable
 
-    # The ARN of the promoted secret. The ARN is the same as the original primary secret except the
-    # Region is changed.
+    # The ARN of the promoted secret. For a cross-region replica, this ARN is the same as the original
+    # primary secret's ARN except that the Region is changed. For a cross-account replica, this is the
+    # ARN of the promoted secret in your account.
     @[JSON::Field(key: "ARN")]
     property arn : String | Nil
 

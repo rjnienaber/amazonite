@@ -146,6 +146,18 @@ module Amazonite::SecretsManager
     @[JSON::Field(key: "ReplicationStatus")]
     property replication_status : Array(ReplicationStatusType) | Nil
 
+    # Information about the primary secret in the other Amazon Web Services account that this
+    # cross-account replica secret replicates from, including the primary secret ARN and the
+    # replication status. This field is omitted if the secret is not a cross-account replica.
+    @[JSON::Field(key: "CrossAccountPrimary")]
+    property cross_account_primary : CrossAccountPrimaryType | Nil
+
+    # A list of this secret's cross-account replica secrets and their replication status, if this
+    # secret is the primary for cross-account replication. This field is omitted if the secret has no
+    # cross-account replicas.
+    @[JSON::Field(key: "CrossAccountReplicas")]
+    property cross_account_replicas : Array(CrossAccountReplicaEntry) | Nil
+
     def initialize(
       @arn : String | Nil = nil,
       @name : String | Nil = nil,
@@ -168,6 +180,8 @@ module Amazonite::SecretsManager
       @created_date : Time | Nil = nil,
       @primary_region : String | Nil = nil,
       @replication_status : Array(ReplicationStatusType) | Nil = nil,
+      @cross_account_primary : CrossAccountPrimaryType | Nil = nil,
+      @cross_account_replicas : Array(CrossAccountReplicaEntry) | Nil = nil,
     )
     end
 
@@ -233,8 +247,18 @@ module Amazonite::SecretsManager
       if value = @replication_status
         value.each(&.validate!)
       end
+
+      if value = @cross_account_primary
+        value.validate!
+      end
+
+      if value = @cross_account_replicas
+        raise Core::ValidationError.new("CrossAccountReplicas must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("CrossAccountReplicas must have at most 100 item(s)") if value.size > 100
+        value.each(&.validate!)
+      end
     end
 
-    def_equals_and_hash(@arn, @name, @type, @description, @kms_key_id, @rotation_enabled, @rotation_lambda_arn, @rotation_rules, @external_secret_rotation_metadata, @external_secret_rotation_role_arn, @last_rotated_date, @last_changed_date, @last_accessed_date, @deleted_date, @next_rotation_date, @tags, @version_ids_to_stages, @owning_service, @created_date, @primary_region, @replication_status)
+    def_equals_and_hash(@arn, @name, @type, @description, @kms_key_id, @rotation_enabled, @rotation_lambda_arn, @rotation_rules, @external_secret_rotation_metadata, @external_secret_rotation_role_arn, @last_rotated_date, @last_changed_date, @last_accessed_date, @deleted_date, @next_rotation_date, @tags, @version_ids_to_stages, @owning_service, @created_date, @primary_region, @replication_status, @cross_account_primary, @cross_account_replicas)
   end
 end

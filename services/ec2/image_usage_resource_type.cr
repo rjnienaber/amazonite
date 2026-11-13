@@ -6,7 +6,8 @@ module Amazonite::EC2
   class ImageUsageResourceType
     # The resource type.
     #
-    # Valid values: `ec2:Instance` | `ec2:LaunchTemplate`
+    # Valid values: `ec2:Instance` | `ec2:LaunchTemplate` | `imagebuilder:ImageRecipe` |
+    # `imagebuilder:ContainerRecipe`
     property resource_type : String | Nil
 
     # The options that affect the scope of the report. Valid only when `ResourceType` is

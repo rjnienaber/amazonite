@@ -4,8 +4,11 @@ module Amazonite::SecretsManager
   class StopReplicationToReplicaRequest
     include JSON::Serializable
 
-    # The name of the secret or the replica ARN. The replica ARN is the same as the original primary
-    # secret ARN expect the Region is changed to the replica Region.
+    # The ARN or name of the replica secret.
+    #
+    # For a cross-region replica, the replica ARN is the same as the original primary secret ARN
+    # except that the Region is changed to the replica Region. For a cross-account replica, this is
+    # the ARN or name of the replica secret in your account.
     @[JSON::Field(key: "SecretId")]
     property secret_id : String
 

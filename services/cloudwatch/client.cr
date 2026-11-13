@@ -177,6 +177,23 @@ module Amazonite::CloudWatch
       Core::ParsedResponse(ACW::DeleteInsightRulesOutput).new(response)
     end
 
+    # Deletes a metric data query definition.
+    #
+    # This operation is idempotent. If the definition doesn't exist, the operation succeeds without
+    # returning an error.
+    #
+    # **Permissions**
+    #
+    # To delete a definition, you need the `cloudwatch:DeleteMetricDataQueryDefinition` permission on
+    # the metric data query definition resource. You can use the `aws:ResourceTag/${TagKey}` condition
+    # key to control access based on the tags of the definition.
+    def delete_metric_data_query_definition(input : ACW::DeleteMetricDataQueryDefinitionInput) : Core::ParsedResponse(ACW::DeleteMetricDataQueryDefinitionOutput)
+      Log.info { "performing 'DeleteMetricDataQueryDefinition' operation" }
+      input.validate! if config.validate_input?
+      response = post("DeleteMetricDataQueryDefinition", "/", input.to_json)
+      Core::ParsedResponse(ACW::DeleteMetricDataQueryDefinitionOutput).new(response)
+    end
+
     # Permanently deletes the metric stream that you specify.
     def delete_metric_stream(input : ACW::DeleteMetricStreamInput) : Core::ParsedResponse(ACW::DeleteMetricStreamOutput)
       Log.info { "performing 'DeleteMetricStream' operation" }
@@ -514,6 +531,20 @@ module Amazonite::CloudWatch
       Core::ParsedResponse(ACW::GetMetricDataOutput).new(response)
     end
 
+    # Returns a metric data query definition, including its expression.
+    #
+    # **Permissions**
+    #
+    # To get a definition, you need the `cloudwatch:GetMetricDataQueryDefinition` permission on the
+    # metric data query definition resource. You can use the `aws:ResourceTag/${TagKey}` condition key
+    # to control access based on the tags of the definition.
+    def get_metric_data_query_definition(input : ACW::GetMetricDataQueryDefinitionInput) : Core::ParsedResponse(ACW::GetMetricDataQueryDefinitionOutput)
+      Log.info { "performing 'GetMetricDataQueryDefinition' operation" }
+      input.validate! if config.validate_input?
+      response = post("GetMetricDataQueryDefinition", "/", input.to_json)
+      Core::ParsedResponse(ACW::GetMetricDataQueryDefinitionOutput).new(response)
+    end
+
     # Gets statistics for the specified metric.
     #
     # The maximum number of data points returned from a single call is 1,440. If you request more than
@@ -680,6 +711,26 @@ module Amazonite::CloudWatch
       input.validate! if config.validate_input?
       response = post("ListManagedInsightRules", "/", input.to_json)
       Core::ParsedResponse(ACW::ListManagedInsightRulesOutput).new(response)
+    end
+
+    # Lists the metric data query definitions in your account and Region.
+    #
+    # The results are summaries that don't include the expression. To get the full definition, call
+    # `GetMetricDataQueryDefinition` with its ID.
+    #
+    # This operation supports pagination. Use the `MaxResults` and `NextToken` parameters to retrieve
+    # results in multiple calls.
+    #
+    # **Permissions**
+    #
+    # To list definitions, you need the `cloudwatch:ListMetricDataQueryDefinitions` permission. This
+    # permission applies to all definitions in the account and Region. The results aren't filtered by
+    # tags.
+    def list_metric_data_query_definitions(input : ACW::ListMetricDataQueryDefinitionsInput) : Core::ParsedResponse(ACW::ListMetricDataQueryDefinitionsOutput)
+      Log.info { "performing 'ListMetricDataQueryDefinitions' operation" }
+      input.validate! if config.validate_input?
+      response = post("ListMetricDataQueryDefinitions", "/", input.to_json)
+      Core::ParsedResponse(ACW::ListMetricDataQueryDefinitionsOutput).new(response)
     end
 
     # List the specified metrics. You can use the returned metrics with
@@ -1035,6 +1086,38 @@ module Amazonite::CloudWatch
       input.validate! if config.validate_input?
       response = post("PutMetricData", "/", input.to_json)
       Core::Response.new(response)
+    end
+
+    # Creates or updates a metric data query definition.
+    #
+    # A metric data query definition saves a metric query so that you can reuse it later. It includes
+    # the query expression, the query language, and a path that names the definition and can organize
+    # it into folders. When you save a definition, CloudWatch doesn't validate or run its expression.
+    #
+    # To create a definition, omit `Id`. CloudWatch generates the ID and returns it. To update a
+    # definition, specify its `Id`. An update replaces the path, expression, and type, and keeps the
+    # creation time.
+    #
+    # The path must be unique in your account and Region. If another definition already uses the path,
+    # the request fails with a `ConflictException`.
+    #
+    # You can have up to 1,000 metric data query definitions in each Region of your account. A request
+    # that would create more fails with a `LimitExceededException`.
+    #
+    # **Permissions**
+    #
+    # To create or update a definition, you need the `cloudwatch:PutMetricDataQueryDefinition`
+    # permission on the metric data query definition resource. The resource ARN has the format
+    # `arn:aws:cloudwatch:Region:account-id:metric-query-definition/Id`.
+    #
+    # To add tags when you create a definition, you also need the `cloudwatch:TagResource` permission.
+    # You can use the `aws:RequestTag/${TagKey}` and `aws:TagKeys` condition keys to control which
+    # tags can be added.
+    def put_metric_data_query_definition(input : ACW::PutMetricDataQueryDefinitionInput) : Core::ParsedResponse(ACW::PutMetricDataQueryDefinitionOutput)
+      Log.info { "performing 'PutMetricDataQueryDefinition' operation" }
+      input.validate! if config.validate_input?
+      response = post("PutMetricDataQueryDefinition", "/", input.to_json)
+      Core::ParsedResponse(ACW::PutMetricDataQueryDefinitionOutput).new(response)
     end
 
     # Creates or updates a metric stream. Metric streams can automatically stream CloudWatch metrics

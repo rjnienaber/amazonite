@@ -31,6 +31,12 @@ module Amazonite::EC2
     # The exclusion configuration for Elastic File System traffic.
     property elastic_file_system : VpcEncryptionControlExclusion | Nil
 
+    # The exclusion configuration for AWS Global Accelerator traffic.
+    property global_accelerator : VpcEncryptionControlExclusion | Nil
+
+    # The exclusion configuration for Amazon API Gateway V2 traffic.
+    property api_gateway_v2 : VpcEncryptionControlExclusion | Nil
+
     def initialize(
       @internet_gateway : VpcEncryptionControlExclusion | Nil = nil,
       @egress_only_internet_gateway : VpcEncryptionControlExclusion | Nil = nil,
@@ -40,6 +46,8 @@ module Amazonite::EC2
       @lambda : VpcEncryptionControlExclusion | Nil = nil,
       @vpc_lattice : VpcEncryptionControlExclusion | Nil = nil,
       @elastic_file_system : VpcEncryptionControlExclusion | Nil = nil,
+      @global_accelerator : VpcEncryptionControlExclusion | Nil = nil,
+      @api_gateway_v2 : VpcEncryptionControlExclusion | Nil = nil,
     )
     end
 
@@ -77,6 +85,14 @@ module Amazonite::EC2
       if value = @elastic_file_system
         params.concat(value.to_query_params("#{prefix}ElasticFileSystem."))
       end
+
+      if value = @global_accelerator
+        params.concat(value.to_query_params("#{prefix}GlobalAccelerator."))
+      end
+
+      if value = @api_gateway_v2
+        params.concat(value.to_query_params("#{prefix}ApiGatewayV2."))
+      end
       params
     end
 
@@ -90,6 +106,8 @@ module Amazonite::EC2
         lambda: node.xpath_node("*[local-name()='lambda']").try { |n| VpcEncryptionControlExclusion.from_xml(n) },
         vpc_lattice: node.xpath_node("*[local-name()='vpcLattice']").try { |n| VpcEncryptionControlExclusion.from_xml(n) },
         elastic_file_system: node.xpath_node("*[local-name()='elasticFileSystem']").try { |n| VpcEncryptionControlExclusion.from_xml(n) },
+        global_accelerator: node.xpath_node("*[local-name()='globalAccelerator']").try { |n| VpcEncryptionControlExclusion.from_xml(n) },
+        api_gateway_v2: node.xpath_node("*[local-name()='apiGatewayV2']").try { |n| VpcEncryptionControlExclusion.from_xml(n) },
       )
     end
 
@@ -125,8 +143,16 @@ module Amazonite::EC2
       if value = @elastic_file_system
         value.validate!
       end
+
+      if value = @global_accelerator
+        value.validate!
+      end
+
+      if value = @api_gateway_v2
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@internet_gateway, @egress_only_internet_gateway, @nat_gateway, @virtual_private_gateway, @vpc_peering, @lambda, @vpc_lattice, @elastic_file_system)
+    def_equals_and_hash(@internet_gateway, @egress_only_internet_gateway, @nat_gateway, @virtual_private_gateway, @vpc_peering, @lambda, @vpc_lattice, @elastic_file_system, @global_accelerator, @api_gateway_v2)
   end
 end

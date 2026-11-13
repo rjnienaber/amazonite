@@ -5,6 +5,8 @@ module Amazonite::SecretsManager
     InSync
     Failed
     InProgress
+    Pending
+    Detached
 
     def self.to_json(e : StatusType, json : JSON::Builder) : Nil
       json.string(e.to_s)
@@ -16,6 +18,8 @@ module Amazonite::SecretsManager
       when "InSync"     then ASM::StatusType::InSync
       when "Failed"     then ASM::StatusType::Failed
       when "InProgress" then ASM::StatusType::InProgress
+      when "Pending"    then ASM::StatusType::Pending
+      when "Detached"   then ASM::StatusType::Detached
       else
         raise Exception.new("unknown enum value for 'StatusType' when deserializing from json: '#{value}'")
       end
@@ -30,6 +34,8 @@ module Amazonite::SecretsManager
       when "InSync"     then ASM::StatusType::InSync
       when "Failed"     then ASM::StatusType::Failed
       when "InProgress" then ASM::StatusType::InProgress
+      when "Pending"    then ASM::StatusType::Pending
+      when "Detached"   then ASM::StatusType::Detached
       else
         nil
       end

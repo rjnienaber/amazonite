@@ -6,8 +6,12 @@ module Amazonite::EC2
     # Indicates whether detailed monitoring is enabled. Otherwise, basic monitoring is enabled.
     property enabled : Bool | Nil
 
+    # The IDs of the metric categories to associate with the instance.
+    property metric_category_ids : Array(String) | Nil
+
     def initialize(
       @enabled : Bool | Nil = nil,
+      @metric_category_ids : Array(String) | Nil = nil,
     )
     end
 
@@ -17,18 +21,23 @@ module Amazonite::EC2
       if value = @enabled
         params << {"#{prefix}Enabled", Core::QueryValue.bool(value)}
       end
+
+      (@metric_category_ids || [] of String).each_with_index(1) do |item, i|
+        params << {"#{prefix}MetricCategoryIdSet.#{i}", item}
+      end
       params
     end
 
     def self.from_xml(node : XML::Node) : self
       new(
         enabled: Core::XMLValue.bool(node.xpath_node("*[local-name()='enabled']")),
+        metric_category_ids: node.xpath_nodes("*[local-name()='metricCategoryIdSet']/*[local-name()='item']").map { |n| n.content },
       )
     end
 
     def validate! : Nil
     end
 
-    def_equals_and_hash(@enabled)
+    def_equals_and_hash(@enabled, @metric_category_ids)
   end
 end

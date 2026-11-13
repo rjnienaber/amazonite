@@ -10,6 +10,41 @@ module Amazonite::SecretsManager
       super("secretsmanager", "secretsmanager", "1.1", EXCEPTION_FACTORY, config)
     end
 
+    # Links a primary secret in your account to a replica secret in a different Amazon Web Services
+    # account and starts replication to this replica. The replica secret must already exist in the
+    # other Amazon Web Services account. Create the replica with CreateSecret and set its
+    # `CrossAccountPrimaryARN` field set to this primary secret's ARN. When you call
+    # AssociateCrossAccountReplica, Secrets Manager calls AcceptCrossAccountReplication on the replica
+    # secret on your behalf.
+    #
+    # The primary and replica secrets must be in the same Amazon Web Services Region and partition,
+    # and you must call this operation from the account that owns the primary secret. A primary secret
+    # can have at most one cross-account replica. This operation is idempotent, so you can call it
+    # again for the same replica to repair replication. If the association fails, Secrets Manager does
+    # not modify either the primary or replica secret.
+    #
+    # Secrets Manager generates a CloudTrail log entry when you call this action. Do not include
+    # sensitive information in request parameters because it might be logged. For more information,
+    # see [Logging Secrets Manager events with
+    # CloudTrail](https://docs.aws.amazon.com/secretsmanager/latest/userguide/retrieve-ct-entries.html).
+    #
+    # **Required permissions: ** `secretsmanager:AssociateCrossAccountReplica`,
+    # `secretsmanager:GetSecretValue` on the primary secret, and
+    # `secretsmanager:AcceptCrossAccountReplication` on the replica secret. You must also have
+    # `kms:Decrypt` permission for the Key Management Service (KMS) key that encrypts the primary
+    # secret, and `kms:Encrypt` permission for the Amazon Web Services KMS key that encrypts the
+    # replica secret. If you supply `ReplicationRoleARN`, you also need `iam:PassRole` for that role.
+    # For more information, see [ IAM policy actions for Secrets
+    # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_iam-permissions.html#reference_iam-permissions_actions)
+    # and [Authentication and access control in Secrets
+    # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
+    def associate_cross_account_replica(input : ASM::AssociateCrossAccountReplicaRequest) : Core::ParsedResponse(ASM::AssociateCrossAccountReplicaResponse)
+      Log.info { "performing 'AssociateCrossAccountReplica' operation" }
+      input.validate! if config.validate_input?
+      response = post("AssociateCrossAccountReplica", "/", input.to_json)
+      Core::ParsedResponse(ASM::AssociateCrossAccountReplicaResponse).new(response)
+    end
+
     # Retrieves the contents of the encrypted fields `SecretString` or `SecretBinary` for up to 20
     # secrets. To retrieve a single secret, call GetSecretValue.
     #
@@ -43,7 +78,7 @@ module Amazonite::SecretsManager
     # state. You might need to remove the staging label `AWSPENDING` from the partially created
     # version. You also need to determine whether to roll back to the previous version of the secret
     # by moving the staging label `AWSCURRENT` to the version that has `AWSPENDING`. To determine
-    # which version has a specific staging label, call ListSecretVersionIds. Then use
+    # which version has a specific staging label, call DescribeSecret. Then use
     # UpdateSecretVersionStage to change staging labels. For more information, see [How rotation
     # works](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_how.html).
     #
@@ -69,8 +104,9 @@ module Amazonite::SecretsManager
     # Creates a new secret. A *secret* can be a password, a set of credentials such as a user name and
     # password, an OAuth token, or other secret information that you store in an encrypted form in
     # Secrets Manager. The secret also includes the connection information to access a database or
-    # other service, which Secrets Manager doesn't encrypt. A secret in Secrets Manager consists of
-    # both the protected secret data and the important information needed to manage the secret.
+    # other service. Secrets Manager does not encrypt this connection information. A secret in Secrets
+    # Manager consists of both the encrypted secret versions and the metadata that Secrets Manager
+    # uses to manage the secret.
     #
     # For secrets that use *managed rotation*, you need to create the secret through the managing
     # service. For more information, see [Secrets Manager secrets managed by other Amazon Web Services
@@ -81,7 +117,7 @@ module Amazonite::SecretsManager
     #
     # To create a secret, you can provide the secret value to be encrypted in either the
     # `SecretString` parameter or the `SecretBinary` parameter, but not both. If you include
-    # `SecretString` or `SecretBinary` then Secrets Manager creates an initial secret version and
+    # `SecretString` or `SecretBinary`, then Secrets Manager creates an initial secret version and
     # automatically attaches the staging label `AWSCURRENT` to it.
     #
     # For database credentials you want to rotate, for Secrets Manager to be able to rotate the
@@ -93,11 +129,15 @@ module Amazonite::SecretsManager
     # key `aws/secretsmanager`. If this key doesn't already exist in your account, then Secrets
     # Manager creates it for you automatically. All users and roles in the Amazon Web Services account
     # automatically have access to use `aws/secretsmanager`. Creating `aws/secretsmanager` can result
-    # in a one-time significant delay in returning the result.
+    # in a one-time delay to complete the secret creation.
     #
     # If the secret is in a different Amazon Web Services account from the credentials calling the
     # API, then you can't use `aws/secretsmanager` to encrypt the secret, and you must create and use
     # a customer managed KMS key.
+    #
+    # To create a cross-account replica secret, include `CrossAccountPrimaryARN`. The replica must use
+    # a customer managed KMS key, and can't include `AddReplicaRegions`, `Description`,
+    # `SecretBinary`, `SecretString`, or `Type`.
     #
     # Secrets Manager generates a CloudTrail log entry when you call this action. Do not include
     # sensitive information in request parameters except `SecretBinary` or `SecretString` because it
@@ -106,8 +146,9 @@ module Amazonite::SecretsManager
     #
     # **Required permissions: ** `secretsmanager:CreateSecret`. If you include tags in the secret, you
     # also need `secretsmanager:TagResource`. To add replica Regions, you must also have
-    # `secretsmanager:ReplicateSecretToRegions`. For more information, see [ IAM policy actions for
-    # Secrets
+    # `secretsmanager:ReplicateSecretToRegions`. To create a cross-account replica secret, you must
+    # also have `secretsmanager:PutResourcePolicy` permissions. For more information, see [ IAM policy
+    # actions for Secrets
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_iam-permissions.html#reference_iam-permissions_actions)
     # and [Authentication and access control in Secrets
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
@@ -157,6 +198,12 @@ module Amazonite::SecretsManager
     # replicas using RemoveRegionsFromReplication, and then delete the primary secret. When you delete
     # a replica, it is deleted immediately.
     #
+    # You can't delete a cross-account primary secret that is associated with a cross-account replica
+    # secret. You must first disassociate each of the replicas using DisassociateCrossAccountReplica,
+    # before deleting the primary secret. Similarly, you can't delete a cross-account replica secret
+    # without first stopping replication. Call StopReplicationToReplica to stop replication, and then
+    # you can delete the secret.
+    #
     # You can't directly delete a version of a secret. Instead, you remove all staging labels from the
     # version using UpdateSecretVersionStage. This marks the version as deprecated, and then Secrets
     # Manager can automatically delete the version in the background.
@@ -196,6 +243,11 @@ module Amazonite::SecretsManager
     # Retrieves the details of a secret. It does not include the encrypted secret value. Secrets
     # Manager only returns fields that have a value in the response.
     #
+    # The `VersionIdsToStages` field in the response includes every version ID that has a staging
+    # label attached, even if that version doesn't contain a secret value. In contrast,
+    # `ListSecretVersionIds` only returns versions that contain a secret value. To check whether a
+    # secret version contains a value, call GetSecretValue.
+    #
     # Secrets Manager generates a CloudTrail log entry when you call this action. Do not include
     # sensitive information in request parameters because it might be logged. For more information,
     # see [Logging Secrets Manager events with
@@ -211,6 +263,37 @@ module Amazonite::SecretsManager
       input.validate! if config.validate_input?
       response = post("DescribeSecret", "/", input.to_json)
       Core::ParsedResponse(ASM::DescribeSecretResponse).new(response)
+    end
+
+    # Removes the link between a primary secret in your account and a cross-account replica secret,
+    # and stops replication to the replica secret. Call this operation on the primary secret. This
+    # action removes the replica association created by AssociateCrossAccountReplica.
+    #
+    # Disassociating the replica from the primary does not delete the replica secret or convert the
+    # replica secret to a standalone secret. The replica secret remains in the other account and its
+    # replication status changes to `Detached`. Secrets Manager no longer sends updates from the
+    # primary secret to the replica secret after disassociation. To convert a detached replica into a
+    # standalone secret, call StopReplicationToReplica on the replica secret.
+    #
+    # You must disassociate a cross-account replica before you call DeleteSecret for the primary
+    # secret. The DeleteSecret call fails if any replicas are still associated with the primary
+    # secret.
+    #
+    # Secrets Manager generates a CloudTrail log entry when you call this action. Do not include
+    # sensitive information in request parameters because it might be logged. For more information,
+    # see [Logging Secrets Manager events with
+    # CloudTrail](https://docs.aws.amazon.com/secretsmanager/latest/userguide/retrieve-ct-entries.html).
+    #
+    # **Required permissions: ** `secretsmanager:DisassociateCrossAccountReplica`. For more
+    # information, see [ IAM policy actions for Secrets
+    # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_iam-permissions.html#reference_iam-permissions_actions)
+    # and [Authentication and access control in Secrets
+    # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
+    def disassociate_cross_account_replica(input : ASM::DisassociateCrossAccountReplicaRequest) : Core::ParsedResponse(ASM::DisassociateCrossAccountReplicaResponse)
+      Log.info { "performing 'DisassociateCrossAccountReplica' operation" }
+      input.validate! if config.validate_input?
+      response = post("DisassociateCrossAccountReplica", "/", input.to_json)
+      Core::ParsedResponse(ASM::DisassociateCrossAccountReplicaResponse).new(response)
     end
 
     # Generates a random password. We recommend that you specify the maximum length and include every
@@ -286,6 +369,28 @@ module Amazonite::SecretsManager
       Core::ParsedResponse(ASM::GetSecretValueResponse).new(response)
     end
 
+    # Lists the resource-based policies attached to a secret. The response contains only the names of
+    # the policies, not their contents. Secrets Manager lists `default` first, followed by any other
+    # policies in alphabetical order. To get the contents of a policy, use GetResourcePolicy. You can
+    # modify only the `default` policy.
+    #
+    # Secrets Manager generates a CloudTrail log entry when you call this action. Do not include
+    # sensitive information in request parameters because it might be logged. For more information,
+    # see [Logging Secrets Manager events with
+    # CloudTrail](https://docs.aws.amazon.com/secretsmanager/latest/userguide/retrieve-ct-entries.html).
+    #
+    # **Required permissions: ** `secretsmanager:ListResourcePolicies`. For more information, see [
+    # IAM policy actions for Secrets
+    # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_iam-permissions.html#reference_iam-permissions_actions)
+    # and [Authentication and access control in Secrets
+    # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
+    def list_resource_policies(input : ASM::ListResourcePoliciesRequest) : Core::ParsedResponse(ASM::ListResourcePoliciesResponse)
+      Log.info { "performing 'ListResourcePolicies' operation" }
+      input.validate! if config.validate_input?
+      response = post("ListResourcePolicies", "/", input.to_json)
+      Core::ParsedResponse(ASM::ListResourcePoliciesResponse).new(response)
+    end
+
     # Lists the secrets that are stored by Secrets Manager in the Amazon Web Services account, not
     # including secrets that are marked for deletion. To see secrets marked for deletion, use the
     # Secrets Manager console.
@@ -323,6 +428,10 @@ module Amazonite::SecretsManager
     # Versions](https://docs.aws.amazon.com/secretsmanager/latest/userguide/getting-started.html#term_version).
     #
     # To list the secrets in the account, use ListSecrets.
+    #
+    # `ListSecretVersionIds` only returns versions that contain a secret value. To see all version IDs
+    # that have staging labels attached, including ones without a secret value, call `DescribeSecret`
+    # and check `VersionIdsToStages`.
     #
     # Secrets Manager generates a CloudTrail log entry when you call this action. Do not include
     # sensitive information in request parameters because it might be logged. For more information,
@@ -511,19 +620,28 @@ module Amazonite::SecretsManager
       Core::ParsedResponse(ASM::RotateSecretResponse).new(response)
     end
 
-    # Removes the link between the replica secret and the primary secret and promotes the replica to a
-    # primary secret in the replica Region.
+    # Removes the link between a replica secret and its primary secret, and stops replication to the
+    # replica. You call this operation from the replica account or Region. Depending on the type of
+    # replica, the behavior is:
     #
-    # You must call this operation from the Region in which you want to promote the replica to a
-    # primary secret.
+    # - **Cross-Region replica**: promotes the replica to a standalone primary secret in the replica
+    # Region.
+    #
+    # - **Cross-account replica**: promotes the replica in your account to a standalone secret and
+    # stops replication from its primary secret in the other account. Secrets Manager updates the
+    # primary secret's replication status to `Detached` for this replica.
+    #
+    # To stop cross-account replication from the primary account instead, use
+    # DisassociateCrossAccountReplica.
     #
     # Secrets Manager generates a CloudTrail log entry when you call this action. Do not include
     # sensitive information in request parameters because it might be logged. For more information,
     # see [Logging Secrets Manager events with
     # CloudTrail](https://docs.aws.amazon.com/secretsmanager/latest/userguide/retrieve-ct-entries.html).
     #
-    # **Required permissions: ** `secretsmanager:StopReplicationToReplica`. For more information, see
-    # [ IAM policy actions for Secrets
+    # **Required permissions: ** `secretsmanager:StopReplicationToReplica`. For cross-account replica
+    # secrets, you must also have `secretsmanager:DeleteResourcePolicy` permissions. For more
+    # information, see [ IAM policy actions for Secrets
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_iam-permissions.html#reference_iam-permissions_actions)
     # and [Authentication and access control in Secrets
     # Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).

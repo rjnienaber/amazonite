@@ -137,6 +137,14 @@ module Amazonite::SecretsManager
     @[JSON::Field(key: "Type")]
     property type : String | Nil
 
+    # The ARN of a primary secret in another Amazon Web Services account. Include this field to create
+    # a cross-account replica secret that receives replicated data from that primary secret. The
+    # primary secret must be in the same Amazon Web Services Region and partition as the replica, and
+    # you must specify a customer managed KMS key in `KmsKeyId`. You can't include `SecretString`,
+    # `SecretBinary`, `Description`, `AddReplicaRegions`, or `Type`.
+    @[JSON::Field(key: "CrossAccountPrimaryARN")]
+    property cross_account_primary_arn : String | Nil
+
     def initialize(
       @name : String,
       @client_request_token : String | Nil = nil,
@@ -148,6 +156,7 @@ module Amazonite::SecretsManager
       @add_replica_regions : Array(ReplicaRegionType) | Nil = nil,
       @force_overwrite_replica_secret : Bool | Nil = nil,
       @type : String | Nil = nil,
+      @cross_account_primary_arn : String | Nil = nil,
     )
     end
 
@@ -195,8 +204,13 @@ module Amazonite::SecretsManager
         raise Core::ValidationError.new("Type length must be >= 0") if value.size < 0
         raise Core::ValidationError.new("Type length must be <= 256") if value.size > 256
       end
+
+      if value = @cross_account_primary_arn
+        raise Core::ValidationError.new("CrossAccountPrimaryARN length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("CrossAccountPrimaryARN length must be <= 2048") if value.size > 2048
+      end
     end
 
-    def_equals_and_hash(@name, @client_request_token, @description, @kms_key_id, @secret_binary, @secret_string, @tags, @add_replica_regions, @force_overwrite_replica_secret, @type)
+    def_equals_and_hash(@name, @client_request_token, @description, @kms_key_id, @secret_binary, @secret_string, @tags, @add_replica_regions, @force_overwrite_replica_secret, @type, @cross_account_primary_arn)
   end
 end

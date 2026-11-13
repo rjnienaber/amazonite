@@ -18,6 +18,12 @@ module Amazonite::SecretsManager
     @[JSON::Field(key: "ResourcePolicy")]
     property resource_policy : String
 
+    # The name of the resource policy to attach. If you don't specify this field, Secrets Manager uses
+    # `default`. You can only attach the `default` policy; if you specify any other name, the
+    # operation returns an `InvalidParameterException`.
+    @[JSON::Field(key: "PolicyName")]
+    property policy_name : String | Nil
+
     # Specifies whether to block resource-based policies that allow broad access to the secret, for
     # example those that use a wildcard for the principal. By default, public policies aren't blocked.
     #
@@ -40,6 +46,7 @@ module Amazonite::SecretsManager
     def initialize(
       @secret_id : String,
       @resource_policy : String,
+      @policy_name : String | Nil = nil,
       @block_public_policy : Bool | Nil = nil,
     )
     end
@@ -54,8 +61,14 @@ module Amazonite::SecretsManager
         raise Core::ValidationError.new("ResourcePolicy length must be >= 1") if value.size < 1
         raise Core::ValidationError.new("ResourcePolicy length must be <= 20480") if value.size > 20480
       end
+
+      if value = @policy_name
+        raise Core::ValidationError.new("PolicyName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("PolicyName length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("PolicyName does not match the required pattern") unless value.matches?(Regex.new("^[0-9A-Za-z\\-\\_]+$"))
+      end
     end
 
-    def_equals_and_hash(@secret_id, @resource_policy, @block_public_policy)
+    def_equals_and_hash(@secret_id, @resource_policy, @policy_name, @block_public_policy)
   end
 end

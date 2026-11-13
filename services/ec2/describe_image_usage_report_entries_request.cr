@@ -21,7 +21,8 @@ module Amazonite::EC2
     # zone (YYYY-MM-DDThh:mm:ss.sssZ), for example, `2025-11-29T11:04:43.305Z`. You can use a wildcard
     # (`*`), for example, `2025-11-29T*`, which matches an entire day.
     #
-    # - `resource-type` - The resource type (`ec2:Instance` | `ec2:LaunchTemplate`).
+    # - `resource-type` - The resource type (`ec2:Instance` | `ec2:LaunchTemplate` |
+    # `imagebuilder:ImageRecipe` | `imagebuilder:ContainerRecipe`).
     property filters : Array(Filter) | Nil
 
     # Checks whether you have the required permissions for the action, without actually making the

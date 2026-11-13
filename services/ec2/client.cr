@@ -2128,7 +2128,8 @@ module Amazonite::EC2
 
     # Creates a report that shows how your image is used across other Amazon Web Services accounts.
     # The report provides visibility into which accounts are using the specified image, and how many
-    # resources (EC2 instances or launch templates) are referencing it.
+    # resources (EC2 instances, EC2 launch templates, Image Builder image recipes, or Image Builder
+    # container recipes) are referencing it.
     #
     # For more information, see [View your AMI
     # usage](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/your-ec2-ami-usage.html) in the
@@ -2742,6 +2743,27 @@ module Amazonite::EC2
       result_node = XML.parse(response.body).root.not_nil!
       result = AEC::CreateManagedPrefixListResult.from_xml(result_node)
       Core::ParsedResponse(AEC::CreateManagedPrefixListResult).new(response, result)
+    end
+
+    # Creates a metric category. A metric category is a set of additional metrics that you can
+    # associate with an instance that has detailed monitoring enabled.
+    #
+    # For more information, see [Use metric categories for additional
+    # metrics](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-detailed-monitoring.html#detailed-monitoring-metric-categories)
+    # in the *Amazon EC2 User Guide*.
+    def create_metric_category(input : AEC::CreateMetricCategoryRequest) : Core::ParsedResponse(AEC::CreateMetricCategoryResult)
+      Log.info { "performing 'CreateMetricCategory' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "CreateMetricCategory")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("CreateMetricCategory", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::CreateMetricCategoryResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::CreateMetricCategoryResult).new(response, result)
     end
 
     # Creates a NAT gateway in the specified subnet. This action creates a network interface in the
@@ -4953,6 +4975,27 @@ module Amazonite::EC2
       result_node = XML.parse(response.body).root.not_nil!
       result = AEC::DeleteManagedPrefixListResult.from_xml(result_node)
       Core::ParsedResponse(AEC::DeleteManagedPrefixListResult).new(response, result)
+    end
+
+    # Deletes the specified metric category. Associations between the metric category and your
+    # instances are removed asynchronously.
+    #
+    # For more information, see [Use metric categories for additional
+    # metrics](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-detailed-monitoring.html#detailed-monitoring-metric-categories)
+    # in the *Amazon EC2 User Guide*.
+    def delete_metric_category(input : AEC::DeleteMetricCategoryRequest) : Core::ParsedResponse(AEC::DeleteMetricCategoryResult)
+      Log.info { "performing 'DeleteMetricCategory' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "DeleteMetricCategory")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("DeleteMetricCategory", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::DeleteMetricCategoryResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::DeleteMetricCategoryResult).new(response, result)
     end
 
     # Deletes the specified NAT gateway. Deleting a public NAT gateway disassociates its Elastic IP
@@ -8302,6 +8345,26 @@ module Amazonite::EC2
       result_node = XML.parse(response.body).root.not_nil!
       result = AEC::DescribeManagedPrefixListsResult.from_xml(result_node)
       Core::ParsedResponse(AEC::DescribeManagedPrefixListsResult).new(response, result)
+    end
+
+    # Describes the specified metric categories, or all of your metric categories.
+    #
+    # For more information, see [Use metric categories for additional
+    # metrics](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-detailed-monitoring.html#detailed-monitoring-metric-categories)
+    # in the *Amazon EC2 User Guide*.
+    def describe_metric_categories(input : AEC::DescribeMetricCategoriesRequest) : Core::ParsedResponse(AEC::DescribeMetricCategoriesResult)
+      Log.info { "performing 'DescribeMetricCategories' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "DescribeMetricCategories")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("DescribeMetricCategories", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::DescribeMetricCategoriesResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::DescribeMetricCategoriesResult).new(response, result)
     end
 
     # This action is deprecated.
@@ -12244,7 +12307,7 @@ module Amazonite::EC2
     # - Create a set of named queries in Athena that you can use to get started quickly
     #
     # `GetFlowLogsIntegrationTemplate` does not support integration between Amazon Web Services
-    # Transit Gateway Flow Logs or Amazon Web Services Cloud WAN Flow Logs and Amazon Athena.
+    # Transit Gateway Flow Logs and Amazon Athena.
     def get_flow_logs_integration_template(input : AEC::GetFlowLogsIntegrationTemplateRequest) : Core::ParsedResponse(AEC::GetFlowLogsIntegrationTemplateResult)
       Log.info { "performing 'GetFlowLogsIntegrationTemplate' operation" }
       input.validate! if config.validate_input?
@@ -14649,6 +14712,29 @@ module Amazonite::EC2
       result_node = XML.parse(response.body).root.not_nil!
       result = AEC::ModifyManagedResourceVisibilityResult.from_xml(result_node)
       Core::ParsedResponse(AEC::ModifyManagedResourceVisibilityResult).new(response, result)
+    end
+
+    # Modifies the metrics in the specified metric category. The metrics that you specify replace the
+    # existing metrics.
+    #
+    # Instances that are associated with the metric category are updated asynchronously.
+    #
+    # For more information, see [Use metric categories for additional
+    # metrics](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/manage-detailed-monitoring.html#detailed-monitoring-metric-categories)
+    # in the *Amazon EC2 User Guide*.
+    def modify_metric_category(input : AEC::ModifyMetricCategoryRequest) : Core::ParsedResponse(AEC::ModifyMetricCategoryResult)
+      Log.info { "performing 'ModifyMetricCategory' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "ModifyMetricCategory")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("ModifyMetricCategory", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::ModifyMetricCategoryResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::ModifyMetricCategoryResult).new(response, result)
     end
 
     # Modifies the specified network interface attribute. You can specify only one attribute at a

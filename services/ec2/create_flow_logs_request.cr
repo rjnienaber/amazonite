@@ -40,8 +40,8 @@ module Amazonite::EC2
     property resource_type : FlowLogsResourceType
 
     # The type of traffic to monitor (accepted traffic, rejected traffic, or all traffic). This
-    # parameter is not supported for transit gateway or Cloud WAN resource types. It is required for
-    # the other resource types.
+    # parameter is not supported for transit gateway resource types. It is required for the other
+    # resource types.
     property traffic_type : TrafficType | Nil
 
     # The type of destination for the flow log data.
@@ -76,11 +76,9 @@ module Amazonite::EC2
     # specify this parameter, you must include at least one field. For more information about the
     # available fields, see [Flow log
     # records](https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html) in the *Amazon
-    # VPC User Guide*, [Transit Gateway Flow Log
+    # VPC User Guide* or [Transit Gateway Flow Log
     # records](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-flow-logs.html#flow-log-records) in the
-    # *Amazon Web Services Transit Gateway Guide*, or [Cloud WAN Flow Log
-    # records](https://docs.aws.amazon.com/network-manager/latest/cloudwan/cwan-flow-logs.html) in the
-    # *Amazon Web Services Cloud WAN User Guide*.
+    # *Amazon Web Services Transit Gateway Guide*.
     #
     # Specify the fields using the `${field-id}` format, separated by spaces.
     property log_format : String | Nil
@@ -90,7 +88,7 @@ module Amazonite::EC2
 
     # The maximum interval of time during which a flow of packets is captured and aggregated into a
     # flow log record. The possible values are 60 seconds (1 minute) or 600 seconds (10 minutes). This
-    # parameter must be 60 seconds for transit gateway and Cloud WAN resource types.
+    # parameter must be 60 seconds for transit gateway resource types.
     #
     # When a network interface is attached to a [Nitro-based
     # instance](https://docs.aws.amazon.com/ec2/latest/instancetypes/ec2-nitro-instances.html), the
