@@ -14,13 +14,7 @@ module Amazonite::EC2
     # in the *Amazon EBS User Guide*.
     property destination_outpost_arn : String | Nil
 
-    # The destination Region to use in the `PresignedUrl` parameter of a snapshot copy operation. This
-    # parameter is only valid for specifying the destination Region in a `PresignedUrl` parameter,
-    # where it is required.
-    #
-    # The snapshot copy is sent to the regional endpoint that you sent the HTTP request to (for
-    # example, `ec2.us-east-1.amazonaws.com`). With the CLI, this is specified using the `--region`
-    # parameter or the default Region in your Amazon Web Services configuration file.
+    # Deprecated.
     property destination_region : String | Nil
 
     # To encrypt a copy of an unencrypted snapshot if encryption by default is not enabled, enable
@@ -50,19 +44,7 @@ module Amazonite::EC2
     # alias, or ARN that is not valid, the action can appear to complete, but eventually fails.
     property kms_key_id : String | Nil
 
-    # When you copy an encrypted source snapshot using the Amazon EC2 Query API, you must supply a
-    # pre-signed URL. This parameter is optional for unencrypted snapshots. For more information, see
-    # [Query requests](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html).
-    #
-    # The `PresignedUrl` should use the snapshot source endpoint, the `CopySnapshot` action, and
-    # include the `SourceRegion`, `SourceSnapshotId`, and `DestinationRegion` parameters. The
-    # `PresignedUrl` must be signed using Amazon Web Services Signature Version 4. Because EBS
-    # snapshots are stored in Amazon S3, the signing algorithm for this parameter uses the same logic
-    # that is described in [ Authenticating Requests: Using Query Parameters (Amazon Web Services
-    # Signature Version
-    # 4)](https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html) in the *Amazon
-    # S3 API Reference*. An invalid or improperly signed `PresignedUrl` will cause the copy operation
-    # to fail asynchronously, and the snapshot will move to an `error` state.
+    # Deprecated.
     property presigned_url : String | Nil
 
     # The ID of the Region that contains the snapshot to be copied.

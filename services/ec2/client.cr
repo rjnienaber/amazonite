@@ -675,6 +675,34 @@ module Amazonite::EC2
       Core::ParsedResponse(AEC::AssociateNatGatewayAddressResult).new(response, result)
     end
 
+    # Associates a flex cost allocation policy with one or more network resources. You can associate
+    # the policy directly with specific resources by resource ID, or you can associate it with a scope
+    # of resources in an account, Amazon VPC, or subnet.
+    #
+    # The following limits apply:
+    #
+    # - A request can associate up to 20 resources.
+    #
+    # - A policy can have up to 100 active associations.
+    #
+    # - A network resource can have only one active association, across all policies. If a resource is
+    # already associated, the response includes it in the failures with the code
+    # `ResourceAlreadyAssociated`.
+    def associate_networking_flex_cost_allocation_policy(input : AEC::AssociateNetworkingFlexCostAllocationPolicyRequest) : Core::ParsedResponse(AEC::AssociateNetworkingFlexCostAllocationPolicyResult)
+      Log.info { "performing 'AssociateNetworkingFlexCostAllocationPolicy' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "AssociateNetworkingFlexCostAllocationPolicy")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("AssociateNetworkingFlexCostAllocationPolicy", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::AssociateNetworkingFlexCostAllocationPolicyResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::AssociateNetworkingFlexCostAllocationPolicyResult).new(response, result)
+    end
+
     # Associates a route server with a VPC to enable dynamic route updates.
     #
     # A route server association is the connection established between a route server and a VPC.
@@ -2853,6 +2881,31 @@ module Amazonite::EC2
       end
       response = query_request("CreateNetworkAclEntry", body)
       Core::Response.new(response)
+    end
+
+    # Creates a flex cost allocation policy for Networking Flexible Cost Allocation (FCA), a feature
+    # of Amazon Virtual Private Cloud (Amazon VPC). The policy allocates the charges of a shared
+    # networking resource at the reporting granularity that you specify. You can create a policy for
+    # one of the following resource types: NAT gateways, Amazon VPC peering connections, or EC2
+    # instances. Policies can allocate data transfer charges for all three types, and data processing
+    # charges for NAT gateways.
+    #
+    # You can have up to 100 policies per account in each Amazon Web Services Region, plus one
+    # additional policy per network resource type created by a declarative policy, for a maximum of
+    # 103 policies in an Amazon Web Services Region.
+    def create_networking_flex_cost_allocation_policy(input : AEC::CreateNetworkingFlexCostAllocationPolicyRequest) : Core::ParsedResponse(AEC::CreateNetworkingFlexCostAllocationPolicyResult)
+      Log.info { "performing 'CreateNetworkingFlexCostAllocationPolicy' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "CreateNetworkingFlexCostAllocationPolicy")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("CreateNetworkingFlexCostAllocationPolicy", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::CreateNetworkingFlexCostAllocationPolicyResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::CreateNetworkingFlexCostAllocationPolicyResult).new(response, result)
     end
 
     # Creates a Network Access Scope.
@@ -5043,6 +5096,22 @@ module Amazonite::EC2
       end
       response = query_request("DeleteNetworkAclEntry", body)
       Core::Response.new(response)
+    end
+
+    # Deletes one or more flex cost allocation policies.
+    def delete_networking_flex_cost_allocation_policies(input : AEC::DeleteNetworkingFlexCostAllocationPoliciesRequest) : Core::ParsedResponse(AEC::DeleteNetworkingFlexCostAllocationPoliciesResult)
+      Log.info { "performing 'DeleteNetworkingFlexCostAllocationPolicies' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "DeleteNetworkingFlexCostAllocationPolicies")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("DeleteNetworkingFlexCostAllocationPolicies", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::DeleteNetworkingFlexCostAllocationPoliciesResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::DeleteNetworkingFlexCostAllocationPoliciesResult).new(response, result)
     end
 
     # Deletes the specified Network Access Scope.
@@ -8427,6 +8496,40 @@ module Amazonite::EC2
       Core::ParsedResponse(AEC::DescribeNetworkAclsResult).new(response, result)
     end
 
+    # Describes one or more of your flex cost allocation policies. We recommend using pagination to
+    # ensure that the operation returns quickly and successfully.
+    def describe_networking_flex_cost_allocation_policies(input : AEC::DescribeNetworkingFlexCostAllocationPoliciesRequest) : Core::ParsedResponse(AEC::DescribeNetworkingFlexCostAllocationPoliciesResult)
+      Log.info { "performing 'DescribeNetworkingFlexCostAllocationPolicies' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "DescribeNetworkingFlexCostAllocationPolicies")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("DescribeNetworkingFlexCostAllocationPolicies", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::DescribeNetworkingFlexCostAllocationPoliciesResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::DescribeNetworkingFlexCostAllocationPoliciesResult).new(response, result)
+    end
+
+    # Describes the associations between your flex cost allocation policies and network resources. We
+    # recommend using pagination to ensure that the operation returns quickly and successfully.
+    def describe_networking_flex_cost_allocation_policy_associations(input : AEC::DescribeNetworkingFlexCostAllocationPolicyAssociationsRequest) : Core::ParsedResponse(AEC::DescribeNetworkingFlexCostAllocationPolicyAssociationsResult)
+      Log.info { "performing 'DescribeNetworkingFlexCostAllocationPolicyAssociations' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "DescribeNetworkingFlexCostAllocationPolicyAssociations")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("DescribeNetworkingFlexCostAllocationPolicyAssociations", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::DescribeNetworkingFlexCostAllocationPolicyAssociationsResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::DescribeNetworkingFlexCostAllocationPolicyAssociationsResult).new(response, result)
+    end
+
     # Describes the specified Network Access Scope analyses.
     def describe_network_insights_access_scope_analyses(input : AEC::DescribeNetworkInsightsAccessScopeAnalysesRequest) : Core::ParsedResponse(AEC::DescribeNetworkInsightsAccessScopeAnalysesResult)
       Log.info { "performing 'DescribeNetworkInsightsAccessScopeAnalyses' operation" }
@@ -8526,8 +8629,8 @@ module Amazonite::EC2
     # Describes the specified network interfaces or all your network interfaces.
     #
     # If you have a large number of network interfaces, the operation fails unless you use pagination
-    # or one of the following filters: `group-id`, `mac-address`, `private-dns-name`,
-    # `private-ip-address`, `subnet-id`, or `vpc-id`.
+    # or one of the following filters: `attachment.instance-id`, `group-id`, `mac-address`,
+    # `private-dns-name`, `private-ip-address`, `subnet-id`, or `vpc-id`.
     #
     # We strongly recommend using only paginated requests. Unpaginated requests are susceptible to
     # throttling and timeouts.
@@ -11076,6 +11179,22 @@ module Amazonite::EC2
       Core::ParsedResponse(AEC::DisassociateNatGatewayAddressResult).new(response, result)
     end
 
+    # Disassociates a flex cost allocation policy from one or more network resources.
+    def disassociate_networking_flex_cost_allocation_policy(input : AEC::DisassociateNetworkingFlexCostAllocationPolicyRequest) : Core::ParsedResponse(AEC::DisassociateNetworkingFlexCostAllocationPolicyResult)
+      Log.info { "performing 'DisassociateNetworkingFlexCostAllocationPolicy' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "DisassociateNetworkingFlexCostAllocationPolicy")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("DisassociateNetworkingFlexCostAllocationPolicy", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::DisassociateNetworkingFlexCostAllocationPolicyResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::DisassociateNetworkingFlexCostAllocationPolicyResult).new(response, result)
+    end
+
     # Disassociates a route server from a VPC.
     #
     # A route server association is the connection established between a route server and a VPC.
@@ -12307,7 +12426,7 @@ module Amazonite::EC2
     # - Create a set of named queries in Athena that you can use to get started quickly
     #
     # `GetFlowLogsIntegrationTemplate` does not support integration between Amazon Web Services
-    # Transit Gateway Flow Logs and Amazon Athena.
+    # Transit Gateway Flow Logs or Amazon Web Services Cloud WAN Flow Logs and Amazon Athena.
     def get_flow_logs_integration_template(input : AEC::GetFlowLogsIntegrationTemplateRequest) : Core::ParsedResponse(AEC::GetFlowLogsIntegrationTemplateResult)
       Log.info { "performing 'GetFlowLogsIntegrationTemplate' operation" }
       input.validate! if config.validate_input?
@@ -12979,6 +13098,22 @@ module Amazonite::EC2
       result_node = XML.parse(response.body).root.not_nil!
       result = AEC::GetManagedResourceVisibilityResult.from_xml(result_node)
       Core::ParsedResponse(AEC::GetManagedResourceVisibilityResult).new(response, result)
+    end
+
+    # Retrieves the versions of a flex cost allocation policy.
+    def get_networking_flex_cost_allocation_policy_versions(input : AEC::GetNetworkingFlexCostAllocationPolicyVersionsRequest) : Core::ParsedResponse(AEC::GetNetworkingFlexCostAllocationPolicyVersionsResult)
+      Log.info { "performing 'GetNetworkingFlexCostAllocationPolicyVersions' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "GetNetworkingFlexCostAllocationPolicyVersions")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("GetNetworkingFlexCostAllocationPolicyVersions", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::GetNetworkingFlexCostAllocationPolicyVersionsResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::GetNetworkingFlexCostAllocationPolicyVersionsResult).new(response, result)
     end
 
     # Gets the findings for the specified Network Access Scope analysis.
@@ -14735,6 +14870,27 @@ module Amazonite::EC2
       result_node = XML.parse(response.body).root.not_nil!
       result = AEC::ModifyMetricCategoryResult.from_xml(result_node)
       Core::ParsedResponse(AEC::ModifyMetricCategoryResult).new(response, result)
+    end
+
+    # Modifies a flex cost allocation policy. Changing a policy document or `ShowBackEnabled` creates
+    # a new version of the policy. Changing only the description doesn't create a new version.
+    #
+    # A policy can have up to 100 versions. Versions are never removed, so after a policy reaches 100
+    # versions, you can't change its policy document or `ShowBackEnabled`. Policies that are managed
+    # by a declarative policy aren't subject to this limit.
+    def modify_networking_flex_cost_allocation_policy(input : AEC::ModifyNetworkingFlexCostAllocationPolicyRequest) : Core::ParsedResponse(AEC::ModifyNetworkingFlexCostAllocationPolicyResult)
+      Log.info { "performing 'ModifyNetworkingFlexCostAllocationPolicy' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "ModifyNetworkingFlexCostAllocationPolicy")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("ModifyNetworkingFlexCostAllocationPolicy", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::ModifyNetworkingFlexCostAllocationPolicyResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::ModifyNetworkingFlexCostAllocationPolicyResult).new(response, result)
     end
 
     # Modifies the specified network interface attribute. You can specify only one attribute at a

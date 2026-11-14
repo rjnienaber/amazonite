@@ -20,7 +20,7 @@ module Amazonite::EC2
     # The Amazon Web Services Region of the IPAM.
     property ipam_region : String | Nil
 
-    # The Regional Internet Registry. Possible values:
+    # The internet registry. Possible values:
     #
     # - `ripe` - RIPE NCC (Europe, the Middle East, and Central Asia).
     #
@@ -29,6 +29,8 @@ module Amazonite::EC2
     # - `arin` - ARIN (North America).
     #
     # - `lacnic` - LACNIC (Latin America and the Caribbean).
+    #
+    # - `nicbr` - NIC.br (Brazil).
     property rir : Rir | Nil
 
     # The organization handle at the internet registry.
@@ -37,10 +39,10 @@ module Amazonite::EC2
     # The description of the internet registry association.
     property description : String | Nil
 
-    # The state of the internet registry association. Valid values: `pending-activation` |
-    # `pending-enable` | `create-in-progress` | `create-failed` | `enable-in-progress` |
-    # `enable-complete` | `enable-failed` | `delete-in-progress` | `delete-complete` |
-    # `delete-failed`.
+    # The state of the internet registry association. Valid values: `pending-enable` |
+    # `create-in-progress` | `create-failed` | `enable-in-progress` | `enable-complete` |
+    # `enable-failed` | `disable-in-progress` | `disable-complete` | `disable-failed` |
+    # `delete-in-progress` | `delete-complete` | `delete-failed`.
     property state : IpamInternetRegistryAssociationState | Nil
 
     # A message describing the current state of the internet registry association, including

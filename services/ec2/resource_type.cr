@@ -15,6 +15,7 @@ module Amazonite::EC2
     ElasticGpu
     ExportImageTask
     ExportInstanceTask
+    FcaPolicy
     Fleet
     FpgaImage
     HostReservation
@@ -131,6 +132,7 @@ module Amazonite::EC2
               when AEC::ResourceType::ElasticGpu                                             then "elastic-gpu"
               when AEC::ResourceType::ExportImageTask                                        then "export-image-task"
               when AEC::ResourceType::ExportInstanceTask                                     then "export-instance-task"
+              when AEC::ResourceType::FcaPolicy                                              then "fca-policy"
               when AEC::ResourceType::Fleet                                                  then "fleet"
               when AEC::ResourceType::FpgaImage                                              then "fpga-image"
               when AEC::ResourceType::HostReservation                                        then "host-reservation"
@@ -253,6 +255,7 @@ module Amazonite::EC2
       when "elastic-gpu"                                                   then AEC::ResourceType::ElasticGpu
       when "export-image-task"                                             then AEC::ResourceType::ExportImageTask
       when "export-instance-task"                                          then AEC::ResourceType::ExportInstanceTask
+      when "fca-policy"                                                    then AEC::ResourceType::FcaPolicy
       when "fleet"                                                         then AEC::ResourceType::Fleet
       when "fpga-image"                                                    then AEC::ResourceType::FpgaImage
       when "host-reservation"                                              then AEC::ResourceType::HostReservation
@@ -373,6 +376,7 @@ module Amazonite::EC2
       when AEC::ResourceType::ElasticGpu                                             then "elastic-gpu"
       when AEC::ResourceType::ExportImageTask                                        then "export-image-task"
       when AEC::ResourceType::ExportInstanceTask                                     then "export-instance-task"
+      when AEC::ResourceType::FcaPolicy                                              then "fca-policy"
       when AEC::ResourceType::Fleet                                                  then "fleet"
       when AEC::ResourceType::FpgaImage                                              then "fpga-image"
       when AEC::ResourceType::HostReservation                                        then "host-reservation"
@@ -493,6 +497,7 @@ module Amazonite::EC2
       when "elastic-gpu"                                                   then AEC::ResourceType::ElasticGpu
       when "export-image-task"                                             then AEC::ResourceType::ExportImageTask
       when "export-instance-task"                                          then AEC::ResourceType::ExportInstanceTask
+      when "fca-policy"                                                    then AEC::ResourceType::FcaPolicy
       when "fleet"                                                         then AEC::ResourceType::Fleet
       when "fpga-image"                                                    then AEC::ResourceType::FpgaImage
       when "host-reservation"                                              then AEC::ResourceType::HostReservation

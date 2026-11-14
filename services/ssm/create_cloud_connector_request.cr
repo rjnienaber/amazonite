@@ -21,9 +21,10 @@ module Amazonite::Ssm
     @[JSON::Field(key: "Configuration")]
     property configuration : CloudConnectorConfiguration
 
-    # The ARN of the Amazon Web Services Config connector associated with this cloud connector.
+    # The ARN of the Amazon Web Services Config connector to associate with this cloud connector. If
+    # you omit it, the cloud connector is created without Amazon Web Services Config integration.
     @[JSON::Field(key: "ConfigConnectorArn")]
-    property config_connector_arn : String
+    property config_connector_arn : String | Nil
 
     # Optional metadata that you assign to a resource. Tags enable you to categorize a resource in
     # different ways, such as by purpose, owner, or environment.
@@ -34,8 +35,8 @@ module Amazonite::Ssm
       @display_name : String,
       @role_arn : String,
       @configuration : CloudConnectorConfiguration,
-      @config_connector_arn : String,
       @description : String | Nil = nil,
+      @config_connector_arn : String | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
     )
     end

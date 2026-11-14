@@ -112,7 +112,8 @@ module Amazonite::Ssm
     property source_id : String | Nil
 
     # The type of the source resource. Valid values: `AWS::EC2::Instance` |
-    # `AWS::SSM::ManagedInstance` | `AWS::IoT::Thing` | `Microsoft.Compute/virtualMachines`.
+    # `AWS::SSM::ManagedInstance` | `AWS::IoT::Thing` | `Microsoft.Compute/virtualMachines` |
+    # `compute.googleapis.com/Instance`.
     @[JSON::Field(key: "SourceType", converter: AS::SourceType)]
     property source_type : SourceType | Nil
 

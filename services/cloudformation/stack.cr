@@ -128,6 +128,11 @@ module Amazonite::CloudFormation
     # Information about the most recent operations performed on this stack.
     property last_operations : Array(OperationEntry) | Nil
 
+    # The alias assigned to the stack, if one has been set. An alias is an alternative name that can
+    # be used in place of the stack name in any CloudFormation API call that accepts the `StackName`
+    # parameter.
+    property alias_name : String | Nil
+
     def initialize(
       @stack_name : String,
       @creation_time : Time,
@@ -156,6 +161,7 @@ module Amazonite::CloudFormation
       @deletion_mode : DeletionMode | Nil = nil,
       @detailed_status : DetailedStatus | Nil = nil,
       @last_operations : Array(OperationEntry) | Nil = nil,
+      @alias_name : String | Nil = nil,
     )
     end
 
@@ -263,6 +269,10 @@ module Amazonite::CloudFormation
       (@last_operations || [] of OperationEntry).each_with_index(1) do |item, i|
         params.concat(item.to_query_params("#{prefix}LastOperations.member.#{i}."))
       end
+
+      if value = @alias_name
+        params << {"#{prefix}AliasName", value}
+      end
       params
     end
 
@@ -295,6 +305,7 @@ module Amazonite::CloudFormation
         deletion_mode: (n = node.xpath_node("*[local-name()='DeletionMode']")) ? ACF::DeletionMode.from_json_object_key?(n.content) : nil,
         detailed_status: (n = node.xpath_node("*[local-name()='DetailedStatus']")) ? ACF::DetailedStatus.from_json_object_key?(n.content) : nil,
         last_operations: node.xpath_nodes("*[local-name()='LastOperations']/*[local-name()='member']").map { |n| OperationEntry.from_xml(n) },
+        alias_name: Core::XMLValue.string(node.xpath_node("*[local-name()='AliasName']")),
       )
     end
 
@@ -352,8 +363,13 @@ module Amazonite::CloudFormation
       if value = @last_operations
         value.each(&.validate!)
       end
+
+      if value = @alias_name
+        raise Core::ValidationError.new("AliasName length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("AliasName length must be <= 128") if value.size > 128
+      end
     end
 
-    def_equals_and_hash(@stack_id, @stack_name, @change_set_id, @description, @parameters, @creation_time, @deletion_time, @last_updated_time, @rollback_configuration, @stack_status, @stack_status_reason, @disable_rollback, @deployment_config, @notification_ar_ns, @timeout_in_minutes, @capabilities, @outputs, @role_arn, @tags, @enable_termination_protection, @parent_id, @root_id, @drift_information, @retain_except_on_create, @deletion_mode, @detailed_status, @last_operations)
+    def_equals_and_hash(@stack_id, @stack_name, @change_set_id, @description, @parameters, @creation_time, @deletion_time, @last_updated_time, @rollback_configuration, @stack_status, @stack_status_reason, @disable_rollback, @deployment_config, @notification_ar_ns, @timeout_in_minutes, @capabilities, @outputs, @role_arn, @tags, @enable_termination_protection, @parent_id, @root_id, @drift_information, @retain_except_on_create, @deletion_mode, @detailed_status, @last_operations, @alias_name)
   end
 end

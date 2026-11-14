@@ -191,6 +191,11 @@ module Amazonite::Lambda
     @[JSON::Field(key: "DurableConfig")]
     property durable_config : DurableConfig | Nil
 
+    # The customer-managed runtime configuration for your function. Specifies the customer-managed
+    # runtime and the runtime alias that your function uses.
+    @[JSON::Field(key: "RuntimeConfig")]
+    property runtime_config : FunctionRuntimeConfig | Nil
+
     def initialize(
       @function_name : String,
       @role : String,
@@ -220,6 +225,7 @@ module Amazonite::Lambda
       @tenancy_config : TenancyConfig | Nil = nil,
       @capacity_provider_config : CapacityProviderConfig | Nil = nil,
       @durable_config : DurableConfig | Nil = nil,
+      @runtime_config : FunctionRuntimeConfig | Nil = nil,
     )
     end
 
@@ -327,8 +333,12 @@ module Amazonite::Lambda
       if value = @durable_config
         value.validate!
       end
+
+      if value = @runtime_config
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@function_name, @runtime, @role, @handler, @code, @description, @timeout, @memory_size, @publish, @publish_to, @vpc_config, @package_type, @dead_letter_config, @environment, @kms_key_arn, @tracing_config, @tags, @layers, @file_system_configs, @code_signing_config_arn, @image_config, @architectures, @ephemeral_storage, @snap_start, @logging_config, @tenancy_config, @capacity_provider_config, @durable_config)
+    def_equals_and_hash(@function_name, @runtime, @role, @handler, @code, @description, @timeout, @memory_size, @publish, @publish_to, @vpc_config, @package_type, @dead_letter_config, @environment, @kms_key_arn, @tracing_config, @tags, @layers, @file_system_configs, @code_signing_config_arn, @image_config, @architectures, @ephemeral_storage, @snap_start, @logging_config, @tenancy_config, @capacity_provider_config, @durable_config, @runtime_config)
   end
 end

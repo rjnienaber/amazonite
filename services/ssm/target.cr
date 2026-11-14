@@ -30,6 +30,17 @@ module Amazonite::Ssm
   #
   # - `Key=InstanceIds,Values=*`
   #
+  # - Automation only, to target Microsoft Azure or Google Cloud Platform (GCP) resources:
+  #
+  # - `Key=CloudConnector,Values=cloud-connector-id`
+  #
+  # -
+  # `Key=CloudConnector,Values={"CloudConnectorId":"cloud-connector-id","SsmManagedNodeFilter":"MANAGED","CloudProviderRegions":["eastus"]}`
+  #
+  # Supported JSON keys: `CloudConnectorId` (required), `SsmManagedNodeFilter`,
+  # `CloudProviderRegions`, and, for GCP, `IncludesLabels`, `ExcludesLabels`,
+  # `OsPolicyComplianceFilter`, and `OsPolicyOrchestratorId`.
+  #
   # **For Run Command and Maintenance Windows:**
   #
   # - `Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3`
@@ -51,6 +62,17 @@ module Amazonite::Ssm
   # - To target all instances in the Amazon Web Services Region:
   #
   # - `Key=InstanceIds,Values=*`
+  #
+  # - For associations that run an Automation runbook, to target Microsoft Azure or Google Cloud
+  # Platform (GCP) resources:
+  #
+  # - `Key=CloudConnector,Values=cloud-connector-id`
+  #
+  # -
+  # `Key=CloudConnector,Values={"CloudConnectorId":"cloud-connector-id","SsmManagedNodeFilter":"UNMANAGED"}`
+  #
+  # Supported JSON keys: `CloudConnectorId` (required), `SsmManagedNodeFilter`, and
+  # `CloudProviderRegions`.
   #
   # For more information about how to send commands that target managed nodes using `Key,Value`
   # parameters, see [Targeting multiple managed

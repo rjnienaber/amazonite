@@ -115,7 +115,9 @@ module Amazonite::Ssm
     property source_id : String | Nil
 
     # The type of the source resource. For IoT Greengrass devices, `SourceType` is `AWS::IoT::Thing`.
-    # For Azure Virtual Machines, `SourceType` is `Microsoft.Compute/virtualMachines`.
+    # For Azure Virtual Machines, `SourceType` is `Microsoft.Compute/virtualMachines`. For Google
+    # Cloud Platform (GCP) Compute Engine Virtual Machines, `SourceType` is
+    # `compute.googleapis.com/Instance`.
     @[JSON::Field(key: "SourceType", converter: AS::SourceType)]
     property source_type : SourceType | Nil
 

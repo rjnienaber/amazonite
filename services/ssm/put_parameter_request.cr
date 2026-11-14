@@ -160,6 +160,8 @@ module Amazonite::Ssm
     #
     # - The parameter uses a parameter policy.
     #
+    # - The parameter uses the `url`, `json`, or `jsonc` data type.
+    #
     # - More than 10,000 parameters already exist in your Amazon Web Services account in the current
     # Amazon Web Services Region.
     #
@@ -192,8 +194,8 @@ module Amazonite::Ssm
     @[JSON::Field(key: "Policies")]
     property policies : String | Nil
 
-    # The data type for a `String` parameter. Supported data types include plain text and Amazon
-    # Machine Image (AMI) IDs.
+    # The data type of the parameter value. Parameter Store validates the value against the data type
+    # when you create or update the parameter. The default is `text`, which performs no validation.
     #
     # **The following data type values are supported.**
     #
@@ -202,6 +204,42 @@ module Amazonite::Ssm
     # - `aws:ec2:image`
     #
     # - `aws:ssm:integration`
+    #
+    # - `aws:region`
+    #
+    # - `aws:account:id`
+    #
+    # - `boolean`
+    #
+    # - `integer`
+    #
+    # - `float`
+    #
+    # - `binary`
+    #
+    # - `hostname`
+    #
+    # - `email`
+    #
+    # - `ipv4-address`
+    #
+    # - `ipv6-address`
+    #
+    # - `url`
+    #
+    # - `json`
+    #
+    # - `jsonc`
+    #
+    # For more information about the supported data types, see [Working with parameter data types in
+    # Parameter
+    # Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-data-types.html).
+    #
+    # Regardless of a parameter's data type, the Parameter Store API operations that retrieve
+    # parameters, such as `GetParameter`, `GetParameters`, and `GetParametersByPath`, return the
+    # parameter value as a string. For example, if a parameter has the data type `integer` and the
+    # value `443`, `GetParameter` returns the value as the string `"443"`. Convert the value to the
+    # type your application needs after you retrieve it.
     #
     # When you create a `String` parameter and specify `aws:ec2:image`, Amazon Web Services Systems
     # Manager validates the parameter value is in the required format, such as

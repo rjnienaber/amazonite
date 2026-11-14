@@ -11,7 +11,7 @@ module Amazonite::EC2
     # The ID of the IPAM to associate with the internet registry.
     property ipam_id : String
 
-    # The Regional Internet Registry to associate with. Possible values:
+    # The internet registry to associate with. Possible values:
     #
     # - `ripe` - RIPE NCC (Europe, the Middle East, and Central Asia).
     #
@@ -20,6 +20,8 @@ module Amazonite::EC2
     # - `arin` - ARIN (North America).
     #
     # - `lacnic` - LACNIC (Latin America and the Caribbean).
+    #
+    # - `nicbr` - NIC.br (Brazil).
     property rir : Rir
 
     # The organization handle at the internet registry (for example, a RIPE NCC organization ID or

@@ -53,6 +53,7 @@ module Amazonite::Lambda
     Java8Al2023
     Java11Al2023
     Java17Al2023
+    Custom
 
     def self.to_json(e : Runtime, json : JSON::Builder) : Nil
       value = case e
@@ -107,6 +108,7 @@ module Amazonite::Lambda
               when AL::Runtime::Java8Al2023    then "java8.al2023"
               when AL::Runtime::Java11Al2023   then "java11.al2023"
               when AL::Runtime::Java17Al2023   then "java17.al2023"
+              when AL::Runtime::Custom         then "custom"
               else
                 raise Exception.new("unknown enum value for 'Runtime' when serializing to json: '#{e}'")
               end
@@ -167,6 +169,7 @@ module Amazonite::Lambda
       when "java8.al2023"    then AL::Runtime::Java8Al2023
       when "java11.al2023"   then AL::Runtime::Java11Al2023
       when "java17.al2023"   then AL::Runtime::Java17Al2023
+      when "custom"          then AL::Runtime::Custom
       else
         raise Exception.new("unknown enum value for 'Runtime' when deserializing from json: '#{value}'")
       end
@@ -225,6 +228,7 @@ module Amazonite::Lambda
       when AL::Runtime::Java8Al2023    then "java8.al2023"
       when AL::Runtime::Java11Al2023   then "java11.al2023"
       when AL::Runtime::Java17Al2023   then "java17.al2023"
+      when AL::Runtime::Custom         then "custom"
       else
         raise Exception.new("unknown enum value for 'Runtime' when serializing to json: '#{self}'")
       end
@@ -283,6 +287,7 @@ module Amazonite::Lambda
       when "java8.al2023"    then AL::Runtime::Java8Al2023
       when "java11.al2023"   then AL::Runtime::Java11Al2023
       when "java17.al2023"   then AL::Runtime::Java17Al2023
+      when "custom"          then AL::Runtime::Custom
       else
         nil
       end

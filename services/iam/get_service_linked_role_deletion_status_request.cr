@@ -4,7 +4,8 @@ module Amazonite::Iam
   class GetServiceLinkedRoleDeletionStatusRequest
     # The deletion task identifier. This identifier is returned by the
     # [DeleteServiceLinkedRole](https://docs.aws.amazon.com/IAM/latest/APIReference/API_DeleteServiceLinkedRole.html)
-    # operation in the format `task/aws-service-role///`.
+    # operation in the format
+    # `task/aws-service-role/<service-principal-name>/<role-name>/<task-uuid>`.
     property deletion_task_id : String
 
     def initialize(

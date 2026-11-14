@@ -130,6 +130,12 @@ module Amazonite::Lambda
   class ResourceNotReadyException < Core::ResponseException
   end
 
+  class RuntimeAliasDeletedException < Core::ResponseException
+  end
+
+  class RuntimeVersionDeletedException < Core::ResponseException
+  end
+
   class S3FilesMountConnectivityException < Core::ResponseException
   end
 
@@ -215,6 +221,8 @@ module Amazonite::Lambda
       when "ResourceInUseException"                                    then ResourceInUseException.new(http, message, code)
       when "ResourceNotFoundException"                                 then ResourceNotFoundException.new(http, message, code)
       when "ResourceNotReadyException"                                 then ResourceNotReadyException.new(http, message, code)
+      when "RuntimeAliasDeletedException"                              then RuntimeAliasDeletedException.new(http, message, code)
+      when "RuntimeVersionDeletedException"                            then RuntimeVersionDeletedException.new(http, message, code)
       when "S3FilesMountConnectivityException"                         then S3FilesMountConnectivityException.new(http, message, code)
       when "S3FilesMountFailureException"                              then S3FilesMountFailureException.new(http, message, code)
       when "S3FilesMountTimeoutException"                              then S3FilesMountTimeoutException.new(http, message, code)

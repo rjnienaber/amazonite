@@ -145,7 +145,7 @@ module Amazonite::Ssm
 
     def validate! : Nil
       if value = @action
-        raise Core::ValidationError.new("Action does not match the required pattern") unless value.matches?(Regex.new("^aws:[a-zA-Z]{3,25}$"))
+        raise Core::ValidationError.new("Action does not match the required pattern") unless value.matches?(Regex.new("^aws:[a-zA-Z]{3,40}$"))
       end
 
       if value = @outputs

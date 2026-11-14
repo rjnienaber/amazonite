@@ -161,6 +161,11 @@ module Amazonite::Lambda
     @[JSON::Field(key: "DurableConfig")]
     property durable_config : DurableConfig | Nil
 
+    # The customer-managed runtime configuration for your function. Specifies the customer-managed
+    # runtime and the runtime alias that your function uses.
+    @[JSON::Field(key: "RuntimeConfig")]
+    property runtime_config : FunctionRuntimeConfig | Nil
+
     def initialize(
       @function_name : String,
       @role : String | Nil = nil,
@@ -183,6 +188,7 @@ module Amazonite::Lambda
       @logging_config : LoggingConfig | Nil = nil,
       @capacity_provider_config : CapacityProviderConfig | Nil = nil,
       @durable_config : DurableConfig | Nil = nil,
+      @runtime_config : FunctionRuntimeConfig | Nil = nil,
     )
     end
 
@@ -271,8 +277,12 @@ module Amazonite::Lambda
       if value = @durable_config
         value.validate!
       end
+
+      if value = @runtime_config
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@function_name, @role, @handler, @description, @timeout, @memory_size, @vpc_config, @environment, @runtime, @dead_letter_config, @kms_key_arn, @tracing_config, @revision_id, @layers, @file_system_configs, @image_config, @ephemeral_storage, @snap_start, @logging_config, @capacity_provider_config, @durable_config)
+    def_equals_and_hash(@function_name, @role, @handler, @description, @timeout, @memory_size, @vpc_config, @environment, @runtime, @dead_letter_config, @kms_key_arn, @tracing_config, @revision_id, @layers, @file_system_configs, @image_config, @ephemeral_storage, @snap_start, @logging_config, @capacity_provider_config, @durable_config, @runtime_config)
   end
 end

@@ -4,6 +4,8 @@ module Amazonite::Ssm
   enum ValidationFindingCode
     TargetInaccessible
     TargetUnusable
+    TargetMissingPermissions
+    TargetApiDisabled
     TargetStateWarning
     AwsRoleAssumptionFailed
     WebIdentityTokenFailed
@@ -21,6 +23,8 @@ module Amazonite::Ssm
       case value
       when "TargetInaccessible"                    then AS::ValidationFindingCode::TargetInaccessible
       when "TargetUnusable"                        then AS::ValidationFindingCode::TargetUnusable
+      when "TargetMissingPermissions"              then AS::ValidationFindingCode::TargetMissingPermissions
+      when "TargetApiDisabled"                     then AS::ValidationFindingCode::TargetApiDisabled
       when "TargetStateWarning"                    then AS::ValidationFindingCode::TargetStateWarning
       when "AwsRoleAssumptionFailed"               then AS::ValidationFindingCode::AwsRoleAssumptionFailed
       when "WebIdentityTokenFailed"                then AS::ValidationFindingCode::WebIdentityTokenFailed
@@ -41,6 +45,8 @@ module Amazonite::Ssm
       case key
       when "TargetInaccessible"                    then AS::ValidationFindingCode::TargetInaccessible
       when "TargetUnusable"                        then AS::ValidationFindingCode::TargetUnusable
+      when "TargetMissingPermissions"              then AS::ValidationFindingCode::TargetMissingPermissions
+      when "TargetApiDisabled"                     then AS::ValidationFindingCode::TargetApiDisabled
       when "TargetStateWarning"                    then AS::ValidationFindingCode::TargetStateWarning
       when "AwsRoleAssumptionFailed"               then AS::ValidationFindingCode::AwsRoleAssumptionFailed
       when "WebIdentityTokenFailed"                then AS::ValidationFindingCode::WebIdentityTokenFailed

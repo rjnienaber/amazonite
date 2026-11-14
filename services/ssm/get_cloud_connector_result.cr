@@ -24,7 +24,9 @@ module Amazonite::Ssm
     @[JSON::Field(key: "Configuration")]
     property configuration : CloudConnectorConfiguration | Nil
 
-    # The ARN of the Amazon Web Services Config connector associated with this cloud connector.
+    # The ARN of the Amazon Web Services Config connector associated with this cloud connector. This
+    # value is returned only if the cloud connector was created with an Amazon Web Services Config
+    # connector.
     @[JSON::Field(key: "ConfigConnectorArn")]
     property config_connector_arn : String | Nil
 

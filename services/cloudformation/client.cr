@@ -1699,6 +1699,21 @@ module Amazonite::CloudFormation
       Core::ParsedResponse(ACF::RegisterTypeOutput).new(response, result)
     end
 
+    # Removes an alias from a stack. After the alias is removed successfully, it can no longer be used
+    # to reference the stack in API calls.
+    def remove_alias(input : ACF::RemoveAliasInput) : Core::Response
+      Log.info { "performing 'RemoveAlias' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "RemoveAlias")
+        form.add("Version", "2010-05-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("RemoveAlias", body)
+      Core::Response.new(response)
+    end
+
     # When specifying `RollbackStack`, you preserve the state of previously provisioned resources when
     # an operation fails. You can check the status of the stack through the DescribeStacks operation.
     #
@@ -1730,6 +1745,29 @@ module Amazonite::CloudFormation
       result_node = XML.parse(response.body).xpath_node("//*[local-name()='RollbackStackResult']").not_nil!
       result = ACF::RollbackStackOutput.from_xml(result_node)
       Core::ParsedResponse(ACF::RollbackStackOutput).new(response, result)
+    end
+
+    # Assigns an alias to an existing stack. An alias is an alternative name for a stack that can be
+    # used in place of the stack name in any CloudFormation API call that accepts the `StackName`
+    # parameter. This enables you to effectively rename a stack without recreating it.
+    #
+    # After setting an alias, both the original stack name and the alias resolve to the same stack.
+    # Setting an alias does not change the stack's ARN, physical resource IDs, or any deployed
+    # resources.
+    #
+    # Each stack can have at most one alias. To change a stack's alias, first remove the existing
+    # alias using RemoveAlias, then set a new one.
+    def set_alias(input : ACF::SetAliasInput) : Core::Response
+      Log.info { "performing 'SetAlias' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "SetAlias")
+        form.add("Version", "2010-05-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("SetAlias", body)
+      Core::Response.new(response)
     end
 
     # Sets a stack policy for a specified stack.

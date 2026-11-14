@@ -1,3 +1,4 @@
+private alias AS = Amazonite::Ssm
 private alias Core = Amazonite::Core
 
 module Amazonite::Ssm
@@ -29,6 +30,17 @@ module Amazonite::Ssm
     @[JSON::Field(key: "UpdatedAt", converter: Core::AWSEpochConverter)]
     property updated_at : Time | Nil
 
+    # The third-party cloud provider that the cloud connector connects to. Valid values: `Azure` |
+    # `GCP`.
+    @[JSON::Field(key: "Provider", converter: AS::Provider)]
+    property provider : Provider | Nil
+
+    # The ARN of the Amazon Web Services Config connector associated with this cloud connector. This
+    # value is returned only if the cloud connector was created with an Amazon Web Services Config
+    # connector.
+    @[JSON::Field(key: "ConfigConnectorArn")]
+    property config_connector_arn : String | Nil
+
     def initialize(
       @cloud_connector_id : String | Nil = nil,
       @display_name : String | Nil = nil,
@@ -36,6 +48,8 @@ module Amazonite::Ssm
       @role_arn : String | Nil = nil,
       @created_at : Time | Nil = nil,
       @updated_at : Time | Nil = nil,
+      @provider : Provider | Nil = nil,
+      @config_connector_arn : String | Nil = nil,
     )
     end
 
@@ -62,8 +76,14 @@ module Amazonite::Ssm
         raise Core::ValidationError.new("RoleArn length must be >= 20") if value.size < 20
         raise Core::ValidationError.new("RoleArn length must be <= 2048") if value.size > 2048
       end
+
+      if value = @config_connector_arn
+        raise Core::ValidationError.new("ConfigConnectorArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ConfigConnectorArn length must be <= 512") if value.size > 512
+        raise Core::ValidationError.new("ConfigConnectorArn does not match the required pattern") unless value.matches?(Regex.new("^arn:aws(-cn|-us-gov)?:config:([^:]+):\\d{12}:connector/.+$"))
+      end
     end
 
-    def_equals_and_hash(@cloud_connector_id, @display_name, @description, @role_arn, @created_at, @updated_at)
+    def_equals_and_hash(@cloud_connector_id, @display_name, @description, @role_arn, @created_at, @updated_at, @provider, @config_connector_arn)
   end
 end

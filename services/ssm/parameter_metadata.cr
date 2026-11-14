@@ -55,7 +55,8 @@ module Amazonite::Ssm
     @[JSON::Field(key: "Policies")]
     property policies : Array(ParameterInlinePolicy) | Nil
 
-    # The data type of the parameter, such as `text` or `aws:ec2:image`. The default is `text`.
+    # The data type of the parameter, such as `text`, `aws:ec2:image`, or `json`. The default is
+    # `text`. For the list of data types, see the `DataType` parameter of `PutParameter`.
     @[JSON::Field(key: "DataType")]
     property data_type : String | Nil
 

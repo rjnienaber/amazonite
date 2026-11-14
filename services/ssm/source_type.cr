@@ -6,6 +6,7 @@ module Amazonite::Ssm
     AwsIoTThing
     AwsSsmManagedInstance
     MicrosoftComputeVirtualMachines
+    ComputeGoogleapisComInstance
 
     def self.to_json(e : SourceType, json : JSON::Builder) : Nil
       value = case e
@@ -13,6 +14,7 @@ module Amazonite::Ssm
               when AS::SourceType::AwsIoTThing                     then "AWS::IoT::Thing"
               when AS::SourceType::AwsSsmManagedInstance           then "AWS::SSM::ManagedInstance"
               when AS::SourceType::MicrosoftComputeVirtualMachines then "Microsoft.Compute/virtualMachines"
+              when AS::SourceType::ComputeGoogleapisComInstance    then "compute.googleapis.com/Instance"
               else
                 raise Exception.new("unknown enum value for 'SourceType' when serializing to json: '#{e}'")
               end
@@ -26,6 +28,7 @@ module Amazonite::Ssm
       when "AWS::IoT::Thing"                   then AS::SourceType::AwsIoTThing
       when "AWS::SSM::ManagedInstance"         then AS::SourceType::AwsSsmManagedInstance
       when "Microsoft.Compute/virtualMachines" then AS::SourceType::MicrosoftComputeVirtualMachines
+      when "compute.googleapis.com/Instance"   then AS::SourceType::ComputeGoogleapisComInstance
       else
         raise Exception.new("unknown enum value for 'SourceType' when deserializing from json: '#{value}'")
       end
@@ -37,6 +40,7 @@ module Amazonite::Ssm
       when AS::SourceType::AwsIoTThing                     then "AWS::IoT::Thing"
       when AS::SourceType::AwsSsmManagedInstance           then "AWS::SSM::ManagedInstance"
       when AS::SourceType::MicrosoftComputeVirtualMachines then "Microsoft.Compute/virtualMachines"
+      when AS::SourceType::ComputeGoogleapisComInstance    then "compute.googleapis.com/Instance"
       else
         raise Exception.new("unknown enum value for 'SourceType' when serializing to json: '#{self}'")
       end
@@ -48,6 +52,7 @@ module Amazonite::Ssm
       when "AWS::IoT::Thing"                   then AS::SourceType::AwsIoTThing
       when "AWS::SSM::ManagedInstance"         then AS::SourceType::AwsSsmManagedInstance
       when "Microsoft.Compute/virtualMachines" then AS::SourceType::MicrosoftComputeVirtualMachines
+      when "compute.googleapis.com/Instance"   then AS::SourceType::ComputeGoogleapisComInstance
       else
         nil
       end

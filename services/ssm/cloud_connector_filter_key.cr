@@ -4,6 +4,8 @@ module Amazonite::Ssm
   enum CloudConnectorFilterKey
     SubscriptionId
     TenantId
+    ProjectId
+    OrganizationId
 
     def self.to_json(e : CloudConnectorFilterKey, json : JSON::Builder) : Nil
       json.string(e.to_s)
@@ -14,6 +16,8 @@ module Amazonite::Ssm
       case value
       when "SubscriptionId" then AS::CloudConnectorFilterKey::SubscriptionId
       when "TenantId"       then AS::CloudConnectorFilterKey::TenantId
+      when "ProjectId"      then AS::CloudConnectorFilterKey::ProjectId
+      when "OrganizationId" then AS::CloudConnectorFilterKey::OrganizationId
       else
         raise Exception.new("unknown enum value for 'CloudConnectorFilterKey' when deserializing from json: '#{value}'")
       end
@@ -27,6 +31,8 @@ module Amazonite::Ssm
       case key
       when "SubscriptionId" then AS::CloudConnectorFilterKey::SubscriptionId
       when "TenantId"       then AS::CloudConnectorFilterKey::TenantId
+      when "ProjectId"      then AS::CloudConnectorFilterKey::ProjectId
+      when "OrganizationId" then AS::CloudConnectorFilterKey::OrganizationId
       else
         nil
       end

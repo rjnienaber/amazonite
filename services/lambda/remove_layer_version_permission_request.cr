@@ -32,8 +32,8 @@ module Amazonite::Lambda
     def validate! : Nil
       if value = @layer_name
         raise Core::ValidationError.new("LayerName length must be >= 1") if value.size < 1
-        raise Core::ValidationError.new("LayerName length must be <= 140") if value.size > 140
-        raise Core::ValidationError.new("LayerName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:layer:[a-zA-Z0-9-_]+)|[a-zA-Z0-9-_]+$"))
+        raise Core::ValidationError.new("LayerName length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("LayerName does not match the required pattern") unless value.matches?(Regex.new("^(arn:(aws[a-zA-Z-]*)?:lambda:(eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:layer:[a-zA-Z0-9-_]{1,140}|[a-zA-Z0-9-_]{1,140})$"))
       end
 
       if value = @statement_id

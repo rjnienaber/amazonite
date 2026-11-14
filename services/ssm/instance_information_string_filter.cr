@@ -20,7 +20,7 @@ module Amazonite::Ssm
     # - Valid values for the `ResourceType` filter key: EC2Instance | ManagedInstance
     #
     # - Valid values for the `SourceType` filter key: AWS::EC2::Instance | AWS::SSM::ManagedInstance |
-    # AWS::IoT::Thing | Microsoft.Compute/virtualMachines
+    # AWS::IoT::Thing | Microsoft.Compute/virtualMachines | compute.googleapis.com/Instance
     #
     # - Valid tag examples: `Key=tag-key,Values=Purpose` | `Key=tag:Purpose,Values=Test`.
     @[JSON::Field(key: "Key")]

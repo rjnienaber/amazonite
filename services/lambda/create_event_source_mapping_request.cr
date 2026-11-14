@@ -155,9 +155,9 @@ module Amazonite::Lambda
     # specified number of retries. The default value is infinite (-1). When set to infinite (-1),
     # failed records are retried until the record expires.
     #
-    # For Kafka `Stream` consumption mode, the default is `-1` (infinite retries; capped at 10 when an
-    # on-failure destination is configured). For Kafka `Queue` consumption mode, the default is `0`,
-    # and if no on-failure destination is configured the Kafka broker performs retries.
+    # For Kafka event source mappings with `ConsumptionMode` set to `Queue`, the value -1 (infinite
+    # retries) is not supported and the default is 0 (no retries). Lambda releases failed records back
+    # to the broker, which redelivers them up to the share group's `group.share.delivery.count.limit`.
     @[JSON::Field(key: "MaximumRetryAttempts")]
     property maximum_retry_attempts : Int32 | Nil
 

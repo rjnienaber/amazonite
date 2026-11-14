@@ -3,7 +3,8 @@ private alias Core = Amazonite::Core
 module Amazonite::Iam
   class DeleteServiceLinkedRoleResponse
     # The deletion task identifier that you can use to check the status of the deletion. This
-    # identifier is returned in the format `task/aws-service-role///`.
+    # identifier is returned in the format
+    # `task/aws-service-role/<service-principal-name>/<role-name>/<task-uuid>`.
     property deletion_task_id : String
 
     def initialize(

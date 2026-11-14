@@ -4,11 +4,15 @@ module Amazonite::Ssm
   enum ValidationFindingScopeType
     AzureTenant
     AzureSubscription
+    GcpOrganization
+    GcpProject
 
     def self.to_json(e : ValidationFindingScopeType, json : JSON::Builder) : Nil
       value = case e
               when AS::ValidationFindingScopeType::AzureTenant       then "azure:tenant"
               when AS::ValidationFindingScopeType::AzureSubscription then "azure:subscription"
+              when AS::ValidationFindingScopeType::GcpOrganization   then "gcp:organization"
+              when AS::ValidationFindingScopeType::GcpProject        then "gcp:project"
               else
                 raise Exception.new("unknown enum value for 'ValidationFindingScopeType' when serializing to json: '#{e}'")
               end
@@ -20,6 +24,8 @@ module Amazonite::Ssm
       case value
       when "azure:tenant"       then AS::ValidationFindingScopeType::AzureTenant
       when "azure:subscription" then AS::ValidationFindingScopeType::AzureSubscription
+      when "gcp:organization"   then AS::ValidationFindingScopeType::GcpOrganization
+      when "gcp:project"        then AS::ValidationFindingScopeType::GcpProject
       else
         raise Exception.new("unknown enum value for 'ValidationFindingScopeType' when deserializing from json: '#{value}'")
       end
@@ -29,6 +35,8 @@ module Amazonite::Ssm
       case self
       when AS::ValidationFindingScopeType::AzureTenant       then "azure:tenant"
       when AS::ValidationFindingScopeType::AzureSubscription then "azure:subscription"
+      when AS::ValidationFindingScopeType::GcpOrganization   then "gcp:organization"
+      when AS::ValidationFindingScopeType::GcpProject        then "gcp:project"
       else
         raise Exception.new("unknown enum value for 'ValidationFindingScopeType' when serializing to json: '#{self}'")
       end
@@ -38,6 +46,8 @@ module Amazonite::Ssm
       case key
       when "azure:tenant"       then AS::ValidationFindingScopeType::AzureTenant
       when "azure:subscription" then AS::ValidationFindingScopeType::AzureSubscription
+      when "gcp:organization"   then AS::ValidationFindingScopeType::GcpOrganization
+      when "gcp:project"        then AS::ValidationFindingScopeType::GcpProject
       else
         nil
       end

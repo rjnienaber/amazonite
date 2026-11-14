@@ -17,6 +17,15 @@ module Amazonite::Ssm
     #
     # TenantId The Azure tenant ID to filter by. Filters the results to connectors that target the
     # specified tenant.
+    #
+    # ProjectId The Google Cloud Platform (GCP) project ID to filter by. Filters the results to
+    # connectors that target the specified project.
+    #
+    # OrganizationId The GCP organization ID to filter by. Filters the results to connectors that
+    # target the entire specified organization.
+    #
+    # You can't combine Azure filter keys (`SubscriptionId` and `TenantId`) with GCP filter keys
+    # (`ProjectId` and `OrganizationId`) in the same request.
     @[JSON::Field(key: "FilterValues")]
     property filter_values : Array(String) | Nil
 

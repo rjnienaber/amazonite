@@ -215,6 +215,11 @@ module Amazonite::Lambda
     @[JSON::Field(key: "DurableConfig")]
     property durable_config : DurableConfig | Nil
 
+    # The customer-managed runtime configuration for your function. Specifies the customer-managed
+    # runtime and the runtime alias that your function uses.
+    @[JSON::Field(key: "RuntimeConfig")]
+    property runtime_config : FunctionRuntimeConfig | Nil
+
     def initialize(
       @function_name : String | Nil = nil,
       @function_arn : String | Nil = nil,
@@ -256,6 +261,7 @@ module Amazonite::Lambda
       @capacity_provider_config : CapacityProviderConfig | Nil = nil,
       @config_sha_256 : String | Nil = nil,
       @durable_config : DurableConfig | Nil = nil,
+      @runtime_config : FunctionRuntimeConfig | Nil = nil,
     )
     end
 
@@ -397,8 +403,12 @@ module Amazonite::Lambda
       if value = @durable_config
         value.validate!
       end
+
+      if value = @runtime_config
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@function_name, @function_arn, @runtime, @role, @handler, @code_size, @description, @timeout, @memory_size, @last_modified, @code_sha_256, @version, @vpc_config, @dead_letter_config, @environment, @kms_key_arn, @tracing_config, @master_arn, @revision_id, @layers, @state, @state_reason, @state_reason_code, @last_update_status, @last_update_status_reason, @last_update_status_reason_code, @file_system_configs, @signing_profile_version_arn, @signing_job_arn, @package_type, @image_config_response, @architectures, @ephemeral_storage, @snap_start, @runtime_version_config, @logging_config, @tenancy_config, @capacity_provider_config, @config_sha_256, @durable_config)
+    def_equals_and_hash(@function_name, @function_arn, @runtime, @role, @handler, @code_size, @description, @timeout, @memory_size, @last_modified, @code_sha_256, @version, @vpc_config, @dead_letter_config, @environment, @kms_key_arn, @tracing_config, @master_arn, @revision_id, @layers, @state, @state_reason, @state_reason_code, @last_update_status, @last_update_status_reason, @last_update_status_reason_code, @file_system_configs, @signing_profile_version_arn, @signing_job_arn, @package_type, @image_config_response, @architectures, @ephemeral_storage, @snap_start, @runtime_version_config, @logging_config, @tenancy_config, @capacity_provider_config, @config_sha_256, @durable_config, @runtime_config)
   end
 end
