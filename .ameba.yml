@@ -23,3 +23,8 @@ Lint/SpecFilename:
   - spec/**/spec_helper.cr
   - spec/mocks/**
 
+
+# False positive on Crystal nightly: flags code that already uses short block
+# notation (e.g. `node.try(&.content)`), which `--fix` can't change.
+Style/VerboseBlock:
+  Enabled: false

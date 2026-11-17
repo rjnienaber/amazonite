@@ -206,6 +206,10 @@ module Amazonite::Codegen::Service
         # translating a union the same way as a structure (no required members)
         # reproduces that exact old-format shape.
         build_structure_shape(json, shape)
+      when "intEnum"
+        # The old format has no integer enums, so (like the other numeric
+        # primitives) an intEnum is just a plain integer.
+        build_primitive_shape(json, "integer", shape)
       when "list"
         build_list_shape(json, shape)
       when "map"
