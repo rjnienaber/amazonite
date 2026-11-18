@@ -43,6 +43,13 @@ module Amazonite::EC2
     # The payer responsibility settings for the endpoint.
     property payer_responsibilities : Array(PayerResponsibilityEntry) | Nil
 
+    # The ID of the transit gateway attachment, if the connection is for a transit gateway attachment.
+    property transit_gateway_attachment_id : String | Nil
+
+    # The ID of the Amazon Web Services account that owns the transit gateway attachment, if the
+    # connection is for a transit gateway attachment.
+    property transit_gateway_attachment_owner : String | Nil
+
     def initialize(
       @service_id : String | Nil = nil,
       @vpc_endpoint_id : String | Nil = nil,
@@ -57,6 +64,8 @@ module Amazonite::EC2
       @tags : Array(Tag) | Nil = nil,
       @vpc_endpoint_region : String | Nil = nil,
       @payer_responsibilities : Array(PayerResponsibilityEntry) | Nil = nil,
+      @transit_gateway_attachment_id : String | Nil = nil,
+      @transit_gateway_attachment_owner : String | Nil = nil,
     )
     end
 
@@ -114,6 +123,14 @@ module Amazonite::EC2
       (@payer_responsibilities || [] of PayerResponsibilityEntry).each_with_index(1) do |item, i|
         params.concat(item.to_query_params("#{prefix}PayerResponsibilitySet.#{i}."))
       end
+
+      if value = @transit_gateway_attachment_id
+        params << {"#{prefix}TransitGatewayAttachmentId", value}
+      end
+
+      if value = @transit_gateway_attachment_owner
+        params << {"#{prefix}TransitGatewayAttachmentOwner", value}
+      end
       params
     end
 
@@ -132,6 +149,8 @@ module Amazonite::EC2
         tags: node.xpath_nodes("*[local-name()='tagSet']/*[local-name()='item']").map { |n| Tag.from_xml(n) },
         vpc_endpoint_region: Core::XMLValue.string(node.xpath_node("*[local-name()='vpcEndpointRegion']")),
         payer_responsibilities: node.xpath_nodes("*[local-name()='payerResponsibilitySet']/*[local-name()='item']").map { |n| PayerResponsibilityEntry.from_xml(n) },
+        transit_gateway_attachment_id: Core::XMLValue.string(node.xpath_node("*[local-name()='transitGatewayAttachmentId']")),
+        transit_gateway_attachment_owner: Core::XMLValue.string(node.xpath_node("*[local-name()='transitGatewayAttachmentOwner']")),
       )
     end
 
@@ -149,6 +168,6 @@ module Amazonite::EC2
       end
     end
 
-    def_equals_and_hash(@service_id, @vpc_endpoint_id, @vpc_endpoint_owner, @vpc_endpoint_state, @creation_timestamp, @dns_entries, @network_load_balancer_arns, @gateway_load_balancer_arns, @ip_address_type, @vpc_endpoint_connection_id, @tags, @vpc_endpoint_region, @payer_responsibilities)
+    def_equals_and_hash(@service_id, @vpc_endpoint_id, @vpc_endpoint_owner, @vpc_endpoint_state, @creation_timestamp, @dns_entries, @network_load_balancer_arns, @gateway_load_balancer_arns, @ip_address_type, @vpc_endpoint_connection_id, @tags, @vpc_endpoint_region, @payer_responsibilities, @transit_gateway_attachment_id, @transit_gateway_attachment_owner)
   end
 end

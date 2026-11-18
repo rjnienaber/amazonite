@@ -126,6 +126,14 @@ module Amazonite::Lambda
     @[JSON::Field(key: "InvocationCompletedDetails")]
     property invocation_completed_details : InvocationCompletedDetails | Nil
 
+    # The details of an `ExecutionPaused` event.
+    @[JSON::Field(key: "ExecutionPausedDetails")]
+    property execution_paused_details : ExecutionPausedDetails | Nil
+
+    # The details of an `ExecutionResumed` event.
+    @[JSON::Field(key: "ExecutionResumedDetails")]
+    property execution_resumed_details : ExecutionResumedDetails | Nil
+
     def initialize(
       @event_type : EventType | Nil = nil,
       @sub_type : String | Nil = nil,
@@ -158,6 +166,8 @@ module Amazonite::Lambda
       @callback_failed_details : CallbackFailedDetails | Nil = nil,
       @callback_timed_out_details : CallbackTimedOutDetails | Nil = nil,
       @invocation_completed_details : InvocationCompletedDetails | Nil = nil,
+      @execution_paused_details : ExecutionPausedDetails | Nil = nil,
+      @execution_resumed_details : ExecutionResumedDetails | Nil = nil,
     )
     end
 
@@ -285,8 +295,16 @@ module Amazonite::Lambda
       if value = @invocation_completed_details
         value.validate!
       end
+
+      if value = @execution_paused_details
+        value.validate!
+      end
+
+      if value = @execution_resumed_details
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@event_type, @sub_type, @event_id, @id, @name, @event_timestamp, @parent_id, @execution_started_details, @execution_succeeded_details, @execution_failed_details, @execution_timed_out_details, @execution_stopped_details, @context_started_details, @context_succeeded_details, @context_failed_details, @wait_started_details, @wait_succeeded_details, @wait_cancelled_details, @step_started_details, @step_succeeded_details, @step_failed_details, @chained_invoke_started_details, @chained_invoke_succeeded_details, @chained_invoke_failed_details, @chained_invoke_timed_out_details, @chained_invoke_stopped_details, @callback_started_details, @callback_succeeded_details, @callback_failed_details, @callback_timed_out_details, @invocation_completed_details)
+    def_equals_and_hash(@event_type, @sub_type, @event_id, @id, @name, @event_timestamp, @parent_id, @execution_started_details, @execution_succeeded_details, @execution_failed_details, @execution_timed_out_details, @execution_stopped_details, @context_started_details, @context_succeeded_details, @context_failed_details, @wait_started_details, @wait_succeeded_details, @wait_cancelled_details, @step_started_details, @step_succeeded_details, @step_failed_details, @chained_invoke_started_details, @chained_invoke_succeeded_details, @chained_invoke_failed_details, @chained_invoke_timed_out_details, @chained_invoke_stopped_details, @callback_started_details, @callback_succeeded_details, @callback_failed_details, @callback_timed_out_details, @invocation_completed_details, @execution_paused_details, @execution_resumed_details)
   end
 end

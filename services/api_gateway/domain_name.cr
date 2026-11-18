@@ -42,8 +42,8 @@ module Amazonite::ApiGateway
     property regional_domain_name : String | Nil
 
     # The region-specific Amazon Route 53 Hosted Zone ID of the regional endpoint. For more
-    # information, see Set up a Regional Custom Domain Name and AWS Regions and Endpoints for API
-    # Gateway.
+    # information, see Set up a Regional Custom Domain Name and Amazon Web Services Regions and
+    # Endpoints for API Gateway.
     @[JSON::Field(key: "regionalHostedZoneId")]
     property regional_hosted_zone_id : String | Nil
 
@@ -65,7 +65,7 @@ module Amazonite::ApiGateway
 
     # The region-agnostic Amazon Route 53 Hosted Zone ID of the edge-optimized endpoint. The valid
     # value is `Z2FDTNDATAQYW2` for all the regions. For more information, see Set up a Regional
-    # Custom Domain Name and AWS Regions and Endpoints for API Gateway.
+    # Custom Domain Name and Amazon Web Services Regions and Endpoints for API Gateway.
     @[JSON::Field(key: "distributionHostedZoneId")]
     property distribution_hosted_zone_id : String | Nil
 

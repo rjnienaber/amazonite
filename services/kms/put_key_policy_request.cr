@@ -18,8 +18,11 @@ module Amazonite::Kms
     @[JSON::Field(key: "KeyId")]
     property key_id : String
 
-    # The name of the key policy. If no policy name is specified, the default value is `default`. The
-    # only valid value is `default`.
+    # The name of the key policy. If no policy name is specified, the default value is `default`.
+    # Valid values are `default` and `AWS_RAM`, but you can set only the `default` key policy. RAM
+    # manages the `AWS_RAM` key policy for KMS keys that you share through RAM. If you specify
+    # `AWS_RAM`, the request fails with a `ValidationException`, or with an `AccessDeniedException` if
+    # you don't have permission to call `PutKeyPolicy` with that policy name.
     @[JSON::Field(key: "PolicyName")]
     property policy_name : String | Nil
 
@@ -85,6 +88,10 @@ module Amazonite::Kms
     # making a subsequent
     # [PutKeyPolicy](https://docs.aws.amazon.com/kms/latest/APIReference/API_PutKeyPolicy.html)
     # request on the KMS key.
+    #
+    # The key policy lockout safety check and the `BypassPolicyLockoutSafetyCheck` parameter apply
+    # only to the `default` key policy. The check evaluates only the new `default` key policy, with
+    # `kms:PolicyName` set to `default`. It doesn't consider permissions in the `AWS_RAM` key policy.
     @[JSON::Field(key: "BypassPolicyLockoutSafetyCheck")]
     property bypass_policy_lockout_safety_check : Bool | Nil
 

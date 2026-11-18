@@ -40,7 +40,8 @@ module Amazonite::EC2
     # enforcement.
     property elastic_file_system : VpcEncryptionControlExclusionStateInput | Nil
 
-    # Specifies whether to exclude AWS Global Accelerator from account-level encryption enforcement.
+    # Specifies whether to exclude Amazon Web Services Global Accelerator from account-level
+    # encryption enforcement.
     property global_accelerator : VpcEncryptionControlExclusionStateInput | Nil
 
     # Specifies whether to exclude Amazon API Gateway V2 from account-level encryption enforcement.

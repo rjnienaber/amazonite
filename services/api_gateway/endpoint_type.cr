@@ -3,7 +3,7 @@ private alias AAG = Amazonite::ApiGateway
 module Amazonite::ApiGateway
   # The endpoint type. The valid values are `EDGE` for edge-optimized API setup, most suitable for
   # mobile applications; `REGIONAL` for regional API endpoint setup, most suitable for calling from
-  # AWS Region; and `PRIVATE` for private APIs.
+  # Amazon Web Services Region; and `PRIVATE` for private APIs.
   enum EndpointType
     Regional
     Edge

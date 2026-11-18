@@ -50,6 +50,10 @@ module Amazonite::EC2
     # The type of zone where the Capacity Block offering is available.
     property zone_type : String | Nil
 
+    # The individual segments that compose the Capacity Block offering. Each segment describes a
+    # distinct block of capacity with its own Availability Zone, instance type, schedule, and pricing.
+    property capacity_block_offering_segments : Array(CapacityBlockOfferingSegment) | Nil
+
     def initialize(
       @capacity_block_offering_id : String | Nil = nil,
       @instance_type : String | Nil = nil,
@@ -65,6 +69,7 @@ module Amazonite::EC2
       @ultraserver_count : Int32 | Nil = nil,
       @capacity_block_duration_minutes : Int32 | Nil = nil,
       @zone_type : String | Nil = nil,
+      @capacity_block_offering_segments : Array(CapacityBlockOfferingSegment) | Nil = nil,
     )
     end
 
@@ -126,6 +131,10 @@ module Amazonite::EC2
       if value = @zone_type
         params << {"#{prefix}ZoneType", value}
       end
+
+      (@capacity_block_offering_segments || [] of CapacityBlockOfferingSegment).each_with_index(1) do |item, i|
+        params.concat(item.to_query_params("#{prefix}CapacityBlockOfferingSegmentSet.#{i}."))
+      end
       params
     end
 
@@ -145,12 +154,18 @@ module Amazonite::EC2
         ultraserver_count: Core::XMLValue.i32(node.xpath_node("*[local-name()='ultraserverCount']")),
         capacity_block_duration_minutes: Core::XMLValue.i32(node.xpath_node("*[local-name()='capacityBlockDurationMinutes']")),
         zone_type: Core::XMLValue.string(node.xpath_node("*[local-name()='zoneType']")),
+        capacity_block_offering_segments: node.xpath_nodes("*[local-name()='capacityBlockOfferingSegmentSet']/*[local-name()='item']").map { |n| CapacityBlockOfferingSegment.from_xml(n) },
       )
     end
 
     def validate! : Nil
+      if value = @capacity_block_offering_segments
+        raise Core::ValidationError.new("CapacityBlockOfferingSegments must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("CapacityBlockOfferingSegments must have at most 10 item(s)") if value.size > 10
+        value.each(&.validate!)
+      end
     end
 
-    def_equals_and_hash(@capacity_block_offering_id, @instance_type, @availability_zone, @instance_count, @start_date, @end_date, @capacity_block_duration_hours, @upfront_fee, @currency_code, @tenancy, @ultraserver_type, @ultraserver_count, @capacity_block_duration_minutes, @zone_type)
+    def_equals_and_hash(@capacity_block_offering_id, @instance_type, @availability_zone, @instance_count, @start_date, @end_date, @capacity_block_duration_hours, @upfront_fee, @currency_code, @tenancy, @ultraserver_type, @ultraserver_count, @capacity_block_duration_minutes, @zone_type, @capacity_block_offering_segments)
   end
 end

@@ -49,6 +49,9 @@ module Amazonite::Kinesis
   class ResourceNotFoundException < Core::ResponseException
   end
 
+  class ThrottlingException < Core::ResponseException
+  end
+
   class ValidationException < Core::ResponseException
   end
 
@@ -71,6 +74,7 @@ module Amazonite::Kinesis
       when "ProvisionedThroughputExceededException" then ProvisionedThroughputExceededException.new(http, message, code)
       when "ResourceInUseException"                 then ResourceInUseException.new(http, message, code)
       when "ResourceNotFoundException"              then ResourceNotFoundException.new(http, message, code)
+      when "ThrottlingException"                    then ThrottlingException.new(http, message, code)
       when "ValidationException"                    then ValidationException.new(http, message, code)
       end
     end

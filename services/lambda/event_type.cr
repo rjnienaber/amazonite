@@ -26,6 +26,8 @@ module Amazonite::Lambda
     CallbackFailed
     CallbackTimedOut
     InvocationCompleted
+    ExecutionPaused
+    ExecutionResumed
 
     def self.to_json(e : EventType, json : JSON::Builder) : Nil
       json.string(e.to_s)
@@ -58,6 +60,8 @@ module Amazonite::Lambda
       when "CallbackFailed"         then AL::EventType::CallbackFailed
       when "CallbackTimedOut"       then AL::EventType::CallbackTimedOut
       when "InvocationCompleted"    then AL::EventType::InvocationCompleted
+      when "ExecutionPaused"        then AL::EventType::ExecutionPaused
+      when "ExecutionResumed"       then AL::EventType::ExecutionResumed
       else
         raise Exception.new("unknown enum value for 'EventType' when deserializing from json: '#{value}'")
       end
@@ -93,6 +97,8 @@ module Amazonite::Lambda
       when "CallbackFailed"         then AL::EventType::CallbackFailed
       when "CallbackTimedOut"       then AL::EventType::CallbackTimedOut
       when "InvocationCompleted"    then AL::EventType::InvocationCompleted
+      when "ExecutionPaused"        then AL::EventType::ExecutionPaused
+      when "ExecutionResumed"       then AL::EventType::ExecutionResumed
       else
         nil
       end

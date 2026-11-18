@@ -59,6 +59,9 @@ module Amazonite::EC2
     # snapshot was created.
     property full_snapshot_size_in_bytes : Int64 | Nil
 
+    # The additional KMS keys that are associated with the snapshot.
+    property associated_kms_keys : Array(AssociatedKmsKey) | Nil
+
     # The ID of the snapshot. Each snapshot receives a unique identifier when it is created.
     property snapshot_id : String | Nil
 
@@ -116,6 +119,7 @@ module Amazonite::EC2
       @completion_duration_minutes : Int32 | Nil = nil,
       @completion_time : Time | Nil = nil,
       @full_snapshot_size_in_bytes : Int64 | Nil = nil,
+      @associated_kms_keys : Array(AssociatedKmsKey) | Nil = nil,
       @snapshot_id : String | Nil = nil,
       @volume_id : String | Nil = nil,
       @state : SnapshotState | Nil = nil,
@@ -176,6 +180,10 @@ module Amazonite::EC2
 
       if value = @full_snapshot_size_in_bytes
         params << {"#{prefix}FullSnapshotSizeInBytes", value.to_s}
+      end
+
+      (@associated_kms_keys || [] of AssociatedKmsKey).each_with_index(1) do |item, i|
+        params.concat(item.to_query_params("#{prefix}AssociatedKmsKeySet.#{i}."))
       end
 
       if value = @snapshot_id
@@ -241,6 +249,7 @@ module Amazonite::EC2
         completion_duration_minutes: Core::XMLValue.i32(node.xpath_node("*[local-name()='completionDurationMinutes']")),
         completion_time: Core::XMLValue.time(node.xpath_node("*[local-name()='completionTime']")),
         full_snapshot_size_in_bytes: Core::XMLValue.i64(node.xpath_node("*[local-name()='fullSnapshotSizeInBytes']")),
+        associated_kms_keys: node.xpath_nodes("*[local-name()='associatedKmsKeySet']/*[local-name()='item']").map { |n| AssociatedKmsKey.from_xml(n) },
         snapshot_id: Core::XMLValue.string(node.xpath_node("*[local-name()='snapshotId']")),
         volume_id: Core::XMLValue.string(node.xpath_node("*[local-name()='volumeId']")),
         state: (n = node.xpath_node("*[local-name()='status']")) ? AEC::SnapshotState.from_json_object_key?(n.content) : nil,
@@ -260,8 +269,12 @@ module Amazonite::EC2
       if value = @tags
         value.each(&.validate!)
       end
+
+      if value = @associated_kms_keys
+        value.each(&.validate!)
+      end
     end
 
-    def_equals_and_hash(@owner_alias, @outpost_arn, @tags, @storage_tier, @restore_expiry_time, @sse_type, @availability_zone, @transfer_type, @completion_duration_minutes, @completion_time, @full_snapshot_size_in_bytes, @snapshot_id, @volume_id, @state, @state_message, @start_time, @progress, @owner_id, @description, @volume_size, @encrypted, @kms_key_id, @data_encryption_key_id)
+    def_equals_and_hash(@owner_alias, @outpost_arn, @tags, @storage_tier, @restore_expiry_time, @sse_type, @availability_zone, @transfer_type, @completion_duration_minutes, @completion_time, @full_snapshot_size_in_bytes, @associated_kms_keys, @snapshot_id, @volume_id, @state, @state_message, @start_time, @progress, @owner_id, @description, @volume_size, @encrypted, @kms_key_id, @data_encryption_key_id)
   end
 end

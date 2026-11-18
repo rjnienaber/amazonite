@@ -21,8 +21,8 @@ module Amazonite::ApiGateway
     property fail_on_warnings : Bool | Nil
 
     # Custom header parameters as part of the request. For example, to exclude DocumentationParts from
-    # an imported API, set `ignore=documentation` as a `parameters` value, as in the AWS CLI command
-    # of `aws apigateway import-rest-api --parameters ignore=documentation --body
+    # an imported API, set `ignore=documentation` as a `parameters` value, as in the CLI command of
+    # `aws apigateway import-rest-api --parameters ignore=documentation --body
     # 'file:///path/to/imported-api-body.json'`.
     @[JSON::Field(key: "parameters")]
     property parameters : Hash(String, String) | Nil

@@ -4,7 +4,7 @@ module Amazonite::Kms
   class GetKeyPolicyRequest
     include JSON::Serializable
 
-    # Gets the key policy for the specified KMS key.
+    # Identifies the KMS key whose key policy you want to get.
     #
     # Specify the key ID or key ARN of the KMS key.
     #
@@ -19,7 +19,9 @@ module Amazonite::Kms
     property key_id : String
 
     # Specifies the name of the key policy. If no policy name is specified, the default value is
-    # `default`. The only valid name is `default`. To get the names of key policies, use
+    # `default`. Valid values are `default` and `AWS_RAM`. Use `AWS_RAM` to get the key policy that
+    # RAM manages for a KMS key that you share through RAM. If the KMS key doesn't have an `AWS_RAM`
+    # key policy, the request fails with a `NotFoundException`. To get the names of key policies, use
     # ListKeyPolicies.
     @[JSON::Field(key: "PolicyName")]
     property policy_name : String | Nil

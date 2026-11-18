@@ -12,6 +12,8 @@ module Amazonite::EC2
 
     # The filters.
     #
+    # - `permission-type` - The permission type (`vpc-endpoint` | `transit-gateway-attachment`).
+    #
     # - `principal` - The ARN of the principal.
     #
     # - `principal-type` - The principal type (`All` | `Service` | `OrganizationUnit` | `Account` |

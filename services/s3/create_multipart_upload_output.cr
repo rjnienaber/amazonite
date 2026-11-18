@@ -76,6 +76,14 @@ module Amazonite::S3
     # Guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html).
     property checksum_type : ChecksumType | Nil
 
+    # Version ID of the object.
+    #
+    # Returns the Version ID of the object for the initiated multipart upload, if bucket versioning is
+    # enabled.
+    #
+    # This functionality is not supported for directory buckets.
+    property version_id : String | Nil
+
     def initialize(
       @abort_date : Time | Nil = nil,
       @abort_rule_id : String | Nil = nil,
@@ -91,6 +99,7 @@ module Amazonite::S3
       @request_charged : RequestCharged | Nil = nil,
       @checksum_algorithm : ChecksumAlgorithm | Nil = nil,
       @checksum_type : ChecksumType | Nil = nil,
+      @version_id : String | Nil = nil,
     )
     end
 
@@ -133,6 +142,6 @@ module Amazonite::S3
       end
     end
 
-    def_equals_and_hash(@abort_date, @abort_rule_id, @bucket, @key, @upload_id, @server_side_encryption, @sse_customer_algorithm, @sse_customer_key_md5, @ssekms_key_id, @ssekms_encryption_context, @bucket_key_enabled, @request_charged, @checksum_algorithm, @checksum_type)
+    def_equals_and_hash(@abort_date, @abort_rule_id, @bucket, @key, @upload_id, @server_side_encryption, @sse_customer_algorithm, @sse_customer_key_md5, @ssekms_key_id, @ssekms_encryption_context, @bucket_key_enabled, @request_charged, @checksum_algorithm, @checksum_type, @version_id)
   end
 end

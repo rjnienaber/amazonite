@@ -8,7 +8,11 @@ module Amazonite::Kms
     @[JSON::Field(key: "Policy")]
     property policy : String | Nil
 
-    # The name of the key policy. The only valid value is `default`.
+    # The name of the key policy. Valid values are:
+    #
+    # default The key policy that you manage.
+    #
+    # AWS_RAM The key policy that RAM manages for KMS keys that you share through RAM.
     @[JSON::Field(key: "PolicyName")]
     property policy_name : String | Nil
 

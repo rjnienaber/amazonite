@@ -1,7 +1,7 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::ApiGateway
-  # Represents a collection of usage plans for an AWS account.
+  # Represents a collection of usage plans for an Amazon Web Services account.
   class UsagePlans
     include JSON::Serializable
 

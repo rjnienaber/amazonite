@@ -4,7 +4,11 @@ module Amazonite::Kms
   class ListKeyPoliciesResponse
     include JSON::Serializable
 
-    # A list of key policy names. The only valid value is `default`.
+    # A list of key policy names. Valid values are:
+    #
+    # default The key policy that you manage.
+    #
+    # AWS_RAM The key policy that RAM manages for KMS keys that you share through RAM.
     @[JSON::Field(key: "PolicyNames")]
     property policy_names : Array(String) | Nil
 

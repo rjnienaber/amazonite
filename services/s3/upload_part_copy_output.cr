@@ -40,6 +40,13 @@ module Amazonite::S3
 
     property request_charged : RequestCharged | Nil
 
+    # Version ID of the object.
+    #
+    # Returns the Version ID of the object for the copied part, if bucket versioning is enabled.
+    #
+    # This functionality is not supported for directory buckets.
+    property version_id : String | Nil
+
     def initialize(
       @copy_source_version_id : String | Nil = nil,
       @copy_part_result : CopyPartResult | Nil = nil,
@@ -49,6 +56,7 @@ module Amazonite::S3
       @ssekms_key_id : String | Nil = nil,
       @bucket_key_enabled : Bool | Nil = nil,
       @request_charged : RequestCharged | Nil = nil,
+      @version_id : String | Nil = nil,
     )
     end
 
@@ -77,6 +85,6 @@ module Amazonite::S3
       end
     end
 
-    def_equals_and_hash(@copy_source_version_id, @copy_part_result, @server_side_encryption, @sse_customer_algorithm, @sse_customer_key_md5, @ssekms_key_id, @bucket_key_enabled, @request_charged)
+    def_equals_and_hash(@copy_source_version_id, @copy_part_result, @server_side_encryption, @sse_customer_algorithm, @sse_customer_key_md5, @ssekms_key_id, @bucket_key_enabled, @request_charged, @version_id)
   end
 end

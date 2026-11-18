@@ -27,8 +27,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 403 Forbidden
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* AccountProblem
@@ -37,8 +35,6 @@ module Amazonite::S3
     # action from completing successfully. Contact Amazon Web Services Support for further assistance.
     #
     # - *HTTP Status Code:* 403 Forbidden
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -49,8 +45,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 403 Forbidden
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* AmbiguousGrantByEmailAddress
@@ -58,8 +52,6 @@ module Amazonite::S3
     # - *Description:* The email address you provided is associated with more than one account.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -79,8 +71,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* BucketAlreadyExists
@@ -89,8 +79,6 @@ module Amazonite::S3
     # all users of the system. Please select a different name and try again.
     #
     # - *HTTP Status Code:* 409 Conflict
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -103,8 +91,6 @@ module Amazonite::S3
     #
     # - *Code:* 409 Conflict (in all Regions except the North Virginia Region)
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* BucketNotEmpty
@@ -113,8 +99,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 409 Conflict
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* CredentialsNotSupported
@@ -122,8 +106,6 @@ module Amazonite::S3
     # - *Description:* This request does not support credentials.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -134,8 +116,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 403 Forbidden
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* EntityTooSmall
@@ -143,8 +123,6 @@ module Amazonite::S3
     # - *Description:* Your proposed upload is smaller than the minimum allowed object size.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -154,8 +132,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* ExpiredToken
@@ -163,8 +139,6 @@ module Amazonite::S3
     # - *Description:* The provided token has expired.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -175,8 +149,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* IncompleteBody
@@ -186,8 +158,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* IncorrectNumberOfFilesInPostRequest
@@ -195,8 +165,6 @@ module Amazonite::S3
     # - *Description:* POST requires exactly one file upload per request.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -206,8 +174,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* InternalError
@@ -215,8 +181,6 @@ module Amazonite::S3
     # - *Description:* We encountered an internal error. Please try again.
     #
     # - *HTTP Status Code:* 500 Internal Server Error
-    #
-    # - *SOAP Fault Code Prefix:* Server
     #
     # -
     #
@@ -227,8 +191,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 403 Forbidden
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* InvalidAddressingHeader
@@ -236,8 +198,6 @@ module Amazonite::S3
     # - *Description:* You must specify the Anonymous role.
     #
     # - *HTTP Status Code:* N/A
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -247,8 +207,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* InvalidBucketName
@@ -256,8 +214,6 @@ module Amazonite::S3
     # - *Description:* The specified bucket is not valid.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -267,8 +223,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 409 Conflict
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* InvalidDigest
@@ -277,8 +231,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* InvalidEncryptionAlgorithmError
@@ -286,8 +238,6 @@ module Amazonite::S3
     # - *Description:* The encryption request you specified is not valid. The valid value is AES256.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -299,8 +249,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* InvalidObjectState
@@ -308,8 +256,6 @@ module Amazonite::S3
     # - *Description:* The action is not valid for the current state of the object.
     #
     # - *HTTP Status Code:* 403 Forbidden
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -320,8 +266,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* InvalidPartOrder
@@ -330,8 +274,6 @@ module Amazonite::S3
     # order by part number.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -342,8 +284,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 403 Forbidden
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* InvalidPolicyDocument
@@ -353,8 +293,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* InvalidRange
@@ -362,8 +300,6 @@ module Amazonite::S3
     # - *Description:* The requested range cannot be satisfied.
     #
     # - *HTTP Status Code:* 416 Requested Range Not Satisfiable
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -374,16 +310,6 @@ module Amazonite::S3
     # - *HTTP Status Code:* 400 Bad Request
     #
     # - *Code:* N/A
-    #
-    # -
-    #
-    # - *Code:* InvalidRequest
-    #
-    # - *Description:* SOAP requests must be made over an HTTPS connection.
-    #
-    # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -467,18 +393,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 403 Forbidden
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
-    # -
-    #
-    # - *Code:* InvalidSOAPRequest
-    #
-    # - *Description:* The SOAP request body is invalid.
-    #
-    # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* InvalidStorageClass
@@ -486,8 +400,6 @@ module Amazonite::S3
     # - *Description:* The storage class you specified is not valid.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -498,8 +410,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* InvalidToken
@@ -507,8 +417,6 @@ module Amazonite::S3
     # - *Description:* The provided token is malformed or otherwise invalid.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -518,8 +426,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* KeyTooLongError
@@ -527,8 +433,6 @@ module Amazonite::S3
     # - *Description:* Your key is too long.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -539,8 +443,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* MalformedPOSTRequest
@@ -548,8 +450,6 @@ module Amazonite::S3
     # - *Description:* The body of your POST request is not well-formed multipart/form-data.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -561,8 +461,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* MaxMessageLengthExceeded
@@ -570,8 +468,6 @@ module Amazonite::S3
     # - *Description:* Your request was too big.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -581,8 +477,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* MetadataTooLarge
@@ -590,8 +484,6 @@ module Amazonite::S3
     # - *Description:* Your metadata headers exceed the maximum allowed metadata size.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -601,18 +493,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 405 Method Not Allowed
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
-    # -
-    #
-    # - *Code:* MissingAttachment
-    #
-    # - *Description:* A SOAP attachment was expected, but none were found.
-    #
-    # - *HTTP Status Code:* N/A
-    #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* MissingContentLength
@@ -620,8 +500,6 @@ module Amazonite::S3
     # - *Description:* You must provide the Content-Length HTTP header.
     #
     # - *HTTP Status Code:* 411 Length Required
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -632,18 +510,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
-    # -
-    #
-    # - *Code:* MissingSecurityElement
-    #
-    # - *Description:* The SOAP 1.1 request is missing a security element.
-    #
-    # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* MissingSecurityHeader
@@ -651,8 +517,6 @@ module Amazonite::S3
     # - *Description:* Your request is missing a required header.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -662,8 +526,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* NoSuchBucket
@@ -671,8 +533,6 @@ module Amazonite::S3
     # - *Description:* The specified bucket does not exist.
     #
     # - *HTTP Status Code:* 404 Not Found
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -682,8 +542,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 404 Not Found
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* NoSuchKey
@@ -692,8 +550,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 404 Not Found
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* NoSuchLifecycleConfiguration
@@ -701,8 +557,6 @@ module Amazonite::S3
     # - *Description:* The lifecycle configuration does not exist.
     #
     # - *HTTP Status Code:* 404 Not Found
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -713,8 +567,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 404 Not Found
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* NoSuchVersion
@@ -724,8 +576,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 404 Not Found
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* NotImplemented
@@ -733,8 +583,6 @@ module Amazonite::S3
     # - *Description:* A header you provided implies functionality that is not implemented.
     #
     # - *HTTP Status Code:* 501 Not Implemented
-    #
-    # - *SOAP Fault Code Prefix:* Server
     #
     # -
     #
@@ -746,8 +594,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 403 Forbidden
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* OperationAborted
@@ -756,8 +602,6 @@ module Amazonite::S3
     # resource. Try again.
     #
     # - *HTTP Status Code:* 409 Conflict
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -768,8 +612,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 301 Moved Permanently
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* PreconditionFailed
@@ -777,8 +619,6 @@ module Amazonite::S3
     # - *Description:* At least one of the preconditions you specified did not hold.
     #
     # - *HTTP Status Code:* 412 Precondition Failed
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -788,8 +628,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 307 Moved Temporarily
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* RestoreAlreadyInProgress
@@ -798,8 +636,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 409 Conflict
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* RequestIsNotMultiPartContent
@@ -807,8 +643,6 @@ module Amazonite::S3
     # - *Description:* Bucket POST must be of the enclosure-type multipart/form-data.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -819,8 +653,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* RequestTimeTooSkewed
@@ -828,8 +660,6 @@ module Amazonite::S3
     # - *Description:* The difference between the request time and the server's time is too large.
     #
     # - *HTTP Status Code:* 403 Forbidden
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -839,8 +669,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* SignatureDoesNotMatch
@@ -848,13 +676,9 @@ module Amazonite::S3
     # - *Description:* The request signature we calculated does not match the signature you provided.
     # Check your Amazon Web Services secret access key and signing method. For more information, see
     # [REST Authentication](https://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html)
-    # and [SOAP
-    # Authentication](https://docs.aws.amazon.com/AmazonS3/latest/dev/SOAPAuthentication.html) for
-    # details.
+    # for details.
     #
     # - *HTTP Status Code:* 403 Forbidden
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -864,8 +688,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 503 Service Unavailable
     #
-    # - *SOAP Fault Code Prefix:* Server
-    #
     # -
     #
     # - *Code:* SlowDown
@@ -873,8 +695,6 @@ module Amazonite::S3
     # - *Description:* Reduce your request rate.
     #
     # - *HTTP Status Code:* 503 Slow Down
-    #
-    # - *SOAP Fault Code Prefix:* Server
     #
     # -
     #
@@ -884,8 +704,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 307 Moved Temporarily
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* TokenRefreshRequired
@@ -893,8 +711,6 @@ module Amazonite::S3
     # - *Description:* The provided token must be refreshed.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -904,8 +720,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* UnexpectedContent
@@ -913,8 +727,6 @@ module Amazonite::S3
     # - *Description:* This request does not support content.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     #
     # -
     #
@@ -924,8 +736,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code:* 400 Bad Request
     #
-    # - *SOAP Fault Code Prefix:* Client
-    #
     # -
     #
     # - *Code:* UserKeyMustBeSpecified
@@ -934,8 +744,6 @@ module Amazonite::S3
     # check the order of the fields.
     #
     # - *HTTP Status Code:* 400 Bad Request
-    #
-    # - *SOAP Fault Code Prefix:* Client
     property code : String | Nil
 
     # The error message contains a generic description of the error condition in English. It is

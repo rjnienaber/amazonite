@@ -37,6 +37,13 @@ module Amazonite::S3
     # in the *Amazon S3 User Guide*.
     property checksum_type : ChecksumType | Nil
 
+    # Version ID of the object.
+    #
+    # Returns the Version ID of the object for the multipart upload, if bucket versioning is enabled.
+    #
+    # This functionality is not supported for directory buckets.
+    property version_id : String | Nil
+
     def initialize(
       @upload_id : String | Nil = nil,
       @key : String | Nil = nil,
@@ -46,6 +53,7 @@ module Amazonite::S3
       @initiator : Initiator | Nil = nil,
       @checksum_algorithm : ChecksumAlgorithm | Nil = nil,
       @checksum_type : ChecksumType | Nil = nil,
+      @version_id : String | Nil = nil,
     )
     end
 
@@ -92,6 +100,10 @@ module Amazonite::S3
       if value = @checksum_type
         xml.element("ChecksumType") { xml.text value.to_json_object_key }
       end
+
+      if value = @version_id
+        xml.element("VersionId") { xml.text value }
+      end
     end
 
     def self.from_xml(node : XML::Node) : self
@@ -104,6 +116,7 @@ module Amazonite::S3
         initiator: node.xpath_node("*[local-name()='Initiator']").try { |n| Initiator.from_xml(n) },
         checksum_algorithm: (n = node.xpath_node("*[local-name()='ChecksumAlgorithm']")) ? AS::ChecksumAlgorithm.from_json_object_key?(n.content) : nil,
         checksum_type: (n = node.xpath_node("*[local-name()='ChecksumType']")) ? AS::ChecksumType.from_json_object_key?(n.content) : nil,
+        version_id: Core::XMLValue.string(node.xpath_node("*[local-name()='VersionId']")),
       )
     end
 
@@ -121,6 +134,6 @@ module Amazonite::S3
       end
     end
 
-    def_equals_and_hash(@upload_id, @key, @initiated, @storage_class, @owner, @initiator, @checksum_algorithm, @checksum_type)
+    def_equals_and_hash(@upload_id, @key, @initiated, @storage_class, @owner, @initiator, @checksum_algorithm, @checksum_type, @version_id)
   end
 end

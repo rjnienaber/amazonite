@@ -7,8 +7,9 @@ module Amazonite::Kinesis
     include JSON::Serializable
 
     # After you call SubscribeToShard, Kinesis Data Streams sends events of this type to your
-    # consumer. For an example of how to handle these events, see [Enhanced Fan-Out Using the Kinesis
-    # Data Streams API](/streams/latest/dev/building-enhanced-consumers-api.html).
+    # consumer. For an example of how to handle these events, see [Develop enhanced fan-out consumers
+    # with the Amazon Web Services SDK for
+    # Java](/streams/latest/dev/building-enhanced-consumers-api.html).
     @[JSON::Field(key: "SubscribeToShardEvent")]
     property subscribe_to_shard_event : SubscribeToShardEvent | Nil
 

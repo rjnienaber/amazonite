@@ -16,11 +16,15 @@ module Amazonite::EC2
     # The ID of the service.
     property service_id : String | Nil
 
+    # The type of permission granted to the principal.
+    property permission_type : PermissionType | Nil
+
     def initialize(
       @principal_type : PrincipalType | Nil = nil,
       @principal : String | Nil = nil,
       @service_permission_id : String | Nil = nil,
       @service_id : String | Nil = nil,
+      @permission_type : PermissionType | Nil = nil,
     )
     end
 
@@ -42,6 +46,10 @@ module Amazonite::EC2
       if value = @service_id
         params << {"#{prefix}ServiceId", value}
       end
+
+      if value = @permission_type
+        params << {"#{prefix}PermissionType", value.to_json_object_key}
+      end
       params
     end
 
@@ -51,12 +59,13 @@ module Amazonite::EC2
         principal: Core::XMLValue.string(node.xpath_node("*[local-name()='principal']")),
         service_permission_id: Core::XMLValue.string(node.xpath_node("*[local-name()='servicePermissionId']")),
         service_id: Core::XMLValue.string(node.xpath_node("*[local-name()='serviceId']")),
+        permission_type: (n = node.xpath_node("*[local-name()='permissionType']")) ? AEC::PermissionType.from_json_object_key?(n.content) : nil,
       )
     end
 
     def validate! : Nil
     end
 
-    def_equals_and_hash(@principal_type, @principal, @service_permission_id, @service_id)
+    def_equals_and_hash(@principal_type, @principal, @service_permission_id, @service_id, @permission_type)
   end
 end

@@ -93,6 +93,13 @@ module Amazonite::S3
 
     property request_charged : RequestCharged | Nil
 
+    # Version ID of the object.
+    #
+    # Returns the Version ID of the object for the uploaded part, if bucket versioning is enabled.
+    #
+    # This functionality is not supported for directory buckets.
+    property version_id : String | Nil
+
     def initialize(
       @server_side_encryption : ServerSideEncryption | Nil = nil,
       @e_tag : String | Nil = nil,
@@ -111,6 +118,7 @@ module Amazonite::S3
       @ssekms_key_id : String | Nil = nil,
       @bucket_key_enabled : Bool | Nil = nil,
       @request_charged : RequestCharged | Nil = nil,
+      @version_id : String | Nil = nil,
     )
     end
 
@@ -136,6 +144,6 @@ module Amazonite::S3
     def validate! : Nil
     end
 
-    def_equals_and_hash(@server_side_encryption, @e_tag, @checksum_crc32, @checksum_crc32c, @checksum_crc64nvme, @checksum_sha1, @checksum_sha256, @checksum_sha512, @checksum_md5, @checksum_xxhash64, @checksum_xxhash3, @checksum_xxhash128, @sse_customer_algorithm, @sse_customer_key_md5, @ssekms_key_id, @bucket_key_enabled, @request_charged)
+    def_equals_and_hash(@server_side_encryption, @e_tag, @checksum_crc32, @checksum_crc32c, @checksum_crc64nvme, @checksum_sha1, @checksum_sha256, @checksum_sha512, @checksum_md5, @checksum_xxhash64, @checksum_xxhash3, @checksum_xxhash128, @sse_customer_algorithm, @sse_customer_key_md5, @ssekms_key_id, @bucket_key_enabled, @request_charged, @version_id)
   end
 end

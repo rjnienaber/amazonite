@@ -1,3 +1,4 @@
+private alias AEC = Amazonite::EC2
 private alias Core = Amazonite::Core
 
 module Amazonite::EC2
@@ -23,6 +24,15 @@ module Amazonite::EC2
     # The ID of the VPC peering connection.
     property vpc_peering_connection_id : String | Nil
 
+    # The multipath resilience status of the VPC peering connection. The possible values are:
+    #
+    # - `enabled` – Both the requester and the accepter allow multipath resilience.
+    #
+    # - `pending` – Either the requester or the accepter allows multipath resilience, but not both.
+    #
+    # - `disabled` – Neither the requester nor the accepter allows multipath resilience.
+    property multipath_resilience_status : MultipathResilienceStatus | Nil
+
     def initialize(
       @accepter_vpc_info : VpcPeeringConnectionVpcInfo | Nil = nil,
       @expiration_time : Time | Nil = nil,
@@ -30,6 +40,7 @@ module Amazonite::EC2
       @status : VpcPeeringConnectionStateReason | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
       @vpc_peering_connection_id : String | Nil = nil,
+      @multipath_resilience_status : MultipathResilienceStatus | Nil = nil,
     )
     end
 
@@ -59,6 +70,10 @@ module Amazonite::EC2
       if value = @vpc_peering_connection_id
         params << {"#{prefix}VpcPeeringConnectionId", value}
       end
+
+      if value = @multipath_resilience_status
+        params << {"#{prefix}MultipathResilienceStatus", value.to_json_object_key}
+      end
       params
     end
 
@@ -70,6 +85,7 @@ module Amazonite::EC2
         status: node.xpath_node("*[local-name()='status']").try { |n| VpcPeeringConnectionStateReason.from_xml(n) },
         tags: node.xpath_nodes("*[local-name()='tagSet']/*[local-name()='item']").map { |n| Tag.from_xml(n) },
         vpc_peering_connection_id: Core::XMLValue.string(node.xpath_node("*[local-name()='vpcPeeringConnectionId']")),
+        multipath_resilience_status: (n = node.xpath_node("*[local-name()='multipathResilienceStatus']")) ? AEC::MultipathResilienceStatus.from_json_object_key?(n.content) : nil,
       )
     end
 
@@ -91,6 +107,6 @@ module Amazonite::EC2
       end
     end
 
-    def_equals_and_hash(@accepter_vpc_info, @expiration_time, @requester_vpc_info, @status, @tags, @vpc_peering_connection_id)
+    def_equals_and_hash(@accepter_vpc_info, @expiration_time, @requester_vpc_info, @status, @tags, @vpc_peering_connection_id, @multipath_resilience_status)
   end
 end

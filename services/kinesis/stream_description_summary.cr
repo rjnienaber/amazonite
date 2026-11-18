@@ -36,7 +36,7 @@ module Amazonite::Kinesis
     property stream_status : StreamStatus
 
     # Specifies the capacity mode to which you want to set your data stream. Currently, in Kinesis
-    # Data Streams, you can choose between an **on-demand** ycapacity mode and a **provisioned**
+    # Data Streams, you can choose between an **on-demand** capacity mode and a **provisioned**
     # capacity mode for your data streams.
     @[JSON::Field(key: "StreamModeDetails")]
     property stream_mode_details : StreamModeDetails | Nil
@@ -82,7 +82,9 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "OpenShardCount")]
     property open_shard_count : Int32
 
-    # The number of enhanced fan-out consumers registered with the stream.
+    # The number of enhanced fan-out consumers registered with the stream. Queues are not included in
+    # this count, even though they share the stream's registered consumer limit with enhanced fan-out
+    # consumers. `QueueCount` reports the number of queues.
     @[JSON::Field(key: "ConsumerCount")]
     property consumer_count : Int32 | Nil
 
@@ -108,6 +110,10 @@ module Amazonite::Kinesis
     @[JSON::Field(key: "RecordDistributionStrategy", converter: AK::RecordDistributionStrategy)]
     property record_distribution_strategy : RecordDistributionStrategy | Nil
 
+    # The number of queues created on the data stream.
+    @[JSON::Field(key: "QueueCount")]
+    property queue_count : Int32 | Nil
+
     def initialize(
       @stream_name : String,
       @stream_arn : String,
@@ -125,6 +131,7 @@ module Amazonite::Kinesis
       @max_record_size_in_ki_b : Int32 | Nil = nil,
       @channel_count : Int32 | Nil = nil,
       @record_distribution_strategy : RecordDistributionStrategy | Nil = nil,
+      @queue_count : Int32 | Nil = nil,
     )
     end
 
@@ -183,8 +190,13 @@ module Amazonite::Kinesis
         raise Core::ValidationError.new("ChannelCount value must be >= 0") if value < 0
         raise Core::ValidationError.new("ChannelCount value must be <= 1000000") if value > 1000000
       end
+
+      if value = @queue_count
+        raise Core::ValidationError.new("QueueCount value must be >= 0") if value < 0
+        raise Core::ValidationError.new("QueueCount value must be <= 1000000") if value > 1000000
+      end
     end
 
-    def_equals_and_hash(@stream_name, @stream_arn, @stream_id, @stream_status, @stream_mode_details, @retention_period_hours, @stream_creation_timestamp, @enhanced_monitoring, @encryption_type, @key_id, @open_shard_count, @consumer_count, @warm_throughput, @max_record_size_in_ki_b, @channel_count, @record_distribution_strategy)
+    def_equals_and_hash(@stream_name, @stream_arn, @stream_id, @stream_status, @stream_mode_details, @retention_period_hours, @stream_creation_timestamp, @enhanced_monitoring, @encryption_type, @key_id, @open_shard_count, @consumer_count, @warm_throughput, @max_record_size_in_ki_b, @channel_count, @record_distribution_strategy, @queue_count)
   end
 end

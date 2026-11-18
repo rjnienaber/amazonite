@@ -7,6 +7,9 @@ module Amazonite::Lambda
     Failed
     TimedOut
     Stopped
+    Deleting
+    Pausing
+    Paused
 
     def self.to_json(e : ExecutionStatus, json : JSON::Builder) : Nil
       value = case e
@@ -15,6 +18,9 @@ module Amazonite::Lambda
               when AL::ExecutionStatus::Failed    then "FAILED"
               when AL::ExecutionStatus::TimedOut  then "TIMED_OUT"
               when AL::ExecutionStatus::Stopped   then "STOPPED"
+              when AL::ExecutionStatus::Deleting  then "DELETING"
+              when AL::ExecutionStatus::Pausing   then "PAUSING"
+              when AL::ExecutionStatus::Paused    then "PAUSED"
               else
                 raise Exception.new("unknown enum value for 'ExecutionStatus' when serializing to json: '#{e}'")
               end
@@ -29,6 +35,9 @@ module Amazonite::Lambda
       when "FAILED"    then AL::ExecutionStatus::Failed
       when "TIMED_OUT" then AL::ExecutionStatus::TimedOut
       when "STOPPED"   then AL::ExecutionStatus::Stopped
+      when "DELETING"  then AL::ExecutionStatus::Deleting
+      when "PAUSING"   then AL::ExecutionStatus::Pausing
+      when "PAUSED"    then AL::ExecutionStatus::Paused
       else
         raise Exception.new("unknown enum value for 'ExecutionStatus' when deserializing from json: '#{value}'")
       end
@@ -41,6 +50,9 @@ module Amazonite::Lambda
       when AL::ExecutionStatus::Failed    then "FAILED"
       when AL::ExecutionStatus::TimedOut  then "TIMED_OUT"
       when AL::ExecutionStatus::Stopped   then "STOPPED"
+      when AL::ExecutionStatus::Deleting  then "DELETING"
+      when AL::ExecutionStatus::Pausing   then "PAUSING"
+      when AL::ExecutionStatus::Paused    then "PAUSED"
       else
         raise Exception.new("unknown enum value for 'ExecutionStatus' when serializing to json: '#{self}'")
       end
@@ -53,6 +65,9 @@ module Amazonite::Lambda
       when "FAILED"    then AL::ExecutionStatus::Failed
       when "TIMED_OUT" then AL::ExecutionStatus::TimedOut
       when "STOPPED"   then AL::ExecutionStatus::Stopped
+      when "DELETING"  then AL::ExecutionStatus::Deleting
+      when "PAUSING"   then AL::ExecutionStatus::Pausing
+      when "PAUSED"    then AL::ExecutionStatus::Paused
       else
         nil
       end

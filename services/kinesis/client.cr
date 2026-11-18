@@ -10,6 +10,42 @@ module Amazonite::Kinesis
       super("Kinesis_20131202", "kinesis", "1.1", EXCEPTION_FACTORY, config)
     end
 
+    # Acknowledges up to 10 dead-letter records in the specified queue, so the queue doesn't return
+    # them again. The result for each entry is reported individually in the response.
+    #
+    # Acknowledging a record does not affect the record in the data stream. That record remains
+    # available to stream consumers and to other queues on the same stream for the rest of its
+    # retention period.
+    #
+    # Because the request can result in a combination of successful and unsuccessful entries, check
+    # the `Failed` list even when the call returns an HTTP status code of `200`.
+    def acknowledge_dead_letter_queue_records(input : AK::AcknowledgeDeadLetterQueueRecordsInput) : Core::ParsedResponse(AK::AcknowledgeDeadLetterQueueRecordsOutput)
+      Log.info { "performing 'AcknowledgeDeadLetterQueueRecords' operation" }
+      input.validate! if config.validate_input?
+      response = post("AcknowledgeDeadLetterQueueRecords", "/", input.to_json)
+      Core::ParsedResponse(AK::AcknowledgeDeadLetterQueueRecordsOutput).new(response)
+    end
+
+    # Acknowledges up to 10 records from the specified queue. After a record is acknowledged, the
+    # queue does not deliver it again. The result for each entry is reported individually in the
+    # response.
+    #
+    # Acknowledging a record does not affect the record in the data stream. That record remains
+    # available to stream consumers and to other queues on the same stream for the rest of its
+    # retention period.
+    #
+    # Because the request can result in a combination of successful and unsuccessful entries, check
+    # the `Failed` list even when the call returns an HTTP status code of `200`.
+    #
+    # On rare occasions, you can receive a record again after you acknowledge it. Design your queue
+    # consumer to be idempotent, so that processing the same record more than once is safe.
+    def acknowledge_queue_records(input : AK::AcknowledgeQueueRecordsInput) : Core::ParsedResponse(AK::AcknowledgeQueueRecordsOutput)
+      Log.info { "performing 'AcknowledgeQueueRecords' operation" }
+      input.validate! if config.validate_input?
+      response = post("AcknowledgeQueueRecords", "/", input.to_json)
+      Core::ParsedResponse(AK::AcknowledgeQueueRecordsOutput).new(response)
+    end
+
     # Adds or updates tags for the specified Kinesis data stream. You can assign up to 50 tags to a
     # data stream.
     #
@@ -51,6 +87,48 @@ module Amazonite::Kinesis
       input.validate! if config.validate_input?
       response = post("CreateChannel", "/", input.to_json)
       Core::ParsedResponse(AK::CreateChannelOutput).new(response)
+    end
+
+    # Creates a queue on the specified data stream. A queue delivers records from the stream to a
+    # queue consumer, tracks the delivery state of each record, and redelivers any record that is not
+    # acknowledged before its visibility timeout expires.
+    #
+    # A queue does not extend how long the stream keeps a record. When a record reaches the end of the
+    # data stream's retention period, the queue stops delivering it.
+    #
+    # Your queue consumer calls ReceiveQueueRecords to receive up to 10 records at a time. After it
+    # processes records, it calls AcknowledgeQueueRecords so the queue does not deliver them again.
+    #
+    # Queues are supported only on data streams in on-demand capacity mode.
+    #
+    # Creating a queue does not change how producers write to the stream, and it does not change how
+    # existing stream consumers read from it. A queue counts as a registered consumer on the stream
+    # and shares the stream's registered consumer limit with enhanced fan-out consumers: 20 on
+    # On-demand Standard and 50 on On-demand Advantage.
+    #
+    # Use `StartingPosition` to set the position in the stream where delivery begins. The default is
+    # `LATEST`.
+    #
+    # `CreateQueue` is an asynchronous operation. Upon receiving a `CreateQueue` request, Amazon
+    # Kinesis Data Streams immediately returns a queue description with a `QueueStatus` of `CREATING`.
+    # After the queue is created, Kinesis Data Streams sets the `QueueStatus` to `ACTIVE`. You can
+    # begin receiving records after the queue is `ACTIVE`. Use DescribeQueue to check the status of
+    # the queue.
+    #
+    # Each queue has built-in dead-letter handling. When a record has been received `MaxReceiveCount`
+    # times without being acknowledged, it becomes a dead-letter record, and ReceiveQueueRecords no
+    # longer returns it. You work with dead-letter records through a separate set of operations that
+    # use the same queue ARN: ReceiveDeadLetterQueueRecords, AcknowledgeDeadLetterQueueRecords,
+    # UpdateDeadLetterQueueRecordsVisibility, and RestoreDeadLetterQueueRecords.
+    #
+    # Dead-letter handling is enabled by default, with a `MaxReceiveCount` of 6. To use a different
+    # value, or to turn dead-letter handling off, specify `DeadLetterConfiguration` in
+    # `QueueAttributes`.
+    def create_queue(input : AK::CreateQueueInput) : Core::ParsedResponse(AK::CreateQueueOutput)
+      Log.info { "performing 'CreateQueue' operation" }
+      input.validate! if config.validate_input?
+      response = post("CreateQueue", "/", input.to_json)
+      Core::ParsedResponse(AK::CreateQueueOutput).new(response)
     end
 
     # Creates a Kinesis data stream. A stream captures and transports data records that are
@@ -148,13 +226,35 @@ module Amazonite::Kinesis
       Core::Response.new(response)
     end
 
-    # Delete a policy for the specified data stream or consumer. Request patterns can be one of the
-    # following:
+    # Deletes the specified queue. Records that are in flight when you delete the queue are not
+    # delivered again, and receipt handles issued by the queue stop being valid.
+    #
+    # Deleting a queue does not delete the data stream the queue was created on, and does not delete
+    # any records in that stream. Those records remain available to stream consumers and to other
+    # queues on the same stream for the rest of their retention period.
+    #
+    # `DeleteQueue` is an asynchronous operation. Upon receiving a `DeleteQueue` request, Amazon
+    # Kinesis Data Streams sets the `QueueStatus` to `DELETING`. The queue is deleted when the
+    # operation completes. A queue in the `DELETING` state does not deliver records.
+    #
+    # You must delete every queue on a data stream before you can delete the stream, or switch it from
+    # on-demand to provisioned capacity mode.
+    def delete_queue(input : AK::DeleteQueueInput) : Core::Response
+      Log.info { "performing 'DeleteQueue' operation" }
+      input.validate! if config.validate_input?
+      response = post("DeleteQueue", "/", input.to_json)
+      Core::Response.new(response)
+    end
+
+    # Delete a policy for the specified data stream, consumer, or queue. Request patterns can be one
+    # of the following:
     #
     # - Data stream pattern: `arn:aws.*:kinesis:.*:\d{12}:.*stream/\S+`
     #
     # - Consumer pattern:
     # `^(arn):aws.*:kinesis:.*:\d{12}:.*stream\/[a-zA-Z0-9_.-]+\/consumer\/[a-zA-Z0-9_.-]+:[0-9]+`
+    #
+    # - Queue pattern: `arn:aws.*:kinesis:.*:\d{12}:queue/\S+`
     def delete_resource_policy(input : AK::DeleteResourcePolicyInput) : Core::Response
       Log.info { "performing 'DeleteResourcePolicy' operation" }
       input.validate! if config.validate_input?
@@ -178,6 +278,9 @@ module Amazonite::Kinesis
     #
     # When you delete a stream, any shards in that stream are also deleted, and any tags are
     # dissociated from the stream.
+    #
+    # Before you can delete a data stream that has queues, you must delete every queue on the stream
+    # with DeleteQueue.
     #
     # You can use the DescribeStreamSummary operation to check the state of the stream, which is
     # returned in `StreamStatus`.
@@ -242,6 +345,15 @@ module Amazonite::Kinesis
       input.validate! if config.validate_input?
       response = post("DescribeLimits", "/", input.to_json)
       Core::ParsedResponse(AK::DescribeLimitsOutput).new(response)
+    end
+
+    # Returns a description of the specified queue, including its status, the data stream it delivers
+    # records from, and its configuration attributes.
+    def describe_queue(input : AK::DescribeQueueInput) : Core::ParsedResponse(AK::DescribeQueueOutput)
+      Log.info { "performing 'DescribeQueue' operation" }
+      input.validate! if config.validate_input?
+      response = post("DescribeQueue", "/", input.to_json)
+      Core::ParsedResponse(AK::DescribeQueueOutput).new(response)
     end
 
     # Describes the specified Kinesis data stream.
@@ -399,13 +511,15 @@ module Amazonite::Kinesis
       Core::ParsedResponse(AK::GetRecordsOutput).new(response)
     end
 
-    # Returns a policy attached to the specified data stream or consumer. Request patterns can be one
-    # of the following:
+    # Returns a policy attached to the specified data stream, consumer, or queue. Request patterns can
+    # be one of the following:
     #
     # - Data stream pattern: `arn:aws.*:kinesis:.*:\d{12}:.*stream/\S+`
     #
     # - Consumer pattern:
     # `^(arn):aws.*:kinesis:.*:\d{12}:.*stream\/[a-zA-Z0-9_.-]+\/consumer\/[a-zA-Z0-9_.-]+:[0-9]+`
+    #
+    # - Queue pattern: `arn:aws.*:kinesis:.*:\d{12}:queue/\S+`
     def get_resource_policy(input : AK::GetResourcePolicyInput) : Core::ParsedResponse(AK::GetResourcePolicyOutput)
       Log.info { "performing 'GetResourcePolicy' operation" }
       input.validate! if config.validate_input?
@@ -492,6 +606,18 @@ module Amazonite::Kinesis
       Core::ParsedResponse(AK::ListChannelsOutput).new(response)
     end
 
+    # Returns a summary of each queue in the Amazon Web Services account and Region used by the
+    # request. Use `StreamFilter` to list only the queues on a particular data stream.
+    #
+    # If the response contains a `NextToken`, more queues are available. Call `ListQueues` again with
+    # that value to retrieve the next page.
+    def list_queues(input : AK::ListQueuesInput) : Core::ParsedResponse(AK::ListQueuesOutput)
+      Log.info { "performing 'ListQueues' operation" }
+      input.validate! if config.validate_input?
+      response = post("ListQueues", "/", input.to_json)
+      Core::ParsedResponse(AK::ListQueuesOutput).new(response)
+    end
+
     # Lists the shards in a stream and provides information about each shard. This operation has a
     # limit of 1000 transactions per second per data stream.
     #
@@ -549,6 +675,8 @@ module Amazonite::Kinesis
     # List all tags added to the specified Kinesis resource. Each tag is a label consisting of a
     # user-defined key and value. Tags can help you manage, identify, organize, search for, and filter
     # resources.
+    #
+    # The Kinesis resource can be a data stream, a queue, or an enhanced fan-out consumer.
     #
     # For more information about tagging Kinesis resources, see [Tag your Amazon Kinesis Data Streams
     # resources](https://docs.aws.amazon.com/streams/latest/dev/tagging.html).
@@ -738,13 +866,13 @@ module Amazonite::Kinesis
       Core::ParsedResponse(AK::PutRecordsOutput).new(response)
     end
 
-    # Attaches a resource-based policy to a data stream or registered consumer. If you are using an
-    # identity other than the root user of the Amazon Web Services account that owns the resource, the
-    # calling identity must have the `PutResourcePolicy` permissions on the specified Kinesis Data
-    # Streams resource and belong to the owner's account in order to use this operation. If you don't
-    # have `PutResourcePolicy` permissions, Amazon Kinesis Data Streams returns a `403 Access Denied
-    # error`. If you receive a `ResourceNotFoundException`, check to see if you passed a valid stream
-    # or consumer resource.
+    # Attaches a resource-based policy to a data stream, a queue, or an enhanced fan-out consumer. If
+    # you are using an identity other than the root user of the Amazon Web Services account that owns
+    # the resource, the calling identity must have the `PutResourcePolicy` permissions on the
+    # specified Kinesis Data Streams resource and belong to the owner's account in order to use this
+    # operation. If you don't have `PutResourcePolicy` permissions, Amazon Kinesis Data Streams
+    # returns a `403 Access Denied error`. If you receive a `ResourceNotFoundException`, check to see
+    # if you passed a valid stream or consumer resource.
     #
     # Request patterns can be one of the following:
     #
@@ -753,6 +881,8 @@ module Amazonite::Kinesis
     # - Consumer pattern:
     # `^(arn):aws.*:kinesis:.*:\d{12}:.*stream\/[a-zA-Z0-9_.-]+\/consumer\/[a-zA-Z0-9_.-]+:[0-9]+`
     #
+    # - Queue pattern: `arn:aws.*:kinesis:.*:\d{12}:queue/\S+`
+    #
     # For more information, see [Controlling Access to Amazon Kinesis Data Streams Resources Using
     # IAM](https://docs.aws.amazon.com/streams/latest/dev/controlling-access.html).
     def put_resource_policy(input : AK::PutResourcePolicyInput) : Core::Response
@@ -760,6 +890,56 @@ module Amazonite::Kinesis
       input.validate! if config.validate_input?
       response = post("PutResourcePolicy", "/", input.to_json)
       Core::Response.new(response)
+    end
+
+    # Receives up to 10 dead-letter records from the specified queue. Each queue has built-in
+    # dead-letter handling: when a record has been received `MaxReceiveCount` times without being
+    # acknowledged, it becomes a dead-letter record, which usually means your queue consumer could not
+    # process it. The dead-letter record stays in the same queue, and ReceiveQueueRecords no longer
+    # returns it.
+    #
+    # Dead-letter records carry the same data and partition key as when they were first delivered, and
+    # are returned with a receipt handle. Use the receipt handle to acknowledge the record with
+    # AcknowledgeDeadLetterQueueRecords, which discards it, to change its visibility with
+    # UpdateDeadLetterQueueRecordsVisibility, or to restore it with RestoreDeadLetterQueueRecords,
+    # which returns it to the normal receive path so that ReceiveQueueRecords can return it again.
+    #
+    # Use this operation to inspect the records your queue consumer could not process, so you can
+    # correct the cause and then either acknowledge or restore them.
+    #
+    # A queue delivers dead-letter records while it is in the `ACTIVE` state.
+    def receive_dead_letter_queue_records(input : AK::ReceiveDeadLetterQueueRecordsInput) : Core::ParsedResponse(AK::ReceiveDeadLetterQueueRecordsOutput)
+      Log.info { "performing 'ReceiveDeadLetterQueueRecords' operation" }
+      input.validate! if config.validate_input?
+      response = post("ReceiveDeadLetterQueueRecords", "/", input.to_json)
+      Core::ParsedResponse(AK::ReceiveDeadLetterQueueRecordsOutput).new(response)
+    end
+
+    # Receives up to 10 records from the specified queue. Each record is returned with a receipt
+    # handle, which is the identifier you use to acknowledge the record or change its visibility.
+    #
+    # A record returned by `ReceiveQueueRecords` becomes in flight: it is not visible to any consumer
+    # instance for the duration of its visibility timeout, so subsequent receive requests do not
+    # return it while your queue consumer processes it. Acknowledge the record with
+    # AcknowledgeQueueRecords when you finish processing it. A record that is not acknowledged before
+    # its visibility timeout expires becomes visible in the queue again and can be received by any
+    # consumer instance.
+    #
+    # Use `WaitTimeSeconds` to control how long the call waits for a record to become visible before
+    # returning. If a record becomes visible sooner, the call returns sooner. If the wait time expires
+    # and no records are visible, the call returns an empty list of records.
+    #
+    # Records are not necessarily received in the order they were written to the data stream.
+    #
+    # A queue delivers records while it is in the `ACTIVE` state.
+    #
+    # On rare occasions, a queue can deliver a record more than once. Design your queue consumer to be
+    # idempotent, so that processing the same record more than once is safe.
+    def receive_queue_records(input : AK::ReceiveQueueRecordsInput) : Core::ParsedResponse(AK::ReceiveQueueRecordsOutput)
+      Log.info { "performing 'ReceiveQueueRecords' operation" }
+      input.validate! if config.validate_input?
+      response = post("ReceiveQueueRecords", "/", input.to_json)
+      Core::ParsedResponse(AK::ReceiveQueueRecordsOutput).new(response)
     end
 
     # Registers a consumer with a Kinesis data stream. When you use this operation, the consumer you
@@ -773,14 +953,15 @@ module Amazonite::Kinesis
     # permission for the consumer that will be registered. Tags will take effect from the `CREATING`
     # status of the consumer.
     #
-    # With On-demand Advantage streams, you can register up to 50 consumers per stream to use Enhanced
-    # Fan-out. With On-demand Standard and Provisioned streams, you can register up to 20 consumers
-    # per stream to use Enhanced Fan-out. A given consumer can only be registered with one stream at a
-    # time.
+    # With On-demand Advantage streams, you can register up to 50 consumers per stream to use enhanced
+    # fan-out. With On-demand Standard and Provisioned streams, you can register up to 20 consumers
+    # per stream to use enhanced fan-out. Queues share this limit with enhanced fan-out consumers:
+    # both count as registered consumers on the stream. A given consumer can only be registered with
+    # one stream at a time.
     #
-    # For an example of how to use this operation, see [Enhanced Fan-Out Using the Kinesis Data
-    # Streams
-    # API](https://docs.aws.amazon.com/streams/latest/dev/building-enhanced-consumers-api.html).
+    # For an example of how to use this operation, see [Develop enhanced fan-out consumers with the
+    # Amazon Web Services SDK for
+    # Java](https://docs.aws.amazon.com/streams/latest/dev/building-enhanced-consumers-api.html).
     #
     # The use of this operation has a limit of five transactions per second per account. Also, only 5
     # consumers can be created simultaneously. In other words, you cannot have more than 5 consumers
@@ -807,6 +988,23 @@ module Amazonite::Kinesis
       input.validate! if config.validate_input?
       response = post("RemoveTagsFromStream", "/", input.to_json)
       Core::Response.new(response)
+    end
+
+    # Restores up to 10 dead-letter records in the specified queue. Restoring a record clears its
+    # dead-letter state and resets its receive count, so ReceiveQueueRecords can return it again, up
+    # to `MaxReceiveCount` times before it becomes a dead-letter record again. The result for each
+    # entry is reported individually in the response.
+    #
+    # Restore records after you have corrected the condition that prevented your queue consumer from
+    # processing them.
+    #
+    # Because the request can result in a combination of successful and unsuccessful entries, check
+    # the `Failed` list even when the call returns an HTTP status code of `200`.
+    def restore_dead_letter_queue_records(input : AK::RestoreDeadLetterQueueRecordsInput) : Core::ParsedResponse(AK::RestoreDeadLetterQueueRecordsOutput)
+      Log.info { "performing 'RestoreDeadLetterQueueRecords' operation" }
+      input.validate! if config.validate_input?
+      response = post("RestoreDeadLetterQueueRecords", "/", input.to_json)
+      Core::ParsedResponse(AK::RestoreDeadLetterQueueRecordsOutput).new(response)
     end
 
     # Splits a shard into two new shards in the Kinesis data stream, to increase the stream's capacity
@@ -918,6 +1116,8 @@ module Amazonite::Kinesis
     # Adds or updates tags for the specified Kinesis resource. Each tag is a label consisting of a
     # user-defined key and value. Tags can help you manage, identify, organize, search for, and filter
     # resources. You can assign up to 50 tags to a Kinesis resource.
+    #
+    # The Kinesis resource can be a data stream, a queue, or an enhanced fan-out consumer.
     def tag_resource(input : AK::TagResourceInput) : Core::Response
       Log.info { "performing 'TagResource' operation" }
       input.validate! if config.validate_input?
@@ -927,6 +1127,8 @@ module Amazonite::Kinesis
 
     # Removes tags from the specified Kinesis resource. Removed tags are deleted and can't be
     # recovered after this operation completes successfully.
+    #
+    # The Kinesis resource can be a data stream, a queue, or an enhanced fan-out consumer.
     def untag_resource(input : AK::UntagResourceInput) : Core::Response
       Log.info { "performing 'UntagResource' operation" }
       input.validate! if config.validate_input?
@@ -971,6 +1173,19 @@ module Amazonite::Kinesis
       Core::ParsedResponse(AK::UpdateChannelOutput).new(response)
     end
 
+    # Changes the visibility timeout of up to 10 dead-letter records that you have received from the
+    # specified queue but not yet acknowledged. The result for each entry is reported individually in
+    # the response.
+    #
+    # Because the request can result in a combination of successful and unsuccessful entries, check
+    # the `Failed` list even when the call returns an HTTP status code of `200`.
+    def update_dead_letter_queue_records_visibility(input : AK::UpdateDeadLetterQueueRecordsVisibilityInput) : Core::ParsedResponse(AK::UpdateDeadLetterQueueRecordsVisibilityOutput)
+      Log.info { "performing 'UpdateDeadLetterQueueRecordsVisibility' operation" }
+      input.validate! if config.validate_input?
+      response = post("UpdateDeadLetterQueueRecordsVisibility", "/", input.to_json)
+      Core::ParsedResponse(AK::UpdateDeadLetterQueueRecordsVisibilityOutput).new(response)
+    end
+
     # This allows you to update the `MaxRecordSize` of a single record that you can write to, and read
     # from a stream. You can ingest and digest single records up to 10240 KiB.
     def update_max_record_size(input : AK::UpdateMaxRecordSizeInput) : Core::Response
@@ -978,6 +1193,45 @@ module Amazonite::Kinesis
       input.validate! if config.validate_input?
       response = post("UpdateMaxRecordSize", "/", input.to_json)
       Core::Response.new(response)
+    end
+
+    # Updates the configuration attributes of the specified queue. You can change the queue's
+    # visibility timeout, its dead-letter handling configuration, or both.
+    #
+    # A new visibility timeout applies to records received after the update completes. Records that
+    # are already in flight keep the visibility timeout they were received with. To change the
+    # visibility timeout of a record that is already in flight, use UpdateQueueRecordsVisibility.
+    #
+    # `UpdateQueue` is an asynchronous operation. Upon receiving an `UpdateQueue` request, Amazon
+    # Kinesis Data Streams sets the `QueueStatus` to `UPDATING`, and sets it back to `ACTIVE` when the
+    # update is complete. You can continue to receive and acknowledge records while the queue is
+    # `UPDATING`.
+    #
+    # You can't change the data stream or the starting position of a queue after you create it. To
+    # read from a different stream or position, create a new queue.
+    def update_queue(input : AK::UpdateQueueInput) : Core::ParsedResponse(AK::UpdateQueueOutput)
+      Log.info { "performing 'UpdateQueue' operation" }
+      input.validate! if config.validate_input?
+      response = post("UpdateQueue", "/", input.to_json)
+      Core::ParsedResponse(AK::UpdateQueueOutput).new(response)
+    end
+
+    # Changes the visibility timeout of up to 10 records that you have received from the specified
+    # queue but not yet acknowledged. The result for each entry is reported individually in the
+    # response.
+    #
+    # Extend the visibility timeout of a record when your queue consumer needs more time to finish
+    # processing it, so the record does not become visible and get redelivered while it is still being
+    # processed. Set the visibility timeout to `0` to make a record visible in the queue immediately,
+    # so that it can be received again without waiting for its current timeout to expire.
+    #
+    # Because the request can result in a combination of successful and unsuccessful entries, check
+    # the `Failed` list even when the call returns an HTTP status code of `200`.
+    def update_queue_records_visibility(input : AK::UpdateQueueRecordsVisibilityInput) : Core::ParsedResponse(AK::UpdateQueueRecordsVisibilityOutput)
+      Log.info { "performing 'UpdateQueueRecordsVisibility' operation" }
+      input.validate! if config.validate_input?
+      response = post("UpdateQueueRecordsVisibility", "/", input.to_json)
+      Core::ParsedResponse(AK::UpdateQueueRecordsVisibilityOutput).new(response)
     end
 
     # Updates the shard count of the specified stream to the specified number of shards. This API is
@@ -1037,6 +1291,9 @@ module Amazonite::Kinesis
     # `MinimumThroughputBillingCommitment` for your account. Once your account has
     # `MinimumThroughputBillingCommitment` enabled, you can specify the warm throughput in MiB per
     # second that your stream can support in writes.
+    #
+    # You can't switch a data stream from on-demand to provisioned capacity mode while the stream has
+    # one or more queues. Delete the queues with DeleteQueue before you change the capacity mode.
     def update_stream_mode(input : AK::UpdateStreamModeInput) : Core::Response
       Log.info { "performing 'UpdateStreamMode' operation" }
       input.validate! if config.validate_input?

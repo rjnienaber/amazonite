@@ -116,7 +116,7 @@ module Amazonite::ApiGateway
     @[JSON::Field(key: "responseTransferMode", converter: AAG::ResponseTransferMode)]
     property response_transfer_mode : ResponseTransferMode | Nil
 
-    # The ALB or NLB listener to send the request to.
+    # The ALB or NLB ARN to send the request to.
     @[JSON::Field(key: "integrationTarget")]
     property integration_target : String | Nil
 

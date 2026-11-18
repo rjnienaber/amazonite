@@ -3,17 +3,21 @@ private alias AAG = Amazonite::ApiGateway
 module Amazonite::ApiGateway
   # The authorizer type. Valid values are `TOKEN` for a Lambda function using a single authorization
   # token submitted in a custom header, `REQUEST` for a Lambda function using incoming request
-  # parameters, and `COGNITO_USER_POOLS` for using an Amazon Cognito user pool.
+  # parameters, `COGNITO_USER_POOLS` for using an Amazon Cognito user pool, and `JWT` for using a
+  # native JWT authorizer with the trusted issuers, audiences, and signing algorithms that you
+  # declare.
   enum AuthorizerType
     Token
     Request
     CognitoUserPools
+    Jwt
 
     def self.to_json(e : AuthorizerType, json : JSON::Builder) : Nil
       value = case e
               when AAG::AuthorizerType::Token            then "TOKEN"
               when AAG::AuthorizerType::Request          then "REQUEST"
               when AAG::AuthorizerType::CognitoUserPools then "COGNITO_USER_POOLS"
+              when AAG::AuthorizerType::Jwt              then "JWT"
               else
                 raise Exception.new("unknown enum value for 'AuthorizerType' when serializing to json: '#{e}'")
               end
@@ -26,6 +30,7 @@ module Amazonite::ApiGateway
       when "TOKEN"              then AAG::AuthorizerType::Token
       when "REQUEST"            then AAG::AuthorizerType::Request
       when "COGNITO_USER_POOLS" then AAG::AuthorizerType::CognitoUserPools
+      when "JWT"                then AAG::AuthorizerType::Jwt
       else
         raise Exception.new("unknown enum value for 'AuthorizerType' when deserializing from json: '#{value}'")
       end
@@ -36,6 +41,7 @@ module Amazonite::ApiGateway
       when AAG::AuthorizerType::Token            then "TOKEN"
       when AAG::AuthorizerType::Request          then "REQUEST"
       when AAG::AuthorizerType::CognitoUserPools then "COGNITO_USER_POOLS"
+      when AAG::AuthorizerType::Jwt              then "JWT"
       else
         raise Exception.new("unknown enum value for 'AuthorizerType' when serializing to json: '#{self}'")
       end
@@ -46,6 +52,7 @@ module Amazonite::ApiGateway
       when "TOKEN"              then AAG::AuthorizerType::Token
       when "REQUEST"            then AAG::AuthorizerType::Request
       when "COGNITO_USER_POOLS" then AAG::AuthorizerType::CognitoUserPools
+      when "JWT"                then AAG::AuthorizerType::Jwt
       else
         nil
       end

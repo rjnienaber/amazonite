@@ -1,7 +1,7 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::Lambda
-  # Specifies how long to pause the durable execution.
+  # Specifies how long the durable execution waits.
   class WaitOptions
     include JSON::Serializable
 

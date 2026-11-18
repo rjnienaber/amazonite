@@ -42,8 +42,24 @@ module Amazonite::Lambda
     @[JSON::Field(key: "StartTimestamp", converter: Core::AWSEpochConverter)]
     property start_timestamp : Time
 
-    # The current status of the durable execution. Valid values are `RUNNING`, `SUCCEEDED`, `FAILED`,
-    # `TIMED_OUT`, and `STOPPED`.
+    # The durable execution has one of the following statuses:
+    #
+    # - `RUNNING` – The execution is running or waiting for pending operations to complete.
+    #
+    # - `PAUSING` – The execution is waiting for an in-progress invocation to reach its next
+    # checkpoint before it pauses.
+    #
+    # - `PAUSED` – The execution is paused, and Lambda doesn't invoke your function.
+    #
+    # - `SUCCEEDED` – The execution completed successfully.
+    #
+    # - `FAILED` – The execution completed with an error.
+    #
+    # - `TIMED_OUT` – The execution exceeded its execution timeout.
+    #
+    # - `STOPPED` – A `StopDurableExecution` request stopped the execution.
+    #
+    # - `DELETING` – A `DeleteDurableExecution` request is deleting the execution and its data.
     @[JSON::Field(key: "Status", converter: AL::ExecutionStatus)]
     property status : ExecutionStatus
 
@@ -74,6 +90,18 @@ module Amazonite::Lambda
     @[JSON::Field(key: "DurableConfig")]
     property durable_config : DurableConfig | Nil
 
+    # The details of the pause, including when you requested it and whether it pauses the execution
+    # timeout. This field is only present when the execution status is `PAUSING` or `PAUSED`.
+    @[JSON::Field(key: "PauseDetails")]
+    property pause_details : PauseDetails | Nil
+
+    # The date and time when the durable execution will time out, in Unix timestamp format. This value
+    # includes any extension from time the execution spent paused. While the execution is paused with
+    # its execution timeout paused, this value is 366 days after the start time. This field isn't
+    # present for completed executions.
+    @[JSON::Field(key: "ExpectedExecutionTimeoutTimestamp", converter: Core::AWSEpochConverter)]
+    property expected_execution_timeout_timestamp : Time | Nil
+
     def initialize(
       @durable_execution_arn : String,
       @durable_execution_name : String,
@@ -88,6 +116,8 @@ module Amazonite::Lambda
       @trace_header : TraceHeader | Nil = nil,
       @execution_data_included : Bool | Nil = nil,
       @durable_config : DurableConfig | Nil = nil,
+      @pause_details : PauseDetails | Nil = nil,
+      @expected_execution_timeout_timestamp : Time | Nil = nil,
     )
     end
 
@@ -137,8 +167,12 @@ module Amazonite::Lambda
       if value = @durable_config
         value.validate!
       end
+
+      if value = @pause_details
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@durable_execution_arn, @durable_execution_name, @function_arn, @input_payload, @result, @error, @start_timestamp, @status, @end_timestamp, @version, @trace_header, @execution_data_included, @durable_config)
+    def_equals_and_hash(@durable_execution_arn, @durable_execution_name, @function_arn, @input_payload, @result, @error, @start_timestamp, @status, @end_timestamp, @version, @trace_header, @execution_data_included, @durable_config, @pause_details, @expected_execution_timeout_timestamp)
   end
 end

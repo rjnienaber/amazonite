@@ -1,0 +1,54 @@
+private alias Core = Amazonite::Core
+
+module Amazonite::EC2
+  class ModifyTransitGatewayPeeringAttachmentRequest
+    # The ID of the transit gateway peering attachment.
+    property transit_gateway_attachment_id : String
+
+    # The options to modify for the transit gateway peering attachment.
+    property options : ModifyTransitGatewayPeeringAttachmentRequestOptions | Nil
+
+    # Checks whether you have the required permissions for the action, without actually making the
+    # request, and provides an error response. If you have the required permissions, the error
+    # response is `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    property dry_run : Bool | Nil
+
+    def initialize(
+      @transit_gateway_attachment_id : String,
+      @options : ModifyTransitGatewayPeeringAttachmentRequestOptions | Nil = nil,
+      @dry_run : Bool | Nil = nil,
+    )
+    end
+
+    def to_query_params(prefix : String) : Array({String, String})
+      params = [] of {String, String}
+
+      params << {"#{prefix}TransitGatewayAttachmentId", @transit_gateway_attachment_id}
+
+      if value = @options
+        params.concat(value.to_query_params("#{prefix}Options."))
+      end
+
+      if value = @dry_run
+        params << {"#{prefix}DryRun", Core::QueryValue.bool(value)}
+      end
+      params
+    end
+
+    def self.from_xml(node : XML::Node) : self
+      new(
+        transit_gateway_attachment_id: Core::XMLValue.string(node.xpath_node("*[local-name()='TransitGatewayAttachmentId']")).not_nil!,
+        options: node.xpath_node("*[local-name()='Options']").try { |n| ModifyTransitGatewayPeeringAttachmentRequestOptions.from_xml(n) },
+        dry_run: Core::XMLValue.bool(node.xpath_node("*[local-name()='DryRun']")),
+      )
+    end
+
+    def validate! : Nil
+      if value = @options
+        value.validate!
+      end
+    end
+
+    def_equals_and_hash(@transit_gateway_attachment_id, @options, @dry_run)
+  end
+end

@@ -13,6 +13,8 @@ module Amazonite::EC2
     #
     # - `service-id` - The ID of the service.
     #
+    # - `transit-gateway-attachment-id` - The ID of the transit gateway attachment.
+    #
     # - `vpc-endpoint-owner` - The ID of the Amazon Web Services account ID that owns the endpoint.
     #
     # - `vpc-endpoint-region` - The Region of the endpoint or `cross-region` to find endpoints for

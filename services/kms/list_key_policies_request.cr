@@ -24,7 +24,7 @@ module Amazonite::Kms
     # This value is optional. If you include a value, it must be between 1 and 1000, inclusive. If you
     # do not include a value, it defaults to 100.
     #
-    # Only one policy can be attached to a key.
+    # A KMS key can have at most two key policies, `default` and `AWS_RAM`.
     @[JSON::Field(key: "Limit")]
     property limit : Int32 | Nil
 

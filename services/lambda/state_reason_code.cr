@@ -41,6 +41,7 @@ module Amazonite::Lambda
     FunctionErrorInitResourceExhausted
     DisallowedByVpcEncryptionControl
     DrainingDurableExecutions
+    IncompatibleAcceleratorInstanceTypes
     DependencyError
 
     def self.to_json(e : StateReasonCode, json : JSON::Builder) : Nil
@@ -84,6 +85,7 @@ module Amazonite::Lambda
               when AL::StateReasonCode::FunctionErrorInitResourceExhausted   then "FunctionError.InitResourceExhausted"
               when AL::StateReasonCode::DisallowedByVpcEncryptionControl     then "DisallowedByVpcEncryptionControl"
               when AL::StateReasonCode::DrainingDurableExecutions            then "DrainingDurableExecutions"
+              when AL::StateReasonCode::IncompatibleAcceleratorInstanceTypes then "IncompatibleAcceleratorInstanceTypes"
               when AL::StateReasonCode::DependencyError                      then "DependencyError"
               else
                 raise Exception.new("unknown enum value for 'StateReasonCode' when serializing to json: '#{e}'")
@@ -133,6 +135,7 @@ module Amazonite::Lambda
       when "FunctionError.InitResourceExhausted"   then AL::StateReasonCode::FunctionErrorInitResourceExhausted
       when "DisallowedByVpcEncryptionControl"      then AL::StateReasonCode::DisallowedByVpcEncryptionControl
       when "DrainingDurableExecutions"             then AL::StateReasonCode::DrainingDurableExecutions
+      when "IncompatibleAcceleratorInstanceTypes"  then AL::StateReasonCode::IncompatibleAcceleratorInstanceTypes
       when "DependencyError"                       then AL::StateReasonCode::DependencyError
       else
         raise Exception.new("unknown enum value for 'StateReasonCode' when deserializing from json: '#{value}'")
@@ -180,6 +183,7 @@ module Amazonite::Lambda
       when AL::StateReasonCode::FunctionErrorInitResourceExhausted   then "FunctionError.InitResourceExhausted"
       when AL::StateReasonCode::DisallowedByVpcEncryptionControl     then "DisallowedByVpcEncryptionControl"
       when AL::StateReasonCode::DrainingDurableExecutions            then "DrainingDurableExecutions"
+      when AL::StateReasonCode::IncompatibleAcceleratorInstanceTypes then "IncompatibleAcceleratorInstanceTypes"
       when AL::StateReasonCode::DependencyError                      then "DependencyError"
       else
         raise Exception.new("unknown enum value for 'StateReasonCode' when serializing to json: '#{self}'")
@@ -227,6 +231,7 @@ module Amazonite::Lambda
       when "FunctionError.InitResourceExhausted"   then AL::StateReasonCode::FunctionErrorInitResourceExhausted
       when "DisallowedByVpcEncryptionControl"      then AL::StateReasonCode::DisallowedByVpcEncryptionControl
       when "DrainingDurableExecutions"             then AL::StateReasonCode::DrainingDurableExecutions
+      when "IncompatibleAcceleratorInstanceTypes"  then AL::StateReasonCode::IncompatibleAcceleratorInstanceTypes
       when "DependencyError"                       then AL::StateReasonCode::DependencyError
       else
         nil

@@ -4,8 +4,8 @@ module Amazonite::ApiGateway
     include JSON::Serializable
 
     # The method's authorization type. Valid values are `NONE` for open access, `AWS_IAM` for using
-    # AWS IAM permissions, `CUSTOM` for using a custom authorizer, or `COGNITO_USER_POOLS` for using a
-    # Cognito user pool.
+    # Amazon Web Services IAM permissions, `CUSTOM` for using a custom authorizer, or
+    # `COGNITO_USER_POOLS` for using a Cognito user pool.
     @[JSON::Field(key: "authorizationType")]
     property authorization_type : String | Nil
 

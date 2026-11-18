@@ -119,14 +119,15 @@ module Amazonite::EC2
     # One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 1 IKE
     # negotiations.
     #
-    # Valid values: `2` | `14` | `15` | `16` | `17` | `18` | `19` | `20` | `21` | `22` | `23` | `24`
+    # Valid values: `2` | `14` | `15` | `16` | `17` | `18` | `19` | `20` | `21` | `22` | `23` | `24` |
+    # `35`
     property phase_1dh_group_numbers : Array(Phase1DHGroupNumbersRequestListValue) | Nil
 
     # One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 2 IKE
     # negotiations.
     #
     # Valid values: `2` | `5` | `14` | `15` | `16` | `17` | `18` | `19` | `20` | `21` | `22` | `23` |
-    # `24`
+    # `24` | `35` | `36` | `37`
     property phase_2dh_group_numbers : Array(Phase2DHGroupNumbersRequestListValue) | Nil
 
     # The IKE versions that are permitted for the VPN tunnel.
@@ -149,6 +150,22 @@ module Amazonite::EC2
     # Turn on or off tunnel endpoint lifecycle control feature.
     property enable_tunnel_lifecycle_control : Bool | Nil
 
+    # One or more additional key exchange rounds that are permitted for the VPN tunnel for phase 1 IKE
+    # negotiations. Additional key exchanges occur after the initial Diffie-Hellman exchange. Each
+    # round must have a unique round number.
+    #
+    # Additional key exchanges are supported only with IKEv2. You can't specify a `required` round if
+    # `IKEVersions` contains only `ikev1`.
+    property phase_1_additional_key_exchanges : Array(VpnAdditionalKeyExchangeRequest) | Nil
+
+    # One or more additional key exchange rounds that are permitted for the VPN tunnel for phase 2 IKE
+    # negotiations. Additional key exchanges occur after the initial Diffie-Hellman exchange. Each
+    # round must have a unique round number.
+    #
+    # Additional key exchanges are supported only with IKEv2. You can't specify a `required` round if
+    # `IKEVersions` contains only `ikev1`.
+    property phase_2_additional_key_exchanges : Array(VpnAdditionalKeyExchangeRequest) | Nil
+
     def initialize(
       @tunnel_inside_cidr : String | Nil = nil,
       @tunnel_inside_ipv_6_cidr : String | Nil = nil,
@@ -170,6 +187,8 @@ module Amazonite::EC2
       @startup_action : String | Nil = nil,
       @log_options : VpnTunnelLogOptionsSpecification | Nil = nil,
       @enable_tunnel_lifecycle_control : Bool | Nil = nil,
+      @phase_1_additional_key_exchanges : Array(VpnAdditionalKeyExchangeRequest) | Nil = nil,
+      @phase_2_additional_key_exchanges : Array(VpnAdditionalKeyExchangeRequest) | Nil = nil,
     )
     end
 
@@ -255,6 +274,14 @@ module Amazonite::EC2
       if value = @enable_tunnel_lifecycle_control
         params << {"#{prefix}EnableTunnelLifecycleControl", Core::QueryValue.bool(value)}
       end
+
+      (@phase_1_additional_key_exchanges || [] of VpnAdditionalKeyExchangeRequest).each_with_index(1) do |item, i|
+        params.concat(item.to_query_params("#{prefix}Phase1AdditionalKeyExchange.#{i}."))
+      end
+
+      (@phase_2_additional_key_exchanges || [] of VpnAdditionalKeyExchangeRequest).each_with_index(1) do |item, i|
+        params.concat(item.to_query_params("#{prefix}Phase2AdditionalKeyExchange.#{i}."))
+      end
       params
     end
 
@@ -280,6 +307,8 @@ module Amazonite::EC2
         startup_action: Core::XMLValue.string(node.xpath_node("*[local-name()='StartupAction']")),
         log_options: node.xpath_node("*[local-name()='LogOptions']").try { |n| VpnTunnelLogOptionsSpecification.from_xml(n) },
         enable_tunnel_lifecycle_control: Core::XMLValue.bool(node.xpath_node("*[local-name()='EnableTunnelLifecycleControl']")),
+        phase_1_additional_key_exchanges: node.xpath_nodes("*[local-name()='Phase1AdditionalKeyExchange']/*[local-name()='item']").map { |n| VpnAdditionalKeyExchangeRequest.from_xml(n) },
+        phase_2_additional_key_exchanges: node.xpath_nodes("*[local-name()='Phase2AdditionalKeyExchange']/*[local-name()='item']").map { |n| VpnAdditionalKeyExchangeRequest.from_xml(n) },
       )
     end
 
@@ -315,8 +344,16 @@ module Amazonite::EC2
       if value = @log_options
         value.validate!
       end
+
+      if value = @phase_1_additional_key_exchanges
+        value.each(&.validate!)
+      end
+
+      if value = @phase_2_additional_key_exchanges
+        value.each(&.validate!)
+      end
     end
 
-    def_equals_and_hash(@tunnel_inside_cidr, @tunnel_inside_ipv_6_cidr, @pre_shared_key, @phase_1_lifetime_seconds, @phase_2_lifetime_seconds, @rekey_margin_time_seconds, @rekey_fuzz_percentage, @replay_window_size, @dpd_timeout_seconds, @dpd_timeout_action, @phase_1_encryption_algorithms, @phase_2_encryption_algorithms, @phase_1_integrity_algorithms, @phase_2_integrity_algorithms, @phase_1dh_group_numbers, @phase_2dh_group_numbers, @ike_versions, @startup_action, @log_options, @enable_tunnel_lifecycle_control)
+    def_equals_and_hash(@tunnel_inside_cidr, @tunnel_inside_ipv_6_cidr, @pre_shared_key, @phase_1_lifetime_seconds, @phase_2_lifetime_seconds, @rekey_margin_time_seconds, @rekey_fuzz_percentage, @replay_window_size, @dpd_timeout_seconds, @dpd_timeout_action, @phase_1_encryption_algorithms, @phase_2_encryption_algorithms, @phase_1_integrity_algorithms, @phase_2_integrity_algorithms, @phase_1dh_group_numbers, @phase_2dh_group_numbers, @ike_versions, @startup_action, @log_options, @enable_tunnel_lifecycle_control, @phase_1_additional_key_exchanges, @phase_2_additional_key_exchanges)
   end
 end

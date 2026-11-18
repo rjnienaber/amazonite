@@ -4,8 +4,17 @@ module Amazonite::S3
   class AbortMultipartUploadOutput
     property request_charged : RequestCharged | Nil
 
+    # Version ID of the object.
+    #
+    # Returns the Version ID of the object for the aborted multipart upload, if bucket versioning is
+    # enabled.
+    #
+    # This functionality is not supported for directory buckets.
+    property version_id : String | Nil
+
     def initialize(
       @request_charged : RequestCharged | Nil = nil,
+      @version_id : String | Nil = nil,
     )
     end
 
@@ -31,6 +40,6 @@ module Amazonite::S3
     def validate! : Nil
     end
 
-    def_equals_and_hash(@request_charged)
+    def_equals_and_hash(@request_charged, @version_id)
   end
 end

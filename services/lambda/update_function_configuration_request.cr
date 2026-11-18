@@ -136,7 +136,8 @@ module Amazonite::Lambda
     property image_config : ImageConfig | Nil
 
     # The size of the function's `/tmp` directory in MB. The default value is 512, but can be any
-    # whole number between 512 and 10,240 MB. For more information, see [Configuring ephemeral storage
+    # whole number between 512 and 10,240 MB. For functions that use `AcceleratorConfig`, the maximum
+    # is 32,768 MB. For more information, see [Configuring ephemeral storage
     # (console)](https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage).
     @[JSON::Field(key: "EphemeralStorage")]
     property ephemeral_storage : EphemeralStorage | Nil
@@ -166,6 +167,10 @@ module Amazonite::Lambda
     @[JSON::Field(key: "RuntimeConfig")]
     property runtime_config : FunctionRuntimeConfig | Nil
 
+    # The accelerator resource settings for a Lambda execution environment.
+    @[JSON::Field(key: "AcceleratorConfig")]
+    property accelerator_config : AcceleratorConfig | Nil
+
     def initialize(
       @function_name : String,
       @role : String | Nil = nil,
@@ -189,6 +194,7 @@ module Amazonite::Lambda
       @capacity_provider_config : CapacityProviderConfig | Nil = nil,
       @durable_config : DurableConfig | Nil = nil,
       @runtime_config : FunctionRuntimeConfig | Nil = nil,
+      @accelerator_config : AcceleratorConfig | Nil = nil,
     )
     end
 
@@ -281,8 +287,12 @@ module Amazonite::Lambda
       if value = @runtime_config
         value.validate!
       end
+
+      if value = @accelerator_config
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@function_name, @role, @handler, @description, @timeout, @memory_size, @vpc_config, @environment, @runtime, @dead_letter_config, @kms_key_arn, @tracing_config, @revision_id, @layers, @file_system_configs, @image_config, @ephemeral_storage, @snap_start, @logging_config, @capacity_provider_config, @durable_config, @runtime_config)
+    def_equals_and_hash(@function_name, @role, @handler, @description, @timeout, @memory_size, @vpc_config, @environment, @runtime, @dead_letter_config, @kms_key_arn, @tracing_config, @revision_id, @layers, @file_system_configs, @image_config, @ephemeral_storage, @snap_start, @logging_config, @capacity_provider_config, @durable_config, @runtime_config, @accelerator_config)
   end
 end

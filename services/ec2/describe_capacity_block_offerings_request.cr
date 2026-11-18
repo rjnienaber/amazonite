@@ -43,6 +43,10 @@ module Amazonite::EC2
     # Amazon Web Services Region and Local Zones you are opted into.
     property all_availability_zones : Bool | Nil
 
+    # List of instance type preferences for the Capacity Block offering search. Accepts one or more
+    # instance type names. Either this or the legacy `InstanceType` parameter is required.
+    property instance_type_preferences : Array(CapacityBlockInstanceTypePreference) | Nil
+
     def initialize(
       @capacity_duration_hours : Int32,
       @dry_run : Bool | Nil = nil,
@@ -55,6 +59,7 @@ module Amazonite::EC2
       @ultraserver_type : String | Nil = nil,
       @ultraserver_count : Int32 | Nil = nil,
       @all_availability_zones : Bool | Nil = nil,
+      @instance_type_preferences : Array(CapacityBlockInstanceTypePreference) | Nil = nil,
     )
     end
 
@@ -102,6 +107,10 @@ module Amazonite::EC2
       if value = @all_availability_zones
         params << {"#{prefix}AllAvailabilityZones", Core::QueryValue.bool(value)}
       end
+
+      (@instance_type_preferences || [] of CapacityBlockInstanceTypePreference).each_with_index(1) do |item, i|
+        params.concat(item.to_query_params("#{prefix}InstanceTypePreference.#{i}."))
+      end
       params
     end
 
@@ -118,6 +127,7 @@ module Amazonite::EC2
         ultraserver_type: Core::XMLValue.string(node.xpath_node("*[local-name()='UltraserverType']")),
         ultraserver_count: Core::XMLValue.i32(node.xpath_node("*[local-name()='UltraserverCount']")),
         all_availability_zones: Core::XMLValue.bool(node.xpath_node("*[local-name()='AllAvailabilityZones']")),
+        instance_type_preferences: node.xpath_nodes("*[local-name()='InstanceTypePreference']/*[local-name()='item']").map { |n| CapacityBlockInstanceTypePreference.from_xml(n) },
       )
     end
 
@@ -126,8 +136,14 @@ module Amazonite::EC2
         raise Core::ValidationError.new("MaxResults value must be >= 1") if value < 1
         raise Core::ValidationError.new("MaxResults value must be <= 1000") if value > 1000
       end
+
+      if value = @instance_type_preferences
+        raise Core::ValidationError.new("InstanceTypePreferences must have at least 0 item(s)") if value.size < 0
+        raise Core::ValidationError.new("InstanceTypePreferences must have at most 10 item(s)") if value.size > 10
+        value.each(&.validate!)
+      end
     end
 
-    def_equals_and_hash(@dry_run, @instance_type, @instance_count, @start_date_range, @end_date_range, @capacity_duration_hours, @next_token, @max_results, @ultraserver_type, @ultraserver_count, @all_availability_zones)
+    def_equals_and_hash(@dry_run, @instance_type, @instance_count, @start_date_range, @end_date_range, @capacity_duration_hours, @next_token, @max_results, @ultraserver_type, @ultraserver_count, @all_availability_zones, @instance_type_preferences)
   end
 end

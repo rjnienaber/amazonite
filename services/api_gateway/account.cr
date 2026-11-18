@@ -1,7 +1,7 @@
 private alias Core = Amazonite::Core
 
 module Amazonite::ApiGateway
-  # Represents an AWS account that is associated with API Gateway.
+  # Represents an Amazon Web Services account that is associated with API Gateway.
   class Account
     include JSON::Serializable
 

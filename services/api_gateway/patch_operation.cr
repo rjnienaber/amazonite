@@ -24,7 +24,7 @@ module Amazonite::ApiGateway
     property path : String | Nil
 
     # The new target value of the update operation. It is applicable for the add or replace operation.
-    # When using AWS CLI to update a property of a JSON value, enclose the JSON object with a pair of
+    # When using CLI to update a property of a JSON value, enclose the JSON object with a pair of
     # single quotes in a Linux shell, e.g., '{"a": ...}'.
     @[JSON::Field(key: "value")]
     property value : String | Nil

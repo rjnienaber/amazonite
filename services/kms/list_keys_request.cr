@@ -1,3 +1,4 @@
+private alias AK = Amazonite::Kms
 private alias Core = Amazonite::Core
 
 module Amazonite::Kms
@@ -17,9 +18,39 @@ module Amazonite::Kms
     @[JSON::Field(key: "Marker")]
     property marker : String | Nil
 
+    # Specifies whose KMS keys to list. Use this parameter to list KMS keys that other Amazon Web
+    # Services accounts shared with your Amazon Web Services account through Resource Access Manager
+    # (RAM).
+    #
+    # Specify one or two values. Valid values are:
+    #
+    # SELF Lists the KMS keys in your Amazon Web Services account and Region.
+    #
+    # OTHER_ACCOUNTS_VIA_RAM Lists the KMS keys in the Region that other Amazon Web Services accounts
+    # currently share with your Amazon Web Services account through RAM. This list doesn't include KMS
+    # keys that your Amazon Web Services account owns. For each of these KMS keys, the key ARN in the
+    # response contains the account ID of the Amazon Web Services account that owns the KMS key.
+    #
+    # If you omit this parameter, `ListKeys` lists only the KMS keys in your Amazon Web Services
+    # account. If you specify both values, in either order, `ListKeys` returns the KMS keys in your
+    # Amazon Web Services account first, and then the KMS keys that other Amazon Web Services accounts
+    # shared with you. A single response doesn't contain both kinds of KMS keys.
+    #
+    # When `ResourceOwners` includes `OTHER_ACCOUNTS_VIA_RAM`, a response can contain fewer KMS keys
+    # than the `Limit` value, or none, even when `Truncated` is true. To get all of the KMS keys,
+    # continue calling `ListKeys` with the `NextMarker` value from each response until `Truncated` is
+    # false. Use a `NextMarker` value only in a request that has the same `ResourceOwners` value as
+    # the request that returned it. Otherwise, the request can fail with an `InvalidMarkerException`.
+    #
+    # KMS keys that other Amazon Web Services accounts share with you can take some time to appear in
+    # or disappear from the results after changes to resource shares.
+    @[JSON::Field(key: "ResourceOwners", converter: Core::ArrayConverter(AK::ResourceOwnerType))]
+    property resource_owners : Array(ResourceOwnerType) | Nil
+
     def initialize(
       @limit : Int32 | Nil = nil,
       @marker : String | Nil = nil,
+      @resource_owners : Array(ResourceOwnerType) | Nil = nil,
     )
     end
 
@@ -34,8 +65,13 @@ module Amazonite::Kms
         raise Core::ValidationError.new("Marker length must be <= 1024") if value.size > 1024
         raise Core::ValidationError.new("Marker does not match the required pattern") unless value.matches?(Regex.new("^[ -ÿ]*$"))
       end
+
+      if value = @resource_owners
+        raise Core::ValidationError.new("ResourceOwners must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("ResourceOwners must have at most 2 item(s)") if value.size > 2
+      end
     end
 
-    def_equals_and_hash(@limit, @marker)
+    def_equals_and_hash(@limit, @marker, @resource_owners)
   end
 end

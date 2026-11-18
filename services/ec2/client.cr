@@ -157,6 +157,13 @@ module Amazonite::EC2
     #
     # For an inter-Region VPC peering connection request, you must accept the VPC peering connection
     # in the Region of the accepter VPC.
+    #
+    # If the requester allows multipath resilience, accepting the request also allows multipath
+    # resilience for the accepter VPC, and the `multipathResilienceStatus` of the VPC peering
+    # connection becomes `enabled`. Additional charges apply. For more information, see [Amazon VPC
+    # pricing](http://aws.amazon.com/vpc/pricing/). To stop allowing multipath resilience for the
+    # accepter VPC, use ModifyVpcPeeringConnectionOptions and set `AllowMultipathResilience` to
+    # `false`.
     def accept_vpc_peering_connection(input : AEC::AcceptVpcPeeringConnectionRequest) : Core::ParsedResponse(AEC::AcceptVpcPeeringConnectionResult)
       Log.info { "performing 'AcceptVpcPeeringConnection' operation" }
       input.validate! if config.validate_input?
@@ -639,6 +646,29 @@ module Amazonite::EC2
       result_node = XML.parse(response.body).root.not_nil!
       result = AEC::AssociateIpamResourceDiscoveryResult.from_xml(result_node)
       Core::ParsedResponse(AEC::AssociateIpamResourceDiscoveryResult).new(response, result)
+    end
+
+    # Associates an additional KMS key with an encrypted Amazon EBS snapshot. With the associated key,
+    # you have a second, independent way to access the snapshot's data, in addition to the key the
+    # snapshot is already encrypted under. Associating a key doesn't re-encrypt the snapshot or grant
+    # access to its original key.
+    #
+    # For more information, see [Associated KMS
+    # keys](https://docs.aws.amazon.com/ebs/latest/userguide/associated-kms-keys.html) in the *Amazon
+    # EBS User Guide*.
+    def associate_kms_key_id(input : AEC::AssociateKmsKeyIdRequest) : Core::ParsedResponse(AEC::AssociateKmsKeyIdResult)
+      Log.info { "performing 'AssociateKmsKeyId' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "AssociateKmsKeyId")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("AssociateKmsKeyId", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::AssociateKmsKeyIdResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::AssociateKmsKeyIdResult).new(response, result)
     end
 
     # Associates Elastic IP addresses (EIPs) and private IPv4 addresses with a public NAT gateway. For
@@ -3794,6 +3824,29 @@ module Amazonite::EC2
       Core::ParsedResponse(AEC::CreateTransitGatewayMulticastDomainResult).new(response, result)
     end
 
+    # Creates a network function attachment that connects the specified transit gateway to a Gateway
+    # Load Balancer endpoint service. Traffic that you route to the attachment is sent to the network
+    # function appliances behind the endpoint service. To use this operation, you must be the owner of
+    # the transit gateway.
+    #
+    # You can create one network function attachment for each combination of transit gateway and
+    # endpoint service. The attachment remains in the `pendingAcceptance` state until the endpoint
+    # service owner accepts the endpoint connection.
+    def create_transit_gateway_network_function_attachment(input : AEC::CreateTransitGatewayNetworkFunctionAttachmentRequest) : Core::ParsedResponse(AEC::CreateTransitGatewayNetworkFunctionAttachmentResult)
+      Log.info { "performing 'CreateTransitGatewayNetworkFunctionAttachment' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "CreateTransitGatewayNetworkFunctionAttachment")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("CreateTransitGatewayNetworkFunctionAttachment", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::CreateTransitGatewayNetworkFunctionAttachmentResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::CreateTransitGatewayNetworkFunctionAttachmentResult).new(response, result)
+    end
+
     # Requests a transit gateway peering attachment between the specified transit gateway (requester)
     # and a peer transit gateway (accepter). The peer transit gateway can be in your account or a
     # different Amazon Web Services account.
@@ -4203,6 +4256,9 @@ module Amazonite::EC2
     # The owner of the accepter VPC must accept the peering request to activate the peering
     # connection. The VPC peering connection request expires after 7 days, after which it cannot be
     # accepted or rejected.
+    #
+    # Multipath resilience replicates the traffic of an inter-Region VPC peering connection across
+    # multiple network paths.
     #
     # If you create a VPC peering connection request between VPCs with overlapping CIDR blocks, the
     # VPC peering connection has a status of `failed`.
@@ -5704,6 +5760,23 @@ module Amazonite::EC2
       result_node = XML.parse(response.body).root.not_nil!
       result = AEC::DeleteTransitGatewayMulticastDomainResult.from_xml(result_node)
       Core::ParsedResponse(AEC::DeleteTransitGatewayMulticastDomainResult).new(response, result)
+    end
+
+    # Deletes the specified network function attachment. The attachment must be in the `available` or
+    # `pendingAcceptance` state.
+    def delete_transit_gateway_network_function_attachment(input : AEC::DeleteTransitGatewayNetworkFunctionAttachmentRequest) : Core::ParsedResponse(AEC::DeleteTransitGatewayNetworkFunctionAttachmentResult)
+      Log.info { "performing 'DeleteTransitGatewayNetworkFunctionAttachment' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "DeleteTransitGatewayNetworkFunctionAttachment")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("DeleteTransitGatewayNetworkFunctionAttachment", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::DeleteTransitGatewayNetworkFunctionAttachmentResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::DeleteTransitGatewayNetworkFunctionAttachmentResult).new(response, result)
     end
 
     # Deletes a transit gateway peering attachment.
@@ -9684,6 +9757,23 @@ module Amazonite::EC2
       Core::ParsedResponse(AEC::DescribeTransitGatewayMulticastDomainsResult).new(response, result)
     end
 
+    # Describes one or more network function attachments. You can describe attachments that you own or
+    # that are attached to a transit gateway that you own.
+    def describe_transit_gateway_network_function_attachments(input : AEC::DescribeTransitGatewayNetworkFunctionAttachmentsRequest) : Core::ParsedResponse(AEC::DescribeTransitGatewayNetworkFunctionAttachmentsResult)
+      Log.info { "performing 'DescribeTransitGatewayNetworkFunctionAttachments' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "DescribeTransitGatewayNetworkFunctionAttachments")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("DescribeTransitGatewayNetworkFunctionAttachments", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::DescribeTransitGatewayNetworkFunctionAttachmentsResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::DescribeTransitGatewayNetworkFunctionAttachmentsResult).new(response, result)
+    end
+
     # Describes your transit gateway peering attachments.
     def describe_transit_gateway_peering_attachments(input : AEC::DescribeTransitGatewayPeeringAttachmentsRequest) : Core::ParsedResponse(AEC::DescribeTransitGatewayPeeringAttachmentsResult)
       Log.info { "performing 'DescribeTransitGatewayPeeringAttachments' operation" }
@@ -11150,6 +11240,24 @@ module Amazonite::EC2
       result_node = XML.parse(response.body).root.not_nil!
       result = AEC::DisassociateIpamResourceDiscoveryResult.from_xml(result_node)
       Core::ParsedResponse(AEC::DisassociateIpamResourceDiscoveryResult).new(response, result)
+    end
+
+    # Removes an associated KMS key from an Amazon EBS snapshot. After you disassociate the key, it
+    # can no longer be used to access the snapshot's data. The snapshot's original encryption key is
+    # unaffected.
+    def disassociate_kms_key_id(input : AEC::DisassociateKmsKeyIdRequest) : Core::ParsedResponse(AEC::DisassociateKmsKeyIdResult)
+      Log.info { "performing 'DisassociateKmsKeyId' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "DisassociateKmsKeyId")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("DisassociateKmsKeyId", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::DisassociateKmsKeyIdResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::DisassociateKmsKeyIdResult).new(response, result)
     end
 
     # Disassociates secondary Elastic IP addresses (EIPs) from a public NAT gateway. You cannot
@@ -15257,6 +15365,53 @@ module Amazonite::EC2
       Core::ParsedResponse(AEC::ModifyTransitGatewayMeteringPolicyResult).new(response, result)
     end
 
+    # Adds Availability Zones to or removes Availability Zones from the specified network function
+    # attachment. The attachment must be in the `available` state. You must specify at least one
+    # Availability Zone to add or remove, and the attachment must keep at least one Availability Zone.
+    #
+    # Adding an Availability Zone provisions a new Gateway Load Balancer endpoint in that Availability
+    # Zone. If the endpoint service doesn't automatically accept connection requests, the endpoint
+    # service owner must accept the endpoint connection for each Availability Zone that you add.
+    def modify_transit_gateway_network_function_attachment(input : AEC::ModifyTransitGatewayNetworkFunctionAttachmentRequest) : Core::ParsedResponse(AEC::ModifyTransitGatewayNetworkFunctionAttachmentResult)
+      Log.info { "performing 'ModifyTransitGatewayNetworkFunctionAttachment' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "ModifyTransitGatewayNetworkFunctionAttachment")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("ModifyTransitGatewayNetworkFunctionAttachment", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::ModifyTransitGatewayNetworkFunctionAttachmentResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::ModifyTransitGatewayNetworkFunctionAttachmentResult).new(response, result)
+    end
+
+    # Modifies the options for a transit gateway peering attachment. The peering attachment must be in
+    # the `available` state.
+    #
+    # You can allow multipath resilience for your side of an inter-Region transit gateway peering
+    # attachment between supported Regions. Multipath resilience isn't supported for transit gateway
+    # peering attachments in the same Region. It takes effect only when both the requester and the
+    # accepter allow it. To modify the requester side, send the request in the Region of the requester
+    # transit gateway. To modify the accepter side, send the request in the Region of the accepter
+    # transit gateway. To check whether multipath resilience is in effect, use
+    # DescribeTransitGatewayPeeringAttachments and check `multipathResilienceStatus`.
+    def modify_transit_gateway_peering_attachment(input : AEC::ModifyTransitGatewayPeeringAttachmentRequest) : Core::ParsedResponse(AEC::ModifyTransitGatewayPeeringAttachmentResult)
+      Log.info { "performing 'ModifyTransitGatewayPeeringAttachment' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "ModifyTransitGatewayPeeringAttachment")
+        form.add("Version", "2016-11-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("ModifyTransitGatewayPeeringAttachment", body)
+      result_node = XML.parse(response.body).root.not_nil!
+      result = AEC::ModifyTransitGatewayPeeringAttachmentResult.from_xml(result_node)
+      Core::ParsedResponse(AEC::ModifyTransitGatewayPeeringAttachmentResult).new(response, result)
+    end
+
     # Modifies the specified transit gateway policy table entry.
     def modify_transit_gateway_policy_table_entry(input : AEC::ModifyTransitGatewayPolicyTableEntryRequest) : Core::ParsedResponse(AEC::ModifyTransitGatewayPolicyTableEntryResult)
       Log.info { "performing 'ModifyTransitGatewayPolicyTableEntry' operation" }
@@ -15649,6 +15804,12 @@ module Amazonite::EC2
     # If you grant permissions to all principals, the service is public. Any users who know the name
     # of a public service can send a request to attach an endpoint. If the service does not require
     # manual approval, attachments are automatically approved.
+    #
+    # By default, principals that you grant permissions to can create VPC endpoints that connect to
+    # your endpoint service. For Gateway Load Balancer endpoint services, you can instead grant
+    # permissions so that principals can create transit gateway attachments that connect to your
+    # endpoint service. To do so, specify `transit-gateway-attachment` for `PermissionType`. The two
+    # permission types are independent. A principal can have either or both.
     def modify_vpc_endpoint_service_permissions(input : AEC::ModifyVpcEndpointServicePermissionsRequest) : Core::ParsedResponse(AEC::ModifyVpcEndpointServicePermissionsResult)
       Log.info { "performing 'ModifyVpcEndpointServicePermissions' operation" }
       input.validate! if config.validate_input?
@@ -15675,6 +15836,14 @@ module Amazonite::EC2
     # Region for the requester VPC to modify the requester VPC peering options and the Region for the
     # accepter VPC to modify the accepter VPC peering options. To verify which VPCs are the accepter
     # and the requester for a VPC peering connection, use the DescribeVpcPeeringConnections command.
+    #
+    # Multipath resilience replicates the traffic of an inter-Region VPC peering connection across
+    # multiple network paths. You can allow multipath resilience for your side of the connection if
+    # both of its Regions are supported. It takes effect only when both the requester and the accepter
+    # allow it. Additional charges apply when multipath resilience is in effect. For more information,
+    # see [Amazon VPC pricing](http://aws.amazon.com/vpc/pricing/). To check whether multipath
+    # resilience is in effect, use DescribeVpcPeeringConnections and check
+    # `multipathResilienceStatus`.
     def modify_vpc_peering_connection_options(input : AEC::ModifyVpcPeeringConnectionOptionsRequest) : Core::ParsedResponse(AEC::ModifyVpcPeeringConnectionOptionsResult)
       Log.info { "performing 'ModifyVpcPeeringConnectionOptions' operation" }
       input.validate! if config.validate_input?

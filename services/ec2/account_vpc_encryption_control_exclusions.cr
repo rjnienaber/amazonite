@@ -32,7 +32,7 @@ module Amazonite::EC2
     # The exclusion configuration for Elastic File System service.
     property elastic_file_system : VpcEncryptionControlExclusionState | Nil
 
-    # The exclusion configuration for AWS Global Accelerator.
+    # The exclusion configuration for Amazon Web Services Global Accelerator.
     property global_accelerator : VpcEncryptionControlExclusionState | Nil
 
     # The exclusion configuration for Amazon API Gateway V2.

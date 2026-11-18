@@ -19,7 +19,24 @@ module Amazonite::Lambda
     @[JSON::Field(key: "DurableExecutionName", ignore: true)]
     property durable_execution_name : String | Nil
 
-    # Filter executions by status. Valid values: RUNNING, SUCCEEDED, FAILED, TIMED_OUT, STOPPED.
+    # Filters the executions by status. Specify one of the following values:
+    #
+    # - `RUNNING` – The execution is running or waiting for pending operations to complete.
+    #
+    # - `PAUSING` – The execution is waiting for an in-progress invocation to reach its next
+    # checkpoint before it pauses.
+    #
+    # - `PAUSED` – The execution is paused, and Lambda doesn't invoke your function.
+    #
+    # - `SUCCEEDED` – The execution completed successfully.
+    #
+    # - `FAILED` – The execution completed with an error.
+    #
+    # - `TIMED_OUT` – The execution exceeded its execution timeout.
+    #
+    # - `STOPPED` – A `StopDurableExecution` request stopped the execution.
+    #
+    # - `DELETING` – A `DeleteDurableExecution` request is deleting the execution and its data.
     @[JSON::Field(key: "Statuses", converter: Core::ArrayConverter(AL::ExecutionStatus), ignore: true)]
     property statuses : Array(ExecutionStatus) | Nil
 

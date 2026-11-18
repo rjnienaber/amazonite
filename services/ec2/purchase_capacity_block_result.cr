@@ -8,9 +8,15 @@ module Amazonite::EC2
     # The Capacity Block.
     property capacity_blocks : Array(CapacityBlock) | Nil
 
+    # The Capacity Reservations created as a result of the Capacity Block purchase. When a Capacity
+    # Block offering contains multiple segments, a separate Capacity Reservation is created for each
+    # segment.
+    property capacity_reservations : Array(CapacityReservation) | Nil
+
     def initialize(
       @capacity_reservation : CapacityReservation | Nil = nil,
       @capacity_blocks : Array(CapacityBlock) | Nil = nil,
+      @capacity_reservations : Array(CapacityReservation) | Nil = nil,
     )
     end
 
@@ -24,6 +30,10 @@ module Amazonite::EC2
       (@capacity_blocks || [] of CapacityBlock).each_with_index(1) do |item, i|
         params.concat(item.to_query_params("#{prefix}CapacityBlockSet.#{i}."))
       end
+
+      (@capacity_reservations || [] of CapacityReservation).each_with_index(1) do |item, i|
+        params.concat(item.to_query_params("#{prefix}CapacityReservationSet.#{i}."))
+      end
       params
     end
 
@@ -31,6 +41,7 @@ module Amazonite::EC2
       new(
         capacity_reservation: node.xpath_node("*[local-name()='capacityReservation']").try { |n| CapacityReservation.from_xml(n) },
         capacity_blocks: node.xpath_nodes("*[local-name()='capacityBlockSet']/*[local-name()='item']").map { |n| CapacityBlock.from_xml(n) },
+        capacity_reservations: node.xpath_nodes("*[local-name()='capacityReservationSet']/*[local-name()='item']").map { |n| CapacityReservation.from_xml(n) },
       )
     end
 
@@ -42,8 +53,12 @@ module Amazonite::EC2
       if value = @capacity_blocks
         value.each(&.validate!)
       end
+
+      if value = @capacity_reservations
+        value.each(&.validate!)
+      end
     end
 
-    def_equals_and_hash(@capacity_reservation, @capacity_blocks)
+    def_equals_and_hash(@capacity_reservation, @capacity_blocks, @capacity_reservations)
   end
 end

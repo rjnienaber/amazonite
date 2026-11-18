@@ -11,6 +11,9 @@ module Amazonite::EC2
     # The tags to assign to the peering connection.
     property tag_specifications : Array(TagSpecification) | Nil
 
+    # The VPC peering connection options to apply to the requester VPC.
+    property requester_peering_connection_options : CreatePeeringConnectionOptionsRequest | Nil
+
     # Checks whether you have the required permissions for the action, without actually making the
     # request, and provides an error response. If you have the required permissions, the error
     # response is `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
@@ -32,6 +35,7 @@ module Amazonite::EC2
       @vpc_id : String,
       @peer_region : String | Nil = nil,
       @tag_specifications : Array(TagSpecification) | Nil = nil,
+      @requester_peering_connection_options : CreatePeeringConnectionOptionsRequest | Nil = nil,
       @dry_run : Bool | Nil = nil,
       @peer_vpc_id : String | Nil = nil,
       @peer_owner_id : String | Nil = nil,
@@ -47,6 +51,10 @@ module Amazonite::EC2
 
       (@tag_specifications || [] of TagSpecification).each_with_index(1) do |item, i|
         params.concat(item.to_query_params("#{prefix}TagSpecification.#{i}."))
+      end
+
+      if value = @requester_peering_connection_options
+        params.concat(value.to_query_params("#{prefix}RequesterPeeringConnectionOptions."))
       end
 
       if value = @dry_run
@@ -69,6 +77,7 @@ module Amazonite::EC2
       new(
         peer_region: Core::XMLValue.string(node.xpath_node("*[local-name()='PeerRegion']")),
         tag_specifications: node.xpath_nodes("*[local-name()='TagSpecification']/*[local-name()='item']").map { |n| TagSpecification.from_xml(n) },
+        requester_peering_connection_options: node.xpath_node("*[local-name()='RequesterPeeringConnectionOptions']").try { |n| CreatePeeringConnectionOptionsRequest.from_xml(n) },
         dry_run: Core::XMLValue.bool(node.xpath_node("*[local-name()='dryRun']")),
         vpc_id: Core::XMLValue.string(node.xpath_node("*[local-name()='vpcId']")).not_nil!,
         peer_vpc_id: Core::XMLValue.string(node.xpath_node("*[local-name()='peerVpcId']")),
@@ -80,8 +89,12 @@ module Amazonite::EC2
       if value = @tag_specifications
         value.each(&.validate!)
       end
+
+      if value = @requester_peering_connection_options
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@peer_region, @tag_specifications, @dry_run, @vpc_id, @peer_vpc_id, @peer_owner_id)
+    def_equals_and_hash(@peer_region, @tag_specifications, @requester_peering_connection_options, @dry_run, @vpc_id, @peer_vpc_id, @peer_owner_id)
   end
 end

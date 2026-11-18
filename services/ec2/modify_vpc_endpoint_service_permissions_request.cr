@@ -1,3 +1,4 @@
+private alias AEC = Amazonite::EC2
 private alias Core = Amazonite::Core
 
 module Amazonite::EC2
@@ -18,11 +19,26 @@ module Amazonite::EC2
     # this list.
     property remove_allowed_principals : Array(String) | Nil
 
+    # The type of permission to add or remove. The permission type applies to all principals in
+    # `AddAllowedPrincipals` and `RemoveAllowedPrincipals`.
+    #
+    # - `vpc-endpoint` - Principals can create VPC endpoints that connect to the endpoint service.
+    #
+    # - `transit-gateway-attachment` - Principals can create transit gateway attachments that connect
+    # to the endpoint service. This permission type is supported only for Gateway Load Balancer
+    # endpoint services. You can grant it only to Amazon Web Services accounts
+    # (`arn:aws:iam::account-id:root`). You can't grant it to users, IAM roles, organizations,
+    # organizational units, or all principals (*).
+    #
+    # Default: `vpc-endpoint`
+    property permission_type : PermissionType | Nil
+
     def initialize(
       @service_id : String,
       @dry_run : Bool | Nil = nil,
       @add_allowed_principals : Array(String) | Nil = nil,
       @remove_allowed_principals : Array(String) | Nil = nil,
+      @permission_type : PermissionType | Nil = nil,
     )
     end
 
@@ -42,6 +58,10 @@ module Amazonite::EC2
       (@remove_allowed_principals || [] of String).each_with_index(1) do |item, i|
         params << {"#{prefix}RemoveAllowedPrincipals.#{i}", item}
       end
+
+      if value = @permission_type
+        params << {"#{prefix}PermissionType", value.to_json_object_key}
+      end
       params
     end
 
@@ -51,12 +71,13 @@ module Amazonite::EC2
         service_id: Core::XMLValue.string(node.xpath_node("*[local-name()='ServiceId']")).not_nil!,
         add_allowed_principals: node.xpath_nodes("*[local-name()='AddAllowedPrincipals']/*[local-name()='item']").map { |n| n.content },
         remove_allowed_principals: node.xpath_nodes("*[local-name()='RemoveAllowedPrincipals']/*[local-name()='item']").map { |n| n.content },
+        permission_type: (n = node.xpath_node("*[local-name()='PermissionType']")) ? AEC::PermissionType.from_json_object_key?(n.content) : nil,
       )
     end
 
     def validate! : Nil
     end
 
-    def_equals_and_hash(@dry_run, @service_id, @add_allowed_principals, @remove_allowed_principals)
+    def_equals_and_hash(@dry_run, @service_id, @add_allowed_principals, @remove_allowed_principals, @permission_type)
   end
 end

@@ -471,6 +471,22 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::CheckpointDurableExecutionResponse).new(response)
     end
 
+    # Deletes a completed Lambda [durable
+    # execution](https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html) and its data.
+    # The execution must be in a terminal state (`SUCCEEDED`, `FAILED`, `STOPPED`, or `TIMED_OUT`).
+    # Otherwise, this operation returns a `ResourceConflictException`.
+    #
+    # The execution has `DELETING` status until the deletion finishes. For more information, see
+    # [Deleting durable executions](https://docs.aws.amazon.com/lambda/latest/dg/durable-delete.html).
+    def delete_durable_execution(input : AL::DeleteDurableExecutionRequest) : Core::ParsedResponse(AL::DeleteDurableExecutionResponse)
+      Log.info { "performing 'DeleteDurableExecution' operation" }
+      input.validate! if config.validate_input?
+      path = "/2025-12-01/durable-executions/#{URI.encode_path_segment(input.durable_execution_arn)}"
+      headers = HTTP::Headers.new
+      response = rest_request("DeleteDurableExecution", "DELETE", path, headers, nil)
+      Core::ParsedResponse(AL::DeleteDurableExecutionResponse).new(response)
+    end
+
     # Retrieves the execution history for a [durable
     # execution](https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html), showing all the
     # steps, callbacks, and events that occurred during the execution. This provides a detailed audit
@@ -533,7 +549,45 @@ module Amazonite::Lambda
       Core::ParsedResponse(AL::GetDurableExecutionStateResponse).new(response)
     end
 
-    # Stops a running [durable
+    # Pauses a running [durable
+    # execution](https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html). While an
+    # execution is paused, Lambda doesn't invoke your function, but pending operations such as waits
+    # and callbacks continue to complete.
+    #
+    # If an invocation is in progress, the execution status changes to `PAUSING` until the invocation
+    # reaches its next checkpoint, and then changes to `PAUSED`. This operation returns a successful
+    # response while the execution status is still `RUNNING`, and the status changes when Lambda
+    # processes the request. For more information about pausing executions, see [Pausing and resuming
+    # durable executions](https://docs.aws.amazon.com/lambda/latest/dg/durable-pause-resume.html).
+    def pause_durable_execution(input : AL::PauseDurableExecutionRequest) : Core::ParsedResponse(AL::PauseDurableExecutionResponse)
+      Log.info { "performing 'PauseDurableExecution' operation" }
+      input.validate! if config.validate_input?
+      path = "/2025-12-01/durable-executions/#{URI.encode_path_segment(input.durable_execution_arn)}/pause"
+      headers = HTTP::Headers.new
+      response = rest_request("PauseDurableExecution", "POST", path, headers, input.to_json)
+      Core::ParsedResponse(AL::PauseDurableExecutionResponse).new(response)
+    end
+
+    # Resumes a paused [durable
+    # execution](https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html). If the pause
+    # interrupted an invocation, or an operation completed while the execution was paused, Lambda
+    # invokes your function. Otherwise, the execution continues to wait for its pending operations.
+    #
+    # If the execution status is `PAUSING`, this operation cancels the pause, and the in-progress
+    # invocation continues. This operation returns a successful response while the execution status is
+    # still `PAUSED` or `PAUSING`, and the status changes to `RUNNING` when Lambda processes the
+    # request. For more information about resuming executions, see [Pausing and resuming durable
+    # executions](https://docs.aws.amazon.com/lambda/latest/dg/durable-pause-resume.html).
+    def resume_durable_execution(input : AL::ResumeDurableExecutionRequest) : Core::ParsedResponse(AL::ResumeDurableExecutionResponse)
+      Log.info { "performing 'ResumeDurableExecution' operation" }
+      input.validate! if config.validate_input?
+      path = "/2025-12-01/durable-executions/#{URI.encode_path_segment(input.durable_execution_arn)}/resume"
+      headers = HTTP::Headers.new
+      response = rest_request("ResumeDurableExecution", "POST", path, headers, input.to_json)
+      Core::ParsedResponse(AL::ResumeDurableExecutionResponse).new(response)
+    end
+
+    # Stops a running or paused [durable
     # execution](https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html). The execution
     # transitions to STOPPED status and cannot be resumed. Any in-progress operations are terminated.
     def stop_durable_execution(input : AL::StopDurableExecutionRequest) : Core::ParsedResponse(AL::StopDurableExecutionResponse)

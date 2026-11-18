@@ -31,6 +31,12 @@ module Amazonite::EC2
     # The reason for the current provisioning status.
     property provisioning_status_reason : String | Nil
 
+    # The additional key exchanges negotiated in Phase 1 IKE negotiations.
+    property phase_1_additional_key_exchanges : Array(ActiveVpnTunnelAdditionalKeyExchange) | Nil
+
+    # The additional key exchanges negotiated in Phase 2 IKE negotiations.
+    property phase_2_additional_key_exchanges : Array(ActiveVpnTunnelAdditionalKeyExchange) | Nil
+
     def initialize(
       @phase_1_encryption_algorithm : String | Nil = nil,
       @phase_2_encryption_algorithm : String | Nil = nil,
@@ -41,6 +47,8 @@ module Amazonite::EC2
       @ike_version : String | Nil = nil,
       @provisioning_status : VpnTunnelProvisioningStatus | Nil = nil,
       @provisioning_status_reason : String | Nil = nil,
+      @phase_1_additional_key_exchanges : Array(ActiveVpnTunnelAdditionalKeyExchange) | Nil = nil,
+      @phase_2_additional_key_exchanges : Array(ActiveVpnTunnelAdditionalKeyExchange) | Nil = nil,
     )
     end
 
@@ -82,6 +90,14 @@ module Amazonite::EC2
       if value = @provisioning_status_reason
         params << {"#{prefix}ProvisioningStatusReason", value}
       end
+
+      (@phase_1_additional_key_exchanges || [] of ActiveVpnTunnelAdditionalKeyExchange).each_with_index(1) do |item, i|
+        params.concat(item.to_query_params("#{prefix}Phase1AdditionalKeyExchangeSet.#{i}."))
+      end
+
+      (@phase_2_additional_key_exchanges || [] of ActiveVpnTunnelAdditionalKeyExchange).each_with_index(1) do |item, i|
+        params.concat(item.to_query_params("#{prefix}Phase2AdditionalKeyExchangeSet.#{i}."))
+      end
       params
     end
 
@@ -96,12 +112,21 @@ module Amazonite::EC2
         ike_version: Core::XMLValue.string(node.xpath_node("*[local-name()='ikeVersion']")),
         provisioning_status: (n = node.xpath_node("*[local-name()='provisioningStatus']")) ? AEC::VpnTunnelProvisioningStatus.from_json_object_key?(n.content) : nil,
         provisioning_status_reason: Core::XMLValue.string(node.xpath_node("*[local-name()='provisioningStatusReason']")),
+        phase_1_additional_key_exchanges: node.xpath_nodes("*[local-name()='phase1AdditionalKeyExchangeSet']/*[local-name()='item']").map { |n| ActiveVpnTunnelAdditionalKeyExchange.from_xml(n) },
+        phase_2_additional_key_exchanges: node.xpath_nodes("*[local-name()='phase2AdditionalKeyExchangeSet']/*[local-name()='item']").map { |n| ActiveVpnTunnelAdditionalKeyExchange.from_xml(n) },
       )
     end
 
     def validate! : Nil
+      if value = @phase_1_additional_key_exchanges
+        value.each(&.validate!)
+      end
+
+      if value = @phase_2_additional_key_exchanges
+        value.each(&.validate!)
+      end
     end
 
-    def_equals_and_hash(@phase_1_encryption_algorithm, @phase_2_encryption_algorithm, @phase_1_integrity_algorithm, @phase_2_integrity_algorithm, @phase_1dh_group, @phase_2dh_group, @ike_version, @provisioning_status, @provisioning_status_reason)
+    def_equals_and_hash(@phase_1_encryption_algorithm, @phase_2_encryption_algorithm, @phase_1_integrity_algorithm, @phase_2_integrity_algorithm, @phase_1dh_group, @phase_2dh_group, @ike_version, @provisioning_status, @provisioning_status_reason, @phase_1_additional_key_exchanges, @phase_2_additional_key_exchanges)
   end
 end

@@ -34,7 +34,8 @@ module Amazonite::EC2
     # Specifies whether to exclude Elastic File System traffic from encryption enforcement.
     property elastic_file_system_exclusion : VpcEncryptionControlExclusionStateInput | Nil
 
-    # Specifies whether to exclude AWS Global Accelerator traffic from encryption enforcement.
+    # Specifies whether to exclude Amazon Web Services Global Accelerator traffic from encryption
+    # enforcement.
     property global_accelerator_exclusion : VpcEncryptionControlExclusionStateInput | Nil
 
     # Specifies whether to exclude Amazon API Gateway V2 traffic from encryption enforcement.

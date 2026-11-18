@@ -37,6 +37,7 @@ module Amazonite::Lambda
     FunctionErrorTooManyExtensions
     FunctionErrorInitResourceExhausted
     DisallowedByVpcEncryptionControl
+    IncompatibleAcceleratorInstanceTypes
     DependencyError
 
     def self.to_json(e : LastUpdateStatusReasonCode, json : JSON::Builder) : Nil
@@ -76,6 +77,7 @@ module Amazonite::Lambda
               when AL::LastUpdateStatusReasonCode::FunctionErrorTooManyExtensions       then "FunctionError.TooManyExtensions"
               when AL::LastUpdateStatusReasonCode::FunctionErrorInitResourceExhausted   then "FunctionError.InitResourceExhausted"
               when AL::LastUpdateStatusReasonCode::DisallowedByVpcEncryptionControl     then "DisallowedByVpcEncryptionControl"
+              when AL::LastUpdateStatusReasonCode::IncompatibleAcceleratorInstanceTypes then "IncompatibleAcceleratorInstanceTypes"
               when AL::LastUpdateStatusReasonCode::DependencyError                      then "DependencyError"
               else
                 raise Exception.new("unknown enum value for 'LastUpdateStatusReasonCode' when serializing to json: '#{e}'")
@@ -121,6 +123,7 @@ module Amazonite::Lambda
       when "FunctionError.TooManyExtensions"       then AL::LastUpdateStatusReasonCode::FunctionErrorTooManyExtensions
       when "FunctionError.InitResourceExhausted"   then AL::LastUpdateStatusReasonCode::FunctionErrorInitResourceExhausted
       when "DisallowedByVpcEncryptionControl"      then AL::LastUpdateStatusReasonCode::DisallowedByVpcEncryptionControl
+      when "IncompatibleAcceleratorInstanceTypes"  then AL::LastUpdateStatusReasonCode::IncompatibleAcceleratorInstanceTypes
       when "DependencyError"                       then AL::LastUpdateStatusReasonCode::DependencyError
       else
         raise Exception.new("unknown enum value for 'LastUpdateStatusReasonCode' when deserializing from json: '#{value}'")
@@ -164,6 +167,7 @@ module Amazonite::Lambda
       when AL::LastUpdateStatusReasonCode::FunctionErrorTooManyExtensions       then "FunctionError.TooManyExtensions"
       when AL::LastUpdateStatusReasonCode::FunctionErrorInitResourceExhausted   then "FunctionError.InitResourceExhausted"
       when AL::LastUpdateStatusReasonCode::DisallowedByVpcEncryptionControl     then "DisallowedByVpcEncryptionControl"
+      when AL::LastUpdateStatusReasonCode::IncompatibleAcceleratorInstanceTypes then "IncompatibleAcceleratorInstanceTypes"
       when AL::LastUpdateStatusReasonCode::DependencyError                      then "DependencyError"
       else
         raise Exception.new("unknown enum value for 'LastUpdateStatusReasonCode' when serializing to json: '#{self}'")
@@ -207,6 +211,7 @@ module Amazonite::Lambda
       when "FunctionError.TooManyExtensions"       then AL::LastUpdateStatusReasonCode::FunctionErrorTooManyExtensions
       when "FunctionError.InitResourceExhausted"   then AL::LastUpdateStatusReasonCode::FunctionErrorInitResourceExhausted
       when "DisallowedByVpcEncryptionControl"      then AL::LastUpdateStatusReasonCode::DisallowedByVpcEncryptionControl
+      when "IncompatibleAcceleratorInstanceTypes"  then AL::LastUpdateStatusReasonCode::IncompatibleAcceleratorInstanceTypes
       when "DependencyError"                       then AL::LastUpdateStatusReasonCode::DependencyError
       else
         nil

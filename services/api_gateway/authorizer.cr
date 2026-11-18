@@ -1,4 +1,5 @@
 private alias AAG = Amazonite::ApiGateway
+private alias Core = Amazonite::Core
 
 module Amazonite::ApiGateway
   # Represents an authorization layer for methods. If enabled on a method, API Gateway will activate
@@ -16,13 +17,16 @@ module Amazonite::ApiGateway
 
     # The authorizer type. Valid values are `TOKEN` for a Lambda function using a single authorization
     # token submitted in a custom header, `REQUEST` for a Lambda function using incoming request
-    # parameters, and `COGNITO_USER_POOLS` for using an Amazon Cognito user pool.
+    # parameters, `COGNITO_USER_POOLS` for using an Amazon Cognito user pool, and `JWT` for using a
+    # native JWT authorizer with the trusted issuers, audiences, and signing algorithms that you
+    # declare.
     @[JSON::Field(key: "type", converter: AAG::AuthorizerType)]
     property type : AuthorizerType | Nil
 
     # A list of the Amazon Cognito user pool ARNs for the `COGNITO_USER_POOLS` authorizer. Each
     # element is of this format: `arn:aws:cognito-idp:{region}:{account_id}:userpool/{user_pool_id}`.
-    # For a `TOKEN` or `REQUEST` authorizer, this is not defined.
+    # For a `TOKEN` or `REQUEST` authorizer, this is not defined. This property is not supported for
+    # `JWT` authorizers.
     @[JSON::Field(key: "providerARNs")]
     property providerar_ns : Array(String) | Nil
 
@@ -37,13 +41,15 @@ module Amazonite::ApiGateway
     # `{region}` is the same as the region hosting the Lambda function, `path` indicates that the
     # remaining substring in the URI should be treated as the path to the resource, including the
     # initial `/`. For Lambda functions, this is usually of the form
-    # `/2015-03-31/functions/[FunctionARN]/invocations`.
+    # `/2015-03-31/functions/[FunctionARN]/invocations`. This property is not supported for `JWT`
+    # authorizers.
     @[JSON::Field(key: "authorizerUri")]
     property authorizer_uri : String | Nil
 
     # Specifies the required credentials as an IAM role for API Gateway to invoke the authorizer. To
     # specify an IAM role for API Gateway to assume, use the role's Amazon Resource Name (ARN). To use
-    # resource-based permissions on the Lambda function, specify null.
+    # resource-based permissions on the Lambda function, specify null. This property is not supported
+    # for `JWT` authorizers.
     @[JSON::Field(key: "authorizerCredentials")]
     property authorizer_credentials : String | Nil
 
@@ -61,7 +67,10 @@ module Amazonite::ApiGateway
     # invoke the authorizer Lambda function, otherwise, it returns a 401 Unauthorized response without
     # calling the Lambda function. The valid value is a string of comma-separated mapping expressions
     # of the specified request parameters. When the authorization caching is not enabled, this
-    # property is optional.
+    # property is optional. For a `JWT` authorizer, this is required and must be a single
+    # request-header mapping expression, `method.request.header.`, for example,
+    # `method.request.header.Authorization`. Query string parameters are not supported, and there is
+    # no default.
     @[JSON::Field(key: "identitySource")]
     property identity_source : String | Nil
 
@@ -70,15 +79,21 @@ module Amazonite::ApiGateway
     # field of the incoming token from the client against the specified regular expression. It will
     # invoke the authorizer's Lambda function when there is a match. Otherwise, it will return a 401
     # Unauthorized response without calling the Lambda function. The validation expression does not
-    # apply to the `REQUEST` authorizer.
+    # apply to the `REQUEST` or `JWT` authorizer.
     @[JSON::Field(key: "identityValidationExpression")]
     property identity_validation_expression : String | Nil
 
     # The TTL in seconds of cached authorizer results. If it equals 0, authorization caching is
     # disabled. If it is greater than 0, API Gateway will cache authorizer responses. If this field is
-    # not set, the default value is 300. The maximum value is 3600, or 1 hour.
+    # not set, the default value is 300. The maximum value is 3600, or 1 hour. This property is not
+    # supported for `JWT` authorizers.
     @[JSON::Field(key: "authorizerResultTtlInSeconds")]
     property authorizer_result_ttl_in_seconds : Int32 | Nil
+
+    # The configuration returned for a JWT authorizer. This field is present only when `type` is
+    # `JWT`.
+    @[JSON::Field(key: "jwtConfiguration")]
+    property jwt_configuration : JwtConfiguration | Nil
 
     def initialize(
       @id : String | Nil = nil,
@@ -91,12 +106,16 @@ module Amazonite::ApiGateway
       @identity_source : String | Nil = nil,
       @identity_validation_expression : String | Nil = nil,
       @authorizer_result_ttl_in_seconds : Int32 | Nil = nil,
+      @jwt_configuration : JwtConfiguration | Nil = nil,
     )
     end
 
     def validate! : Nil
+      if value = @jwt_configuration
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@id, @name, @type, @providerar_ns, @auth_type, @authorizer_uri, @authorizer_credentials, @identity_source, @identity_validation_expression, @authorizer_result_ttl_in_seconds)
+    def_equals_and_hash(@id, @name, @type, @providerar_ns, @auth_type, @authorizer_uri, @authorizer_credentials, @identity_source, @identity_validation_expression, @authorizer_result_ttl_in_seconds, @jwt_configuration)
   end
 end

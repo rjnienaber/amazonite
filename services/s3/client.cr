@@ -967,10 +967,19 @@ module Amazonite::S3
     # Overview](https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html) in the *Amazon S3
     # User Guide*.
     #
-    # After you initiate a multipart upload and upload one or more parts, to stop being charged for
+    # - After you initiate a multipart upload and upload one or more parts, to stop being charged for
     # storing the uploaded parts, you must either complete or abort the multipart upload. Amazon S3
     # frees up the space used to store the parts and stops charging you for storing them only after
     # you either complete or abort a multipart upload.
+    #
+    # - When you initiate a multipart upload, Amazon S3 records the bucket configuration in place at
+    # that time and uses it for the rest of the upload. Changes that you make to the bucket
+    # configuration after you initiate the upload don't apply to that upload. To apply new bucket
+    # configuration to uploads in progress, use
+    # [ListMultipartUploads](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html)
+    # to find them and
+    # [AbortMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html)
+    # to stop them. Then start the uploads again.
     #
     # If you have configured a lifecycle rule to abort incomplete multipart uploads, the created
     # multipart upload must be completed within the number of days specified in the bucket lifecycle
@@ -1281,6 +1290,7 @@ module Amazonite::S3
       result.request_charged = response.headers["x-amz-request-charged"]?.try { |value| AS::RequestCharged.from_json_object_key?(value) }
       result.checksum_algorithm = response.headers["x-amz-checksum-algorithm"]?.try { |value| AS::ChecksumAlgorithm.from_json_object_key?(value) }
       result.checksum_type = response.headers["x-amz-checksum-type"]?.try { |value| AS::ChecksumType.from_json_object_key?(value) }
+      result.version_id = response.headers["x-amz-version-id"]?
       Core::ParsedResponse(AS::CreateMultipartUploadOutput).new(response, result)
     end
 
@@ -1901,7 +1911,7 @@ module Amazonite::S3
     end
 
     # We recommend that you delete your S3 Metadata configurations by using the V2
-    # [DeleteBucketMetadataTableConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketMetadataTableConfiguration.html)
+    # [DeleteBucketMetadataConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketMetadataConfiguration.html)
     # API operation. We no longer recommend using the V1 `DeleteBucketMetadataTableConfiguration` API
     # operation.
     #
@@ -3153,8 +3163,6 @@ module Amazonite::S3
     #
     # - HTTP Status Code: 404 Not Found
     #
-    # - SOAP Fault Code Prefix: Client
-    #
     # The following operations are related to `GetBucketLifecycleConfiguration`:
     #
     # -
@@ -3325,7 +3333,7 @@ module Amazonite::S3
     end
 
     # We recommend that you retrieve your S3 Metadata configurations by using the V2
-    # [GetBucketMetadataTableConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketMetadataTableConfiguration.html)
+    # [GetBucketMetadataConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketMetadataConfiguration.html)
     # API operation. We no longer recommend using the V1 `GetBucketMetadataTableConfiguration` API
     # operation.
     #
@@ -5991,6 +5999,7 @@ module Amazonite::S3
       result.abort_date = Core::HeaderValue.http_time(response.headers["x-amz-abort-date"]?)
       result.abort_rule_id = response.headers["x-amz-abort-rule-id"]?
       result.request_charged = response.headers["x-amz-request-charged"]?.try { |value| AS::RequestCharged.from_json_object_key?(value) }
+      result.version_id = response.headers["x-amz-version-id"]?
       Core::ParsedResponse(AS::ListPartsOutput).new(response, result)
     end
 
@@ -8738,8 +8747,6 @@ module Amazonite::S3
     #
     # - *HTTP Status Code: 409 Conflict*
     #
-    # - *SOAP Fault Code Prefix: Client*
-    #
     # -
     #
     # - *Code: GlacierExpeditedRetrievalNotAvailable*
@@ -8749,8 +8756,6 @@ module Amazonite::S3
     # retrievals and not to S3 Standard or Bulk retrievals.)*
     #
     # - *HTTP Status Code: 503*
-    #
-    # - *SOAP Fault Code Prefix: N/A*
     #
     # The following operations are related to `RestoreObject`:
     #
@@ -9230,8 +9235,6 @@ module Amazonite::S3
     #
     # - HTTP Status Code: 404 Not Found
     #
-    # - SOAP Fault Code Prefix: Client
-    #
     # HTTP Host header syntax **Directory buckets ** - The HTTP Host header syntax is `
     # *Bucket-name*.s3express-*zone-id*.*region-code*.amazonaws.com`.
     #
@@ -9342,6 +9345,7 @@ module Amazonite::S3
         ssekms_key_id: response.headers["x-amz-server-side-encryption-aws-kms-key-id"]?,
         bucket_key_enabled: Core::HeaderValue.bool(response.headers["x-amz-server-side-encryption-bucket-key-enabled"]?),
         request_charged: response.headers["x-amz-request-charged"]?.try { |value| AS::RequestCharged.from_json_object_key?(value) },
+        version_id: response.headers["x-amz-version-id"]?,
       )
       Core::ParsedResponse(AS::UploadPartOutput).new(response, result)
     end
@@ -9584,6 +9588,7 @@ module Amazonite::S3
         ssekms_key_id: response.headers["x-amz-server-side-encryption-aws-kms-key-id"]?,
         bucket_key_enabled: Core::HeaderValue.bool(response.headers["x-amz-server-side-encryption-bucket-key-enabled"]?),
         request_charged: response.headers["x-amz-request-charged"]?.try { |value| AS::RequestCharged.from_json_object_key?(value) },
+        version_id: response.headers["x-amz-version-id"]?,
         copy_part_result: CopyPartResult.from_xml(XML.parse(response.body).root.not_nil!),
       )
       Core::ParsedResponse(AS::UploadPartCopyOutput).new(response, result)

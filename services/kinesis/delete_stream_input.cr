@@ -10,7 +10,13 @@ module Amazonite::Kinesis
     property stream_name : String | Nil
 
     # If this parameter is unset (`null`) or if you set it to `false`, and the stream has registered
-    # consumers, the call to `DeleteStream` fails with a `ResourceInUseException`.
+    # enhanced fan-out consumers, the call to `DeleteStream` fails with a `ResourceInUseException`.
+    #
+    # If you set it to `true`, `DeleteStream` deletes the stream and every consumer registered with
+    # it.
+    #
+    # This parameter does not apply to queues. A stream that has queues cannot be deleted until every
+    # queue on it is deleted with DeleteQueue, whatever this parameter is set to.
     @[JSON::Field(key: "EnforceConsumerDeletion")]
     property enforce_consumer_deletion : Bool | Nil
 
