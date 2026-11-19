@@ -24,6 +24,7 @@ concurrency:
 jobs:
   regenerate:
     runs-on: ubuntu-latest
+    container: crystallang/crystal:latest
     outputs:
       changed: ${{ steps.detect.outputs.changed }}
       modules: ${{ steps.detect.outputs.modules }}
@@ -36,10 +37,6 @@ jobs:
           # the release job fast-forwards master onto this branch, and tagging
           # needs the tag list, so a shallow clone won't do
           fetch-depth: 0
-      - name: refresh apt index
-        run: sudo apt-get update
-      - name: install crystal
-        uses: crystal-lang/install-crystal@v1
       - name: cache shards
         uses: actions/cache@v6
         with:

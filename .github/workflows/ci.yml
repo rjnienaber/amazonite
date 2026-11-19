@@ -21,7 +21,15 @@ jobs:
       matrix:
         crystal: [latest, nightly]
         os: [ubuntu-latest, macos-latest, windows-latest]
+        exclude:
+          # no reliable nightly installer on macOS (install-crystal depends on
+          # CircleCI's artifacts API); Linux nightly uses the official image
+          - crystal: nightly
+            os: macos-latest
     runs-on: ${{ matrix.os }}
+    # Linux uses the official image (tags: latest, nightly); other OSes
+    # install crystal with install-crystal below.
+    container: ${{ matrix.os == 'ubuntu-latest' && format('crystallang/crystal:{0}', matrix.crystal) || '' }}
     defaults:
       run:
         shell: bash
@@ -37,10 +45,8 @@ jobs:
           # empty for every trigger other than workflow_call, which checkout
           # treats as "use the default ref"
           ref: ${{ inputs.ref }}
-      - name: refresh apt index
-        if: runner.os == 'Linux'
-        run: sudo apt-get update
       - name: install crystal
+        if: matrix.os != 'ubuntu-latest'
         uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
@@ -72,6 +78,7 @@ jobs:
       matrix:
         crystal: [latest, nightly]
     runs-on: ubuntu-latest
+    container: crystallang/crystal:${{ matrix.crystal }}
     services:
       localstack:
         image: localstack/localstack
@@ -91,12 +98,6 @@ jobs:
           # empty for every trigger other than workflow_call, which checkout
           # treats as "use the default ref"
           ref: ${{ inputs.ref }}
-      - name: refresh apt index
-        run: sudo apt-get update
-      - name: install crystal
-        uses: crystal-lang/install-crystal@v1
-        with:
-          crystal: ${{ matrix.crystal }}
       - name: cache shards
         uses: actions/cache@v6
         with:
@@ -111,3 +112,5 @@ jobs:
           AWS_ACCESS_KEY_ID: AKIAIOSFODNN7EXAMPLE
           AWS_SECRET_ACCESS_KEY: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
           AWS_REGION: us-west-2
+          # the job runs in a container, so reach localstack by service name
+          LOCALSTACK_URL: http://localstack:4566

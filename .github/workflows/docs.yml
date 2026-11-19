@@ -16,13 +16,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: crystallang/crystal:latest
     steps:
       - name: download source
         uses: actions/checkout@v7
-      - name: refresh apt index
-        run: sudo apt-get update
-      - name: install crystal
-        uses: crystal-lang/install-crystal@v1
       - name: cache shards
         uses: actions/cache@v6
         with:
