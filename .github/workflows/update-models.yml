@@ -37,6 +37,10 @@ jobs:
           # the release job fast-forwards master onto this branch, and tagging
           # needs the tag list, so a shallow clone won't do
           fetch-depth: 0
+      - name: trust workspace
+        # the container runs as a different uid than the checkout's owner;
+        # checkout only whitelists the top-level repo, not the submodule
+        run: git config --global --add safe.directory '*'
       - name: cache shards
         uses: actions/cache@v6
         with:
