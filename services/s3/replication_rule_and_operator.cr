@@ -16,9 +16,13 @@ module Amazonite::S3
     # An array of tags containing key and value pairs.
     property tags : Array(Tag) | Nil
 
+    # A container for specifying filters that exclude matching objects from the replication rule.
+    property not : ReplicationRuleNotOperator | Nil
+
     def initialize(
       @prefix : String | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
+      @not : ReplicationRuleNotOperator | Nil = nil,
     )
     end
 
@@ -41,12 +45,17 @@ module Amazonite::S3
       (@tags || [] of Tag).each do |item|
         xml.element("Tag") { item.build_xml(xml) }
       end
+
+      if value = @not
+        xml.element("Not") { value.build_xml(xml) }
+      end
     end
 
     def self.from_xml(node : XML::Node) : self
       new(
         prefix: Core::XMLValue.string(node.xpath_node("*[local-name()='Prefix']")),
         tags: node.xpath_nodes("*[local-name()='Tag']").map { |n| Tag.from_xml(n) },
+        not: node.xpath_node("*[local-name()='Not']").try { |n| ReplicationRuleNotOperator.from_xml(n) },
       )
     end
 
@@ -54,8 +63,12 @@ module Amazonite::S3
       if value = @tags
         value.each(&.validate!)
       end
+
+      if value = @not
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@prefix, @tags)
+    def_equals_and_hash(@prefix, @tags, @not)
   end
 end

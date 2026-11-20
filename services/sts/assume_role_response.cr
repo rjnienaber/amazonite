@@ -17,9 +17,10 @@ module Amazonite::Sts
     # ARN and ID include the `RoleSessionName` that you specified when you called `AssumeRole`.
     property assumed_role_user : AssumedRoleUser | Nil
 
-    # A percentage value that indicates the packed size of the session policies and session tags
-    # combined passed in the request. The request fails if the packed size is greater than 100
-    # percent, which means the policies and tags exceeded the allowed space.
+    # The percentage (0-100) of the maximum allowed session token size that the returned session token
+    # consumes.
+    #
+    # This field is deprecated. Use `SessionTokenUtilization` instead.
     property packed_policy_size : Int32 | Nil
 
     # The source identity specified by the principal that is calling the `AssumeRole` operation.
@@ -107,7 +108,7 @@ module Amazonite::Sts
 
       if value = @source_identity
         raise Core::ValidationError.new("SourceIdentity length must be >= 2") if value.size < 2
-        raise Core::ValidationError.new("SourceIdentity length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("SourceIdentity length must be <= 256") if value.size > 256
         raise Core::ValidationError.new("SourceIdentity does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]*$"))
       end
 

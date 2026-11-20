@@ -61,11 +61,28 @@ module Amazonite::Iam
     # entire request fails and the resource is not created.
     property tags : Array(Tag) | Nil
 
+    # The trusted identity propagation context provider configuration to associate with the OpenID
+    # Connect (OIDC) provider. The context provider defines how the subject is derived and how keys
+    # from the provider's token are mapped into trusted context keys. Specifying a context provider
+    # enables trusted identity propagation for the provider. For more information, see
+    # [ContextProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ContextProvider.html).
+    property context_provider : ContextProvider | Nil
+
+    # The Amazon Resource Name (ARN) of the IAM Identity Center instance to associate with the OpenID
+    # Connect (OIDC) provider. If you specify this parameter, you must also specify `ContextProvider`.
+    #
+    # For the format, see
+    # [InstanceMetadata](https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_InstanceMetadata.html)
+    # in the *IAM Identity Center API Reference*.
+    property identity_center_instance_arn : String | Nil
+
     def initialize(
       @url : String,
       @client_id_list : Array(String) | Nil = nil,
       @thumbprint_list : Array(String) | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
+      @context_provider : ContextProvider | Nil = nil,
+      @identity_center_instance_arn : String | Nil = nil,
     )
     end
 
@@ -85,6 +102,14 @@ module Amazonite::Iam
       (@tags || [] of Tag).each_with_index(1) do |item, i|
         params.concat(item.to_query_params("#{prefix}Tags.member.#{i}."))
       end
+
+      if value = @context_provider
+        params.concat(value.to_query_params("#{prefix}ContextProvider."))
+      end
+
+      if value = @identity_center_instance_arn
+        params << {"#{prefix}IdentityCenterInstanceArn", value}
+      end
       params
     end
 
@@ -94,6 +119,8 @@ module Amazonite::Iam
         client_id_list: node.xpath_nodes("*[local-name()='ClientIDList']/*[local-name()='member']").map { |n| n.content },
         thumbprint_list: node.xpath_nodes("*[local-name()='ThumbprintList']/*[local-name()='member']").map { |n| n.content },
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
+        context_provider: node.xpath_node("*[local-name()='ContextProvider']").try { |n| ContextProvider.from_xml(n) },
+        identity_center_instance_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='IdentityCenterInstanceArn']")),
       )
     end
 
@@ -108,8 +135,17 @@ module Amazonite::Iam
         raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
         value.each(&.validate!)
       end
+
+      if value = @context_provider
+        value.validate!
+      end
+
+      if value = @identity_center_instance_arn
+        raise Core::ValidationError.new("IdentityCenterInstanceArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("IdentityCenterInstanceArn length must be <= 1224") if value.size > 1224
+      end
     end
 
-    def_equals_and_hash(@url, @client_id_list, @thumbprint_list, @tags)
+    def_equals_and_hash(@url, @client_id_list, @thumbprint_list, @tags, @context_provider, @identity_center_instance_arn)
   end
 end

@@ -47,7 +47,7 @@ module Amazonite::Sts
 
       if value = @context_assertion
         raise Core::ValidationError.new("ContextAssertion length must be >= 4") if value.size < 4
-        raise Core::ValidationError.new("ContextAssertion length must be <= 2048") if value.size > 2048
+        raise Core::ValidationError.new("ContextAssertion length must be <= 3072") if value.size > 3072
       end
     end
 

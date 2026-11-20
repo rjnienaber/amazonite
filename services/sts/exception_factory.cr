@@ -13,10 +13,19 @@ module Amazonite::Sts
   class IDPRejectedClaimException < Core::ResponseException
   end
 
+  class InsufficientSessionLifetimeException < Core::ResponseException
+  end
+
   class InvalidAuthorizationMessageException < Core::ResponseException
   end
 
+  class InvalidContextAssertionException < Core::ResponseException
+  end
+
   class InvalidIdentityTokenException < Core::ResponseException
+  end
+
+  class InvalidSubjectCredentialsException < Core::ResponseException
   end
 
   class JWTPayloadSizeExceededException < Core::ResponseException
@@ -44,8 +53,11 @@ module Amazonite::Sts
       when "ExpiredTradeInTokenException"                   then ExpiredTradeInTokenException.new(http, message, code)
       when "IDPCommunicationError"                          then IDPCommunicationErrorException.new(http, message, code)
       when "IDPRejectedClaim"                               then IDPRejectedClaimException.new(http, message, code)
+      when "InsufficientSessionLifetime"                    then InsufficientSessionLifetimeException.new(http, message, code)
       when "InvalidAuthorizationMessageException"           then InvalidAuthorizationMessageException.new(http, message, code)
+      when "InvalidContextAssertion"                        then InvalidContextAssertionException.new(http, message, code)
       when "InvalidIdentityToken"                           then InvalidIdentityTokenException.new(http, message, code)
+      when "InvalidSubjectCredentials"                      then InvalidSubjectCredentialsException.new(http, message, code)
       when "JWTPayloadSizeExceededException"                then JWTPayloadSizeExceededException.new(http, message, code)
       when "MalformedPolicyDocument"                        then MalformedPolicyDocumentException.new(http, message, code)
       when "OutboundWebIdentityFederationDisabledException" then OutboundWebIdentityFederationDisabledException.new(http, message, code)

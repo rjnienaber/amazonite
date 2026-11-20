@@ -26,12 +26,39 @@ module Amazonite::Iam
     # The Key ID of the private key to remove.
     property remove_private_key : String | Nil
 
+    # The trusted identity propagation context provider configuration to associate with the SAML
+    # provider. This replaces the existing context provider configuration. For more information, see
+    # [ContextProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ContextProvider.html).
+    property context_provider : ContextProvider | Nil
+
+    # The Amazon Resource Name (ARN) of the IAM Identity Center instance to associate with the SAML
+    # provider.
+    #
+    # For the format, see
+    # [InstanceMetadata](https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_InstanceMetadata.html)
+    # in the *IAM Identity Center API Reference*.
+    property identity_center_instance_arn : String | Nil
+
+    # Specifies whether to remove the existing trusted identity propagation context provider
+    # configuration from the SAML provider. When set to `true`, the context provider is removed. This
+    # parameter is mutually exclusive with `ContextProvider`.
+    property remove_context_provider : Bool | Nil
+
+    # Specifies whether to disassociate the IAM Identity Center instance from the SAML provider. When
+    # set to `true`, the instance is disassociated. This parameter is mutually exclusive with
+    # `IdentityCenterInstanceArn`.
+    property remove_identity_center_instance : Bool | Nil
+
     def initialize(
       @saml_provider_arn : String,
       @saml_metadata_document : String | Nil = nil,
       @assertion_encryption_mode : AssertionEncryptionModeType | Nil = nil,
       @add_private_key : String | Nil = nil,
       @remove_private_key : String | Nil = nil,
+      @context_provider : ContextProvider | Nil = nil,
+      @identity_center_instance_arn : String | Nil = nil,
+      @remove_context_provider : Bool | Nil = nil,
+      @remove_identity_center_instance : Bool | Nil = nil,
     )
     end
 
@@ -55,6 +82,22 @@ module Amazonite::Iam
       if value = @remove_private_key
         params << {"#{prefix}RemovePrivateKey", value}
       end
+
+      if value = @context_provider
+        params.concat(value.to_query_params("#{prefix}ContextProvider."))
+      end
+
+      if value = @identity_center_instance_arn
+        params << {"#{prefix}IdentityCenterInstanceArn", value}
+      end
+
+      if value = @remove_context_provider
+        params << {"#{prefix}RemoveContextProvider", Core::QueryValue.bool(value)}
+      end
+
+      if value = @remove_identity_center_instance
+        params << {"#{prefix}RemoveIdentityCenterInstance", Core::QueryValue.bool(value)}
+      end
       params
     end
 
@@ -65,6 +108,10 @@ module Amazonite::Iam
         assertion_encryption_mode: (n = node.xpath_node("*[local-name()='AssertionEncryptionMode']")) ? AI::AssertionEncryptionModeType.from_json_object_key?(n.content) : nil,
         add_private_key: Core::XMLValue.string(node.xpath_node("*[local-name()='AddPrivateKey']")),
         remove_private_key: Core::XMLValue.string(node.xpath_node("*[local-name()='RemovePrivateKey']")),
+        context_provider: node.xpath_node("*[local-name()='ContextProvider']").try { |n| ContextProvider.from_xml(n) },
+        identity_center_instance_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='IdentityCenterInstanceArn']")),
+        remove_context_provider: Core::XMLValue.bool(node.xpath_node("*[local-name()='RemoveContextProvider']")),
+        remove_identity_center_instance: Core::XMLValue.bool(node.xpath_node("*[local-name()='RemoveIdentityCenterInstance']")),
       )
     end
 
@@ -90,8 +137,17 @@ module Amazonite::Iam
         raise Core::ValidationError.new("RemovePrivateKey length must be <= 64") if value.size > 64
         raise Core::ValidationError.new("RemovePrivateKey does not match the required pattern") unless value.matches?(Regex.new("^[A-Z0-9]+$"))
       end
+
+      if value = @context_provider
+        value.validate!
+      end
+
+      if value = @identity_center_instance_arn
+        raise Core::ValidationError.new("IdentityCenterInstanceArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("IdentityCenterInstanceArn length must be <= 1224") if value.size > 1224
+      end
     end
 
-    def_equals_and_hash(@saml_metadata_document, @saml_provider_arn, @assertion_encryption_mode, @add_private_key, @remove_private_key)
+    def_equals_and_hash(@saml_metadata_document, @saml_provider_arn, @assertion_encryption_mode, @add_private_key, @remove_private_key, @context_provider, @identity_center_instance_arn, @remove_context_provider, @remove_identity_center_instance)
   end
 end

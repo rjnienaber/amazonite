@@ -12,10 +12,15 @@ module Amazonite::Iam
     # The date and time when the SAML provider was created.
     property create_date : Time | Nil
 
+    # Specifies whether trusted identity propagation is enabled for the SAML provider. This is `true`
+    # when an IAM Identity Center instance is associated with the provider.
+    property is_trusted_identity_propagation_enabled : Bool | Nil
+
     def initialize(
       @arn : String | Nil = nil,
       @valid_until : Time | Nil = nil,
       @create_date : Time | Nil = nil,
+      @is_trusted_identity_propagation_enabled : Bool | Nil = nil,
     )
     end
 
@@ -33,6 +38,10 @@ module Amazonite::Iam
       if value = @create_date
         params << {"#{prefix}CreateDate", Core::QueryValue.time(value)}
       end
+
+      if value = @is_trusted_identity_propagation_enabled
+        params << {"#{prefix}IsTrustedIdentityPropagationEnabled", Core::QueryValue.bool(value)}
+      end
       params
     end
 
@@ -41,6 +50,7 @@ module Amazonite::Iam
         arn: Core::XMLValue.string(node.xpath_node("*[local-name()='Arn']")),
         valid_until: Core::XMLValue.time(node.xpath_node("*[local-name()='ValidUntil']")),
         create_date: Core::XMLValue.time(node.xpath_node("*[local-name()='CreateDate']")),
+        is_trusted_identity_propagation_enabled: Core::XMLValue.bool(node.xpath_node("*[local-name()='IsTrustedIdentityPropagationEnabled']")),
       )
     end
 
@@ -51,6 +61,6 @@ module Amazonite::Iam
       end
     end
 
-    def_equals_and_hash(@arn, @valid_until, @create_date)
+    def_equals_and_hash(@arn, @valid_until, @create_date, @is_trusted_identity_propagation_enabled)
   end
 end

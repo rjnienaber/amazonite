@@ -4,9 +4,7 @@ module Amazonite::Sts
   class GetDelegatedAccessTokenResponse
     property credentials : Credentials | Nil
 
-    # The percentage of the maximum policy size that is used by the session policy. The policy size is
-    # calculated as the sum of all the session policies and permission boundaries attached to the
-    # session. If the packed size exceeds 100%, the request fails.
+    # This field is deprecated. It is not populated for `GetDelegatedAccessToken`.
     property packed_policy_size : Int32 | Nil
 
     # The Amazon Resource Name (ARN) of the principal that was assumed when obtaining the delegated

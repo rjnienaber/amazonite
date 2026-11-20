@@ -37,7 +37,7 @@ module Amazonite::Lambda
     property description : String | Nil
 
     # The amount of time (in seconds) that Lambda allows a function to run before stopping it. The
-    # default is 3 seconds, and the maximum allowed value is 900 seconds. For functions using Lambda
+    # default is 3 seconds, and the maximum allowed value is 1,800 seconds. For functions using Lambda
     # Managed Instances, asynchronous invocations and event source mapping invocations (except Amazon
     # MQ and Amazon DocumentDB) support a maximum allowed value of 5,400 seconds (90 minutes). For
     # more information, see [Lambda execution

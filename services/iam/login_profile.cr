@@ -19,10 +19,17 @@ module Amazonite::Iam
     # Specifies whether the user is required to set a new password on next sign-in.
     property password_reset_required : Bool | Nil
 
+    # The maximum duration (in seconds) of an Amazon Web Services Sign-In session for the user.
+    #
+    # This member is omitted when the setting is unset. In that case, no default value is returned and
+    # the existing sign-in session behavior applies.
+    property max_signin_session_duration : Int32 | Nil
+
     def initialize(
       @user_name : String,
       @create_date : Time,
       @password_reset_required : Bool | Nil = nil,
+      @max_signin_session_duration : Int32 | Nil = nil,
     )
     end
 
@@ -36,6 +43,10 @@ module Amazonite::Iam
       if value = @password_reset_required
         params << {"#{prefix}PasswordResetRequired", Core::QueryValue.bool(value)}
       end
+
+      if value = @max_signin_session_duration
+        params << {"#{prefix}MaxSigninSessionDuration", value.to_s}
+      end
       params
     end
 
@@ -44,6 +55,7 @@ module Amazonite::Iam
         user_name: Core::XMLValue.string(node.xpath_node("*[local-name()='UserName']")).not_nil!,
         create_date: Core::XMLValue.time(node.xpath_node("*[local-name()='CreateDate']")).not_nil!,
         password_reset_required: Core::XMLValue.bool(node.xpath_node("*[local-name()='PasswordResetRequired']")),
+        max_signin_session_duration: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxSigninSessionDuration']")),
       )
     end
 
@@ -53,8 +65,13 @@ module Amazonite::Iam
         raise Core::ValidationError.new("UserName length must be <= 64") if value.size > 64
         raise Core::ValidationError.new("UserName does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]+$"))
       end
+
+      if value = @max_signin_session_duration
+        raise Core::ValidationError.new("MaxSigninSessionDuration value must be >= 3600") if value < 3600
+        raise Core::ValidationError.new("MaxSigninSessionDuration value must be <= 7776000") if value > 7776000
+      end
     end
 
-    def_equals_and_hash(@user_name, @create_date, @password_reset_required)
+    def_equals_and_hash(@user_name, @create_date, @password_reset_required, @max_signin_session_duration)
   end
 end

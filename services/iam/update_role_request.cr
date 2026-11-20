@@ -26,10 +26,38 @@ module Amazonite::Iam
     # the specified maximum session duration.
     property max_session_duration : Int32 | Nil
 
+    # The maximum duration (in seconds) of an Amazon Web Services Sign-In session for users who sign
+    # in with the specified role. This setting can have a value from 1 hour (3600 seconds) to 90 days
+    # (7776000 seconds), inclusive, and replaces any value currently configured for the role. This
+    # setting is independent of `MaxSessionDuration`.
+    #
+    # If you omit both this parameter and `ResetMaxSigninSessionDuration`, the current setting is
+    # unchanged. You cannot specify this parameter and set `ResetMaxSigninSessionDuration` to `true`
+    # in the same request.
+    #
+    # Changes to this setting apply to new sign-in sessions. Sessions that are already established are
+    # not affected.
+    #
+    # You cannot set this value on a service-linked role.
+    property max_signin_session_duration : Int32 | Nil
+
+    # Specifies whether to clear the role's maximum sign-in session duration. Set this value to `true`
+    # to return the setting to its unset state, so that the existing sign-in session behavior applies.
+    # When the setting is unset, the role's `MaxSigninSessionDuration` is omitted from responses.
+    #
+    # If you set this value to `false` or omit it, the current setting is not cleared. You cannot set
+    # this value to `true` and specify `MaxSigninSessionDuration` in the same request. Clearing a
+    # setting that is already unset has no effect.
+    #
+    # You cannot reset this value on a service-linked role.
+    property reset_max_signin_session_duration : Bool | Nil
+
     def initialize(
       @role_name : String,
       @description : String | Nil = nil,
       @max_session_duration : Int32 | Nil = nil,
+      @max_signin_session_duration : Int32 | Nil = nil,
+      @reset_max_signin_session_duration : Bool | Nil = nil,
     )
     end
 
@@ -45,6 +73,14 @@ module Amazonite::Iam
       if value = @max_session_duration
         params << {"#{prefix}MaxSessionDuration", value.to_s}
       end
+
+      if value = @max_signin_session_duration
+        params << {"#{prefix}MaxSigninSessionDuration", value.to_s}
+      end
+
+      if value = @reset_max_signin_session_duration
+        params << {"#{prefix}ResetMaxSigninSessionDuration", Core::QueryValue.bool(value)}
+      end
       params
     end
 
@@ -53,6 +89,8 @@ module Amazonite::Iam
         role_name: Core::XMLValue.string(node.xpath_node("*[local-name()='RoleName']")).not_nil!,
         description: Core::XMLValue.string(node.xpath_node("*[local-name()='Description']")),
         max_session_duration: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxSessionDuration']")),
+        max_signin_session_duration: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxSigninSessionDuration']")),
+        reset_max_signin_session_duration: Core::XMLValue.bool(node.xpath_node("*[local-name()='ResetMaxSigninSessionDuration']")),
       )
     end
 
@@ -73,8 +111,13 @@ module Amazonite::Iam
         raise Core::ValidationError.new("MaxSessionDuration value must be >= 3600") if value < 3600
         raise Core::ValidationError.new("MaxSessionDuration value must be <= 43200") if value > 43200
       end
+
+      if value = @max_signin_session_duration
+        raise Core::ValidationError.new("MaxSigninSessionDuration value must be >= 3600") if value < 3600
+        raise Core::ValidationError.new("MaxSigninSessionDuration value must be <= 7776000") if value > 7776000
+      end
     end
 
-    def_equals_and_hash(@role_name, @description, @max_session_duration)
+    def_equals_and_hash(@role_name, @description, @max_session_duration, @max_signin_session_duration, @reset_max_signin_session_duration)
   end
 end

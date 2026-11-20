@@ -205,12 +205,6 @@ module Amazonite::Sts
     # Limits](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-limits.html#reference_iam-limits-entity-length)
     # in the *IAM User Guide*.
     #
-    # An Amazon Web Services conversion compresses the passed inline session policy, managed policy
-    # ARNs, and session tags into a packed binary format that has a separate limit. Your request can
-    # fail for this limit even if your plaintext meets the other requirements. The `PackedPolicySize`
-    # response element indicates by percentage how close the policies and tags for your request are to
-    # the upper size limit.
-    #
     # You can pass a session tag with the same key as a tag that is attached to the role. When you do,
     # session tags override the role's tags with the same key.
     #
@@ -345,12 +339,6 @@ module Amazonite::Sts
     # Character
     # Limits](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-limits.html#reference_iam-limits-entity-length)
     # in the *IAM User Guide*.
-    #
-    # An Amazon Web Services conversion compresses the passed inline session policy, managed policy
-    # ARNs, and session tags into a packed binary format that has a separate limit. Your request can
-    # fail for this limit even if your plaintext meets the other requirements. The `PackedPolicySize`
-    # response element indicates by percentage how close the policies and tags for your request are to
-    # the upper size limit.
     #
     # You can pass a session tag with the same key as a tag that is attached to the role. When you do,
     # the session tag overrides the role tag with the same key.
@@ -622,7 +610,8 @@ module Amazonite::Sts
     # - You cannot call any IAM operations using the CLI or the Amazon Web Services API. This
     # limitation does not apply to console sessions.
     #
-    # - You cannot call any STS operations except `GetCallerIdentity`.
+    # - You cannot call any STS operations except `GetCallerIdentity`, `GetScopedCredentials`, or
+    # `GetDelegatedAccessToken`.
     #
     # You can use temporary credentials for single sign-on (SSO) to the console.
     #
@@ -690,6 +679,41 @@ module Amazonite::Sts
       Core::ParsedResponse(AS::GetFederationTokenResponse).new(response, result)
     end
 
+    # Returns a set of temporary security credentials that are scoped down from the caller's existing
+    # temporary security credentials. `GetScopedCredentials` preserves the caller's identity while
+    # narrowing the permissions and optionally shortening the session lifetime.
+    #
+    # For a comparison of `GetScopedCredentials` with the other API operations that produce temporary
+    # security credentials, see [Requesting Temporary Security
+    # Credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_request.html)
+    # and [Compare STS
+    # credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_sts-comparison.html)
+    # in the IAM User Guide.
+    #
+    # **Credential requirements**
+    #
+    # You can only call `GetScopedCredentials` with temporary security credentials, for example,
+    # credentials from an assumed role or a federated session. You cannot call it with IAM user
+    # credentials or root credentials. If you want to scope down IAM user credentials, first call
+    # `GetSessionToken` to get temporary security credentials, and then call `GetScopedCredentials`
+    # with those credentials.
+    #
+    # The `GetScopedCredentials` API is not available on the STS Global endpoint.
+    def get_scoped_credentials(input : AS::GetScopedCredentialsRequest) : Core::ParsedResponse(AS::GetScopedCredentialsResponse)
+      Log.info { "performing 'GetScopedCredentials' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "GetScopedCredentials")
+        form.add("Version", "2011-06-15")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("GetScopedCredentials", body)
+      result_node = XML.parse(response.body).xpath_node("//*[local-name()='GetScopedCredentialsResult']").not_nil!
+      result = AS::GetScopedCredentialsResponse.from_xml(result_node)
+      Core::ParsedResponse(AS::GetScopedCredentialsResponse).new(response, result)
+    end
+
     # Returns a set of temporary credentials for an Amazon Web Services account or IAM user. The
     # credentials consist of an access key ID, a secret access key, and a security token. Typically,
     # you use `GetSessionToken` if you want to use MFA to protect programmatic calls to specific
@@ -728,7 +752,8 @@ module Amazonite::Sts
     # - You cannot call any IAM API operations unless MFA authentication information is included in
     # the request.
     #
-    # - You cannot call any STS API *except* `AssumeRole` or `GetCallerIdentity`.
+    # - You cannot call any STS API *except* `AssumeRole`, `GetCallerIdentity`,
+    # `GetScopedCredentials`, `GetWebIdentityToken`, or `GetDelegatedAccessToken`.
     #
     # The credentials that `GetSessionToken` returns are based on permissions associated with the IAM
     # user whose credentials were used to call the operation. The temporary credentials have the same
@@ -761,10 +786,16 @@ module Amazonite::Sts
       Core::ParsedResponse(AS::GetSessionTokenResponse).new(response, result)
     end
 
-    # Returns a signed JSON Web Token (JWT) that represents the calling Amazon Web Services identity.
-    # The returned JWT can be used to authenticate with external services that support OIDC discovery.
-    # The token is signed by Amazon Web Services STS and can be publicly verified using the
-    # verification keys published at the issuer's JWKS endpoint.
+    # Returns a signed JSON Web Token (JWT) that represents the calling Amazon Web Services identity
+    # or, if you set `SubjectMode` to `OriginIdentity`, the human user or workload on whose behalf the
+    # calling session acts. The returned JWT can be used to authenticate with external services that
+    # support OIDC discovery. The token is signed by Amazon Web Services STS and can be publicly
+    # verified using the verification keys published at the issuer's JWKS endpoint.
+    #
+    # The `sub` (subject) claim contains the identity that `SubjectMode` selects. Whichever subject
+    # mode you use, the `principal_id` claim under the `https://sts.amazonaws.com/` namespace contains
+    # the ARN of the principal that requested the token, when that principal has an ARN. For a role
+    # session, this is the ARN of the role.
     #
     # The `GetWebIdentityToken` API is not available on the STS Global endpoint.
     def get_web_identity_token(input : AS::GetWebIdentityTokenRequest) : Core::ParsedResponse(AS::GetWebIdentityTokenResponse)

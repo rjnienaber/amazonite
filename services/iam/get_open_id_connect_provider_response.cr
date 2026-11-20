@@ -29,12 +29,45 @@ module Amazonite::Iam
     # Guide*.
     property tags : Array(Tag) | Nil
 
+    # The trusted identity propagation context provider configuration associated with the IAM OIDC
+    # provider resource object. For more information, see
+    # [ContextProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ContextProvider.html).
+    #
+    # This element is returned only when a trusted identity propagation context provider is configured
+    # for the OIDC provider.
+    property context_provider : ContextProvider | Nil
+
+    # The Amazon Resource Name (ARN) of the IAM Identity Center instance associated with the IAM OIDC
+    # provider resource object.
+    #
+    # For the format, see
+    # [InstanceMetadata](https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_InstanceMetadata.html)
+    # in the *IAM Identity Center API Reference*.
+    #
+    # This element is returned only when an IAM Identity Center instance is associated with the OIDC
+    # provider.
+    property identity_center_instance_arn : String | Nil
+
+    # The Amazon Resource Name (ARN) of the identity store that is resolved from the associated IAM
+    # Identity Center instance.
+    #
+    # For the format, see
+    # [InstanceMetadata](https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_InstanceMetadata.html)
+    # in the *IAM Identity Center API Reference*.
+    #
+    # This element is returned only when an IAM Identity Center instance is associated with the OIDC
+    # provider.
+    property identity_store_arn : String | Nil
+
     def initialize(
       @url : String | Nil = nil,
       @client_id_list : Array(String) | Nil = nil,
       @thumbprint_list : Array(String) | Nil = nil,
       @create_date : Time | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
+      @context_provider : ContextProvider | Nil = nil,
+      @identity_center_instance_arn : String | Nil = nil,
+      @identity_store_arn : String | Nil = nil,
     )
     end
 
@@ -60,6 +93,18 @@ module Amazonite::Iam
       (@tags || [] of Tag).each_with_index(1) do |item, i|
         params.concat(item.to_query_params("#{prefix}Tags.member.#{i}."))
       end
+
+      if value = @context_provider
+        params.concat(value.to_query_params("#{prefix}ContextProvider."))
+      end
+
+      if value = @identity_center_instance_arn
+        params << {"#{prefix}IdentityCenterInstanceArn", value}
+      end
+
+      if value = @identity_store_arn
+        params << {"#{prefix}IdentityStoreArn", value}
+      end
       params
     end
 
@@ -70,6 +115,9 @@ module Amazonite::Iam
         thumbprint_list: node.xpath_nodes("*[local-name()='ThumbprintList']/*[local-name()='member']").map { |n| n.content },
         create_date: Core::XMLValue.time(node.xpath_node("*[local-name()='CreateDate']")),
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
+        context_provider: node.xpath_node("*[local-name()='ContextProvider']").try { |n| ContextProvider.from_xml(n) },
+        identity_center_instance_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='IdentityCenterInstanceArn']")),
+        identity_store_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='IdentityStoreArn']")),
       )
     end
 
@@ -84,8 +132,22 @@ module Amazonite::Iam
         raise Core::ValidationError.new("Tags must have at most 50 item(s)") if value.size > 50
         value.each(&.validate!)
       end
+
+      if value = @context_provider
+        value.validate!
+      end
+
+      if value = @identity_center_instance_arn
+        raise Core::ValidationError.new("IdentityCenterInstanceArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("IdentityCenterInstanceArn length must be <= 1224") if value.size > 1224
+      end
+
+      if value = @identity_store_arn
+        raise Core::ValidationError.new("IdentityStoreArn length must be >= 20") if value.size < 20
+        raise Core::ValidationError.new("IdentityStoreArn length must be <= 2048") if value.size > 2048
+      end
     end
 
-    def_equals_and_hash(@url, @client_id_list, @thumbprint_list, @create_date, @tags)
+    def_equals_and_hash(@url, @client_id_list, @thumbprint_list, @create_date, @tags, @context_provider, @identity_center_instance_arn, @identity_store_arn)
   end
 end

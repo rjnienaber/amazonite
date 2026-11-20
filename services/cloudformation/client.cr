@@ -117,8 +117,8 @@ module Amazonite::CloudFormation
     # rollback, see [Update rollback
     # failed](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html#troubleshooting-errors-update-rollback-failed).
     #
-    # `ForceRollback` and `ResourcesToSkip` are mutually exclusive. For details, see
-    # ContinueUpdateRollbackInput$ForceRollback.
+    # `ForceRollback` and `ResourcesToSkip` are mutually exclusive. For details, see the
+    # `ForceRollback` parameter.
     def continue_update_rollback(input : ACF::ContinueUpdateRollbackInput) : Core::ParsedResponse(ACF::ContinueUpdateRollbackOutput)
       Log.info { "performing 'ContinueUpdateRollback' operation" }
       input.validate! if config.validate_input?
@@ -832,6 +832,9 @@ module Amazonite::CloudFormation
 
     # Returns the description of the specified StackSet operation.
     #
+    # Reports role provisioning and stack instances deployment progress in `StatusDetails.Stages`. A
+    # breakdown for each Amazon Web Services Region is available in `RegionalStatusDetails`.
+    #
     # This API provides *strongly consistent* reads meaning it will always return the most up-to-date
     # data.
     def describe_stack_set_operation(input : ACF::DescribeStackSetOperationInput) : Core::ParsedResponse(ACF::DescribeStackSetOperationOutput)
@@ -1489,6 +1492,9 @@ module Amazonite::CloudFormation
     end
 
     # Returns summary information about operations performed on a StackSet.
+    #
+    # Reports role provisioning and stack instances deployment progress in `StatusDetails.Stages`. The
+    # breakdown for each Amazon Web Services Region is available only from DescribeStackSetOperation.
     #
     # This API provides *eventually consistent* reads meaning it may take some time but will
     # eventually return the most up-to-date data.

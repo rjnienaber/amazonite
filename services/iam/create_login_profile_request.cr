@@ -32,10 +32,19 @@ module Amazonite::Iam
     # Specifies whether the user is required to set a new password on next sign-in.
     property password_reset_required : Bool | Nil
 
+    # The maximum duration (in seconds) of an Amazon Web Services Sign-In session for this IAM user.
+    # This setting can have a value from 1 hour (3600 seconds) to 90 days (7776000 seconds),
+    # inclusive. If you do not specify a value, the setting remains unset and the existing sign-in
+    # session behavior applies.
+    #
+    # This setting is not supported for the root user.
+    property max_signin_session_duration : Int32 | Nil
+
     def initialize(
       @user_name : String | Nil = nil,
       @password : String | Nil = nil,
       @password_reset_required : Bool | Nil = nil,
+      @max_signin_session_duration : Int32 | Nil = nil,
     )
     end
 
@@ -53,6 +62,10 @@ module Amazonite::Iam
       if value = @password_reset_required
         params << {"#{prefix}PasswordResetRequired", Core::QueryValue.bool(value)}
       end
+
+      if value = @max_signin_session_duration
+        params << {"#{prefix}MaxSigninSessionDuration", value.to_s}
+      end
       params
     end
 
@@ -61,6 +74,7 @@ module Amazonite::Iam
         user_name: Core::XMLValue.string(node.xpath_node("*[local-name()='UserName']")),
         password: Core::XMLValue.string(node.xpath_node("*[local-name()='Password']")),
         password_reset_required: Core::XMLValue.bool(node.xpath_node("*[local-name()='PasswordResetRequired']")),
+        max_signin_session_duration: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxSigninSessionDuration']")),
       )
     end
 
@@ -76,8 +90,13 @@ module Amazonite::Iam
         raise Core::ValidationError.new("Password length must be <= 128") if value.size > 128
         raise Core::ValidationError.new("Password does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
       end
+
+      if value = @max_signin_session_duration
+        raise Core::ValidationError.new("MaxSigninSessionDuration value must be >= 3600") if value < 3600
+        raise Core::ValidationError.new("MaxSigninSessionDuration value must be <= 7776000") if value > 7776000
+      end
     end
 
-    def_equals_and_hash(@user_name, @password, @password_reset_required)
+    def_equals_and_hash(@user_name, @password, @password_reset_required, @max_signin_session_duration)
   end
 end

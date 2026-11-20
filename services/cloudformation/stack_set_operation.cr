@@ -95,6 +95,11 @@ module Amazonite::CloudFormation
     # Detailed information about the StackSet operation.
     property status_details : StackSetOperationStatusDetails | Nil
 
+    # The progress detail for each Region of the operation, keyed by Region. Each entry reports the
+    # stack instances deployment progress for that Region. This field is returned only by
+    # DescribeStackSetOperation. It is not included in the ListStackSetOperations summary.
+    property regional_status_details : Hash(String, RegionalStatusDetail) | Nil
+
     def initialize(
       @operation_id : String | Nil = nil,
       @stack_set_id : String | Nil = nil,
@@ -110,6 +115,7 @@ module Amazonite::CloudFormation
       @stack_set_drift_detection_details : StackSetDriftDetectionDetails | Nil = nil,
       @status_reason : String | Nil = nil,
       @status_details : StackSetOperationStatusDetails | Nil = nil,
+      @regional_status_details : Hash(String, RegionalStatusDetail) | Nil = nil,
     )
     end
 
@@ -171,6 +177,11 @@ module Amazonite::CloudFormation
       if value = @status_details
         params.concat(value.to_query_params("#{prefix}StatusDetails."))
       end
+
+      (@regional_status_details || {} of String => RegionalStatusDetail).each_with_index(1) do |(key, value), i|
+        params << {"#{prefix}RegionalStatusDetails.entry.#{i}.key", key}
+        params.concat(value.to_query_params("#{prefix}RegionalStatusDetails.entry.#{i}.value."))
+      end
       params
     end
 
@@ -190,6 +201,7 @@ module Amazonite::CloudFormation
         stack_set_drift_detection_details: node.xpath_node("*[local-name()='StackSetDriftDetectionDetails']").try { |n| StackSetDriftDetectionDetails.from_xml(n) },
         status_reason: Core::XMLValue.string(node.xpath_node("*[local-name()='StatusReason']")),
         status_details: node.xpath_node("*[local-name()='StatusDetails']").try { |n| StackSetOperationStatusDetails.from_xml(n) },
+        regional_status_details: node.xpath_nodes("*[local-name()='RegionalStatusDetails']/*[local-name()='entry']").each_with_object({} of String => RegionalStatusDetail) { |entry, hash| hash[entry.xpath_node("*[local-name()='key']").not_nil!.content] = RegionalStatusDetail.from_xml(entry.xpath_node("*[local-name()='value']").not_nil!) },
       )
     end
 
@@ -226,8 +238,12 @@ module Amazonite::CloudFormation
       if value = @status_details
         value.validate!
       end
+
+      if value = @regional_status_details
+        value.each_value(&.validate!)
+      end
     end
 
-    def_equals_and_hash(@operation_id, @stack_set_id, @action, @status, @operation_preferences, @retain_stacks, @administration_role_arn, @execution_role_name, @creation_timestamp, @end_timestamp, @deployment_targets, @stack_set_drift_detection_details, @status_reason, @status_details)
+    def_equals_and_hash(@operation_id, @stack_set_id, @action, @status, @operation_preferences, @retain_stacks, @administration_role_arn, @execution_role_name, @creation_timestamp, @end_timestamp, @deployment_targets, @stack_set_drift_detection_details, @status_reason, @status_details, @regional_status_details)
   end
 end

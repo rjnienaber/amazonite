@@ -58,12 +58,6 @@ module Amazonite::Sts
     # Namespaces](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) in the
     # Amazon Web Services General Reference.
     #
-    # An Amazon Web Services conversion compresses the passed inline session policy, managed policy
-    # ARNs, and session tags into a packed binary format that has a separate limit. Your request can
-    # fail for this limit even if your plaintext meets the other requirements. The `PackedPolicySize`
-    # response element indicates by percentage how close the policies and tags for your request are to
-    # the upper size limit.
-    #
     # Passing policies to this operation returns new temporary credentials. The resulting session's
     # permissions are the intersection of the role's identity-based policy and the session policies.
     # You can use the role's temporary credentials in subsequent Amazon Web Services API calls to
@@ -92,12 +86,6 @@ module Amazonite::Sts
     #
     # For more information about role session permissions, see [Session
     # policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#policies_session).
-    #
-    # An Amazon Web Services conversion compresses the passed inline session policy, managed policy
-    # ARNs, and session tags into a packed binary format that has a separate limit. Your request can
-    # fail for this limit even if your plaintext meets the other requirements. The `PackedPolicySize`
-    # response element indicates by percentage how close the policies and tags for your request are to
-    # the upper size limit.
     property policy : String | Nil
 
     # The duration, in seconds, of the role session. The value can range from 900 seconds (15 minutes)

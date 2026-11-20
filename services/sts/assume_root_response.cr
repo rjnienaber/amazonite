@@ -71,7 +71,7 @@ module Amazonite::Sts
 
       if value = @source_identity
         raise Core::ValidationError.new("SourceIdentity length must be >= 2") if value.size < 2
-        raise Core::ValidationError.new("SourceIdentity length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("SourceIdentity length must be <= 256") if value.size > 256
         raise Core::ValidationError.new("SourceIdentity does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]*$"))
       end
 

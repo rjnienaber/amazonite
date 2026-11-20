@@ -17,8 +17,13 @@ module Amazonite::S3
     # *Amazon Web Services Key Management Service Developer Guide*.
     property replica_kms_key_id : String | Nil
 
+    # Specifies whether Amazon S3 uses the related multi-Region KMS key in the destination Amazon Web
+    # Services Region to encrypt the replica.
+    property use_source_multi_region_key : UseSourceMultiRegionKey | Nil
+
     def initialize(
       @replica_kms_key_id : String | Nil = nil,
+      @use_source_multi_region_key : UseSourceMultiRegionKey | Nil = nil,
     )
     end
 
@@ -37,17 +42,25 @@ module Amazonite::S3
       if value = @replica_kms_key_id
         xml.element("ReplicaKmsKeyID") { xml.text value }
       end
+
+      if value = @use_source_multi_region_key
+        xml.element("UseSourceMultiRegionKey") { value.build_xml(xml) }
+      end
     end
 
     def self.from_xml(node : XML::Node) : self
       new(
         replica_kms_key_id: Core::XMLValue.string(node.xpath_node("*[local-name()='ReplicaKmsKeyID']")),
+        use_source_multi_region_key: node.xpath_node("*[local-name()='UseSourceMultiRegionKey']").try { |n| UseSourceMultiRegionKey.from_xml(n) },
       )
     end
 
     def validate! : Nil
+      if value = @use_source_multi_region_key
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@replica_kms_key_id)
+    def_equals_and_hash(@replica_kms_key_id, @use_source_multi_region_key)
   end
 end

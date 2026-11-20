@@ -16,9 +16,10 @@ module Amazonite::Sts
     # user's ARN in your resource-based policies, such as an Amazon S3 bucket policy.
     property federated_user : FederatedUser | Nil
 
-    # A percentage value that indicates the packed size of the session policies and session tags
-    # combined passed in the request. The request fails if the packed size is greater than 100
-    # percent, which means the policies and tags exceeded the allowed space.
+    # The percentage (0-100) of the maximum allowed session token size that the returned session token
+    # consumes.
+    #
+    # This field is deprecated. Use `SessionTokenUtilization` instead.
     property packed_policy_size : Int32 | Nil
 
     property session_token_utilization : Int32 | Nil

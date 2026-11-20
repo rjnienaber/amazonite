@@ -434,7 +434,16 @@ module Amazonite::Iam
     #
     # - A list of thumbprints of one or more server certificates that the IdP uses
     #
-    # You get all of this information from the OIDC IdP you want to use to access Amazon Web Services.
+    # - A trusted identity propagation context provider that defines how the subject is derived and
+    # how keys from the provider's token are mapped into trusted context keys. Specifying a context
+    # provider enables trusted identity propagation for the provider. For more information, see
+    # [ContextProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ContextProvider.html).
+    #
+    # - The ARN of an IAM Identity Center instance to associate with the OIDC provider. If you specify
+    # an IAM Identity Center instance, you must also specify a context provider.
+    #
+    # You get the URL, client IDs, and thumbprints from the OIDC IdP you want to use to access Amazon
+    # Web Services.
     #
     # Amazon Web Services secures communication with OIDC identity providers (IdPs) using our library
     # of trusted root certificate authorities (CAs) to verify the JSON Web Key Set (JWKS) endpoint's
@@ -446,6 +455,17 @@ module Amazonite::Iam
     # Therefore, it is best to limit access to the
     # [CreateOpenIDConnectProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateOpenIDConnectProvider.html)
     # operation to highly privileged users.
+    #
+    # To control who can configure trusted identity propagation on an OIDC provider, use the
+    # [iam:EnableIdentityPropagation](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_EnableIdentityPropagation),
+    # [iam:EnableIdentityCenterAssociation](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_EnableIdentityCenterAssociation),
+    # [iam:RequestIdentityProviderIssuers](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_RequestIdentityProviderIssuers),
+    # [iam:ResourceIdentityProviderIssuers](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_ResourceIdentityProviderIssuers),
+    # [iam:RequestIdentityCenterInstanceArn](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_RequestIdentityCenterInstanceArn),
+    # and
+    # [iam:ResourceIdentityCenterInstanceArn](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_ResourceIdentityCenterInstanceArn)
+    # condition keys in IAM policies. The `Request` keys contain the values in the request. The
+    # `Resource` keys contain the values stored on the provider.
     def create_open_id_connect_provider(input : AI::CreateOpenIDConnectProviderRequest) : Core::ParsedResponse(AI::CreateOpenIDConnectProviderResponse)
       Log.info { "performing 'CreateOpenIDConnectProvider' operation" }
       input.validate! if config.validate_input?
@@ -564,6 +584,17 @@ module Amazonite::Iam
     # and [About SAML 2.0-based
     # federation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_saml.html) in
     # the *IAM User Guide*.
+    #
+    # To control who can configure trusted identity propagation on a SAML provider, use the
+    # [iam:EnableIdentityPropagation](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_EnableIdentityPropagation),
+    # [iam:EnableIdentityCenterAssociation](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_EnableIdentityCenterAssociation),
+    # [iam:RequestIdentityProviderIssuers](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_RequestIdentityProviderIssuers),
+    # [iam:ResourceIdentityProviderIssuers](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_ResourceIdentityProviderIssuers),
+    # [iam:RequestIdentityCenterInstanceArn](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_RequestIdentityCenterInstanceArn),
+    # and
+    # [iam:ResourceIdentityCenterInstanceArn](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_ResourceIdentityCenterInstanceArn)
+    # condition keys in IAM policies. The `Request` keys contain the values in the request. The
+    # `Resource` keys contain the values stored on the provider.
     def create_saml_provider(input : AI::CreateSAMLProviderRequest) : Core::ParsedResponse(AI::CreateSAMLProviderResponse)
       Log.info { "performing 'CreateSAMLProvider' operation" }
       input.validate! if config.validate_input?
@@ -855,14 +886,13 @@ module Amazonite::Iam
       Core::Response.new(response)
     end
 
-    # Deletes an OpenID Connect identity provider (IdP) resource object in IAM.
+    # Deletes an OpenID Connect identity provider (IdP) resource object in IAM. Deleting the provider
+    # also deletes its trusted identity propagation context provider and removes any IAM Identity
+    # Center instance association.
     #
     # Deleting an IAM OIDC provider resource does not update any roles that reference the provider as
     # a principal in their trust policies. Any attempt to assume a role that references a deleted
     # provider fails.
-    #
-    # This operation is idempotent; it does not fail or return an error if you call the operation for
-    # a provider that does not exist.
     def delete_open_id_connect_provider(input : AI::DeleteOpenIDConnectProviderRequest) : Core::Response
       Log.info { "performing 'DeleteOpenIDConnectProvider' operation" }
       input.validate! if config.validate_input?
@@ -4451,8 +4481,9 @@ module Amazonite::Iam
       Core::Response.new(response)
     end
 
-    # Changes the password for the specified IAM user. You can use the CLI, the Amazon Web Services
-    # API, or the **Users** page in the IAM console to change the password for any IAM user. Use
+    # Changes the password or the maximum sign-in session duration for the specified IAM user. You can
+    # use the CLI, the Amazon Web Services API, or the **Users** page in the IAM console to change the
+    # password for any IAM user. Use
     # [ChangePassword](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ChangePassword.html) to
     # change your own password in the **My Security Credentials** page in the Amazon Web Services
     # Management Console.
@@ -4470,6 +4501,46 @@ module Amazonite::Iam
         params.each { |key, value| form.add(key, value) }
       end
       response = query_request("UpdateLoginProfile", body)
+      Core::Response.new(response)
+    end
+
+    # Updates the configuration of an existing IAM OpenID Connect (OIDC) identity provider resource
+    # object. Use this operation to set, change, or remove the trusted identity propagation context
+    # provider, and to associate or disassociate an IAM Identity Center instance with the provider.
+    #
+    # This operation does not update the OIDC provider's server certificate thumbprints. Thumbprints
+    # are managed only by the
+    # [UpdateOpenIDConnectProviderThumbprint](https://docs.aws.amazon.com/IAM/latest/APIReference/API_UpdateOpenIDConnectProviderThumbprint.html)
+    # operation. To change a provider's thumbprints, call that operation instead.
+    #
+    # To remove a configuration rather than replace it, use the `RemoveContextProvider` and
+    # `RemoveIdentityCenterInstance` parameters. For each configuration, provide either the new value
+    # or the corresponding `Remove` flag in a single request, but not both. For example, specifying
+    # both `ContextProvider` and `RemoveContextProvider` in the same request is not allowed.
+    #
+    # A single request can change either the context provider or the IAM Identity Center association,
+    # but not both. To change both, make separate `UpdateOpenIDConnectProvider` requests. To remove
+    # the context provider, first remove the IAM Identity Center association in a separate request.
+    #
+    # To control who can configure trusted identity propagation on an OIDC provider, use the
+    # [iam:EnableIdentityPropagation](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_EnableIdentityPropagation),
+    # [iam:EnableIdentityCenterAssociation](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_EnableIdentityCenterAssociation),
+    # [iam:ResourceIdentityProviderIssuers](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_ResourceIdentityProviderIssuers),
+    # [iam:RequestIdentityCenterInstanceArn](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_RequestIdentityCenterInstanceArn),
+    # and
+    # [iam:ResourceIdentityCenterInstanceArn](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_ResourceIdentityCenterInstanceArn)
+    # condition keys in IAM policies. The `Request` keys contain the values in the request. The
+    # `Resource` keys contain the values stored on the provider.
+    def update_open_id_connect_provider(input : AI::UpdateOpenIDConnectProviderRequest) : Core::Response
+      Log.info { "performing 'UpdateOpenIDConnectProvider' operation" }
+      input.validate! if config.validate_input?
+      params = input.to_query_params("")
+      body = URI::Params.build do |form|
+        form.add("Action", "UpdateOpenIDConnectProvider")
+        form.add("Version", "2010-05-08")
+        params.each { |key, value| form.add(key, value) }
+      end
+      response = query_request("UpdateOpenIDConnectProvider", body)
       Core::Response.new(response)
     end
 
@@ -4506,7 +4577,8 @@ module Amazonite::Iam
       Core::Response.new(response)
     end
 
-    # Updates the description or maximum session duration setting of a role.
+    # Updates the description, maximum session duration, or maximum sign-in session duration of a
+    # role. You cannot change the maximum sign-in session duration of a service-linked role.
     def update_role(input : AI::UpdateRoleRequest) : Core::ParsedResponse(AI::UpdateRoleResponse)
       Log.info { "performing 'UpdateRole' operation" }
       input.validate! if config.validate_input?
@@ -4545,6 +4617,29 @@ module Amazonite::Iam
     # Updates the metadata document, SAML encryption settings, and private keys for an existing SAML
     # provider. To rotate private keys, add your new private key and then remove the old key in a
     # separate request.
+    #
+    # You can also use this operation to set, change, or remove the trusted identity propagation
+    # context provider, and to associate or disassociate an IAM Identity Center instance with the
+    # provider. To remove a configuration rather than replace it, use the `RemoveContextProvider` and
+    # `RemoveIdentityCenterInstance` parameters. For each configuration, provide either the new value
+    # or the corresponding `Remove` flag in a single request, but not both.
+    #
+    # A single request can change either the context provider or the provider metadata, but not both.
+    # Provider metadata includes the SAML metadata document, assertion encryption mode, private keys,
+    # and IAM Identity Center association. To change both, make separate `UpdateSAMLProvider`
+    # requests. To remove the context provider, first remove the IAM Identity Center association in a
+    # separate request.
+    #
+    # To control who can configure trusted identity propagation on a SAML provider, use the
+    # [iam:EnableIdentityPropagation](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_EnableIdentityPropagation),
+    # [iam:EnableIdentityCenterAssociation](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_EnableIdentityCenterAssociation),
+    # [iam:RequestIdentityProviderIssuers](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_RequestIdentityProviderIssuers),
+    # [iam:ResourceIdentityProviderIssuers](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_ResourceIdentityProviderIssuers),
+    # [iam:RequestIdentityCenterInstanceArn](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_RequestIdentityCenterInstanceArn),
+    # and
+    # [iam:ResourceIdentityCenterInstanceArn](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#ck_ResourceIdentityCenterInstanceArn)
+    # condition keys in IAM policies. The `Request` keys contain the values in the request. The
+    # `Resource` keys contain the values stored on the provider.
     def update_saml_provider(input : AI::UpdateSAMLProviderRequest) : Core::ParsedResponse(AI::UpdateSAMLProviderResponse)
       Log.info { "performing 'UpdateSAMLProvider' operation" }
       input.validate! if config.validate_input?

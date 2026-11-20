@@ -37,12 +37,29 @@ module Amazonite::Iam
     # file that uses AES-GCM or AES-CBC encryption algorithm to decrypt SAML assertions.
     property add_private_key : String | Nil
 
+    # The trusted identity propagation context provider configuration to associate with the SAML
+    # provider. The context provider defines how the subject is derived and how keys from the
+    # provider's SAML assertion are mapped into trusted context keys. Specifying a context provider
+    # enables trusted identity propagation for the provider. For more information, see
+    # [ContextProvider](https://docs.aws.amazon.com/IAM/latest/APIReference/API_ContextProvider.html).
+    property context_provider : ContextProvider | Nil
+
+    # The Amazon Resource Name (ARN) of the IAM Identity Center instance to associate with the SAML
+    # provider. If you specify this parameter, you must also specify `ContextProvider`.
+    #
+    # For the format, see
+    # [InstanceMetadata](https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_InstanceMetadata.html)
+    # in the *IAM Identity Center API Reference*.
+    property identity_center_instance_arn : String | Nil
+
     def initialize(
       @saml_metadata_document : String,
       @name : String,
       @tags : Array(Tag) | Nil = nil,
       @assertion_encryption_mode : AssertionEncryptionModeType | Nil = nil,
       @add_private_key : String | Nil = nil,
+      @context_provider : ContextProvider | Nil = nil,
+      @identity_center_instance_arn : String | Nil = nil,
     )
     end
 
@@ -64,6 +81,14 @@ module Amazonite::Iam
       if value = @add_private_key
         params << {"#{prefix}AddPrivateKey", value}
       end
+
+      if value = @context_provider
+        params.concat(value.to_query_params("#{prefix}ContextProvider."))
+      end
+
+      if value = @identity_center_instance_arn
+        params << {"#{prefix}IdentityCenterInstanceArn", value}
+      end
       params
     end
 
@@ -74,6 +99,8 @@ module Amazonite::Iam
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
         assertion_encryption_mode: (n = node.xpath_node("*[local-name()='AssertionEncryptionMode']")) ? AI::AssertionEncryptionModeType.from_json_object_key?(n.content) : nil,
         add_private_key: Core::XMLValue.string(node.xpath_node("*[local-name()='AddPrivateKey']")),
+        context_provider: node.xpath_node("*[local-name()='ContextProvider']").try { |n| ContextProvider.from_xml(n) },
+        identity_center_instance_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='IdentityCenterInstanceArn']")),
       )
     end
 
@@ -100,8 +127,17 @@ module Amazonite::Iam
         raise Core::ValidationError.new("AddPrivateKey length must be <= 16384") if value.size > 16384
         raise Core::ValidationError.new("AddPrivateKey does not match the required pattern") unless value.matches?(Regex.new("^[\t\n\r -ÿ]+$"))
       end
+
+      if value = @context_provider
+        value.validate!
+      end
+
+      if value = @identity_center_instance_arn
+        raise Core::ValidationError.new("IdentityCenterInstanceArn length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("IdentityCenterInstanceArn length must be <= 1224") if value.size > 1224
+      end
     end
 
-    def_equals_and_hash(@saml_metadata_document, @name, @tags, @assertion_encryption_mode, @add_private_key)
+    def_equals_and_hash(@saml_metadata_document, @name, @tags, @assertion_encryption_mode, @add_private_key, @context_provider, @identity_center_instance_arn)
   end
 end

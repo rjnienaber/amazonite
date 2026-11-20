@@ -35,12 +35,6 @@ module Amazonite::Sts
     # Namespaces](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) in the
     # Amazon Web Services General Reference.
     #
-    # An Amazon Web Services conversion compresses the passed inline session policy, managed policy
-    # ARNs, and session tags into a packed binary format that has a separate limit. Your request can
-    # fail for this limit even if your plaintext meets the other requirements. The `PackedPolicySize`
-    # response element indicates by percentage how close the policies and tags for your request are to
-    # the upper size limit.
-    #
     # Passing policies to this operation returns new temporary credentials. The resulting session's
     # permissions are the intersection of the role's identity-based policy and the session policies.
     # You can use the role's temporary credentials in subsequent Amazon Web Services API calls to
@@ -66,12 +60,6 @@ module Amazonite::Sts
     # characters. The JSON policy characters can be any ASCII character from the space character to
     # the end of the valid character list (\u0020 through \u00FF). It can also include the tab
     # (\u0009), linefeed (\u000A), and carriage return (\u000D) characters.
-    #
-    # An Amazon Web Services conversion compresses the passed inline session policy, managed policy
-    # ARNs, and session tags into a packed binary format that has a separate limit. Your request can
-    # fail for this limit even if your plaintext meets the other requirements. The `PackedPolicySize`
-    # response element indicates by percentage how close the policies and tags for your request are to
-    # the upper size limit.
     #
     # For more information about role session permissions, see [Session
     # policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#policies_session).
@@ -114,12 +102,6 @@ module Amazonite::Sts
     # additional limits, see [IAM and STS Character
     # Limits](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-limits.html#reference_iam-limits-entity-length)
     # in the *IAM User Guide*.
-    #
-    # An Amazon Web Services conversion compresses the passed inline session policy, managed policy
-    # ARNs, and session tags into a packed binary format that has a separate limit. Your request can
-    # fail for this limit even if your plaintext meets the other requirements. The `PackedPolicySize`
-    # response element indicates by percentage how close the policies and tags for your request are to
-    # the upper size limit.
     #
     # You can pass a session tag with the same key as a tag that is already attached to the role. When
     # you do, session tags override a role tag with the same key.
@@ -367,7 +349,7 @@ module Amazonite::Sts
 
       if value = @source_identity
         raise Core::ValidationError.new("SourceIdentity length must be >= 2") if value.size < 2
-        raise Core::ValidationError.new("SourceIdentity length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("SourceIdentity length must be <= 256") if value.size > 256
         raise Core::ValidationError.new("SourceIdentity does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]*$"))
       end
 

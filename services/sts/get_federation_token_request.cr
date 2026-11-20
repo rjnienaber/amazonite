@@ -39,12 +39,6 @@ module Amazonite::Sts
     # characters. The JSON policy characters can be any ASCII character from the space character to
     # the end of the valid character list (\u0020 through \u00FF). It can also include the tab
     # (\u0009), linefeed (\u000A), and carriage return (\u000D) characters.
-    #
-    # An Amazon Web Services conversion compresses the passed inline session policy, managed policy
-    # ARNs, and session tags into a packed binary format that has a separate limit. Your request can
-    # fail for this limit even if your plaintext meets the other requirements. The `PackedPolicySize`
-    # response element indicates by percentage how close the policies and tags for your request are to
-    # the upper size limit.
     property policy : String | Nil
 
     # The Amazon Resource Names (ARNs) of the IAM managed policies that you want to use as a managed
@@ -76,12 +70,6 @@ module Amazonite::Sts
     # that policy specifically references the federated user session in the `Principal` element of the
     # policy, the session has the permissions allowed by the policy. These permissions are granted in
     # addition to the permissions that are granted by the session policies.
-    #
-    # An Amazon Web Services conversion compresses the passed inline session policy, managed policy
-    # ARNs, and session tags into a packed binary format that has a separate limit. Your request can
-    # fail for this limit even if your plaintext meets the other requirements. The `PackedPolicySize`
-    # response element indicates by percentage how close the policies and tags for your request are to
-    # the upper size limit.
     property policy_arns : Array(PolicyDescriptorType) | Nil
 
     # The duration, in seconds, that the session should last. Acceptable durations for federation
@@ -101,12 +89,6 @@ module Amazonite::Sts
     # limits, see [IAM and STS Character
     # Limits](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-limits.html#reference_iam-limits-entity-length)
     # in the *IAM User Guide*.
-    #
-    # An Amazon Web Services conversion compresses the passed inline session policy, managed policy
-    # ARNs, and session tags into a packed binary format that has a separate limit. Your request can
-    # fail for this limit even if your plaintext meets the other requirements. The `PackedPolicySize`
-    # response element indicates by percentage how close the policies and tags for your request are to
-    # the upper size limit.
     #
     # You can pass a session tag with the same key as a tag that is already attached to the user you
     # are federating. When you do, session tags override a user tag with the same key.

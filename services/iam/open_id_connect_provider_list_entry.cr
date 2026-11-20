@@ -5,8 +5,13 @@ module Amazonite::Iam
   class OpenIDConnectProviderListEntry
     property arn : String | Nil
 
+    # Specifies whether trusted identity propagation is enabled for the OpenID Connect (OIDC)
+    # provider. This is `true` when an IAM Identity Center instance is associated with the provider.
+    property is_trusted_identity_propagation_enabled : Bool | Nil
+
     def initialize(
       @arn : String | Nil = nil,
+      @is_trusted_identity_propagation_enabled : Bool | Nil = nil,
     )
     end
 
@@ -16,12 +21,17 @@ module Amazonite::Iam
       if value = @arn
         params << {"#{prefix}Arn", value}
       end
+
+      if value = @is_trusted_identity_propagation_enabled
+        params << {"#{prefix}IsTrustedIdentityPropagationEnabled", Core::QueryValue.bool(value)}
+      end
       params
     end
 
     def self.from_xml(node : XML::Node) : self
       new(
         arn: Core::XMLValue.string(node.xpath_node("*[local-name()='Arn']")),
+        is_trusted_identity_propagation_enabled: Core::XMLValue.bool(node.xpath_node("*[local-name()='IsTrustedIdentityPropagationEnabled']")),
       )
     end
 
@@ -32,6 +42,6 @@ module Amazonite::Iam
       end
     end
 
-    def_equals_and_hash(@arn)
+    def_equals_and_hash(@arn, @is_trusted_identity_propagation_enabled)
   end
 end

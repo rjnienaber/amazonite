@@ -14,6 +14,6 @@ require "./core/*"
 module Amazonite::Sts
   # this service's own version in api-models-aws (gradle.properties), not
   # amazonite's shard version - upstream bumps it per model release
-  VERSION     = "1.0.8"
+  VERSION     = "1.0.9"
   API_VERSION = "2011-06-15"
 end

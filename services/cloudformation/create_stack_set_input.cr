@@ -91,14 +91,19 @@ module Amazonite::CloudFormation
     # with template
     # macros](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-macros.html).
     #
-    # StackSets with service-managed permissions don't currently support the use of macros in
-    # templates. (This includes the
+    # With service-managed permissions, CloudFormation can process macros, nested stacks, and
+    # transforms in your StackSet template only when you provide a custom execution role template.
+    # (Macros include the
     # [AWS::Include](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-include.html)
     # and
     # [AWS::Serverless](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-serverless.html)
-    # transforms, which are macros hosted by CloudFormation.) Even if you specify this capability for
-    # a StackSet with service-managed permissions, if you reference a macro in your template the
-    # StackSet operation will fail.
+    # transforms, which are macros hosted by CloudFormation.) The default service-managed execution
+    # role can't provision them: if you reference a macro in your template, the StackSet operation
+    # fails even when you specify this capability.
+    #
+    # To use macros, nested stacks, or transforms with service-managed permissions, specify a custom
+    # execution role template in `ExecutionRoleTemplateBody` or `ExecutionRoleTemplateUrl`, and
+    # specify both `CAPABILITY_NAMED_IAM` and `CAPABILITY_AUTO_EXPAND`.
     property capabilities : Array(Capability) | Nil
 
     # The key-value pairs to associate with this StackSet and the stacks created from it.
@@ -121,14 +126,17 @@ module Amazonite::CloudFormation
     # Valid only if the permissions model is `SELF_MANAGED`.
     property administration_role_arn : String | Nil
 
-    # The name of the IAM execution role to use to create the StackSet. If you do not specify an
-    # execution role, CloudFormation uses the `AWSCloudFormationStackSetExecutionRole` role for the
-    # StackSet operation.
+    # The name of the IAM execution role that CloudFormation uses for StackSet operations in your
+    # target accounts.
     #
-    # Specify an IAM role only if you are using customized execution roles to control which stack
-    # resources users and groups can include in their StackSets.
+    # [Self-managed permissions] If you do not specify an execution role, CloudFormation uses the
+    # `AWSCloudFormationStackSetExecutionRole` role for the StackSet operation. Specify an IAM role
+    # only if you are using customized execution roles to control which stack resources users and
+    # groups can include in their StackSets.
     #
-    # Valid only if the permissions model is `SELF_MANAGED`.
+    # [Service-managed permissions] Set this name when you use custom execution roles. The role that
+    # your custom execution role template provisions in your target accounts must have this same name,
+    # and the name must begin with `stacksets-exec-custom-`.
     property execution_role_name : String | Nil
 
     # Describes how the IAM roles required for StackSet operations are created. By default,
@@ -188,6 +196,26 @@ module Amazonite::CloudFormation
     # conflicting operations.
     property managed_execution : ManagedExecution | Nil
 
+    # The body of the template that creates a custom execution role in target accounts. This parameter
+    # applies only when the permissions model is `SERVICE_MANAGED`.
+    #
+    # Conditional: Specify either `ExecutionRoleTemplateBody` or `ExecutionRoleTemplateUrl`, but not
+    # both. If you don't specify either, CloudFormation uses the default service-managed execution
+    # role in target accounts.
+    property execution_role_template_body : String | Nil
+
+    # The URL of an Amazon S3 object that contains the template that creates a custom execution role
+    # in target accounts. This parameter applies only when the permissions model is `SERVICE_MANAGED`.
+    #
+    # Conditional: Specify either `ExecutionRoleTemplateBody` or `ExecutionRoleTemplateUrl`, but not
+    # both. If you don't specify either, CloudFormation uses the default service-managed execution
+    # role in target accounts.
+    property execution_role_template_url : String | Nil
+
+    # The name of the Amazon S3 bucket that stores the execution role stack template body.
+    # CloudFormation uses this bucket only when you specify a custom execution role template.
+    property stack_set_output_bucket : String | Nil
+
     def initialize(
       @stack_set_name : String,
       @description : String | Nil = nil,
@@ -204,6 +232,9 @@ module Amazonite::CloudFormation
       @call_as : CallAs | Nil = nil,
       @client_request_token : String | Nil = nil,
       @managed_execution : ManagedExecution | Nil = nil,
+      @execution_role_template_body : String | Nil = nil,
+      @execution_role_template_url : String | Nil = nil,
+      @stack_set_output_bucket : String | Nil = nil,
     )
     end
 
@@ -267,6 +298,18 @@ module Amazonite::CloudFormation
       if value = @managed_execution
         params.concat(value.to_query_params("#{prefix}ManagedExecution."))
       end
+
+      if value = @execution_role_template_body
+        params << {"#{prefix}ExecutionRoleTemplateBody", value}
+      end
+
+      if value = @execution_role_template_url
+        params << {"#{prefix}ExecutionRoleTemplateUrl", value}
+      end
+
+      if value = @stack_set_output_bucket
+        params << {"#{prefix}StackSetOutputBucket", value}
+      end
       params
     end
 
@@ -287,6 +330,9 @@ module Amazonite::CloudFormation
         call_as: (n = node.xpath_node("*[local-name()='CallAs']")) ? ACF::CallAs.from_json_object_key?(n.content) : nil,
         client_request_token: Core::XMLValue.string(node.xpath_node("*[local-name()='ClientRequestToken']")),
         managed_execution: node.xpath_node("*[local-name()='ManagedExecution']").try { |n| ManagedExecution.from_xml(n) },
+        execution_role_template_body: Core::XMLValue.string(node.xpath_node("*[local-name()='ExecutionRoleTemplateBody']")),
+        execution_role_template_url: Core::XMLValue.string(node.xpath_node("*[local-name()='ExecutionRoleTemplateUrl']")),
+        stack_set_output_bucket: Core::XMLValue.string(node.xpath_node("*[local-name()='StackSetOutputBucket']")),
       )
     end
 
@@ -339,8 +385,17 @@ module Amazonite::CloudFormation
       if value = @managed_execution
         value.validate!
       end
+
+      if value = @execution_role_template_body
+        raise Core::ValidationError.new("ExecutionRoleTemplateBody length must be >= 1") if value.size < 1
+      end
+
+      if value = @execution_role_template_url
+        raise Core::ValidationError.new("ExecutionRoleTemplateUrl length must be >= 1") if value.size < 1
+        raise Core::ValidationError.new("ExecutionRoleTemplateUrl length must be <= 5120") if value.size > 5120
+      end
     end
 
-    def_equals_and_hash(@stack_set_name, @description, @template_body, @template_url, @stack_id, @parameters, @capabilities, @tags, @administration_role_arn, @execution_role_name, @permission_model, @auto_deployment, @call_as, @client_request_token, @managed_execution)
+    def_equals_and_hash(@stack_set_name, @description, @template_body, @template_url, @stack_id, @parameters, @capabilities, @tags, @administration_role_arn, @execution_role_name, @permission_model, @auto_deployment, @call_as, @client_request_token, @managed_execution, @execution_role_template_body, @execution_role_template_url, @stack_set_output_bucket)
   end
 end

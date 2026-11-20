@@ -2,7 +2,7 @@ private alias Core = Amazonite::Core
 
 module Amazonite::S3
   # A filter that identifies the subset of objects to which the replication rule applies. A `Filter`
-  # must specify exactly one `Prefix`, `Tag`, or an `And` child element.
+  # must specify exactly one `Prefix`, `Tag`, `And`, or `Not` child element.
   class ReplicationRuleFilter
     # An object key name prefix that identifies the subset of objects to which the rule applies.
     #
@@ -25,10 +25,14 @@ module Amazonite::S3
     # - If you specify a filter based on multiple tags, wrap the `Tag` elements in an `And` tag.
     property and : ReplicationRuleAndOperator | Nil
 
+    # A container for specifying filters that exclude matching objects from the replication rule.
+    property not : ReplicationRuleNotOperator | Nil
+
     def initialize(
       @prefix : String | Nil = nil,
       @tag : Tag | Nil = nil,
       @and : ReplicationRuleAndOperator | Nil = nil,
+      @not : ReplicationRuleNotOperator | Nil = nil,
     )
     end
 
@@ -55,6 +59,10 @@ module Amazonite::S3
       if value = @and
         xml.element("And") { value.build_xml(xml) }
       end
+
+      if value = @not
+        xml.element("Not") { value.build_xml(xml) }
+      end
     end
 
     def self.from_xml(node : XML::Node) : self
@@ -62,6 +70,7 @@ module Amazonite::S3
         prefix: Core::XMLValue.string(node.xpath_node("*[local-name()='Prefix']")),
         tag: node.xpath_node("*[local-name()='Tag']").try { |n| Tag.from_xml(n) },
         and: node.xpath_node("*[local-name()='And']").try { |n| ReplicationRuleAndOperator.from_xml(n) },
+        not: node.xpath_node("*[local-name()='Not']").try { |n| ReplicationRuleNotOperator.from_xml(n) },
       )
     end
 
@@ -73,8 +82,12 @@ module Amazonite::S3
       if value = @and
         value.validate!
       end
+
+      if value = @not
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@prefix, @tag, @and)
+    def_equals_and_hash(@prefix, @tag, @and, @not)
   end
 end

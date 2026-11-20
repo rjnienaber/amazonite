@@ -91,6 +91,10 @@ module Amazonite::CloudFormation
     # deployed in. The Amazon Web Services Regions list output is in no particular order.
     property regions : Array(String) | Nil
 
+    # The Amazon S3 bucket path where CloudFormation stores the execution role stack template body.
+    # CloudFormation uses this bucket only when you specify a custom execution role template.
+    property stack_set_output_bucket_path : String | Nil
+
     def initialize(
       @stack_set_name : String | Nil = nil,
       @stack_set_id : String | Nil = nil,
@@ -109,6 +113,7 @@ module Amazonite::CloudFormation
       @organizational_unit_ids : Array(String) | Nil = nil,
       @managed_execution : ManagedExecution | Nil = nil,
       @regions : Array(String) | Nil = nil,
+      @stack_set_output_bucket_path : String | Nil = nil,
     )
     end
 
@@ -182,6 +187,10 @@ module Amazonite::CloudFormation
       (@regions || [] of String).each_with_index(1) do |item, i|
         params << {"#{prefix}Regions.member.#{i}", item}
       end
+
+      if value = @stack_set_output_bucket_path
+        params << {"#{prefix}StackSetOutputBucketPath", value}
+      end
       params
     end
 
@@ -204,6 +213,7 @@ module Amazonite::CloudFormation
         organizational_unit_ids: node.xpath_nodes("*[local-name()='OrganizationalUnitIds']/*[local-name()='member']").map { |n| n.content },
         managed_execution: node.xpath_node("*[local-name()='ManagedExecution']").try { |n| ManagedExecution.from_xml(n) },
         regions: node.xpath_nodes("*[local-name()='Regions']/*[local-name()='member']").map { |n| n.content },
+        stack_set_output_bucket_path: Core::XMLValue.string(node.xpath_node("*[local-name()='StackSetOutputBucketPath']")),
       )
     end
 
@@ -251,6 +261,6 @@ module Amazonite::CloudFormation
       end
     end
 
-    def_equals_and_hash(@stack_set_name, @stack_set_id, @description, @status, @template_body, @parameters, @capabilities, @tags, @stack_set_arn, @administration_role_arn, @execution_role_name, @stack_set_drift_detection_details, @auto_deployment, @permission_model, @organizational_unit_ids, @managed_execution, @regions)
+    def_equals_and_hash(@stack_set_name, @stack_set_id, @description, @status, @template_body, @parameters, @capabilities, @tags, @stack_set_arn, @administration_role_arn, @execution_role_name, @stack_set_drift_detection_details, @auto_deployment, @permission_model, @organizational_unit_ids, @managed_execution, @regions, @stack_set_output_bucket_path)
   end
 end

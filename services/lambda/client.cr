@@ -1153,7 +1153,9 @@ module Amazonite::Lambda
     #
     # For functions with a long timeout, your client might disconnect during synchronous invocation
     # while it waits for a response. Configure your HTTP client, SDK, firewall, proxy, or operating
-    # system to allow for long connections with timeout or keep-alive settings.
+    # system to allow for long connections with timeout or keep-alive settings. Synchronous
+    # invocations can run for up to 30 minutes. Set the read timeout of your client higher than the
+    # function timeout, and turn on TCP keep-alive.
     #
     # This operation requires permission for the
     # [lambda:InvokeFunction](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_awslambda.html)

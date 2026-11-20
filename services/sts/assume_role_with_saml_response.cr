@@ -14,12 +14,17 @@ module Amazonite::Sts
     # The identifiers for the temporary security credentials that the operation returns.
     property assumed_role_user : AssumedRoleUser | Nil
 
-    # A percentage value that indicates the packed size of the session policies and session tags
-    # combined passed in the request. The request fails if the packed size is greater than 100
-    # percent, which means the policies and tags exceeded the allowed space.
+    # The percentage (0-100) of the maximum allowed session token size that the returned session token
+    # consumes.
+    #
+    # This field is deprecated. Use `SessionTokenUtilization` instead.
     property packed_policy_size : Int32 | Nil
 
     # The value of the `NameID` element in the `Subject` element of the SAML assertion.
+    #
+    # This is not the trusted identity propagation subject (`aws:OriginIdentity/Subject`). When the
+    # session carries trusted identity propagation context, that value is returned in
+    # `TrustedIdentityPropagationContext`.
     property subject : String | Nil
 
     # The format of the name ID, as defined by the `Format` attribute in the `NameID` element of the
@@ -29,9 +34,17 @@ module Amazonite::Sts
     # removed. For example, `urn:oasis:names:tc:SAML:2.0:nameid-format:transient` is returned as
     # `transient`. If the format includes any other prefix, the format is returned with no
     # modifications.
+    #
+    # This is not the trusted identity propagation subject type (`aws:OriginIdentity/SubjectType`).
+    # When the session carries trusted identity propagation context, that value is returned in
+    # `TrustedIdentityPropagationContext`.
     property subject_type : String | Nil
 
     # The value of the `Issuer` element of the SAML assertion.
+    #
+    # This is not the trusted identity propagation issuer (`aws:OriginIdentity/Issuer`). When the
+    # session carries trusted identity propagation context, that value is returned in
+    # `TrustedIdentityPropagationContext`.
     property issuer : String | Nil
 
     # The value of the `Recipient` attribute of the `SubjectConfirmationData` element of the SAML
@@ -80,6 +93,26 @@ module Amazonite::Sts
 
     property session_token_size : Int32 | Nil
 
+    # The trusted identity propagation context that Amazon Web Services STS set in the session from
+    # the SAML assertion, through the context provider attached to the SAML identity provider. It is
+    # present only when Amazon Web Services STS set such context in the session. It contains the
+    # `aws:OriginIdentity/Subject`, `aws:OriginIdentity/SubjectType`, `aws:OriginIdentity/Issuer` and
+    # `aws:OriginIdentity/FederatedProviderArn` keys and the
+    # `aws:TransactionContext/IdentityProvider/*` keys that Amazon Web Services STS set in the
+    # session. Other keys in the session, such as `aws:IdentityCenterInstanceArn` and
+    # `aws:IdentityStoreArn` for an identity provider with an Identity Center instance attached, are
+    # not returned.
+    #
+    # Its `OriginIdentity` members share the names `Subject`, `SubjectType` and `Issuer` with members
+    # of this response but carry the trusted identity propagation values, which differ from the SAML
+    # assertion values.
+    #
+    # It is not returned when the SAML assertion is encrypted, even though the session carries the
+    # context.
+    #
+    # This element contains information about the end user. Do not log it.
+    property trusted_identity_propagation_context : TrustedIdentityPropagationContext | Nil
+
     def initialize(
       @credentials : Credentials | Nil = nil,
       @assumed_role_user : AssumedRoleUser | Nil = nil,
@@ -92,6 +125,7 @@ module Amazonite::Sts
       @source_identity : String | Nil = nil,
       @session_token_utilization : Int32 | Nil = nil,
       @session_token_size : Int32 | Nil = nil,
+      @trusted_identity_propagation_context : TrustedIdentityPropagationContext | Nil = nil,
     )
     end
 
@@ -141,6 +175,10 @@ module Amazonite::Sts
       if value = @session_token_size
         params << {"#{prefix}SessionTokenSize", value.to_s}
       end
+
+      if value = @trusted_identity_propagation_context
+        params.concat(value.to_query_params("#{prefix}TrustedIdentityPropagationContext."))
+      end
       params
     end
 
@@ -157,6 +195,7 @@ module Amazonite::Sts
         source_identity: Core::XMLValue.string(node.xpath_node("*[local-name()='SourceIdentity']")),
         session_token_utilization: Core::XMLValue.i32(node.xpath_node("*[local-name()='SessionTokenUtilization']")),
         session_token_size: Core::XMLValue.i32(node.xpath_node("*[local-name()='SessionTokenSize']")),
+        trusted_identity_propagation_context: node.xpath_node("*[local-name()='TrustedIdentityPropagationContext']").try { |n| TrustedIdentityPropagationContext.from_xml(n) },
       )
     end
 
@@ -175,7 +214,7 @@ module Amazonite::Sts
 
       if value = @source_identity
         raise Core::ValidationError.new("SourceIdentity length must be >= 2") if value.size < 2
-        raise Core::ValidationError.new("SourceIdentity length must be <= 64") if value.size > 64
+        raise Core::ValidationError.new("SourceIdentity length must be <= 256") if value.size > 256
         raise Core::ValidationError.new("SourceIdentity does not match the required pattern") unless value.matches?(Regex.new("^[\\w+=,.@-]*$"))
       end
 
@@ -186,8 +225,12 @@ module Amazonite::Sts
       if value = @session_token_size
         raise Core::ValidationError.new("SessionTokenSize value must be >= 0") if value < 0
       end
+
+      if value = @trusted_identity_propagation_context
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@credentials, @assumed_role_user, @packed_policy_size, @subject, @subject_type, @issuer, @audience, @name_qualifier, @source_identity, @session_token_utilization, @session_token_size)
+    def_equals_and_hash(@credentials, @assumed_role_user, @packed_policy_size, @subject, @subject_type, @issuer, @audience, @name_qualifier, @source_identity, @session_token_utilization, @session_token_size, @trusted_identity_propagation_context)
   end
 end

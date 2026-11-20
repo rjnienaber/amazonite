@@ -38,6 +38,13 @@ module Amazonite::Iam
     # parameter or `duration-seconds` CLI parameter.
     property max_session_duration : Int32 | Nil
 
+    # The maximum duration (in seconds) of an Amazon Web Services Sign-In session for users who sign
+    # in with this role. This value is independent of `MaxSessionDuration`.
+    #
+    # This member is omitted when the setting is unset. In that case, no default value is returned and
+    # the existing sign-in session behavior applies.
+    property max_signin_session_duration : Int32 | Nil
+
     # The ARN of the policy used to set the permissions boundary for the role.
     #
     # For more information about permissions boundaries, see [Permissions boundaries for IAM
@@ -73,6 +80,7 @@ module Amazonite::Iam
       @assume_role_policy_document : String | Nil = nil,
       @description : String | Nil = nil,
       @max_session_duration : Int32 | Nil = nil,
+      @max_signin_session_duration : Int32 | Nil = nil,
       @permissions_boundary : AttachedPermissionsBoundary | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
       @role_last_used : RoleLastUsed | Nil = nil,
@@ -105,6 +113,10 @@ module Amazonite::Iam
         params << {"#{prefix}MaxSessionDuration", value.to_s}
       end
 
+      if value = @max_signin_session_duration
+        params << {"#{prefix}MaxSigninSessionDuration", value.to_s}
+      end
+
       if value = @permissions_boundary
         params.concat(value.to_query_params("#{prefix}PermissionsBoundary."))
       end
@@ -133,6 +145,7 @@ module Amazonite::Iam
         assume_role_policy_document: Core::XMLValue.string(node.xpath_node("*[local-name()='AssumeRolePolicyDocument']")),
         description: Core::XMLValue.string(node.xpath_node("*[local-name()='Description']")),
         max_session_duration: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxSessionDuration']")),
+        max_signin_session_duration: Core::XMLValue.i32(node.xpath_node("*[local-name()='MaxSigninSessionDuration']")),
         permissions_boundary: node.xpath_node("*[local-name()='PermissionsBoundary']").try { |n| AttachedPermissionsBoundary.from_xml(n) },
         tags: node.xpath_nodes("*[local-name()='Tags']/*[local-name()='member']").map { |n| Tag.from_xml(n) },
         role_last_used: node.xpath_node("*[local-name()='RoleLastUsed']").try { |n| RoleLastUsed.from_xml(n) },
@@ -181,6 +194,11 @@ module Amazonite::Iam
         raise Core::ValidationError.new("MaxSessionDuration value must be <= 43200") if value > 43200
       end
 
+      if value = @max_signin_session_duration
+        raise Core::ValidationError.new("MaxSigninSessionDuration value must be >= 3600") if value < 3600
+        raise Core::ValidationError.new("MaxSigninSessionDuration value must be <= 7776000") if value > 7776000
+      end
+
       if value = @permissions_boundary
         value.validate!
       end
@@ -200,6 +218,6 @@ module Amazonite::Iam
       end
     end
 
-    def_equals_and_hash(@path, @role_name, @role_id, @arn, @create_date, @assume_role_policy_document, @description, @max_session_duration, @permissions_boundary, @tags, @role_last_used, @source_role_template)
+    def_equals_and_hash(@path, @role_name, @role_id, @arn, @create_date, @assume_role_policy_document, @description, @max_session_duration, @max_signin_session_duration, @permissions_boundary, @tags, @role_last_used, @source_role_template)
   end
 end

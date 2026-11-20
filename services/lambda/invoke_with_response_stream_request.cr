@@ -27,6 +27,8 @@ module Amazonite::Lambda
 
     # Up to 3,583 bytes of base64-encoded data about the invoking client to pass to the function in
     # the context object.
+    #
+    # `ClientContext` is logged to CloudTrail if you turn on data events.
     @[JSON::Field(key: "ClientContext", ignore: true)]
     property client_context : String | Nil
 
