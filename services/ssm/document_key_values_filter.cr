@@ -8,6 +8,18 @@ module Amazonite::Ssm
   # You can also use Amazon Web Services-provided keys, some of which have specific allowed values.
   # These keys and their associated values are as follows:
   #
+  # CloudProviders Returns documents whose default version can run against any of the specified
+  # cloud providers. The `CloudProviders` key supports the following values:
+  #
+  # - `AWS` - Documents that run against Amazon Web Services resources.
+  #
+  # - `Azure` - Documents that run against Microsoft Azure resources.
+  #
+  # - `GCP` - Documents that run against Google Cloud resources.
+  #
+  # If you created a document before Systems Manager supported cloud providers, the document runs
+  # against `AWS`.
+  #
   # DocumentType
   #
   # - `ApplicationConfiguration`

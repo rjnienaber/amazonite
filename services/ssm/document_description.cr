@@ -138,6 +138,11 @@ module Amazonite::Ssm
     @[JSON::Field(key: "CategoryEnum")]
     property category_enum : Array(String) | Nil
 
+    # This field specifies the cloud providers that the returned version of the document can run
+    # against.
+    @[JSON::Field(key: "CloudProviders", converter: Core::ArrayConverter(AS::CloudProvider))]
+    property cloud_providers : Array(CloudProvider) | Nil
+
     def initialize(
       @sha_1 : String | Nil = nil,
       @hash : String | Nil = nil,
@@ -169,6 +174,7 @@ module Amazonite::Ssm
       @review_status : ReviewStatus | Nil = nil,
       @category : Array(String) | Nil = nil,
       @category_enum : Array(String) | Nil = nil,
+      @cloud_providers : Array(CloudProvider) | Nil = nil,
     )
     end
 
@@ -255,8 +261,13 @@ module Amazonite::Ssm
         raise Core::ValidationError.new("CategoryEnum must have at least 0 item(s)") if value.size < 0
         raise Core::ValidationError.new("CategoryEnum must have at most 3 item(s)") if value.size > 3
       end
+
+      if value = @cloud_providers
+        raise Core::ValidationError.new("CloudProviders must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("CloudProviders must have at most 10 item(s)") if value.size > 10
+      end
     end
 
-    def_equals_and_hash(@sha_1, @hash, @hash_type, @name, @display_name, @version_name, @owner, @created_date, @status, @status_information, @document_version, @description, @parameters, @platform_types, @document_type, @schema_version, @latest_version, @default_version, @document_format, @target_type, @tags, @attachments_information, @requires, @author, @review_information, @approved_version, @pending_review_version, @review_status, @category, @category_enum)
+    def_equals_and_hash(@sha_1, @hash, @hash_type, @name, @display_name, @version_name, @owner, @created_date, @status, @status_information, @document_version, @description, @parameters, @platform_types, @document_type, @schema_version, @latest_version, @default_version, @document_format, @target_type, @tags, @attachments_information, @requires, @author, @review_information, @approved_version, @pending_review_version, @review_status, @category, @category_enum, @cloud_providers)
   end
 end

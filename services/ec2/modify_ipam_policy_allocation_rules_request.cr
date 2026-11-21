@@ -20,6 +20,16 @@ module Amazonite::EC2
     # policies. Supported services and resource types include:
     #
     # - Elastic IP addresses
+    #
+    # - Application Load Balancers
+    #
+    # - Amazon RDS
+    #
+    # - NAT gateways in regional availability mode
+    #
+    # - Lambda Network Connector
+    #
+    # - Automated Internet Firewall
     property resource_type : IpamPolicyResourceType
 
     # The new allocation rules to apply to the IPAM policy.

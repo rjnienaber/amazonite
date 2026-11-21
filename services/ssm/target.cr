@@ -37,9 +37,24 @@ module Amazonite::Ssm
   # -
   # `Key=CloudConnector,Values={"CloudConnectorId":"cloud-connector-id","SsmManagedNodeFilter":"MANAGED","CloudProviderRegions":["eastus"]}`
   #
-  # Supported JSON keys: `CloudConnectorId` (required), `SsmManagedNodeFilter`,
-  # `CloudProviderRegions`, and, for GCP, `IncludesLabels`, `ExcludesLabels`,
-  # `OsPolicyComplianceFilter`, and `OsPolicyOrchestratorId`.
+  # Instead of `CloudConnector`, you can use `AzureCloudConnector` or `GcpCloudConnector` for a
+  # cloud connector to that provider. You must specify exactly one value. A cloud connector ID alone
+  # targets every running virtual machine (VM) in the cloud connector's scope. In the JSON value,
+  # `CloudConnectorId` is required, and the following optional keys narrow that scope:
+  #
+  # - For both providers: `SsmManagedNodeFilter`, which filters VMs by whether they are Systems
+  # Manager managed nodes.
+  #
+  # - For Microsoft Azure: `CloudProviderRegions`, `AzureSubscriptions`, `AzureResourceGroups`,
+  # `AzureTag`, `AzureVmPowerStates`, and `AzureResourceType`.
+  #
+  # - For GCP: `Zones`, `GcpProjects`, `IncludesLabels`, `ExcludesLabels`, `GcpInstanceStates`,
+  # `OsPolicyComplianceFilter`, `OsPolicyOrchestratorName`, `OsPolicyOrchestratorId`, and
+  # `GcpAssetType`.
+  #
+  # For descriptions, valid values, and defaults of these keys, see [Cloud Connector target
+  # reference](https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-cloud-connector-target.html)
+  # in the *Amazon Web Services Systems Manager User Guide*.
   #
   # **For Run Command and Maintenance Windows:**
   #

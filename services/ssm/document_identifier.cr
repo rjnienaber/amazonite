@@ -73,6 +73,11 @@ module Amazonite::Ssm
     @[JSON::Field(key: "Author")]
     property author : String | Nil
 
+    # This field specifies the cloud providers that the default version of the document can run
+    # against.
+    @[JSON::Field(key: "CloudProviders", converter: Core::ArrayConverter(AS::CloudProvider))]
+    property cloud_providers : Array(CloudProvider) | Nil
+
     def initialize(
       @name : String | Nil = nil,
       @created_date : Time | Nil = nil,
@@ -89,6 +94,7 @@ module Amazonite::Ssm
       @requires : Array(DocumentRequires) | Nil = nil,
       @review_status : ReviewStatus | Nil = nil,
       @author : String | Nil = nil,
+      @cloud_providers : Array(CloudProvider) | Nil = nil,
     )
     end
 
@@ -131,8 +137,13 @@ module Amazonite::Ssm
         raise Core::ValidationError.new("Requires must have at least 1 item(s)") if value.size < 1
         value.each(&.validate!)
       end
+
+      if value = @cloud_providers
+        raise Core::ValidationError.new("CloudProviders must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("CloudProviders must have at most 10 item(s)") if value.size > 10
+      end
     end
 
-    def_equals_and_hash(@name, @created_date, @display_name, @owner, @version_name, @platform_types, @document_version, @document_type, @schema_version, @document_format, @target_type, @tags, @requires, @review_status, @author)
+    def_equals_and_hash(@name, @created_date, @display_name, @owner, @version_name, @platform_types, @document_version, @document_type, @schema_version, @document_format, @target_type, @tags, @requires, @review_status, @author, @cloud_providers)
   end
 end

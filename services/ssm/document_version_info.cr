@@ -50,6 +50,10 @@ module Amazonite::Ssm
     @[JSON::Field(key: "ReviewStatus", converter: AS::ReviewStatus)]
     property review_status : ReviewStatus | Nil
 
+    # This field specifies the cloud providers that this version of the document can run against.
+    @[JSON::Field(key: "CloudProviders", converter: Core::ArrayConverter(AS::CloudProvider))]
+    property cloud_providers : Array(CloudProvider) | Nil
+
     def initialize(
       @name : String | Nil = nil,
       @display_name : String | Nil = nil,
@@ -61,6 +65,7 @@ module Amazonite::Ssm
       @status : DocumentStatus | Nil = nil,
       @status_information : String | Nil = nil,
       @review_status : ReviewStatus | Nil = nil,
+      @cloud_providers : Array(CloudProvider) | Nil = nil,
     )
     end
 
@@ -82,8 +87,13 @@ module Amazonite::Ssm
       if value = @version_name
         raise Core::ValidationError.new("VersionName does not match the required pattern") unless value.matches?(Regex.new("^[a-zA-Z0-9_\\-.]{1,128}$"))
       end
+
+      if value = @cloud_providers
+        raise Core::ValidationError.new("CloudProviders must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("CloudProviders must have at most 10 item(s)") if value.size > 10
+      end
     end
 
-    def_equals_and_hash(@name, @display_name, @document_version, @version_name, @created_date, @is_default_version, @document_format, @status, @status_information, @review_status)
+    def_equals_and_hash(@name, @display_name, @document_version, @version_name, @created_date, @is_default_version, @document_format, @status, @status_information, @review_status, @cloud_providers)
   end
 end

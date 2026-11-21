@@ -7,6 +7,7 @@ module Amazonite::EC2
     T3a
     T4g
     T8i
+    T9g
 
     def self.to_json(e : UnlimitedSupportedInstanceFamily, json : JSON::Builder) : Nil
       value = case e
@@ -15,6 +16,7 @@ module Amazonite::EC2
               when AEC::UnlimitedSupportedInstanceFamily::T3a then "t3a"
               when AEC::UnlimitedSupportedInstanceFamily::T4g then "t4g"
               when AEC::UnlimitedSupportedInstanceFamily::T8i then "t8i"
+              when AEC::UnlimitedSupportedInstanceFamily::T9g then "t9g"
               else
                 raise Exception.new("unknown enum value for 'UnlimitedSupportedInstanceFamily' when serializing to json: '#{e}'")
               end
@@ -29,6 +31,7 @@ module Amazonite::EC2
       when "t3a" then AEC::UnlimitedSupportedInstanceFamily::T3a
       when "t4g" then AEC::UnlimitedSupportedInstanceFamily::T4g
       when "t8i" then AEC::UnlimitedSupportedInstanceFamily::T8i
+      when "t9g" then AEC::UnlimitedSupportedInstanceFamily::T9g
       else
         raise Exception.new("unknown enum value for 'UnlimitedSupportedInstanceFamily' when deserializing from json: '#{value}'")
       end
@@ -41,6 +44,7 @@ module Amazonite::EC2
       when AEC::UnlimitedSupportedInstanceFamily::T3a then "t3a"
       when AEC::UnlimitedSupportedInstanceFamily::T4g then "t4g"
       when AEC::UnlimitedSupportedInstanceFamily::T8i then "t8i"
+      when AEC::UnlimitedSupportedInstanceFamily::T9g then "t9g"
       else
         raise Exception.new("unknown enum value for 'UnlimitedSupportedInstanceFamily' when serializing to json: '#{self}'")
       end
@@ -53,6 +57,7 @@ module Amazonite::EC2
       when "t3a" then AEC::UnlimitedSupportedInstanceFamily::T3a
       when "t4g" then AEC::UnlimitedSupportedInstanceFamily::T4g
       when "t8i" then AEC::UnlimitedSupportedInstanceFamily::T8i
+      when "t9g" then AEC::UnlimitedSupportedInstanceFamily::T9g
       else
         nil
       end

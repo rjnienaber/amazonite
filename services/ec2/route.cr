@@ -68,6 +68,12 @@ module Amazonite::EC2
     # The next hop IP address for routes propagated by VPC Route Server into VPC route tables.
     property ip_address : String | Nil
 
+    # Information about the Automated Internet Firewall that inspects traffic for this route. The
+    # response includes this value only for routes that target an internet gateway or egress-only
+    # internet gateway in a VPC that has a firewall. The route target remains the internet gateway or
+    # egress-only internet gateway.
+    property igw_firewall : IgwFirewall | Nil
+
     def initialize(
       @destination_cidr_block : String | Nil = nil,
       @destination_ipv_6_cidr_block : String | Nil = nil,
@@ -87,6 +93,7 @@ module Amazonite::EC2
       @core_network_arn : String | Nil = nil,
       @odb_network_arn : String | Nil = nil,
       @ip_address : String | Nil = nil,
+      @igw_firewall : IgwFirewall | Nil = nil,
     )
     end
 
@@ -164,6 +171,10 @@ module Amazonite::EC2
       if value = @ip_address
         params << {"#{prefix}IpAddress", value}
       end
+
+      if value = @igw_firewall
+        params.concat(value.to_query_params("#{prefix}IgwFirewall."))
+      end
       params
     end
 
@@ -187,12 +198,16 @@ module Amazonite::EC2
         core_network_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='coreNetworkArn']")),
         odb_network_arn: Core::XMLValue.string(node.xpath_node("*[local-name()='odbNetworkArn']")),
         ip_address: Core::XMLValue.string(node.xpath_node("*[local-name()='ipAddress']")),
+        igw_firewall: node.xpath_node("*[local-name()='igwFirewall']").try { |n| IgwFirewall.from_xml(n) },
       )
     end
 
     def validate! : Nil
+      if value = @igw_firewall
+        value.validate!
+      end
     end
 
-    def_equals_and_hash(@destination_cidr_block, @destination_ipv_6_cidr_block, @destination_prefix_list_id, @egress_only_internet_gateway_id, @gateway_id, @instance_id, @instance_owner_id, @nat_gateway_id, @transit_gateway_id, @local_gateway_id, @carrier_gateway_id, @network_interface_id, @origin, @state, @vpc_peering_connection_id, @core_network_arn, @odb_network_arn, @ip_address)
+    def_equals_and_hash(@destination_cidr_block, @destination_ipv_6_cidr_block, @destination_prefix_list_id, @egress_only_internet_gateway_id, @gateway_id, @instance_id, @instance_owner_id, @nat_gateway_id, @transit_gateway_id, @local_gateway_id, @carrier_gateway_id, @network_interface_id, @origin, @state, @vpc_peering_connection_id, @core_network_arn, @odb_network_arn, @ip_address, @igw_firewall)
   end
 end

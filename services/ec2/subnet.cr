@@ -57,6 +57,31 @@ module Amazonite::EC2
     # ](https://docs.aws.amazon.com/evs/latest/APIReference/Welcome.html).
     property type : String | Nil
 
+    # The internet connectivity treatment that the Automated Internet Firewall applies to the subnet.
+    # The response includes this value only if the subnet is in a VPC that has a firewall. Possible
+    # values:
+    #
+    # - `az-unsupported`: The firewall doesn't support the subnet's Availability Zone, so it doesn't
+    # inspect traffic for the subnet.
+    #
+    # - `bidirectional`: Provides bidirectional internet connectivity to every network interface that
+    # has a public IP association. Any network interface without a public IP cannot communicate with
+    # the internet unless a NAT device is explicitly inserted in the path. All inbound and outbound
+    # traffic is inspected against your firewall rules.
+    #
+    # - `exclude`: The firewall doesn't inspect traffic for the subnet. The subnet bypasses the
+    # firewall, and its traffic passes directly through the internet gateway.
+    #
+    # - `flexible`: Sets the connectivity for each network interface in the subnet based on whether it
+    # is associated with a public IP address. A network interface with a public IP address gets
+    # bidirectional internet connectivity. A network interface without a public IP address gets
+    # outbound-only connectivity. All traffic is inspected against your firewall rules.
+    #
+    # - `outbound-only`: Provides egress-only connectivity for all network interfaces in the subnet.
+    # All outbound traffic and inbound responses are inspected against your firewall rules.
+    # Unsolicited inbound connections are dropped. For IPv4 traffic, the firewall performs NAT.
+    property network_firewall_connectivity_type : NetworkFirewallConnectivityType | Nil
+
     # The ID of the subnet.
     property subnet_id : String | Nil
 
@@ -107,6 +132,7 @@ module Amazonite::EC2
       @private_dns_name_options_on_launch : PrivateDnsNameOptionsOnLaunch | Nil = nil,
       @block_public_access_states : BlockPublicAccessStates | Nil = nil,
       @type : String | Nil = nil,
+      @network_firewall_connectivity_type : NetworkFirewallConnectivityType | Nil = nil,
       @subnet_id : String | Nil = nil,
       @state : SubnetState | Nil = nil,
       @vpc_id : String | Nil = nil,
@@ -181,6 +207,10 @@ module Amazonite::EC2
         params << {"#{prefix}Type", value}
       end
 
+      if value = @network_firewall_connectivity_type
+        params << {"#{prefix}NetworkFirewallConnectivityType", value.to_json_object_key}
+      end
+
       if value = @subnet_id
         params << {"#{prefix}SubnetId", value}
       end
@@ -232,6 +262,7 @@ module Amazonite::EC2
         private_dns_name_options_on_launch: node.xpath_node("*[local-name()='privateDnsNameOptionsOnLaunch']").try { |n| PrivateDnsNameOptionsOnLaunch.from_xml(n) },
         block_public_access_states: node.xpath_node("*[local-name()='blockPublicAccessStates']").try { |n| BlockPublicAccessStates.from_xml(n) },
         type: Core::XMLValue.string(node.xpath_node("*[local-name()='type']")),
+        network_firewall_connectivity_type: (n = node.xpath_node("*[local-name()='networkFirewallConnectivityType']")) ? AEC::NetworkFirewallConnectivityType.from_json_object_key?(n.content) : nil,
         subnet_id: Core::XMLValue.string(node.xpath_node("*[local-name()='subnetId']")),
         state: (n = node.xpath_node("*[local-name()='state']")) ? AEC::SubnetState.from_json_object_key?(n.content) : nil,
         vpc_id: Core::XMLValue.string(node.xpath_node("*[local-name()='vpcId']")),
@@ -261,6 +292,6 @@ module Amazonite::EC2
       end
     end
 
-    def_equals_and_hash(@availability_zone_id, @enable_lni_at_device_index, @map_customer_owned_ip_on_launch, @customer_owned_ipv_4_pool, @owner_id, @assign_ipv_6_address_on_creation, @ipv_6_cidr_block_association_set, @tags, @subnet_arn, @outpost_arn, @enable_dns_64, @ipv_6_native, @private_dns_name_options_on_launch, @block_public_access_states, @type, @subnet_id, @state, @vpc_id, @cidr_block, @available_ip_address_count, @availability_zone, @default_for_az, @map_public_ip_on_launch)
+    def_equals_and_hash(@availability_zone_id, @enable_lni_at_device_index, @map_customer_owned_ip_on_launch, @customer_owned_ipv_4_pool, @owner_id, @assign_ipv_6_address_on_creation, @ipv_6_cidr_block_association_set, @tags, @subnet_arn, @outpost_arn, @enable_dns_64, @ipv_6_native, @private_dns_name_options_on_launch, @block_public_access_states, @type, @network_firewall_connectivity_type, @subnet_id, @state, @vpc_id, @cidr_block, @available_ip_address_count, @availability_zone, @default_for_az, @map_public_ip_on_launch)
   end
 end

@@ -46,8 +46,6 @@ module Amazonite::EC2
     property subnet_id : String | Nil
 
     # The service that manages the elastic IP address.
-    #
-    # The only option supported today is `alb`.
     property service_managed : ServiceManaged | Nil
 
     # The ID of the instance that the address is associated with (if any).

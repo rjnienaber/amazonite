@@ -103,6 +103,18 @@ module Amazonite::Ssm
     @[JSON::Field(key: "Tags")]
     property tags : Array(Tag) | Nil
 
+    # The cloud providers that the document can run against. Valid values include the following:
+    #
+    # - `AWS` - The document runs against Amazon Web Services resources.
+    #
+    # - `Azure` - The document runs against Microsoft Azure resources.
+    #
+    # - `GCP` - The document runs against Google Cloud resources.
+    #
+    # If you don't specify a value, the default is `AWS`.
+    @[JSON::Field(key: "CloudProviders", converter: Core::ArrayConverter(AS::CloudProvider))]
+    property cloud_providers : Array(CloudProvider) | Nil
+
     def initialize(
       @content : String,
       @name : String,
@@ -114,6 +126,7 @@ module Amazonite::Ssm
       @document_format : DocumentFormat | Nil = nil,
       @target_type : String | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
+      @cloud_providers : Array(CloudProvider) | Nil = nil,
     )
     end
 
@@ -158,8 +171,13 @@ module Amazonite::Ssm
         raise Core::ValidationError.new("Tags must have at most 1000 item(s)") if value.size > 1000
         value.each(&.validate!)
       end
+
+      if value = @cloud_providers
+        raise Core::ValidationError.new("CloudProviders must have at least 1 item(s)") if value.size < 1
+        raise Core::ValidationError.new("CloudProviders must have at most 10 item(s)") if value.size > 10
+      end
     end
 
-    def_equals_and_hash(@content, @requires, @attachments, @name, @display_name, @version_name, @document_type, @document_format, @target_type, @tags)
+    def_equals_and_hash(@content, @requires, @attachments, @name, @display_name, @version_name, @document_type, @document_format, @target_type, @tags, @cloud_providers)
   end
 end

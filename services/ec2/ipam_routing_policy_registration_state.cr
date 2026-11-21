@@ -11,6 +11,7 @@ module Amazonite::EC2
     UpdateComplete
     DeleteInProgress
     DeleteComplete
+    DisableComplete
 
     def self.to_json(e : IpamRoutingPolicyRegistrationState, json : JSON::Builder) : Nil
       value = case e
@@ -22,6 +23,7 @@ module Amazonite::EC2
               when AEC::IpamRoutingPolicyRegistrationState::UpdateComplete   then "update-complete"
               when AEC::IpamRoutingPolicyRegistrationState::DeleteInProgress then "delete-in-progress"
               when AEC::IpamRoutingPolicyRegistrationState::DeleteComplete   then "delete-complete"
+              when AEC::IpamRoutingPolicyRegistrationState::DisableComplete  then "disable-complete"
               else
                 raise Exception.new("unknown enum value for 'IpamRoutingPolicyRegistrationState' when serializing to json: '#{e}'")
               end
@@ -39,6 +41,7 @@ module Amazonite::EC2
       when "update-complete"    then AEC::IpamRoutingPolicyRegistrationState::UpdateComplete
       when "delete-in-progress" then AEC::IpamRoutingPolicyRegistrationState::DeleteInProgress
       when "delete-complete"    then AEC::IpamRoutingPolicyRegistrationState::DeleteComplete
+      when "disable-complete"   then AEC::IpamRoutingPolicyRegistrationState::DisableComplete
       else
         raise Exception.new("unknown enum value for 'IpamRoutingPolicyRegistrationState' when deserializing from json: '#{value}'")
       end
@@ -54,6 +57,7 @@ module Amazonite::EC2
       when AEC::IpamRoutingPolicyRegistrationState::UpdateComplete   then "update-complete"
       when AEC::IpamRoutingPolicyRegistrationState::DeleteInProgress then "delete-in-progress"
       when AEC::IpamRoutingPolicyRegistrationState::DeleteComplete   then "delete-complete"
+      when AEC::IpamRoutingPolicyRegistrationState::DisableComplete  then "disable-complete"
       else
         raise Exception.new("unknown enum value for 'IpamRoutingPolicyRegistrationState' when serializing to json: '#{self}'")
       end
@@ -69,6 +73,7 @@ module Amazonite::EC2
       when "update-complete"    then AEC::IpamRoutingPolicyRegistrationState::UpdateComplete
       when "delete-in-progress" then AEC::IpamRoutingPolicyRegistrationState::DeleteInProgress
       when "delete-complete"    then AEC::IpamRoutingPolicyRegistrationState::DeleteComplete
+      when "disable-complete"   then AEC::IpamRoutingPolicyRegistrationState::DisableComplete
       else
         nil
       end

@@ -27,6 +27,11 @@ module Amazonite::EC2
     # The state of VPC Block Public Access (BPA).
     property block_public_access_states : BlockPublicAccessStates | Nil
 
+    # Information about the firewall associations for the VPC. Automated Internet Firewall, a feature
+    # of Amazon Virtual Private Cloud (Amazon VPC), inspects traffic between the VPC and its internet
+    # gateway or egress-only internet gateway. This list is empty if the VPC doesn't have a firewall.
+    property network_firewall_associations : Array(NetworkFirewallAssociation) | Nil
+
     # The ID of the VPC.
     property vpc_id : String | Nil
 
@@ -48,6 +53,7 @@ module Amazonite::EC2
       @encryption_control : VpcEncryptionControl | Nil = nil,
       @tags : Array(Tag) | Nil = nil,
       @block_public_access_states : BlockPublicAccessStates | Nil = nil,
+      @network_firewall_associations : Array(NetworkFirewallAssociation) | Nil = nil,
       @vpc_id : String | Nil = nil,
       @state : VpcState | Nil = nil,
       @cidr_block : String | Nil = nil,
@@ -90,6 +96,10 @@ module Amazonite::EC2
         params.concat(value.to_query_params("#{prefix}BlockPublicAccessStates."))
       end
 
+      (@network_firewall_associations || [] of NetworkFirewallAssociation).each_with_index(1) do |item, i|
+        params.concat(item.to_query_params("#{prefix}NetworkFirewallAssociationSet.#{i}."))
+      end
+
       if value = @vpc_id
         params << {"#{prefix}VpcId", value}
       end
@@ -118,6 +128,7 @@ module Amazonite::EC2
         encryption_control: node.xpath_node("*[local-name()='encryptionControl']").try { |n| VpcEncryptionControl.from_xml(n) },
         tags: node.xpath_nodes("*[local-name()='tagSet']/*[local-name()='item']").map { |n| Tag.from_xml(n) },
         block_public_access_states: node.xpath_node("*[local-name()='blockPublicAccessStates']").try { |n| BlockPublicAccessStates.from_xml(n) },
+        network_firewall_associations: node.xpath_nodes("*[local-name()='networkFirewallAssociationSet']/*[local-name()='item']").map { |n| NetworkFirewallAssociation.from_xml(n) },
         vpc_id: Core::XMLValue.string(node.xpath_node("*[local-name()='vpcId']")),
         state: (n = node.xpath_node("*[local-name()='state']")) ? AEC::VpcState.from_json_object_key?(n.content) : nil,
         cidr_block: Core::XMLValue.string(node.xpath_node("*[local-name()='cidrBlock']")),
@@ -145,8 +156,12 @@ module Amazonite::EC2
       if value = @block_public_access_states
         value.validate!
       end
+
+      if value = @network_firewall_associations
+        value.each(&.validate!)
+      end
     end
 
-    def_equals_and_hash(@owner_id, @instance_tenancy, @ipv_6_cidr_block_association_set, @cidr_block_association_set, @is_default, @encryption_control, @tags, @block_public_access_states, @vpc_id, @state, @cidr_block, @dhcp_options_id)
+    def_equals_and_hash(@owner_id, @instance_tenancy, @ipv_6_cidr_block_association_set, @cidr_block_association_set, @is_default, @encryption_control, @tags, @block_public_access_states, @network_firewall_associations, @vpc_id, @state, @cidr_block, @dhcp_options_id)
   end
 end
